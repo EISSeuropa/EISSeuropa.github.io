@@ -1,0 +1,1784 @@
+{
+  "settings": {
+    "name": "EISS v1.0",
+    "currentPage": "board.html",
+    "theme": {
+      "name": "mobirise-amp",
+      "title": "Mobirise AMP",
+      "styling": {
+        "primaryColor": "#4ea2e3",
+        "secondaryColor": "#4addff",
+        "successColor": "#0dcd7b",
+        "infoColor": "#8282e7",
+        "warningColor": "#767676",
+        "dangerColor": "#a0a0a0",
+        "mainFont": "Roboto",
+        "display1Font": "Roboto",
+        "display1Size": 4.5,
+        "display2Font": "Roboto",
+        "display2Size": 2.2,
+        "display5Font": "Roboto",
+        "display5Size": 1.8,
+        "display7Font": "Roboto",
+        "display7Size": "1.2",
+        "display4Font": "Roboto",
+        "display4Size": 0.9,
+        "isRoundedButtons": true,
+        "isScrollToTopButton": false,
+        "arrowColor": "#4ea2e3"
+      },
+      "additionalSetColors": []
+    },
+    "path": "@PROJECT_PATH@",
+    "versionFirst": "4.8.1",
+    "siteFonts": [],
+    "favicon": "@PROJECT_PATH@/assets/images/visuel-2-128x82-1.png",
+    "noImageResize": "",
+    "uniqCompNum": 19,
+    "versionPublish": "4.8.10",
+    "screenshot": "screenshot.png"
+  },
+  "pages": {
+    "index.html": {
+      "settings": {
+        "main": true,
+        "title": "EISS - Homepage",
+        "meta_descr": "Welcome to the European Initiative for Security Studies!",
+        "header_custom": "",
+        "footer_custom": "",
+        "html_before": ""
+      },
+      "components": [
+        {
+          "_styles": {
+            "amp-sidebar": {
+              "min-width": "260px!important",
+              "z-index": "1050!important",
+              "background-color": "@menuBgColor"
+            },
+            "amp-sidebar.open:after": {
+              "content": "''",
+              "position": "absolute",
+              "top": "0",
+              "left": "0",
+              "bottom": "0",
+              "right": "0",
+              "background-color": "red"
+            },
+            ".open": {
+              "-webkit-transform": "translateX(0%) !important",
+              "transform": "translateX(0%) !important",
+              "display": "block!important"
+            },
+            ".builder-sidebar": {
+              "background-color": "@menuBgColor",
+              "position": "relative",
+              "min-height": "100vh",
+              "z-index": "1030",
+              "padding": "1rem 2rem",
+              "max-width": "20rem"
+            },
+            ".headerbar": {
+              "display": "flex",
+              "-webkit-flex-direction": "column",
+              "flex-direction": "column",
+              "-webkit-justify-content": "center",
+              "justify-content": "center",
+              "padding": ".5rem 1rem",
+              "min-height": "70px",
+              "-webkit-align-items": "center",
+              "align-items": "center",
+              "background": "@menuBgColor",
+              "&.sticky-nav": {
+                "position": "fixed",
+                "z-index": "1000",
+                "width": "100%"
+              }
+            },
+            "button.sticky-but": {
+              "position": "fixed"
+            },
+            ".brand": {
+              "display": "flex",
+              "-webkit-align-items": "center",
+              "align-items": "center",
+              "-webkit-align-self": "flex-start",
+              "align-self": "flex-start",
+              "padding-right": "30px",
+              "p": {
+                "margin": "0",
+                "padding": "0"
+              }
+            },
+            ".brand-name": {
+              "color": "#197bc6"
+            },
+            ".sidebar": {
+              "padding": "1rem 0",
+              "margin": "0"
+            },
+            ".sidebar > li": {
+              "list-style": "none",
+              "display": "flex",
+              "-webkit-flex-direction": "column",
+              "flex-direction": "column"
+            },
+            ".sidebar a": {
+              "display": "block",
+              "text-decoration": "none",
+              "margin-bottom": "10px"
+            },
+            ".close-sidebar": {
+              "width": "30px",
+              "height": "30px",
+              "position": "relative",
+              "cursor": "pointer",
+              "background-color": "transparent",
+              "border": "none",
+              "&:focus": {
+                "outline": "2px auto @primaryColor"
+              },
+              "span": {
+                "position": "absolute",
+                "left": "0",
+                "top": "14px",
+                "width": "30px",
+                "height": "2px",
+                "border-right": "5px",
+                "background-color": "@hamburgerColor",
+                "&:nth-child(1)": {
+                  "-webkit-transform": "rotate(45deg)",
+                  "transform": "rotate(45deg)"
+                },
+                "&:nth-child(2)": {
+                  "-webkit-transform": "rotate(-45deg)",
+                  "transform": "rotate(-45deg)"
+                }
+              }
+            },
+            "@media (min-width: 992px)": {
+              "& .brand-name": {
+                "min-width": "8rem"
+              },
+              "& .builder-sidebar": {
+                "margin-left": "auto",
+                ".sidebar li": {
+                  "-webkit-flex-direction": "row",
+                  "flex-direction": "row",
+                  "-webkit-flex-wrap": "wrap",
+                  "flex-wrap": "wrap",
+                  "a": {
+                    "padding": ".5rem",
+                    "margin": "0"
+                  }
+                }
+              },
+              "& .builder-overlay": {
+                "display": "none !important"
+              }
+            },
+            ".hamburger": {
+              "position": "absolute",
+              "top": "25px",
+              "right": "20px",
+              "margin-left": "auto",
+              "width": "30px",
+              "height": "20px",
+              "background": "none",
+              "border": "none",
+              "cursor": "pointer",
+              "z-index": "1000",
+              "& when (@showLogo)": {
+                "@media (min-width: 768px)": {
+                  "top": "calc(0.5rem ~\"+\" @logoHeight ~\"*\" 0.5px ~\"-\" 10px)"
+                }
+              },
+              "&:focus": {
+                "outline": "none"
+              },
+              "span": {
+                "position": "absolute",
+                "right": "0",
+                "width": "30px",
+                "height": "2px",
+                "border-right": "5px",
+                "background-color": "@hamburgerColor",
+                "&:nth-child(1)": {
+                  "top": "0",
+                  "transition": "all .2s"
+                },
+                "&:nth-child(2)": {
+                  "top": "8px",
+                  "transition": "all .15s"
+                },
+                "&:nth-child(3)": {
+                  "top": "8px",
+                  "transition": "all .15s"
+                },
+                "&:nth-child(4)": {
+                  "top": "16px",
+                  "transition": "all .2s"
+                }
+              }
+            },
+            "amp-img": {
+              "margin-right": "1rem",
+              "display": "flex",
+              "-webkit-align-items": "center",
+              "align-items": "center",
+              "height": "~\"@{logoHeight}px\"",
+              "width": "~\"@{logoWidth}px\"",
+              "@media (max-width: 768px)": {
+                "max-height": "55px",
+                "max-width": "55px"
+              }
+            }
+          },
+          "_name": "menu1",
+          "_customHTML": "<section class=\"menu\" group=\"Menu\" plugins=\"amp-main,amp-sidebar\" global=\"\" once=\"menu\" always-top=\"\" position-absolute=\"\">\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"checkbox\" title=\"Show Logo\" name=\"showLogo\" checked=\"\">\n        <input type=\"range\" title=\"Logo Height\" inline=\"\" name=\"logoHeight\" min=\"55\" max=\"120\" value=\"55\" step=\"1\">\n        <input type=\"range\" title=\"Logo Width\" inline=\"\" name=\"logoWidth\" min=\"55\" max=\"120\" value=\"55\" step=\"1\">\n\n        <input type=\"checkbox\" title=\"Show Brand Name\" name=\"showBrand\" checked=\"\">\n        <input type=\"checkbox\" title=\"Show Links\" name=\"showLinks\" checked=\"\">\n        <input type=\"checkbox\" title=\"Show Button(s)\" name=\"showButtons\" checked=\"\">\n        <input type=\"checkbox\" title=\"Sticky\" name=\"sticky\" checked=\"\">\n        <select title=\"Sidebar Side\" name=\"sidebarSide\">\n            <option value=\"left\">Left</option>\n            <option value=\"right\" selected=\"\">Right</option>\n        </select>\n        <input type=\"color\" title=\"Background Color\" name=\"menuBgColor\" value=\"#ffffff\">\n        <input type=\"color\" title=\"Hamburger Color\" name=\"hamburgerColor\" value=\"#197bc6\">\n    <!-- End block parameters -->\n    </mbr-parameters>\n    <nav class=\"headerbar\" mbr-class=\"{'sticky-nav':sticky}\">\n      <div class=\"brand\">\n          <span mbr-if=\"showLogo\" class=\"brand-logo\">\n              <amp-img src=\"@THEME_PATH@/components/_images/logo1.png\" layout=\"responsive\" width=\"55.87765957446808\" height=\"55\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                  <div placeholder=\"\" class=\"placeholder\"></div>\n                  <img class=\"mbr-temp\" src=\"@THEME_PATH@/components/_images/logo1.png\" alt=\"Mobirise\">\n              </amp-img>\n          </span>\n          <p mbr-text=\"\" mbr-theme-style=\"display-2\" mbr-if=\"showBrand\" class=\"brand-name mbr-fonts-style\" data-app-selector=\".brand-name\">EISS</p>\n      </div>\n    </nav>\n    <amp-sidebar id=\"sidebar\" layout=\"nodisplay\" side=\"{{sidebarSide}}\">\n        <div class=\"builder-sidebar\" id=\"builder-sidebar\">\n            <button on=\"tap:sidebar.close\" class=\"close-sidebar\">\n                <span></span>\n                <span></span>\n            </button>\n\n            <div mbr-menu=\"\" class=\"sidebar mbr-white\" mbr-theme-style=\"display-7\" mbr-if=\"showLinks\"><a class=\"text-primary\" href=\"index.html\" data-app-placeholder=\"Type Text\">Homepage</a> <a class=\"text-primary\" href=\"initiative.html\" data-app-placeholder=\"Type Text\">The Initiative</a> <a class=\"text-primary\" href=\"2019.html\" data-app-placeholder=\"Type Text\">The 2019 Conference</a>\n              \n              <a class=\"text-primary\" href=\"board.html\" data-app-placeholder=\"Type Text\">The Board</a></div>\n            \n            <div mbr-if=\"showButtons\" mbr-buttons=\"\" mbr-theme-style=\"display-4\" class=\"navbar-buttons mbr-section-btn align-center\"><a class=\"btn btn-sm btn-primary\" href=\"mailto:EISSnetwork@gmail.com\" data-app-placeholder=\"Type Text\"><span class=\"mbri-paper-plane mbr-iconfont mbr-iconfont-btn\"></span>Contact Us</a></div>\n        </div>\n    </amp-sidebar>\n    <button on=\"tap:sidebar.toggle\" class=\"ampstart-btn hamburger\" mbr-class=\"{'sticky-but':sticky}\">\n        <span></span>\n        <span></span>\n        <span></span>\n        <span></span>\n    </button>\n</section>",
+          "_cid": "rdsiJ1uGK8",
+          "_anchor": "menu1-j",
+          "_protectedParams": [],
+          "_global": true,
+          "_once": "menu",
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "& when not (@fullScreen)": {
+              "padding-top": "(@paddingTop * 15px)",
+              "padding-bottom": "(@paddingBottom * 15px)"
+            },
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
+            },
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            ".mbr-text, .mbr-section-btn": {
+              "color": "#ffffff"
+            }
+          },
+          "_name": "header1",
+          "_customHTML": "<section class=\"header1\" group=\"Headers\" plugins=\"amp-main\" mbr-class=\"{'mbr-fullscreen': fullScreen}\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"checkbox\" title=\"Full Screen\" name=\"fullScreen\">\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"9\" step=\"1\" value=\"6\" condition=\"fullScreen == false\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"9\" step=\"1\" value=\"6\" condition=\"fullScreen == false\">\n\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked>\n        <input type=\"checkbox\" title=\"Show Subtitle\" name=\"showSubTitle\" checked>\n        <input type=\"checkbox\" title=\"Show Text\" name=\"showText\" checked>\n        <input type=\"checkbox\" title=\"Show Buttons\" name=\"showButtons\" checked>\n\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"@PROJECT_PATH@/assets/images/visuel-4-875x562.png\" selected>\n            <input type=\"color\" title=\"Background Color\" value=\"#0dd1ff\">\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <h1 class=\"mbr-section-title mbr-fonts-style align-right mbr-bold mbr-white\" mbr-theme-style=\"display-1\" data-app-selector=\".mbr-section-title\" mbr-if=\"showTitle\">\n            <span style=\"font-weight: normal;\"><i>The</i></span> European Initiative<br><i style=\"font-weight: normal;\">for</i> Security Studies</h1>\n        <h3 class=\"mbr-section-subtitle mbr-fonts-style align-right mbr-white mbr-light\" mbr-theme-style=\"display-5\" data-app-selector=\".mbr-section-subtitle\" mbr-if=\"showSubTitle\"><b>The largest and most diverse European gathering of <br>scholars and practitioners on security issues</b></h3>\n        <p class=\"mbr-fonts-style mbr-text align-right\" mbr-theme-style=\"display-2\" data-app-selector=\".mbr-text, .mbr-section-btn\" mbr-if=\"showText\"><b>EISS 2019 - June 27th-28th - Sciences Po Paris</b></p>\n        <div class=\"mbr-section-btn align-right\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons mbr-theme-style=\"display-4\"><a class=\"btn btn-md btn-primary\" href=\"https://twitter.com/EISSnetwork\" data-app-placeholder=\"Type Text\" target=\"_blank\"><span class=\"fa fa-twitter mbr-iconfont mbr-iconfont-btn\"></span>Follow us</a> <a class=\"btn btn-md btn-primary\" href=\"http://eepurl.com/gczTK5\" data-app-placeholder=\"Type Text\" target=\"_blank\"><span class=\"mbri-chat mbr-iconfont mbr-iconfont-btn\"></span>Subscribe to our emails</a> <a class=\"btn btn-md btn-primary\" href=\"mailto:EISSnetwork@gmail.com\" data-app-placeholder=\"Type Text\"><span class=\"mbri-paper-plane mbr-iconfont mbr-iconfont-btn\"></span>\n                Contact us</a></div>\n    </div>\n\n</section>",
+          "_cid": "r0CliU8gXp",
+          "_anchor": "header1-1",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
+            },
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            ".mbr-row": {
+              "margin": "0 15px"
+            },
+            ".card": {
+              "@media (max-width: 991px)": {
+                "margin-bottom": "20px"
+              }
+            },
+            ".mbr-section-title": {
+              "margin": "0",
+              "padding-bottom": "1rem"
+            },
+            ".mbr-text": {
+              "margin": "0"
+            }
+          },
+          "_name": "content15",
+          "_customHTML": "<section class=\"content15 mbr-section\" group=\"Articles\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"9\" step=\"1\" value=\"5\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"9\" step=\"1\" value=\"0\">\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked>\n        <input type=\"checkbox\" title=\"Show Text\" name=\"showText\" checked>\n        <select title=\"Cards\" name=\"cardsAmount\">\n            <option value=\"1\">1</option>\n            <option value=\"2\">2</option>\n            <option value=\"3\" selected>3</option>\n            <option value=\"4\">4</option>\n        </select>\n\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background3.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n    \n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount <= 3,\n                             'mbr-col-lg-3': cardsAmount > 3}\">\n                <h3 class=\"mbr-section-title mbr-fonts-style align-center\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".mbr-section-title\">Multidisciplinarity</h3>\n                <p class=\"mbr-text mbr-fonts-style align-center\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text\">\n                    Sociology, politcal science, economics, philosophy, law, strategic studies</p>             \n            </div>\n            \n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount <= 3,\n                             'mbr-col-lg-3': cardsAmount > 3}\" mbr-if=\"cardsAmount > 1\">\n                <h3 class=\"mbr-section-title mbr-fonts-style align-center\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".mbr-section-title\">\n                    Geographic diversity</h3>\n                <p class=\"mbr-text mbr-fonts-style align-center\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text\">\n                    Hundreds of university and partner institutions from every part of Europe and beyond</p> \n            </div>\n        \n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount <= 3,\n                             'mbr-col-lg-3': cardsAmount > 3}\" mbr-if=\"cardsAmount > 2\">\n                <h3 class=\"mbr-section-title mbr-fonts-style align-center\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".mbr-section-title\">\n                    Practitioners welcomed</h3>\n                <p class=\"mbr-text mbr-fonts-style align-center\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text\">\n                    Members of the armed forces, of diplomatic services, national and international civil servants</p>\n            </div>\n        \n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount <= 3,\n                             'mbr-col-lg-3': cardsAmount > 3}\" mbr-if=\"cardsAmount > 3\">\n                <h3 class=\"mbr-section-title mbr-fonts-style align-center\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".mbr-section-title\">\n                    Results\n                </h3>\n                <p class=\"mbr-text mbr-fonts-style align-center\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text\">\n                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus aperiam\n                </p>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_cid": "r0CsbD4HzF",
+          "_anchor": "content15-6",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "background-color": "@bgColor"
+          },
+          "_name": "content5",
+          "_customHTML": "<section class=\"mbr-section content5\" plugins=\"amp-main\" group=\"Article\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"4\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"4\">\n        <input type=\"color\" title=\"Backgroud Color\" name=\"bgColor\" value=\"#ffffff\">\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"mbr-container\">\n        <div class=\"mbr-section-btn align-center\" mbr-buttons mbr-theme-style=\"display-4\" data-toolbar=\"-mbrBtnMove\"><a class=\"btn btn-primary\" href=\"initiative.html\" data-app-placeholder=\"Type Text\">The Initiative</a> <a class=\"btn btn-primary\" href=\"2019.html\" data-app-placeholder=\"Type Text\">The 2019 Edition</a>\n            <a class=\"btn btn-primary\" href=\"board.html\" data-app-placeholder=\"Type Text\">The Board</a></div>\n    </div>\n</section>",
+          "_cid": "rdskIJidyV",
+          "_anchor": "content5-n",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "background-color": "@bgColor",
+            ".counter-container": {
+              "ul": {
+                "margin-bottom": "0",
+                "li": {
+                  "color": "inherit",
+                  "padding-bottom": "1rem",
+                  "& when (@stylizedCounters)": {
+                    "list-style": "none",
+                    "&:before": {
+                      "box-sizing": "inherit",
+                      "position": "absolute",
+                      "left": "0px",
+                      "padding-top": "3px",
+                      "content": "''",
+                      "display": "inline-block",
+                      "text-align": "center",
+                      "margin": "10px 15px",
+                      "line-height": "20px",
+                      "transition": "all .2s",
+                      "color": "contrast(@counterColor)",
+                      "background": "@counterColor",
+                      "width": "10px",
+                      "height": "10px",
+                      "border-radius": "50%",
+                      "& when (@countersType = 'circle')": {
+                        "background": "none",
+                        "border": "1px solid @counterColor",
+                        "color": "@counterColor"
+                      },
+                      "& when (@countersType = 'square')": {
+                        "border-radius": "0"
+                      },
+                      "& when (@countersType = 'romb')": {
+                        "border-radius": "0",
+                        "-webkit-transform": "rotate(45deg)",
+                        "transform": "rotate(45deg)"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "_name": "content7",
+          "_customHTML": "<section class=\"content7 mbr-section\" plugins=\"amp-main\">\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"4\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"4\">\n        <input type=\"checkbox\" title=\"Stylized Counters\" name=\"stylizedCounters\" checked>\n        <input type=\"color\" title=\"Counter Color\" name=\"counterColor\" value=\"#4ea2e3\" condition=\"stylizedCounters\">\n        <input type=\"checkbox\" title=\"Stylized Counters\" name=\"stylizedCounters\" checked>\n        <select title=\"Counters Type\" name=\"countersType\" condition=\"stylizedCounters\">\n            <option value=\"default\">Сircle Fill</option>\n            <option value=\"circle\">Circle</option>\n            <option value=\"square\">Square</option>\n            <option value=\"romb\" selected>Rhombus</option>\n\n        </select>   \n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\">\n    <!-- End block parameters -->\n    </mbr-parameters> \n\n    <div class=\"mbr-container\">\n        <div class=\"mbr-text counter-container mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\" data-multiline mbr-article>\n            <ul>\n                <li><b>The European Initiative on Security Studies is a Europe-wide multidisciplinary network of scholars from over eighty universities that share the goal of consolidating security studies in Europe. Specifically, the aims of the EISS are two-fold. </b></li><li><b>The first is to develop and sustain a Europe-wide network in the field of security studies. This gives visibility to the range of individual and collective research projects that are currently underway in Europe. </b></li><li><b>The second goal is to establish a forum for the exchange of ideas in order to foster new joint research projects and develop international research partnerships.</b></li>\n            </ul>\n        </div>\n    </div>\n</section>",
+          "_cid": "rdsa6N15Rz",
+          "_anchor": "content7-o",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
+            },
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            ".mbr-title": {
+              "padding-bottom": "1rem"
+            },
+            ".mbr-section-btn": {
+              "padding-top": "1.5rem"
+            }
+          },
+          "_name": "content1",
+          "_customHTML": "<section class=\"mbr-section content1\" group=\"Article\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"4\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"0\">\n\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked>\n        <input type=\"checkbox\" title=\"Show Subtitle\" name=\"showSubtitle\">\n        <input type=\"checkbox\" title=\"Show Buttons\" name=\"showButtons\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background3.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"mbr-container\">\n        <h2 mbr-if=\"showTitle\" class=\"mbr-title align-center mbr-fonts-style mbr-bold\" mbr-theme-style=\"display-2\" data-app-selector=\".mbr-title\"><span style=\"font-weight: normal;\">They support EISS 2019</span></h2>\n        <h3 mbr-if=\"showSubtitle\" data-app-selector=\".mbr-section-subtitle\" class=\"mbr-section-subtitle align-center mbr-light mbr-fonts-style\" mbr-theme-style=\"display-5\">\n            <i>Shape your future web project with sharp design and refine coded functions.</i>\n        </h3>\n        <div class=\"mbr-section-btn align-center\" mbr-if=\"showButtons\" mbr-buttons mbr-theme-style=\"display-4\" data-toolbar=\"-mbrBtnAdd,-mbrBtnMove\">\n            <a class=\"btn btn-primary\" href=\"https://mobirise.com\">LEARN MORE</a>\n            <a class=\"btn btn-black-outline\" href=\"https://mobirise.com\">LIVE DEMO</a>\n        </div>\n    </div>\n</section>",
+          "_cid": "r0HKgmTM0k",
+          "_anchor": "content1-b",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
+            },
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            ".card": {
+              "margin-bottom": "20px",
+              "position": "relative",
+              "display": "flex",
+              "-ms-flex-direction": "column",
+              "flex-direction": "column",
+              "min-width": "0",
+              "word-wrap": "break-word",
+              "background-clip": "border-box",
+              "border-radius": "0",
+              "width": "100%",
+              "min-height": "1px",
+              ".btn": {
+                "margin": ".4rem 4px !important"
+              }
+            },
+            ".card-title": {
+              "margin": "0",
+              "& when not (@showText)": {
+                "padding-bottom": "10px"
+              }
+            },
+            ".mbr-text": {
+              "color": "#232323"
+            },
+            ".card-box": {
+              "padding-top": "2rem"
+            },
+            "amp-img": {
+              "width": "100%"
+            }
+          },
+          "_name": "features2",
+          "_customHTML": "<section class=\"features2 mbr-section\" group=\"Features\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"9\" step=\"1\" value=\"4\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"9\" step=\"1\" value=\"2\">\n\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\">\n        <input type=\"checkbox\" title=\"Show Text\" name=\"showText\">\n        <input type=\"checkbox\" title=\"Show Buttons\" name=\"showButtons\">\n        <!-- <input type=\"checkbox\" title=\"Show Lines\" name=\"showLines\" checked> -->\n        <!-- <input type=\"color\" title=\"Lines Color\" name=\"linesColor\" value=\"#efefef\" condition=\"showLines\"> -->\n        <select title=\"Cards\" name=\"cardsAmount\">\n            <option value=\"1\">1</option>\n            <option value=\"2\" selected=\"\">2</option>\n            <option value=\"3\">3</option>\n            <option value=\"4\">4</option>\n        </select>\n\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background1.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected=\"\">\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n    \n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 1}\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/screenshot-2018-10-25-at-16.41.13-510x286.png\" layout=\"responsive\" width=\"540.3146853146853\" height=\"303\" alt=\"Mobirise\">\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/screenshot-2018-10-25-at-16.41.13-510x286.png\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".card-title\"></h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">The French Association for the Study of War and Strategy </p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\"><a class=\"btn btn-sm btn-primary-outline\" href=\"https://www.cybersecurity.ox.ac.uk/education/cdt\" data-app-placeholder=\"Type Text\" target=\"_blank\">\n                                LEARN MORE\n                            </a></div>\n                    </div>\n                </div>\n            </div>\n            \n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 2}\" mbr-if=\"cardsAmount > 1\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/sciencespo-appellations-ceri-rgb-1-369x159.png\" layout=\"responsive\" height=\"215\" width=\"540.304347826087\" alt=\"Mobirise\">\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/sciencespo-appellations-ceri-rgb-1-369x159.png\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Wolfson College</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">The Centre for International Research at Sciences Po Paris</p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\"><a class=\"btn btn-sm btn-primary-outline\" href=\"https://www.wolfson.ox.ac.uk/node/2268\" data-app-placeholder=\"Type Text\" target=\"_blank\">\n                                LEARN MORE\n                            </a></div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 3}\" mbr-if=\"cardsAmount > 2\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/sponsor-bwhighres-1-484x220.jpg\" layout=\"responsive\" height=\"91\" width=\"255.54069767441862\" alt=\"Mobirise\">\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/sponsor-bwhighres-1-484x220.jpg\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            The UK EPSC</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">\n                            The Engineering and Physical Sciences Research Council is dedicated to funding research and training in its broad domain of competence. It is part of UK Research and Innovation.&nbsp;<br><br></p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\"><a class=\"btn btn-sm btn-primary-outline\" href=\"https://epsrc.ukri.org/about/\" data-app-placeholder=\"Type Text\" target=\"_blank\">\n                                LEARN MORE\n                            </a></div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 4}\" mbr-if=\"cardsAmount > 3\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/screen-shot-2018-08-14-at-15.33.30-510x209.png\" layout=\"responsive\" height=\"93\" width=\"254.49999999999997\" alt=\"Mobirise\">\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/screen-shot-2018-08-14-at-15.33.30-510x209.png\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            The Rotary Foundation</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">\n                            The Foundation acts as the charity of Rotary International and is dedicated to the betterment of the human condition through peace, health, education and development.<br><br><br></p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\"><a class=\"btn btn-sm btn-primary-outline\" href=\"https://www.rotary.org/en/about-rotary/rotary-foundation\" data-app-placeholder=\"Type Text\" target=\"_blank\">\n                                LEARN MORE\n                            </a></div>\n                    </div>\n                </div>\n            </div>\n            \n        </div>\n    </div>\n</section>",
+          "_cid": "r0HJXOBDhJ",
+          "_anchor": "features2-9",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
+            },
+            "p": {
+              "margin": "0",
+              "color": "#ffffff"
+            },
+            ".mbr-col-sm-12, .mbr-text": {
+              "color": "#000000"
+            }
+          },
+          "_name": "footer1",
+          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2019 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners<br><br>Last update: 27/12/2019</p>\n        </div>\n    </div>\n</section>",
+          "_cid": "r0ClIUHuFw",
+          "_anchor": "footer1-5",
+          "_protectedParams": [],
+          "_global": true,
+          "_once": "footer",
+          "_params": {}
+        }
+      ]
+    },
+    "initiative.html": {
+      "settings": {
+        "title": "EISS - The Initiative",
+        "order": 1
+      },
+      "components": [
+        {
+          "_styles": {
+            "amp-sidebar": {
+              "min-width": "260px!important",
+              "z-index": "1050!important",
+              "background-color": "@menuBgColor"
+            },
+            "amp-sidebar.open:after": {
+              "content": "''",
+              "position": "absolute",
+              "top": "0",
+              "left": "0",
+              "bottom": "0",
+              "right": "0",
+              "background-color": "red"
+            },
+            ".open": {
+              "-webkit-transform": "translateX(0%) !important",
+              "transform": "translateX(0%) !important",
+              "display": "block!important"
+            },
+            ".builder-sidebar": {
+              "background-color": "@menuBgColor",
+              "position": "relative",
+              "min-height": "100vh",
+              "z-index": "1030",
+              "padding": "1rem 2rem",
+              "max-width": "20rem"
+            },
+            ".headerbar": {
+              "display": "flex",
+              "-webkit-flex-direction": "column",
+              "flex-direction": "column",
+              "-webkit-justify-content": "center",
+              "justify-content": "center",
+              "padding": ".5rem 1rem",
+              "min-height": "70px",
+              "-webkit-align-items": "center",
+              "align-items": "center",
+              "background": "@menuBgColor",
+              "&.sticky-nav": {
+                "position": "fixed",
+                "z-index": "1000",
+                "width": "100%"
+              }
+            },
+            "button.sticky-but": {
+              "position": "fixed"
+            },
+            ".brand": {
+              "display": "flex",
+              "-webkit-align-items": "center",
+              "align-items": "center",
+              "-webkit-align-self": "flex-start",
+              "align-self": "flex-start",
+              "padding-right": "30px",
+              "p": {
+                "margin": "0",
+                "padding": "0"
+              }
+            },
+            ".brand-name": {
+              "color": "#197bc6"
+            },
+            ".sidebar": {
+              "padding": "1rem 0",
+              "margin": "0"
+            },
+            ".sidebar > li": {
+              "list-style": "none",
+              "display": "flex",
+              "-webkit-flex-direction": "column",
+              "flex-direction": "column"
+            },
+            ".sidebar a": {
+              "display": "block",
+              "text-decoration": "none",
+              "margin-bottom": "10px"
+            },
+            ".close-sidebar": {
+              "width": "30px",
+              "height": "30px",
+              "position": "relative",
+              "cursor": "pointer",
+              "background-color": "transparent",
+              "border": "none",
+              "&:focus": {
+                "outline": "2px auto @primaryColor"
+              },
+              "span": {
+                "position": "absolute",
+                "left": "0",
+                "top": "14px",
+                "width": "30px",
+                "height": "2px",
+                "border-right": "5px",
+                "background-color": "@hamburgerColor",
+                "&:nth-child(1)": {
+                  "-webkit-transform": "rotate(45deg)",
+                  "transform": "rotate(45deg)"
+                },
+                "&:nth-child(2)": {
+                  "-webkit-transform": "rotate(-45deg)",
+                  "transform": "rotate(-45deg)"
+                }
+              }
+            },
+            "@media (min-width: 992px)": {
+              "& .brand-name": {
+                "min-width": "8rem"
+              },
+              "& .builder-sidebar": {
+                "margin-left": "auto",
+                ".sidebar li": {
+                  "-webkit-flex-direction": "row",
+                  "flex-direction": "row",
+                  "-webkit-flex-wrap": "wrap",
+                  "flex-wrap": "wrap",
+                  "a": {
+                    "padding": ".5rem",
+                    "margin": "0"
+                  }
+                }
+              },
+              "& .builder-overlay": {
+                "display": "none !important"
+              }
+            },
+            ".hamburger": {
+              "position": "absolute",
+              "top": "25px",
+              "right": "20px",
+              "margin-left": "auto",
+              "width": "30px",
+              "height": "20px",
+              "background": "none",
+              "border": "none",
+              "cursor": "pointer",
+              "z-index": "1000",
+              "& when (@showLogo)": {
+                "@media (min-width: 768px)": {
+                  "top": "calc(0.5rem ~\"+\" @logoHeight ~\"*\" 0.5px ~\"-\" 10px)"
+                }
+              },
+              "&:focus": {
+                "outline": "none"
+              },
+              "span": {
+                "position": "absolute",
+                "right": "0",
+                "width": "30px",
+                "height": "2px",
+                "border-right": "5px",
+                "background-color": "@hamburgerColor",
+                "&:nth-child(1)": {
+                  "top": "0",
+                  "transition": "all .2s"
+                },
+                "&:nth-child(2)": {
+                  "top": "8px",
+                  "transition": "all .15s"
+                },
+                "&:nth-child(3)": {
+                  "top": "8px",
+                  "transition": "all .15s"
+                },
+                "&:nth-child(4)": {
+                  "top": "16px",
+                  "transition": "all .2s"
+                }
+              }
+            },
+            "amp-img": {
+              "margin-right": "1rem",
+              "display": "flex",
+              "-webkit-align-items": "center",
+              "align-items": "center",
+              "height": "~\"@{logoHeight}px\"",
+              "width": "~\"@{logoWidth}px\"",
+              "@media (max-width: 768px)": {
+                "max-height": "55px",
+                "max-width": "55px"
+              }
+            }
+          },
+          "_name": "menu1",
+          "_customHTML": "<section class=\"menu\" group=\"Menu\" plugins=\"amp-main,amp-sidebar\" global=\"\" once=\"menu\" always-top=\"\" position-absolute=\"\">\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"checkbox\" title=\"Show Logo\" name=\"showLogo\" checked=\"\">\n        <input type=\"range\" title=\"Logo Height\" inline=\"\" name=\"logoHeight\" min=\"55\" max=\"120\" value=\"55\" step=\"1\">\n        <input type=\"range\" title=\"Logo Width\" inline=\"\" name=\"logoWidth\" min=\"55\" max=\"120\" value=\"55\" step=\"1\">\n\n        <input type=\"checkbox\" title=\"Show Brand Name\" name=\"showBrand\" checked=\"\">\n        <input type=\"checkbox\" title=\"Show Links\" name=\"showLinks\" checked=\"\">\n        <input type=\"checkbox\" title=\"Show Button(s)\" name=\"showButtons\" checked=\"\">\n        <input type=\"checkbox\" title=\"Sticky\" name=\"sticky\" checked=\"\">\n        <select title=\"Sidebar Side\" name=\"sidebarSide\">\n            <option value=\"left\">Left</option>\n            <option value=\"right\" selected=\"\">Right</option>\n        </select>\n        <input type=\"color\" title=\"Background Color\" name=\"menuBgColor\" value=\"#ffffff\">\n        <input type=\"color\" title=\"Hamburger Color\" name=\"hamburgerColor\" value=\"#197bc6\">\n    <!-- End block parameters -->\n    </mbr-parameters>\n    <nav class=\"headerbar\" mbr-class=\"{'sticky-nav':sticky}\">\n      <div class=\"brand\">\n          <span mbr-if=\"showLogo\" class=\"brand-logo\">\n              <amp-img src=\"@THEME_PATH@/components/_images/logo1.png\" layout=\"responsive\" width=\"55.87765957446808\" height=\"55\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                  <div placeholder=\"\" class=\"placeholder\"></div>\n                  <img class=\"mbr-temp\" src=\"@THEME_PATH@/components/_images/logo1.png\" alt=\"Mobirise\">\n              </amp-img>\n          </span>\n          <p mbr-text=\"\" mbr-theme-style=\"display-2\" mbr-if=\"showBrand\" class=\"brand-name mbr-fonts-style\" data-app-selector=\".brand-name\">EISS</p>\n      </div>\n    </nav>\n    <amp-sidebar id=\"sidebar\" layout=\"nodisplay\" side=\"{{sidebarSide}}\">\n        <div class=\"builder-sidebar\" id=\"builder-sidebar\">\n            <button on=\"tap:sidebar.close\" class=\"close-sidebar\">\n                <span></span>\n                <span></span>\n            </button>\n\n            <div mbr-menu=\"\" class=\"sidebar mbr-white\" mbr-theme-style=\"display-7\" mbr-if=\"showLinks\"><a class=\"text-primary\" href=\"index.html\" data-app-placeholder=\"Type Text\">Homepage</a> <a class=\"text-primary\" href=\"initiative.html\" data-app-placeholder=\"Type Text\">The Initiative</a> <a class=\"text-primary\" href=\"2019.html\" data-app-placeholder=\"Type Text\">The 2019 Conference</a>\n              \n              <a class=\"text-primary\" href=\"board.html\" data-app-placeholder=\"Type Text\">The Board</a></div>\n            \n            <div mbr-if=\"showButtons\" mbr-buttons=\"\" mbr-theme-style=\"display-4\" class=\"navbar-buttons mbr-section-btn align-center\"><a class=\"btn btn-sm btn-primary\" href=\"mailto:EISSnetwork@gmail.com\" data-app-placeholder=\"Type Text\"><span class=\"mbri-paper-plane mbr-iconfont mbr-iconfont-btn\"></span>Contact Us</a></div>\n        </div>\n    </amp-sidebar>\n    <button on=\"tap:sidebar.toggle\" class=\"ampstart-btn hamburger\" mbr-class=\"{'sticky-but':sticky}\">\n        <span></span>\n        <span></span>\n        <span></span>\n        <span></span>\n    </button>\n</section>",
+          "_anchor": "menu1-k",
+          "_isUserblock": true,
+          "_sourceTheme": "mobirise-amp",
+          "_cid": "rdskhFTVyI",
+          "_protectedParams": [],
+          "_global": true,
+          "_once": "menu",
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "background-color": "@bgColor",
+            "& when not (@fullWidth)": {
+              "padding-top": "(@paddingTop * 15px)",
+              "padding-bottom": "(@paddingBottom * 15px)"
+            },
+            ".image-block": {
+              "margin": "auto",
+              "width": "~\"@{videoSize}%\"",
+              "& when (@fullWidth)": {
+                "width": "100% !important"
+              }
+            },
+            "amp-img": {
+              "text-align": "center"
+            },
+            ".mbr-text": {
+              "margin": "0",
+              "padding": ".5rem 0",
+              "& when (@fullWidth)": {
+                "padding": ".5rem 15px"
+              }
+            },
+            "@media (max-width: 767px)": {
+              ".image-block": {
+                "width": "100% !important"
+              }
+            }
+          },
+          "_name": "image1",
+          "_customHTML": "<section class=\"image1\" group=\"Images &amp; Videos\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n\n        <input type=\"checkbox\" title=\"Full Width\" name=\"fullWidth\" checked=\"\">\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" value=\"2\" step=\"1\" condition=\"fullWidth == false\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" value=\"2\" step=\"1\" condition=\"fullWidth == false\">\n        <input type=\"range\" inline=\"\" title=\"Width\" name=\"videoSize\" min=\"20\" max=\"100\" value=\"66\" step=\"1\" condition=\"fullWidth == false\">\n        <input type=\"checkbox\" title=\"Show Caption\" name=\"showText\" checked=\"\">\n\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\" condition=\"showText==true\">\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div mbr-class=\"{'container': fullWidth == false}\">\n        <div class=\"image-block\">\n            <amp-img src=\"@PROJECT_PATH@/assets/images/visuel-4-875x562.png\" layout=\"responsive\" width=\"1465.0800711743773\" height=\"941\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                <div placeholder=\"\" class=\"placeholder\"></div>\n                <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/visuel-4-875x562.png\" alt=\"Mobirise\" title=\"\">\n            </amp-img>\n            <div class=\"mbr-figure-caption\" mbr-if=\"showText\">\n                <p mbr-text=\"\" class=\"mbr-text mbr-black align-center mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\"></p>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_cid": "rdygXJu6B4",
+          "_anchor": "image1-j",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "background-color": "@bgColor",
+            ".mbr-text": {
+              "margin-bottom": "0"
+            },
+            ".mbr-section-title": {
+              "margin": "0"
+            }
+          },
+          "_name": "content2",
+          "_customHTML": "<section class=\"content2 mbr-section article\" plugins=\"amp-main\">\n    \n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"0\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"0\">\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked>\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\">\n    <!-- End block parameters -->\n    </mbr-parameters> \n\n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-8\">\n                <h3 class=\"mbr-fonts-style mbr-section-title mbr-light\" mbr-if=\"showTitle\" mbr-theme-style=\"display-5\" data-app-selector=\".mbr-section-title\">\n                    Our aim and charachteristics<br></h3>\n                <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\" data-multiline mbr-article>The European Initiative on Security Studies is a Europe-wide multidisciplinary network of scholars from over eighty universities that share the goal of consolidating security studies in Europe. Specifically, the aims of the EISS are two-fold. The first is to develop and sustain a Europe-wide network in the field of security studies. This gives visibility to the range of individual and collective research projects that are currently underway in Europe. The second goal is to establish a forum for the exchange of ideas in order to foster new joint research projects and develop international research partnerships.<br><br>The EISS has three main characteristics: it is (1) thematically-driven and open to all theoretical approaches, (2) multidisciplinary and interdisciplinary, and (3) geographically inclusive. Firstly, the EISS is not limited to one specific theoretical approach to security studies, but instead seeks to be inclusive. This is reflected, for instance, in the EISS Conference’s panels, which cover a large range of themes in the broad field of security studies. The EISS welcomes contributions on both so-called ‘traditional’ and ‘non-traditional’ security issues. Secondly, the EISS is multidisciplinary and interdisciplinary in that it gathers, among others, historians, political scientists, economists, geographers, anthropologists and sociologists sharing an interest in developing security studies in Europe. Finally, the EISS seeks to be as inclusive as possible from a geographical perspective. The EISS welcomes projects focusing on any region of the world. It aims to establish a European network of scholars and institutions working on a broad range of themes and geographical areas in the field of security studies. By doing so, its ambition is to help overcoming the existing fragmentation in European security studies, and thereby to foster and consolidate a European field of security studies.<br></p>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_anchor": "content2-t",
+          "_isUserblock": true,
+          "_sourceTheme": "mobirise-amp",
+          "_cid": "rdsddTg1uV",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "background-color": "@bgColor"
+          },
+          "_name": "content5",
+          "_customHTML": "<section class=\"mbr-section content5\" plugins=\"amp-main\" group=\"Article\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"4\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"4\">\n        <input type=\"color\" title=\"Backgroud Color\" name=\"bgColor\" value=\"#ffffff\">\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"mbr-container\">\n        <div class=\"mbr-section-btn align-center\" mbr-buttons mbr-theme-style=\"display-4\" data-toolbar=\"-mbrBtnMove\"><a class=\"btn btn-primary\" href=\"index.html\" data-app-placeholder=\"Type Text\">Homepage</a> <a class=\"btn btn-primary\" href=\"2019.html\" data-app-placeholder=\"Type Text\">The 2019 Edition</a>\n            <a class=\"btn btn-primary\" href=\"board.html\" data-app-placeholder=\"Type Text\">The Board</a></div>\n    </div>\n</section>",
+          "_anchor": "content5-p",
+          "_isUserblock": true,
+          "_sourceTheme": "mobirise-amp",
+          "_cid": "rdsmbxU8eK",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
+            },
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            ".mbr-title": {
+              "padding-bottom": "1rem"
+            },
+            ".mbr-section-btn": {
+              "padding-top": "1.5rem"
+            }
+          },
+          "_name": "content1",
+          "_customHTML": "<section class=\"mbr-section content1\" group=\"Article\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"4\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"0\">\n\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked=\"\">\n        <input type=\"checkbox\" title=\"Show Subtitle\" name=\"showSubtitle\">\n        <input type=\"checkbox\" title=\"Show Buttons\" name=\"showButtons\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"@PROJECT_PATH@/assets/images/background3.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected=\"\">\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"mbr-container\">\n        <h2 mbr-if=\"showTitle\" class=\"mbr-title align-center mbr-fonts-style mbr-bold\" mbr-theme-style=\"display-2\" data-app-selector=\".mbr-title\"><span style=\"font-weight: normal;\">They support EISS 2019</span></h2>\n        <h3 mbr-if=\"showSubtitle\" data-app-selector=\".mbr-section-subtitle\" class=\"mbr-section-subtitle align-center mbr-light mbr-fonts-style\" mbr-theme-style=\"display-5\">\n            <i>Shape your future web project with sharp design and refine coded functions.</i>\n        </h3>\n        <div class=\"mbr-section-btn align-center\" mbr-if=\"showButtons\" mbr-buttons=\"\" mbr-theme-style=\"display-4\" data-toolbar=\"-mbrBtnAdd,-mbrBtnMove\">\n            <a class=\"btn btn-primary\" href=\"https://mobirise.com\">LEARN MORE</a>\n            <a class=\"btn btn-black-outline\" href=\"https://mobirise.com\">LIVE DEMO</a>\n        </div>\n    </div>\n</section>",
+          "_anchor": "content1-v",
+          "_isUserblock": true,
+          "_sourceTheme": "mobirise-amp",
+          "_cid": "rdsdMlEQng",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
+            },
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            ".card": {
+              "margin-bottom": "20px",
+              "position": "relative",
+              "display": "flex",
+              "-ms-flex-direction": "column",
+              "flex-direction": "column",
+              "min-width": "0",
+              "word-wrap": "break-word",
+              "background-clip": "border-box",
+              "border-radius": "0",
+              "width": "100%",
+              "min-height": "1px",
+              ".btn": {
+                "margin": ".4rem 4px !important"
+              }
+            },
+            ".card-title": {
+              "margin": "0",
+              "& when not (@showText)": {
+                "padding-bottom": "10px"
+              }
+            },
+            ".mbr-text": {
+              "color": "#232323"
+            },
+            ".card-box": {
+              "padding-top": "2rem"
+            },
+            "amp-img": {
+              "width": "100%"
+            }
+          },
+          "_name": "features2",
+          "_customHTML": "<section class=\"features2 mbr-section\" group=\"Features\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"9\" step=\"1\" value=\"4\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"9\" step=\"1\" value=\"2\">\n\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\">\n        <input type=\"checkbox\" title=\"Show Text\" name=\"showText\">\n        <input type=\"checkbox\" title=\"Show Buttons\" name=\"showButtons\">\n        <!-- <input type=\"checkbox\" title=\"Show Lines\" name=\"showLines\" checked> -->\n        <!-- <input type=\"color\" title=\"Lines Color\" name=\"linesColor\" value=\"#efefef\" condition=\"showLines\"> -->\n        <select title=\"Cards\" name=\"cardsAmount\">\n            <option value=\"1\">1</option>\n            <option value=\"2\" selected=\"\">2</option>\n            <option value=\"3\">3</option>\n            <option value=\"4\">4</option>\n        </select>\n\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"@PROJECT_PATH@/assets/images/background1.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected=\"\">\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n    \n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 1}\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/screenshot-2018-10-25-at-16.41.13-510x286.png\" layout=\"responsive\" width=\"540.3146853146853\" height=\"303\" alt=\"Mobirise\">\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/screenshot-2018-10-25-at-16.41.13-510x286.png\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".card-title\"></h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">The French Association for the Study of War and Strategy </p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\"><a class=\"btn btn-sm btn-primary-outline\" href=\"https://www.cybersecurity.ox.ac.uk/education/cdt\" data-app-placeholder=\"Type Text\" target=\"_blank\">\n                                LEARN MORE\n                            </a></div>\n                    </div>\n                </div>\n            </div>\n            \n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 2}\" mbr-if=\"cardsAmount > 1\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/sciencespo-appellations-ceri-rgb-1-369x159.png\" layout=\"responsive\" height=\"215\" width=\"540.304347826087\" alt=\"Mobirise\">\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/sciencespo-appellations-ceri-rgb-1-369x159.png\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Wolfson College</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">The Centre for International Research at Sciences Po Paris</p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\"><a class=\"btn btn-sm btn-primary-outline\" href=\"https://www.wolfson.ox.ac.uk/node/2268\" data-app-placeholder=\"Type Text\" target=\"_blank\">\n                                LEARN MORE\n                            </a></div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 3}\" mbr-if=\"cardsAmount > 2\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/sponsor-bwhighres-1-484x220.jpg\" layout=\"responsive\" height=\"91\" width=\"255.54069767441862\" alt=\"Mobirise\">\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/sponsor-bwhighres-1-484x220.jpg\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            The UK EPSC</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">\n                            The Engineering and Physical Sciences Research Council is dedicated to funding research and training in its broad domain of competence. It is part of UK Research and Innovation.&nbsp;<br><br></p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\"><a class=\"btn btn-sm btn-primary-outline\" href=\"https://epsrc.ukri.org/about/\" data-app-placeholder=\"Type Text\" target=\"_blank\">\n                                LEARN MORE\n                            </a></div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 4}\" mbr-if=\"cardsAmount > 3\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/screen-shot-2018-08-14-at-15.33.30-510x209.png\" layout=\"responsive\" height=\"93\" width=\"254.49999999999997\" alt=\"Mobirise\">\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/screen-shot-2018-08-14-at-15.33.30-510x209.png\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            The Rotary Foundation</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">\n                            The Foundation acts as the charity of Rotary International and is dedicated to the betterment of the human condition through peace, health, education and development.<br><br><br></p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\"><a class=\"btn btn-sm btn-primary-outline\" href=\"https://www.rotary.org/en/about-rotary/rotary-foundation\" data-app-placeholder=\"Type Text\" target=\"_blank\">\n                                LEARN MORE\n                            </a></div>\n                    </div>\n                </div>\n            </div>\n            \n        </div>\n    </div>\n</section>",
+          "_anchor": "features2-w",
+          "_isUserblock": true,
+          "_sourceTheme": "mobirise-amp",
+          "_cid": "rdsdQXpPw1",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
+            },
+            "p": {
+              "margin": "0",
+              "color": "#ffffff"
+            },
+            ".mbr-col-sm-12, .mbr-text": {
+              "color": "#000000"
+            }
+          },
+          "_name": "footer1",
+          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2019 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners<br><br>Last update: 27/12/2019</p>\n        </div>\n    </div>\n</section>",
+          "_cid": "r0ClIUHuFw",
+          "_anchor": "footer1-s",
+          "_protectedParams": [],
+          "_global": true,
+          "_once": "footer",
+          "_params": {}
+        }
+      ]
+    },
+    "2019.html": {
+      "settings": {
+        "title": "EISS - 2019 Conference",
+        "order": 2
+      },
+      "components": [
+        {
+          "_styles": {
+            "amp-sidebar": {
+              "min-width": "260px!important",
+              "z-index": "1050!important",
+              "background-color": "@menuBgColor"
+            },
+            "amp-sidebar.open:after": {
+              "content": "''",
+              "position": "absolute",
+              "top": "0",
+              "left": "0",
+              "bottom": "0",
+              "right": "0",
+              "background-color": "red"
+            },
+            ".open": {
+              "-webkit-transform": "translateX(0%) !important",
+              "transform": "translateX(0%) !important",
+              "display": "block!important"
+            },
+            ".builder-sidebar": {
+              "background-color": "@menuBgColor",
+              "position": "relative",
+              "min-height": "100vh",
+              "z-index": "1030",
+              "padding": "1rem 2rem",
+              "max-width": "20rem"
+            },
+            ".headerbar": {
+              "display": "flex",
+              "-webkit-flex-direction": "column",
+              "flex-direction": "column",
+              "-webkit-justify-content": "center",
+              "justify-content": "center",
+              "padding": ".5rem 1rem",
+              "min-height": "70px",
+              "-webkit-align-items": "center",
+              "align-items": "center",
+              "background": "@menuBgColor",
+              "&.sticky-nav": {
+                "position": "fixed",
+                "z-index": "1000",
+                "width": "100%"
+              }
+            },
+            "button.sticky-but": {
+              "position": "fixed"
+            },
+            ".brand": {
+              "display": "flex",
+              "-webkit-align-items": "center",
+              "align-items": "center",
+              "-webkit-align-self": "flex-start",
+              "align-self": "flex-start",
+              "padding-right": "30px",
+              "p": {
+                "margin": "0",
+                "padding": "0"
+              }
+            },
+            ".brand-name": {
+              "color": "#197bc6"
+            },
+            ".sidebar": {
+              "padding": "1rem 0",
+              "margin": "0"
+            },
+            ".sidebar > li": {
+              "list-style": "none",
+              "display": "flex",
+              "-webkit-flex-direction": "column",
+              "flex-direction": "column"
+            },
+            ".sidebar a": {
+              "display": "block",
+              "text-decoration": "none",
+              "margin-bottom": "10px"
+            },
+            ".close-sidebar": {
+              "width": "30px",
+              "height": "30px",
+              "position": "relative",
+              "cursor": "pointer",
+              "background-color": "transparent",
+              "border": "none",
+              "&:focus": {
+                "outline": "2px auto @primaryColor"
+              },
+              "span": {
+                "position": "absolute",
+                "left": "0",
+                "top": "14px",
+                "width": "30px",
+                "height": "2px",
+                "border-right": "5px",
+                "background-color": "@hamburgerColor",
+                "&:nth-child(1)": {
+                  "-webkit-transform": "rotate(45deg)",
+                  "transform": "rotate(45deg)"
+                },
+                "&:nth-child(2)": {
+                  "-webkit-transform": "rotate(-45deg)",
+                  "transform": "rotate(-45deg)"
+                }
+              }
+            },
+            "@media (min-width: 992px)": {
+              "& .brand-name": {
+                "min-width": "8rem"
+              },
+              "& .builder-sidebar": {
+                "margin-left": "auto",
+                ".sidebar li": {
+                  "-webkit-flex-direction": "row",
+                  "flex-direction": "row",
+                  "-webkit-flex-wrap": "wrap",
+                  "flex-wrap": "wrap",
+                  "a": {
+                    "padding": ".5rem",
+                    "margin": "0"
+                  }
+                }
+              },
+              "& .builder-overlay": {
+                "display": "none !important"
+              }
+            },
+            ".hamburger": {
+              "position": "absolute",
+              "top": "25px",
+              "right": "20px",
+              "margin-left": "auto",
+              "width": "30px",
+              "height": "20px",
+              "background": "none",
+              "border": "none",
+              "cursor": "pointer",
+              "z-index": "1000",
+              "& when (@showLogo)": {
+                "@media (min-width: 768px)": {
+                  "top": "calc(0.5rem ~\"+\" @logoHeight ~\"*\" 0.5px ~\"-\" 10px)"
+                }
+              },
+              "&:focus": {
+                "outline": "none"
+              },
+              "span": {
+                "position": "absolute",
+                "right": "0",
+                "width": "30px",
+                "height": "2px",
+                "border-right": "5px",
+                "background-color": "@hamburgerColor",
+                "&:nth-child(1)": {
+                  "top": "0",
+                  "transition": "all .2s"
+                },
+                "&:nth-child(2)": {
+                  "top": "8px",
+                  "transition": "all .15s"
+                },
+                "&:nth-child(3)": {
+                  "top": "8px",
+                  "transition": "all .15s"
+                },
+                "&:nth-child(4)": {
+                  "top": "16px",
+                  "transition": "all .2s"
+                }
+              }
+            },
+            "amp-img": {
+              "margin-right": "1rem",
+              "display": "flex",
+              "-webkit-align-items": "center",
+              "align-items": "center",
+              "height": "~\"@{logoHeight}px\"",
+              "width": "~\"@{logoWidth}px\"",
+              "@media (max-width: 768px)": {
+                "max-height": "55px",
+                "max-width": "55px"
+              }
+            }
+          },
+          "_name": "menu1",
+          "_customHTML": "<section class=\"menu\" group=\"Menu\" plugins=\"amp-main,amp-sidebar\" global=\"\" once=\"menu\" always-top=\"\" position-absolute=\"\">\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"checkbox\" title=\"Show Logo\" name=\"showLogo\" checked=\"\">\n        <input type=\"range\" title=\"Logo Height\" inline=\"\" name=\"logoHeight\" min=\"55\" max=\"120\" value=\"55\" step=\"1\">\n        <input type=\"range\" title=\"Logo Width\" inline=\"\" name=\"logoWidth\" min=\"55\" max=\"120\" value=\"55\" step=\"1\">\n\n        <input type=\"checkbox\" title=\"Show Brand Name\" name=\"showBrand\" checked=\"\">\n        <input type=\"checkbox\" title=\"Show Links\" name=\"showLinks\" checked=\"\">\n        <input type=\"checkbox\" title=\"Show Button(s)\" name=\"showButtons\" checked=\"\">\n        <input type=\"checkbox\" title=\"Sticky\" name=\"sticky\" checked=\"\">\n        <select title=\"Sidebar Side\" name=\"sidebarSide\">\n            <option value=\"left\">Left</option>\n            <option value=\"right\" selected=\"\">Right</option>\n        </select>\n        <input type=\"color\" title=\"Background Color\" name=\"menuBgColor\" value=\"#ffffff\">\n        <input type=\"color\" title=\"Hamburger Color\" name=\"hamburgerColor\" value=\"#197bc6\">\n    <!-- End block parameters -->\n    </mbr-parameters>\n    <nav class=\"headerbar\" mbr-class=\"{'sticky-nav':sticky}\">\n      <div class=\"brand\">\n          <span mbr-if=\"showLogo\" class=\"brand-logo\">\n              <amp-img src=\"@THEME_PATH@/components/_images/logo1.png\" layout=\"responsive\" width=\"55.87765957446808\" height=\"55\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                  <div placeholder=\"\" class=\"placeholder\"></div>\n                  <img class=\"mbr-temp\" src=\"@THEME_PATH@/components/_images/logo1.png\" alt=\"Mobirise\">\n              </amp-img>\n          </span>\n          <p mbr-text=\"\" mbr-theme-style=\"display-2\" mbr-if=\"showBrand\" class=\"brand-name mbr-fonts-style\" data-app-selector=\".brand-name\">EISS</p>\n      </div>\n    </nav>\n    <amp-sidebar id=\"sidebar\" layout=\"nodisplay\" side=\"{{sidebarSide}}\">\n        <div class=\"builder-sidebar\" id=\"builder-sidebar\">\n            <button on=\"tap:sidebar.close\" class=\"close-sidebar\">\n                <span></span>\n                <span></span>\n            </button>\n\n            <div mbr-menu=\"\" class=\"sidebar mbr-white\" mbr-theme-style=\"display-7\" mbr-if=\"showLinks\"><a class=\"text-primary\" href=\"index.html\" data-app-placeholder=\"Type Text\">Homepage</a> <a class=\"text-primary\" href=\"initiative.html\" data-app-placeholder=\"Type Text\">The Initiative</a> <a class=\"text-primary\" href=\"2019.html\" data-app-placeholder=\"Type Text\">The 2019 Conference</a>\n              \n              <a class=\"text-primary\" href=\"board.html\" data-app-placeholder=\"Type Text\">The Board</a></div>\n            \n            <div mbr-if=\"showButtons\" mbr-buttons=\"\" mbr-theme-style=\"display-4\" class=\"navbar-buttons mbr-section-btn align-center\"><a class=\"btn btn-sm btn-primary\" href=\"mailto:EISSnetwork@gmail.com\" data-app-placeholder=\"Type Text\"><span class=\"mbri-paper-plane mbr-iconfont mbr-iconfont-btn\"></span>Contact Us</a></div>\n        </div>\n    </amp-sidebar>\n    <button on=\"tap:sidebar.toggle\" class=\"ampstart-btn hamburger\" mbr-class=\"{'sticky-but':sticky}\">\n        <span></span>\n        <span></span>\n        <span></span>\n        <span></span>\n    </button>\n</section>",
+          "_anchor": "menu1-l",
+          "_isUserblock": true,
+          "_sourceTheme": "mobirise-amp",
+          "_cid": "rdskjOwpn2",
+          "_protectedParams": [],
+          "_global": true,
+          "_once": "menu",
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
+            },
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            ".mbr-title": {
+              "padding-bottom": "1rem"
+            },
+            ".mbr-section-btn": {
+              "padding-top": "1.5rem"
+            }
+          },
+          "_name": "content1",
+          "_customHTML": "<section class=\"mbr-section content1\" group=\"Article\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"6\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"0\">\n\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked>\n        <input type=\"checkbox\" title=\"Show Subtitle\" name=\"showSubtitle\">\n        <input type=\"checkbox\" title=\"Show Buttons\" name=\"showButtons\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"@PROJECT_PATH@/assets/images/background3.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"mbr-container\">\n        <h2 mbr-if=\"showTitle\" class=\"mbr-title align-center mbr-fonts-style mbr-bold\" mbr-theme-style=\"display-2\" data-app-selector=\".mbr-title\">\n            The programme<br><br><span style=\"font-weight: normal;\">June 27th-28th 2019</span></h2>\n        <h3 mbr-if=\"showSubtitle\" data-app-selector=\".mbr-section-subtitle\" class=\"mbr-section-subtitle align-center mbr-light mbr-fonts-style\" mbr-theme-style=\"display-5\">\n            <i>Shape your future web project with sharp design and refine coded functions.</i>\n        </h3>\n        <div class=\"mbr-section-btn align-center\" mbr-if=\"showButtons\" mbr-buttons mbr-theme-style=\"display-4\" data-toolbar=\"-mbrBtnAdd,-mbrBtnMove\">\n            <a class=\"btn btn-primary\" href=\"https://mobirise.com\">LEARN MORE</a>\n            <a class=\"btn btn-black-outline\" href=\"https://mobirise.com\">LIVE DEMO</a>\n        </div>\n    </div>\n</section>",
+          "_anchor": "content1-j",
+          "_isUserblock": true,
+          "_sourceTheme": "mobirise-amp",
+          "_cid": "rdwt1Jz8HY",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
+            },
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            ".card": {
+              "margin-bottom": "20px",
+              "position": "relative",
+              "display": "flex",
+              "-ms-flex-direction": "column",
+              "-webkit-flex-direction": "column",
+              "flex-direction": "column",
+              "min-width": "0",
+              "word-wrap": "break-word",
+              "background-clip": "border-box",
+              "border-radius": ".25rem",
+              "width": "100%",
+              "min-height": "1px"
+            },
+            ".card-title": {
+              "margin": "0"
+            },
+            ".card-box": {
+              "padding-top": "2rem"
+            },
+            "amp-img": {
+              "width": "100%"
+            },
+            ".mbr-text": {
+              "color": "#767676"
+            }
+          },
+          "_name": "features1",
+          "_customHTML": "<section class=\"features1 mbr-section\" group=\"Features\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"9\" step=\"1\" value=\"2\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"9\" step=\"1\" value=\"2\">\n\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\">\n        <input type=\"checkbox\" title=\"Show Text\" name=\"showText\">\n        <select title=\"Cards\" name=\"cardsAmount\">\n            <option value=\"1\">1</option>\n            <option value=\"2\" selected=\"\">2</option>\n        </select>\n\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"@PROJECT_PATH@/assets/images/background3.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected=\"\">\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n    \n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/screenshot-2018-12-27-at-18.29.45-1080x1480.png\" layout=\"responsive\" width=\"540\" height=\"740\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/screenshot-2018-12-27-at-18.29.45-1080x1480.png\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Higher Perfomance\n                        </h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-7\" mbr-if=\"showText\" data-app-selector=\".mbr-text\">\n                            Web pages and ads published in the AMP open-source format load near instantly, giving users a smooth, more engaging experience on mobile and desktop.\n                        </p>\n                    </div>\n                </div>\n            </div>\n            \n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-if=\"cardsAmount > 1\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/screenshot-2018-12-27-at-18.29.55-1080x1345.png\" layout=\"responsive\" height=\"673\" width=\"540.4014869888476\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/screenshot-2018-12-27-at-18.29.55-1080x1345.png\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Flexibility and Results\n                        </h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-7\" mbr-if=\"showText\" data-app-selector=\".mbr-text\">\n                            Publishers and advertisers can decide how to present their content and what technology vendors to use, all while maintaining and improving key performance indicators.\n                        </p>\n                    </div>\n                </div>\n            </div>\n            \n        </div>\n    </div>\n</section>",
+          "_anchor": "features1-k",
+          "_isUserblock": true,
+          "_sourceTheme": "mobirise-amp",
+          "_cid": "rdwt2zUP5b",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "background-color": "@bgColor",
+            ".mbr-row": {
+              "margin-left": "0",
+              "margin-right": "0"
+            },
+            ".mbr-section-title": {
+              "padding-bottom": "3rem"
+            },
+            ".google-map": {
+              "height": "25rem",
+              "position": "relative",
+              "width": "100%",
+              "iframe": {
+                "height": "100%",
+                "width": "100%"
+              },
+              "[data-state-details]": {
+                "color": "#6b6763",
+                "font-family": "Montserrat",
+                "height": "1.5em",
+                "margin-top": "-0.75em",
+                "padding-left": "1.25rem",
+                "padding-right": "1.25rem",
+                "position": "absolute",
+                "text-align": "center",
+                "top": "50%",
+                "width": "100%"
+              },
+              "&[data-state]": {
+                "background": "#e9e5dc"
+              },
+              "&[data-state=\"loading\"]": {
+                "[data-state-details]": {
+                  "display": "none"
+                }
+              }
+            },
+            ".map-placeholder": {
+              "display": "none"
+            },
+            "h4": {
+              "padding-top": "5rem",
+              "color": "#767676",
+              "text-align": "center"
+            }
+          },
+          "_name": "map1",
+          "_customHTML": "<section class=\"map\" group=\"Maps\" plugins=\"amp-main,amp-iframe\">\n\n    <mbr-parameters>\n    <!-- Block of parameters for component -->\n\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" value=\"4\" step=\"1\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" value=\"4\" step=\"1\">\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked=\"\">\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\">\n        <input type=\"map\" title=\"Map\" name=\"googleMap\" place-id=\"ChIJK-_8QtZx5kcRCPqPKu7Lybg\" value=\"Sciences Po Paris\">\n    <!-- End block of parameters -->\n    </mbr-parameters>\n    <div class=\"mbr-row mbr-justify-content-center\">\n        <div class=\"map-title mbr-col-sm-12 mbr-col-md-12 align-center\">\n            <h2 class=\"mbr-section-title mbr-fonts-style\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".mbr-section-title, .map-title\">EISS 2019 will take place at Sciences Po CERI, Paris</h2>\n        </div>\n        <div class=\"google-map\" mbr-map=\"googleMap\"></div>\n        <div class=\"map-placeholder\">\n            <h4 placeholder=\"\">Google Map Initialization...</h4>\n        </div>\n    </div>\n</section>",
+          "_anchor": "map1-l",
+          "_isUserblock": true,
+          "_sourceTheme": "mobirise-amp",
+          "_cid": "rdwt3nRwVD",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "background-color": "@bgColor",
+            ".mbr-text": {
+              "margin-bottom": "0",
+              "text-align": "left"
+            },
+            ".mbr-section-title": {
+              "margin": "0"
+            }
+          },
+          "_name": "content2",
+          "_customHTML": "<section class=\"content2 mbr-section article\" plugins=\"amp-main\">\n    \n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"0\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"0\">\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked=\"\">\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\">\n    <!-- End block parameters -->\n    </mbr-parameters> \n\n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-8\">\n                <h3 class=\"mbr-fonts-style mbr-section-title mbr-light\" mbr-if=\"showTitle\" mbr-theme-style=\"display-5\" data-app-selector=\".mbr-section-title\"><div>Key practical information</div></h3>\n                <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\" data-multiline=\"\" mbr-article=\"\"><br>• The registration rate is €30 per participant<br><br>• Travel/accommodation expenses: no funding is provided by the EISS. Applicants are advised to seek funding for travel/accommodation from their home institution.<br><br>• EISS Partner Institutions: as a general rule, by accepting to cover the travel/accommodation of its participants, each university accepts to be included in the list of EISS Partner Institutions (which entails no other cost or contribution from the home university). If a university is not able to cover the travel/accommodation expenses, the EISS also considers applications that are individually-funded or funded by third sources.<br><br>• Conference speakers will send their complete papers to the chair ahead of the conference.<br><br>• Organization of each panel: 4 presentations (10 min. each); 20 min. discussion between chair/discussant and panelists; 30 min. Q&amp;A with audience.</p><p></p><p></p>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_anchor": "content2-m",
+          "_isUserblock": true,
+          "_sourceTheme": "mobirise-amp",
+          "_cid": "rdwt7ymTAb",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "background-color": "@bgColor",
+            ".mbr-text": {
+              "margin-bottom": "0",
+              "text-align": "left"
+            },
+            ".mbr-section-title": {
+              "margin": "0"
+            }
+          },
+          "_name": "content2",
+          "_customHTML": "<section class=\"content2 mbr-section article\" plugins=\"amp-main\">\n    \n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"0\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"0\">\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked=\"\">\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\">\n    <!-- End block parameters -->\n    </mbr-parameters> \n\n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-8\">\n                <h3 class=\"mbr-fonts-style mbr-section-title mbr-light\" mbr-if=\"showTitle\" mbr-theme-style=\"display-5\" data-app-selector=\".mbr-section-title\"><div>Open and closed panels</div></h3>\n                <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\" data-multiline=\"\" mbr-article=\"\">The EISS Conference features both ‘closed’ and ‘open’ panels.<br><b>‘Closed’ panels </b>focus on themes decided by the EISS (cf. the program below). Participants should send an abstract (300 words max) to the panel’s chair (cf. the chair’s email addresses and the description of the different panels below). Please make sure to send the paper abstracts directly to the panel’s chair, not to the EISS. Each panel includes four papers and the chair serves as discussant.<br><b>‘Open’ panels</b>: participants propose a panel’s title, a chair, and four speakers. The chair serves as discussant. The proposals should include: (1) an abstract of the panel summarizing its academic goals and originality (300 words max); (2) the name and affiliation of the participants; (3) an abstract for each presentation (300 words max). The ‘open panels’ are meant to broaden the range of existing themes in the EISS and to provide greater latitude to the participants to contribute to the definition of the EISS program. Therefore, please consult the list of closed panels to avoid duplication. Please send the ‘open’ panel proposals to eissnetwork@gmail.com.<br><br><b>Selection criteria</b> for Closed and Open panels: (1) quality and originality of the panel/paper proposal; (2) multidisciplinarity and/or interdisciplinarity (history, political science, sociology, etc.). The panels should focus on specific themes that can be addressed from a variety of disciplines. N.B. Each panel must also include scholars from disciplines other than political science; (3) represent different European countries/regions (western, northern, eastern, central, southern Europe), as per participants’ affiliation; (4) and allow for gender diversity.<br><br><b>Deadlines</b><br><br>• <b>15 January 2019</b>: deadline for sending paper proposals to the panel chairs (cf. emails below) and panel proposals to the EISS (eissnetwork@gmail.com).<br><br>•<b> 15 February 2019</b>: decision on open panels by EISS; and on papers for closed panels by chairs<br><br>• <b>Early March 2019</b>: final program sent to participants<br><br>• <b>10 June 2019</b>: deadline for sending the full paper to the panel’s chair<br><br></p><p></p><p></p>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_anchor": "content2-n",
+          "_isUserblock": true,
+          "_sourceTheme": "mobirise-amp",
+          "_cid": "rdwtbFEUkV",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "background-color": "@bgColor",
+            ".mbr-text": {
+              "margin-bottom": "0",
+              "text-align": "left"
+            },
+            ".mbr-section-title": {
+              "margin": "0"
+            }
+          },
+          "_name": "content2",
+          "_customHTML": "<section class=\"content2 mbr-section article\" plugins=\"amp-main\">\n    \n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"0\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"0\">\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked>\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\">\n    <!-- End block parameters -->\n    </mbr-parameters> \n\n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-8\">\n                <h3 class=\"mbr-fonts-style mbr-section-title mbr-light\" mbr-if=\"showTitle\" mbr-theme-style=\"display-5\" data-app-selector=\".mbr-section-title\"><div>Our closed panels for 2019</div></h3>\n                <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\" data-multiline mbr-article><b>Terrorism and Counter-Terrorism</b><br>Chair: Peter Neumann, King’s College London<br>peter.neumann@kcl.ac.uk<br><br>The topics of terrorism and counter-terrorism have in recent years received a huge amount of scholarly attention. The increase in scholarship can be seen in a positive light, we have gained knowledge and insight into the causes, processes and activities and termination of terrorist struggles. The scholarly output does, however, not always meet the highest scholarly standard, for which the field has rightly been criticized. The speed with which some material is published and the sometimes flimsy scientific underpinnings have been very worrisome aspects. The temptation to write treatises that summarize or integrate existing knowledge, rather than produce innovative and ground-breaking contributions, has been large. Currently, we see challenges both in regard to the consistency of the scholarly base and the content of contributions. First, how can we create a more solid and consistent base of scholarship? There is a large challenge to reduce fickleness of potential funders, who when terrorist threats rise make large funds available and when it subsides, lose interest. Second, the field is plagued by fashions. There is a consistent and hard to change lack of appreciation of (counter)-terrorism’s history. Furthermore, scholarship has devoted much time and effort in fashionable but often not very productive lines of research (e.g. the root causes discussion, radicalization and de-radicalization and WMD and terrorism). The establishment of critical terrorism studies has created a welcome theoretical diversity. However, instead of exchange, the response has generally been entrenchment. This panel is explicitly open to diverse disciplines, such as history, political science or sociology. We invite contributions for this panel which aim to discuss and debate any, or possibly all of these challenges. We hope to further solidify, from a multidisciplinary perspective, the foundations of our scholarship and work towards productive joint research.<br><br><b>Military Technology</b><br>Chair: Moritz Weiss, Ludwig Maximilian University of Munich<br>moritz.weiss@gsi.lmu.de<br><br>This panel addresses the interaction between global security and its underlying technologies. On the one hand, traditional military capabilities, such as aircraft carriers, land systems or missiles, still predominate strategic thinking about this interrelationship. On the other hand, recent technological advances in diverse domains ranging from drones and robotics to cyber malware and artificial intelligence are not only transforming the use of force, but have also empowered a novel set of actors with an influential role in global security. What is ultimately at stake are the causes and consequences of military innovation. Hence this panel encourages submissions that conceptualize military technologies either as explanandum or as explanans. Preference will be given to those papers that link a systematic understanding of ‘old’ and/or ‘new’ technologies with fundamental questions in International Relations, such as cooperation and conflict, balance of power and hegemony, or continuity and change. This call is explicitly open to diverse disciplines (political science, sociology, history) and welcomes different theoretical orientations, since the panel primarily aims to encourage dialogue between scholars with a substantive interest in the interaction between politics and technologies.<br><br><b>Private Actors, Armed Conflict and the State</b><br>Chair: Sibylle Scheipers, University of St Andrews<br>ss203@st-andrews.ac.uk<br><br>In today’s political, moral, legal and strategic debates private actors in war are commonly seen as a relic from the pre-Westphalian past that has increasingly returned after the end of the Cold War. A proliferation of private actors such as mercenaries and private security companies, but also insurgents, terrorists, local militias and rebels has been identified as the main source of the state’s loss of the monopoly over the use of armed force. The panel aims to move beyond this simple juxtaposition of private actors and the state and to explore the complex links and interactions that exist between both spheres. It intends to address the following questions: Why do states choose to collaborate with and support private actors in armed conflict? How have public-private partnerships in armed conflict evolved historically, in particular between the seventeenth and the twentieth century, in other words, during a period that is seen as the heyday of the state’s monopoly over the use of armed force? How do private actors’ and states’ strategic agendas align, and what happens if they don’t? What moral and legal challenges do public-private partnerships in the realm of armed conflict hold? How do they impact on democratic accountability?<br><br><b>Defense Cooperation and Military Assistance</b><br>Chair: Adrian Hyde-Price, University of Gothenburg<br>Adrian.hyde-price@gu.se<br><br>For nearly all states, various forms of defense cooperation and military assistance are central to their national security policies. This can take the form of bilateral and multilateral arrangements, or more structured and institutional cooperation through organizations such as the African Union, the EU, NATO or the Association of Southeast Asian Nations. In recent years, there has been a proliferation of various forms of defense cooperation or military assistance, often on a regional or sub-regional level. It can also take a variety of forms, from joint military training and exercises to operational planning, procurement and defense-industrial research. This panel invites papers on defense cooperation and military assistance in a broad and inclusive sense, from a variety of disciplines (history, political science, sociology, etc.) and of analytical, theoretical and empirical perspectives. Papers may cover responses to traditional security threats such as Russia’s military assertiveness or China’s rise, or more diffuse risks and challenges such as terrorism, proliferation, migration, human smuggling and the impact of global climate change. Papers may also cover the creation and evolution of defense institutions and cooperation arrangements whether in bi-, tri-, or ‘minilateral’ ways.<br><br><b>Military Interventions</b><br>Chair: Chiara Ruffa, Uppsala University<br>chiara.ruffa@fhs.se<br><br>With the winding down of large scale boots-on-the-ground multinational missions in Afghanistan and Iraq, it has become apparent in both policy and academic circles that large-scale military interventions are but one option among others. Many other kinds of military interventions have been and are being launched and implemented, ranging from military assistance, to more ‘agile’ counterinsurgency, drone fighting, peacekeeping, and aerial interventions, among others. Recent work has investigated the politics of forming multinational coalitions for launching military interventions. Other contributions have explored the politics of implementation, looking at caveats and actual behavior of troops on the ground. A third strand has explored the implication of military interventions for the civil-military relations of the home country when those soldiers return home. Notwithstanding recent advances, within the field of security studies, there is little clarity about the conceptual, theoretical and empirical underpinnings of different kinds of military interventions with important implications for both scholarship and policy. This panel welcomes contributions on different types of military interventions and potential comparisons. Contributions are welcome from a variety of disciplines (history, political science, sociology, etc.) and may shed light on conceptual, theoretical and empirical aspects of the ongoing debate on military interventions within the security studies debate in dialogue with other neighboring fields such as peace and conflict research, operation research and military sociology.<br><br><b>Arms Procurement and Transfers</b><br>Chair: Jocelyn Mawdsley, Newcastle University<br>jocelyn.mawdsley@ncl.ac.uk<br><br>The parameters of the global arms trade have changed in the post-Cold War era. Defense firms, especially in the West, have internationalized and some have left or reduced their exposure to the defense sector. There are also new entrants and, as Bitzinger (2010) argues, new arms producing states continue to pursue techno-nationalist policies. These changes have left some existing firms, notably in the overcrowded European market, heavily reliant on exports, which commentators increasingly find ethically problematic. This panel will seek to critically interrogate these developments and their consequences for an environment already trying to deal with disruptive technologies, events and a worsening arms control situation. For this panel, we invite papers that address any of these themes, or related issues. Contributions are welcome from all theoretical approaches and disciplines, and papers that focus on national or multilateral dimensions of arms procurement, transfers, and defense and security industries.<br><br><b>WMD Non-Proliferation and Arms Control</b><br>Chair: Eliza Gheorghe, Bilkent University<br>eliza.gheorghe@bilkent.edu.tr<br><br>This panel serves as a platform for presenting and discussing research that adds theoretical depth and empirical breadth to current understandings of the spread of Weapons of Mass Destruction (WMD). The central themes to be explored include: 1. the causes and phases of WMD proliferation; 2. nuclear strategy; 3. nuclear stability and arms control. To develop a deeper appreciation of the challenges posed by WMD, we encourage participants to answer the following questions: Under what conditions are we likely to witness a fourth proliferation wave? Which countries would be part of it? How can nuclear powers, such as the United States, China or Russia, deal with allies bent on securing their own nuclear deterrents? What changes should the nuclear powers make to their nuclear postures and force structures to enhance and strengthen deterrence? How is a new cold war between the US and Russia likely to play out in the nuclear realm?  What advantages, if any, does nuclear superiority offer in the event of a crisis or outbreak of war? What are the origins and likely consequences of the turn in American and Russian nuclear strategy towards considering low-yield atomic weapons for war-fighting? How does lowering the threshold for nuclear use and the emphasis on cross-domain deterrence affect the strategic calculations of rivals in times of crisis? The panel seeks to bring together scholars and experts across disciplinary boundaries (e.g. political science, security studies, history, etc.) to discuss these topics, and so, create the space for academic cross-pollination and policy-relevant work.<br><br><b>Intelligence</b><br>Chair: Claudia Hillebrand, Cardiff University<br>HillebrandC@cardiff.ac.uk<br><br>Intelligence is deeply embedded within national and transnational security policies and practices. The panel’s aim is to understand the various roles intelligence plays at the strategic and tactical level. How do intelligence actors reduce uncertainty and provide a knowledge advantage? And what are the problems and pitfalls? Many intelligence practices challenge legal and ethical boundaries in democratic societies. What kind of mechanisms have been found to negotiate and implement limits of intelligence? We are particularly keen to bring together panellists from various disciplinary backgrounds and with diverse theoretical approaches and methodologies. By comparing and contrasting systems, events and practices from a range of countries, the panel aims to provide a rich picture of the current status quo of Intelligence Studies.</p><p></p><p></p>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_anchor": "content2-z",
+          "_isUserblock": true,
+          "_sourceTheme": "mobirise-amp",
+          "_cid": "rdseJhA2bT",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
+            },
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            ".mbr-title": {
+              "padding-bottom": "1rem"
+            },
+            ".mbr-section-btn": {
+              "padding-top": "1.5rem"
+            }
+          },
+          "_name": "content1",
+          "_customHTML": "<section class=\"mbr-section content1\" group=\"Article\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"4\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"0\">\n\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked=\"\">\n        <input type=\"checkbox\" title=\"Show Subtitle\" name=\"showSubtitle\">\n        <input type=\"checkbox\" title=\"Show Buttons\" name=\"showButtons\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"@PROJECT_PATH@/assets/images/background3.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected=\"\">\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"mbr-container\">\n        <h2 mbr-if=\"showTitle\" class=\"mbr-title align-center mbr-fonts-style mbr-bold\" mbr-theme-style=\"display-2\" data-app-selector=\".mbr-title\"><span style=\"font-weight: normal;\">They support EISS 2019</span></h2>\n        <h3 mbr-if=\"showSubtitle\" data-app-selector=\".mbr-section-subtitle\" class=\"mbr-section-subtitle align-center mbr-light mbr-fonts-style\" mbr-theme-style=\"display-5\">\n            <i>Shape your future web project with sharp design and refine coded functions.</i>\n        </h3>\n        <div class=\"mbr-section-btn align-center\" mbr-if=\"showButtons\" mbr-buttons=\"\" mbr-theme-style=\"display-4\" data-toolbar=\"-mbrBtnAdd,-mbrBtnMove\">\n            <a class=\"btn btn-primary\" href=\"https://mobirise.com\">LEARN MORE</a>\n            <a class=\"btn btn-black-outline\" href=\"https://mobirise.com\">LIVE DEMO</a>\n        </div>\n    </div>\n</section>",
+          "_anchor": "content1-p",
+          "_isUserblock": true,
+          "_sourceTheme": "mobirise-amp",
+          "_cid": "rdwtjlhyvD",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
+            },
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            ".card": {
+              "margin-bottom": "20px",
+              "position": "relative",
+              "display": "flex",
+              "-ms-flex-direction": "column",
+              "flex-direction": "column",
+              "min-width": "0",
+              "word-wrap": "break-word",
+              "background-clip": "border-box",
+              "border-radius": "0",
+              "width": "100%",
+              "min-height": "1px",
+              ".btn": {
+                "margin": ".4rem 4px !important"
+              }
+            },
+            ".card-title": {
+              "margin": "0",
+              "& when not (@showText)": {
+                "padding-bottom": "10px"
+              }
+            },
+            ".mbr-text": {
+              "color": "#232323"
+            },
+            ".card-box": {
+              "padding-top": "2rem"
+            },
+            "amp-img": {
+              "width": "100%"
+            }
+          },
+          "_name": "features2",
+          "_customHTML": "<section class=\"features2 mbr-section\" group=\"Features\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"9\" step=\"1\" value=\"4\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"9\" step=\"1\" value=\"0\">\n\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\">\n        <input type=\"checkbox\" title=\"Show Text\" name=\"showText\">\n        <input type=\"checkbox\" title=\"Show Buttons\" name=\"showButtons\">\n        <!-- <input type=\"checkbox\" title=\"Show Lines\" name=\"showLines\" checked> -->\n        <!-- <input type=\"color\" title=\"Lines Color\" name=\"linesColor\" value=\"#efefef\" condition=\"showLines\"> -->\n        <select title=\"Cards\" name=\"cardsAmount\">\n            <option value=\"1\">1</option>\n            <option value=\"2\" selected=\"\">2</option>\n            <option value=\"3\">3</option>\n            <option value=\"4\">4</option>\n        </select>\n\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"@PROJECT_PATH@/assets/images/background1.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected=\"\">\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n    \n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 1}\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/screenshot-2018-10-25-at-16.41.13-510x286.png\" layout=\"responsive\" width=\"540.3146853146853\" height=\"303\" alt=\"Mobirise\">\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/screenshot-2018-10-25-at-16.41.13-510x286.png\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".card-title\"></h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">The French Association for the Study of War and Strategy </p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\"><a class=\"btn btn-sm btn-primary-outline\" href=\"https://www.cybersecurity.ox.ac.uk/education/cdt\" data-app-placeholder=\"Type Text\" target=\"_blank\">\n                                LEARN MORE\n                            </a></div>\n                    </div>\n                </div>\n            </div>\n            \n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 2}\" mbr-if=\"cardsAmount > 1\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/sciencespo-appellations-ceri-rgb-1-369x159.png\" layout=\"responsive\" height=\"215\" width=\"540.304347826087\" alt=\"Mobirise\">\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/sciencespo-appellations-ceri-rgb-1-369x159.png\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Wolfson College</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">The Centre for International Research at Sciences Po Paris</p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\"><a class=\"btn btn-sm btn-primary-outline\" href=\"https://www.wolfson.ox.ac.uk/node/2268\" data-app-placeholder=\"Type Text\" target=\"_blank\">\n                                LEARN MORE\n                            </a></div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 3}\" mbr-if=\"cardsAmount > 2\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/sponsor-bwhighres-1-484x220.jpg\" layout=\"responsive\" height=\"91\" width=\"255.54069767441862\" alt=\"Mobirise\">\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/sponsor-bwhighres-1-484x220.jpg\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            The UK EPSC</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">\n                            The Engineering and Physical Sciences Research Council is dedicated to funding research and training in its broad domain of competence. It is part of UK Research and Innovation.&nbsp;<br><br></p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\"><a class=\"btn btn-sm btn-primary-outline\" href=\"https://epsrc.ukri.org/about/\" data-app-placeholder=\"Type Text\" target=\"_blank\">\n                                LEARN MORE\n                            </a></div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 4}\" mbr-if=\"cardsAmount > 3\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/screen-shot-2018-08-14-at-15.33.30-510x209.png\" layout=\"responsive\" height=\"93\" width=\"254.49999999999997\" alt=\"Mobirise\">\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/screen-shot-2018-08-14-at-15.33.30-510x209.png\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            The Rotary Foundation</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">\n                            The Foundation acts as the charity of Rotary International and is dedicated to the betterment of the human condition through peace, health, education and development.<br><br><br></p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\"><a class=\"btn btn-sm btn-primary-outline\" href=\"https://www.rotary.org/en/about-rotary/rotary-foundation\" data-app-placeholder=\"Type Text\" target=\"_blank\">\n                                LEARN MORE\n                            </a></div>\n                    </div>\n                </div>\n            </div>\n            \n        </div>\n    </div>\n</section>",
+          "_anchor": "features2-o",
+          "_isUserblock": true,
+          "_sourceTheme": "mobirise-amp",
+          "_cid": "rdwthvekex",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
+            },
+            "p": {
+              "margin": "0",
+              "color": "#ffffff"
+            },
+            ".mbr-col-sm-12, .mbr-text": {
+              "color": "#000000"
+            }
+          },
+          "_name": "footer1",
+          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2019 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners<br><br>Last update: 27/12/2019</p>\n        </div>\n    </div>\n</section>",
+          "_cid": "r0ClIUHuFw",
+          "_anchor": "footer1-y",
+          "_protectedParams": [],
+          "_global": true,
+          "_once": "footer",
+          "_params": {}
+        }
+      ]
+    },
+    "board.html": {
+      "settings": {
+        "title": "EISS - The Board",
+        "order": 3
+      },
+      "components": [
+        {
+          "_styles": {
+            "amp-sidebar": {
+              "min-width": "260px!important",
+              "z-index": "1050!important",
+              "background-color": "@menuBgColor"
+            },
+            "amp-sidebar.open:after": {
+              "content": "''",
+              "position": "absolute",
+              "top": "0",
+              "left": "0",
+              "bottom": "0",
+              "right": "0",
+              "background-color": "red"
+            },
+            ".open": {
+              "-webkit-transform": "translateX(0%) !important",
+              "transform": "translateX(0%) !important",
+              "display": "block!important"
+            },
+            ".builder-sidebar": {
+              "background-color": "@menuBgColor",
+              "position": "relative",
+              "min-height": "100vh",
+              "z-index": "1030",
+              "padding": "1rem 2rem",
+              "max-width": "20rem"
+            },
+            ".headerbar": {
+              "display": "flex",
+              "-webkit-flex-direction": "column",
+              "flex-direction": "column",
+              "-webkit-justify-content": "center",
+              "justify-content": "center",
+              "padding": ".5rem 1rem",
+              "min-height": "70px",
+              "-webkit-align-items": "center",
+              "align-items": "center",
+              "background": "@menuBgColor",
+              "&.sticky-nav": {
+                "position": "fixed",
+                "z-index": "1000",
+                "width": "100%"
+              }
+            },
+            "button.sticky-but": {
+              "position": "fixed"
+            },
+            ".brand": {
+              "display": "flex",
+              "-webkit-align-items": "center",
+              "align-items": "center",
+              "-webkit-align-self": "flex-start",
+              "align-self": "flex-start",
+              "padding-right": "30px",
+              "p": {
+                "margin": "0",
+                "padding": "0"
+              }
+            },
+            ".brand-name": {
+              "color": "#197bc6"
+            },
+            ".sidebar": {
+              "padding": "1rem 0",
+              "margin": "0"
+            },
+            ".sidebar > li": {
+              "list-style": "none",
+              "display": "flex",
+              "-webkit-flex-direction": "column",
+              "flex-direction": "column"
+            },
+            ".sidebar a": {
+              "display": "block",
+              "text-decoration": "none",
+              "margin-bottom": "10px"
+            },
+            ".close-sidebar": {
+              "width": "30px",
+              "height": "30px",
+              "position": "relative",
+              "cursor": "pointer",
+              "background-color": "transparent",
+              "border": "none",
+              "&:focus": {
+                "outline": "2px auto @primaryColor"
+              },
+              "span": {
+                "position": "absolute",
+                "left": "0",
+                "top": "14px",
+                "width": "30px",
+                "height": "2px",
+                "border-right": "5px",
+                "background-color": "@hamburgerColor",
+                "&:nth-child(1)": {
+                  "-webkit-transform": "rotate(45deg)",
+                  "transform": "rotate(45deg)"
+                },
+                "&:nth-child(2)": {
+                  "-webkit-transform": "rotate(-45deg)",
+                  "transform": "rotate(-45deg)"
+                }
+              }
+            },
+            "@media (min-width: 992px)": {
+              "& .brand-name": {
+                "min-width": "8rem"
+              },
+              "& .builder-sidebar": {
+                "margin-left": "auto",
+                ".sidebar li": {
+                  "-webkit-flex-direction": "row",
+                  "flex-direction": "row",
+                  "-webkit-flex-wrap": "wrap",
+                  "flex-wrap": "wrap",
+                  "a": {
+                    "padding": ".5rem",
+                    "margin": "0"
+                  }
+                }
+              },
+              "& .builder-overlay": {
+                "display": "none !important"
+              }
+            },
+            ".hamburger": {
+              "position": "absolute",
+              "top": "25px",
+              "right": "20px",
+              "margin-left": "auto",
+              "width": "30px",
+              "height": "20px",
+              "background": "none",
+              "border": "none",
+              "cursor": "pointer",
+              "z-index": "1000",
+              "& when (@showLogo)": {
+                "@media (min-width: 768px)": {
+                  "top": "calc(0.5rem ~\"+\" @logoHeight ~\"*\" 0.5px ~\"-\" 10px)"
+                }
+              },
+              "&:focus": {
+                "outline": "none"
+              },
+              "span": {
+                "position": "absolute",
+                "right": "0",
+                "width": "30px",
+                "height": "2px",
+                "border-right": "5px",
+                "background-color": "@hamburgerColor",
+                "&:nth-child(1)": {
+                  "top": "0",
+                  "transition": "all .2s"
+                },
+                "&:nth-child(2)": {
+                  "top": "8px",
+                  "transition": "all .15s"
+                },
+                "&:nth-child(3)": {
+                  "top": "8px",
+                  "transition": "all .15s"
+                },
+                "&:nth-child(4)": {
+                  "top": "16px",
+                  "transition": "all .2s"
+                }
+              }
+            },
+            "amp-img": {
+              "margin-right": "1rem",
+              "display": "flex",
+              "-webkit-align-items": "center",
+              "align-items": "center",
+              "height": "~\"@{logoHeight}px\"",
+              "width": "~\"@{logoWidth}px\"",
+              "@media (max-width: 768px)": {
+                "max-height": "55px",
+                "max-width": "55px"
+              }
+            }
+          },
+          "_name": "menu1",
+          "_customHTML": "<section class=\"menu\" group=\"Menu\" plugins=\"amp-main,amp-sidebar\" global=\"\" once=\"menu\" always-top=\"\" position-absolute=\"\">\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"checkbox\" title=\"Show Logo\" name=\"showLogo\" checked=\"\">\n        <input type=\"range\" title=\"Logo Height\" inline=\"\" name=\"logoHeight\" min=\"55\" max=\"120\" value=\"55\" step=\"1\">\n        <input type=\"range\" title=\"Logo Width\" inline=\"\" name=\"logoWidth\" min=\"55\" max=\"120\" value=\"55\" step=\"1\">\n\n        <input type=\"checkbox\" title=\"Show Brand Name\" name=\"showBrand\" checked=\"\">\n        <input type=\"checkbox\" title=\"Show Links\" name=\"showLinks\" checked=\"\">\n        <input type=\"checkbox\" title=\"Show Button(s)\" name=\"showButtons\" checked=\"\">\n        <input type=\"checkbox\" title=\"Sticky\" name=\"sticky\" checked=\"\">\n        <select title=\"Sidebar Side\" name=\"sidebarSide\">\n            <option value=\"left\">Left</option>\n            <option value=\"right\" selected=\"\">Right</option>\n        </select>\n        <input type=\"color\" title=\"Background Color\" name=\"menuBgColor\" value=\"#ffffff\">\n        <input type=\"color\" title=\"Hamburger Color\" name=\"hamburgerColor\" value=\"#197bc6\">\n    <!-- End block parameters -->\n    </mbr-parameters>\n    <nav class=\"headerbar\" mbr-class=\"{'sticky-nav':sticky}\">\n      <div class=\"brand\">\n          <span mbr-if=\"showLogo\" class=\"brand-logo\">\n              <amp-img src=\"@THEME_PATH@/components/_images/logo1.png\" layout=\"responsive\" width=\"55.87765957446808\" height=\"55\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                  <div placeholder=\"\" class=\"placeholder\"></div>\n                  <img class=\"mbr-temp\" src=\"@THEME_PATH@/components/_images/logo1.png\" alt=\"Mobirise\">\n              </amp-img>\n          </span>\n          <p mbr-text=\"\" mbr-theme-style=\"display-2\" mbr-if=\"showBrand\" class=\"brand-name mbr-fonts-style\" data-app-selector=\".brand-name\">EISS</p>\n      </div>\n    </nav>\n    <amp-sidebar id=\"sidebar\" layout=\"nodisplay\" side=\"{{sidebarSide}}\">\n        <div class=\"builder-sidebar\" id=\"builder-sidebar\">\n            <button on=\"tap:sidebar.close\" class=\"close-sidebar\">\n                <span></span>\n                <span></span>\n            </button>\n\n            <div mbr-menu=\"\" class=\"sidebar mbr-white\" mbr-theme-style=\"display-7\" mbr-if=\"showLinks\"><a class=\"text-primary\" href=\"index.html\" data-app-placeholder=\"Type Text\">Homepage</a> <a class=\"text-primary\" href=\"initiative.html\" data-app-placeholder=\"Type Text\">The Initiative</a> <a class=\"text-primary\" href=\"2019.html\" data-app-placeholder=\"Type Text\">The 2019 Conference</a>\n              \n              <a class=\"text-primary\" href=\"board.html\" data-app-placeholder=\"Type Text\">The Board</a></div>\n            \n            <div mbr-if=\"showButtons\" mbr-buttons=\"\" mbr-theme-style=\"display-4\" class=\"navbar-buttons mbr-section-btn align-center\"><a class=\"btn btn-sm btn-primary\" href=\"mailto:EISSnetwork@gmail.com\" data-app-placeholder=\"Type Text\"><span class=\"mbri-paper-plane mbr-iconfont mbr-iconfont-btn\"></span>Contact Us</a></div>\n        </div>\n    </amp-sidebar>\n    <button on=\"tap:sidebar.toggle\" class=\"ampstart-btn hamburger\" mbr-class=\"{'sticky-but':sticky}\">\n        <span></span>\n        <span></span>\n        <span></span>\n        <span></span>\n    </button>\n</section>",
+          "_anchor": "menu1-m",
+          "_isUserblock": true,
+          "_sourceTheme": "mobirise-amp",
+          "_cid": "rdsklMjBGz",
+          "_protectedParams": [],
+          "_global": true,
+          "_once": "menu",
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
+            },
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            ".card": {
+              "margin-bottom": "20px",
+              "position": "relative",
+              "display": "flex",
+              "-ms-flex-direction": "column",
+              "-webkit-flex-direction": "column",
+              "flex-direction": "column",
+              "min-width": "0",
+              "word-wrap": "break-word",
+              "background-clip": "border-box",
+              "border-radius": "0",
+              "width": "100%",
+              "min-height": "1px",
+              ".btn": {
+                "margin": ".4rem 4px !important"
+              }
+            },
+            ".card-title": {
+              "margin": "0",
+              "& when not (@showText)": {
+                "padding-bottom": "10px"
+              }
+            },
+            ".mbr-text": {
+              "color": "#232323"
+            },
+            ".card-box": {
+              "padding-top": "2rem"
+            },
+            "amp-img": {
+              "width": "100%"
+            }
+          },
+          "_name": "features2",
+          "_customHTML": "<section class=\"features2 mbr-section\" group=\"Features\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"9\" step=\"1\" value=\"2\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"9\" step=\"1\" value=\"2\">\n\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked=\"\">\n        <input type=\"checkbox\" title=\"Show Text\" name=\"showText\" checked=\"\">\n        <input type=\"checkbox\" title=\"Show Buttons\" name=\"showButtons\">\n        <!-- <input type=\"checkbox\" title=\"Show Lines\" name=\"showLines\" checked> -->\n        <!-- <input type=\"color\" title=\"Lines Color\" name=\"linesColor\" value=\"#efefef\" condition=\"showLines\"> -->\n        <select title=\"Cards\" name=\"cardsAmount\">\n            <option value=\"1\">1</option>\n            <option value=\"2\">2</option>\n            <option value=\"3\">3</option>\n            <option value=\"4\" selected=\"\">4</option>\n        </select>\n\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background1.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected=\"\">\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n    \n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 1}\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/meijer-140x175.jpg\" layout=\"responsive\" width=\"255.20000000000002\" height=\"319\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/meijer-140x175.jpg\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Hugo MEIJER</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">\n                            Hugo Meijer is Marie Skłodowska-Curie Fellow at the European University Institute (EUI). Starting in January 2019, he will be CNRS Research Fellow at the Center for International Studies at Sciences Po, Paris. He is also the founding director of The European Initiative on Security Studies (EISS), a network of scholars from over eighty universities that share the goal of consolidating security studies in Europe. Previously, he was Lecturer in Defence Studies at King’s College London and a Researcher at the Institute for Strategic Research (IRSEM, Paris). Recent publications: The Handbook of European Defence Policies and Armed Forces (OUP, 2018), co-edited with Marco Wyss; Trading with the Enemy: The Making of US Export Control Policy toward the People’s Republic of China (OUP, 2016); Origins and Evolution of the US Rebalance toward Asia: Diplomatic, Military, and Economic Dimensions  (ed.) (Palgrave, 2015). He has also published in such journals as Cooperation and Conflict, Journal of Strategic Studies, European Journal of International Security and the Journal of Cold War Studies.\n                        </p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\">\n                            <a class=\"btn btn-sm btn-secondary\" href=\"https://mobirise.co\">\n                                LEARN MORE\n                            </a>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            \n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 2}\" mbr-if=\"cardsAmount > 1\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/duyvesteyn-317x531.jpg\" layout=\"responsive\" height=\"427\" width=\"254.91337099811676\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/duyvesteyn-317x531.jpg\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Isabelle DUYVESTEYN</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">\n                            Isabelle Duyvesteyn is Professor of International Studies/Global History at the Institute of History at Leiden University. She completed her PhD at the Department of War Studies at King’s College in London. Previously she has worked at the Royal Military Academy in the Netherlands, the Netherlands Institute for International Relations and the Department of History of International Relations at Utrecht University. Between 2012 and 2017 she held the special chair in Strategic Studies at the Institute of Political Science at Leiden University. She is a member of the Netherlands Advisory Council for International Affairs which advises the Netherlands government on issues of peace and security, a member of the Scientific Advisory Board of the Netherlands Defence Academy and a member of several book and journal editorial boards, notably the Journal of Strategic Studies and Small Wars and Insurgencies.\n                        </p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\">\n                            <a class=\"btn btn-sm btn-secondary\" href=\"https://mobirise.co\">\n                                LEARN MORE\n                            </a>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 3}\" mbr-if=\"cardsAmount > 2\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/gasbarri-307x462.jpg\" layout=\"responsive\" height=\"384\" width=\"255.16883116883116\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/gasbarri-307x462.jpg\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Flavia GASBARRI</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">\n                            Flavia Gasbarri holds a PhD in War Studies from King’s College London, where she is Teaching Fellow in International History and co-Chair of the KCL Africa Research Group. In April-September 2012 she was Junior Visiting Scholar at the Woodrow Wilson Center in Washington DC. Her research interests and publications focus on the history of the Cold War in the Third World, US-Africa relations and post-Cold War US foreign policy. She has also researched and published on US policy in the Rwandan genocide and in the Great Lakes region.\n                        </p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\">\n                            <a class=\"btn btn-sm btn-secondary\" href=\"https://mobirise.co\">\n                                LEARN MORE\n                            </a>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 4}\" mbr-if=\"cardsAmount > 3\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/gilli-302x434.jpg\" layout=\"responsive\" height=\"366\" width=\"254.68202764976957\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/gilli-302x434.jpg\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Mauro GILLI</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">\n                            Mauro Gilli is a Senior Researcher in Military Technology and International Security at the Center for Security Studies of ETH-Zurich (Swiss Federal Institute of Technology, Zurich). He has a B.A. in Political Science from the University of Turin, an M.A. in International Relations and International Economics from Johns Hopkins University’s Paul H. Nitze School of Advanced International Studies, and a Ph.D. in Political Science from Northwestern University. In 2015-2016, he was a Post-Doctoral Fellow at the John Sloan Dickey Center for International Understanding of Dartmouth College. His research has been published or is forthcoming in International Security and Security Studies.\n                        </p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\">\n                            <a class=\"btn btn-sm btn-secondary\" href=\"https://mobirise.co\">\n                                LEARN MORE\n                            </a>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            \n        </div>\n    </div>\n</section>",
+          "_cid": "rdscBKQmsn",
+          "_anchor": "features2-q",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
+            },
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            ".card": {
+              "margin-bottom": "20px",
+              "position": "relative",
+              "display": "flex",
+              "-ms-flex-direction": "column",
+              "-webkit-flex-direction": "column",
+              "flex-direction": "column",
+              "min-width": "0",
+              "word-wrap": "break-word",
+              "background-clip": "border-box",
+              "border-radius": "0",
+              "width": "100%",
+              "min-height": "1px",
+              ".btn": {
+                "margin": ".4rem 4px !important"
+              }
+            },
+            ".card-title": {
+              "margin": "0",
+              "& when not (@showText)": {
+                "padding-bottom": "10px"
+              }
+            },
+            ".mbr-text": {
+              "color": "#232323"
+            },
+            ".card-box": {
+              "padding-top": "2rem"
+            },
+            "amp-img": {
+              "width": "100%"
+            }
+          },
+          "_name": "features2",
+          "_customHTML": "<section class=\"features2 mbr-section\" group=\"Features\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"9\" step=\"1\" value=\"2\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"9\" step=\"1\" value=\"2\">\n\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked=\"\">\n        <input type=\"checkbox\" title=\"Show Text\" name=\"showText\" checked=\"\">\n        <input type=\"checkbox\" title=\"Show Buttons\" name=\"showButtons\">\n        <!-- <input type=\"checkbox\" title=\"Show Lines\" name=\"showLines\" checked> -->\n        <!-- <input type=\"color\" title=\"Lines Color\" name=\"linesColor\" value=\"#efefef\" condition=\"showLines\"> -->\n        <select title=\"Cards\" name=\"cardsAmount\">\n            <option value=\"1\">1</option>\n            <option value=\"2\">2</option>\n            <option value=\"3\">3</option>\n            <option value=\"4\" selected=\"\">4</option>\n        </select>\n\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background1.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected=\"\">\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n    \n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 1}\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/henke-marina-347x521.jpg\" layout=\"responsive\" width=\"255.08829174664106\" height=\"383\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/henke-marina-347x521.jpg\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Marina HENKE</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">\n                            Marina E. Henke is an Assistant Professor of International Relations and the Co-Chair of the War &amp; Society Working Group at Northwestern University in Chicago (USA). Marina holds a Ph.D. in Politics and Public Policy from Princeton University, a Double-MSc in Development Studies and International Political Economy from Sciences Po Paris and the London School of Economics, and a B.A. (summa cum laude) in Economics and Politics from Sciences Po Paris. Her research focuses on military interventions, peacekeeping and European Grand Strategy. Her academic work has been published in Security Studies, International Studies Quarterly, International Peacekeeping, Providing for Peacekeeping, and Conflict Management and Peace Science among others. Her book Constructing Allied Cooperation: Diplomacy, Payments and Power in Multilateral Military Coalition Building is forthcoming with Cornell University Press.\n                        </p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\">\n                            <a class=\"btn btn-sm btn-secondary\" href=\"https://mobirise.co\">\n                                LEARN MORE\n                            </a>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            \n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 2}\" mbr-if=\"cardsAmount > 1\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/heuser-658x1024.jpg\" layout=\"responsive\" height=\"397\" width=\"255.103515625\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/heuser-658x1024.jpg\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Beatrice HEUSER</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">\n                            Beatrice Heuser holds the Chair in International Relations at the University of Glasgow.  She was previously at the Dept. of War Studies, King’s College London, then the University of Reading; she has also taught at French and German universities (most recently Sciences Po Paris).  1997-1998 worked at NATO HQ in Brussels.  She holds degrees from the Universities of London (BA, MA), Oxford (DPhil), Marburg (Habilitation). Her publications include The Evolution of Strategy (2010), Reading Clausewitz (2002), Strategy before Clausewitz (2017), with Eitan Shamir (eds) Insurgencies and Counterinsurgencies: National Styles and Strategic Cultures (2017) and many works on nuclear strategy, NATO, Transatlantic Relations.\n                        </p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\">\n                            <a class=\"btn btn-sm btn-secondary\" href=\"https://mobirise.co\">\n                                LEARN MORE\n                            </a>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 3}\" mbr-if=\"cardsAmount > 2\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/ulrich2-660x638.jpg\" layout=\"responsive\" height=\"247\" width=\"255.51724137931035\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/ulrich2-660x638.jpg\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Ulrich KROTZ</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">\n                            Ulrich Krotz is Professor at the European University Institute, where he holds the Chair in International Relations in the Department of Political and Social Sciences and the Robert Schuman Centre for Advanced Studies, and founding director of the EUI’s programme on Europe in the World: International Relations, International Security, World Politics. He received his Ph.D. from Cornell University, has taught at Oxford University and Brown University, and held research positions at Princeton University, the EUI, and Harvard University. He is the author of Shaping Europe: France, Germany, and Embedded Bilateralism from the Elysée Treaty to Twenty-First Century Politics (with Joachim Schild) (Oxford, hardback 2013, paperback 2015); History and Foreign Policy in France and Germany (Palgrave Macmillan, 2015); and Flying Tiger: International Relations Theory and the Politics of Advanced Weapons (Oxford, 2011). His articles have appeared in journals such as World Politics, International Security, International Affairs, the European Journal of International Relations, Foreign Policy Analysis, West European Politics, the Journal of European Public Policy, and the Journal of Common Market Studies.\n                        </p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\">\n                            <a class=\"btn btn-sm btn-secondary\" href=\"https://mobirise.co\">\n                                LEARN MORE\n                            </a>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 4}\" mbr-if=\"cardsAmount > 3\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/face-sais-mag-pannier-512x512.jpg\" layout=\"responsive\" height=\"255\" width=\"255\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/face-sais-mag-pannier-512x512.jpg\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Alice PANNIER</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">\n                            Alice Pannier is an Assistant Professor of International Relations and European Studies at the Paul H. Nitze School of Advanced International Studies (SAIS), Johns Hopkins University, Washington, D.C. She earned her Ph.D. in Political Science from Sciences Po Paris with joint supervision from King’s College London. Her work has appeared, inter alia, in the Journal of Strategic Studies, Global Affairs, and European Security. Prior to joining SAIS, she was Postdoctoral Fellow at the French Institute for Strategic Research (IRSEM, Paris). She is currently preparing a book on French defense policy since the end of the Cold War (co-authored with Olivier Schmitt), as well as a manuscript based on her dissertation on Franco-British defense relations.\n                        </p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\">\n                            <a class=\"btn btn-sm btn-secondary\" href=\"https://mobirise.co\">\n                                LEARN MORE\n                            </a>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            \n        </div>\n    </div>\n</section>",
+          "_cid": "rdscCEfrLs",
+          "_anchor": "features2-r",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
+            },
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            ".card": {
+              "margin-bottom": "20px",
+              "position": "relative",
+              "display": "flex",
+              "-ms-flex-direction": "column",
+              "-webkit-flex-direction": "column",
+              "flex-direction": "column",
+              "min-width": "0",
+              "word-wrap": "break-word",
+              "background-clip": "border-box",
+              "border-radius": "0",
+              "width": "100%",
+              "min-height": "1px",
+              ".btn": {
+                "margin": ".4rem 4px !important"
+              }
+            },
+            ".card-title": {
+              "margin": "0",
+              "& when not (@showText)": {
+                "padding-bottom": "10px"
+              }
+            },
+            ".mbr-text": {
+              "color": "#232323"
+            },
+            ".card-box": {
+              "padding-top": "2rem"
+            },
+            "amp-img": {
+              "width": "100%"
+            }
+          },
+          "_name": "features2",
+          "_customHTML": "<section class=\"features2 mbr-section\" group=\"Features\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"9\" step=\"1\" value=\"2\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"9\" step=\"1\" value=\"2\">\n\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked=\"\">\n        <input type=\"checkbox\" title=\"Show Text\" name=\"showText\" checked=\"\">\n        <input type=\"checkbox\" title=\"Show Buttons\" name=\"showButtons\">\n        <!-- <input type=\"checkbox\" title=\"Show Lines\" name=\"showLines\" checked> -->\n        <!-- <input type=\"color\" title=\"Lines Color\" name=\"linesColor\" value=\"#efefef\" condition=\"showLines\"> -->\n        <select title=\"Cards\" name=\"cardsAmount\">\n            <option value=\"1\">1</option>\n            <option value=\"2\">2</option>\n            <option value=\"3\" selected=\"\">3</option>\n            <option value=\"4\">4</option>\n        </select>\n\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background1.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected=\"\">\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n    \n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 1}\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/schmitt-olivier-213x320.jpg\" layout=\"responsive\" width=\"350.11875000000003\" height=\"526\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/schmitt-olivier-213x320.jpg\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Olivier SCHMITT</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">\n                            Olivier Schmitt is an associate professor at the Center for War Studies, University of Southern Denmark. His work focuses on transatlantic security, multinational security cooperation, and military change. He currently directs the research project “Transforming Armed Forces in the 21st Century” supported by the Carlsberg Foundation and the Danish Research Council. His recent publications include Allies that Count, Junior Partners in Coalition Warfare (Georgetown University Press, 2018) and Raymond Aron and International Relations (Routledge, 2018).\n                        </p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\">\n                            <a class=\"btn btn-sm btn-secondary\" href=\"https://mobirise.co\">\n                                LEARN MORE\n                            </a>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            \n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 2}\" mbr-if=\"cardsAmount > 1\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/simon-481x517.jpg\" layout=\"responsive\" height=\"376\" width=\"349.8181818181818\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/simon-481x517.jpg\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Luis SIMON</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">\n                            Luis Simón is research professor at the Institute for European Studies and director of the Brussels office of the Elcano Royal Institute. He is also an Associate Fellow at the Royal United Services Institute (RUSI, London) and the Baltic Defence College, and a member of the editorial board of Parameters: The US Army War College Quarterly.  Luis is a frequent lecturer on geopolitical and strategic affairs at several universities and defence colleges, and his research has appeared in prestigious journals, such as Security Studies, International Affairs, The Journal of Strategic Studies, Geopolitics, Survival, Orbis, The RUSI Journal, Comparative Strategy, Parameters or The International Spectator. He holds a PhD in International Relations from the University of London, and a Masters degree from the Institute d’Études Politiques de Paris (Sciences Po).\n                        </p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\">\n                            <a class=\"btn btn-sm btn-secondary\" href=\"https://mobirise.co\">\n                                LEARN MORE\n                            </a>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 3}\" mbr-if=\"cardsAmount > 2\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/wyss-403x564.jpg\" layout=\"responsive\" height=\"490\" width=\"350.1241134751773\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/wyss-403x564.jpg\" alt=\"Mobirise\" title=\"\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Marco WYSS</h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">\n                            Dr Marco Wyss, FRHistS, FHEA, is Lecturer in the International History of the Cold War at Lancaster University, a Research Fellow at the University of the Free State, an Associate Fellow at the Institute of Commonwealth Studies, editor of the International Journal of Military History and Historiography, and co-editor of Brill’s ‘New Perspectives on the Cold War’ book series. Among many other publications, he is the author of Arms Transfers, Neutrality and Britain’s Role in the Cold War (Brill, 2013), and co-editor of Peacekeeping in Africa (Routledge, 2014), Neutrality and Neutralism in the Global Cold War (Routledge, 2016), and The Handbook of European Defence Policies and Armed Forces (co-edited with Hugo Meijer, OUP, 2018).\n                        </p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\">\n                            <a class=\"btn btn-sm btn-secondary\" href=\"https://mobirise.co\">\n                                LEARN MORE\n                            </a>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-class=\"{'mbr-col-lg-4': cardsAmount == 3,\n                             'mbr-col-lg-3': cardsAmount == 4,\n                             'last-child': cardsAmount == 4}\" mbr-if=\"cardsAmount > 3\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@THEME_PATH@/components/_images/img/03.jpg\" layout=\"responsive\" height=\"220\" width=\"330\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <img class=\"mbr-temp\" src=\"@THEME_PATH@/components/_images/img/03.jpg\" alt=\"Mobirise\">\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Results\n                        </h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-4\" mbr-if=\"showText\" data-app-selector=\".mbr-text, .mbr-section-btn\">\n                            Publishers and advertisers can decide how to present their content and what technology vendors to use, all while maintaining and improving key performance indicators.\n                        </p>\n                        <div class=\"mbr-section-btn align-left\" mbr-if=\"showButtons\" data-toolbar=\"-mbrBtnMove\" mbr-buttons=\"\" mbr-theme-style=\"display-4\">\n                            <a class=\"btn btn-sm btn-secondary\" href=\"https://mobirise.co\">\n                                LEARN MORE\n                            </a>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            \n        </div>\n    </div>\n</section>",
+          "_cid": "rdsfD4Zml6",
+          "_anchor": "features2-10",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
+            },
+            "p": {
+              "margin": "0",
+              "color": "#ffffff"
+            },
+            ".mbr-col-sm-12, .mbr-text": {
+              "color": "#000000"
+            }
+          },
+          "_name": "footer1",
+          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2019 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners<br><br>Last update: 27/12/2019</p>\n        </div>\n    </div>\n</section>",
+          "_cid": "r0ClIUHuFw",
+          "_anchor": "footer1-p",
+          "_protectedParams": [],
+          "_global": true,
+          "_once": "footer",
+          "_params": {}
+        }
+      ]
+    }
+  }
+}
