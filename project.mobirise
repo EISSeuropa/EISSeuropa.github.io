@@ -1,7 +1,7 @@
 {
   "settings": {
     "name": "EISS v1.0",
-    "currentPage": "board.html",
+    "currentPage": "index.html",
     "theme": {
       "name": "mobirise-amp",
       "title": "Mobirise AMP",
@@ -34,7 +34,7 @@
     "siteFonts": [],
     "favicon": "@PROJECT_PATH@/assets/images/visuel-2-128x82-1.png",
     "noImageResize": "",
-    "uniqCompNum": 19,
+    "uniqCompNum": 29,
     "versionPublish": "4.8.10",
     "screenshot": "screenshot.png"
   },
@@ -1396,7 +1396,7 @@
     "board.html": {
       "settings": {
         "title": "EISS - The Board",
-        "order": 3
+        "order": 4
       },
       "components": [
         {
