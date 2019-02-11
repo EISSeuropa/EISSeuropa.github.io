@@ -1,7 +1,7 @@
 {
   "settings": {
-    "name": "EISS v1.1",
-    "currentPage": "2019.html",
+    "name": "EISS v1.2",
+    "currentPage": "initiative.html",
     "theme": {
       "name": "mobirise-amp",
       "title": "Mobirise AMP",
@@ -34,9 +34,10 @@
     "siteFonts": [],
     "favicon": "@PROJECT_PATH@/assets/images/visuel-2-128x82-1.png",
     "noImageResize": "",
-    "uniqCompNum": 23,
+    "uniqCompNum": 25,
     "versionPublish": "4.9.2",
-    "screenshot": "screenshot.png"
+    "screenshot": "screenshot.png",
+    "сanonical-url": ""
   },
   "pages": {
     "index.html": {
@@ -691,38 +692,48 @@
         },
         {
           "_styles": {
-            "background-color": "@bgColor",
-            "& when not (@fullWidth)": {
-              "padding-top": "(@paddingTop * 15px)",
-              "padding-bottom": "(@paddingBottom * 15px)"
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
             },
-            ".image-block": {
-              "margin": "auto",
-              "width": "~\"@{videoSize}%\"",
-              "& when (@fullWidth)": {
-                "width": "100% !important"
-              }
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
             },
-            "amp-img": {
-              "text-align": "center"
+            ".mbr-title": {
+              "padding-bottom": "1rem"
             },
-            ".mbr-text": {
-              "margin": "0",
-              "padding": ".5rem 0",
-              "& when (@fullWidth)": {
-                "padding": ".5rem 15px"
-              }
-            },
-            "@media (max-width: 767px)": {
-              ".image-block": {
-                "width": "100% !important"
-              }
+            ".mbr-section-btn": {
+              "padding-top": "1.5rem"
             }
           },
-          "_name": "image1",
-          "_customHTML": "<section class=\"image1\" group=\"Images &amp; Videos\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n\n        <input type=\"checkbox\" title=\"Full Width\" name=\"fullWidth\" checked=\"\">\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" value=\"2\" step=\"1\" condition=\"fullWidth == false\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" value=\"2\" step=\"1\" condition=\"fullWidth == false\">\n        <input type=\"range\" inline=\"\" title=\"Width\" name=\"videoSize\" min=\"20\" max=\"100\" value=\"66\" step=\"1\" condition=\"fullWidth == false\">\n        <input type=\"checkbox\" title=\"Show Caption\" name=\"showText\" checked=\"\">\n\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\" condition=\"showText==true\">\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div mbr-class=\"{'container': fullWidth == false}\">\n        <div class=\"image-block\">\n            <amp-img src=\"@PROJECT_PATH@/assets/images/background-test-4-1920x560.jpg\" layout=\"responsive\" width=\"1680\" height=\"490\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                <div placeholder=\"\" class=\"placeholder\"></div>\n                <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/background-test-4-1920x560.jpg\" alt=\"Mobirise\" title=\"\">\n            </amp-img>\n            <div class=\"mbr-figure-caption\" mbr-if=\"showText\">\n                <p mbr-text=\"\" class=\"mbr-text mbr-black align-center mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\"></p>\n            </div>\n        </div>\n    </div>\n</section>",
-          "_cid": "rdygXJu6B4",
-          "_anchor": "image1-j",
+          "_name": "content19",
+          "_customHTML": "<section class=\"mbr-section content19\" group=\"Article\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"8\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"4\">\n\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked>\n        <input type=\"checkbox\" title=\"Show Subtitle\" name=\"showSubtitle\">\n        <input type=\"checkbox\" title=\"Show Buttons\" name=\"showButtons\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"@PROJECT_PATH@/assets/images/background-test-4-1920x560.jpg\" selected>\n            <input type=\"color\" title=\"Background Color\" value=\"#000000\">\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"mbr-container\">\n        <h2 mbr-if=\"showTitle\" class=\"mbr-title align-center mbr-fonts-style mbr-bold mbr-white\" mbr-theme-style=\"display-1\" data-app-selector=\".mbr-title\">\n            The Initiative</h2>\n        <h3 mbr-if=\"showSubtitle\" data-app-selector=\".mbr-section-subtitle\" class=\"mbr-section-subtitle align-center mbr-light mbr-fonts-style mbr-white\" mbr-theme-style=\"display-5\">\n            <i>Shape your future web project with sharp design and refine coded functions.</i>\n        </h3>\n        <div class=\"mbr-section-btn align-center\" mbr-if=\"showButtons\" mbr-buttons mbr-theme-style=\"display-4\" data-toolbar=\"-mbrBtnAdd,-mbrBtnMove\">\n            <a class=\"btn btn-primary\" href=\"https://mobirise.co\">LEARN MORE</a>\n            <a class=\"btn btn-white-outline\" href=\"https://mobirise.co\">LIVE DEMO</a>\n        </div>\n    </div>\n</section>",
+          "_cid": "rhLB9J4Yzj",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {},
+          "_anchor": "content19-o"
+        },
+        {
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "background-color": "@bgColor",
+            ".mbr-text": {
+              "margin-bottom": "0"
+            },
+            ".mbr-section-title": {
+              "margin": "0"
+            }
+          },
+          "_name": "content2",
+          "_customHTML": "<section class=\"content2 mbr-section article\" plugins=\"amp-main\">\n    \n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"3\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"0\">\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked>\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\">\n    <!-- End block parameters -->\n    </mbr-parameters> \n\n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-8\">\n                <h3 class=\"mbr-fonts-style mbr-section-title mbr-light\" mbr-if=\"showTitle\" mbr-theme-style=\"display-2\" data-app-selector=\".mbr-section-title\">\n                    Our aim and charachteristics<br></h3>\n                <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\" data-multiline mbr-article>The European Initiative on Security Studies is a Europe-wide multidisciplinary network of scholars from over eighty universities that share the goal of consolidating security studies in Europe. Specifically, the aims of the EISS are two-fold. The first is to develop and sustain a Europe-wide network in the field of security studies. This gives visibility to the range of individual and collective research projects that are currently underway in Europe. The second goal is to establish a forum for the exchange of ideas in order to foster new joint research projects and develop international research partnerships.<br><br>The EISS has three main characteristics: it is (1) thematically-driven and open to all theoretical approaches, (2) multidisciplinary and interdisciplinary, and (3) geographically inclusive. Firstly, the EISS is not limited to one specific theoretical approach to security studies, but instead seeks to be inclusive. This is reflected, for instance, in the EISS Conference’s panels, which cover a large range of themes in the broad field of security studies. The EISS welcomes contributions on both so-called ‘traditional’ and ‘non-traditional’ security issues. Secondly, the EISS is multidisciplinary and interdisciplinary in that it gathers, among others, historians, political scientists, economists, geographers, anthropologists and sociologists sharing an interest in developing security studies in Europe. Finally, the EISS seeks to be as inclusive as possible from a geographical perspective. The EISS welcomes projects focusing on any region of the world. It aims to establish a European network of scholars and institutions working on a broad range of themes and geographical areas in the field of security studies. By doing so, its ambition is to help overcoming the existing fragmentation in European security studies, and thereby to foster and consolidate a European field of security studies.<br></p>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_anchor": "content2-t",
+          "_isUserblock": true,
+          "_sourceTheme": "mobirise-amp",
+          "_cid": "rdsddTg1uV",
           "_protectedParams": [],
           "_global": false,
           "_once": false,
@@ -741,15 +752,13 @@
             }
           },
           "_name": "content2",
-          "_customHTML": "<section class=\"content2 mbr-section article\" plugins=\"amp-main\">\n    \n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"0\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"0\">\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked>\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\">\n    <!-- End block parameters -->\n    </mbr-parameters> \n\n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-8\">\n                <h3 class=\"mbr-fonts-style mbr-section-title mbr-light\" mbr-if=\"showTitle\" mbr-theme-style=\"display-5\" data-app-selector=\".mbr-section-title\">\n                    Our aim and charachteristics<br></h3>\n                <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\" data-multiline mbr-article>The European Initiative on Security Studies is a Europe-wide multidisciplinary network of scholars from over eighty universities that share the goal of consolidating security studies in Europe. Specifically, the aims of the EISS are two-fold. The first is to develop and sustain a Europe-wide network in the field of security studies. This gives visibility to the range of individual and collective research projects that are currently underway in Europe. The second goal is to establish a forum for the exchange of ideas in order to foster new joint research projects and develop international research partnerships.<br><br>The EISS has three main characteristics: it is (1) thematically-driven and open to all theoretical approaches, (2) multidisciplinary and interdisciplinary, and (3) geographically inclusive. Firstly, the EISS is not limited to one specific theoretical approach to security studies, but instead seeks to be inclusive. This is reflected, for instance, in the EISS Conference’s panels, which cover a large range of themes in the broad field of security studies. The EISS welcomes contributions on both so-called ‘traditional’ and ‘non-traditional’ security issues. Secondly, the EISS is multidisciplinary and interdisciplinary in that it gathers, among others, historians, political scientists, economists, geographers, anthropologists and sociologists sharing an interest in developing security studies in Europe. Finally, the EISS seeks to be as inclusive as possible from a geographical perspective. The EISS welcomes projects focusing on any region of the world. It aims to establish a European network of scholars and institutions working on a broad range of themes and geographical areas in the field of security studies. By doing so, its ambition is to help overcoming the existing fragmentation in European security studies, and thereby to foster and consolidate a European field of security studies.<br></p>\n            </div>\n        </div>\n    </div>\n</section>",
-          "_anchor": "content2-t",
-          "_isUserblock": true,
-          "_sourceTheme": "mobirise-amp",
-          "_cid": "rdsddTg1uV",
+          "_customHTML": "<section class=\"content2 mbr-section article\" plugins=\"amp-main\">\n    \n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"4\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"4\">\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked>\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\">\n    <!-- End block parameters -->\n    </mbr-parameters> \n\n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-8\">\n                <h3 class=\"mbr-fonts-style mbr-section-title mbr-light\" mbr-if=\"showTitle\" mbr-theme-style=\"display-2\" data-app-selector=\".mbr-section-title\">\n                    Universities and Research Centers&nbsp;<br>represented this year</h3>\n                <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\" data-multiline mbr-article><b><br></b><br><b>Belgium\n</b><br>University of Antwerpen \n<br>Vrije Universiteit Brussel\n<br>\n<br><b>Canada\n</b><br>Carleton University\n<br>\n<br><b>Chile\n</b><br>Pontificia Universidad Católica de Chile\n<br>\n<br><b>Denmark\n</b><br>Royal Danish Defense College\n<br>University of Southern Denmark\n<br>\n<br><b>France\n</b><br>École normale Supérieure\n<br>European Council of Foreign Relations\n<br>ILERI – School of International Relations\n<br>National Institute for Oriental Languages and Civilizations (INALCO)\n<br>NEOMA Business School \n<br>Panthéon-Assas University\n<br>Sciences Po\n<br>University of Nantes\n<br>University of Toulouse Jean Jaurès\n<br>\n<br><b>Germany</b>\n<br>European Leadership Network, Berlin\n<br>Federal University of Applied Administrative Sciences Berlin\n<br>Ludwig Maximilian University of Munich\n<br>Max Planck Institute for Comparative Public Law and International Law\n<br>University of Erfurt\n<br>University of Hamburg\n<br>University of Siegen\n<br>\n<br><b>Ireland\n</b><br>University of Galway\n<br>\n<br><b>Italy\n</b><br>European University Institute Florence\n<br>LUISS Business School Roma\n<br>Roma Tre University \n<br>Sant’ Anna School of Advanced Studies\n<br>\n<br><b>Mexico\n</b><br>Center for Research and Training in Economics (CIDE)\n<br>\n<br><b>Sweden\n</b><br>University of Gothenburg\n<br>Uppsala University\n<br>\n<b><br>Switzerland\n</b><br>ETH Zurich\n<br>Graduate Institute Geneva\n<br>University of Lausanne\n<br>\n<br><b>The Netherlands\n</b><br>Free University of Amsterdam \n<br>Leiden University \n<br>Radboud University\n<br>University of Utrecht\n<br>Utrecht University\n<br>\n<br><b>Turkey\n</b><br>Bilkent University \n<br>Suleyman Demirel University\n<br>\n<br><b>United Arab Emirates\n</b><br>Khalifa University\n<br>\n<br><b>United Kingdom\n</b><br>Cardiff University\n<br>King’s College London\n<br>School of Oriental and African Studies (SOAS)\n<br>University of Newcastle\n<br>University of Reading\n<br>University of St. Andrews\n<br>\n<b><br>United States\n</b><br>Dartmouth College\n<br>Franklin Venture Partners\n<br>John Hopkins University (SAIS)\n<br>Massachusetts Institute of Technology (MIT)\n<br>University of California, San Diego\n<br>US Naval Postgraduate School&nbsp;<br></p>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_cid": "rhLAejKRQz",
           "_protectedParams": [],
           "_global": false,
           "_once": false,
-          "_params": {}
+          "_params": {},
+          "_anchor": "content2-n"
         },
         {
           "_styles": {
