@@ -1,7 +1,7 @@
 {
   "settings": {
     "name": "EISS v1.2",
-    "currentPage": "register.html",
+    "currentPage": "index.html",
     "theme": {
       "name": "mobirise-amp",
       "title": "Mobirise AMP",
@@ -45,7 +45,7 @@
     "siteUrl": "https://eiss-europa.com/",
     "sitemapSwitcherAuto": "on",
     "sitemapSwitcher": "on",
-    "google-analytics": ""
+    "google-analytics": "<!-- Global site tag (gtag.js) - Google Analytics -->\r\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-134365408-2\"></script>\r\n<script>\r\n  window.dataLayer = window.dataLayer || [];\r\n  function gtag(){dataLayer.push(arguments);}\r\n  gtag('js', new Date());\r\n\r\n  gtag('config', 'UA-134365408-2');\r\n</script>"
   },
   "pages": {
     "index.html": {
@@ -4610,11 +4610,11 @@
           "_name": "content2",
           "_customHTML": "<section class=\"content2 mbr-section article\" plugins=\"amp-main\">\n    \n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"3\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"0\">\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked>\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\">\n    <!-- End block parameters -->\n    </mbr-parameters> \n\n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-8\">\n                <h3 class=\"mbr-fonts-style mbr-section-title mbr-light\" mbr-if=\"showTitle\" mbr-theme-style=\"display-2\" data-app-selector=\".mbr-section-title\">Subscribe to our mailing list!</h3>\n                <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\" data-multiline mbr-article><div id=\"mc_embed_signup\"><form action=\"https://aeges.us19.list-manage.com/subscribe/post?u=20ec1b10b31ce0f49c0d0a5dd&id=e9d75b1366\" method=\"post\" id=\"mc-embedded-subscribe-form\" name=\"mc-embedded-subscribe-form\" class=\"validate\" target=\"_blank\" novalidate><div id=\"mc_embed_signup_scroll\"><div class=\"indicates-required\"><br></div><div class=\"mc-field-group\">\t<label for=\"mce-EMAIL\">Email Address  <span class=\"asterisk\">*</span><br></label><br>\t<input type=\"email\" value name=\"EMAIL\" class=\"required email\" id=\"mce-EMAIL\"><br></div><br><div class=\"mc-field-group\"><br>\t<label for=\"mce-FNAME\">First Name </label><br>\t<input type=\"text\" value name=\"FNAME\" class id=\"mce-FNAME\"><br></div><br><div class=\"mc-field-group\"><br>\t<label for=\"mce-LNAME\">Last Name </label><br>\t<input type=\"text\" value name=\"LNAME\" class id=\"mce-LNAME\"><br></div><br><div class=\"mc-field-group\"><br>\t<label for=\"mce-MMERGE6\">Institution </label><br>\t<input type=\"text\" value name=\"MMERGE6\" class id=\"mce-MMERGE6\"><br></div><br><div class=\"mc-field-group input-group\"><br>    <strong>Email Format </strong><br>    <ul><li><input type=\"radio\" value=\"html\" name=\"EMAILTYPE\" id=\"mce-EMAILTYPE-0\"><label for=\"mce-EMAILTYPE-0\">html</label></li><br><li><input type=\"radio\" value=\"text\" name=\"EMAILTYPE\" id=\"mce-EMAILTYPE-1\"><label for=\"mce-EMAILTYPE-1\">text</label></li><br></ul><br></div><br>\t<div id=\"mce-responses\" class=\"clear\"><br>\t\t<div class=\"response\" id=\"mce-error-response\" style=\"display:none\"></div><br>\t\t<div class=\"response\" id=\"mce-success-response\" style=\"display:none\"></div><br>\t</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups--><br>    <div style=\"position: absolute; left: -5000px;\" aria-hidden=\"true\"><input type=\"text\" name=\"b_20ec1b10b31ce0f49c0d0a5dd_e9d75b1366\" tabindex=\"-1\" value></div><br>    <div class=\"clear\"><input type=\"submit\" value=\"Subscribe\" name=\"subscribe\" id=\"mc-embedded-subscribe\" class=\"button\"></div><br>    </div><br></form><br></div><br><script type=\"text/javascript\" src=\"//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js\"></script><script type=\"text/javascript\">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[6]='MMERGE6';ftypes[6]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script><br><!--End mc_embed_signup--><style type=\"text/css\"><br>\t#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }<br>\t/* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.<br>\t   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */<br></style></p>\n            </div>\n        </div>\n    </div>\n</section>",
           "_cid": "rhSA8Tqbzb",
+          "_anchor": "content2-1c",
           "_protectedParams": [],
           "_global": false,
           "_once": false,
-          "_params": {},
-          "_anchor": "content2-1c"
+          "_params": {}
         },
         {
           "_styles": {
