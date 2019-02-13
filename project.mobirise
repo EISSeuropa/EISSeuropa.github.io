@@ -36,7 +36,7 @@
     "siteFonts": [],
     "favicon": "@PROJECT_PATH@/assets/images/visuel-2-128x82-1.png",
     "noImageResize": "",
-    "uniqCompNum": 49,
+    "uniqCompNum": 50,
     "versionPublish": "4.9.2",
     "screenshot": "screenshot.png",
     "сanonical-url": "",
@@ -4789,21 +4789,38 @@
         },
         {
           "_styles": {
-            "padding-top": "(@paddingTop * 15px)",
-            "padding-bottom": "(@paddingBottom * 15px)",
             "background-color": "@bgColor",
-            ".mbr-text": {
-              "margin-bottom": "0",
+            "& when not (@fullWidth)": {
+              "padding-top": "(@paddingTop * 15px)",
+              "padding-bottom": "(@paddingBottom * 15px)"
+            },
+            ".image-block": {
+              "margin": "auto",
+              "width": "~\"@{videoSize}%\"",
+              "& when (@fullWidth)": {
+                "width": "100% !important"
+              }
+            },
+            "amp-img": {
               "text-align": "center"
             },
-            ".mbr-section-title": {
-              "margin": "0"
+            ".mbr-text": {
+              "margin": "0",
+              "padding": ".5rem 0",
+              "& when (@fullWidth)": {
+                "padding": ".5rem 15px"
+              }
+            },
+            "@media (max-width: 767px)": {
+              ".image-block": {
+                "width": "100% !important"
+              }
             }
           },
-          "_name": "content2",
-          "_customHTML": "<section class=\"content2 mbr-section article\" plugins=\"amp-main\">\n    \n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"4\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"4\">\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked>\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\">\n    <!-- End block parameters -->\n    </mbr-parameters> \n\n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-8\">\n                <h3 class=\"mbr-fonts-style mbr-section-title mbr-light\" mbr-if=\"showTitle\" mbr-theme-style=\"display-2\" data-app-selector=\".mbr-section-title\">Test</h3>\n                <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\" data-multiline mbr-article><form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\" target=\"_top\"><br><input type=\"hidden\" name=\"cmd\" value=\"_s-xclick\">Registration fees are of €30</form><br><form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\" target=\"_top\">You are not required to create a PayPal account</form><form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\" target=\"_top\">but can instead pay by debit or credit card.</form><form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\" target=\"_top\"><input type=\"hidden\" name=\"hosted_button_id\" value=\"7LU8NVS6VCCX8\"><br><input type=\"image\" src=\"https://www.paypalobjects.com/en_US/GB/i/btn/btn_buynowCC_LG.gif\" border=\"0\" name=\"submit\" alt=\"PayPal – The safer, easier way to pay online!\"></form><br><form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\" target=\"_top\">You will be redirected to our Google Form once payement is confirmed.<br><img alt border=\"0\" src=\"https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif\" width=\"1\" height=\"1\"><br></form><br></p>\n            </div>\n        </div>\n    </div>\n</section>",
-          "_cid": "rhWraRPFiD",
-          "_anchor": "content2-1g",
+          "_name": "image2",
+          "_customHTML": "<section class=\"image2\" group=\"Images & Videos\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n\n        <input type=\"checkbox\" title=\"Full Width\" name=\"fullWidth\">\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" value=\"2\" step=\"1\" condition=\"fullWidth == false\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" value=\"2\" step=\"1\" condition=\"fullWidth == false\">\n        <input type=\"range\" inline title=\"Width\" name=\"videoSize\" min=\"20\" max=\"100\" value=\"66\" step=\"1\" condition=\"fullWidth == false\">\n        <input type=\"checkbox\" title=\"Show Caption\" name=\"showText\" checked>\n\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\" condition=\"showText==true\">\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div mbr-class=\"{'container': fullWidth == false}\">\n        <div class=\"image-block\">\n            <amp-img src=\"@PROJECT_PATH@/assets/images/screenshot-2019-02-13-at-08.17.38-1466x573.png\" layout=\"responsive\" width=\"731.8602620087336\" height=\"286\" alt=\"Registration Fees\" class=\"mobirise-loader\">\n                <div placeholder class=\"placeholder\"></div>\n                <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7LU8NVS6VCCX8\"><img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/screenshot-2019-02-13-at-08.17.38-1466x573.png\" alt=\"Registration Fees\" title=\"Registration Fees\"></a>\n            </amp-img>\n            <div class=\"mbr-figure-caption\" mbr-if=\"showText\">\n                <p mbr-text class=\"mbr-text mbr-black align-center mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\">Registration fees are of €30<br><br>You are not required to create a PayPal account<br>but can instead pay by debit or credit card.<br><br>You will be redirected to our Google Form once payement is confirmed.<br><br></p>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_cid": "rhWxUYVw7K",
+          "_anchor": "image2-1d",
           "_protectedParams": [],
           "_global": false,
           "_once": false,
