@@ -12,9 +12,6 @@
 		<loc>https://eiss-europa.com/board.html</loc>
 	</url>
 	<url>
-		<loc>https://eiss-europa.com/page5.html</loc>
-	</url>
-	<url>
 		<loc>https://eiss-europa.com/register.html</loc>
 	</url>
 	<url>
@@ -24,6 +21,9 @@
 		<loc>https://eiss-europa.com/cancelled.html</loc>
 	</url>
 	<url>
-		<loc>https://eiss-europa.com/page8.html</loc>
+		<loc>https://eiss-europa.com/NDC.html</loc>
+	</url>
+	<url>
+		<loc>https://eiss-europa.com/past.html</loc>
 	</url>
 </urlset>
