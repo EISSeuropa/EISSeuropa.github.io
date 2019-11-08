@@ -18,9 +18,6 @@
 		<loc>https://eiss-europa.com/form.html</loc>
 	</url>
 	<url>
-		<loc>https://eiss-europa.com/cancelled.html</loc>
-	</url>
-	<url>
 		<loc>https://eiss-europa.com/NDC.html</loc>
 	</url>
 	<url>
@@ -28,5 +25,8 @@
 	</url>
 	<url>
 		<loc>https://eiss-europa.com/2020.html</loc>
+	</url>
+	<url>
+		<loc>https://eiss-europa.com/images.html</loc>
 	</url>
 </urlset>
