@@ -69,7 +69,8 @@
     },
     "canonical-url": "http://<linkrel=",
     "": "on",
-    "imageResize": false
+    "imageResize": false,
+    "publishChangesOnly": true
   },
   "pages": {
     "index.html": {
