@@ -7716,47 +7716,6 @@
           "_params": {}
         },
         {
-          "alias": false,
-          "_styles": {
-            "padding-top": "(@paddingTop * 15px)",
-            "padding-bottom": "(@paddingBottom * 15px)",
-            "background-color": "@bgColor",
-            ".mbr-text": {
-              "margin-bottom": "0"
-            },
-            ".mbr-section-title": {
-              "margin": "0"
-            }
-          },
-          "_name": "content2",
-          "_customHTML": "<section class=\"content2 mbr-section article\" plugins=\"amp-main\">\n    \n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"0\">\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked>\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\">\n    <!-- End block parameters -->\n    </mbr-parameters> \n\n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-8\">\n                <h3 class=\"mbr-fonts-style mbr-section-title mbr-light\" mbr-if=\"showTitle\" mbr-theme-style=\"display-2\" data-app-selector=\".mbr-section-title\">Conference Structure</h3>\n                <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\" data-multiline mbr-article><br>The EISS Conference features both ‘closed’ and ‘open’ panels.<br><br>‘Closed’ panels focus on themes decided by the EISS. Each panel includes four papers and the chair serves as discussant.     <br><br>In ‘Open’ panels, participants propose a panel’s title, a chair, and four speakers. The chair serves as discussant. The ‘open panels’ are meant to broaden the range of existing themes in the EISS and to provide greater latitude to the participants to contribute to the definition of the EISS program.<br><br>Selection Criteria for Closed and Open panels are: (1) quality and originality of the panel/paper proposal; (2) multidisciplinarity and/or interdisciplinarity (history, political science, sociology, etc.). The panels should focus on specific themes that can be addressed from a variety of disciplines. N.B. Each panel must also include scholars from disciplines other than political science; (3) represent different European countries/regions (western, northern, eastern, central, southern Europe), as per participants’ affiliation; (4) and allow for gender diversity.<br><b><br></b></p>\n            </div>\n        </div>\n    </div>\n</section>",
-          "_cid": "rIQ2vIEc6d",
-          "_anchor": "content2-4m",
-          "_protectedParams": [],
-          "_global": false,
-          "_once": false,
-          "_params": {}
-        },
-        {
-          "alias": false,
-          "_styles": {
-            "padding-top": "(@paddingTop * 15px)",
-            "padding-bottom": "(@paddingBottom * 15px)",
-            "background-color": "@bgColor",
-            "blockquote": {
-              "border-color": "@lineColor"
-            }
-          },
-          "_name": "content10",
-          "_customHTML": "<section class=\"content10 mbr-section article\" plugins=\"amp-main\" group=\"Article\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"3\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"4\">\n        <input type=\"color\" title=\"Line Color\" name=\"lineColor\" value=\"#767676\">\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\">\n    <!-- End block parameters -->\n    </mbr-parameters> \n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"mbr-text mbr-fonts-style mbr-col-sm-12 mbr-col-md-8\" mbr-theme-style=\"display-4\" data-multiline mbr-article>\n                <blockquote><p><b>Deadlines and practical information</b></p><p><br></p><p>The registration fee is €80 for participation on site; virtual attendance will be free of charge.<br></p></blockquote><blockquote>Travel/accommodation expenses: no funding is provided by the EISS. Applicants are advised to seek funding for travel/accommodation from their home institution.</blockquote><blockquote>Conference speakers will send their complete papers to the chair ahead of the conference. 31 August 2021: deadline for sending the full paper to the panel’s chair.</blockquote><blockquote>Organisation of each panel: 4 presentations (10 min. each); 20 min. discussion between chair/discussant and panelists; 30 min. Q&amp;A with audience.</blockquote>\n            </div>\n        </div>\n    </div>\n</section>",
-          "_cid": "rIQ3f8bgQo",
-          "_anchor": "content10-4o",
-          "_protectedParams": [],
-          "_global": false,
-          "_once": false,
-          "_params": {}
-        },
-        {
           "_styles": {
             "padding-top": "(@paddingTop * 15px)",
             "padding-bottom": "(@paddingBottom * 15px)",
@@ -8105,6 +8064,28 @@
           "_anchor": "info2-5i",
           "_isUserblock": true,
           "_cid": "sqHY4ZJer2",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "alias": false,
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "background-color": "@bgColor",
+            ".mbr-text": {
+              "margin-bottom": "0"
+            },
+            ".mbr-section-title": {
+              "margin": "0"
+            }
+          },
+          "_name": "content2",
+          "_customHTML": "<section class=\"content2 mbr-section article\" plugins=\"amp-main\">\n    \n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"0\">\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked>\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\">\n    <!-- End block parameters -->\n    </mbr-parameters> \n\n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-8\">\n                <h3 class=\"mbr-fonts-style mbr-section-title mbr-light\" mbr-if=\"showTitle\" mbr-theme-style=\"display-2\" data-app-selector=\".mbr-section-title\">Conference Structure</h3>\n                <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\" data-multiline mbr-article><br>The EISS Conference features both ‘closed’ and ‘open’ panels.<br><br>‘Closed’ panels focus on themes decided by the EISS. Each panel includes four papers and the chair serves as discussant.     <br><br>In ‘Open’ panels, participants propose a panel’s title, a chair, and four speakers. The chair serves as discussant. The ‘open panels’ are meant to broaden the range of existing themes in the EISS and to provide greater latitude to the participants to contribute to the definition of the EISS program.<br><br>Selection Criteria for Closed and Open panels are: (1) quality and originality of the panel/paper proposal; (2) multidisciplinarity and/or interdisciplinarity (history, political science, sociology, etc.). The panels should focus on specific themes that can be addressed from a variety of disciplines. N.B. Each panel must also include scholars from disciplines other than political science; (3) represent different European countries/regions (western, northern, eastern, central, southern Europe), as per participants’ affiliation; (4) and allow for gender diversity.<br><b><br></b></p>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_cid": "rIQ2vIEc6d",
+          "_anchor": "content2-4m",
           "_protectedParams": [],
           "_global": false,
           "_once": false,
