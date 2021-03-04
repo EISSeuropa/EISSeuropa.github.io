@@ -70,7 +70,7 @@
     "canonical-url": "http://<linkrel=",
     "": "on",
     "imageResize": false,
-    "publishChangesOnly": true
+    "publishChangesOnly": false
   },
   "pages": {
     "index.html": {
