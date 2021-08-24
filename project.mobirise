@@ -1,7 +1,7 @@
 {
   "settings": {
     "name": "EISS v1.3",
-    "currentPage": "index.html",
+    "currentPage": "2021.html",
     "theme": {
       "name": "mobirise-amp",
       "title": "Mobirise AMP",
@@ -652,7 +652,7 @@
           },
           "_name": "info1",
           "_sourceTheme": "mobirise-amp",
-          "_customHTML": "<section class=\"info1\" group=\"Testimonials & Info\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!--Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Size</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <header>Show/Hide</header>\n        <input type=\"checkbox\" title=\"Title\" name=\"showTitle\" checked>\n        <input type=\"checkbox\" title=\"Subtitle\" name=\"showSubtitle\" checked>\n        <input type=\"checkbox\" title=\"Button\" name=\"showButton\" checked>\n        <input type=\"checkbox\" title=\"Reverse\" name=\"reverse\" condition=\"(showTitle || showSubtitle) && showButton\">\n        <header>Background</header>\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Image\" value=\"@PROJECT_PATH@/assets/images/background3.jpg\">\n            <input type=\"color\" title=\"Color\" value=\"#00dcc0\" selected>\n        </fieldset>\n        <input type=\"checkbox\" title=\"2 Color\" name=\"twoColor\" condition=\"bg.type == 'color'\" checked>\n        <input type=\"color\" title=\"Color 2\" value=\"#005af0\" name=\"twoColorBg\" condition=\"twoColor && bg.type == 'color'\">\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-row mbr-jc-c\" mbr-class=\"{'mbr-row-reverse': reverse}\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-8\" mbr-if=\"showTitle || showSubtitle\">\n                <h2 class=\"mbr-section-title align-left mbr-fonts-style mbr-bold mbr-white mbr-pb-2\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".mbr-section-title\">\n                    The 2021 programme</h2>\n                <h3 class=\"mbr-text align-left mbr-fonts-style mbr-regular mbr-white\" mbr-theme-style=\"display-7\" mbr-if=\"showSubtitle\" data-app-selector=\".mbr-text\">We strive to carry the 2020 programme over to 2021. You can find the preliminary 2021 programme below, for information. Stay tuned for further updates.</h3>\n            </div>\n            <div class=\"btn-container mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-4 align-center mbr-flex\" mbr-if=\"showButton\">\n                <div class=\"mbr-section-btn mbr-m-auto\" mbr-buttons mbr-theme-style=\"display-7\" data-toolbar=\"-mbrBtnMove\"><a class=\"btn btn-white\" href=\"https://drive.google.com/file/d/1TDtM7KapghJNSYHO8qpm-9VrdfFodXY2/view?usp=sharing\" data-app-placeholder=\"Type Text\" target=\"_blank\">DOWNLOAD IT HERE</a></div>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_customHTML": "<section class=\"info1\" group=\"Testimonials & Info\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!--Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Size</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <header>Show/Hide</header>\n        <input type=\"checkbox\" title=\"Title\" name=\"showTitle\" checked>\n        <input type=\"checkbox\" title=\"Subtitle\" name=\"showSubtitle\" checked>\n        <input type=\"checkbox\" title=\"Button\" name=\"showButton\" checked>\n        <input type=\"checkbox\" title=\"Reverse\" name=\"reverse\" condition=\"(showTitle || showSubtitle) && showButton\">\n        <header>Background</header>\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Image\" value=\"@PROJECT_PATH@/assets/images/background3.jpg\">\n            <input type=\"color\" title=\"Color\" value=\"#00dcc0\" selected>\n        </fieldset>\n        <input type=\"checkbox\" title=\"2 Color\" name=\"twoColor\" condition=\"bg.type == 'color'\" checked>\n        <input type=\"color\" title=\"Color 2\" value=\"#005af0\" name=\"twoColorBg\" condition=\"twoColor && bg.type == 'color'\">\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-row mbr-jc-c\" mbr-class=\"{'mbr-row-reverse': reverse}\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-8\" mbr-if=\"showTitle || showSubtitle\">\n                <h2 class=\"mbr-section-title align-left mbr-fonts-style mbr-bold mbr-white mbr-pb-2\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".mbr-section-title\">\n                    The 2021 programme</h2>\n                <h3 class=\"mbr-text align-left mbr-fonts-style mbr-regular mbr-white\" mbr-theme-style=\"display-7\" mbr-if=\"showSubtitle\" data-app-selector=\".mbr-text\">We strove to carry most of the 2020 programme over to 2021. You can find the definitive 2021 programme below, for information.</h3>\n            </div>\n            <div class=\"btn-container mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-4 align-center mbr-flex\" mbr-if=\"showButton\">\n                <div class=\"mbr-section-btn mbr-m-auto\" mbr-buttons mbr-theme-style=\"display-7\" data-toolbar=\"-mbrBtnMove\"><a class=\"btn btn-white\" href=\"https://drive.google.com/file/d/1DauG72h8Nf8MQv46XN7Dt5KFgNdnRbYI/view?usp=drivesdk/view?usp=sharing\" data-app-placeholder=\"Type Text\" target=\"_blank\">DOWNLOAD IT HERE</a></div>\n            </div>\n        </div>\n    </div>\n</section>",
           "_anchor": "info1-5g",
           "_isUserblock": true,
           "_cid": "sqHVSsM2j0",
@@ -972,7 +972,7 @@
             }
           },
           "_name": "footer1",
-          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"6\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2018 - 2021 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners.<br><br>Last update: 04/05/2021<br>Created and maintained by <a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\">APB_Laudrain</a><br><a href=\"mailto:arthur.laudrain@gmail.com\">Freelance website designing and hosting</a><a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\"><br></a><br></p>\n        </div>\n    </div>\n</section>",
+          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"6\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2018 - 2021 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners.<br><br>Last update: 23/08/2021<br>Created and maintained by <a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\">APB_Laudrain</a><br><a href=\"mailto:arthur.laudrain@gmail.com\">Freelance website designing and hosting</a><a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\"><br></a><br></p>\n        </div>\n    </div>\n</section>",
           "_cid": "r0ClIUHuFw",
           "_anchor": "footer1-5",
           "_protectedParams": [],
@@ -1682,7 +1682,7 @@
             }
           },
           "_name": "footer1",
-          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"6\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2018 - 2021 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners.<br><br>Last update: 04/05/2021<br>Created and maintained by <a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\">APB_Laudrain</a><br><a href=\"mailto:arthur.laudrain@gmail.com\">Freelance website designing and hosting</a><a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\"><br></a><br></p>\n        </div>\n    </div>\n</section>",
+          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"6\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2018 - 2021 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners.<br><br>Last update: 23/08/2021<br>Created and maintained by <a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\">APB_Laudrain</a><br><a href=\"mailto:arthur.laudrain@gmail.com\">Freelance website designing and hosting</a><a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\"><br></a><br></p>\n        </div>\n    </div>\n</section>",
           "_cid": "r0ClIUHuFw",
           "_anchor": "footer1-s",
           "_protectedParams": [],
@@ -3322,7 +3322,7 @@
             }
           },
           "_name": "footer1",
-          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"6\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2018 - 2021 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners.<br><br>Last update: 04/05/2021<br>Created and maintained by <a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\">APB_Laudrain</a><br><a href=\"mailto:arthur.laudrain@gmail.com\">Freelance website designing and hosting</a><a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\"><br></a><br></p>\n        </div>\n    </div>\n</section>",
+          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"6\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2018 - 2021 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners.<br><br>Last update: 23/08/2021<br>Created and maintained by <a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\">APB_Laudrain</a><br><a href=\"mailto:arthur.laudrain@gmail.com\">Freelance website designing and hosting</a><a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\"><br></a><br></p>\n        </div>\n    </div>\n</section>",
           "_cid": "r0ClIUHuFw",
           "_anchor": "footer1-y",
           "_protectedParams": [],
@@ -4028,7 +4028,7 @@
             }
           },
           "_name": "footer1",
-          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"6\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2018 - 2021 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners.<br><br>Last update: 04/05/2021<br>Created and maintained by <a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\">APB_Laudrain</a><br><a href=\"mailto:arthur.laudrain@gmail.com\">Freelance website designing and hosting</a><a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\"><br></a><br></p>\n        </div>\n    </div>\n</section>",
+          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"6\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2018 - 2021 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners.<br><br>Last update: 23/08/2021<br>Created and maintained by <a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\">APB_Laudrain</a><br><a href=\"mailto:arthur.laudrain@gmail.com\">Freelance website designing and hosting</a><a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\"><br></a><br></p>\n        </div>\n    </div>\n</section>",
           "_cid": "r0ClIUHuFw",
           "_anchor": "footer1-p",
           "_protectedParams": [],
@@ -4798,7 +4798,7 @@
             }
           },
           "_name": "footer1",
-          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"6\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2018 - 2021 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners.<br><br>Last update: 04/05/2021<br>Created and maintained by <a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\">APB_Laudrain</a><br><a href=\"mailto:arthur.laudrain@gmail.com\">Freelance website designing and hosting</a><a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\"><br></a><br></p>\n        </div>\n    </div>\n</section>",
+          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"6\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2018 - 2021 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners.<br><br>Last update: 23/08/2021<br>Created and maintained by <a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\">APB_Laudrain</a><br><a href=\"mailto:arthur.laudrain@gmail.com\">Freelance website designing and hosting</a><a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\"><br></a><br></p>\n        </div>\n    </div>\n</section>",
           "_cid": "r0ClIUHuFw",
           "_anchor": "footer1-2c",
           "_protectedParams": [],
@@ -5504,7 +5504,7 @@
             }
           },
           "_name": "footer1",
-          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"6\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2018 - 2021 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners.<br><br>Last update: 04/05/2021<br>Created and maintained by <a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\">APB_Laudrain</a><br><a href=\"mailto:arthur.laudrain@gmail.com\">Freelance website designing and hosting</a><a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\"><br></a><br></p>\n        </div>\n    </div>\n</section>",
+          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"6\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2018 - 2021 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners.<br><br>Last update: 23/08/2021<br>Created and maintained by <a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\">APB_Laudrain</a><br><a href=\"mailto:arthur.laudrain@gmail.com\">Freelance website designing and hosting</a><a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\"><br></a><br></p>\n        </div>\n    </div>\n</section>",
           "_cid": "r0ClIUHuFw",
           "_anchor": "footer1-m",
           "_protectedParams": [],
@@ -5992,7 +5992,7 @@
             }
           },
           "_name": "menu2",
-          "_customHTML": "<section class=\"menu horizontal-menu\" group=\"Menu\" plugins=\"DropDown, amp-main,amp-sidebar\" global once=\"menu\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"checkbox\" title=\"Show Logo\" name=\"showLogo\" checked>\n        <input type=\"range\" title=\"Logo Height\" inline name=\"logoHeight\" min=\"35\" max=\"120\" value=\"47\" step=\"1\" condition=\"showLogo\">\n        <input type=\"range\" title=\"Logo Width\" inline name=\"logoWidth\" min=\"35\" max=\"120\" value=\"68\" step=\"1\" condition=\"showLogo\">\n        <input type=\"checkbox\" title=\"Show Brand Name\" name=\"showBrand\" checked>\n        <input type=\"checkbox\" title=\"Show Menu Items\" name=\"showItems\" checked>\n        <input type=\"checkbox\" title=\"Show Button(s)\" name=\"showButtons\">\n        <input type=\"checkbox\" title=\"Sticky\" name=\"sticky\" checked>\n        <select title=\"Sidebar Side\" name=\"sidebarSide\">\n            <option value=\"left\">Left</option>\n            <option value=\"right\" selected>Right</option>\n        </select>\n        <input type=\"color\" title=\"Hamburger Color\" name=\"hamburgerColor\" value=\"#4ea2e3\">\n        <input type=\"color\" title=\"Background Color\" name=\"menuBgColor\" value=\"#ffffff\">\n    <!-- End block parameters -->\n    </mbr-parameters>\n    \n\n    <nav class=\"navbar navbar-dropdown navbar-expand-lg\" mbr-class=\"{'navbar-fixed-top':sticky}\">\n      <div class=\"brand\" mbr-if=\"showLogo || showBrand\">\n          <span mbr-if=\"showLogo\" class=\"brand-logo\">\n              <amp-img src=\"@PROJECT_PATH@/assets/images/logo-eiss-cmjn-2.jpeg\" layout=\"responsive\" width=\"91.1418918918919\" height=\"47\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                  <div placeholder class=\"placeholder\"></div>\n                  <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/logo-eiss-cmjn-2.jpeg\" alt=\"Mobirise\">\n              </amp-img>\n          </span>\n          <p mbr-text mbr-theme-style=\"display-5\" mbr-if=\"showBrand\" class=\"brand-name mbr-fonts-style mbr-bold\" data-app-selector=\".brand-name\"></p>\n      </div>\n      <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n            <button class=\"navbar-toggler mb-2\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarNavAltMarkup\" aria-expanded=\"false\" aria-label=\"Toggle navigation\" mbr-if=\"showItems||showButtons\">\n                <div class=\"hamburger\">\n                    <span></span>\n                    <span></span>\n                    <span></span>\n                    <span></span>\n                </div>\n            </button>\n            <ul mbr-menu class=\"navbar-nav nav-dropdown\" mbr-theme-style=\"display-7\" mbr-if=\"showItems\" mbr-class=\"{'nav-right': !showButtons,'navbar-nav-top-padding': isPublish && !showBrand && !showLogo}\"><li class=\"nav-item\"><a class=\"nav-link link text-warning\" href=\"index.html\" data-app-selector=\".nav-link,.dropdown-item\" data-app-placeholder=\"Type Text\" aria-expanded=\"false\"><span class=\"mbrib-sun mbr-iconfont mbr-iconfont-btn\"></span>\n                        Homepage</a></li><li class=\"nav-item dropdown\">\n                    <a class=\"nav-link link dropdown-toggle text-warning\" href=\"#\" data-app-selector=\".nav-link,.dropdown-item\" data-app-placeholder=\"Type Text\" data-toggle=\"dropdown-submenu\" aria-expanded=\"false\"><span class=\"mobi-mbri mobi-mbri-globe-2 mbr-iconfont mbr-iconfont-btn\"></span>\n                        The Annual Conference</a><div class=\"dropdown-menu\"><a class=\"dropdown-item text-warning\" href=\"2020.html\" data-app-selector=\".nav-link,.dropdown-item\" data-app-placeholder=\"Type Text\" aria-expanded=\"false\">The 2021 Conference - Lisbon</a><a class=\"dropdown-item text-warning\" href=\"2019.html\" data-app-selector=\".nav-link,.dropdown-item\" data-app-placeholder=\"Type Text\">The 2019 Conference - Paris</a><a class=\"dropdown-item text-warning\" href=\"past.html\" data-app-selector=\".nav-link,.dropdown-item\" data-app-placeholder=\"Type Text\">Past conferences</a></div>\n                </li><li class=\"nav-item\"><a class=\"nav-link link text-warning\" href=\"NDC.html\" data-app-selector=\".nav-link,.dropdown-item\" data-app-placeholder=\"Type Text\" aria-expanded=\"false\"><span class=\"mbri-protect mbr-iconfont mbr-iconfont-btn\"></span>Joint Policy Workshop<br></a></li><li class=\"nav-item dropdown\">\n                    <a class=\"nav-link link dropdown-toggle text-warning\" href=\"#\" data-app-selector=\".nav-link,.dropdown-item\" data-app-placeholder=\"Type Text\" data-toggle=\"dropdown-submenu\" aria-expanded=\"true\"><span class=\"mobi-mbri mobi-mbri-users mbr-iconfont mbr-iconfont-btn\"></span>\n                        About us</a><div class=\"dropdown-menu\"><a class=\"dropdown-item text-warning\" href=\"initiative.html\" data-app-selector=\".nav-link,.dropdown-item\" data-app-placeholder=\"Type Text\">The Initiative</a><a class=\"dropdown-item text-warning\" href=\"board.html\" data-app-selector=\".nav-link,.dropdown-item\" data-app-placeholder=\"Type Text\">The Board</a></div>\n                </li></ul>\n            \n            <div mbr-if=\"showButtons\" mbr-buttons mbr-theme-style=\"display-7\" class=\"navbar-buttons mbr-section-btn\"><a class=\"btn btn-sm btn-primary\" href=\"https://www.youtube.com/watch?v=GXDA_XSsQYg\" data-app-placeholder=\"Type Text\" target=\"_blank\"><span class=\"mbri-rocket mbr-iconfont mbr-iconfont-btn\"></span>\n                  Keynote</a></div>\n      </div>\n      <button class=\"navbar-toggler hide\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarNavAltMarkup\" aria-expanded=\"false\" aria-label=\"Toggle navigation\" mbr-if=\"showItems||showButtons\">\n          <div class=\"hamburger\">\n              <span></span>\n              <span></span>\n              <span></span>\n              <span></span>\n          </div>\n      </button>\n      <button on=\"tap:sidebar.toggle\" class=\"ampstart-btn hamburger\" mbr-class=\"{'sticky-but':sticky}\" mbr-if=\"showItems||showButtons\">\n        <span></span>\n        <span></span>\n        <span></span>\n        <span></span>\n    </button>\n    </nav>\n\n  <!-- AMP plug -->\n    <amp-sidebar id=\"sidebar\" layout=\"nodisplay\" side=\"{{sidebarSide}}\">\n        <div class=\"builder-sidebar\" id=\"builder-sidebar\">\n            <button on=\"tap:sidebar.close\" class=\"close-sidebar\">\n                <span></span>\n                <span></span>\n            </button>\n        </div>\n    </amp-sidebar>\n\n</section>",
+          "_customHTML": "<section class=\"menu horizontal-menu\" group=\"Menu\" plugins=\"DropDown, amp-main,amp-sidebar\" global=\"\" once=\"menu\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"checkbox\" title=\"Show Logo\" name=\"showLogo\" checked=\"\">\n        <input type=\"range\" title=\"Logo Height\" inline=\"\" name=\"logoHeight\" min=\"35\" max=\"120\" value=\"47\" step=\"1\" condition=\"showLogo\">\n        <input type=\"range\" title=\"Logo Width\" inline=\"\" name=\"logoWidth\" min=\"35\" max=\"120\" value=\"68\" step=\"1\" condition=\"showLogo\">\n        <input type=\"checkbox\" title=\"Show Brand Name\" name=\"showBrand\" checked=\"\">\n        <input type=\"checkbox\" title=\"Show Menu Items\" name=\"showItems\" checked=\"\">\n        <input type=\"checkbox\" title=\"Show Button(s)\" name=\"showButtons\">\n        <input type=\"checkbox\" title=\"Sticky\" name=\"sticky\" checked=\"\">\n        <select title=\"Sidebar Side\" name=\"sidebarSide\">\n            <option value=\"left\">Left</option>\n            <option value=\"right\" selected=\"\">Right</option>\n        </select>\n        <input type=\"color\" title=\"Hamburger Color\" name=\"hamburgerColor\" value=\"#4ea2e3\">\n        <input type=\"color\" title=\"Background Color\" name=\"menuBgColor\" value=\"#ffffff\">\n    <!-- End block parameters -->\n    </mbr-parameters>\n    \n\n    <nav class=\"navbar navbar-dropdown navbar-expand-lg\" mbr-class=\"{'navbar-fixed-top':sticky}\">\n      <div class=\"brand\" mbr-if=\"showLogo || showBrand\">\n          <span mbr-if=\"showLogo\" class=\"brand-logo\">\n              <amp-img src=\"@PROJECT_PATH@/assets/images/logo-eiss-cmjn-2.jpeg\" layout=\"responsive\" width=\"91.1418918918919\" height=\"47\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                  <div placeholder=\"\" class=\"placeholder\"></div>\n                  <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/logo-eiss-cmjn-2.jpeg\" alt=\"Mobirise\">\n              </amp-img>\n          </span>\n          <p mbr-text=\"\" mbr-theme-style=\"display-5\" mbr-if=\"showBrand\" class=\"brand-name mbr-fonts-style mbr-bold\" data-app-selector=\".brand-name\"></p>\n      </div>\n      <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n            <button class=\"navbar-toggler mb-2\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarNavAltMarkup\" aria-expanded=\"false\" aria-label=\"Toggle navigation\" mbr-if=\"showItems||showButtons\">\n                <div class=\"hamburger\">\n                    <span></span>\n                    <span></span>\n                    <span></span>\n                    <span></span>\n                </div>\n            </button>\n            <ul mbr-menu=\"\" class=\"navbar-nav nav-dropdown\" mbr-theme-style=\"display-7\" mbr-if=\"showItems\" mbr-class=\"{'nav-right': !showButtons,'navbar-nav-top-padding': isPublish &amp;&amp; !showBrand &amp;&amp; !showLogo}\"><li class=\"nav-item\"><a class=\"nav-link link text-warning\" href=\"index.html\" data-app-selector=\".nav-link,.dropdown-item\" data-app-placeholder=\"Type Text\" aria-expanded=\"false\"><span class=\"mbrib-sun mbr-iconfont mbr-iconfont-btn\"></span>\n                        Homepage</a></li><li class=\"nav-item dropdown\">\n                    <a class=\"nav-link link dropdown-toggle text-warning\" href=\"#\" data-app-selector=\".nav-link,.dropdown-item\" data-app-placeholder=\"Type Text\" data-toggle=\"dropdown-submenu\" aria-expanded=\"false\"><span class=\"mobi-mbri mobi-mbri-globe-2 mbr-iconfont mbr-iconfont-btn\"></span>\n                        The Annual Conference</a><div class=\"dropdown-menu\"><a class=\"dropdown-item text-warning\" href=\"2020.html\" data-app-selector=\".nav-link,.dropdown-item\" data-app-placeholder=\"Type Text\" aria-expanded=\"false\">The 2021 Conference - Lisbon</a><a class=\"dropdown-item text-warning\" href=\"2019.html\" data-app-selector=\".nav-link,.dropdown-item\" data-app-placeholder=\"Type Text\">The 2019 Conference - Paris</a><a class=\"dropdown-item text-warning\" href=\"past.html\" data-app-selector=\".nav-link,.dropdown-item\" data-app-placeholder=\"Type Text\">Past conferences</a></div>\n                </li><li class=\"nav-item\"><a class=\"nav-link link text-warning\" href=\"NDC.html\" data-app-selector=\".nav-link,.dropdown-item\" data-app-placeholder=\"Type Text\" aria-expanded=\"false\"><span class=\"mbri-protect mbr-iconfont mbr-iconfont-btn\"></span>Joint Policy Workshop<br></a></li><li class=\"nav-item dropdown\">\n                    <a class=\"nav-link link dropdown-toggle text-warning\" href=\"#\" data-app-selector=\".nav-link,.dropdown-item\" data-app-placeholder=\"Type Text\" data-toggle=\"dropdown-submenu\" aria-expanded=\"true\"><span class=\"mobi-mbri mobi-mbri-users mbr-iconfont mbr-iconfont-btn\"></span>\n                        About us</a><div class=\"dropdown-menu\"><a class=\"dropdown-item text-warning\" href=\"initiative.html\" data-app-selector=\".nav-link,.dropdown-item\" data-app-placeholder=\"Type Text\">The Initiative</a><a class=\"dropdown-item text-warning\" href=\"board.html\" data-app-selector=\".nav-link,.dropdown-item\" data-app-placeholder=\"Type Text\">The Board</a></div>\n                </li></ul>\n            \n            <div mbr-if=\"showButtons\" mbr-buttons=\"\" mbr-theme-style=\"display-7\" class=\"navbar-buttons mbr-section-btn\"><a class=\"btn btn-sm btn-primary\" href=\"https://www.youtube.com/watch?v=GXDA_XSsQYg\" data-app-placeholder=\"Type Text\" target=\"_blank\"><span class=\"mbri-rocket mbr-iconfont mbr-iconfont-btn\"></span>\n                  Keynote</a></div>\n      </div>\n      <button class=\"navbar-toggler hide\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarNavAltMarkup\" aria-expanded=\"false\" aria-label=\"Toggle navigation\" mbr-if=\"showItems||showButtons\">\n          <div class=\"hamburger\">\n              <span></span>\n              <span></span>\n              <span></span>\n              <span></span>\n          </div>\n      </button>\n      <button on=\"tap:sidebar.toggle\" class=\"ampstart-btn hamburger\" mbr-class=\"{'sticky-but':sticky}\" mbr-if=\"showItems||showButtons\">\n        <span></span>\n        <span></span>\n        <span></span>\n        <span></span>\n    </button>\n    </nav>\n\n  <!-- AMP plug -->\n    <amp-sidebar id=\"sidebar\" layout=\"nodisplay\" side=\"{{sidebarSide}}\">\n        <div class=\"builder-sidebar\" id=\"builder-sidebar\">\n            <button on=\"tap:sidebar.close\" class=\"close-sidebar\">\n                <span></span>\n                <span></span>\n            </button>\n        </div>\n    </amp-sidebar>\n\n</section>",
           "_isUserblock": true,
           "_sourceTheme": "mobirise-amp",
           "_cid": "rEjg1AglgL",
@@ -6066,48 +6066,6 @@
         {
           "alias": false,
           "_styles": {
-            "background-color": "@bgColor",
-            "& when not (@fullWidth)": {
-              "padding-top": "(@paddingTop * 15px)",
-              "padding-bottom": "(@paddingBottom * 15px)"
-            },
-            ".image-block": {
-              "margin": "auto",
-              "width": "~\"@{videoSize}%\"",
-              "& when (@fullWidth)": {
-                "width": "100% !important"
-              }
-            },
-            "amp-img": {
-              "text-align": "center"
-            },
-            ".mbr-text": {
-              "margin": "0",
-              "padding": ".5rem 0",
-              "& when (@fullWidth)": {
-                "padding": ".5rem 15px"
-              }
-            },
-            "@media (max-width: 767px)": {
-              ".image-block": {
-                "width": "100% !important"
-              }
-            }
-          },
-          "_name": "image2",
-          "_customHTML": "<section class=\"image2\" group=\"Images &amp; Videos\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n\n        <input type=\"checkbox\" title=\"Full Width\" name=\"fullWidth\">\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" value=\"0\" step=\"1\" condition=\"fullWidth == false\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" value=\"0\" step=\"1\" condition=\"fullWidth == false\">\n        <input type=\"range\" inline=\"\" title=\"Width\" name=\"videoSize\" min=\"20\" max=\"100\" value=\"100\" step=\"1\" condition=\"fullWidth == false\">\n        <input type=\"checkbox\" title=\"Show Caption\" name=\"showText\">\n\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\" condition=\"showText==true\">\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div mbr-class=\"{'container': fullWidth == false}\">\n        <div class=\"image-block\">\n            <amp-img src=\"@PROJECT_PATH@/assets/images/logo-eiss-cartouche-rvb-copy.jpg\" layout=\"responsive\" width=\"1107.9821593220338\" height=\"216.891\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                <div placeholder=\"\" class=\"placeholder\"></div>\n                <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/logo-eiss-cartouche-rvb-copy.jpg\" alt=\"Mobirise\" title=\"\">\n            </amp-img>\n            <div class=\"mbr-figure-caption\" mbr-if=\"showText\">\n                <p mbr-text=\"\" class=\"mbr-text mbr-black align-center mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\">\n                    Create awesome and FAST websites!\n                </p>\n            </div>\n        </div>\n    </div>\n</section>",
-          "_anchor": "image2-3l",
-          "_isUserblock": true,
-          "_sourceTheme": "mobirise-amp",
-          "_cid": "rFJGiIaA6x",
-          "_protectedParams": [],
-          "_global": false,
-          "_once": false,
-          "_params": {}
-        },
-        {
-          "alias": false,
-          "_styles": {
             "padding-top": "(@paddingTop * 15px)",
             "padding-bottom": "(@paddingBottom * 15px)",
             "& when (@bg-type = 'color')": {
@@ -6129,7 +6087,7 @@
           },
           "_name": "info1",
           "_sourceTheme": "mobirise-amp",
-          "_customHTML": "<section class=\"info1\" group=\"Testimonials & Info\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!--Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Size</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <header>Show/Hide</header>\n        <input type=\"checkbox\" title=\"Title\" name=\"showTitle\" checked>\n        <input type=\"checkbox\" title=\"Subtitle\" name=\"showSubtitle\" checked>\n        <input type=\"checkbox\" title=\"Button\" name=\"showButton\" checked>\n        <input type=\"checkbox\" title=\"Reverse\" name=\"reverse\" condition=\"(showTitle || showSubtitle) && showButton\">\n        <header>Background</header>\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Image\" value=\"../_images/background3.jpg\">\n            <input type=\"color\" title=\"Color\" value=\"#00dcc0\" selected>\n        </fieldset>\n        <input type=\"checkbox\" title=\"2 Color\" name=\"twoColor\" condition=\"bg.type == 'color'\" checked>\n        <input type=\"color\" title=\"Color 2\" value=\"#005af0\" name=\"twoColorBg\" condition=\"twoColor && bg.type == 'color'\">\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-row mbr-jc-c\" mbr-class=\"{'mbr-row-reverse': reverse}\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-8\" mbr-if=\"showTitle || showSubtitle\">\n                <h2 class=\"mbr-section-title align-left mbr-fonts-style mbr-bold mbr-white mbr-pb-2\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".mbr-section-title\">\n                    The 2021 programme</h2>\n                <h3 class=\"mbr-text align-left mbr-fonts-style mbr-regular mbr-white\" mbr-theme-style=\"display-7\" mbr-if=\"showSubtitle\" data-app-selector=\".mbr-text\">We strive to carry the 2020 programme over to 2021. You can find the preliminary 2021 programme below, for information. Stay tuned for further updates.</h3>\n            </div>\n            <div class=\"btn-container mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-4 align-center mbr-flex\" mbr-if=\"showButton\">\n                <div class=\"mbr-section-btn mbr-m-auto\" mbr-buttons mbr-theme-style=\"display-7\" data-toolbar=\"-mbrBtnMove\"><a class=\"btn btn-white\" href=\"https://drive.google.com/file/d/1TDtM7KapghJNSYHO8qpm-9VrdfFodXY2/view?usp=sharing\" data-app-placeholder=\"Type Text\" target=\"_blank\">DOWNLOAD IT HERE</a></div>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_customHTML": "<section class=\"info1\" group=\"Testimonials & Info\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!--Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Size</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <header>Show/Hide</header>\n        <input type=\"checkbox\" title=\"Title\" name=\"showTitle\" checked>\n        <input type=\"checkbox\" title=\"Subtitle\" name=\"showSubtitle\" checked>\n        <input type=\"checkbox\" title=\"Button\" name=\"showButton\" checked>\n        <input type=\"checkbox\" title=\"Reverse\" name=\"reverse\" condition=\"(showTitle || showSubtitle) && showButton\">\n        <header>Background</header>\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Image\" value=\"../_images/background3.jpg\">\n            <input type=\"color\" title=\"Color\" value=\"#00dcc0\" selected>\n        </fieldset>\n        <input type=\"checkbox\" title=\"2 Color\" name=\"twoColor\" condition=\"bg.type == 'color'\" checked>\n        <input type=\"color\" title=\"Color 2\" value=\"#005af0\" name=\"twoColorBg\" condition=\"twoColor && bg.type == 'color'\">\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-row mbr-jc-c\" mbr-class=\"{'mbr-row-reverse': reverse}\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-8\" mbr-if=\"showTitle || showSubtitle\">\n                <h2 class=\"mbr-section-title align-left mbr-fonts-style mbr-bold mbr-white mbr-pb-2\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".mbr-section-title\">\n                    The 2021 programme</h2>\n                <h3 class=\"mbr-text align-left mbr-fonts-style mbr-regular mbr-white\" mbr-theme-style=\"display-7\" mbr-if=\"showSubtitle\" data-app-selector=\".mbr-text\">We strove to carry most of the 2020 programme over to 2021. You can find the definitive 2021 programme below, for information.</h3>\n            </div>\n            <div class=\"btn-container mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-4 align-center mbr-flex\" mbr-if=\"showButton\">\n                <div class=\"mbr-section-btn mbr-m-auto\" mbr-buttons mbr-theme-style=\"display-7\" data-toolbar=\"-mbrBtnMove\"><a class=\"btn btn-white\" href=\"https://drive.google.com/file/d/1DauG72h8Nf8MQv46XN7Dt5KFgNdnRbYI/view?usp=drivesdk/view?usp=sharing\" data-app-placeholder=\"Type Text\" target=\"_blank\">DOWNLOAD IT HERE</a></div>\n            </div>\n        </div>\n    </div>\n</section>",
           "_cid": "sqq8KKinXk",
           "_anchor": "info1-5a",
           "_protectedParams": [],
@@ -6165,6 +6123,48 @@
           "_anchor": "info1-5k",
           "_isUserblock": true,
           "_cid": "sqJor1spPC",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "alias": false,
+          "_styles": {
+            "background-color": "@bgColor",
+            "& when not (@fullWidth)": {
+              "padding-top": "(@paddingTop * 15px)",
+              "padding-bottom": "(@paddingBottom * 15px)"
+            },
+            ".image-block": {
+              "margin": "auto",
+              "width": "~\"@{videoSize}%\"",
+              "& when (@fullWidth)": {
+                "width": "100% !important"
+              }
+            },
+            "amp-img": {
+              "text-align": "center"
+            },
+            ".mbr-text": {
+              "margin": "0",
+              "padding": ".5rem 0",
+              "& when (@fullWidth)": {
+                "padding": ".5rem 15px"
+              }
+            },
+            "@media (max-width: 767px)": {
+              ".image-block": {
+                "width": "100% !important"
+              }
+            }
+          },
+          "_name": "image2",
+          "_customHTML": "<section class=\"image2\" group=\"Images &amp; Videos\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n\n        <input type=\"checkbox\" title=\"Full Width\" name=\"fullWidth\">\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" value=\"0\" step=\"1\" condition=\"fullWidth == false\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" value=\"0\" step=\"1\" condition=\"fullWidth == false\">\n        <input type=\"range\" inline=\"\" title=\"Width\" name=\"videoSize\" min=\"20\" max=\"100\" value=\"100\" step=\"1\" condition=\"fullWidth == false\">\n        <input type=\"checkbox\" title=\"Show Caption\" name=\"showText\">\n\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\" condition=\"showText==true\">\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div mbr-class=\"{'container': fullWidth == false}\">\n        <div class=\"image-block\">\n            <amp-img src=\"@PROJECT_PATH@/assets/images/logo-eiss-cartouche-rvb-copy.jpg\" layout=\"responsive\" width=\"1107.9821593220338\" height=\"216.891\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                <div placeholder=\"\" class=\"placeholder\"></div>\n                <img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/logo-eiss-cartouche-rvb-copy.jpg\" alt=\"Mobirise\" title=\"\">\n            </amp-img>\n            <div class=\"mbr-figure-caption\" mbr-if=\"showText\">\n                <p mbr-text=\"\" class=\"mbr-text mbr-black align-center mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\">\n                    Create awesome and FAST websites!\n                </p>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_anchor": "image2-3l",
+          "_isUserblock": true,
+          "_sourceTheme": "mobirise-amp",
+          "_cid": "rFJGiIaA6x",
           "_protectedParams": [],
           "_global": false,
           "_once": false,
@@ -6226,190 +6226,6 @@
           "_anchor": "map1-5j",
           "_isUserblock": true,
           "_cid": "sqI13INEod",
-          "_protectedParams": [],
-          "_global": false,
-          "_once": false,
-          "_params": {}
-        },
-        {
-          "alias": false,
-          "_styles": {
-            "padding-top": "(@paddingTop * 15px)",
-            "padding-bottom": "(@paddingBottom * 15px)",
-            "& when (@bg-type = 'color')": {
-              "background-color": "@bg-value"
-            },
-            "& when (@bg-type = 'image')": {
-              "background-image": "url(@bg-value)"
-            },
-            ".card": {
-              "margin-bottom": "3rem",
-              "position": "relative",
-              "display": "flex",
-              "-ms-flex-direction": "column",
-              "-webkit-flex-direction": "column",
-              "flex-direction": "column",
-              "min-width": "0",
-              "word-wrap": "break-word",
-              "background-clip": "border-box",
-              "border-radius": ".25rem",
-              "width": "100%",
-              "min-height": "1px",
-              "@media (min-width: 768px)": {
-                "padding-left": "1.5rem",
-                "padding-right": "1.5rem"
-              },
-              "@media (max-width: 767px)": {
-                "margin-bottom": "30px"
-              }
-            },
-            ".card-title": {
-              "margin": "0"
-            },
-            ".card-box": {
-              "padding-top": "2rem"
-            },
-            "amp-img": {
-              "width": "100%"
-            },
-            ".mbr-text": {
-              "color": "#767676"
-            },
-            ".mbr-row": {
-              "@media (min-width: 768px)": {
-                "margin-left": "-1.5rem",
-                "margin-right": "-1.5rem"
-              }
-            }
-          },
-          "_name": "features1",
-          "_customHTML": "<section class=\"features1 mbr-section\" group=\"Features\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"9\" step=\"1\" value=\"0\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"9\" step=\"1\" value=\"0\">\n\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\">\n        <input type=\"checkbox\" title=\"Show Text\" name=\"showText\">\n        <select title=\"Cards\" name=\"cardsAmount\">\n            <option value=\"1\">1</option>\n            <option value=\"2\" selected=\"\">2</option>\n        </select>\n\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background2.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected=\"\">\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n    \n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/screenshot-2021-05-04-at-18.01.31.png\" layout=\"responsive\" width=\"529.9858343558283\" height=\"578.812\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <a href=\"https://drive.google.com/file/d/1LZIKI1VMhZfXla2T6v2NZ71bi99krvRh/view?usp=sharing\" target=\"_blank\"><img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/screenshot-2021-05-04-at-18.01.31.png\" alt=\"Mobirise\" title=\"\" data-aspectratio=\"1.0921273031825796\"></a>\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Higher Perfomance\n                        </h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-7\" mbr-if=\"showText\" data-app-selector=\".mbr-text\"></p>\n                    </div>\n                </div>\n            </div>\n            \n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-if=\"cardsAmount > 1\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/screenshot-2021-05-04-at-18.01.45.png\" layout=\"responsive\" height=\"585.062\" width=\"529.9867191358024\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <a href=\"https://drive.google.com/file/d/1LZIKI1VMhZfXla2T6v2NZ71bi99krvRh/view?usp=sharing\" target=\"_blank\"><img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/screenshot-2021-05-04-at-18.01.45.png\" alt=\"Mobirise\" title=\"\" data-aspectratio=\"1.1039182282793867\"></a>\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Flexibility and Results\n                        </h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-7\" mbr-if=\"showText\" data-app-selector=\".mbr-text\"></p>\n                    </div>\n                </div>\n            </div>\n            \n        </div>\n    </div>\n</section>",
-          "_cid": "rIPXnkhprR",
-          "_anchor": "features1-4i",
-          "_protectedParams": [],
-          "_global": false,
-          "_once": false,
-          "_params": {}
-        },
-        {
-          "alias": false,
-          "_styles": {
-            "padding-top": "(@paddingTop * 15px)",
-            "padding-bottom": "(@paddingBottom * 15px)",
-            "& when (@bg-type = 'color')": {
-              "background-color": "@bg-value"
-            },
-            "& when (@bg-type = 'image')": {
-              "background-image": "url(@bg-value)"
-            },
-            ".card": {
-              "margin-bottom": "3rem",
-              "position": "relative",
-              "display": "flex",
-              "-ms-flex-direction": "column",
-              "-webkit-flex-direction": "column",
-              "flex-direction": "column",
-              "min-width": "0",
-              "word-wrap": "break-word",
-              "background-clip": "border-box",
-              "border-radius": ".25rem",
-              "width": "100%",
-              "min-height": "1px",
-              "@media (min-width: 768px)": {
-                "padding-left": "1.5rem",
-                "padding-right": "1.5rem"
-              },
-              "@media (max-width: 767px)": {
-                "margin-bottom": "30px"
-              }
-            },
-            ".card-title": {
-              "margin": "0"
-            },
-            ".card-box": {
-              "padding-top": "2rem"
-            },
-            "amp-img": {
-              "width": "100%"
-            },
-            ".mbr-text": {
-              "color": "#767676"
-            },
-            ".mbr-row": {
-              "@media (min-width: 768px)": {
-                "margin-left": "-1.5rem",
-                "margin-right": "-1.5rem"
-              }
-            }
-          },
-          "_name": "features1",
-          "_sourceTheme": "mobirise-amp",
-          "_customHTML": "<section class=\"features1 mbr-section\" group=\"Features\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"9\" step=\"1\" value=\"0\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"9\" step=\"1\" value=\"0\">\n\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\">\n        <input type=\"checkbox\" title=\"Show Text\" name=\"showText\">\n        <select title=\"Cards\" name=\"cardsAmount\">\n            <option value=\"1\">1</option>\n            <option value=\"2\" selected=\"\">2</option>\n        </select>\n\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"@PROJECT_PATH@/assets/images/background2.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected=\"\">\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n    \n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/screenshot-2021-05-04-at-18.01.56.png\" layout=\"responsive\" width=\"529.9992577197149\" height=\"725.625\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <a href=\"https://drive.google.com/file/d/1LZIKI1VMhZfXla2T6v2NZ71bi99krvRh/view?usp=sharing\" target=\"_blank\"><img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/screenshot-2021-05-04-at-18.01.56.png\" alt=\"Mobirise\" title=\"\" data-aspectratio=\"1.3691056910569106\"></a>\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Higher Perfomance\n                        </h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-7\" mbr-if=\"showText\" data-app-selector=\".mbr-text\"></p>\n                    </div>\n                </div>\n            </div>\n            \n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-if=\"cardsAmount > 1\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/screenshot-2021-05-04-at-18.02.02.png\" layout=\"responsive\" height=\"735.328\" width=\"529.9977470167064\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <a href=\"https://drive.google.com/file/d/1LZIKI1VMhZfXla2T6v2NZ71bi99krvRh/view?usp=sharing\" target=\"_blank\"><img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/screenshot-2021-05-04-at-18.02.02.png\" alt=\"Mobirise\" title=\"\" data-aspectratio=\"1.3874172185430464\"></a>\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Flexibility and Results\n                        </h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-7\" mbr-if=\"showText\" data-app-selector=\".mbr-text\"></p>\n                    </div>\n                </div>\n            </div>\n            \n        </div>\n    </div>\n</section>",
-          "_anchor": "features1-5c",
-          "_isUserblock": true,
-          "_cid": "sqHSqEpz9x",
-          "_protectedParams": [],
-          "_global": false,
-          "_once": false,
-          "_params": {}
-        },
-        {
-          "alias": false,
-          "_styles": {
-            "padding-top": "(@paddingTop * 15px)",
-            "padding-bottom": "(@paddingBottom * 15px)",
-            "& when (@bg-type = 'color')": {
-              "background-color": "@bg-value"
-            },
-            "& when (@bg-type = 'image')": {
-              "background-image": "url(@bg-value)"
-            },
-            ".card": {
-              "margin-bottom": "3rem",
-              "position": "relative",
-              "display": "flex",
-              "-ms-flex-direction": "column",
-              "-webkit-flex-direction": "column",
-              "flex-direction": "column",
-              "min-width": "0",
-              "word-wrap": "break-word",
-              "background-clip": "border-box",
-              "border-radius": ".25rem",
-              "width": "100%",
-              "min-height": "1px",
-              "@media (min-width: 768px)": {
-                "padding-left": "1.5rem",
-                "padding-right": "1.5rem"
-              },
-              "@media (max-width: 767px)": {
-                "margin-bottom": "30px"
-              }
-            },
-            ".card-title": {
-              "margin": "0"
-            },
-            ".card-box": {
-              "padding-top": "2rem"
-            },
-            "amp-img": {
-              "width": "100%"
-            },
-            ".mbr-text": {
-              "color": "#767676"
-            },
-            ".mbr-row": {
-              "@media (min-width: 768px)": {
-                "margin-left": "-1.5rem",
-                "margin-right": "-1.5rem"
-              }
-            }
-          },
-          "_name": "features1",
-          "_sourceTheme": "mobirise-amp",
-          "_customHTML": "<section class=\"features1 mbr-section\" group=\"Features\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"9\" step=\"1\" value=\"0\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"9\" step=\"1\" value=\"0\">\n\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\">\n        <input type=\"checkbox\" title=\"Show Text\" name=\"showText\">\n        <select title=\"Cards\" name=\"cardsAmount\">\n            <option value=\"1\">1</option>\n            <option value=\"2\" selected=\"\">2</option>\n        </select>\n\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"@PROJECT_PATH@/assets/images/background2.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected=\"\">\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n    \n    <div class=\"container\">\n        <div class=\"mbr-row mbr-justify-content-center\">\n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/screenshot-2021-05-04-at-18.02.11.png\" layout=\"responsive\" width=\"529.9906365795724\" height=\"742.516\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <a href=\"https://drive.google.com/file/d/1LZIKI1VMhZfXla2T6v2NZ71bi99krvRh/view?usp=sharing\" target=\"_blank\"><img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/screenshot-2021-05-04-at-18.02.11.png\" alt=\"Mobirise\" title=\"\" data-aspectratio=\"1.4009983361064893\"></a>\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Higher Perfomance\n                        </h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-7\" mbr-if=\"showText\" data-app-selector=\".mbr-text\"></p>\n                    </div>\n                </div>\n            </div>\n            \n            <div class=\"card mbr-col-sm-12 mbr-col-md-6\" mbr-if=\"cardsAmount > 1\">\n                <div class=\"card-wrapper\">\n                    <div class=\"card-img\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/screenshot-2021-05-04-at-18.02.16.png\" layout=\"responsive\" height=\"738.422\" width=\"529.9892521109771\" alt=\"Mobirise\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <a href=\"https://drive.google.com/file/d/1LZIKI1VMhZfXla2T6v2NZ71bi99krvRh/view?usp=sharing\" target=\"_blank\"><img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/screenshot-2021-05-04-at-18.02.16.png\" alt=\"Mobirise\" title=\"\" data-aspectratio=\"1.3932773109243697\"></a>\n                        </amp-img>\n                    </div>\n                    <div class=\"card-box\">\n                        <h4 class=\"card-title mbr-fonts-style align-left mbr-light\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".card-title\">\n                            Flexibility and Results\n                        </h4>\n                        <p class=\"mbr-text mbr-fonts-style align-left\" mbr-theme-style=\"display-7\" mbr-if=\"showText\" data-app-selector=\".mbr-text\"></p>\n                    </div>\n                </div>\n            </div>\n            \n        </div>\n    </div>\n</section>",
-          "_anchor": "features1-5d",
-          "_isUserblock": true,
-          "_cid": "sqHSs9NTB6",
           "_protectedParams": [],
           "_global": false,
           "_once": false,
@@ -6562,7 +6378,7 @@
             }
           },
           "_name": "footer1",
-          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"6\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2018 - 2021 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners.<br><br>Last update: 04/05/2021<br>Created and maintained by <a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\">APB_Laudrain</a><br><a href=\"mailto:arthur.laudrain@gmail.com\">Freelance website designing and hosting</a><a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\"><br></a><br></p>\n        </div>\n    </div>\n</section>",
+          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"6\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2018 - 2021 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners.<br><br>Last update: 23/08/2021<br>Created and maintained by <a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\">APB_Laudrain</a><br><a href=\"mailto:arthur.laudrain@gmail.com\">Freelance website designing and hosting</a><a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\"><br></a><br></p>\n        </div>\n    </div>\n</section>",
           "_cid": "rEjg1Qbdb5",
           "_anchor": "footer1-35",
           "_protectedParams": [],
@@ -7620,7 +7436,7 @@
             }
           },
           "_name": "footer1",
-          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"6\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2018 - 2021 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners.<br><br>Last update: 04/05/2021<br>Created and maintained by <a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\">APB_Laudrain</a><br><a href=\"mailto:arthur.laudrain@gmail.com\">Freelance website designing and hosting</a><a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\"><br></a><br></p>\n        </div>\n    </div>\n</section>",
+          "_customHTML": "<section class=\"footer1\" group=\"Footers\" plugins=\"amp-main\" global once=\"footer\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" step=\"1\" value=\"6\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" step=\"1\" value=\"2\">\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Background Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Background Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-col-sm-12 align-center mbr-white\">\n            <p class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-col-sm-12, .mbr-text\" data-app-placeholder=\"Type Text\">\n                © Copyright 2018 - 2021 EISS - All Rights Reserved\n            <br>Any third-party image and content remains the property of its owners.<br><br>Last update: 23/08/2021<br>Created and maintained by <a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\">APB_Laudrain</a><br><a href=\"mailto:arthur.laudrain@gmail.com\">Freelance website designing and hosting</a><a href=\"https://twitter.com/APB_Laudrain\" target=\"_blank\"><br></a><br></p>\n        </div>\n    </div>\n</section>",
           "_cid": "swsRULZGQF",
           "_anchor": "footer1-7q",
           "_protectedParams": [],
