@@ -1,7 +1,7 @@
 {
   "settings": {
     "name": "EISS v1.3.1",
-    "currentPage": "board.html",
+    "currentPage": "index.html",
     "theme": {
       "name": "mobirise-amp",
       "title": "Mobirise AMP",
@@ -52,7 +52,7 @@
     "siteUrl": "https://eiss-europa.com/",
     "sitemapSwitcherAuto": true,
     "sitemapSwitcher": true,
-    "google-analytics": "<!-- Global site tag (gtag.js) - Google Analytics -->\r\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-134365408-2\"></script>\r\n<script>\r\n  window.dataLayer = window.dataLayer || [];\r\n  function gtag(){dataLayer.push(arguments);}\r\n  gtag('js', new Date());\r\n\r\n  gtag('config', 'UA-134365408-2');\r\n</script>",
+    "google-analytics": "<script id=\"mcjs\">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,\"script\",\"https://chimpstatic.com/mcjs-connected/js/users/20ec1b10b31ce0f49c0d0a5dd/126863d4656a90a2623816d15.js\");</script>",
     "cookiesAlert": {
       "colorText": "#424a4d",
       "colorBg": "#eaeff1",
@@ -71,7 +71,7 @@
     "": "on",
     "imageResize": false,
     "publishChangesOnly": true,
-    "mbrsiteDomain": "znynnq20cm"
+    "mbrsiteDomain": "wrnx7vw3vx"
   },
   "pages": {
     "index.html": {
