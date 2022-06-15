@@ -12,12 +12,6 @@
 		<loc>https://eiss-europa.com/board.html</loc>
 	</url>
 	<url>
-		<loc>https://eiss-europa.com/NDC.html</loc>
-	</url>
-	<url>
-		<loc>https://eiss-europa.com/past.html</loc>
-	</url>
-	<url>
 		<loc>https://eiss-europa.com/2021.html</loc>
 	</url>
 	<url>
@@ -58,5 +52,17 @@
 	</url>
 	<url>
 		<loc>https://eiss-europa.com/practical.html</loc>
+	</url>
+	<url>
+		<loc>https://eiss-europa.com/membership-conf-prompt.html</loc>
+	</url>
+	<url>
+		<loc>https://eiss-europa.com/conferencepast.html</loc>
+	</url>
+	<url>
+		<loc>https://eiss-europa.com/JPW2019.html</loc>
+	</url>
+	<url>
+		<loc>https://eiss-europa.com/JPW2022.html</loc>
 	</url>
 </urlset>
