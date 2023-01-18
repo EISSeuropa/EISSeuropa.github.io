@@ -44,7 +44,7 @@
     "favicon": false,
     "noImageResize": null,
     "uniqCompNum": 604,
-    "versionPublish": "5.7.4",
+    "versionPublish": "5.7.8",
     "screenshot": "screenshot.png",
     "сanonical-url": "",
     "robotsText": "User-agent: *\r\nDisallow: /cgi-bin\r\n",
