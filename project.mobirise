@@ -239,13 +239,13 @@
           },
           "_name": "content5",
           "_sourceTheme": "mobirise-amp",
-          "_customHTML": "<section class=\"mbr-section 04\" plugins=\"amp-main\" group=\"Article\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Style</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" step=\"1\" value=\"0\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" step=\"1\" value=\"4\">\n        <input type=\"color\" title=\"Color\" name=\"bgColor\" value=\"#ffdc00\">\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-row mbr-jc-c\">\n            <div class=\"mbr-section-btn mbr-col-md-12 mbr-col-sm-12 mbr-col-lg-8 align-center\" mbr-buttons mbr-theme-style=\"display-4\" data-toolbar=\"-mbrBtnMove\"><a class=\"btn btn-warning\" href=\"https://indico.eiss-europa.com/e/Ukraine\" data-app-placeholder=\"Type Text\">Learn More</a>\n                <a class=\"btn btn-warning\" href=\"https://indico.eiss-europa.com/event/9/attachments/6/17/The%20War%20in%20Ukraine%20Lessons%20Learned%20and%20the%20Future%20Political%20Settlement%20(24%20February%202023)%20·%20EISS%20-%20E.pdf\" data-app-placeholder=\"Type Text\">Programme (PDF)</a></div>\n        </div>\n    </div>\n</section>",
+          "_customHTML": "<section class=\"mbr-section 04\" plugins=\"amp-main\" group=\"Article\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Style</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" step=\"1\" value=\"0\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" step=\"1\" value=\"4\">\n        <input type=\"color\" title=\"Color\" name=\"bgColor\" value=\"#ffdc00\">\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-row mbr-jc-c\">\n            <div class=\"mbr-section-btn mbr-col-md-12 mbr-col-sm-12 mbr-col-lg-8 align-center\" mbr-buttons mbr-theme-style=\"display-4\" data-toolbar=\"-mbrBtnMove\"><a class=\"btn btn-warning\" href=\"https://indico.eiss-europa.com/e/Ukraine\" data-app-placeholder=\"Type Text\">Learn More</a>\n                <a class=\"btn btn-warning\" href=\"https://indico.eiss-europa.com/event/9/attachments/6/18/Conference%20Lessons%20Learned%20from%20Ukraine_Programme%20Final%20Version.pdf\" data-app-placeholder=\"Type Text\">Programme (PDF)</a></div>\n        </div>\n    </div>\n</section>",
           "_cid": "tvauvakw6U",
+          "_anchor": "content5-h8",
           "_protectedParams": [],
           "_global": false,
           "_once": false,
-          "_params": {},
-          "_anchor": "content5-h8"
+          "_params": {}
         },
         {
           "alias": false,
