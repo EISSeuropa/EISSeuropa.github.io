@@ -27,9 +27,6 @@
 		<loc>https://eiss-europa.com/success.html</loc>
 	</url>
 	<url>
-		<loc>https://eiss-europa.com/refund.html</loc>
-	</url>
-	<url>
 		<loc>https://eiss-europa.com/panels.html</loc>
 	</url>
 	<url>
@@ -61,5 +58,8 @@
 	</url>
 	<url>
 		<loc>https://eiss-europa.com/2024.html</loc>
+	</url>
+	<url>
+		<loc>https://eiss-europa.com/terms.html</loc>
 	</url>
 </urlset>
