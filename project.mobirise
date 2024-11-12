@@ -44,7 +44,7 @@
     ],
     "favicon": false,
     "noImageResize": null,
-    "uniqCompNum": 705,
+    "uniqCompNum": 706,
     "versionPublish": "5.9.18",
     "screenshot": "screenshot.png",
     "сanonical-url": "",
@@ -16620,6 +16620,29 @@
           "_styles": {
             "padding-top": "(@paddingTop * 15px)",
             "padding-bottom": "(@paddingBottom * 15px)",
+            "background-color": "@bgColor",
+            ".google-map": {
+              "height": "25rem"
+            },
+            ".mbr-section-title": {
+              "color": "#170ca4"
+            }
+          },
+          "_name": "map2",
+          "_sourceTheme": "mobirise-amp",
+          "_customHTML": "<section class=\"map map2\" group=\"Maps\" plugins=\"amp-main,amp-iframe\">\n\n    <mbr-parameters>\n    <!-- Block of parameters for component -->\n        <header>Size</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" value=\"0\" step=\"1\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" value=\"5\" step=\"1\">\n        <header>Show/Hide</header>\n        <input type=\"checkbox\" title=\"Title\" name=\"showTitle\" checked>\n        <input type=\"color\" title=\"Background\" name=\"bgColor\" value=\"#ffffff\">\n        <input type=\"map\" title=\"Map\" name=\"googleMap\" place-id=\"Room 3.32\nWijnhaven, Leiden University, \nTurfmarkt 99, 2511 DP Den Haag, Netherlands\" value=\"Room 3.32\nWijnhaven, Leiden University, \nTurfmarkt 99, 2511 DP Den Haag, Netherlands\">\n    <!-- End block of parameters -->\n    </mbr-parameters>\n    <div class=\"container\">\n        <div class=\"mbr-row\">\n            <div class=\"map-title mbr-col-sm-12 mbr-col-md-12 mbr-col-lg-12\">\n                <h2 class=\"mbr-section-title mbr-bold align-center mbr-fonts-style mbr-pb-4\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".mbr-section-title\"><span style=\"font-weight: normal;\">Room 3.32 <br>Wijnhaven, Leiden University,&nbsp;</span><div><span style=\"font-weight: normal;\">Turfmarkt 99, 2511 DP Den Haag, Netherlands</span></div><div><br></div></h2>\n            </div>\n            <div class=\"mbr-col-sm-12 mbr-col-md-12 map-box\">\n                <div class=\"google-map\" mbr-map=\"googleMap\"></div>\n                <div class=\"map-placeholder mobirise-loader\">\n                    <div placeholder class=\"placeholder\"></div>\n                </div>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_cid": "utVi9UTIah",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {},
+          "_anchor": "map2-jl"
+        },
+        {
+          "alias": false,
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
             "& when (@bg-type = 'color')": {
               "background-color": "@bg-value"
             },
@@ -16663,33 +16686,6 @@
           "_anchor": "content1-if",
           "_isUserblock": true,
           "_cid": "tGdW6zU4Ig",
-          "_protectedParams": [],
-          "_global": false,
-          "_once": false,
-          "_params": {}
-        },
-        {
-          "alias": false,
-          "_styles": {
-            "padding-top": "(@paddingTop * 15px)",
-            "padding-bottom": "(@paddingBottom * 15px)",
-            "& when (@bg-type = 'color')": {
-              "background-color": "@bg-value"
-            },
-            "& when (@bg-type = 'image')": {
-              "background-image": "url(@bg-value)"
-            },
-            ".mbr-text": {
-              "color": "#170ca4",
-              "text-align": "left"
-            }
-          },
-          "_name": "content4",
-          "_sourceTheme": "mobirise-amp",
-          "_customHTML": "<section class=\"content4 mbr-section article\" plugins=\"amp-main\" group=\"Article\">\n    \n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Style</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" step=\"1\" value=\"0\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" step=\"1\" value=\"1\">\n        <select name=\"alignContent\" title=\"Align Content\">\n            <option value=\"1\">Left</option>\n            <option value=\"2\" selected>Center</option>\n            <option value=\"3\">Right</option>\n        </select>\n        <input type=\"range\" title=\"Width\" name=\"textWidth\" min=\"4\" max=\"12\" step=\"1\" value=\"10\">\n        <header>Background</header>\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Image\" value=\"@PROJECT_PATH@/assets/images/background4.jpg\">\n            <input type=\"color\" title=\"Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-row\" mbr-class=\"{'mbr-jc-c' : alignContent == 2, 'mbr-jc-e' : alignContent == 3}\">\n            <div class=\"mbr-col-sm-12 mbr-md-12 mbr-col-lg-{{textWidth}}\">\n                <p class=\"mbr-text align-center mbr-fonts-style mbr-regular\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\"><b>Thursday 19 October \n</b><br>\n<br>14:00 - 14:15<br>Welcome remarks<br>\n<br>14:15 - 14:30<br>Presentation Programme: Rationale, Central Questions, Principal Objectives \n<br>\n<br>14:30 - 14:45<br><i>Tour de Table</i>: Introductory round<br><br>14:45 - 17:30<br><u>Roundtable 1:\tDefining Coercive Statecraft</u><br>Chair: <b>Tim Sweijs</b> | The Hague Centre for Strategic Studies / War Studies Research Centre<br> <br>Introductory remarks by:<br><b>Peter Viggo Jakobsen</b> | University of Southern Denmark <br><b>Dima Adamsky</b> | Reichman University<br><b>Kelly Greenhill</b> | Tufts University<br><b>Beatrice Heuser</b> | University of Glasgow<br><br>Leading questions:<br><br>- Conceptual boundaries: what are coercive statecraft, coercive diplomacy and coercion?<br>- What are the differences and similarities between peacetime and wartime coercive statecraft?<br>- What are the differences and similarities between overt and covert coercive statecraft?<br>- How useful is Alexander George’s conceptual framework to evaluate coercive statecraft in the 21st century? How can it be improved?<br>\n<br>19:30<br>Dinner  \n<br>\n<br><b>Friday 20 October \n</b><br>\n<br>09:00 - 09:30<br>Welcome coffee<br><br>09:30 - 12:15<br><u>Roundtable 2: The Effects of Coercive Statecraft</u><br>Chair: <b>Hugo Meijer</b> | Sciences Po<br> <br>Introductory remarks by:<br><b>Melanie Sisson</b> | Brookings Institution<br><b>Elena McLean</b> | University of Buffalo<br><b>Austin Carson</b> | University of Chicago<br><b>Kristin Ven Bruusgaard</b> | Norwegian Intelligence School<br><br>Leading questions:<br><br>- How can the effects of coercive statecraft be meaningfully measured? What are key methodological challenges and how can they be overcome?<br>- Under which conditions is the target likely to be coerced (e.g.. contextual variables, target characteristics)?<br>- How does the effectiveness of coercive statecraft vary across different instruments of coercion?<br>- How do timing/sequencing and combinatorial packages affect/influence the effectiveness of coercion?<br><br>12:15 - 13:15<br>Lunch break<br>\n<br>13:15 - 16:00<br><u>Roundtable 3:\tWhen and why do leaders resort to coercive statecraft?</u><br>\nChair: <b>Eliza Gheorghe</b> | Bilkent University <br><br>Introductory remarks by:<br><b>Roseanne McManus</b> | Penn State University <br><b>Dan Altman</b> | Georgia State University<br><b>Adam Stulberg</b> | Georgia Institute of Technology <br><b>Andrew Mumford</b> | University of Nottingham<br>\n<br>Leading questions:<br><br>- Under what conditions do leaders rely on the threat of force rather than the actual use of force to attain their political objectives?<br>- Are there specific factors (e.g., nature of the objectives) that affect the choice for particular coercive strategies?<br>- Are there particular configurations of the international system (e.g., polarity, hierarchy) that affect the choice for particular coercive strategies?<br>- Are there specific state-level attributes (e.g. regime type) that affect the choice for particular coercive strategies?<br>- Are there specific individual-level characteristics that affect the choice for particular coercive strategies?<br>- If credibility of coercive threats is a key factor in getting the target to comply, how do leaders assess credibility, and what strategies do they use to increase credibility?<br><br>16:00 - 16:30<br>Coffee break<br><br>16:30 - 17:00<br>Synthesis and Wrap \n<br>\n<br>17:00 - 18:00<br>Farewell Drinks&nbsp;&nbsp;<br></p>\n            </div>\n        </div>\n    </div>\n</section>",
-          "_anchor": "content4-ig",
-          "_isUserblock": true,
-          "_cid": "tGdW8ioX1t",
           "_protectedParams": [],
           "_global": false,
           "_once": false,
@@ -16750,10 +16746,37 @@
           },
           "_name": "map1",
           "_sourceTheme": "mobirise-amp",
-          "_customHTML": "<section class=\"map\" group=\"Maps\" plugins=\"amp-main,amp-iframe\">\n\n    <mbr-parameters>\n    <!-- Block of parameters for component -->\n\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" value=\"3\" step=\"1\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" value=\"4\" step=\"1\">\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked>\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\">\n        <input type=\"map\" title=\"Map\" name=\"googleMap\" place-id=\"European University Institute, Florence\" value=\"European University Institute, Florence\">\n    <!-- End block of parameters -->\n    </mbr-parameters>\n    <div class=\"mbr-row mbr-justify-content-center\">\n        <div class=\"map-title mbr-col-sm-12 mbr-col-md-12 align-center\">\n            <h2 class=\"mbr-section-title mbr-fonts-style\" mbr-theme-style=\"display-2\" mbr-if=\"showTitle\" data-app-selector=\".mbr-section-title, .map-title\">European University Institute, Florence, Italy</h2>\n        </div>\n        <div class=\"google-map\" mbr-map=\"googleMap\"></div>\n        <div class=\"map-placeholder\">\n            <h4 placeholder>Google Map Initialization...</h4>\n        </div>\n    </div>\n</section>",
+          "_customHTML": "<section class=\"map\" group=\"Maps\" plugins=\"amp-main,amp-iframe\">\n\n    <mbr-parameters>\n    <!-- Block of parameters for component -->\n\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"8\" value=\"3\" step=\"1\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"8\" value=\"4\" step=\"1\">\n        <input type=\"checkbox\" title=\"Show Title\" name=\"showTitle\" checked>\n        <input type=\"color\" title=\"Background Color\" name=\"bgColor\" value=\"#ffffff\">\n        <input type=\"map\" title=\"Map\" name=\"googleMap\" place-id=\"European University Institute, Florence\" value=\"European University Institute, Florence\">\n    <!-- End block of parameters -->\n    </mbr-parameters>\n    <div class=\"mbr-row mbr-justify-content-center\">\n        <div class=\"map-title mbr-col-sm-12 mbr-col-md-12 align-center\">\n            <h2 class=\"mbr-section-title mbr-fonts-style\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".mbr-section-title, .map-title\">European University Institute, Florence, Italy</h2>\n        </div>\n        <div class=\"google-map\" mbr-map=\"googleMap\"></div>\n        <div class=\"map-placeholder\">\n            <h4 placeholder>Google Map Initialization...</h4>\n        </div>\n    </div>\n</section>",
           "_isUserblock": true,
           "_cid": "tGdSWshN03",
           "_anchor": "map1-ic",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "alias": false,
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
+            },
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            ".mbr-text": {
+              "color": "#170ca4",
+              "text-align": "left"
+            }
+          },
+          "_name": "content4",
+          "_sourceTheme": "mobirise-amp",
+          "_customHTML": "<section class=\"content4 mbr-section article\" plugins=\"amp-main\" group=\"Article\">\n    \n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Style</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" step=\"1\" value=\"0\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" step=\"1\" value=\"1\">\n        <select name=\"alignContent\" title=\"Align Content\">\n            <option value=\"1\">Left</option>\n            <option value=\"2\" selected>Center</option>\n            <option value=\"3\">Right</option>\n        </select>\n        <input type=\"range\" title=\"Width\" name=\"textWidth\" min=\"4\" max=\"12\" step=\"1\" value=\"10\">\n        <header>Background</header>\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Image\" value=\"@PROJECT_PATH@/assets/images/background4.jpg\">\n            <input type=\"color\" title=\"Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-row\" mbr-class=\"{'mbr-jc-c' : alignContent == 2, 'mbr-jc-e' : alignContent == 3}\">\n            <div class=\"mbr-col-sm-12 mbr-md-12 mbr-col-lg-{{textWidth}}\">\n                <p class=\"mbr-text align-center mbr-fonts-style mbr-regular\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\"><b>Thursday 19 October \n</b><br>\n<br>14:00 - 14:15<br>Welcome remarks<br>\n<br>14:15 - 14:30<br>Presentation Programme: Rationale, Central Questions, Principal Objectives \n<br>\n<br>14:30 - 14:45<br><i>Tour de Table</i>: Introductory round<br><br>14:45 - 17:30<br><u>Roundtable 1:\tDefining Coercive Statecraft</u><br>Chair: <b>Tim Sweijs</b> | The Hague Centre for Strategic Studies / War Studies Research Centre<br> <br>Introductory remarks by:<br><b>Peter Viggo Jakobsen</b> | University of Southern Denmark <br><b>Dima Adamsky</b> | Reichman University<br><b>Kelly Greenhill</b> | Tufts University<br><b>Beatrice Heuser</b> | University of Glasgow<br><br>Leading questions:<br><br>- Conceptual boundaries: what are coercive statecraft, coercive diplomacy and coercion?<br>- What are the differences and similarities between peacetime and wartime coercive statecraft?<br>- What are the differences and similarities between overt and covert coercive statecraft?<br>- How useful is Alexander George’s conceptual framework to evaluate coercive statecraft in the 21st century? How can it be improved?<br>\n<br>19:30<br>Dinner  \n<br>\n<br><b>Friday 20 October \n</b><br>\n<br>09:00 - 09:30<br>Welcome coffee<br><br>09:30 - 12:15<br><u>Roundtable 2: The Effects of Coercive Statecraft</u><br>Chair: <b>Hugo Meijer</b> | Sciences Po<br> <br>Introductory remarks by:<br><b>Melanie Sisson</b> | Brookings Institution<br><b>Elena McLean</b> | University of Buffalo<br><b>Austin Carson</b> | University of Chicago<br><b>Kristin Ven Bruusgaard</b> | Norwegian Intelligence School<br><br>Leading questions:<br><br>- How can the effects of coercive statecraft be meaningfully measured? What are key methodological challenges and how can they be overcome?<br>- Under which conditions is the target likely to be coerced (e.g.. contextual variables, target characteristics)?<br>- How does the effectiveness of coercive statecraft vary across different instruments of coercion?<br>- How do timing/sequencing and combinatorial packages affect/influence the effectiveness of coercion?<br><br>12:15 - 13:15<br>Lunch break<br>\n<br>13:15 - 16:00<br><u>Roundtable 3:\tWhen and why do leaders resort to coercive statecraft?</u><br>\nChair: <b>Eliza Gheorghe</b> | Bilkent University <br><br>Introductory remarks by:<br><b>Roseanne McManus</b> | Penn State University <br><b>Dan Altman</b> | Georgia State University<br><b>Adam Stulberg</b> | Georgia Institute of Technology <br><b>Andrew Mumford</b> | University of Nottingham<br>\n<br>Leading questions:<br><br>- Under what conditions do leaders rely on the threat of force rather than the actual use of force to attain their political objectives?<br>- Are there specific factors (e.g., nature of the objectives) that affect the choice for particular coercive strategies?<br>- Are there particular configurations of the international system (e.g., polarity, hierarchy) that affect the choice for particular coercive strategies?<br>- Are there specific state-level attributes (e.g. regime type) that affect the choice for particular coercive strategies?<br>- Are there specific individual-level characteristics that affect the choice for particular coercive strategies?<br>- If credibility of coercive threats is a key factor in getting the target to comply, how do leaders assess credibility, and what strategies do they use to increase credibility?<br><br>16:00 - 16:30<br>Coffee break<br><br>16:30 - 17:00<br>Synthesis and Wrap \n<br>\n<br>17:00 - 18:00<br>Farewell Drinks&nbsp;&nbsp;<br></p>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_anchor": "content4-ig",
+          "_isUserblock": true,
+          "_cid": "tGdW8ioX1t",
           "_protectedParams": [],
           "_global": false,
           "_once": false,
