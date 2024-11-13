@@ -16156,7 +16156,7 @@
           },
           "_name": "content1",
           "_sourceTheme": "mobirise-amp",
-          "_customHTML": "<section class=\"mbr-section 01\" group=\"Article\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Size</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <header>Show/Hide</header>\n        <input type=\"checkbox\" title=\"Title\" name=\"showTitle\" checked>\n        <input type=\"checkbox\" title=\"Subtitle\" name=\"showSubtitle\" checked>\n        <input type=\"checkbox\" title=\"Buttons\" name=\"showButtons\">\n        <header>Background</header>\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Image\" value=\"../_images/background2.jpg\">\n            <input type=\"color\" title=\"Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n     <div class=\"container\">\n        <div class=\"mbr-row mbr-jc-c\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10\">\n                <h2 mbr-if=\"showTitle\" class=\"mbr-section-title align-center mbr-fonts-style mbr-bold\" mbr-theme-style=\"display-2\" data-app-selector=\".mbr-section-title\">A multiannual and multidisciplinary programme<div>on the conditions for effective coercion</div></h2>\n                <h3 mbr-if=\"showSubtitle\" data-app-selector=\".mbr-section-subtitle, .mbr-section-btn\" class=\"mbr-section-subtitle align-center mbr-regular mbr-pt-2 mbr-fonts-style\" mbr-theme-style=\"display-7\"><i>\n                    Scroll down for Symposium agenda and joining details</i></h3>\n                <div class=\"mbr-section-btn align-center mbr-pt-3\" mbr-if=\"showButtons\" mbr-buttons mbr-theme-style=\"display-4\" data-toolbar=\"-mbrBtnAdd,-mbrBtnMove\"><a class=\"btn btn-primary\" href=\"https://mobiri.se\" data-app-placeholder=\"Type Text\">Learn More</a>\n                    <a class=\"btn btn-secondary\" href=\"https://mobiri.se\" data-app-placeholder=\"Type Text\">Live Demo</a></div>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_customHTML": "<section class=\"mbr-section 01\" group=\"Article\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Size</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <header>Show/Hide</header>\n        <input type=\"checkbox\" title=\"Title\" name=\"showTitle\" checked>\n        <input type=\"checkbox\" title=\"Subtitle\" name=\"showSubtitle\" checked>\n        <input type=\"checkbox\" title=\"Buttons\" name=\"showButtons\">\n        <header>Background</header>\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Image\" value=\"../_images/background2.jpg\">\n            <input type=\"color\" title=\"Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n     <div class=\"container\">\n        <div class=\"mbr-row mbr-jc-c\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10\">\n                <h2 mbr-if=\"showTitle\" class=\"mbr-section-title align-center mbr-fonts-style mbr-bold\" mbr-theme-style=\"display-2\" data-app-selector=\".mbr-section-title\">A multiannual and multidisciplinary programme<div>on the conditions for effective coercion</div></h2>\n                <h3 mbr-if=\"showSubtitle\" data-app-selector=\".mbr-section-subtitle, .mbr-section-btn\" class=\"mbr-section-subtitle align-center mbr-regular mbr-pt-2 mbr-fonts-style\" mbr-theme-style=\"display-7\"><i>\n                    Scroll down for Symposium joining details</i></h3>\n                <div class=\"mbr-section-btn align-center mbr-pt-3\" mbr-if=\"showButtons\" mbr-buttons mbr-theme-style=\"display-4\" data-toolbar=\"-mbrBtnAdd,-mbrBtnMove\"><a class=\"btn btn-primary\" href=\"https://mobiri.se\" data-app-placeholder=\"Type Text\">Learn More</a>\n                    <a class=\"btn btn-secondary\" href=\"https://mobiri.se\" data-app-placeholder=\"Type Text\">Live Demo</a></div>\n            </div>\n        </div>\n    </div>\n</section>",
           "_cid": "tIAuobmJ5V",
           "_anchor": "content1-in",
           "_protectedParams": [],
@@ -16230,6 +16230,58 @@
           "_customHTML": "<section class=\"image2\" group=\"Images &amp; Videos\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Size</header>\n        <input type=\"checkbox\" title=\"Full Width\" name=\"fullWidth\">\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" value=\"0\" step=\"1\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" value=\"0\" step=\"1\">\n        <header>Show/Hide</header>\n        <input type=\"range\" inline=\"\" title=\"Width\" name=\"videoSize\" min=\"4\" max=\"12\" value=\"4\" step=\"1\">\n        <input type=\"checkbox\" title=\"Caption\" name=\"showText\" checked=\"\">\n        <header>Background</header>\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Color\" value=\"#ffffff\" selected=\"\">\n        </fieldset>\n        <input type=\"checkbox\" title=\"2 Color\" name=\"twoColor\" condition=\"bg.type == 'color'\">\n        <input type=\"color\" title=\"Color 2\" value=\"#5400d7\" name=\"twoColorBg\" condition=\"twoColor &amp;&amp; bg.type == 'color'\">\n    </mbr-parameters>\n    \n    <div mbr-class=\"{'container': !fullWidth, 'container-fluid' : fullWidth }\">\n            <div class=\"mbr-row mbr-jc-c\">\n                <div class=\"mbr-col-sm-12 mbr-col-md-12 mbr-col-lg-{{videoSize}}\">\n                    <div class=\"image-block\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/screenshot-2023-10-12-at-17.58.55-544x250.png\" layout=\"responsive\" width=\"347.990272\" height=\"159.922\" alt=\"EUI Robert Schuman Centre\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <a href=\"https://www.eui.eu/en/academic-units/robert-schuman-centre-for-advanced-studies\" target=\"_blank\"><img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/screenshot-2023-10-12-at-17.58.55-544x250.png\" alt=\"EUI Robert Schuman Centre\" data-aspectratio=\"0.6666666666666666\"></a>\n                        </amp-img>\n                        <div class=\"mbr-figure-caption\" mbr-if=\"showText\">\n                            <p mbr-text=\"\" class=\"mbr-text mbr-white align-center mbr-fonts-style\" mbr-class=\"{'mbr-py-1': !fullWidth, 'mbr-py-1 mbr-px-4': fullWidth}\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\">\n                                In cooperation with the&nbsp;Robert Schuman Centre at the European University Institute.</p>\n                        </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</section>",
           "_cid": "tSu5NdFDo8",
           "_anchor": "image2-iy",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "alias": false,
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value"
+            },
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            ".mbr-section-title": {
+              "color": "#170ca4"
+            },
+            ".mbr-section-subtitle, .mbr-section-btn": {
+              "color": "#170ca4"
+            }
+          },
+          "_name": "content1",
+          "_sourceTheme": "mobirise-amp",
+          "_customHTML": "<section class=\"mbr-section 01\" group=\"Article\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Size</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <header>Show/Hide</header>\n        <input type=\"checkbox\" title=\"Title\" name=\"showTitle\" checked>\n        <input type=\"checkbox\" title=\"Subtitle\" name=\"showSubtitle\" checked>\n        <input type=\"checkbox\" title=\"Buttons\" name=\"showButtons\" checked>\n        <header>Background</header>\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Image\" value=\"@PROJECT_PATH@/assets/images/background2.jpg\">\n            <input type=\"color\" title=\"Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n     <div class=\"container\">\n        <div class=\"mbr-row mbr-jc-c\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10\">\n                <h2 mbr-if=\"showTitle\" class=\"mbr-section-title align-center mbr-fonts-style mbr-bold\" mbr-theme-style=\"display-2\" data-app-selector=\".mbr-section-title\">Annual Symposium<br><span style=\"font-weight: normal;\">19 November 2024</span></h2>\n                <h3 mbr-if=\"showSubtitle\" data-app-selector=\".mbr-section-subtitle, .mbr-section-btn\" class=\"mbr-section-subtitle align-center mbr-regular mbr-pt-2 mbr-fonts-style\" mbr-theme-style=\"display-7\">\n                    Hybrid (Physical and Virtual)</h3>\n                <div class=\"mbr-section-btn align-center mbr-pt-3\" mbr-if=\"showButtons\" mbr-buttons mbr-theme-style=\"display-4\" data-toolbar=\"-mbrBtnAdd,-mbrBtnMove\"><a class=\"btn btn-primary\" href=\"https://indico.eiss-europa.com/event/20/\" data-app-placeholder=\"Type Text\" target=\"_blank\"><span class=\"fa fa-video-camera mbr-iconfont mbr-iconfont-btn\"></span>Join Online (Members Only)</a>\n                    <a class=\"btn btn-primary\" href=\"https://www.universiteitleiden.nl/en/events/2024/11/roundtable-the-dynamics-of-contemporary-coercive-statecraft\" data-app-placeholder=\"Type Text\" target=\"_blank\"><span class=\"fa fa-subway mbr-iconfont mbr-iconfont-btn\"></span>Join in-person</a></div>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_anchor": "content1-jj",
+          "_isUserblock": true,
+          "_cid": "utVbySxSe4",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
+        },
+        {
+          "alias": false,
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "background-color": "@bgColor",
+            ".google-map": {
+              "height": "25rem"
+            },
+            ".mbr-section-title": {
+              "color": "#170ca4"
+            }
+          },
+          "_name": "map2",
+          "_sourceTheme": "mobirise-amp",
+          "_customHTML": "<section class=\"map map2\" group=\"Maps\" plugins=\"amp-main,amp-iframe\">\n\n    <mbr-parameters>\n    <!-- Block of parameters for component -->\n        <header>Size</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" value=\"0\" step=\"1\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" value=\"5\" step=\"1\">\n        <header>Show/Hide</header>\n        <input type=\"checkbox\" title=\"Title\" name=\"showTitle\" checked>\n        <input type=\"color\" title=\"Background\" name=\"bgColor\" value=\"#ffffff\">\n        <input type=\"map\" title=\"Map\" name=\"googleMap\" place-id=\"Room 3.32\nWijnhaven, Leiden University, \nTurfmarkt 99, 2511 DP Den Haag, Netherlands\" value=\"Room 3.32\nWijnhaven, Leiden University, \nTurfmarkt 99, 2511 DP Den Haag, Netherlands\">\n    <!-- End block of parameters -->\n    </mbr-parameters>\n    <div class=\"container\">\n        <div class=\"mbr-row\">\n            <div class=\"map-title mbr-col-sm-12 mbr-col-md-12 mbr-col-lg-12\">\n                <h2 class=\"mbr-section-title mbr-bold align-center mbr-fonts-style mbr-pb-4\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".mbr-section-title\"><span style=\"font-weight: normal;\">Room 3.32 <br>Wijnhaven, Leiden University,&nbsp;</span><div><span style=\"font-weight: normal;\">Turfmarkt 99, 2511 DP Den Haag, Netherlands</span></div><div><br></div></h2>\n            </div>\n            <div class=\"mbr-col-sm-12 mbr-col-md-12 map-box\">\n                <div class=\"google-map\" mbr-map=\"googleMap\"></div>\n                <div class=\"map-placeholder mobirise-loader\">\n                    <div placeholder class=\"placeholder\"></div>\n                </div>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_cid": "utVi9UTIah",
+          "_anchor": "map2-jl",
           "_protectedParams": [],
           "_global": false,
           "_once": false,
@@ -16552,138 +16604,6 @@
           "_customHTML": "<section class=\"06 mbr-section\" plugins=\"amp-main\">\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Size</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" step=\"1\" value=\"1\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <select name=\"alignContent\" title=\"Align Content\">\n            <option value=\"1\">Left</option>\n            <option value=\"2\" selected>Center</option>\n            <option value=\"3\">Right</option>\n        </select>\n        <input type=\"range\" title=\"Width\" name=\"textWidth\" min=\"4\" max=\"12\" step=\"1\" value=\"10\">\n        <header>Counters</header>\n        <input type=\"checkbox\" title=\"Stylized\" name=\"stylizedCounters\" checked>\n        <input type=\"color\" title=\"Counter\" name=\"counterColor\" value=\"#ffffff\" condition=\"stylizedCounters\">\n        <select title=\"Type\" name=\"countersType\" condition=\"stylizedCounters\">\n            <option value=\"default\">Сircle Fill</option>\n            <option value=\"circle\">Circle</option>\n            <option value=\"square\" selected>Square</option>\n            <option value=\"romb\">Rhombus</option>\n        </select>   \n        <header>Background</header>\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>  \n\n    <div class=\"container\">\n        <div class=\"mbr-row\" mbr-class=\"{'mbr-jc-c' : alignContent == 2, 'mbr-jc-e' : alignContent == 3}\">\n            <div class=\"mbr-col-lg-{{textWidth}} mbr-col-md-12 mbr-col-sm-12\">\n                <div class=\"mbr-text counter-container mbr-fonts-style\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\" data-multiline mbr-article>\n                    <ul>\n                        <li class=\"mbr-pb-2\"><b>2023: 21st Century Coercive Statecraft: A Research Agenda \n</b></li></ul><div>The ambition of the programme’s first year is to define the research agenda on coercive statecraft for the 2020s that will be further developed through the project’s events and publications in the subsequent years. To do so, it will bring together key coercive statecraft academics to outline the state of the art, discuss key findings that have emerged from publications in recent years, and identify future research avenues.\n</div><div><br></div><ul><li class=\"mbr-pb-2\"><b>2024: Coercive Statecraft in Peacetime: Military, Non-Military, and Covert Means\n</b></li></ul><div>The second year of this project will focus on unpacking and systematically comparing the variety of types of coercive strategies and the panoply of tools leveraged by states to coerce their rivals or allies in peacetime, including military, non-military and covert means. It will seek to identify the key explanatory factors of why different countries have used different coercive peacetime strategies – and different coercive tools – across time and space, and assess to what effect they have done so using both. \n</div><div><br></div><ul><li class=\"mbr-pb-2\"><b>2025: Coercion in Wartime: Waging War as a Tool of Statecraft \n</b></li></ul><div>Most coercion literature focuses on coercive statecraft short of war, but coercion also takes place in war and during war, both in the war theatre itself and outside of it. Although the extant literature has identified different coercive wartime strategies, there are no clear-cut typologies that differentiate between different types, logics, and objectives of these different strategies. What are the principal war coercion strategies used by warring actors? What are the different targets of such strategies? How successful have they been in recent wars? This project’s third year will aim to address such questions.</div>\n                </div>\n            </div>\n        </div>\n    </div>\n</section>",
           "_cid": "tGdSWrUNfG",
           "_anchor": "content7-ia",
-          "_protectedParams": [],
-          "_global": false,
-          "_once": false,
-          "_params": {}
-        },
-        {
-          "alias": false,
-          "_styles": {
-            "padding-top": "(@paddingTop * 15px)",
-            "padding-bottom": "(@paddingBottom * 15px)",
-            "& when (@bg-type = 'color')": {
-              "background-color": "@bg-value"
-            },
-            "& when (@bg-type = 'image')": {
-              "background-image": "url(@bg-value)"
-            },
-            ".mbr-section-title": {
-              "color": "#170ca4"
-            },
-            ".mbr-section-subtitle, .mbr-section-btn": {
-              "color": "#170ca4"
-            }
-          },
-          "_name": "content1",
-          "_sourceTheme": "mobirise-amp",
-          "_customHTML": "<section class=\"mbr-section 01\" group=\"Article\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Size</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <header>Show/Hide</header>\n        <input type=\"checkbox\" title=\"Title\" name=\"showTitle\" checked>\n        <input type=\"checkbox\" title=\"Subtitle\" name=\"showSubtitle\" checked>\n        <input type=\"checkbox\" title=\"Buttons\" name=\"showButtons\" checked>\n        <header>Background</header>\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Image\" value=\"@PROJECT_PATH@/assets/images/background2.jpg\">\n            <input type=\"color\" title=\"Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n     <div class=\"container\">\n        <div class=\"mbr-row mbr-jc-c\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10\">\n                <h2 mbr-if=\"showTitle\" class=\"mbr-section-title align-center mbr-fonts-style mbr-bold\" mbr-theme-style=\"display-2\" data-app-selector=\".mbr-section-title\">Symposium Agenda<br><span style=\"font-weight: normal;\">19 November 2024</span></h2>\n                <h3 mbr-if=\"showSubtitle\" data-app-selector=\".mbr-section-subtitle, .mbr-section-btn\" class=\"mbr-section-subtitle align-center mbr-regular mbr-pt-2 mbr-fonts-style\" mbr-theme-style=\"display-7\">\n                    Hybrid (Physical and Virtual)</h3>\n                <div class=\"mbr-section-btn align-center mbr-pt-3\" mbr-if=\"showButtons\" mbr-buttons mbr-theme-style=\"display-4\" data-toolbar=\"-mbrBtnAdd,-mbrBtnMove\"><a class=\"btn btn-primary\" href=\"https://indico.eiss-europa.com/event/20/\" data-app-placeholder=\"Type Text\" target=\"_blank\"><span class=\"fa fa-video-camera mbr-iconfont mbr-iconfont-btn\"></span>Join Online (Members Only)</a>\n                    <a class=\"btn btn-primary\" href=\"https://www.universiteitleiden.nl/en/events/2024/11/roundtable-the-dynamics-of-contemporary-coercive-statecraft\" data-app-placeholder=\"Type Text\" target=\"_blank\"><span class=\"fa fa-subway mbr-iconfont mbr-iconfont-btn\"></span>Join in-person</a></div>\n            </div>\n        </div>\n    </div>\n</section>",
-          "_anchor": "content1-jj",
-          "_isUserblock": true,
-          "_cid": "utVbySxSe4",
-          "_protectedParams": [],
-          "_global": false,
-          "_once": false,
-          "_params": {}
-        },
-        {
-          "alias": false,
-          "_styles": {
-            "padding-top": "(@paddingTop * 15px)",
-            "padding-bottom": "(@paddingBottom * 15px)",
-            "background-color": "@bgColor",
-            ".google-map": {
-              "height": "25rem"
-            },
-            ".mbr-section-title": {
-              "color": "#170ca4"
-            }
-          },
-          "_name": "map2",
-          "_sourceTheme": "mobirise-amp",
-          "_customHTML": "<section class=\"map map2\" group=\"Maps\" plugins=\"amp-main,amp-iframe\">\n\n    <mbr-parameters>\n    <!-- Block of parameters for component -->\n        <header>Size</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" value=\"0\" step=\"1\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" value=\"5\" step=\"1\">\n        <header>Show/Hide</header>\n        <input type=\"checkbox\" title=\"Title\" name=\"showTitle\" checked>\n        <input type=\"color\" title=\"Background\" name=\"bgColor\" value=\"#ffffff\">\n        <input type=\"map\" title=\"Map\" name=\"googleMap\" place-id=\"Room 3.32\nWijnhaven, Leiden University, \nTurfmarkt 99, 2511 DP Den Haag, Netherlands\" value=\"Room 3.32\nWijnhaven, Leiden University, \nTurfmarkt 99, 2511 DP Den Haag, Netherlands\">\n    <!-- End block of parameters -->\n    </mbr-parameters>\n    <div class=\"container\">\n        <div class=\"mbr-row\">\n            <div class=\"map-title mbr-col-sm-12 mbr-col-md-12 mbr-col-lg-12\">\n                <h2 class=\"mbr-section-title mbr-bold align-center mbr-fonts-style mbr-pb-4\" mbr-theme-style=\"display-5\" mbr-if=\"showTitle\" data-app-selector=\".mbr-section-title\"><span style=\"font-weight: normal;\">Room 3.32 <br>Wijnhaven, Leiden University,&nbsp;</span><div><span style=\"font-weight: normal;\">Turfmarkt 99, 2511 DP Den Haag, Netherlands</span></div><div><br></div></h2>\n            </div>\n            <div class=\"mbr-col-sm-12 mbr-col-md-12 map-box\">\n                <div class=\"google-map\" mbr-map=\"googleMap\"></div>\n                <div class=\"map-placeholder mobirise-loader\">\n                    <div placeholder class=\"placeholder\"></div>\n                </div>\n            </div>\n        </div>\n    </div>\n</section>",
-          "_cid": "utVi9UTIah",
-          "_anchor": "map2-jl",
-          "_protectedParams": [],
-          "_global": false,
-          "_once": false,
-          "_params": {}
-        },
-        {
-          "alias": false,
-          "_styles": {
-            "padding-top": "(@paddingTop * 15px)",
-            "padding-bottom": "(@paddingBottom * 15px)",
-            "& when (@bg-type = 'color')": {
-              "background-color": "@bg-value"
-            },
-            "& when (@bg-type = 'image')": {
-              "background-image": "url(@bg-value)"
-            },
-            ".mbr-text": {
-              "color": "#170ca4",
-              "text-align": "left"
-            }
-          },
-          "_name": "content4",
-          "_sourceTheme": "mobirise-amp",
-          "_customHTML": "<section class=\"content4 mbr-section article\" plugins=\"amp-main\" group=\"Article\">\n    \n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Style</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" step=\"1\" value=\"0\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" step=\"1\" value=\"1\">\n        <select name=\"alignContent\" title=\"Align Content\">\n            <option value=\"1\">Left</option>\n            <option value=\"2\" selected>Center</option>\n            <option value=\"3\">Right</option>\n        </select>\n        <input type=\"range\" title=\"Width\" name=\"textWidth\" min=\"4\" max=\"12\" step=\"1\" value=\"10\">\n        <header>Background</header>\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Image\" value=\"@PROJECT_PATH@/assets/images/background4.jpg\">\n            <input type=\"color\" title=\"Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-row\" mbr-class=\"{'mbr-jc-c' : alignContent == 2, 'mbr-jc-e' : alignContent == 3}\">\n            <div class=\"mbr-col-sm-12 mbr-md-12 mbr-col-lg-{{textWidth}}\">\n                <p class=\"mbr-text align-center mbr-fonts-style mbr-regular\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\"><b>Tuesday 19 November</b><br>\n<br>09:00 - 09:30<br>Registration and coffee<br><br>09:30 - 09:45<br>Introduction<br><b>Tim Sweijs, Eliza Gheorghe, Hugo Meijer</b><br><br>09:45 - 10:30<br>Integrating Economic, Political and Military Coercion for Maximum Effect: Lessons from the Ukraine Crisis and War <b>Peter Viggo Jakobsen</b><br> <br>10:30 - 11:15<br>Coercion and Strategic Culture: Why Merge Both Research Programs? <br><b>Dima Adamsky</b><br>\t<br>11:15 - 11:30<br>Coffee break<br><br>11:30 - 12:15<br>Putin’s Red Lines and Russia’s Way of War: Distinguishing Credible Threats from Reflexive Control in Coercive Bargaining<br><b>Adam N. Stulberg &amp; Stephan De Spiegeleire</b><br><br>12:15 - 13:15<br>Lunch<br><br>13:15 - 14:00<br>Aiming at the Opponent’s Supporters: Targeted Economic Sanctions in Peace and War<br><b>Elena McLean &amp; Chamseul Yu</b><br><br>14:00 - 14:45<br>The Correlates of Coercive Statecraft: The US Track Record <b>Melanie Sisson</b><b><br></b><br>14:45 - 15:15<br>Tea Break<br><br>15:15 - 16:00<br>Minding the Gap? The Strategic Logic of Cyber Coercion in Theory and Practice<br><b>Erica D. Lonergan</b><br><br>16:00 - 17:00<br>Discussion and Wrap<br><b>Tim Sweijs, Eliza Gheorghe, Hugo Meijer</b><b><br></b><br>19:00<br>Dinner at Poentjak Kneuterdijk 16, 2514 EN Den Haag<br></p>\n            </div>\n        </div>\n    </div>\n</section>",
-          "_anchor": "content4-jk",
-          "_isUserblock": true,
-          "_cid": "utVbzHpI4R",
-          "_protectedParams": [],
-          "_global": false,
-          "_once": false,
-          "_params": {}
-        },
-        {
-          "alias": false,
-          "_styles": {
-            "padding-top": "(@paddingTop * 15px)",
-            "padding-bottom": "(@paddingBottom * 15px)",
-            "& when (@bg-type = 'color')": {
-              "background-color": "@bg-value"
-            },
-            "& when (@bg-type = 'image')": {
-              "background-image": "url(@bg-value)"
-            },
-            ".mbr-section-title": {
-              "color": "#170ca4"
-            }
-          },
-          "_name": "content1",
-          "_sourceTheme": "mobirise-amp",
-          "_customHTML": "<section class=\"mbr-section 01\" group=\"Article\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Size</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <header>Show/Hide</header>\n        <input type=\"checkbox\" title=\"Title\" name=\"showTitle\" checked>\n        <input type=\"checkbox\" title=\"Subtitle\" name=\"showSubtitle\">\n        <input type=\"checkbox\" title=\"Buttons\" name=\"showButtons\">\n        <header>Background</header>\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Image\" value=\"@PROJECT_PATH@/assets/images/background2.jpg\">\n            <input type=\"color\" title=\"Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n     <div class=\"container\">\n        <div class=\"mbr-row mbr-jc-c\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10\">\n                <h2 mbr-if=\"showTitle\" class=\"mbr-section-title align-center mbr-fonts-style mbr-bold\" mbr-theme-style=\"display-2\" data-app-selector=\".mbr-section-title\">Symposium Agenda<br><span style=\"font-weight: normal;\">19-20 October 2023</span></h2>\n                <h3 mbr-if=\"showSubtitle\" data-app-selector=\".mbr-section-subtitle, .mbr-section-btn\" class=\"mbr-section-subtitle align-center mbr-regular mbr-pt-2 mbr-fonts-style\" mbr-theme-style=\"display-5\">\n                    Shape your future web project with sharp design and refine coded functions.\n                </h3>\n                <div class=\"mbr-section-btn align-center mbr-pt-3\" mbr-if=\"showButtons\" mbr-buttons mbr-theme-style=\"display-4\" data-toolbar=\"-mbrBtnAdd,-mbrBtnMove\"><a class=\"btn btn-primary\" href=\"https://mobiri.se\" data-app-placeholder=\"Type Text\">Learn More</a>\n                    <a class=\"btn btn-secondary\" href=\"https://mobiri.se\" data-app-placeholder=\"Type Text\">Live Demo</a></div>\n            </div>\n        </div>\n    </div>\n</section>",
-          "_anchor": "content1-if",
-          "_isUserblock": true,
-          "_cid": "tGdW6zU4Ig",
-          "_protectedParams": [],
-          "_global": false,
-          "_once": false,
-          "_params": {}
-        },
-        {
-          "alias": false,
-          "_styles": {
-            "padding-top": "(@paddingTop * 15px)",
-            "padding-bottom": "(@paddingBottom * 15px)",
-            "& when (@bg-type = 'color')": {
-              "background-color": "@bg-value"
-            },
-            "& when (@bg-type = 'image')": {
-              "background-image": "url(@bg-value)"
-            },
-            ".mbr-text": {
-              "color": "#170ca4",
-              "text-align": "left"
-            }
-          },
-          "_name": "content4",
-          "_sourceTheme": "mobirise-amp",
-          "_customHTML": "<section class=\"content4 mbr-section article\" plugins=\"amp-main\" group=\"Article\">\n    \n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Style</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" step=\"1\" value=\"0\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" step=\"1\" value=\"1\">\n        <select name=\"alignContent\" title=\"Align Content\">\n            <option value=\"1\">Left</option>\n            <option value=\"2\" selected>Center</option>\n            <option value=\"3\">Right</option>\n        </select>\n        <input type=\"range\" title=\"Width\" name=\"textWidth\" min=\"4\" max=\"12\" step=\"1\" value=\"10\">\n        <header>Background</header>\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Image\" value=\"@PROJECT_PATH@/assets/images/background4.jpg\">\n            <input type=\"color\" title=\"Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters>\n\n    <div class=\"container\">\n        <div class=\"mbr-row\" mbr-class=\"{'mbr-jc-c' : alignContent == 2, 'mbr-jc-e' : alignContent == 3}\">\n            <div class=\"mbr-col-sm-12 mbr-md-12 mbr-col-lg-{{textWidth}}\">\n                <p class=\"mbr-text align-center mbr-fonts-style mbr-regular\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\"><b>Thursday 19 October \n</b><br>\n<br>14:00 - 14:15<br>Welcome remarks<br>\n<br>14:15 - 14:30<br>Presentation Programme: Rationale, Central Questions, Principal Objectives \n<br>\n<br>14:30 - 14:45<br><i>Tour de Table</i>: Introductory round<br><br>14:45 - 17:30<br><u>Roundtable 1:\tDefining Coercive Statecraft</u><br>Chair: <b>Tim Sweijs</b> | The Hague Centre for Strategic Studies / War Studies Research Centre<br> <br>Introductory remarks by:<br><b>Peter Viggo Jakobsen</b> | University of Southern Denmark <br><b>Dima Adamsky</b> | Reichman University<br><b>Kelly Greenhill</b> | Tufts University<br><b>Beatrice Heuser</b> | University of Glasgow<br><br>Leading questions:<br><br>- Conceptual boundaries: what are coercive statecraft, coercive diplomacy and coercion?<br>- What are the differences and similarities between peacetime and wartime coercive statecraft?<br>- What are the differences and similarities between overt and covert coercive statecraft?<br>- How useful is Alexander George’s conceptual framework to evaluate coercive statecraft in the 21st century? How can it be improved?<br>\n<br>19:30<br>Dinner  \n<br>\n<br><b>Friday 20 October \n</b><br>\n<br>09:00 - 09:30<br>Welcome coffee<br><br>09:30 - 12:15<br><u>Roundtable 2: The Effects of Coercive Statecraft</u><br>Chair: <b>Hugo Meijer</b> | Sciences Po<br> <br>Introductory remarks by:<br><b>Melanie Sisson</b> | Brookings Institution<br><b>Elena McLean</b> | University of Buffalo<br><b>Austin Carson</b> | University of Chicago<br><b>Kristin Ven Bruusgaard</b> | Norwegian Intelligence School<br><br>Leading questions:<br><br>- How can the effects of coercive statecraft be meaningfully measured? What are key methodological challenges and how can they be overcome?<br>- Under which conditions is the target likely to be coerced (e.g.. contextual variables, target characteristics)?<br>- How does the effectiveness of coercive statecraft vary across different instruments of coercion?<br>- How do timing/sequencing and combinatorial packages affect/influence the effectiveness of coercion?<br><br>12:15 - 13:15<br>Lunch break<br>\n<br>13:15 - 16:00<br><u>Roundtable 3:\tWhen and why do leaders resort to coercive statecraft?</u><br>\nChair: <b>Eliza Gheorghe</b> | Bilkent University <br><br>Introductory remarks by:<br><b>Roseanne McManus</b> | Penn State University <br><b>Dan Altman</b> | Georgia State University<br><b>Adam Stulberg</b> | Georgia Institute of Technology <br><b>Andrew Mumford</b> | University of Nottingham<br>\n<br>Leading questions:<br><br>- Under what conditions do leaders rely on the threat of force rather than the actual use of force to attain their political objectives?<br>- Are there specific factors (e.g., nature of the objectives) that affect the choice for particular coercive strategies?<br>- Are there particular configurations of the international system (e.g., polarity, hierarchy) that affect the choice for particular coercive strategies?<br>- Are there specific state-level attributes (e.g. regime type) that affect the choice for particular coercive strategies?<br>- Are there specific individual-level characteristics that affect the choice for particular coercive strategies?<br>- If credibility of coercive threats is a key factor in getting the target to comply, how do leaders assess credibility, and what strategies do they use to increase credibility?<br><br>16:00 - 16:30<br>Coffee break<br><br>16:30 - 17:00<br>Synthesis and Wrap \n<br>\n<br>17:00 - 18:00<br>Farewell Drinks&nbsp;&nbsp;<br></p>\n            </div>\n        </div>\n    </div>\n</section>",
-          "_anchor": "content4-ig",
-          "_isUserblock": true,
-          "_cid": "tGdW8ioX1t",
           "_protectedParams": [],
           "_global": false,
           "_once": false,
