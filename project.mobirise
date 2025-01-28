@@ -19389,13 +19389,55 @@
           },
           "_name": "content10",
           "_sourceTheme": "mobirise-amp",
-          "_customHTML": "<section class=\"010 mbr-section article\" plugins=\"amp-main\" group=\"Article\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Size</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <header>Show/Hide</header>\n        <input type=\"color\" title=\"Line\" name=\"lineColor\" value=\"#005af0\">\n        <select name=\"alignContent\" title=\"Align Content\">\n            <option value=\"1\">Left</option>\n            <option value=\"2\" selected>Center</option>\n            <option value=\"3\">Right</option>\n        </select>\n        <input type=\"range\" title=\"Width\" name=\"textWidth\" min=\"4\" max=\"12\" step=\"1\" value=\"8\">\n        <header>Background</header>\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters> \n\n    <div class=\"container\">\n        <div class=\"mbr-row\" mbr-class=\"{'mbr-jc-c' : alignContent == 2, 'mbr-jc-e' : alignContent == 3}\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-{{textWidth}}\">\n                <div class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-multiline mbr-article>\n                    <blockquote><p><b><i>\"Launched in 2025 by the Robert Schuman&nbsp;</i></b><b style=\"font-family: inherit; font-size: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i>Centre for Advanced Studies (RSCAS) at</i><i style=\"font-style: inherit;\">&nbsp;</i></b><b style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i>the European University Institute (EUI),&nbsp;</i></b><b style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i>in collaboration with the European Union</i></b></p><p><b><i>Institute for Security Studies (EUISS), the&nbsp;</i></b><b style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i>Trans European Policy Studies Association&nbsp;</i></b><b style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i>(TEPSA), and the European Initiative for&nbsp;</i></b><b style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i>Security Studies (EISS), ‘Global Risks to the EU’ constitutes the first continent-wide dataset on global risk perceptions among European experts. About 400 respondents rank the likelihood and expected impact of 30 predefined risks affecting EU coherence, unity, security, and prosperity. By operationalising risk as a measurable construct and applying systematic scoring methods, this initiative aims to generate strategic foresight for European foreign policy.\"</i></b></p><p><b style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i><br></i></b></p><p><b style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i>Veronica Anghel, Co-director of the European&nbsp;</i></b><b style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i>Governance and Politics Programme</i></b></p><p><b><i><br></i></b></p><p><b><i>© European University Institute, 2025</i></b></p><p><b><i>Editorial matter and selection © Veronica Anghel, 2025</i></b></p></blockquote>\n                </div>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_customHTML": "<section class=\"010 mbr-section article\" plugins=\"amp-main\" group=\"Article\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Size</header>\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" step=\"1\" value=\"5\">\n        <header>Show/Hide</header>\n        <input type=\"color\" title=\"Line\" name=\"lineColor\" value=\"#005af0\">\n        <select name=\"alignContent\" title=\"Align Content\">\n            <option value=\"1\">Left</option>\n            <option value=\"2\" selected>Center</option>\n            <option value=\"3\">Right</option>\n        </select>\n        <input type=\"range\" title=\"Width\" name=\"textWidth\" min=\"4\" max=\"12\" step=\"1\" value=\"10\">\n        <header>Background</header>\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Color\" value=\"#ffffff\" selected>\n        </fieldset>\n    <!-- End block parameters -->\n    </mbr-parameters> \n\n    <div class=\"container\">\n        <div class=\"mbr-row\" mbr-class=\"{'mbr-jc-c' : alignContent == 2, 'mbr-jc-e' : alignContent == 3}\">\n            <div class=\"mbr-col-sm-12 mbr-col-md-10 mbr-col-lg-{{textWidth}}\">\n                <div class=\"mbr-text mbr-fonts-style\" mbr-theme-style=\"display-7\" data-multiline mbr-article>\n                    <blockquote><p><b><i>\"Launched in 2025 by the Robert Schuman&nbsp;</i></b><b style=\"font-family: inherit; font-size: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i>Centre for Advanced Studies (RSCAS) at</i><i style=\"font-style: inherit;\">&nbsp;</i></b><b style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i>the European University Institute (EUI),&nbsp;</i></b><b style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i>in collaboration with the European Union&nbsp;</i></b><b style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i>Institute for Security Studies (EUISS), the&nbsp;</i></b><b style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i>Trans European Policy Studies Association&nbsp;</i></b><b style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i>(TEPSA), and the European Initiative for&nbsp;</i></b><b style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i>Security Studies (EISS), ‘Global Risks to the EU’ constitutes the first continent-wide dataset on global risk perceptions among European experts. About 400&nbsp;</i></b><b style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i>respondents rank the likelihood and expected impact of 30 predefined risks affecting EU coherence, unity, security, and prosperity. By operationalising risk as a measurable construct and applying systematic scoring methods, this initiative aims to generate strategic foresight for European foreign policy.\"</i></b></p><p><b style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i><br></i></b></p><p><b style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i>Veronica Anghel, Co-director of the European&nbsp;</i></b><b style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\"><i>Governance and Politics Programme</i></b></p><p><b><i><br></i></b></p><p><b><i>© European University Institute, 2025</i></b></p><p><b><i>Editorial matter and selection © Veronica Anghel, 2025</i></b></p></blockquote>\n                </div>\n            </div>\n        </div>\n    </div>\n</section>",
           "_cid": "uBbLD0abfp",
           "_protectedParams": [],
           "_global": false,
           "_once": false,
           "_params": {},
           "_anchor": "content10-k1"
+        },
+        {
+          "alias": false,
+          "_styles": {
+            "padding-top": "(@paddingTop * 15px)",
+            "padding-bottom": "(@paddingBottom * 15px)",
+            "& when (@bg-type = 'color')": {
+              "background-color": "@bg-value",
+              "& when (@twoColor)": {
+                "background": "linear-gradient(225deg, @bg-value 0, @twoColorBg 75%)"
+              }
+            },
+            "& when (@bg-type = 'image')": {
+              "background-image": "url(@bg-value)"
+            },
+            ".image-block": {
+              "position": "relative",
+              "z-index": "1",
+              "& when not (@fullWidth)": {
+                "@media (max-width: 767px)": {
+                  "width": "100% !important"
+                }
+              },
+              "& when not (@showText)": {
+                "box-shadow": "inset 0 0 0 1px #ebebf0, 0 15px 30px 0 rgba(0, 0, 0, 0.15)",
+                "border-radius": "10px"
+              }
+            },
+            "img": {
+              "border-radius": "10px",
+              "object-fit": "contain"
+            }
+          },
+          "_name": "image2",
+          "_sourceTheme": "mobirise-amp",
+          "_customHTML": "<section class=\"image2\" group=\"Images & Videos\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Size</header>\n        <input type=\"checkbox\" title=\"Full Width\" name=\"fullWidth\">\n        <input type=\"range\" inline title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" value=\"5\" step=\"1\">\n        <input type=\"range\" inline title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" value=\"1\" step=\"1\">\n        <header>Show/Hide</header>\n        <input type=\"range\" inline title=\"Width\" name=\"videoSize\" min=\"4\" max=\"12\" value=\"9\" step=\"1\">\n        <input type=\"checkbox\" title=\"Caption\" name=\"showText\" checked>\n        <header>Background</header>\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Color\" value=\"#ffffff\" selected>\n        </fieldset>\n        <input type=\"checkbox\" title=\"2 Color\" name=\"twoColor\" condition=\"bg.type == 'color'\">\n        <input type=\"color\" title=\"Color 2\" value=\"#5400d7\" name=\"twoColorBg\" condition=\"twoColor && bg.type == 'color'\">\n    </mbr-parameters>\n    \n    <div mbr-class=\"{'container': !fullWidth, 'container-fluid' : fullWidth }\">\n            <div class=\"mbr-row mbr-jc-c\">\n                <div class=\"mbr-col-sm-12 mbr-col-md-12 mbr-col-lg-{{videoSize}}\">\n                    <div class=\"image-block\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/screenshot-2025-01-28-at-15.20.16-1646x1049.png\" layout=\"responsive\" width=\"823\" height=\"524.5\" alt=\"EUISS - Interactive Map (external)\" class=\"mobirise-loader\">\n                            <div placeholder class=\"placeholder\"></div>\n                            <a href=\"https://europeangovernanceandpolitics.eui.eu/global-risks-eu/#\" target=\"_blank\"><img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/screenshot-2025-01-28-at-15.20.16-1646x1049.png\" alt=\"EUISS - Interactive Map (external)\" data-aspectratio=\"0.4848116646415553\"></a>\n                        </amp-img>\n                        <div class=\"mbr-figure-caption\" mbr-if=\"showText\">\n                            <p mbr-text class=\"mbr-text mbr-white align-center mbr-fonts-style\" mbr-class=\"{'mbr-py-1': !fullWidth, 'mbr-py-1 mbr-px-4': fullWidth}\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\">\n                                Create awesome and FAST websites!\n                            </p>\n                        </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</section>",
+          "_cid": "uBbLD0De24",
+          "_anchor": "image2-k3",
+          "_protectedParams": [],
+          "_global": false,
+          "_once": false,
+          "_params": {}
         },
         {
           "alias": false,
@@ -19466,48 +19508,6 @@
           "_customHTML": "<section class=\"image1\" group=\"Images &amp; Videos\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Size</header>\n        <input type=\"checkbox\" title=\"Full Width\" name=\"fullWidth\" checked=\"\">\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" value=\"5\" step=\"1\" condition=\"fullWidth == false\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" value=\"5\" step=\"1\" condition=\"fullWidth == false\">\n        <header>Show/Hide</header>\n        <input type=\"range\" inline=\"\" title=\"Width\" name=\"videoSize\" min=\"20\" max=\"100\" value=\"65\" step=\"1\" condition=\"fullWidth == false\">\n        <input type=\"checkbox\" title=\"Caption\" name=\"showText\">\n        <header>Background</header>\n        <input type=\"color\" title=\"Color\" name=\"bgColor\" value=\"#ffffff\">\n    </mbr-parameters>\n\n    <div mbr-class=\"{'container': !fullWidth}\">\n        <div class=\"image-block mbr-m-auto\">\n            <amp-img src=\"@PROJECT_PATH@/assets/images/screenshot-2025-01-28-at-15.30.13-1108x618.png\" layout=\"responsive\" width=\"1428.995488673139\" height=\"797.039\" alt=\"Streaming page (EUISS on X)\" class=\"mobirise-loader\">\n                <div placeholder=\"\" class=\"placeholder\"></div>\n                <a href=\"https://x.com/EU_ISS/status/1884157841038028868\" target=\"_blank\"><img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/screenshot-2025-01-28-at-15.30.13-1108x618.png\" alt=\"Streaming page (EUISS on X)\" data-aspectratio=\"0.6666666666666666\"></a>\n            </amp-img>\n            <div class=\"mbr-figure-caption\" mbr-if=\"showText\">\n                <p mbr-text=\"\" class=\"mbr-text mbr-black align-center mbr-fonts-style\" mbr-class=\"{'mbr-py-1': !fullWidth, 'mbr-py-1 mbr-px-4': fullWidth}\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\">\n                    Create awesome and FAST websites!\n                </p>\n            </div>\n        </div>\n    </div>\n</section>",
           "_cid": "uBbN7ZCANp",
           "_anchor": "image1-k6",
-          "_protectedParams": [],
-          "_global": false,
-          "_once": false,
-          "_params": {}
-        },
-        {
-          "alias": false,
-          "_styles": {
-            "padding-top": "(@paddingTop * 15px)",
-            "padding-bottom": "(@paddingBottom * 15px)",
-            "& when (@bg-type = 'color')": {
-              "background-color": "@bg-value",
-              "& when (@twoColor)": {
-                "background": "linear-gradient(225deg, @bg-value 0, @twoColorBg 75%)"
-              }
-            },
-            "& when (@bg-type = 'image')": {
-              "background-image": "url(@bg-value)"
-            },
-            ".image-block": {
-              "position": "relative",
-              "z-index": "1",
-              "& when not (@fullWidth)": {
-                "@media (max-width: 767px)": {
-                  "width": "100% !important"
-                }
-              },
-              "& when not (@showText)": {
-                "box-shadow": "inset 0 0 0 1px #ebebf0, 0 15px 30px 0 rgba(0, 0, 0, 0.15)",
-                "border-radius": "10px"
-              }
-            },
-            "img": {
-              "border-radius": "10px",
-              "object-fit": "contain"
-            }
-          },
-          "_name": "image2",
-          "_sourceTheme": "mobirise-amp",
-          "_customHTML": "<section class=\"image2\" group=\"Images &amp; Videos\" plugins=\"amp-main\">\n\n    <mbr-parameters>\n    <!-- Block parameters controls (Blue \"Gear\" panel) -->\n        <header>Size</header>\n        <input type=\"checkbox\" title=\"Full Width\" name=\"fullWidth\">\n        <input type=\"range\" inline=\"\" title=\"Top\" name=\"paddingTop\" min=\"0\" max=\"10\" value=\"5\" step=\"1\">\n        <input type=\"range\" inline=\"\" title=\"Bottom\" name=\"paddingBottom\" min=\"0\" max=\"10\" value=\"5\" step=\"1\">\n        <header>Show/Hide</header>\n        <input type=\"range\" inline=\"\" title=\"Width\" name=\"videoSize\" min=\"4\" max=\"12\" value=\"9\" step=\"1\">\n        <input type=\"checkbox\" title=\"Caption\" name=\"showText\" checked=\"\">\n        <header>Background</header>\n        <fieldset type=\"background\" name=\"bg\">\n            <input type=\"image\" title=\"Image\" value=\"../_images/background4.jpg\">\n            <input type=\"color\" title=\"Color\" value=\"#ffffff\" selected=\"\">\n        </fieldset>\n        <input type=\"checkbox\" title=\"2 Color\" name=\"twoColor\" condition=\"bg.type == 'color'\">\n        <input type=\"color\" title=\"Color 2\" value=\"#5400d7\" name=\"twoColorBg\" condition=\"twoColor &amp;&amp; bg.type == 'color'\">\n    </mbr-parameters>\n    \n    <div mbr-class=\"{'container': !fullWidth, 'container-fluid' : fullWidth }\">\n            <div class=\"mbr-row mbr-jc-c\">\n                <div class=\"mbr-col-sm-12 mbr-col-md-12 mbr-col-lg-{{videoSize}}\">\n                    <div class=\"image-block\">\n                        <amp-img src=\"@PROJECT_PATH@/assets/images/screenshot-2025-01-28-at-15.20.16-1646x1049.png\" layout=\"responsive\" width=\"823\" height=\"524.5\" alt=\"EUISS - Interactive Map (external)\" class=\"mobirise-loader\">\n                            <div placeholder=\"\" class=\"placeholder\"></div>\n                            <a href=\"https://europeangovernanceandpolitics.eui.eu/global-risks-eu/#\" target=\"_blank\"><img class=\"mbr-temp\" src=\"@PROJECT_PATH@/assets/images/screenshot-2025-01-28-at-15.20.16-1646x1049.png\" alt=\"EUISS - Interactive Map (external)\" data-aspectratio=\"0.4848116646415553\"></a>\n                        </amp-img>\n                        <div class=\"mbr-figure-caption\" mbr-if=\"showText\">\n                            <p mbr-text=\"\" class=\"mbr-text mbr-white align-center mbr-fonts-style\" mbr-class=\"{'mbr-py-1': !fullWidth, 'mbr-py-1 mbr-px-4': fullWidth}\" mbr-theme-style=\"display-7\" data-app-selector=\".mbr-text\">\n                                Create awesome and FAST websites!\n                            </p>\n                        </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</section>",
-          "_cid": "uBbLD0De24",
-          "_anchor": "image2-k3",
           "_protectedParams": [],
           "_global": false,
           "_once": false,
