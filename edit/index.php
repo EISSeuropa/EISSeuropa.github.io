@@ -523,7 +523,8 @@ class Token {
 
     protected $payload;
 
-    // source: https://github.com/firebase/php-jwt
+    // Adapted from firebase/php-jwt (BSD-3-Clause License). Modified for
+    // RS256-only verification and custom exception handling.
     public static function from($jwt) {
         if (!defined('JWT_PUBLIC_KEY')) {
             throw new ServerException('Invalid configuration');
