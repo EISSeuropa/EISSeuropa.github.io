@@ -189,6 +189,8 @@ class Directory extends Dirent {
 }
 }
 namespace SiteEditor\Fs {
+use SiteEditor\Exception\ServerException;
+
 class DirectoryIterator implements \Iterator {
 
     private $stack = array();
@@ -207,7 +209,11 @@ class DirectoryIterator implements \Iterator {
     public function rewind() {
         if (!$this->path) return;
         $this->index = $this->cursor = 0;
-        $this->stack = array(@dir($this->path));
+        $dir = @dir($this->path);
+        if ($dir === false) {
+            throw new ServerException(sprintf('Failed to open directory: %s', $this->path));
+        }
+        $this->stack = array($dir);
         $this->next();
     }
 
