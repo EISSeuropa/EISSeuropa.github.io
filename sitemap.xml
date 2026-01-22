@@ -18,9 +18,6 @@
 		<loc>https://eiss-europa.com/2022.html</loc>
 	</url>
 	<url>
-		<loc>https://eiss-europa.com/euroswamos.html</loc>
-	</url>
-	<url>
 		<loc>https://eiss-europa.com/membership.html</loc>
 	</url>
 	<url>
@@ -70,5 +67,11 @@
 	</url>
 	<url>
 		<loc>https://eiss-europa.com/2026.html</loc>
+	</url>
+	<url>
+		<loc>https://eiss-europa.com/euroswamos.html</loc>
+	</url>
+	<url>
+		<loc>https://eiss-europa.com/NetSecSchool.html</loc>
 	</url>
 </urlset>
