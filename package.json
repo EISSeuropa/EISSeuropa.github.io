@@ -1,0 +1,18 @@
+{
+  "name": "eiss-europa-site",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Static site for the European Initiative for Security Studies (eiss-europa.com), built with Eleventy.",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve --quiet",
+    "clean": "rm -rf _site"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  }
+}
