@@ -1,0 +1,62 @@
+name: Build and deploy site
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - run: npm install --no-audit --no-fund
+
+      - run: npm run build
+
+      - name: List build output
+        run: |
+          echo "=== _site root ==="
+          ls -la _site/ | head -60
+          echo "=== _site/.well-known ==="
+          ls -la _site/.well-known/ 2>&1 || echo "MISSING"
+          echo "=== root-level HTML count ==="
+          find _site -maxdepth 1 -name '*.html' | wc -l
+          echo "=== critical files ==="
+          for f in CNAME .nojekyll robots.txt sitemap.xml index.html .well-known/apple-developer-merchantid-domain-association assets/images/index-meta.jpg; do
+            if [ -e "_site/$f" ]; then echo "OK   $f"; else echo "MISS $f"; fi
+          done
+
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
