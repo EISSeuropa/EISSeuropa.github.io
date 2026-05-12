@@ -1,0 +1,39 @@
+<header class="site-header" role="banner">
+  <div class="container nav">
+    <a class="nav-brand" href="/" aria-label="{{ site.fullName }} — home">
+      <span class="nav-brand-mark" aria-hidden="true">E</span>
+      <span>EISS</span>
+    </a>
+
+    <ul class="nav-links" id="primary-nav" data-nav-menu>
+      {% for item in site.nav %}
+        {% if item.key != "home" %}
+          <li>
+            <a class="nav-link"
+               href="{{ item.href }}"
+               {% if item.external %}target="_blank" rel="noopener"{% endif %}
+               {% if item.key == navKey %}aria-current="page"{% endif %}>
+              {{ item.text }}
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+
+    <div class="nav-actions">
+      {% include "theme-toggle.njk" %}
+      <button class="icon-btn nav-menu-toggle"
+              type="button"
+              data-menu-toggle
+              aria-label="Toggle navigation menu"
+              aria-controls="primary-nav"
+              aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="4" y1="7" x2="20" y2="7"/>
+          <line x1="4" y1="12" x2="20" y2="12"/>
+          <line x1="4" y1="17" x2="20" y2="17"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>

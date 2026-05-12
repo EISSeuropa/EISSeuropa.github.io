@@ -1,6 +1,8 @@
 module.exports = function (eleventyConfig) {
   eleventyConfig.setQuietMode(true);
 
+  eleventyConfig.addFilter("year", () => new Date().getUTCFullYear());
+
   eleventyConfig.addPassthroughCopy({ "src/legacy": "/" });
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addPassthroughCopy({ "src/.well-known": "/.well-known" });
