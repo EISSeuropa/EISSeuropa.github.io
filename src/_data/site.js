@@ -12,7 +12,7 @@ module.exports = {
   nav: [
     { href: "/", text: "Home", key: "home" },
     { href: "/past.html", text: "Conferences", key: "conferences" },
-    { href: "/NetSecSchool.html", text: "Programmes", key: "programmes" },
+    { href: "/programmes.html", text: "Programmes", key: "programmes" },
     { href: "/initiative.html", text: "The Initiative", key: "initiative" },
     { href: "/membership.html", text: "Membership", key: "membership" },
     { href: "https://indico.eiss-europa.com/", text: "Events", key: "events", external: true },
