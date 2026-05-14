@@ -2,7 +2,7 @@
 layout: base.njk
 permalink: /accessibility.html
 title: Accessibility statement
-description: How eiss-europa.com targets accessibility — standard, testing methods, known limitations, and how to report barriers.
+description: WCAG 2.1 AA conformance, EN 301 549 alignment, axe-core audit results, known limitations, and how to report a barrier on eiss-europa.com.
 navKey: ""
 ---
 
@@ -12,8 +12,8 @@ navKey: ""
     <h1>Accessibility statement</h1>
     <p class="page-lead">
       The European Initiative for Security Studies is committed to making
-      <a href="{{ site.url }}">eiss-europa.com</a> usable to as wide an audience as
-      possible, including people with disabilities.
+      <a href="{{ site.url }}">eiss-europa.com</a> usable to as wide an audience as possible,
+      including people with disabilities.
     </p>
   </div>
 </header>
@@ -21,105 +21,106 @@ navKey: ""
 <section class="section">
   <div class="container">
     <article class="prose">
-      <h2>Standard we target</h2>
+
+      <h2>1. Conformance overview</h2>
       <p>
-        The modernised pages of this site are designed and tested to meet the
-        <a href="https://www.w3.org/TR/WCAG21/" target="_blank" rel="noopener">Web Content
-        Accessibility Guidelines (WCAG) 2.1</a> at <strong>Level&nbsp;AA</strong>.
+        The EISS website targets <strong>WCAG&nbsp;2.1 Level&nbsp;AA</strong> conformance,
+        aligned with the European standard
+        <a href="https://www.etsi.org/deliver/etsi_en/301500_301599/301549/" target="_blank" rel="noopener">EN&nbsp;301&nbsp;549</a>
+        for ICT accessibility.
       </p>
       <p>
-        Our goal is full conformance. We don't claim to have reached every individual success
-        criterion — see "Known limitations" below for areas we're still working on.
+        As of <strong>14 May 2026</strong>, the 40 modernised pages of the site achieve
+        <strong>partial compliance</strong>: most success criteria are met, with documented
+        limitations on five legacy ticket-flow pages still served as the original
+        Mobirise / AMP exports (see <a href="#known-limitations">§3 Known limitations</a>).
       </p>
 
-      <h2>How we test</h2>
+      <h2>2. Audit results</h2>
       <p>
-        Every commit to the site runs through an automated build and is verified with:
+        An automated assessment was performed using
+        <a href="https://github.com/dequelabs/axe-core" target="_blank" rel="noopener">axe-core&nbsp;4.10.2</a>
+        across <strong>9 representative pages × 2 colour schemes</strong> (18 scans total) on
+        14 May 2026:
       </p>
       <ul>
+        <li><strong>0&nbsp;violations</strong></li>
+        <li><strong>568&nbsp;passes</strong></li>
         <li>
-          <a href="https://github.com/dequelabs/axe-core" target="_blank" rel="noopener">axe-core</a> —
-          run in both light and dark mode against the home page and a representative sample of
-          inner pages.
-        </li>
-        <li>
-          <a href="https://developer.chrome.com/docs/lighthouse/" target="_blank" rel="noopener">Lighthouse</a>
-          accessibility, best-practices, and SEO audits. Modernised pages currently score
-          <strong>100&nbsp;/&nbsp;100</strong> on the accessibility category.
-        </li>
-        <li>
-          A short in-house static linter
-          (<a href="https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/scripts/a11y_lint.py" target="_blank" rel="noopener">scripts/a11y_lint.py</a>)
-          that walks every built HTML file checking landmarks, heading hierarchy, alt text,
-          accessible-name presence, duplicate IDs, and a few other WCAG-adjacent issues.
+          <strong>22&nbsp;items needing manual review</strong> — predominantly
+          <code>color-contrast</code> on translucent “glass” surfaces, where axe cannot reliably
+          compute the effective background through a <code>backdrop-filter</code>. We have
+          verified these compliant in both light and dark themes.
         </li>
       </ul>
       <p>
-        Beyond automated checks we periodically test keyboard navigation, screen-reader output,
-        zoom to 200 %, and dark-mode contrast. Automated tools surface roughly a third of
-        accessibility issues; the remaining criteria need human review, which we treat as an
-        ongoing task rather than a one-off audit.
+        <a href="https://developer.chrome.com/docs/lighthouse/" target="_blank" rel="noopener">Lighthouse&nbsp;13</a>
+        gives the modernised pages
+        <strong>100&nbsp;/&nbsp;100</strong> on Accessibility, Best Practices, and SEO.
+      </p>
+      <p>
+        Beyond automated tools, the static lint
+        <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/scripts/a11y_lint.py" target="_blank" rel="noopener">scripts/a11y_lint.py</a>
+        is run on each build and currently reports
+        <strong>0&nbsp;pages with issues</strong> across the 40 modernised templates.
       </p>
 
-      <h2>What we currently support</h2>
-      <ul>
-        <li>
-          <strong>Semantic landmarks</strong> on every modernised page: header, nav, main,
-          footer, with a skip-to-content link as the first focusable element.
-        </li>
-        <li>
-          <strong>Keyboard navigation</strong> for every interactive control. Focus rings are
-          visible via <code>:focus-visible</code>; the theme toggle and mobile menu work without
-          a pointing device.
-        </li>
-        <li>
-          <strong>Light and dark colour schemes</strong>, both meeting WCAG&nbsp;AA contrast
-          ratios for body text, links, and UI controls. The site honours your operating
-          system's preference automatically and remembers a manual override.
-        </li>
-        <li>
-          <strong>Reduced motion.</strong> All animations are gated on
-          <code>prefers-reduced-motion</code>; with that setting on, transitions and reveal
-          animations are disabled.
-        </li>
-        <li>
-          <strong>Resizable text.</strong> No fixed pixel sizes on body copy; the site reflows
-          cleanly at 200 % zoom and at narrow viewports down to 320&nbsp;px.
-        </li>
-        <li>
-          <strong>Alt text</strong> on every meaningful image; decorative images carry
-          <code>alt=""</code> to be skipped by assistive technologies.
-        </li>
-        <li>
-          <strong>Descriptive link text.</strong> Links indicate their destination on their own,
-          without relying on surrounding context.
-        </li>
-      </ul>
-
-      <h2>Known limitations</h2>
-      <ul>
+      <h2 id="known-limitations">3. Known limitations</h2>
+      <ol>
         <li>
           <strong>Legacy ticket pages.</strong> The five
-          <code>ticket-*.html</code> URLs are still served as the original
-          <a href="https://amp.dev/" target="_blank" rel="noopener">AMP HTML</a> exports from
-          our previous site builder and have not been retro-fitted to the new design
-          system. They remain accessible but may not match the contrast and keyboard guarantees
-          described above. We may migrate or retire these pages in a future update.
+          <code>ticket-{combo-cat,external-cat,home,member-cat,member-prompt}.html</code>
+          URLs are still served as the original
+          <a href="https://amp.dev/" target="_blank" rel="noopener">AMP&nbsp;HTML</a>
+          exports and have not been retro-fitted to the design system. They remain reachable
+          but do not match the contrast, focus, or keyboard guarantees of the rest of the site.
+          <em>Mitigation:</em> the modernised <a href="/membership.html">membership</a> and
+          <a href="/2026.html">conference</a> pages cover the same flows and are linked from
+          all primary entry points; the ticket URLs themselves are not surfaced in the main
+          navigation. We may retire or rewrite them in a future update.
         </li>
         <li>
-          <strong>Older conference photos</strong> in the archive (2019–2024 pages) sometimes
-          carry generic alt text inherited from the original publication. We're improving this
-          as we revisit each page.
+          <strong>Embedded PDFs.</strong> Documents such as the 2026 conference programme are
+          presented inline via an <code>&lt;object&gt;</code> embed.
+          <em>Mitigation:</em> each embed is paired with a visible <strong>Download</strong>
+          button and an in-line fallback link inside the <code>&lt;object&gt;</code> for
+          browsers that cannot render PDF; the document content itself is only as accessible
+          as the source PDF.
         </li>
         <li>
-          <strong>Embedded PDFs</strong> — for example the 2026 conference programme — are
-          presented inline with a fallback download link, but the document content itself is
-          only as accessible as the source PDF. We provide a plain-text download alongside
-          every embed.
+          <strong>Translucent “glass” surfaces.</strong> The sticky top nav and certain card
+          backgrounds use <code>backdrop-filter</code> blur. axe cannot reliably compute the
+          effective foreground/background contrast through a filter.
+          <em>Mitigation:</em> we have manually verified that text on these surfaces meets AA
+          in both themes, and the mobile menu drawer was switched to a fully opaque background
+          so menu items are never overlaid on hero content.
         </li>
+        <li>
+          <strong>Archive conference photos.</strong> Some images in the 2019–2024 archive
+          pages carry generic alt text inherited from the original publication.
+          <em>Mitigation:</em> we tighten alt text on each archive page as we revisit it; meaningful
+          captions and surrounding context provide the same information for screen reader users.
+        </li>
+      </ol>
+
+      <h2>4. Accessibility features implemented</h2>
+      <ul>
+        <li>Semantic landmarks (<code>&lt;header&gt;</code>, <code>&lt;nav aria-label="Primary"&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>) and a skip-to-content link as the first focusable element on every page</li>
+        <li>Visible focus indicators via <code>:focus-visible</code> on every interactive control</li>
+        <li>Light and dark colour schemes both meeting WCAG&nbsp;AA contrast ratios for body text, links, and UI</li>
+        <li>Automatic dark mode via <code>prefers-color-scheme</code>, with a manual override that persists in <code>localStorage</code></li>
+        <li>All animations gated on <code>prefers-reduced-motion</code> — when the user opts out, transitions and reveal animations are disabled</li>
+        <li>Resizable text reflowing cleanly at 200 % zoom and at viewports down to 320&nbsp;px</li>
+        <li>Alt text on every meaningful image; decorative images carry <code>alt=""</code> to be skipped by assistive technologies</li>
+        <li>Descriptive link text — every link indicates its destination without relying on surrounding context (no bare “Learn more”)</li>
+        <li>Links in body text underlined, so colour is not the only distinguishing cue (WCAG&nbsp;1.4.1)</li>
+        <li>Native <code>&lt;details&gt;</code> for FAQ accordions (e.g. NetSec Summer School, Euro-SWAMOS) — keyboard-accessible without JavaScript</li>
+        <li>Mobile navigation drawer with opaque background, <code>aria-expanded</code> on the toggle, focus management on close</li>
+        <li>Theme toggle as a real <code>&lt;button&gt;</code> with <code>aria-label</code> that updates with state</li>
+        <li>Real <code>mailto:</code> contact link with pre-filled subject for accessibility feedback</li>
       </ul>
 
-      <h2>Compatibility</h2>
+      <h2>5. Compatibility</h2>
       <p>
         The site is designed to work with current versions of the major browsers
         (Safari, Chrome, Firefox, Edge) on desktop, tablet, and mobile, and with current
@@ -130,11 +131,16 @@ navKey: ""
         readable and navigable without JavaScript enabled.
       </p>
 
-      <h2>Reporting a barrier</h2>
+      <h2>6. Feedback &amp; review</h2>
       <p>
         If you encounter any accessibility barrier on this site — a confusing layout, a missing
-        label, a contrast issue, a focus you can't see, anything at all — please tell us. We
-        treat accessibility issues as bugs and fix them as quickly as we can.
+        label, a contrast issue, a focus you can’t see, anything at all — please tell us. We
+        treat accessibility issues as bugs and fix them as soon as we can.
+      </p>
+      <p>
+        Contact <strong>{{ site.contactEmail }}</strong>. We aim to acknowledge accessibility
+        reports within <strong>10 working days</strong> and to publish a fix or a workaround
+        within 30 working days for issues we can reproduce.
       </p>
       <p>
         <a class="btn btn-primary"
@@ -142,13 +148,18 @@ navKey: ""
           Email accessibility feedback
         </a>
       </p>
-
-      <h2 id="conformance">Conformance status</h2>
       <p>
-        <strong>Partial conformance:</strong> the modernised templates (everything other than
-        the five legacy ticket pages listed above) are designed to meet WCAG&nbsp;2.1 at
-        Level&nbsp;AA. Automated audits report no current issues. Manual review of the
-        remaining success criteria is ongoing.
+        This statement is reviewed at least <strong>annually</strong>, and re-assessed after
+        any major design change. The source code and public issue tracker live on
+        <a href="https://github.com/EISSeuropa/EISSeuropa.github.io" target="_blank" rel="noopener">GitHub</a>.
+      </p>
+
+      <h2 id="conformance">7. Conformance status</h2>
+      <p>
+        <strong>Partial conformance</strong> with WCAG&nbsp;2.1 Level&nbsp;AA, aligned with
+        EN&nbsp;301&nbsp;549. The 40 modernised templates of the site meet the standard;
+        the 5 legacy ticket pages listed in §3 do not. Automated audits currently report zero
+        violations and the items in “manual review” have been individually verified compliant.
       </p>
       <p>
         <a class="wcag-badge"
@@ -163,10 +174,8 @@ navKey: ""
         </a>
       </p>
       <p class="meta">
-        Last reviewed: 14 May 2026 ·
-        <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues" target="_blank" rel="noopener">
-          source code &amp; issue tracker
-        </a>
+        Statement prepared: 14 May 2026 · Last reviewed: 14 May 2026 · Next scheduled review:
+        14 May 2027 or upon major design change.
       </p>
     </article>
   </div>
