@@ -42,28 +42,88 @@ navKey: conferences
   <div class="container">
     <h2 id="programme-title">Final programme</h2>
     <p class="lead muted" style="max-width: 44rem;">
-      The conference runs across two days. The full programme is shown below.
+      The conference runs across two days. Download or browse the full programme below.
     </p>
 
-    <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(28rem, 100%), 1fr)); margin-block: var(--space-6);">
-      <figure style="margin: 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-1);">
-        <img src="/assets/images/screenshot202026-05-0620at2014.35.24-779x1113.png"
-             alt="Day 1 of the 2026 European Security Studies Conference programme."
-             loading="lazy">
-        <figcaption style="padding: var(--space-3) var(--space-4); background: var(--bg-elev); border-top: 1px solid var(--border); font-size: var(--fs-sm); color: var(--text-subtle);">
-          Day 1 — Thursday 11 June 2026
-        </figcaption>
-      </figure>
+    <article class="card" style="padding: 0; overflow: hidden; margin-block: var(--space-6);">
+      <header style="
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: var(--space-4);
+        align-items: center;
+        padding: var(--space-5) clamp(var(--space-5), 2vw + 1rem, var(--space-6));
+        border-bottom: 1px solid var(--border-glass);
+      ">
+        <span aria-hidden="true" style="
+          width: 48px;
+          height: 56px;
+          display: grid;
+          place-items: center;
+          border-radius: 8px;
+          background: linear-gradient(180deg, hsl(0 70% 55%), hsl(0 75% 45%));
+          color: white;
+          font-size: 0.7rem;
+          font-weight: 800;
+          letter-spacing: 0.05em;
+          box-shadow: var(--shadow-1), inset 0 1px 0 hsl(0 0% 100% / 0.25);
+        ">PDF</span>
+        <div style="min-width: 0;">
+          <p style="margin: 0 0 var(--space-1); font-weight: 600; font-size: var(--fs-base); color: var(--text);">
+            EISS Conference Programme — 2026
+          </p>
+          <p style="margin: 0; font-size: var(--fs-sm); color: var(--text-muted);">
+            <span>2 pages</span>
+            <span aria-hidden="true">·</span>
+            <span>107&nbsp;KB</span>
+            <span aria-hidden="true">·</span>
+            <span>11–12 June, Stockholm</span>
+          </p>
+        </div>
+        <div style="display: inline-flex; flex-wrap: wrap; gap: var(--space-2); justify-content: flex-end;">
+          <a class="btn btn-secondary btn-sm"
+             href="/assets/files/EISS-2026-programme.pdf"
+             target="_blank" rel="noopener">
+            Open in new tab
+          </a>
+          <a class="btn btn-primary btn-sm"
+             href="/assets/files/EISS-2026-programme.pdf"
+             download="EISS-2026-programme.pdf">
+            Download
+          </a>
+        </div>
+      </header>
 
-      <figure style="margin: 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-1);">
-        <img src="/assets/images/screenshot202026-05-0620at2014.35.32-789x1118.png"
-             alt="Day 2 of the 2026 European Security Studies Conference programme."
-             loading="lazy">
-        <figcaption style="padding: var(--space-3) var(--space-4); background: var(--bg-elev); border-top: 1px solid var(--border); font-size: var(--fs-sm); color: var(--text-subtle);">
-          Day 2 — Friday 12 June 2026
-        </figcaption>
-      </figure>
-    </div>
+      <div style="background: var(--bg-tinted); padding: var(--space-3);">
+        <object
+          data="/assets/files/EISS-2026-programme.pdf#view=FitH&toolbar=0&navpanes=0"
+          type="application/pdf"
+          aria-label="Embedded 2026 conference programme. If your browser cannot display the PDF, use the download link above."
+          style="
+            display: block;
+            width: 100%;
+            aspect-ratio: 8.5 / 11;
+            max-height: 90vh;
+            border: 0;
+            border-radius: var(--radius-sm);
+            background: var(--bg-elev);
+            box-shadow: var(--shadow-1);
+          ">
+          <div style="padding: var(--space-7) var(--space-5); text-align: center; color: var(--text-muted);">
+            <p>Your browser can't display the embedded PDF.</p>
+            <p>
+              <a class="btn btn-primary btn-sm"
+                 href="/assets/files/EISS-2026-programme.pdf"
+                 download="EISS-2026-programme.pdf">Download the programme (107&nbsp;KB)</a>
+            </p>
+          </div>
+        </object>
+      </div>
+    </article>
+
+    <p style="font-size: var(--fs-sm); color: var(--text-subtle);">
+      Two-day programme covering Thursday 11 and Friday 12 June 2026 at Stockholm University.
+      The programme may be updated as speakers are confirmed.
+    </p>
   </div>
 </section>
 
