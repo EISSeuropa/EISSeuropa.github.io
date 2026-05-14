@@ -4,29 +4,39 @@ Static site for the **European Initiative for Security Studies**, served at <htt
 
 ## Stack
 
-- [Eleventy](https://www.11ty.dev/) static site generator.
-- GitHub Actions builds `_site/` on every push to `master` and deploys it to GitHub Pages.
-- No runtime dependencies, no client-side JS frameworks.
+- [Eleventy 3](https://www.11ty.dev/) static site generator with Nunjucks templates.
+- Single design-system CSS file in [src/assets/css/site.css](src/assets/css/site.css) — design tokens, auto + manual dark mode, Apple-style frosted surfaces, motion gated on `prefers-reduced-motion`, Inter font.
+- GitHub Actions builds `_site/` on every push to `master` and deploys it to GitHub Pages — no Jekyll, no runtime dependencies, no client-side JS frameworks.
+- ~30 lines of vanilla JS for the theme toggle and mobile menu drawer ([src/assets/js/theme.js](src/assets/js/theme.js)).
 
 ## Repo layout
 
 ```
 src/
-  _layouts/        shared page layouts (added in phase 2)
-  _includes/       partials: nav, footer, theme toggle (added in phase 2)
-  _data/           global site data (added in phase 2)
-  assets/          images, fonts, files (passed through verbatim)
-  legacy/          unmigrated pages exported by Mobirise, copied verbatim to /
-  .well-known/     Apple Pay merchant verification, etc.
-  CNAME            custom domain
-  robots.txt
-  sitemap.xml
-  .nojekyll        disable Jekyll on GitHub Pages
-.eleventy.js       Eleventy config
-.github/workflows/ CI: build + deploy
+  _layouts/base.njk      page shell (head, OG/Twitter meta, theme bootstrap)
+  _includes/             partials: nav, footer, theme toggle, content
+                         partials shared between pages (terms-body, jpw-2019-body,
+                         redirect-body)
+  _data/site.js          global nav config + site identity
+  assets/
+    css/site.css         the design system — design tokens + every component
+    js/theme.js          theme toggle + mobile menu logic
+    images/              photos, logos, OG cards
+    files/               PDFs (conference programmes, etc.)
+  .well-known/           Apple Pay merchant verification
+  CNAME, robots.txt, sitemap.xml, .nojekyll
+  legacy/                pages still on raw Mobirise/AMP passthrough (the five
+                         ticket-*.html flow pages — kept verbatim because they
+                         may still be linked from external Stripe-style flows)
+  *.njk                  one file per modernised page (39 pages — index, archive
+                         years 2019-2026, programmes, board, membership, …)
+.eleventy.js             Eleventy config (passthrough rules + year filter)
+.github/workflows/       CI: build → upload-pages-artifact → deploy-pages
+scripts/                 dev helpers (a11y_lint.py, extract_legacy.py,
+                         extract_prose.py) — not part of the deployed site
 ```
 
-During the migration, pages live in either `src/legacy/` (untouched Mobirise export) or `src/` (modern Eleventy template). Both URL spaces co-exist; the live site is always fully working.
+The site is fully built by Eleventy. All 39 modernised pages live as `.njk` templates under `src/`; the 5 ticket-* URLs remain on legacy passthrough. URLs are preserved from the original Mobirise export (`/2019.html`, `/JPW2022.html`, `/.well-known/apple-developer-merchantid-domain-association`, …) so external bookmarks survive.
 
 ## Working on the site
 
@@ -34,12 +44,31 @@ Install Node 20+ once, then:
 
 ```bash
 npm install
-npm run serve     # local dev server with live reload
+npm run serve     # local dev server with live reload at http://localhost:8080
 npm run build     # one-off build into _site/
 ```
 
 Push to `master` to deploy. GitHub Actions runs the build and publishes via GitHub Pages.
 
+### Editing pages
+
+- **Add a new page:** create `src/your-page.njk`, set frontmatter (`layout: base.njk`, `permalink: /your-page.html`, `title:`, `description:`, `metaImage:`, `navKey:`), then write the content as plain HTML inside.
+- **Edit an existing page:** find it in `src/` (or in `src/_includes/` if its content is shared between URLs — terms.html + refund.html, JPW2019 + NDC). Look for the matching `<h1>` to confirm.
+- **Add a PDF embed:** ship the PDF in `src/assets/files/`, then drop an `<article class="card pdf-doc">` block using the `.pdf-doc-*` class set from [site.css](src/assets/css/site.css) (see `src/2026.njk` for the canonical example).
+- **Change nav links:** edit [src/_data/site.js](src/_data/site.js).
+- **Change design tokens (colours, type scale, radii, motion):** edit the `:root` block at the top of [src/assets/css/site.css](src/assets/css/site.css). Tokens cascade through every component.
+
+### Accessibility lint
+
+`scripts/a11y_lint.py` walks every built HTML file and checks for missing landmarks, alt-less images, heading-hierarchy gaps, duplicate IDs, accessible-name absence, etc. Run after any template change:
+
+```bash
+npm run build
+python3 scripts/a11y_lint.py
+```
+
+Should always say `Pages with issues: 0`. axe-core 4.10 also runs cleanly across light + dark modes on the modernised pages — no contrast violations as of phase 6.
+
 ## History
 
-Until May 2026 the site was generated by [Mobirise](https://mobirise.com), exported as ~50 standalone AMP HTML files. The Mobirise project file has been preserved as `project.mobirise.archived` for reference but is **no longer edited**. All future content changes happen by editing files in `src/`.
+Until May 2026 the site was generated by [Mobirise](https://mobirise.com), exported as 43 standalone AMP HTML files (~80–150 KB each, with the entire Mobirise CSS framework inlined into every file). It was migrated to Eleventy in seven phases (PRs #5 → #14) while keeping the site live throughout. The Mobirise project file has been preserved as `project.mobirise.archived` for reference but is **no longer edited** — all future content changes happen by editing files in `src/`.
