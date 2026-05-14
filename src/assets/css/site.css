@@ -69,8 +69,8 @@
   --border-strong: hsl(220 14% 82%);
   --border-glass: hsl(220 30% 100% / 0.6);
   --text: hsl(222 28% 12%);
-  --text-muted: hsl(222 14% 38%);
-  --text-subtle: hsl(222 10% 52%);
+  --text-muted: hsl(222 16% 34%);
+  --text-subtle: hsl(222 13% 40%);
   --accent: hsl(216 88% 50%);
   --accent-hover: hsl(216 88% 44%);
   --accent-soft: hsl(216 88% 50% / 0.1);
@@ -838,13 +838,15 @@ h4 { font-size: var(--fs-lg); }
   gap: var(--space-3);
 }
 
-.footer h3 {
+.footer h2 {
   font-size: var(--fs-xs);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--text-subtle);
   margin-bottom: var(--space-3);
+  line-height: var(--lh-snug);
+  letter-spacing: 0.08em;
 }
 
 .footer-list {
@@ -1021,9 +1023,12 @@ h4 { font-size: var(--fs-lg); }
   font-weight: 700;
 }
 
+.tile h2,
 .tile h3 {
   font-size: var(--fs-lg);
   margin-bottom: var(--space-2);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
 }
 
 .tile p {
