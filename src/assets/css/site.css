@@ -413,19 +413,24 @@ h4 { font-size: var(--fs-lg); }
 @media (max-width: 880px) {
   .nav-links {
     position: fixed;
-    inset-block-start: 64px;
+    inset-block-start: var(--nav-height, 64px);
     inset-inline-end: 0;
     inset-inline-start: 0;
     flex-direction: column;
     align-items: stretch;
-    gap: 0;
+    gap: var(--space-1);
     padding: var(--space-4);
     margin: 0;
-    background: var(--surface-strong);
-    -webkit-backdrop-filter: saturate(var(--saturate)) blur(var(--blur-nav));
-    backdrop-filter: saturate(var(--saturate)) blur(var(--blur-nav));
-    border-bottom: 1px solid var(--border-glass);
+    /* Solid background — the mobile drawer overlays the hero, so a frosted
+       translucent surface lets photo + text bleed through and tank legibility.
+       Keep frosted look on the always-visible nav bar (handled separately on
+       .site-header); the drawer itself stays opaque. */
+    background: var(--bg-elev);
+    border-block-end: 1px solid var(--border);
     box-shadow: var(--shadow-3);
+    max-block-size: calc(100dvh - var(--nav-height, 64px));
+    overflow-y: auto;
+    overscroll-behavior: contain;
     transform: translateY(-12px);
     opacity: 0;
     pointer-events: none;
@@ -443,6 +448,7 @@ h4 { font-size: var(--fs-lg); }
     width: 100%;
     padding: var(--space-3) var(--space-4);
     border-radius: var(--radius-sm);
+    font-size: var(--fs-base);
   }
 
   .nav-menu-toggle {
@@ -873,6 +879,107 @@ h4 { font-size: var(--fs-lg); }
 }
 
 .footer-fineprint p { margin-bottom: var(--space-3); }
+
+/* ---------- pdf document card (Apple Files style) ---------- */
+.pdf-doc {
+  margin-block: var(--space-6);
+  padding: 0;
+  overflow: hidden;
+}
+
+.pdf-doc-header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: var(--space-4);
+  align-items: center;
+  padding: var(--space-5) clamp(var(--space-5), 2vw + 1rem, var(--space-6));
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.pdf-doc-icon {
+  inline-size: 48px;
+  block-size: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: linear-gradient(180deg, hsl(0 70% 55%), hsl(0 75% 45%));
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  box-shadow: var(--shadow-1), inset 0 1px 0 hsl(0 0% 100% / 0.25);
+}
+
+.pdf-doc-meta {
+  min-width: 0;
+}
+
+.pdf-doc-title {
+  margin: 0 0 var(--space-1);
+  font-weight: 600;
+  font-size: var(--fs-base);
+  color: var(--text);
+  /* Wrap on word boundaries, never mid-word, even in the narrowest column. */
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
+}
+
+.pdf-doc-subtitle {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.pdf-doc-subtitle > span {
+  /* Each metadata chip can break to a new line but never mid-word. */
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.pdf-doc-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: flex-end;
+}
+
+.pdf-doc-frame {
+  background: var(--bg-tinted);
+  padding: var(--space-3);
+}
+
+.pdf-doc-frame > object {
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 8.5 / 11;
+  max-block-size: 90vh;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elev);
+  box-shadow: var(--shadow-1);
+}
+
+.pdf-doc-fallback {
+  padding: var(--space-7) var(--space-5);
+  text-align: center;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .pdf-doc-header {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-3) var(--space-4);
+  }
+  .pdf-doc-actions {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+  .pdf-doc-actions .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}
 
 /* ---------- inner-page header ---------- */
 .page-header {
