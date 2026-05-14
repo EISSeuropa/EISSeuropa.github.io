@@ -1,0 +1,173 @@
+---
+layout: base.njk
+permalink: /accessibility.html
+title: Accessibility statement
+description: How eiss-europa.com targets accessibility — standard, testing methods, known limitations, and how to report barriers.
+navKey: ""
+---
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">Accessibility</span>
+    <h1>Accessibility statement</h1>
+    <p class="page-lead">
+      The European Initiative for Security Studies is committed to making
+      <a href="{{ site.url }}">eiss-europa.com</a> usable to as wide an audience as
+      possible, including people with disabilities.
+    </p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <article class="prose">
+      <h2>Standard we target</h2>
+      <p>
+        The modernised pages of this site are designed and tested to meet the
+        <a href="https://www.w3.org/TR/WCAG21/" target="_blank" rel="noopener">Web Content
+        Accessibility Guidelines (WCAG) 2.1</a> at <strong>Level&nbsp;AA</strong>.
+      </p>
+      <p>
+        Our goal is full conformance. We don't claim to have reached every individual success
+        criterion — see "Known limitations" below for areas we're still working on.
+      </p>
+
+      <h2>How we test</h2>
+      <p>
+        Every commit to the site runs through an automated build and is verified with:
+      </p>
+      <ul>
+        <li>
+          <a href="https://github.com/dequelabs/axe-core" target="_blank" rel="noopener">axe-core</a> —
+          run in both light and dark mode against the home page and a representative sample of
+          inner pages.
+        </li>
+        <li>
+          <a href="https://developer.chrome.com/docs/lighthouse/" target="_blank" rel="noopener">Lighthouse</a>
+          accessibility, best-practices, and SEO audits. Modernised pages currently score
+          <strong>100&nbsp;/&nbsp;100</strong> on the accessibility category.
+        </li>
+        <li>
+          A short in-house static linter
+          (<a href="https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/scripts/a11y_lint.py" target="_blank" rel="noopener">scripts/a11y_lint.py</a>)
+          that walks every built HTML file checking landmarks, heading hierarchy, alt text,
+          accessible-name presence, duplicate IDs, and a few other WCAG-adjacent issues.
+        </li>
+      </ul>
+      <p>
+        Beyond automated checks we periodically test keyboard navigation, screen-reader output,
+        zoom to 200 %, and dark-mode contrast. Automated tools surface roughly a third of
+        accessibility issues; the remaining criteria need human review, which we treat as an
+        ongoing task rather than a one-off audit.
+      </p>
+
+      <h2>What we currently support</h2>
+      <ul>
+        <li>
+          <strong>Semantic landmarks</strong> on every modernised page: header, nav, main,
+          footer, with a skip-to-content link as the first focusable element.
+        </li>
+        <li>
+          <strong>Keyboard navigation</strong> for every interactive control. Focus rings are
+          visible via <code>:focus-visible</code>; the theme toggle and mobile menu work without
+          a pointing device.
+        </li>
+        <li>
+          <strong>Light and dark colour schemes</strong>, both meeting WCAG&nbsp;AA contrast
+          ratios for body text, links, and UI controls. The site honours your operating
+          system's preference automatically and remembers a manual override.
+        </li>
+        <li>
+          <strong>Reduced motion.</strong> All animations are gated on
+          <code>prefers-reduced-motion</code>; with that setting on, transitions and reveal
+          animations are disabled.
+        </li>
+        <li>
+          <strong>Resizable text.</strong> No fixed pixel sizes on body copy; the site reflows
+          cleanly at 200 % zoom and at narrow viewports down to 320&nbsp;px.
+        </li>
+        <li>
+          <strong>Alt text</strong> on every meaningful image; decorative images carry
+          <code>alt=""</code> to be skipped by assistive technologies.
+        </li>
+        <li>
+          <strong>Descriptive link text.</strong> Links indicate their destination on their own,
+          without relying on surrounding context.
+        </li>
+      </ul>
+
+      <h2>Known limitations</h2>
+      <ul>
+        <li>
+          <strong>Legacy ticket pages.</strong> The five
+          <code>ticket-*.html</code> URLs are still served as the original
+          <a href="https://amp.dev/" target="_blank" rel="noopener">AMP HTML</a> exports from
+          our previous site builder and have not been retro-fitted to the new design
+          system. They remain accessible but may not match the contrast and keyboard guarantees
+          described above. We may migrate or retire these pages in a future update.
+        </li>
+        <li>
+          <strong>Older conference photos</strong> in the archive (2019–2024 pages) sometimes
+          carry generic alt text inherited from the original publication. We're improving this
+          as we revisit each page.
+        </li>
+        <li>
+          <strong>Embedded PDFs</strong> — for example the 2026 conference programme — are
+          presented inline with a fallback download link, but the document content itself is
+          only as accessible as the source PDF. We provide a plain-text download alongside
+          every embed.
+        </li>
+      </ul>
+
+      <h2>Compatibility</h2>
+      <p>
+        The site is designed to work with current versions of the major browsers
+        (Safari, Chrome, Firefox, Edge) on desktop, tablet, and mobile, and with current
+        versions of the major screen readers (VoiceOver, NVDA, JAWS, TalkBack).
+      </p>
+      <p>
+        JavaScript is used only for the theme toggle and mobile menu. The site is fully
+        readable and navigable without JavaScript enabled.
+      </p>
+
+      <h2>Reporting a barrier</h2>
+      <p>
+        If you encounter any accessibility barrier on this site — a confusing layout, a missing
+        label, a contrast issue, a focus you can't see, anything at all — please tell us. We
+        treat accessibility issues as bugs and fix them as quickly as we can.
+      </p>
+      <p>
+        <a class="btn btn-primary"
+           href="mailto:{{ site.contactEmail }}?subject=Accessibility%20feedback%20on%20eiss-europa.com">
+          Email accessibility feedback
+        </a>
+      </p>
+
+      <h2 id="conformance">Conformance status</h2>
+      <p>
+        <strong>Partial conformance:</strong> the modernised templates (everything other than
+        the five legacy ticket pages listed above) are designed to meet WCAG&nbsp;2.1 at
+        Level&nbsp;AA. Automated audits report no current issues. Manual review of the
+        remaining success criteria is ongoing.
+      </p>
+      <p>
+        <a class="wcag-badge"
+           href="https://www.w3.org/TR/WCAG21/#level-aa-conformance"
+           target="_blank" rel="noopener"
+           aria-label="WCAG 2.1 Level AA — Web Content Accessibility Guidelines, see the W3C reference">
+          <span class="wcag-badge-wcag" aria-hidden="true">WCAG</span>
+          <span class="wcag-badge-vert" aria-hidden="true">
+            <span class="wcag-badge-version">2.1</span>
+            <span class="wcag-badge-level">AA</span>
+          </span>
+        </a>
+      </p>
+      <p class="meta">
+        Last reviewed: 14 May 2026 ·
+        <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues" target="_blank" rel="noopener">
+          source code &amp; issue tracker
+        </a>
+      </p>
+    </article>
+  </div>
+</section>

@@ -880,6 +880,63 @@ h4 { font-size: var(--fs-lg); }
 
 .footer-fineprint p { margin-bottom: var(--space-3); }
 
+/* ---------- WCAG conformance badge ---------- */
+.wcag-badge {
+  display: inline-flex;
+  align-items: stretch;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: var(--shadow-1);
+  border: 1px solid var(--border);
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1;
+  transition: transform var(--motion-fast) var(--ease-out),
+              box-shadow var(--motion-fast) var(--ease-out);
+  margin-block: var(--space-3);
+}
+
+.wcag-badge:hover,
+.wcag-badge:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-2);
+  text-decoration: none;
+}
+
+.wcag-badge-wcag {
+  display: grid;
+  place-items: center;
+  padding: var(--space-3) var(--space-4);
+  background: var(--text);
+  color: var(--bg-elev);
+  font-size: var(--fs-base);
+  letter-spacing: 0.08em;
+}
+
+.wcag-badge-vert {
+  display: grid;
+  grid-template-rows: auto auto;
+  align-content: center;
+  gap: 2px;
+  padding: var(--space-2) var(--space-4);
+  background: var(--bg-elev);
+  text-align: center;
+}
+
+.wcag-badge-version {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.wcag-badge-level {
+  font-size: var(--fs-lg);
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+
 /* ---------- pdf document card (Apple Files style) ---------- */
 .pdf-doc {
   margin-block: var(--space-6);
