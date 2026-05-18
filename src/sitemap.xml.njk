@@ -1,0 +1,21 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+legacyUrls:
+  - /ticket-combo-cat.html
+  - /ticket-external-cat.html
+  - /ticket-home.html
+  - /ticket-member-cat.html
+  - /ticket-member-prompt.html
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{%- for entry in collections.all -%}
+  {%- if not entry.data.redirectTo and entry.url != "/sitemap.xml" %}
+  <url><loc>{{ site.url }}{{ entry.url }}</loc></url>
+  {%- endif -%}
+{%- endfor %}
+{%- for url in legacyUrls %}
+  <url><loc>{{ site.url }}{{ url }}</loc></url>
+{%- endfor %}
+</urlset>
