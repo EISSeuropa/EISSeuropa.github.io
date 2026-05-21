@@ -1,3 +1,4 @@
+{% from "icons.njk" import icon %}
 <footer class="site-footer" role="contentinfo">
   <div class="container footer">
     <div class="footer-grid">
@@ -41,6 +42,19 @@
           <li><a href="mailto:{{ site.contactEmail }}">Contact</a></li>
         </ul>
       </div>
+    </div>
+
+    <div class="footer-social" aria-label="Follow EISS on social media">
+      <span class="footer-social-label">Follow us</span>
+      <a class="footer-social-link" href="{{ site.social.linkedin }}" target="_blank" rel="noopener" aria-label="EISS on LinkedIn">
+        {{ icon("linkedin") }}
+      </a>
+      <a class="footer-social-link" href="{{ site.social.twitter }}" target="_blank" rel="noopener" aria-label="EISS on Twitter / X">
+        {{ icon("twitter") }}
+      </a>
+      <a class="footer-social-link" href="{{ site.social.youtube }}" target="_blank" rel="noopener" aria-label="EISS on YouTube">
+        {{ icon("youtube") }}
+      </a>
     </div>
 
     <div class="footer-fineprint">

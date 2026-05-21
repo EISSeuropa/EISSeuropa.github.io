@@ -565,6 +565,17 @@ h4 { font-size: var(--fs-lg); }
 .btn:hover { text-decoration: none; }
 .btn:active { transform: scale(0.97); }
 
+/* Icons inside buttons: cancel the em-relative vertical-align nudge that
+   the inline .icon class applies (flexbox already centers them), and pin
+   the size at 1em so they match the button's font-size exactly. */
+.btn .icon,
+.btn .icon-inline {
+  vertical-align: baseline;
+  width: 1em;
+  height: 1em;
+  margin: 0;
+}
+
 .btn-primary {
   background: var(--accent);
   color: var(--accent-text);
@@ -898,8 +909,50 @@ h4 { font-size: var(--fs-lg); }
 
 .footer-list a:hover { color: var(--accent); }
 
+/* ---------- footer "Follow us" social row ---------- */
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.footer-social-label {
+  font-size: var(--fs-sm);
+  color: var(--text-subtle);
+  margin-right: var(--space-2);
+}
+
+.footer-social-link {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-hover);
+  transition: background var(--motion-base) var(--ease-out),
+              color var(--motion-base) var(--ease-out),
+              transform var(--motion-base) var(--ease-out);
+}
+
+.footer-social-link:hover,
+.footer-social-link:focus-visible {
+  background: var(--accent);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.footer-social-link svg {
+  width: 18px;
+  height: 18px;
+}
+
 .footer-fineprint {
-  margin-top: var(--space-7);
+  margin-top: var(--space-6);
   padding-top: var(--space-5);
   border-top: 1px solid var(--border);
   font-size: var(--fs-xs);
