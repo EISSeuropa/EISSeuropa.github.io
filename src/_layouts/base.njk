@@ -15,7 +15,16 @@
   {% else %}
     <link rel="canonical" href="{{ site.url }}{{ page.url }}">
   {% endif %}
-  <link rel="shortcut icon" href="/assets/images/logo-eiss-cmjn-2.jpeg" type="image/x-icon">
+  {# Favicon stack — SVG for modern browsers (any size, theme-tolerant),
+     PNG fallbacks for legacy + iOS home-screen + Android PWA. Generated from
+     src/assets/favicon.svg; sizes pinned to standard 32/16 (legacy),
+     180 (apple-touch), 192+512 (Android PWA). #}
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32x32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/assets/favicon-16x16.png" sizes="16x16" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180">
+  <link rel="manifest" href="/assets/manifest.webmanifest">
+  <meta name="theme-color" content="#1e6bcb">
 
   {# Open Graph (Facebook, LinkedIn, Mastodon, Bluesky preview cards) #}
   <meta property="og:type" content="website">
