@@ -244,22 +244,28 @@ h4 { font-size: var(--fs-lg); }
 /* ---------- inline icons (Lucide via src/_includes/icons.njk) ---------- */
 /* All icons render in the surrounding font colour via stroke="currentColor",
    so they automatically work in light + dark themes and inherit link colours.
-   Sizes are em-relative so they scale with the surrounding text. */
+   Sizes are em-relative so they scale with the surrounding text.
+
+   Why we size icons at 0.875em (not 1em): a 1em icon fills the whole line-box
+   (cap height + descender), which makes it look heavier than the lowercase
+   letters around it — those only occupy the x-height. 0.875em brings the
+   icon's visual mass closer to the surrounding text. */
 .icon {
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.125em;
+  width: 0.875em;
+  height: 0.875em;
+  vertical-align: -0.1em;
   display: inline-block;
   flex-shrink: 0;
 }
-.icon-sm { width: 0.875em; height: 0.875em; }
-.icon-lg { width: 1.5em; height: 1.5em; vertical-align: -0.3em; }
-.icon-xl { width: 2em; height: 2em; vertical-align: -0.4em; }
+.icon-sm { width: 0.75em; height: 0.75em; vertical-align: -0.05em; }
+.icon-md { width: 1em; height: 1em; vertical-align: -0.15em; }
+.icon-lg { width: 1.25em; height: 1.25em; vertical-align: -0.2em; }
+.icon-xl { width: 1.75em; height: 1.75em; vertical-align: -0.3em; }
 .icon-inline {
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.15em;
-  margin-right: 0.4em;
+  width: 0.875em;
+  height: 0.875em;
+  vertical-align: -0.1em;
+  margin-right: 0.35em;
   display: inline-block;
   flex-shrink: 0;
 }
