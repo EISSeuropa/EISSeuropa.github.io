@@ -1,0 +1,35 @@
+{
+  "_documentation": "Configuration for scripts/sync-board.py. See docs/board-bios-setup.md for the step-by-step on creating the Google Form, linking it to a Sheet, and filling in the URLs below. While `csv_url` is empty, the workflow runs but no-ops cleanly — so the workflow stays green while the Form is still being set up.",
+
+  "sheet": {
+    "csv_url": ""
+  },
+  "form_url": "",
+
+  "_columns_doc": "Header names exactly as Google Sheets writes them for this form. Timestamp + email columns are localised to the form owner's account language (e.g. French → 'Horodateur' / 'Adresse e-mail'). If you ever change a question's text in the form, mirror the change here so the sync script keeps matching.",
+
+  "columns": {
+    "timestamp": "Timestamp",
+    "email": "Email Address",
+    "name": "Full name (with title — Dr / Prof / Mr / Ms)",
+    "role": "Your role",
+    "year_joined": "Year you joined the EISS board / support team (optional)",
+    "affiliation": "Position and institution (e.g. 'Associate Professor — Leiden University')",
+    "themes": "Research themes (3–5 short phrases, comma-separated)",
+    "bio": "Long bio (optional — used for the support-team display style)",
+    "photo": "Headshot photo (optional)",
+    "consent": "I consent to publication of my bio on eiss-europa.com"
+  },
+
+  "_roles_doc": "Allowed values for the 'Your role' Form dropdown. The Form question's options must exactly match the `label` values below. `kind` determines which output section the entry lands in (board → /board.html 'Board' grid with research themes; support → 'Support Team' grid with flowing bio). `tier` is the primary sort key — lower tiers appear higher on the page. Within a tier, entries sort by `year_joined` ascending (longest tenured first; missing year sorts to end), then by surname alphabetical. To add a new role: append to this list AND add the matching option to the Form dropdown.",
+
+  "roles": [
+    { "label": "Founding Director",          "kind": "board",   "tier": 1 },
+    { "label": "Treasurer",                  "kind": "board",   "tier": 2 },
+    { "label": "Secretary-General",          "kind": "board",   "tier": 3 },
+    { "label": "Board Member",               "kind": "board",   "tier": 100 },
+    { "label": "Technology Coordinator",     "kind": "support", "tier": 1 },
+    { "label": "Events Coordinator",         "kind": "support", "tier": 2 },
+    { "label": "Communications Coordinator", "kind": "support", "tier": 3 }
+  ]
+}
