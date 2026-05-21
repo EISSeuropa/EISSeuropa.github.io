@@ -5,6 +5,7 @@ module.exports = {
     "The largest and most diverse European gathering of scholars and practitioners on security issues.",
   url: "https://eiss-europa.com",
   contactEmail: "contact@eiss-europa.com",
+  newsletterUrl: "https://eepurl.com/h40Gkr",
   social: {
     youtube: "https://www.youtube.com/channel/UCfdVczE8X2iDPsIaadtP57Q",
     twitter: "https://twitter.com/APB_Laudrain",
