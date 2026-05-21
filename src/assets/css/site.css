@@ -241,6 +241,29 @@ h4 { font-size: var(--fs-lg); }
   color: var(--text);
 }
 
+/* ---------- inline icons (Lucide via src/_includes/icons.njk) ---------- */
+/* All icons render in the surrounding font colour via stroke="currentColor",
+   so they automatically work in light + dark themes and inherit link colours.
+   Sizes are em-relative so they scale with the surrounding text. */
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.icon-sm { width: 0.875em; height: 0.875em; }
+.icon-lg { width: 1.5em; height: 1.5em; vertical-align: -0.3em; }
+.icon-xl { width: 2em; height: 2em; vertical-align: -0.4em; }
+.icon-inline {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  margin-right: 0.4em;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
 /* ---------- skip link ---------- */
 .skip-link {
   position: absolute;
