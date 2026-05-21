@@ -1225,11 +1225,20 @@ h4 { font-size: var(--fs-lg); }
   background: var(--accent-soft);
   display: grid;
   place-items: center;
-  /* Use the darker accent for the icon text so a small badge meets 4.5:1
-     against the very pale accent-soft background. */
+  /* Use the darker accent for the icon text/glyph so a small badge meets
+     4.5:1 against the very pale accent-soft background. SVG icons inherit
+     this via stroke="currentColor". */
   color: var(--accent-hover);
   margin-bottom: var(--space-3);
   font-weight: 700;
+}
+
+/* Inline-SVG icons rendered inside a .tile-icon badge override the em-
+   relative .icon sizing — they should fill the badge consistently
+   regardless of the surrounding font-size. */
+.tile-icon svg {
+  width: 22px;
+  height: 22px;
 }
 
 .tile h2,
