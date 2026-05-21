@@ -17,14 +17,42 @@
   {% endif %}
   <link rel="shortcut icon" href="/assets/images/logo-eiss-cmjn-2.jpeg" type="image/x-icon">
 
+  {# Open Graph (Facebook, LinkedIn, Mastodon, Bluesky preview cards) #}
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="{{ site.title }}">
   <meta property="og:title" content="{{ title or site.fullName }}">
   <meta property="og:description" content="{{ description or site.description }}">
-  {% if metaImage %}<meta property="og:image" content="{{ site.url }}{{ metaImage }}">{% endif %}
+  <meta property="og:url" content="{{ site.url }}{{ redirectTo or page.url }}">
+  <meta property="og:image" content="{{ site.url }}{{ metaImage or site.defaultMetaImage }}">
+  <meta property="og:image:alt" content="{{ title or site.fullName }}">
+
+  {# Twitter / X Card #}
   <meta name="twitter:card" content="summary_large_image">
-  {% if metaImage %}<meta name="twitter:image" content="{{ site.url }}{{ metaImage }}">{% endif %}
   <meta name="twitter:title" content="{{ title or site.fullName }}">
+  <meta name="twitter:description" content="{{ description or site.description }}">
+  <meta name="twitter:image" content="{{ site.url }}{{ metaImage or site.defaultMetaImage }}">
+  {% if site.social.twitterHandle %}<meta name="twitter:site" content="{{ site.social.twitterHandle }}">{% endif %}
+
+  {# JSON-LD Organization schema — helps Google Knowledge Panel attach
+     name, logo, and verified social profiles to the eiss-europa.com
+     domain. Emitted on every page; search engines deduplicate. #}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "{{ site.fullName }}",
+    "alternateName": "{{ site.title }}",
+    "url": "{{ site.url }}/",
+    "logo": "{{ site.url }}/assets/images/logo-eiss-cmjn-2.jpeg",
+    "description": "{{ site.description }}",
+    "email": "{{ site.contactEmail }}",
+    "sameAs": [
+      "{{ site.social.twitter }}",
+      "{{ site.social.linkedin }}",
+      "{{ site.social.youtube }}"
+    ]
+  }
+  </script>
 
   <script>
     (function(){
