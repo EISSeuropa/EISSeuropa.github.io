@@ -5,3 +5,5 @@ npm-debug.log*
 .cache/
 .eleventy-cache/
 .claude/
+__pycache__/
+*.pyc

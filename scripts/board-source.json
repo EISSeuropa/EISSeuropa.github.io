@@ -1,0 +1,21 @@
+{
+  "_documentation": "Configuration for scripts/sync-board.py. See docs/board-bios-setup.md for the step-by-step on creating the Google Form, linking it to a Sheet, and filling in the URLs below. While `csv_url` is empty, the workflow runs but no-ops cleanly — so the workflow stays green while the Form is still being set up.",
+
+  "sheet": {
+    "csv_url": ""
+  },
+  "form_url": "",
+
+  "_columns_doc": "Header names exactly as Google Sheets writes them for this form. Timestamp + email columns are localised to the form owner's account language (e.g. French → 'Horodateur' / 'Adresse e-mail'). If you ever change a question's text in the form, mirror the change here so the sync script keeps matching.",
+
+  "columns": {
+    "timestamp": "Timestamp",
+    "email": "Email Address",
+    "name": "Full name (with title — Dr / Prof / Mr / Ms)",
+    "affiliation": "Position and institution (e.g. 'Associate Professor — Leiden University')",
+    "themes": "Research themes (3–5 short phrases, comma-separated)",
+    "bio": "Long bio (optional — used for the support-team display style)",
+    "photo": "Headshot photo (optional)",
+    "consent": "I consent to publication of my bio on eiss-europa.com"
+  }
+}
