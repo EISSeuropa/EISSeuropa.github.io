@@ -6,6 +6,7 @@ description: A multiannual and multidisciplinary programme on the conditions for
 metaImage: /assets/images/coercion-meta.jpg
 navKey: programmes
 ---
+{% from "icons.njk" import icon %}
 
 <header class="page-header">
   <div class="container">
@@ -83,12 +84,12 @@ navKey: programmes
 
     <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr)); margin-block: var(--space-6);">
       <article class="tile">
-        <div class="tile-icon" aria-hidden="true">G</div>
+        <div class="tile-icon" aria-hidden="true">{{ icon("shield") }}</div>
         <h3>From Gunboat Diplomacy to Digital Control</h3>
         <p>Coercion has evolved, adapting to opportunities and limitations afforded by the Age.</p>
       </article>
       <article class="tile">
-        <div class="tile-icon" aria-hidden="true">R</div>
+        <div class="tile-icon" aria-hidden="true">{{ icon("globe") }}</div>
         <h3>Regional Variation and Multidomain Tactics</h3>
         <p>
           Interstate coercion has been on the uptick since the 2010s, yet with remarkable

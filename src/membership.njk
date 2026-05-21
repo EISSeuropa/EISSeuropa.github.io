@@ -6,6 +6,7 @@ description: Join the EISS community and get exclusive access to our online and 
 navKey: membership
 metaImage: /assets/images/membership-meta.jpg
 ---
+{% from "icons.njk" import icon %}
 
 <header class="page-header">
   <div class="container">
@@ -27,7 +28,7 @@ metaImage: /assets/images/membership-meta.jpg
 
     <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-block: var(--space-6);">
       <article class="tile">
-        <div class="tile-icon" aria-hidden="true">∀</div>
+        <div class="tile-icon" aria-hidden="true">{{ icon("users-round") }}</div>
         <h3>Open to all</h3>
         <p>
           Early-career scholars, members of the armed forces, of diplomatic services, as well as
@@ -35,12 +36,12 @@ metaImage: /assets/images/membership-meta.jpg
         </p>
       </article>
       <article class="tile">
-        <div class="tile-icon" aria-hidden="true">M</div>
+        <div class="tile-icon" aria-hidden="true">{{ icon("lightbulb") }}</div>
         <h3>Multidisciplinary</h3>
         <p>History, political science, law, philosophy, economics, psychology, sociology, etc.</p>
       </article>
       <article class="tile">
-        <div class="tile-icon" aria-hidden="true">G</div>
+        <div class="tile-icon" aria-hidden="true">{{ icon("globe") }}</div>
         <h3>Geographically inclusive</h3>
         <p>
           Each year, the Annual Conference is organised on a rotational basis in a different

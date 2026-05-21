@@ -6,6 +6,7 @@ description: Joint Conference on the War in Ukraine — Lessons Learned and the 
 metaImage: /assets/images/Ukraine-meta.jpg
 navKey: ""
 ---
+{% from "icons.njk" import icon %}
 
 <header class="page-header">
   <div class="container">
@@ -47,7 +48,7 @@ navKey: ""
     <h2 style="margin-bottom: var(--space-5);">Format — two roundtables</h2>
     <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));">
       <article class="tile">
-        <div class="tile-icon" aria-hidden="true">1</div>
+        <div class="tile-icon" aria-hidden="true">{{ icon("shield") }}</div>
         <h3>Military lessons learned</h3>
         <p>
           The first roundtable focused on the key military lessons learned from the analysis of
@@ -56,7 +57,7 @@ navKey: ""
         </p>
       </article>
       <article class="tile">
-        <div class="tile-icon" aria-hidden="true">2</div>
+        <div class="tile-icon" aria-hidden="true">{{ icon("users-round") }}</div>
         <h3>Future political settlement</h3>
         <p>
           The second roundtable examined the prospects for a future political settlement between
