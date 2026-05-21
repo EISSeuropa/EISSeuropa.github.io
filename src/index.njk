@@ -6,6 +6,7 @@ description: We are the largest and most diverse European gathering of scholars 
 metaImage: /assets/images/index-meta.jpg
 navKey: home
 ---
+{% from "icons.njk" import icon %}
 
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero-bg" aria-hidden="true">
@@ -25,11 +26,11 @@ navKey: home
       <a class="btn btn-ghost" href="/initiative.html">About the initiative</a>
     </div>
     <p class="reveal reveal-delay-3" style="margin-top: var(--space-6); font-size: var(--fs-sm); color: hsl(0 0% 100% / 0.85);">
-      <a href="{{ site.newsletterUrl }}" target="_blank" rel="noopener" style="color: inherit;">Subscribe to our newsletter</a>
+      <a href="{{ site.newsletterUrl }}" target="_blank" rel="noopener" style="color: inherit;">{{ icon("bell", "icon-inline") }}Subscribe to our newsletter</a>
       <span aria-hidden="true">&nbsp;·&nbsp;</span>
-      <a href="{{ site.social.youtube }}" target="_blank" rel="noopener" style="color: inherit;">Follow our YouTube channel</a>
+      <a href="{{ site.social.youtube }}" target="_blank" rel="noopener" style="color: inherit;">{{ icon("youtube", "icon-inline") }}Follow our YouTube channel</a>
       <span aria-hidden="true">&nbsp;·&nbsp;</span>
-      <a href="mailto:{{ site.contactEmail }}" style="color: inherit;">Contact us</a>
+      <a href="mailto:{{ site.contactEmail }}" style="color: inherit;">{{ icon("mail", "icon-inline") }}Contact us</a>
     </p>
   </div>
 </section>
@@ -46,11 +47,11 @@ navKey: home
         </p>
         <div class="featured-meta">
           <div>
-            <strong>Dates</strong>
+            <strong>{{ icon("calendar", "icon-inline") }}Dates</strong>
             11 — 12 June 2026
           </div>
           <div>
-            <strong>Venue</strong>
+            <strong>{{ icon("map-pin", "icon-inline") }}Venue</strong>
             Stockholm University
           </div>
         </div>
