@@ -4,52 +4,39 @@ This guide walks through creating the Google Form, linking it to a Sheet,
 and wiring the published Sheet into the manual sync workflow.
 **One-time setup, ~30 minutes.** After this, board updates are:
 
-1. A board member submits or updates their bio via the Form.
+1. A board / support-team member submits or updates their bio via the Form.
 2. You go to Actions → *Sync board bios from Google Form* → *Run
    workflow*.
-3. A PR appears. You review it (one diff, your board.json) and click
-   Merge.
+3. A PR appears. You review the diff (one file, `src/_data/board.json`)
+   and click Merge.
 
 ## How the pipeline works
 
 ```
-Google Form ──► Google Sheet ──► sync-board.yml (manual) ──► PR ──► merge ──► /board.html
+Google Form ──► Google Sheet ──► sync-board.yml (manual) ──► PR ──► review + merge ──► /board.html
 ```
 
-Three repo-side moving parts:
+Two repo-side moving parts:
 
-- **`scripts/board-source.json`** — the Sheet's published-CSV URL +
-  column mapping (which question text maps to which JSON field).
-- **`scripts/board-roles.json`** — the **roster**: who is on the board,
-  their organisational role (`Founding Director`, `Treasurer`, …), and
-  their position in the display order. *You* maintain this — members
-  cannot change their own title via the Form.
-- **`scripts/sync-board.py`** — the script that ties them together.
-  No-ops cleanly while `csv_url` is empty.
+- **`scripts/board-source.json`** — the Sheet's published-CSV URL, the
+  column mapping (which question text maps to which JSON field), and
+  the **roles** table (which role labels the Form dropdown offers,
+  and where each appears on the page).
+- **`scripts/sync-board.py`** — the script. Reads the Sheet, builds
+  `src/_data/board.json`, opens a PR. No-ops cleanly while `csv_url`
+  is empty.
 
-The Form is **invitation-only**: any submission whose email isn't in
-`board-roles.json` is dropped with a log line. So even if the Form URL
-leaks, random Google users can't add themselves to the board page.
-
-## Step 0 · Fill in the roster
-
-Before doing any of the Google steps, edit `scripts/board-roles.json`
-and replace each placeholder `FILL_IN@invalid.eiss-europa.com` with the
-real Google-account email of that board / support-team member. The
-script gates every submission on this list.
-
-Roster entries are **independent** of submissions: an entry whose
-member hasn't yet submitted via the Form keeps their existing
-`src/_data/board.json` content (matched by name slug) and just inherits
-the latest `role` from the roster. So you can fill in real emails and
-merge to `master` before sending the Form — nothing will break.
+There is no allowlist. The Form URL is private (shared with board
+members directly), and every workflow run produces a PR that you
+review before it lands. If something unexpected comes through, you
+just don't merge.
 
 ## Step 1 · Create the Form
 
 1. Go to <https://forms.google.com> and create a new blank form.
 2. Title it **Update your EISS bio**. Suggested description:
-   > For listed EISS board and support-team members. Submit (or
-   > re-submit) your bio for the public page at
+   > For EISS board and support-team members. Submit (or re-submit)
+   > your bio for the public page at
    > <https://eiss-europa.com/board.html>. Takes ~5 minutes. You can
    > edit your response later via the link in your confirmation email.
 3. Add these questions, **in this order, with the exact text below**.
@@ -59,24 +46,42 @@ merge to `master` before sending the Form — nothing will break.
 | # | Question text | Type | Required? |
 |---|---|---|---|
 | 1 | **Full name (with title — Dr / Prof / Mr / Ms)** | Short answer | ✅ |
-| 2 | **Position and institution (e.g. 'Associate Professor — Leiden University')** | Short answer | ✅ |
-| 3 | **Research themes (3–5 short phrases, comma-separated)** | Short answer | ⬜ |
-| 4 | **Long bio (optional — used for the support-team display style)** | Paragraph | ⬜ |
-| 5 | **Headshot photo (optional)** | File upload — image only — max 5 MB | ⬜ |
-| 6 | **I consent to publication of my bio on eiss-europa.com** | Checkboxes — single option | ✅ |
+| 2 | **Your role** | Dropdown — see roles table below | ✅ |
+| 3 | **Year you joined the EISS board / support team (optional)** | Short answer | ⬜ |
+| 4 | **Position and institution (e.g. 'Associate Professor — Leiden University')** | Short answer | ✅ |
+| 5 | **Research themes (3–5 short phrases, comma-separated)** | Short answer | ⬜ |
+| 6 | **Long bio (optional — used for the support-team display style)** | Paragraph | ⬜ |
+| 7 | **Headshot photo (optional)** | File upload — image only — max 5 MB | ⬜ |
+| 8 | **I consent to publication of my bio on eiss-europa.com** | Checkboxes — single option | ✅ |
 
-> **Themes vs long bio.** Board members get the "Research themes" line
-> styled separately from their affiliation. Support-team members get a
-> flowing bio paragraph instead. The script picks the right shape based
-> on each person's `kind` (board / support) in the roster — members do
-> **not** choose this themselves.
+**Dropdown options for "Your role"** — must match exactly the `label`
+values in `scripts/board-source.json` → `roles` table. Current list:
+
+- Founding Director
+- Treasurer
+- Secretary-General
+- Board Member
+- Technology Coordinator
+- Events Coordinator
+- Communications Coordinator
+
+> **Themes vs long bio.** Board roles get the "Research themes" line
+> styled separately from their affiliation. Support-team roles
+> (Coordinator titles) get a flowing bio paragraph instead. The script
+> picks the right shape from `kind` in the roles table, looked up by
+> the role label the member chose.
+
+> **Year joined.** Used only for sort order within the "Board Member"
+> tier (longest tenured appears first; missing years sort to the end
+> alphabetically). Founding Director / Treasurer / Secretary-General
+> are unique titles, so year doesn't affect their position.
 
 In *Settings → Responses*, **enable**:
 
 - ☑ Collect email addresses
 - ☑ Allow response editing
-- ☑ Limit to 1 response (require Google sign-in — strongly recommended,
-  because the script matches submissions against the roster by email).
+- ☑ Limit to 1 response (require Google sign-in — recommended; the
+  script uses email to dedupe re-submissions).
 
 ## Step 2 · Link the Form to a Sheet
 
@@ -117,21 +122,22 @@ Open `scripts/board-source.json` and fill in:
   *Send → 🔗 Link*).
 
 If the columns in your Sheet are spelled slightly differently from
-those in `columns` (e.g. your Google account's locale renamed
-*Timestamp* to *Horodateur*), update the values in `columns` to match
-the exact header text in the Sheet.
+the values in `columns` (e.g. your Google account's locale renamed
+*Timestamp* to *Horodateur*), update `columns` to match the exact
+header text in the Sheet.
 
 Commit. The workflow will pick it up on the next manual run.
 
 ## Step 5 · Photo permissions — the one Google quirk
 
-Files uploaded via Google Forms land in a private Drive folder. For the
-sync script to download them, they need to be readable without auth.
+Files uploaded via Google Forms land in a private Drive folder. For
+the sync script to download them, they need to be readable without
+auth.
 
 In Google Drive, find the Form's auto-created folder (under
 *My Drive → Update your EISS bio (File responses)*). Right-click →
-*Share* → set general access to **Anyone with the link → Viewer**. This
-inherits to every file uploaded later.
+*Share* → set general access to **Anyone with the link → Viewer**.
+This inherits to every file uploaded later.
 
 (If you'd rather control sharing per file, do the same right-click →
 *Share* dance on each upload as submissions arrive. More secure, more
@@ -143,44 +149,63 @@ After Step 4, trigger the workflow manually:
 
 1. *Actions → Sync board bios from Google Form → Run workflow*.
 2. Wait ~30 s.
-3. If the Sheet has at least one submission whose email matches the
-   roster, a PR opens on `board-sync/auto`. If it doesn't, the run is
-   a clean no-op.
+3. If the Sheet has at least one submission, a PR opens on
+   `board-sync/auto`. If it doesn't, the run is a clean no-op.
 
 ## Step 7 · Share the Form with the board
 
-Send the Form URL to board + support-team members directly, ideally
-with a note about what they're consenting to:
+Send the Form URL to board + support-team members directly. Sample:
 
 > Subject: Update your EISS bio
 >
 > Dear colleague,
 >
 > We've automated the maintenance of <https://eiss-europa.com/board.html>.
-> If you'd like to update your photo, affiliation, or research themes,
-> please fill in this short form (~5 minutes):
+> If you'd like to update your photo, affiliation, role, or research
+> themes, please fill in this short form (~5 minutes):
 >
 >   <https://forms.google.com/your-form-url>
 >
-> Submissions go into a Google Sheet that we sync to the website on
-> demand. You can edit your response any time using the link in your
-> confirmation email.
+> Submissions go into a private Google Sheet that we sync to the
+> website on demand. You can edit your response any time using the
+> link in your confirmation email.
 >
-> The Form is invitation-only — submissions from any address not in
-> our internal roster are dropped automatically.
+> The Form URL is shared only with current EISS members — please do
+> not forward it without checking with us first.
+
+## Adding or changing a role
+
+The Form dropdown and the script must agree on role labels. To add a
+new role (e.g. "Liaison Officer"):
+
+1. Edit the Form's "Your role" dropdown — add the new option.
+2. Edit `scripts/board-source.json` → `roles` table — append:
+   ```json
+   { "label": "Liaison Officer", "kind": "board", "tier": 50 }
+   ```
+   `tier` controls where on the page the new role appears (lower =
+   higher up; 1–3 are the existing leadership tiers, 100 is the
+   default for Board Member).
+3. Commit, merge, run the workflow.
+
+If a submitter picks a role label that isn't in the table (e.g. you
+forgot Step 2), the script falls back to "Board Member" and logs a
+warning visible in the PR body.
 
 ## Editing or removing a bio
 
 - **Edit the Sheet directly.** The response sheet is just data —
-  correct typos, fix affiliations, etc. The next sync run picks up your
+  correct typos, fix affiliations, etc. The next sync picks up your
   edits.
-- **Roster changes.** To change someone's title (`Treasurer → Board
-  Member`) or display order, edit `scripts/board-roles.json` in a PR
-  and merge. No Form interaction required.
-- **Remove a member.** Delete their entry from
-  `scripts/board-roles.json`. The next sync drops them from
-  `src/_data/board.json`. Their old photo file stays in
-  `src/assets/images/board/` until you delete it manually.
+- **Remove a member.** Two steps:
+  1. Delete their row in the Sheet (otherwise the next sync will
+     re-add them).
+  2. Edit `src/_data/board.json` to remove their entry. Open a small
+     PR. The sync script never deletes entries by itself — removal is
+     always a deliberate, human-reviewed action.
+
+Their old photo file stays in `src/assets/images/board/` until you
+delete it manually.
 
 ## Exporting / archiving the data
 

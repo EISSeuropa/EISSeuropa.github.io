@@ -7,32 +7,37 @@ Usage:
     python3 scripts/sync-board.py
 
 What it does:
-  1. Reads scripts/board-source.json for the sheet's published CSV URL.
-     If the URL is empty (initial state), the script exits cleanly
-     without touching anything — so the workflow stays green while the
-     Google Form is still being set up.
-  2. Reads scripts/board-roles.json — the canonical roster (who is on
-     the board, their organisational role, and display order). Any form
-     submission whose email isn't listed in the roster is dropped:
-     board membership is by invitation, not self-signup.
-  3. Fetches the Sheet as CSV; for each row, validates consent + email,
-     downloads the headshot from Google Drive (if present), and assembles
-     a per-person entry whose `role`/`order`/`kind` come from the roster,
-     not the form.
-  4. Merges with the existing src/_data/board.json:
-       - Roster members who submitted: rebuilt from the submission, but
-         photo + affiliation + themes fall back to the prior entry's
-         values if the submission left them blank (so re-submitting
-         with just a name update doesn't wipe their photo).
-       - Roster members who haven't submitted yet: preserved from the
-         prior board.json (matched by slug of name) — this is the
-         transitional state where some members have filled the form
-         and others haven't.
-       - Anyone in the prior board.json who isn't in the roster: dropped.
-  5. Writes src/_data/board.json deterministically, but only if the
-     content actually changed — so re-running the script when nothing
-     has moved leaves a clean working tree.
-  6. Prints a human-readable diff (added / removed / updated).
+  1. Reads scripts/board-source.json for the Sheet's published-CSV URL,
+     the column mapping, and the list of allowed roles. If `csv_url`
+     is empty (initial state), exits cleanly — so the workflow stays
+     green while the Form is still being set up.
+  2. Fetches the Sheet as CSV; for each row, checks consent, then
+     builds a per-person entry. `role` comes from the Form dropdown;
+     `kind` (board / support) and `tier` (display order) come from the
+     `roles` table in board-source.json — looked up by role label.
+     A row whose role label isn't in the table is published as a
+     Board Member at the bottom (so a typo in the Form doesn't drop the
+     entry; you'll see it at PR-review time).
+  3. Merges with the existing src/_data/board.json:
+       - Submissions are deduped first by email (newest wins), then by
+         name slug across the email-deduped set (so the same person
+         submitting from two emails doesn't appear twice).
+       - Existing entries that don't match any submission (by name
+         slug) are preserved — this is the transitional state while
+         board members are still filling the Form.
+       - Existing entries whose role label still exists in the roles
+         table inherit their tier from there; otherwise they default
+         to Board Member (tier 100).
+       - No entries are removed by the sync. To remove someone, edit
+         src/_data/board.json directly in a PR (see docs/board-bios-setup.md).
+  4. Sorts each output section by (tier, year_joined ASC, surname ASC).
+     Missing year_joined sorts to the end of its tier.
+  5. Writes src/_data/board.json only if the content has actually
+     changed — so re-running the script when nothing has moved leaves
+     a clean working tree.
+  6. Prints a human-readable diff (added / removed / updated) plus
+     warnings for likely-bad submissions (unknown role, two people
+     claiming the same leadership title).
 
 Requires: requests. Pillow is optional — used to optimise photos if
 available; if not, photos are saved as-is.
@@ -46,6 +51,7 @@ import os
 import re
 import sys
 import unicodedata
+from collections import Counter
 from datetime import datetime
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
@@ -63,12 +69,12 @@ except ImportError:
 
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG = ROOT / "scripts" / "board-source.json"
-ROSTER = ROOT / "scripts" / "board-roles.json"
 BOARD = ROOT / "src" / "_data" / "board.json"
 PHOTO_DIR = ROOT / "src" / "assets" / "images" / "board"
-PHOTO_REL_PREFIX = "/assets/images/board"
 
 MAX_PHOTO_WIDTH = 600
+DEFAULT_ROLE = {"label": "Board Member", "kind": "board", "tier": 100}
+UNKNOWN_YEAR = 9999  # sorts to the end of a tier
 
 # ──────────────────────────── helpers ────────────────────────────
 
@@ -79,10 +85,9 @@ def norm_email(s: str) -> str:
 
 def slugify(name: str) -> str:
     """Stable slug from a person's name. Strips diacritics, titles, and
-    apostrophes before collapsing non-alphanumerics to hyphens. Used both
-    for photo filenames and for matching existing board.json entries
-    against the roster during the transitional period before everyone
-    has submitted via the Form."""
+    apostrophes before collapsing non-alphanumerics to hyphens. Used
+    for photo filenames AND for matching submissions against existing
+    board.json entries during the transitional period."""
     s = unicodedata.normalize("NFKD", name or "")
     s = "".join(c for c in s if not unicodedata.combining(c))
     s = re.sub(r"^(Dr|Prof|Mr|Ms|Mrs)\.?\s+", "", s)
@@ -92,11 +97,27 @@ def slugify(name: str) -> str:
     return s or "member"
 
 
+def surname_key(name: str) -> str:
+    """Best-effort surname extraction for alphabetical sorting. Strips
+    the title prefix (Dr / Prof / etc.) then takes the last whitespace-
+    separated token, lowercased and stripped of diacritics. Works for
+    common cases ('Dr Hugo Meijer' → 'meijer', 'Prof. Silvia D'Amato'
+    → 'damato'); names with multi-word surnames may sort by the last
+    word only, which is acceptable for a 22-person list."""
+    s = re.sub(r"^(Dr|Prof|Mr|Ms|Mrs)\.?\s+", "", (name or "").strip())
+    if not s:
+        return ""
+    last = s.split()[-1]
+    last = unicodedata.normalize("NFKD", last)
+    last = "".join(c for c in last if not unicodedata.combining(c))
+    last = re.sub(r"[‘’ʼ'`]", "", last).lower()
+    return re.sub(r"[^a-z0-9]+", "", last)
+
+
 def parse_timestamp(raw: str) -> float:
-    """Parse a Google-Forms timestamp string to epoch seconds. The
-    format depends on the form-owner's locale at sheet creation. Returns
-    0.0 for an unparseable value, so older entries lose to newer ones in
-    dedup comparison."""
+    """Google-Forms timestamp string → epoch seconds. Format depends on
+    form-owner's locale at sheet creation. Returns 0.0 for unparseable
+    values so older entries lose to newer ones in dedup."""
     if not raw:
         return 0.0
     raw = raw.strip()
@@ -113,10 +134,20 @@ def parse_timestamp(raw: str) -> float:
     return 0.0
 
 
+def parse_year(raw: str) -> int:
+    """Parse the optional 'year you joined' field. Returns UNKNOWN_YEAR
+    (sorts to end) for blank or unparseable values. Accepts a bare
+    integer ('2019') or a fragment containing one ('Joined in 2019')."""
+    if not raw:
+        return UNKNOWN_YEAR
+    m = re.search(r"\b(19|20)\d{2}\b", raw)
+    return int(m.group(0)) if m else UNKNOWN_YEAR
+
+
 def consent_ok(raw: str) -> bool:
-    """Treat anything explicit-looking as consent. We err on the side of
-    publishing — the form requires consent to submit, so a blank value
-    here would only happen if the column rename slipped past us."""
+    """Treat anything explicit-looking as consent. The Form requires
+    consent, so a blank value would only happen if the column rename
+    slipped past us — fail open rather than silently drop everything."""
     if not raw:
         return True
     v = raw.strip().lower()
@@ -142,9 +173,10 @@ def drive_file_id(url: str) -> str | None:
 def download_photo(url: str, dest_no_ext: Path) -> str | None:
     """Download a photo, optimise if Pillow available, return path
     relative to site root (e.g. '/assets/images/board/meijer.jpg') or
-    None on failure. Writes to disk only if the bytes differ from what's
-    already there — without this, every re-encode would dirty the tree
-    on idempotent reruns (libjpeg quantisation is not bit-stable)."""
+    None on failure. Writes to disk only if the bytes differ from
+    what's already there — libjpeg quantisation is not bit-stable
+    across PIL runs, so unconditional rewrites would dirty the tree
+    on every idempotent rerun."""
     if not url:
         return None
     file_id = drive_file_id(url)
@@ -196,23 +228,21 @@ def download_photo(url: str, dest_no_ext: Path) -> str | None:
 # ──────────────────────────── core build ────────────────────────────
 
 
-def build_from_row(
-    row: dict, cols: dict, roster_entry: dict, prior: dict | None
-) -> dict:
-    """Build a board.json entry for one person, merging:
-      - submitted content (name, affiliation, themes, bio, photo) from `row`
-      - organisational facts (role) from `roster_entry`
-      - fallback values (photo, affiliation, themes) from `prior` so
-        a partial submission doesn't wipe a previously-set field."""
-    name = (row.get(cols["name"], "") or "").strip() or roster_entry["name"]
-    kind = roster_entry["kind"]
+def build_from_row(row: dict, cols: dict, role_info: dict, prior: dict | None) -> dict:
+    """Build a board.json entry from one form submission, falling back
+    to fields from `prior` (the existing board.json entry for this
+    person, if any) when the submission left a field blank."""
+    name = (row.get(cols["name"], "") or "").strip()
+    if not name and prior:
+        name = prior["name"]
+    kind = role_info["kind"]
     person: dict = {
         "name": name,
-        "role": roster_entry["role"],
+        "role": role_info["label"],
         "alt": name,
     }
 
-    # Photo: submission wins; otherwise inherit from prior entry.
+    # Photo: new upload wins; otherwise inherit prior.
     photo_url = (row.get(cols.get("photo", ""), "") or "").strip()
     photo_path = None
     if photo_url:
@@ -244,61 +274,94 @@ def build_from_row(
     return person
 
 
-def carry_over(prior: dict, roster_entry: dict) -> dict:
-    """Roster member hasn't submitted yet: keep their prior entry exactly
-    as it stood in board.json, but force role to whatever the roster
-    currently says (so a role change in the overlay takes effect on the
-    next sync even without a re-submission)."""
-    out = dict(prior)
-    out["role"] = roster_entry["role"]
-    return out
+def carry_over(prior: dict, roles_map: dict[str, dict]) -> tuple[dict, dict]:
+    """Existing entry has no matching submission yet: return it
+    unchanged, paired with a synthesised role_info for sorting (looked
+    up from the roles table by the entry's existing `role` string)."""
+    role_info = roles_map.get(prior.get("role", ""), DEFAULT_ROLE)
+    # If the prior entry's role isn't in the table but it has a "bio"
+    # field (the support-team marker), treat it as support so the
+    # display-style is preserved.
+    if prior.get("role") not in roles_map and "bio" in prior:
+        role_info = {**DEFAULT_ROLE, "kind": "support", "tier": 100}
+    return dict(prior), role_info
 
 
 # ──────────────────────────── orchestration ────────────────────────────
 
 
-def load_prior() -> tuple[dict, dict, dict]:
-    """Return (raw board.json data, members-by-slug, support-by-slug)."""
+def load_prior() -> tuple[dict, dict[str, dict]]:
+    """Return (raw board.json data, slug → existing entry across both
+    members + support)."""
     raw = json.loads(BOARD.read_text())
-    members_by_slug = {slugify(p["name"]): p for p in raw.get("members", [])}
-    support_by_slug = {slugify(p["name"]): p for p in raw.get("support", [])}
-    return raw, members_by_slug, support_by_slug
+    by_slug: dict[str, dict] = {}
+    for p in raw.get("members", []) + raw.get("support", []):
+        by_slug[slugify(p["name"])] = p
+    return raw, by_slug
 
 
-def dedupe_submissions(
-    rows: list[dict], cols: dict, valid_emails: set[str]
-) -> dict[str, dict]:
-    """Reduce CSV rows to {email → newest valid submission}. Drops rows
-    whose email isn't in the roster (logged), and rows that explicitly
-    decline consent."""
-    out: dict[str, dict] = {}
+def dedupe_submissions(rows: list[dict], cols: dict) -> list[dict]:
+    """Reduce CSV rows to a list of one submission per person. Two-pass
+    dedup: first by email (newest wins), then by name slug across what
+    survived (catches the case where the same person submitted from
+    two different Google accounts)."""
+    ts_col = cols.get("timestamp", "")
+
+    def ts_of(r: dict) -> float:
+        return parse_timestamp(r.get(ts_col, ""))
+
+    # Pass 1: email dedup
+    by_email: dict[str, dict] = {}
+    no_email: list[dict] = []
     for raw_row in rows:
         row = {(k or "").strip(): v for k, v in raw_row.items()}
-        email = norm_email(row.get(cols.get("email", ""), ""))
-        if not email:
-            print("  · skipping row with empty email", file=sys.stderr)
-            continue
-        if email not in valid_emails:
+        if not consent_ok(row.get(cols.get("consent", ""), "")):
             print(
-                f"  · skipping submission from {email!r}: "
-                "not in scripts/board-roles.json (board membership is by invitation)",
+                f"  · skipping (no consent): "
+                f"{row.get(cols.get('name', ''), '') or '<unnamed>'}",
                 file=sys.stderr,
             )
             continue
-        if not consent_ok(row.get(cols.get("consent", ""), "")):
-            print(f"  · skipping {email!r}: no consent recorded", file=sys.stderr)
+        email = norm_email(row.get(cols.get("email", ""), ""))
+        if not email:
+            no_email.append(row)
             continue
-        ts = parse_timestamp(row.get(cols.get("timestamp", ""), ""))
-        if email in out:
-            prev_ts = parse_timestamp(out[email].get(cols.get("timestamp", ""), ""))
-            if prev_ts >= ts:
-                continue  # already have a newer submission for this email
-        out[email] = row
-    return out
+        if email in by_email and ts_of(by_email[email]) >= ts_of(row):
+            continue
+        by_email[email] = row
+
+    # Pass 2: name-slug dedup across the survivors
+    by_slug: dict[str, dict] = {}
+    name_col = cols.get("name", "")
+    for row in list(by_email.values()) + no_email:
+        slug = slugify(row.get(name_col, ""))
+        if not slug:
+            continue
+        if slug in by_slug and ts_of(by_slug[slug]) >= ts_of(row):
+            continue
+        by_slug[slug] = row
+
+    return list(by_slug.values())
+
+
+def warn_on_duplicates(entries: list[dict], roles_map: dict[str, dict]) -> None:
+    """Print a loud warning if two submissions claim the same
+    leadership role (unique tiers — anything below 100). Doesn't
+    block; surfaces the conflict for the PR reviewer."""
+    counts = Counter(e["role"] for e in entries)
+    for role, n in counts.items():
+        info = roles_map.get(role)
+        if not info or info["tier"] >= 100:
+            continue
+        if n > 1:
+            print(
+                f"  ⚠ {n} submissions claim role {role!r} — verify "
+                "this is intended before merging.",
+                file=sys.stderr,
+            )
 
 
 def diff_summary(old: dict, new: dict) -> str:
-    """Human-readable summary of what changed across the two structures."""
     def by_name(d: dict, key: str) -> dict[str, dict]:
         return {p["name"]: p for p in d.get(key, [])}
 
@@ -310,7 +373,8 @@ def diff_summary(old: dict, new: dict) -> str:
         removed = sorted(set(old_p) - set(new_p))
         changed = [
             n for n in sorted(set(old_p) & set(new_p))
-            if json.dumps(old_p[n], sort_keys=True) != json.dumps(new_p[n], sort_keys=True)
+            if json.dumps(old_p[n], sort_keys=True)
+            != json.dumps(new_p[n], sort_keys=True)
         ]
         lines.append(f"{kind_key}: {len(new_p)} (was {len(old_p)})")
         for n in added:
@@ -331,17 +395,11 @@ def main() -> None:
         return
 
     cols = config.get("columns", {})
-    roster = json.loads(ROSTER.read_text()).get("members", [])
-    if not roster:
-        sys.exit("scripts/board-roles.json has no members — nothing to sync.")
+    roles_map = {r["label"]: r for r in config.get("roles", [])}
+    if not roles_map:
+        sys.exit("board-source.json has no `roles` table — refusing to run.")
 
-    valid_emails = {norm_email(m["email"]) for m in roster}
-    # Strip the invalid.eiss-europa.com placeholders — they exist so the
-    # roster is shaped from day one, but a submission must never match
-    # one (the domain is unroutable, but be paranoid anyway).
-    valid_emails = {e for e in valid_emails if "invalid.eiss-europa.com" not in e}
-
-    prior_raw, prior_members_by_slug, prior_support_by_slug = load_prior()
+    prior_raw, prior_by_slug = load_prior()
 
     # Fetch the Sheet
     print(f"Fetching {csv_url}")
@@ -349,44 +407,68 @@ def main() -> None:
     r.raise_for_status()
     text = r.content.decode("utf-8-sig")
     reader = csv.DictReader(io.StringIO(text))
-    submissions = dedupe_submissions(list(reader), cols, valid_emails)
+    submissions = dedupe_submissions(list(reader), cols)
 
-    # Build the new board.json content. Iterate the roster in declared
-    # order, splitting by kind into the two output buckets.
-    new_members: list[dict] = []
-    new_support: list[dict] = []
+    # Build entries. Each entry gets a hidden `_sort` tuple stripped
+    # before writing.
+    members: list[dict] = []
+    support: list[dict] = []
+    matched_slugs: set[str] = set()
 
-    for roster_entry in sorted(
-        roster, key=lambda m: (m["kind"], m["order"], m["name"])
-    ):
-        email = norm_email(roster_entry["email"])
-        kind = roster_entry["kind"]
-        slug = slugify(roster_entry["name"])
-        prior_pool = (
-            prior_members_by_slug if kind == "board" else prior_support_by_slug
-        )
-        prior = prior_pool.get(slug)
-
-        if email in submissions:
-            person = build_from_row(submissions[email], cols, roster_entry, prior)
-        elif prior:
-            person = carry_over(prior, roster_entry)
-        else:
+    for row in submissions:
+        name = (row.get(cols.get("name", ""), "") or "").strip()
+        if not name:
+            print("  · skipping submission with empty name", file=sys.stderr)
+            continue
+        slug = slugify(name)
+        prior = prior_by_slug.get(slug)
+        role_label = (row.get(cols.get("role", ""), "") or "").strip()
+        role_info = roles_map.get(role_label)
+        if role_info is None:
             print(
-                f"  · {roster_entry['name']}: no submission and no prior "
-                "board.json entry — skipping until they submit.",
+                f"  ⚠ {name!r}: unknown role {role_label!r} — falling back "
+                "to 'Board Member'. Fix the Form dropdown or the roles "
+                "table in scripts/board-source.json if this is wrong.",
                 file=sys.stderr,
             )
-            continue
+            role_info = DEFAULT_ROLE
 
-        if kind == "support":
-            new_support.append(person)
+        year = parse_year(row.get(cols.get("year_joined", ""), ""))
+        entry = build_from_row(row, cols, role_info, prior)
+        entry["_sort"] = (role_info["tier"], year, surname_key(name))
+
+        if role_info["kind"] == "support":
+            support.append(entry)
         else:
-            new_members.append(person)
+            members.append(entry)
+        matched_slugs.add(slug)
+
+    # Carry over existing entries that no submission matched yet.
+    for slug, prior in prior_by_slug.items():
+        if slug in matched_slugs:
+            continue
+        entry, role_info = carry_over(prior, roles_map)
+        entry["_sort"] = (
+            role_info["tier"],
+            UNKNOWN_YEAR,
+            surname_key(entry["name"]),
+        )
+        if role_info["kind"] == "support":
+            support.append(entry)
+        else:
+            members.append(entry)
+
+    # Sort and strip the sort key
+    members.sort(key=lambda e: e["_sort"])
+    support.sort(key=lambda e: e["_sort"])
+    for e in members + support:
+        e.pop("_sort", None)
+
+    warn_on_duplicates(members + support, roles_map)
 
     new_data = dict(prior_raw)
-    new_data["members"] = new_members
-    new_data["support"] = new_support
+    new_data["members"] = members
+    new_data["support"] = support
 
     if new_data == prior_raw:
         print()
