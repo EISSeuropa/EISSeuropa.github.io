@@ -30,10 +30,11 @@ navKey: ""
         for ICT accessibility.
       </p>
       <p>
-        As of <strong>14 May 2026</strong>, the 40 modernised pages of the site achieve
-        <strong>partial compliance</strong>: most success criteria are met, with documented
-        limitations on five legacy ticket-flow pages still served as the original
-        Mobirise / AMP exports (see <a href="#known-limitations">§3 Known limitations</a>).
+        As of <strong>22 May 2026</strong>, every URL on the site is served by the modernised
+        Eleventy templates — the last five Mobirise / AMP ticket-flow pages have been retired
+        and now redirect to the current conference. The site achieves <strong>partial
+        compliance</strong>: most success criteria are met, with a small number of documented
+        limitations (see <a href="#known-limitations">§3 Known limitations</a>).
       </p>
 
       <h2>2. Audit results</h2>
@@ -62,23 +63,11 @@ navKey: ""
         Beyond automated tools, the static lint
         <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/scripts/a11y_lint.py" target="_blank" rel="noopener">scripts/a11y_lint.py</a>
         is run on each build and currently reports
-        <strong>0&nbsp;pages with issues</strong> across the 40 modernised templates.
+        <strong>0&nbsp;pages with issues</strong> across all templates.
       </p>
 
       <h2 id="known-limitations">3. Known limitations</h2>
       <ol>
-        <li>
-          <strong>Legacy ticket pages.</strong> The five
-          <code>ticket-{combo-cat,external-cat,home,member-cat,member-prompt}.html</code>
-          URLs are still served as the original
-          <a href="https://amp.dev/" target="_blank" rel="noopener">AMP&nbsp;HTML</a>
-          exports and have not been retro-fitted to the design system. They remain reachable
-          but do not match the contrast, focus, or keyboard guarantees of the rest of the site.
-          <em>Mitigation:</em> the modernised <a href="/membership.html">membership</a> and
-          <a href="/2026.html">conference</a> pages cover the same flows and are linked from
-          all primary entry points; the ticket URLs themselves are not surfaced in the main
-          navigation. We may retire or rewrite them in a future update.
-        </li>
         <li>
           <strong>Embedded PDFs.</strong> Documents such as the 2026 conference programme are
           presented inline via an <code>&lt;object&gt;</code> embed.
@@ -157,9 +146,11 @@ navKey: ""
       <h2 id="conformance">7. Conformance status</h2>
       <p>
         <strong>Partial conformance</strong> with WCAG&nbsp;2.1 Level&nbsp;AA, aligned with
-        EN&nbsp;301&nbsp;549. The 40 modernised templates of the site meet the standard;
-        the 5 legacy ticket pages listed in §3 do not. Automated audits currently report zero
-        violations and the items in “manual review” have been individually verified compliant.
+        EN&nbsp;301&nbsp;549. All templates of the site meet the standard; the residual
+        partial-compliance label reflects the documented limitations in §3 (embedded PDFs,
+        translucent surfaces, generic alt text on some archive photos). Automated audits
+        currently report zero violations and the items in “manual review” have been
+        individually verified compliant.
       </p>
       <p>
         <a class="wcag-badge"
@@ -174,7 +165,7 @@ navKey: ""
         </a>
       </p>
       <p class="meta">
-        Statement prepared: 14 May 2026 · Last reviewed: 14 May 2026 · Next scheduled review:
+        Statement prepared: 14 May 2026 · Last reviewed: 22 May 2026 · Next scheduled review:
         14 May 2027 or upon major design change.
       </p>
     </article>

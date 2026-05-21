@@ -3,7 +3,6 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addFilter("year", () => new Date().getUTCFullYear());
 
-  eleventyConfig.addPassthroughCopy({ "src/legacy": "/" });
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addPassthroughCopy({ "src/.well-known": "/.well-known" });
   eleventyConfig.addPassthroughCopy({ "src/CNAME": "CNAME" });
