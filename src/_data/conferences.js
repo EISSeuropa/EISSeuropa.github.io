@@ -252,8 +252,14 @@ const past = conferences
   .filter((c) => c.endDate < today)
   .sort((a, b) => b.startDate.localeCompare(a.startDate));
 
+// Year-keyed lookup for per-year content pages (/2026, /2027, ...) that
+// want to read structured data — e.g. the registration-status badge in
+// src/_includes/registration-badge.njk pulls `conferences.byYear[year]`.
+const byYear = Object.fromEntries(conferences.map((c) => [String(c.year), c]));
+
 module.exports = {
   all: conferences,
+  byYear,
   next: upcomingOrCurrent[0] || null,   // closest upcoming (or in-progress)
   upcoming: upcomingOrCurrent,
   past,

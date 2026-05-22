@@ -1,0 +1,62 @@
+{# Homepage announcement card.
+   Renders nothing when `announcement.visible` is false or the language
+   block is missing. Consumed by /index in all three languages.
+
+   This partial is included from the CHILD page template, so base.njk's
+   `t` shorthand isn't in scope. We re-derive locally.
+
+   Variables in scope from the page template:
+     - `lang` — front-matter, defaults to "en"
+     - `announcement` — the data file from src/_data/announcement.js.
+       Shape: { visible: bool, en: {...}, fr: {...}, de: {...} }
+#}
+{% from "icons.njk" import icon %}
+{%- set _lang = lang or "en" -%}
+{%- set a = announcement[_lang] -%}
+
+{% if announcement.visible and a %}
+<section class="section-tight" aria-labelledby="news-title">
+  <div class="container">
+    <article class="card announcement">
+      <div>
+        <div class="announcement-eyebrow">{{ a.eyebrow }}</div>
+        <h2 id="news-title">{{ a.headline }}</h2>
+        {%- for paragraph in a.body %}
+          {%- if loop.first %}
+        <p class="lead">{{ paragraph | safe }}</p>
+          {%- else %}
+        <p>{{ paragraph | safe }}</p>
+          {%- endif %}
+        {%- endfor %}
+
+        {%- if a.pullquote %}
+        <blockquote class="pullquote">
+          {{ a.pullquote.text }}
+          <cite>{{ a.pullquote.cite }}</cite>
+        </blockquote>
+        {%- endif %}
+
+        {%- if a.cta %}
+        <div>
+          <a class="btn btn-secondary" href="{{ a.cta.url }}"{% if a.cta.external %} target="_blank" rel="noopener"{% endif %}>
+            {{ a.cta.label }}{% if a.cta.external %} {{ icon("external-link") }}{% endif %}
+          </a>
+        </div>
+        {%- endif %}
+      </div>
+
+      {%- if a.image %}
+      <figure class="announcement-figure">
+        <img src="{{ a.image.src }}"
+             alt="{{ a.image.alt }}"
+             loading="lazy"
+             width="{{ a.image.width }}" height="{{ a.image.height }}">
+        {%- if a.image.caption %}
+        <figcaption>{{ a.image.caption }}</figcaption>
+        {%- endif %}
+      </figure>
+      {%- endif %}
+    </article>
+  </div>
+</section>
+{% endif %}

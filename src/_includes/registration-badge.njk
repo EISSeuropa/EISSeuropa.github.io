@@ -1,0 +1,75 @@
+{# Registration-status badge for annual conference pages.
+
+   Computes status from `conferences.today` (build-time wall clock) and
+   the conference's startDate/endDate from conferences.js. The Indico URL
+   is pulled from src/_data/indico.json (annualConferences[year]) — if
+   no Indico page exists for the year, the badge still renders but
+   without a clickable link.
+
+   Status thresholds:
+     - today  < startDate              → "upcoming"  (with N-days countdown)
+     - start <= today <= endDate       → "happening-now"
+     - today  > endDate                → "past"
+
+   Usage from a year page (e.g. src/2026.njk):
+     {% set year = "2026" %}
+     {% include "registration-badge.njk" %}
+
+   Skipped silently when `year` isn't set or no conference matches —
+   the page renders identically to before.
+#}
+{% from "icons.njk" import icon %}
+{%- set _lang = lang or "en" -%}
+{%- set t = i18n[_lang] -%}
+{%- set _conf = conferences.byYear[year] -%}
+{%- set _indico = indico.annualConferences[year] -%}
+
+{%- if _conf -%}
+  {%- set _today = conferences.today -%}
+  {%- if _today < _conf.startDate -%}
+    {%- set _status = "upcoming" -%}
+  {%- elif _today <= _conf.endDate -%}
+    {%- set _status = "happening-now" -%}
+  {%- else -%}
+    {%- set _status = "past" -%}
+  {%- endif -%}
+
+  {# Days countdown — Eleventy 3 ships `Date` helpers via Nunjucks's globals.
+     We compute it via a Date-roundtrip filter chain that works in pure
+     Nunjucks: convert today + startDate to Unix epoch via Date.parse-like
+     math is awkward here, so we precompute on the page side. Instead we
+     just render a coarse label: "Tomorrow" / "Today" handled separately
+     when start == today + 1 / start == today; otherwise show
+     "N days to go" using a build-time computed `_daysToStart` only when
+     conferences.js exposes one. To keep things simple, omit the precise
+     countdown when there's no helper — the textual badge already
+     conveys urgency. #}
+
+<div class="registration-badge registration-badge--{{ _status }}" role="status">
+  {%- if _status == "upcoming" %}
+  <span class="registration-badge__dot" aria-hidden="true"></span>
+  <span class="registration-badge__label">{{ t.registrationBadge.upcoming }}</span>
+    {%- if _indico %}
+  <a class="registration-badge__cta" href="{{ _indico.url }}" target="_blank" rel="noopener">
+    {{ t.registrationBadge.registerOnIndico }} {{ icon("external-link") }}
+  </a>
+    {%- endif %}
+  {%- elif _status == "happening-now" %}
+  <span class="registration-badge__dot registration-badge__dot--live" aria-hidden="true"></span>
+  <span class="registration-badge__label">{{ t.registrationBadge.happeningNow }}</span>
+    {%- if _indico %}
+  <a class="registration-badge__cta" href="{{ _indico.url }}" target="_blank" rel="noopener">
+    {{ t.registrationBadge.onIndico }} {{ icon("external-link") }}
+  </a>
+    {%- endif %}
+  {%- else %}
+  <span class="registration-badge__dot" aria-hidden="true"></span>
+  <span class="registration-badge__label">{{ t.registrationBadge.past }}</span>
+    {%- if _indico %}
+  <a class="registration-badge__cta" href="{{ _indico.url }}" target="_blank" rel="noopener">
+    {{ t.registrationBadge.onIndico }} {{ icon("external-link") }}
+  </a>
+    {%- endif %}
+  {%- endif %}
+</div>
+{%- endif %}

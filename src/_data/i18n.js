@@ -135,6 +135,21 @@ const locales = {
       noEventsTitle: "No upcoming events on Indico yet",
       noEventsBody: "When members publish events through indico.eiss-europa.com, they'll appear here automatically.",
     },
+
+    registrationBadge: {
+      // Live status badge on annual conference pages (/2026, /2027, ...).
+      // Status is computed at build time from conferences.js dates and
+      // today's date. The Indico URL comes from src/_data/indico.json
+      // (annualConferences[year].url). Hidden if no Indico page exists.
+      upcoming: "Registration open",
+      happeningNow: "Happening now",
+      past: "Past edition",
+      registerOnIndico: "Register on Indico",
+      daysToGo: "{{n}} days to go",
+      oneDayToGo: "Tomorrow",
+      today: "Today",
+      onIndico: "View on Indico",
+    },
   },
 
   fr: {
@@ -229,6 +244,17 @@ const locales = {
       noEventsTitle: "Pas encore d'événements à venir sur Indico",
       noEventsBody: "Lorsque les membres publient des événements via indico.eiss-europa.com, ils apparaîtront ici automatiquement.",
     },
+
+    registrationBadge: {
+      upcoming: "Inscriptions ouvertes",
+      happeningNow: "En cours",
+      past: "Édition passée",
+      registerOnIndico: "S'inscrire sur Indico",
+      daysToGo: "Dans {{n}} jours",
+      oneDayToGo: "Demain",
+      today: "Aujourd'hui",
+      onIndico: "Voir sur Indico",
+    },
   },
 
   de: {
@@ -322,6 +348,17 @@ const locales = {
       lastSynced: "Zuletzt aktualisiert",
       noEventsTitle: "Noch keine kommenden Veranstaltungen auf Indico",
       noEventsBody: "Wenn Mitglieder Veranstaltungen über indico.eiss-europa.com veröffentlichen, erscheinen sie hier automatisch.",
+    },
+
+    registrationBadge: {
+      upcoming: "Anmeldung offen",
+      happeningNow: "Findet jetzt statt",
+      past: "Vergangene Ausgabe",
+      registerOnIndico: "Auf Indico anmelden",
+      daysToGo: "Noch {{n}} Tage",
+      oneDayToGo: "Morgen",
+      today: "Heute",
+      onIndico: "Auf Indico ansehen",
     },
   },
 };
