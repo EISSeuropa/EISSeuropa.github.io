@@ -1657,8 +1657,11 @@ h4 { font-size: var(--fs-lg); }
 /* ---------- live keynote programme ------------------------------------
    Block above the static PDF programme on annual conference pages. Each
    row shows when, what + who, and either a Zoom-style "Join online" CTA
-   or a "TBA" placeholder. Rendered by src/_includes/keynotes-list.njk
-   from src/_data/indico.json (the Indico timetable's KEY-coded sessions).
+   or a "TBA" placeholder. Rendered by src/_includes/plenaries-list.njk
+   from src/_data/indico.json — Indico sessions whose sessionCode is
+   in {INTRO, KEY, CONC}. The .keynote class names are retained for
+   styling continuity (v2.7 → v2.8); semantically they cover all
+   plenary types.
 */
 .keynotes-list {
   list-style: none;
@@ -1694,6 +1697,21 @@ h4 { font-size: var(--fs-lg); }
 
 .keynote-when-time {
   font-variant-numeric: tabular-nums;
+}
+
+/* Small per-row eyebrow ("Introduction" / "Keynote" / "Closing"). */
+.keynote-type {
+  margin: 0 0 var(--space-1);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.keynote--introduction .keynote-type,
+.keynote--conclusion .keynote-type {
+  color: var(--text-subtle);
 }
 
 .keynote-title {

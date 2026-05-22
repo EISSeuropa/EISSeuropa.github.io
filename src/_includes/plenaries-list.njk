@@ -1,46 +1,48 @@
-{# Live-from-Indico keynote block for annual conference pages.
-   Renders nothing when the year has no keynotes (zero sessions with
-   sessionCode == "KEY" in the Indico timetable).
+{# Live-from-Indico plenary-sessions block for annual conference pages.
+   Renders nothing when the year has no plenaries (no sessions with
+   sessionCode in INTRO / KEY / CONC in the Indico timetable).
 
    Variables in scope from the page template:
      - `lang` — front-matter, defaults to "en"
      - `year` — string, e.g. "2026"
-     - `indico` — src/_data/indico.json. The keynotes live at
-                  indico.annualConferences[year].keynotes (array).
+     - `indico` — src/_data/indico.json. The plenaries live at
+                  indico.annualConferences[year].plenaries (array).
 
-   Each keynote object has the shape produced by
-   scripts/sync-indico.py:extract_keynotes:
-     { title, startDate, startTime, endTime, location, room, url,
+   Each plenary object has the shape produced by
+   scripts/sync-indico.py:extract_plenaries:
+     { type: "introduction" | "keynote" | "conclusion",
+       title, startDate, startTime, endTime, location, room, url,
        conveners: [{name, affiliation}], videoUrl }
 
    When `videoUrl` is null we render an "Online room TBA" placeholder —
-   the moment Indico publishes the Zoom link, the next sync swaps the
+   the moment Indico publishes the join link, the next sync swaps the
    placeholder for a real "Join online" button.
 #}
 {% from "icons.njk" import icon %}
 {%- set _lang = lang or "en" -%}
 {%- set t = i18n[_lang] -%}
 {%- set _conf = indico.annualConferences[year] -%}
-{%- set _keynotes = _conf.keynotes if _conf else [] -%}
+{%- set _plenaries = _conf.plenaries if _conf else [] -%}
 
-{% if _keynotes and _keynotes.length %}
-<section class="section-tight keynotes" aria-labelledby="keynotes-title">
+{% if _plenaries and _plenaries.length %}
+<section class="section-tight keynotes" aria-labelledby="plenaries-title">
   <div class="container">
-    <div class="featured-eyebrow">{{ t.keynotes.sectionEyebrow }}</div>
-    <h2 id="keynotes-title">{{ t.keynotes.sectionHeading }}</h2>
+    <div class="featured-eyebrow">{{ t.plenaries.sectionEyebrow }}</div>
+    <h2 id="plenaries-title">{{ t.plenaries.sectionHeading }}</h2>
     <p class="muted" style="max-width: 44rem; margin-bottom: var(--space-5);">
-      {{ t.keynotes.sectionLead }}
+      {{ t.plenaries.sectionLead }}
     </p>
 
     <ul class="keynotes-list" role="list">
-      {%- for k in _keynotes %}
-      <li class="keynote">
+      {%- for k in _plenaries %}
+      <li class="keynote keynote--{{ k.type }}">
         <div class="keynote-when" aria-hidden="true">
           {{ icon("calendar") }}
           <span class="keynote-when-date">{{ k.startDate }}</span>
           <span class="keynote-when-time">{{ k.startTime }} – {{ k.endTime }}</span>
         </div>
         <div class="keynote-body">
+          <p class="keynote-type">{{ t.plenaries.types[k.type] }}</p>
           <p class="keynote-title">
             <a href="{{ k.url }}" target="_blank" rel="noopener">{{ k.title }}</a>
           </p>
@@ -58,11 +60,11 @@
         <div class="keynote-action">
           {%- if k.videoUrl %}
           <a class="btn btn-primary btn-sm" href="{{ k.videoUrl }}" target="_blank" rel="noopener">
-            {{ icon("video") }} {{ t.keynotes.joinOnline }}
+            {{ icon("video") }} {{ t.plenaries.joinOnline }}
           </a>
           {%- else %}
           <span class="keynote-tba">
-            {{ icon("video-off") }} {{ t.keynotes.onlineRoomTba }}
+            {{ icon("video-off") }} {{ t.plenaries.onlineRoomTba }}
           </span>
           {%- endif %}
         </div>

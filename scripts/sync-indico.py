@@ -61,11 +61,19 @@ ROOT_CATEGORY_ID = 0          # Indico root — returns events from all sub-cate
 LOOK_AHEAD_DAYS = 540          # ~18 months
 ANNUAL_CONFERENCE_CATEGORY_IDS = {1}  # ESSC editions — routed into `annualConferences` bucket
 
-# Indico session code that flags a keynote in the EISS timetable. Set on
-# the session itself (visible as both `code` and `sessionCode` in the
-# timetable export). The 2026 ESSC uses "KEY"; adjust if the convention
-# changes in a future edition.
-KEYNOTE_SESSION_CODE = "KEY"
+# Indico session codes that flag plenary sessions in the EISS timetable.
+# Set on the session itself (visible as both `code` and `sessionCode` in
+# the timetable export). The 2026 ESSC uses:
+#   "INTRO" — opening / introductory remarks
+#   "KEY"   — keynote talk
+#   "CONC"  — concluding remarks
+# Adjust if the convention changes in a future edition. The mapped value
+# is a stable identifier the templates use to pick a localised label.
+PLENARY_SESSION_CODES = {
+    "INTRO": "introduction",
+    "KEY": "keynote",
+    "CONC": "conclusion",
+}
 
 # Substring tokens we look for in URL fields when extracting video-room
 # links from Indico's timetable. The Indico Zoom integration stores the
@@ -159,16 +167,16 @@ def fetch_timetable(event_id: str) -> dict:
     return payload.get("results", {}) or {}
 
 
-def extract_keynotes(timetable_results: dict, event_id: str) -> list[dict]:
-    """Pick out keynote-flagged sessions from a timetable export.
-    Returns a sorted list of normalised dicts, one per keynote slot.
+def extract_plenaries(timetable_results: dict, event_id: str) -> list[dict]:
+    """Pick out plenary sessions (introduction / keynote / conclusion)
+    from a timetable export. Returns a sorted list of normalised dicts.
 
-    Keynote detection uses Indico's `sessionCode == KEYNOTE_SESSION_CODE`
-    — set by the EISS conference team on each keynote slot. We don't
-    fall back to title-substring matching because "Keynote" appears in
-    many descriptions and would produce false positives.
+    Detection uses Indico's `sessionCode` field — set by the EISS
+    conference team on each plenary slot. We don't fall back to title-
+    substring matching because words like "Keynote" appear in many
+    descriptions and would produce false positives.
     """
-    keynotes: list[dict] = []
+    plenaries: list[dict] = []
     event_block = timetable_results.get(str(event_id), {})
     for day_key, day in event_block.items():
         if not isinstance(day, dict):
@@ -178,11 +186,14 @@ def extract_keynotes(timetable_results: dict, event_id: str) -> list[dict]:
                 continue
             if slot.get("entryType") != "Session":
                 continue
-            if slot.get("sessionCode") != KEYNOTE_SESSION_CODE:
+            code = slot.get("sessionCode")
+            plenary_type = PLENARY_SESSION_CODES.get(code)
+            if not plenary_type:
                 continue
             start = slot.get("startDate") or {}
             end = slot.get("endDate") or {}
-            keynotes.append({
+            plenaries.append({
+                "type": plenary_type,
                 "id": str(slot.get("id", slot_id)),
                 "title": slot.get("title") or slot.get("slotTitle") or "(untitled keynote)",
                 "slotTitle": slot.get("slotTitle") or "",
@@ -209,9 +220,10 @@ def extract_keynotes(timetable_results: dict, event_id: str) -> list[dict]:
                 # show a "TBA" placeholder in that case.
                 "videoUrl": _find_vc_url(slot),
             })
-    # Sort by start date+time so keynotes appear in programme order.
-    keynotes.sort(key=lambda k: (k["startDate"], k["startTime"]))
-    return keynotes
+    # Sort by start date+time so plenaries appear in programme order
+    # (introduction → keynotes → conclusion, day by day).
+    plenaries.sort(key=lambda k: (k["startDate"], k["startTime"]))
+    return plenaries
 
 
 def fetch_events() -> list[dict]:
@@ -261,20 +273,25 @@ def main() -> None:
     # when `order=start` is requested, but be defensive.
     upcoming.sort(key=lambda e: (e["start"] or "9999-12-31T23:59:59"))
 
-    # Enrich each Annual Conference with its timetable-derived keynote
-    # list. One extra HTTP request per ESSC year — currently 1 call.
-    # If a future edition adds half-a-dozen Indico events under the
-    # Annual Conferences category, this stays bounded because we only
-    # fetch timetables for the events we've kept (the latest per year).
+    # Enrich each Annual Conference with its timetable-derived plenary
+    # list (introduction + keynotes + conclusion). One extra HTTP
+    # request per ESSC year — currently 1 call. If a future edition
+    # adds half-a-dozen Indico events under the Annual Conferences
+    # category, this stays bounded because we only fetch timetables
+    # for the events we've kept (the latest per year).
     for year, event in annual_by_year.items():
         tt = fetch_timetable(event["id"])
-        keynotes = extract_keynotes(tt, event["id"])
-        event["keynotes"] = keynotes
-        with_video = sum(1 for k in keynotes if k.get("videoUrl"))
+        plenaries = extract_plenaries(tt, event["id"])
+        event["plenaries"] = plenaries
+        with_video = sum(1 for k in plenaries if k.get("videoUrl"))
+        by_type: dict[str, int] = {}
+        for k in plenaries:
+            by_type[k["type"]] = by_type.get(k["type"], 0) + 1
         print(
-            f"  {year}: {len(keynotes)} keynote(s); "
+            f"  {year}: {len(plenaries)} plenary session(s) "
+            f"[{', '.join(f'{n} {t}' for t, n in sorted(by_type.items()))}]; "
             f"{with_video} with video link; "
-            f"{len(keynotes) - with_video} TBA",
+            f"{len(plenaries) - with_video} TBA",
             file=sys.stderr,
         )
 
@@ -286,10 +303,10 @@ def main() -> None:
             ".github/workflows/sync-indico.yml). DO NOT EDIT BY HAND — "
             "the next sync will overwrite. `upcoming` holds members' "
             "events; `annualConferences` is a year-keyed map of ESSC "
-            "registration pages, each enriched with a `keynotes` list "
-            "derived from the event's timetable. Consumed by /2026, "
-            "/2027 to drive the registration status badge and the "
-            "live keynote programme."
+            "registration pages, each enriched with a `plenaries` list "
+            "(introduction + keynotes + conclusion, derived from the "
+            "Indico timetable). Consumed by /2026, /2027 to drive the "
+            "registration status badge and the live plenary block."
         ),
         "syncedAt": dt.datetime.utcnow().isoformat(timespec="seconds") + "Z",
         "source": f"{INDICO_BASE}/export/categ/{ROOT_CATEGORY_ID}.json",
