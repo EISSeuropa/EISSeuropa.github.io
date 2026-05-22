@@ -1654,6 +1654,108 @@ h4 { font-size: var(--fs-lg); }
   }
 }
 
+/* ---------- live keynote programme ------------------------------------
+   Block above the static PDF programme on annual conference pages. Each
+   row shows when, what + who, and either a Zoom-style "Join online" CTA
+   or a "TBA" placeholder. Rendered by src/_includes/keynotes-list.njk
+   from src/_data/indico.json (the Indico timetable's KEY-coded sessions).
+*/
+.keynotes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.keynote {
+  display: grid;
+  grid-template-columns: minmax(8.5rem, max-content) 1fr auto;
+  gap: var(--space-3) var(--space-5);
+  align-items: start;
+  padding: var(--space-4) var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.keynote-when {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  color: var(--text-subtle);
+  font-size: var(--fs-sm);
+}
+
+.keynote-when-date {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.keynote-when-time {
+  font-variant-numeric: tabular-nums;
+}
+
+.keynote-title {
+  font-weight: 600;
+  font-size: var(--fs-base);
+  margin: 0 0 var(--space-2);
+}
+
+.keynote-title a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--motion-fast) var(--ease-out);
+}
+
+.keynote-title a:hover,
+.keynote-title a:focus-visible {
+  border-bottom-color: var(--accent);
+}
+
+.keynote-conveners,
+.keynote-meta {
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+}
+
+.keynote-meta {
+  margin-top: var(--space-2);
+}
+
+.keynote-action {
+  align-self: center;
+}
+
+.keynote-tba {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  border: 1px dashed var(--border);
+  color: var(--text-subtle);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .keynote {
+    grid-template-columns: 1fr;
+  }
+  .keynote-when {
+    flex-direction: row;
+    gap: var(--space-3);
+    align-items: baseline;
+  }
+  .keynote-action {
+    justify-self: start;
+  }
+}
+
 /* ---------- registration-status badge --------------------------------
    Live "Registration open / Happening now / Past edition" pill rendered
    on annual-conference pages (src/2026.njk, ...) via the partial

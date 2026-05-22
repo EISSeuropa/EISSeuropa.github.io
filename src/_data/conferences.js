@@ -78,6 +78,16 @@ const conferences = [
     },
     dayRange: "11–12",     // for the featured-card .day block
     yearLine: "2026 · Stockholm",
+    // Manual override for the registration-status badge on /YYYY pages.
+    //   "open"   — show the "Registration open" pill regardless of dates
+    //   "closed" — show "Registration closed"; useful between the form
+    //              closing and the conference starting (the date-only
+    //              fallback would incorrectly say "open" in that window)
+    //   null / unset — derive from today vs. start/end dates
+    // We don't pull this from Indico because the anonymous API doesn't
+    // expose registration-form state. Flip it by hand when the form
+    // opens or closes; the daily rebuild picks up the change.
+    registrationStatus: "closed",
     hasOwnPage: true,
   },
   {
