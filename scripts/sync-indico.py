@@ -64,12 +64,12 @@ INDICO_BASE = "https://indico.eiss-europa.com"
 ROOT_CATEGORY_ID = 0          # Indico root — returns events from all sub-categories
 LOOK_AHEAD_DAYS = 540          # ~18 months
 
-# Indico API token (read-only, on a dedicated service account). When
-# present we add an `Authorization: Bearer …` header to every Indico
-# call, which unlocks endpoints that anonymous access can't see —
-# notably registration-form state and any video-conference URLs that
-# require auth. The script keeps working without it (anonymous mode),
-# so local runs and emergencies don't need the secret.
+# Indico API token (read-only, on a dedicated service account). Only
+# used on the newer `/api/*` endpoints — Indico's legacy `/export/*`
+# API rejects Bearer auth with 400 on some versions, so call sites
+# must opt in via `_get(url, authenticate=True)`. The token is
+# detected here so the startup mode banner can confirm in CI logs
+# that the secret was wired up correctly.
 #
 # Storage: GitHub Actions secret named `INDICO_API_TOKEN`, surfaced
 # to the workflow step via `env:`. NEVER hardcode the token here.
@@ -129,13 +129,25 @@ VC_URL_TOKENS = ("zoom.us", "meet.google", "teams.microsoft", "webex.com")
 ISO_FMT = "%Y-%m-%dT%H:%M:%S"
 
 
-def _get(url: str) -> requests.Response:
-    """One-stop HTTP GET that adds the bearer token when present.
-    Pulled out so we don't have three almost-identical request lines
-    drifting from each other (one would inevitably forget to add the
-    auth header). The token is NEVER logged."""
+def _get(url: str, authenticate: bool = False) -> requests.Response:
+    """One-stop HTTP GET. Adds the bearer token only when explicitly
+    requested via `authenticate=True`, because Indico has two parallel
+    APIs that disagree about auth headers:
+
+      - legacy `/export/*` endpoints (everything this script currently
+        hits) accept anonymous access, OR an `?apikey=…` query
+        parameter scheme. They reject `Authorization: Bearer …` with
+        a 400 on some Indico versions.
+      - newer `/api/*` endpoints accept Bearer tokens and require them
+        for protected resources (registration state, private events).
+
+    Default `authenticate=False` keeps every existing call site
+    anonymous — which is what they need. New call sites that hit
+    `/api/*` pass `authenticate=True` to opt in. The token is NEVER
+    logged regardless of mode.
+    """
     headers = {"Accept": "application/json"}
-    if INDICO_API_TOKEN:
+    if authenticate and INDICO_API_TOKEN:
         headers["Authorization"] = f"Bearer {INDICO_API_TOKEN}"
     return requests.get(url, timeout=30, headers=headers)
 
