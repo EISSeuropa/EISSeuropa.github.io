@@ -1,0 +1,187 @@
+---
+layout: base.njk
+permalink: /accessibility.fr.html
+title: Déclaration d'accessibilité
+description: Conformité WCAG 2.1 AA, alignement EN 301 549, résultats d'audit axe-core, limites connues, et comment signaler un obstacle sur eiss-europa.com.
+metaImage: /assets/images/accessibility-meta.jpg
+navKey: ""
+lang: fr
+status: beta
+alternates:
+  en: /accessibility.html
+  fr: /accessibility.fr.html
+  de: /accessibility.de.html
+---
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">Accessibilité</span>
+    <h1>Déclaration d'accessibilité</h1>
+    <p class="page-lead">
+      L'Initiative européenne pour les études de sécurité s'engage à rendre
+      <a href="{{ site.url }}">eiss-europa.com</a> utilisable par le public le plus large possible,
+      y compris les personnes en situation de handicap.
+    </p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <article class="prose">
+      <p class="muted" style="border-inline-start: 3px solid var(--accent); padding-inline-start: var(--space-3);">
+        <em><strong>Avis :</strong> traduction de bonne foi. La <a href="/accessibility.html">version anglaise</a> reste le texte de référence officiel.</em>
+      </p>
+
+      <h2>1. Vue d'ensemble de la conformité</h2>
+      <p>
+        Le site EISS vise la conformité <strong>WCAG&nbsp;2.1 Niveau&nbsp;AA</strong>, alignée sur la
+        norme européenne
+        <a href="https://www.etsi.org/deliver/etsi_en/301500_301599/301549/" target="_blank" rel="noopener">EN&nbsp;301&nbsp;549</a>
+        pour l'accessibilité des TIC.
+      </p>
+      <p>
+        Au <strong>22 mai 2026</strong>, toutes les URL du site sont servies par les modèles Eleventy
+        modernisés — les cinq dernières pages de flux de billetterie Mobirise / AMP ont été retirées
+        et redirigent désormais vers la conférence en cours. Le site atteint une <strong>conformité
+        partielle</strong> : la plupart des critères de succès sont satisfaits, avec un petit nombre
+        de limites documentées (voir <a href="#known-limitations">§3 Limites connues</a>).
+      </p>
+
+      <h2>2. Résultats de l'audit</h2>
+      <p>
+        Une évaluation automatisée a été réalisée avec
+        <a href="https://github.com/dequelabs/axe-core" target="_blank" rel="noopener">axe-core&nbsp;4.10.2</a>
+        sur <strong>9 pages représentatives × 2 schémas de couleurs</strong> (18 scans au total) le
+        14 mai 2026 :
+      </p>
+      <ul>
+        <li><strong>0&nbsp;violation</strong></li>
+        <li><strong>568&nbsp;réussites</strong></li>
+        <li>
+          <strong>22&nbsp;éléments nécessitant une revue manuelle</strong> — principalement
+          <code>color-contrast</code> sur les surfaces translucides « verre », où axe ne peut pas
+          calculer fiablement l'arrière-plan effectif à travers un <code>backdrop-filter</code>.
+          Nous avons vérifié leur conformité dans les thèmes clair et sombre.
+        </li>
+      </ul>
+      <p>
+        <a href="https://developer.chrome.com/docs/lighthouse/" target="_blank" rel="noopener">Lighthouse&nbsp;13</a>
+        donne aux pages modernisées <strong>100&nbsp;/&nbsp;100</strong> en accessibilité, bonnes
+        pratiques et SEO.
+      </p>
+      <p>
+        Au-delà des outils automatisés, le lint statique
+        <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/scripts/a11y_lint.py" target="_blank" rel="noopener">scripts/a11y_lint.py</a>
+        est exécuté à chaque build et signale actuellement
+        <strong>0&nbsp;page avec des problèmes</strong> sur tous les modèles.
+      </p>
+
+      <h2 id="known-limitations">3. Limites connues</h2>
+      <ol>
+        <li>
+          <strong>PDF intégrés.</strong> Les documents tels que le programme de la conférence 2026
+          sont présentés en ligne via une balise <code>&lt;object&gt;</code>.
+          <em>Atténuation :</em> chaque intégration est associée à un bouton <strong>Télécharger</strong>
+          visible et à un lien de secours en ligne à l'intérieur de l'<code>&lt;object&gt;</code> pour
+          les navigateurs ne pouvant pas afficher le PDF ; le contenu du document lui-même n'est aussi
+          accessible que le PDF source.
+        </li>
+        <li>
+          <strong>Surfaces translucides « verre ».</strong> La barre de navigation collante et certains
+          arrière-plans de cartes utilisent un flou <code>backdrop-filter</code>. axe ne peut pas
+          calculer fiablement le contraste effectif premier-plan / arrière-plan à travers un filtre.
+          <em>Atténuation :</em> nous avons vérifié manuellement que le texte sur ces surfaces respecte
+          le niveau AA dans les deux thèmes, et le menu mobile a été basculé sur un arrière-plan
+          totalement opaque pour que les éléments de menu ne soient jamais superposés au contenu héros.
+        </li>
+        <li>
+          <strong>Photos des archives de conférences.</strong> Certaines images des pages d'archive
+          2019–2024 portent du texte alt générique hérité de la publication originale.
+          <em>Atténuation :</em> nous resserrons le texte alt sur chaque page d'archive lors de nos
+          révisions ; des légendes significatives et le contexte environnant fournissent la même
+          information aux utilisateurs de lecteurs d'écran.
+        </li>
+      </ol>
+
+      <h2>4. Fonctionnalités d'accessibilité mises en œuvre</h2>
+      <ul>
+        <li>Repères sémantiques (<code>&lt;header&gt;</code>, <code>&lt;nav aria-label="Primary"&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>) et un lien d'évitement vers le contenu comme premier élément focusable sur chaque page</li>
+        <li>Indicateurs de focus visibles via <code>:focus-visible</code> sur chaque contrôle interactif</li>
+        <li>Schémas de couleurs clair et sombre respectant tous deux les ratios de contraste WCAG&nbsp;AA pour le texte, les liens et l'UI</li>
+        <li>Mode sombre automatique via <code>prefers-color-scheme</code>, avec une bascule manuelle persistante dans <code>localStorage</code></li>
+        <li>Toutes les animations conditionnées à <code>prefers-reduced-motion</code> — lorsque l'utilisateur le désactive, les transitions et animations de révélation sont désactivées</li>
+        <li>Texte redimensionnable s'adaptant proprement à un zoom de 200 % et à des fenêtres jusqu'à 320&nbsp;px</li>
+        <li>Texte alt sur chaque image significative ; les images décoratives portent <code>alt=""</code> pour être ignorées par les technologies d'assistance</li>
+        <li>Texte de lien descriptif — chaque lien indique sa destination sans dépendre du contexte environnant (pas de simple « En savoir plus »)</li>
+        <li>Liens dans le corps du texte soulignés, pour que la couleur ne soit pas le seul indice distinctif (WCAG&nbsp;1.4.1)</li>
+        <li>Balises natives <code>&lt;details&gt;</code> pour les accordéons FAQ (par exemple école d'été NetSec, Euro-SWAMOS) — accessibles au clavier sans JavaScript</li>
+        <li>Tiroir de navigation mobile avec arrière-plan opaque, <code>aria-expanded</code> sur la bascule, gestion du focus à la fermeture</li>
+        <li>Bascule de thème en tant que véritable <code>&lt;button&gt;</code> avec un <code>aria-label</code> qui se met à jour selon l'état</li>
+        <li>Lien <code>mailto:</code> réel pour le contact avec sujet pré-rempli pour les retours d'accessibilité</li>
+      </ul>
+
+      <h2>5. Compatibilité</h2>
+      <p>
+        Le site est conçu pour fonctionner avec les versions actuelles des principaux navigateurs
+        (Safari, Chrome, Firefox, Edge) sur ordinateur, tablette et mobile, et avec les versions
+        actuelles des principaux lecteurs d'écran (VoiceOver, NVDA, JAWS, TalkBack).
+      </p>
+      <p>
+        JavaScript n'est utilisé que pour la bascule de thème et le menu mobile. Le site est
+        entièrement lisible et navigable sans JavaScript activé.
+      </p>
+
+      <h2>6. Retours et revue</h2>
+      <p>
+        Si vous rencontrez un obstacle d'accessibilité sur ce site — une mise en page confuse, un
+        libellé manquant, un problème de contraste, un focus invisible, n'importe quoi — merci de
+        nous le signaler. Nous traitons les problèmes d'accessibilité comme des bugs et les corrigeons
+        dès que possible.
+      </p>
+      <p>
+        Contactez <strong>{{ site.contactEmail }}</strong>. Nous visons à accuser réception des
+        signalements d'accessibilité dans un délai de <strong>10 jours ouvrables</strong> et à publier
+        un correctif ou une solution de contournement dans les 30 jours ouvrables pour les problèmes
+        que nous pouvons reproduire.
+      </p>
+      <p>
+        <a class="btn btn-primary"
+           href="mailto:{{ site.contactEmail }}?subject=Accessibility%20feedback%20on%20eiss-europa.com">
+          Envoyer un retour d'accessibilité
+        </a>
+      </p>
+      <p>
+        Cette déclaration est révisée au moins <strong>une fois par an</strong>, et réévaluée après
+        tout changement majeur de conception. Le code source et le suivi public des problèmes sont
+        hébergés sur
+        <a href="https://github.com/EISSeuropa/EISSeuropa.github.io" target="_blank" rel="noopener">GitHub</a>.
+      </p>
+
+      <h2 id="conformance">7. État de conformité</h2>
+      <p>
+        <strong>Conformité partielle</strong> avec WCAG&nbsp;2.1 Niveau&nbsp;AA, alignée avec
+        EN&nbsp;301&nbsp;549. Tous les modèles du site respectent la norme ; le label de conformité
+        partielle résiduelle reflète les limites documentées au §3 (PDF intégrés, surfaces translucides,
+        texte alt générique sur certaines photos d'archive). Les audits automatisés ne signalent
+        actuellement aucune violation et les éléments en « revue manuelle » ont été individuellement
+        vérifiés conformes.
+      </p>
+      <p>
+        <a class="wcag-badge"
+           href="https://www.w3.org/TR/WCAG21/#level-aa-conformance"
+           target="_blank" rel="noopener"
+           aria-label="WCAG 2.1 Niveau AA — Web Content Accessibility Guidelines, voir la référence W3C">
+          <span class="wcag-badge-wcag" aria-hidden="true">WCAG</span>
+          <span class="wcag-badge-vert" aria-hidden="true">
+            <span class="wcag-badge-version">2.1</span>
+            <span class="wcag-badge-level">AA</span>
+          </span>
+        </a>
+      </p>
+      <p class="meta">
+        Déclaration préparée : 14 mai 2026 · Dernière revue : 22 mai 2026 · Prochaine revue prévue :
+        14 mai 2027 ou lors d'un changement majeur de conception.
+      </p>
+    </article>
+  </div>
+</section>

@@ -1,11 +1,12 @@
 ---
 layout: base.njk
-permalink: /board.html
-title: The People
-description: The EISS board and support team — scholars and practitioners who advise, steer, and operate the European Initiative for Security Studies.
+permalink: /board.de.html
+title: Die Personen
+description: Der EISS-Vorstand und das Unterstützungsteam — Wissenschaftler und Praktiker, die die Europäische Initiative für Sicherheitsstudien beraten, steuern und betreiben.
 metaImage: /assets/images/board-meta.jpg
 navKey: ""
-lang: en
+lang: de
+status: beta
 alternates:
   en: /board.html
   fr: /board.fr.html
@@ -14,18 +15,21 @@ alternates:
 
 <header class="page-header">
   <div class="container">
-    <span class="eyebrow">About</span>
-    <h1>The People</h1>
+    <span class="eyebrow">Über uns</span>
+    <h1>Die Personen</h1>
     <p class="page-lead">
-      Our Board members advise and steer the organisation, notably through thematic Working Groups (WG).
-      A small support team handles day-to-day operations.
+      Unsere Vorstandsmitglieder beraten und steuern die Organisation, insbesondere durch thematische
+      Arbeitsgruppen (WG). Ein kleines Unterstützungsteam wickelt das Tagesgeschäft ab.
+    </p>
+    <p class="page-lead muted" style="font-size: var(--fs-sm); margin-top: var(--space-3);">
+      <em>Namen, Zugehörigkeiten und Forschungsthemen unten bleiben in der Originalsprache.</em>
     </p>
   </div>
 </header>
 
 <section class="section">
   <div class="container">
-    <h2 style="margin-bottom: var(--space-5);">Board</h2>
+    <h2 style="margin-bottom: var(--space-5);">Vorstand</h2>
     <div class="people-grid">
       {%- for person in board.members %}
       <article class="person">
@@ -35,7 +39,7 @@ alternates:
           <p class="person-name">{{ person.name }}</p>
           <p class="person-affiliation">{{ person.affiliation | safe }}</p>
           {%- if person.themes %}
-          <p class="person-affiliation muted" style="margin-top: var(--space-2); font-size: var(--fs-xs); border-top: 1px solid var(--border); padding-top: var(--space-2);"><strong>Research themes:</strong> {{ person.themes | safe }}</p>
+          <p class="person-affiliation muted" style="margin-top: var(--space-2); font-size: var(--fs-xs); border-top: 1px solid var(--border); padding-top: var(--space-2);"><strong>Forschungsthemen:</strong> {{ person.themes | safe }}</p>
           {%- endif %}
         </div>
       </article>
@@ -46,7 +50,7 @@ alternates:
 
 <section class="section">
   <div class="container">
-    <h2 style="margin-bottom: var(--space-5);">Support Team</h2>
+    <h2 style="margin-bottom: var(--space-5);">Unterstützungsteam</h2>
     <div class="people-grid">
       {%- for person in board.support %}
       <article class="person">

@@ -1,0 +1,97 @@
+---
+layout: base.njk
+permalink: /events.de.html
+title: Veranstaltungen für Mitglieder
+description: Online- und Hybridveranstaltungen, organisiert von EISS-Mitgliedern — Runde Tische, Seminare für Nachwuchsforscher und Doktoranden-Workshops.
+metaImage: /assets/images/events-meta.jpg
+navKey: ""
+lang: de
+status: beta
+alternates:
+  en: /events.html
+  fr: /events.fr.html
+  de: /events.de.html
+---
+{% from "icons.njk" import icon %}
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">Für Mitglieder</span>
+    <h1>Veranstaltungen für Mitglieder</h1>
+    <p class="page-lead">
+      Unsere Mitglieder sind aufgerufen, eine breite Palette von Veranstaltungen zu organisieren.
+      EISS unterstützt diese Bottom-up-Initiativen, um sie allen Mitgliedern online zugänglich zu machen.
+    </p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));">
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("users-round") }}</div>
+        <h2>Runde Tische &amp; Konferenzen</h2>
+        <p>
+          Online- und Hybridveranstaltungen, organisiert von EISS-Mitgliedern mit Gästen aus der
+          Wissenschaft und/oder Politik, um über kritische Fragen der internationalen Sicherheit zu
+          diskutieren. EISS-Mitglieder schlagen ein Thema vor, versammeln eine Gruppe von Kolleg:innen,
+          und EISS gewährt der EISS-Community Zugang zum Online-Tisch.
+        </p>
+      </article>
+
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("graduation-cap") }}</div>
+        <h2>Seminare für Nachwuchsforscher</h2>
+        <p>
+          Online- und Hybridseminare, organisiert von Doktorand:innen oder Nachwuchswissenschaftler:innen,
+          um ihre Forschung zu präsentieren und Ideen mit der breiteren EISS-Community auszutauschen.
+          Doktorand:innen oder Postdocs, die EISS-Mitglied sind, veranstalten ein Seminar oder eine
+          Konferenz vor Ort an ihrer Universität (oder anderswo), und EISS bietet der Mitgliedschaft
+          virtuellen Zugang.
+        </p>
+      </article>
+
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("book-open") }}</div>
+        <h2>Doktoranden-Workshops</h2>
+        <p>
+          Online- und Hybrid-Workshops, organisiert von EISS-Mitgliedern und auf Doktorand:innen und
+          Nachwuchswissenschaftler:innen zugeschnitten. Diese Online-Trainingsworkshops können sich
+          um den akademischen Arbeitsmarkt, die Entwicklung einer effektiven Publikationsstrategie,
+          die Navigation in akademischen Zeitschriften und im Publikationsprozess sowie um die
+          Verwandlung des Doktoratsmanuskripts in ein Buch drehen. Sowohl Nachwuchswissenschaftler:innen
+          als auch erfahrene Wissenschaftler:innen können Vorschläge einreichen.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div class="featured-eyebrow">Aufruf zur Einreichung von Abstracts</div>
+      <h2>Einen Veranstaltungsvorschlag einreichen</h2>
+      <p class="lead">
+        Wir nehmen derzeit Abstracts für unsere Online- und Hybridveranstaltungen entgegen.
+        Senden Sie uns Ihr Abstract über Indico.
+      </p>
+      <p>Bitte reichen Sie für alle drei Formate ein kurzes Abstract ein mit:</p>
+      <ul>
+        <li>Dem Format Ihrer Veranstaltung (eines der drei oben beschriebenen).</li>
+        <li>Dem Hauptthema, das behandelt werden soll.</li>
+        <li>Dem Zweck der Veranstaltung.</li>
+        <li>Dem Vorsitz und den Referent:innen.</li>
+      </ul>
+      <p>
+        Abstracts können das ganze Jahr über eingereicht werden und müssen mindestens 4 Wochen
+        vor der Veranstaltung gesendet werden.
+      </p>
+      <p style="margin-top: var(--space-5);">
+        <a class="btn btn-primary" href="https://indico.eiss-europa.com/event/3/" target="_blank" rel="noopener">
+          Jetzt einreichen {{ icon("external-link") }}
+        </a>
+      </p>
+    </article>
+  </div>
+</section>
