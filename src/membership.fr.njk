@@ -1,0 +1,143 @@
+---
+layout: base.njk
+permalink: /membership.fr.html
+title: Adhésion
+description: Rejoignez la communauté EISS et bénéficiez d'un accès exclusif à nos événements en ligne et hybrides. Adhésion par paliers pour les étudiants, jeunes chercheurs et professionnels établis.
+navKey: membership
+metaImage: /assets/images/membership-meta.jpg
+lang: fr
+status: beta
+alternates:
+  en: /membership.html
+  fr: /membership.fr.html
+  de: /membership.de.html
+---
+{% from "icons.njk" import icon %}
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">Rejoignez-nous</span>
+    <h1>Adhésion</h1>
+    <p class="page-lead">
+      Rejoignez la communauté, contribuez au développement des études européennes de sécurité,
+      et bénéficiez d'un accès exclusif à nos événements en ligne et hybrides.
+    </p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <h2>À quoi ressemble notre communauté</h2>
+    <p class="lead" style="max-width: 44rem;">
+      Nous nous efforçons de rendre notre communauté accessible à tous.
+    </p>
+
+    <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-block: var(--space-6);">
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("users-round") }}</div>
+        <h3>Ouverte à tous</h3>
+        <p>
+          Chercheurs en début de carrière, membres des forces armées, des services diplomatiques,
+          ainsi que les fonctionnaires nationaux et internationaux.
+        </p>
+      </article>
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("lightbulb") }}</div>
+        <h3>Multidisciplinaire</h3>
+        <p>Histoire, sciences politiques, droit, philosophie, économie, psychologie, sociologie, etc.</p>
+      </article>
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("globe") }}</div>
+        <h3>Géographiquement inclusive</h3>
+        <p>
+          Chaque année, la conférence annuelle est organisée par rotation dans un pays européen différent.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section-tight" id="content19-b9">
+  <div class="container">
+    <h2>Qui êtes-vous ?</h2>
+    <p class="lead" style="max-width: 44rem;">
+      Trois paliers d'adhésion couvrant les étudiants jusqu'aux professionnels établis. La tarification
+      est annuelle ; les paiements et renouvellements sont gérés par Stripe.
+    </p>
+
+    <p style="background: var(--accent-soft); padding: var(--space-3) var(--space-4); border-radius: var(--radius-sm); border-inline-start: 3px solid var(--accent); margin-block: var(--space-5); max-width: 44rem;">
+      <strong>Vous avez déjà un compte Indico chez nous ?</strong>
+      Veuillez utiliser la même adresse e-mail lors de l'enregistrement de votre paiement ci-dessous
+      pour accéder à votre espace membre.
+    </p>
+
+    <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));">
+      <article class="tile">
+        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">30 € / an</div>
+        <h3>Étudiant·e</h3>
+        <p>Étudiants en licence et en master.</p>
+        <p style="margin-top: var(--space-4);">
+          <a class="btn btn-primary btn-sm" href="https://buy.stripe.com/6oE7vDfu9dDqdG0fZp" target="_blank" rel="noopener">{{ icon("user-plus") }} Devenir membre</a>
+        </p>
+      </article>
+      <article class="tile">
+        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">50 € / an</div>
+        <h3>Doctorant·e &amp; jeune chercheur·euse</h3>
+        <p>Chercheurs doctoraux et post-doctoraux (dans les trois ans suivant l'obtention).</p>
+        <p style="margin-top: var(--space-4);">
+          <a class="btn btn-primary btn-sm" href="https://buy.stripe.com/4gwaHP4Pv6aYbxS9B2" target="_blank" rel="noopener">{{ icon("user-plus") }} Devenir membre</a>
+        </p>
+      </article>
+      <article class="tile">
+        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">80 € / an</div>
+        <h3>Universitaire ou professionnel·le établi·e</h3>
+        <p>Universitaires, décideurs politiques, journalistes et autres professionnels.</p>
+        <p style="margin-top: var(--space-4);">
+          <a class="btn btn-primary btn-sm" href="https://buy.stripe.com/28o7vD95LdDq1Xi4gQ" target="_blank" rel="noopener">{{ icon("user-plus") }} Devenir membre</a>
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="container">
+    <article class="card" style="display: grid; gap: var(--space-5); grid-template-columns: 1fr; padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div>
+        <div class="featured-eyebrow">Déjà membre ?</div>
+        <h2 style="margin-bottom: var(--space-3);">Gérez votre adhésion</h2>
+        <p class="muted">
+          Mettez à jour vos coordonnées, vos informations bancaires, ou annulez votre abonnement à tout moment.
+        </p>
+        <p style="margin-top: var(--space-4);">
+          <a class="btn btn-secondary" href="https://billing.stripe.com/p/login/3cscOuaesfHceC4dQQ" target="_blank" rel="noopener">
+            Portail de gestion de l'adhésion {{ icon("external-link") }}
+          </a>
+        </p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <article class="prose">
+      <h2>Conditions générales</h2>
+      <p>
+        Notre adhésion fonctionne sur la base d'un <strong>système d'abonnement</strong>. Elle se renouvelle
+        automatiquement chaque année, mais vous pouvez l'annuler à tout moment et serez prévenu 7 jours
+        avant le renouvellement par e-mail. Veillez à maintenir vos coordonnées et informations bancaires à jour.
+      </p>
+      <p>
+        Vous pouvez gérer votre adhésion à tout moment
+        <a href="https://billing.stripe.com/p/login/3cscOuaesfHceC4dQQ" target="_blank" rel="noopener">ici</a>.
+        L'adhésion ouvrant droit à des avantages immédiats, son annulation entraînera un prélèvement
+        <em>au prorata</em> sur la carte enregistrée. Les paiements échoués entraîneront une annulation
+        après 15 jours.
+      </p>
+      <p>
+        Consultez les <a href="/terms.fr.html">conditions générales</a> complètes pour plus de détails.
+      </p>
+    </article>
+  </div>
+</section>

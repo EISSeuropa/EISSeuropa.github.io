@@ -1,0 +1,144 @@
+---
+layout: base.njk
+permalink: /membership.de.html
+title: Mitgliedschaft
+description: Schließen Sie sich der EISS-Community an und erhalten Sie exklusiven Zugang zu unseren Online- und Hybridveranstaltungen. Gestaffelte Mitgliedschaft für Studenten, Nachwuchsforscher und etablierte Fachleute.
+navKey: membership
+metaImage: /assets/images/membership-meta.jpg
+lang: de
+status: beta
+alternates:
+  en: /membership.html
+  fr: /membership.fr.html
+  de: /membership.de.html
+---
+{% from "icons.njk" import icon %}
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">Werden Sie Mitglied</span>
+    <h1>Mitgliedschaft</h1>
+    <p class="page-lead">
+      Schließen Sie sich der Community an, tragen Sie zur Entwicklung der europäischen Sicherheitsstudien
+      bei und profitieren Sie von exklusivem Zugang zu unseren Online- und Hybridveranstaltungen.
+    </p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <h2>Wie unsere Community aussieht</h2>
+    <p class="lead" style="max-width: 44rem;">
+      Wir bemühen uns, unsere Community für alle zugänglich zu machen.
+    </p>
+
+    <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-block: var(--space-6);">
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("users-round") }}</div>
+        <h3>Offen für alle</h3>
+        <p>
+          Nachwuchswissenschaftler, Angehörige der Streitkräfte, des diplomatischen Dienstes
+          sowie nationale und internationale Beamte.
+        </p>
+      </article>
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("lightbulb") }}</div>
+        <h3>Multidisziplinär</h3>
+        <p>Geschichte, Politikwissenschaft, Recht, Philosophie, Wirtschaft, Psychologie, Soziologie usw.</p>
+      </article>
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("globe") }}</div>
+        <h3>Geografisch inklusiv</h3>
+        <p>
+          Jedes Jahr wird die Jahreskonferenz im Rotationsverfahren in einem anderen europäischen Land organisiert.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section-tight" id="content19-b9">
+  <div class="container">
+    <h2>Wer sind Sie?</h2>
+    <p class="lead" style="max-width: 44rem;">
+      Drei Mitgliedschaftsstufen vom Studenten bis zum etablierten Profi. Die Preise gelten jährlich;
+      Zahlungen und Verlängerungen werden über Stripe abgewickelt.
+    </p>
+
+    <p style="background: var(--accent-soft); padding: var(--space-3) var(--space-4); border-radius: var(--radius-sm); border-inline-start: 3px solid var(--accent); margin-block: var(--space-5); max-width: 44rem;">
+      <strong>Haben Sie bereits ein Indico-Konto bei uns?</strong>
+      Bitte verwenden Sie dieselbe E-Mail-Adresse bei der Zahlungsregistrierung unten, um Zugang zu
+      Ihrem Mitgliederbereich zu erhalten.
+    </p>
+
+    <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));">
+      <article class="tile">
+        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">30 € / Jahr</div>
+        <h3>Student</h3>
+        <p>Bachelor- und Masterstudierende.</p>
+        <p style="margin-top: var(--space-4);">
+          <a class="btn btn-primary btn-sm" href="https://buy.stripe.com/6oE7vDfu9dDqdG0fZp" target="_blank" rel="noopener">{{ icon("user-plus") }} Mitglied werden</a>
+        </p>
+      </article>
+      <article class="tile">
+        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">50 € / Jahr</div>
+        <h3>Doktorand &amp; Nachwuchswissenschaftler</h3>
+        <p>Doktoranden und Postdoktoranden (innerhalb von drei Jahren nach dem Abschluss).</p>
+        <p style="margin-top: var(--space-4);">
+          <a class="btn btn-primary btn-sm" href="https://buy.stripe.com/4gwaHP4Pv6aYbxS9B2" target="_blank" rel="noopener">{{ icon("user-plus") }} Mitglied werden</a>
+        </p>
+      </article>
+      <article class="tile">
+        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">80 € / Jahr</div>
+        <h3>Etablierte Akademiker oder Fachleute</h3>
+        <p>Akademiker, Entscheidungsträger, Journalisten und andere Fachleute.</p>
+        <p style="margin-top: var(--space-4);">
+          <a class="btn btn-primary btn-sm" href="https://buy.stripe.com/28o7vD95LdDq1Xi4gQ" target="_blank" rel="noopener">{{ icon("user-plus") }} Mitglied werden</a>
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="container">
+    <article class="card" style="display: grid; gap: var(--space-5); grid-template-columns: 1fr; padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div>
+        <div class="featured-eyebrow">Bereits Mitglied?</div>
+        <h2 style="margin-bottom: var(--space-3);">Verwalten Sie Ihre Mitgliedschaft</h2>
+        <p class="muted">
+          Aktualisieren Sie Ihre Kontaktdaten, Bankinformationen oder kündigen Sie Ihr Abonnement jederzeit.
+        </p>
+        <p style="margin-top: var(--space-4);">
+          <a class="btn btn-secondary" href="https://billing.stripe.com/p/login/3cscOuaesfHceC4dQQ" target="_blank" rel="noopener">
+            Portal zur Mitgliedschaftsverwaltung {{ icon("external-link") }}
+          </a>
+        </p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <article class="prose">
+      <h2>Allgemeine Geschäftsbedingungen</h2>
+      <p>
+        Unsere Mitgliedschaft funktioniert nach einem <strong>Abonnementsystem</strong>. Sie verlängert
+        sich automatisch jährlich, kann jedoch jederzeit gekündigt werden. Sie werden 7 Tage vor der
+        Verlängerung per E-Mail benachrichtigt. Bitte achten Sie darauf, Ihre Kontakt- und Bankdaten
+        auf dem neuesten Stand zu halten.
+      </p>
+      <p>
+        Sie können Ihre Mitgliedschaft jederzeit
+        <a href="https://billing.stripe.com/p/login/3cscOuaesfHceC4dQQ" target="_blank" rel="noopener">hier</a>
+        verwalten. Da die Mitgliedsvorteile sofort beginnen, führt eine Kündigung zu einer
+        <em>anteiligen</em> Belastung der hinterlegten Karte. Fehlgeschlagene Zahlungen führen nach
+        15 Tagen zur Kündigung.
+      </p>
+      <p>
+        Lesen Sie die vollständigen <a href="/terms.de.html">Allgemeinen Geschäftsbedingungen</a> für Details.
+      </p>
+    </article>
+  </div>
+</section>

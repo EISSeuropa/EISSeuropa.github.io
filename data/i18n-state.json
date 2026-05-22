@@ -1,0 +1,47 @@
+{
+  "_documentation": "Translation drift state — tracks the SHA-1 of each English source .njk at the moment a translation was made. The CI workflow (.github/workflows/i18n-drift.yml) runs scripts/check-i18n-drift.py; if any recorded SHA does not match the current source SHA, the PR is blocked until either (a) the translation is updated and re-stamped, or (b) the source change is reverted. See docs/i18n.md for the full workflow.",
+  "translations": {
+    "src/index.njk": {
+      "fr": {
+        "file": "src/index.fr.njk",
+        "source_sha1": "97e55e16108e6fe23d4016b591168d5b14b937a9",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/index.de.njk",
+        "source_sha1": "97e55e16108e6fe23d4016b591168d5b14b937a9",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      }
+    },
+    "src/initiative.njk": {
+      "fr": {
+        "file": "src/initiative.fr.njk",
+        "source_sha1": "95eb8ddd604bf975f4fe27d8c7b2f3a5de46bdd8",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/initiative.de.njk",
+        "source_sha1": "95eb8ddd604bf975f4fe27d8c7b2f3a5de46bdd8",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      }
+    },
+    "src/membership.njk": {
+      "fr": {
+        "file": "src/membership.fr.njk",
+        "source_sha1": "5ddabe1b340a8c91409e3eca1752760fd1c62aa6",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/membership.de.njk",
+        "source_sha1": "5ddabe1b340a8c91409e3eca1752760fd1c62aa6",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      }
+    }
+  }
+}

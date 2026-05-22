@@ -1,4 +1,9 @@
+{# Footer consumes the active-locale catalog `t` from base.njk.
+   Brand+legal text is i18n'd, but link `href` values stay constant
+   (and where possible point at the appropriate-language sibling
+   when one exists). #}
 {% from "icons.njk" import icon %}
+{%- set langSuffix = "" if lang == "en" else "." + lang -%}
 <footer class="site-footer" role="contentinfo">
   <div class="container footer">
     <div class="footer-grid">
@@ -8,75 +13,70 @@
           <span>{{ site.fullName }}</span>
         </div>
         <p class="text-subtle">
-          The largest and most diverse European gathering of scholars and practitioners on security issues.
+          {{ t.footer.tagline }}
         </p>
       </div>
 
       <div>
-        <h2>Conferences</h2>
+        <h2>{{ t.footer.conferencesHeading }}</h2>
         <ul class="footer-list">
-          <li><a href="/2026.html">2026 — Stockholm</a></li>
-          <li><a href="/2025.html">2025 — Thessaloniki</a></li>
-          <li><a href="/2024.html">2024 — Prague</a></li>
-          <li><a href="/past.html">All past conferences</a></li>
+          <li><a href="/2026{{ langSuffix }}.html">{{ t.footer.conferencesItems.c2026 }}</a></li>
+          <li><a href="/2025{{ langSuffix }}.html">{{ t.footer.conferencesItems.c2025 }}</a></li>
+          <li><a href="/2024{{ langSuffix }}.html">{{ t.footer.conferencesItems.c2024 }}</a></li>
+          <li><a href="/past{{ langSuffix }}.html">{{ t.footer.conferencesItems.allPast }}</a></li>
         </ul>
       </div>
 
       <div>
-        <h2>Programmes</h2>
+        <h2>{{ t.footer.programmesHeading }}</h2>
         <ul class="footer-list">
-          <li><a href="/NetSecSchool.html">NetSec Summer School</a></li>
-          <li><a href="/euroswamos.html">Euro-SWAMOS</a></li>
-          <li><a href="/coercion.html">Coercive Statecraft</a></li>
-          <li><a href="/GlobalRisks.html">Global Risks Survey</a></li>
+          <li><a href="/NetSecSchool{{ langSuffix }}.html">{{ t.footer.programmesItems.netsec }}</a></li>
+          <li><a href="/euroswamos{{ langSuffix }}.html">{{ t.footer.programmesItems.euroswamos }}</a></li>
+          <li><a href="/coercion{{ langSuffix }}.html">{{ t.footer.programmesItems.coercion }}</a></li>
+          <li><a href="/GlobalRisks{{ langSuffix }}.html">{{ t.footer.programmesItems.globalRisks }}</a></li>
         </ul>
       </div>
 
       <div>
-        <h2>About</h2>
+        <h2>{{ t.footer.aboutHeading }}</h2>
         <ul class="footer-list">
-          <li><a href="/initiative.html">The Initiative</a></li>
-          <li><a href="/board.html">The People</a></li>
-          <li><a href="/membership.html">Membership</a></li>
-          <li><a href="{{ site.newsletterUrl }}" target="_blank" rel="noopener">Newsletter</a></li>
-          <li><a href="mailto:{{ site.contactEmail }}">Contact</a></li>
+          <li><a href="/initiative{{ langSuffix }}.html">{{ t.footer.aboutItems.initiative }}</a></li>
+          <li><a href="/board{{ langSuffix }}.html">{{ t.footer.aboutItems.people }}</a></li>
+          <li><a href="/membership{{ langSuffix }}.html">{{ t.footer.aboutItems.membership }}</a></li>
+          <li><a href="{{ site.newsletterUrl }}" target="_blank" rel="noopener">{{ t.footer.aboutItems.newsletter }}</a></li>
+          <li><a href="mailto:{{ site.contactEmail }}">{{ t.footer.aboutItems.contact }}</a></li>
         </ul>
       </div>
     </div>
 
-    <div class="footer-social" aria-label="Follow EISS on social media">
-      <span class="footer-social-label">Follow us</span>
-      <a class="footer-social-link" href="{{ site.social.linkedin }}" target="_blank" rel="noopener" aria-label="EISS on LinkedIn">
+    <div class="footer-social" aria-label="{{ t.footer.followUs }}">
+      <span class="footer-social-label">{{ t.footer.followUs }}</span>
+      <a class="footer-social-link" href="{{ site.social.linkedin }}" target="_blank" rel="noopener" aria-label="{{ t.footer.socialLabel.linkedin }}">
         {{ icon("linkedin") }}
       </a>
-      <a class="footer-social-link" href="{{ site.social.twitter }}" target="_blank" rel="noopener" aria-label="EISS on Twitter / X">
+      <a class="footer-social-link" href="{{ site.social.twitter }}" target="_blank" rel="noopener" aria-label="{{ t.footer.socialLabel.twitter }}">
         {{ icon("twitter") }}
       </a>
-      <a class="footer-social-link" href="{{ site.social.youtube }}" target="_blank" rel="noopener" aria-label="EISS on YouTube">
+      <a class="footer-social-link" href="{{ site.social.youtube }}" target="_blank" rel="noopener" aria-label="{{ t.footer.socialLabel.youtube }}">
         {{ icon("youtube") }}
       </a>
     </div>
 
     <div class="footer-fineprint">
       <p>
-        <em>© Copyright 2018 — {{ "" | year }} European Initiative for Security Studies — All rights reserved | Tous droits réservés.
-        Any third-party image and content remains the property of its owners as indicated in their respective description, unless specified otherwise below.</em>
+        <em>{{ t.footer.copyright | replace("{{year}}", "" | year) }}</em>
       </p>
       <p>
-        <em>Euro-SWAMOS images © Marine Nationale, EEAS, État-Major des Armées, NATO CCDCOE.<br>
-        Prague image cc-by-2.0 Moyan Brenn.<br>
-        Barcelona image royalty-free stock photo (ID: 1795930126 Pajor Pawel).</em>
+        <em>{{ t.footer.imageCredits }}</em>
       </p>
       <p>
-        EISS is a registered charity (W751263001) under French law. |
-        L'EISS est une association loi 1901 enregistrée sous le numéro W751263001
-        au Répertoire National des Associations, et appartenant au champ de l'économie sociale et solidaire.
+        {{ t.footer.legalStatus }}
       </p>
       <p>
-        <a href="/refund.html">Terms and Conditions</a> ·
-        <a href="/policy.html">Privacy Policy</a> ·
-        <a href="/accessibility.html">Accessibility</a> ·
-        <a href="/sitemap.html">Site map</a>
+        <a href="/refund{{ langSuffix }}.html">{{ t.footer.legalLinks.terms }}</a> ·
+        <a href="/policy{{ langSuffix }}.html">{{ t.footer.legalLinks.privacy }}</a> ·
+        <a href="/accessibility{{ langSuffix }}.html">{{ t.footer.legalLinks.accessibility }}</a> ·
+        <a href="/sitemap{{ langSuffix }}.html">{{ t.footer.legalLinks.sitemap }}</a>
       </p>
     </div>
   </div>
