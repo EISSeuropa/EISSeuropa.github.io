@@ -25,106 +25,58 @@ alternates:
   </div>
 </header>
 
+{% set conf = conferences.next %}
+{% if conf %}
 <section class="section" aria-labelledby="upcoming-title">
   <div class="container">
     <h2 id="upcoming-title" style="margin-bottom: var(--space-5);">Demnächst</h2>
     <article class="card featured">
       <div>
         <div class="featured-eyebrow">Nächste Jahreskonferenz</div>
-        <h3 style="font-size: clamp(1.5rem, 1rem + 1.6vw, 2.4rem); margin-bottom: var(--space-4);">European Security Conference 2026</h3>
+        <h3 style="font-size: clamp(1.5rem, 1rem + 1.6vw, 2.4rem); margin-bottom: var(--space-4);">European Security Conference {{ conf.year }}</h3>
         <p class="featured-orgs">
-          Gemeinsam organisiert von der COST-Aktion NetSec, der Europäischen Initiative für
-          Sicherheitsstudien (EISS) und der Universität Stockholm.
+          {{ conf.organisers.de }}
         </p>
         <div class="featured-meta">
           <div>
             <strong>Datum</strong>
-            11. — 12. Juni 2026
+            {{ conf.dates.de }}
           </div>
           <div>
             <strong>Ort</strong>
-            Universität Stockholm
+            {{ conf.venue.de }}
           </div>
         </div>
         <div>
-          <a class="btn btn-primary" href="/2026.de.html">Mehr über die ESSC&nbsp;2026 erfahren</a>
+          <a class="btn btn-primary" href="/{{ conf.slug }}.de.html">Mehr über die ESSC&nbsp;{{ conf.year }} erfahren</a>
         </div>
       </div>
       <aside class="featured-date" aria-hidden="true">
-        <div class="month">Juni</div>
-        <div class="day">11<span aria-hidden="true">–</span>12</div>
-        <div class="year">2026 · Stockholm</div>
+        <div class="month">{{ conf.monthLabel.de }}</div>
+        <div class="day">{{ conf.dayRange | replace("–", "<span aria-hidden='true'>–</span>") | safe }}</div>
+        <div class="year">{{ conf.year }} · {{ conf.city }}</div>
       </aside>
     </article>
   </div>
 </section>
+{% endif %}
 
 <section class="section-tight" aria-labelledby="archive-title">
   <div class="container">
     <h2 id="archive-title" style="margin-bottom: var(--space-5);">Archiv</h2>
     <div class="conference-list">
-      <a class="conference" href="/2025.html">
-        <span class="conference-year">2025</span>
+      {%- for c in conferences.past %}
+      {%- if c.hasOwnPage %}
+      <a class="conference" href="/{{ c.slug }}.html">
+        <span class="conference-year">{{ c.year }}</span>
         <span>
-          <strong>Thessaloniki</strong>
-          <div class="conference-meta">8. Jahreskonferenz · 26. — 27. Juni 2025 · Universität Mazedonien, Thessaloniki</div>
+          <strong>{{ c.displayCity.de or c.city }}</strong>
+          <div class="conference-meta">{{ c.archiveMeta.de }}</div>
         </span>
         <span class="conference-arrow" aria-hidden="true">→</span>
       </a>
-
-      <a class="conference" href="/2024.html">
-        <span class="conference-year">2024</span>
-        <span>
-          <strong>Prag</strong>
-          <div class="conference-meta">7. Jahreskonferenz · 27. — 28. Juni 2024 · Karls-Universität, Prag</div>
-        </span>
-        <span class="conference-arrow" aria-hidden="true">→</span>
-      </a>
-
-      <a class="conference" href="/2023.html">
-        <span class="conference-year">2023</span>
-        <span>
-          <strong>Barcelona</strong>
-          <div class="conference-meta">6. Jahreskonferenz · Barcelona, Spanien</div>
-        </span>
-        <span class="conference-arrow" aria-hidden="true">→</span>
-      </a>
-
-      <a class="conference" href="/2022.html">
-        <span class="conference-year">2022</span>
-        <span>
-          <strong>Berlin</strong>
-          <div class="conference-meta">5. Jahreskonferenz · Hertie School, Berlin</div>
-        </span>
-        <span class="conference-arrow" aria-hidden="true">→</span>
-      </a>
-
-      <a class="conference" href="/2021.html">
-        <span class="conference-year">2021</span>
-        <span>
-          <strong>Lissabon</strong>
-          <div class="conference-meta">4. Jahreskonferenz · Lissabon, Portugal</div>
-        </span>
-        <span class="conference-arrow" aria-hidden="true">→</span>
-      </a>
-
-      <a class="conference" href="/2020.html">
-        <span class="conference-year">2020</span>
-        <span>
-          <strong>Online-Ausgabe</strong>
-          <div class="conference-meta">3. Jahreskonferenz — aufgrund der COVID-19-Pandemie online abgehalten</div>
-        </span>
-        <span class="conference-arrow" aria-hidden="true">→</span>
-      </a>
-
-      <a class="conference" href="/2019.html">
-        <span class="conference-year">2019</span>
-        <span>
-          <strong>Paris</strong>
-          <div class="conference-meta">2. Jahreskonferenz · Sciences Po CERI, Paris</div>
-        </span>
-        <span class="conference-arrow" aria-hidden="true">→</span>
-      </a>
+      {%- endif %}
+      {%- endfor %}
     </div>
     <p class="muted" style="font-size: var(--fs-sm); margin-top: var(--space-4);">
       <em>Die einzelnen Archivseiten sind nur auf Englisch verfügbar.</em>

@@ -1,0 +1,64 @@
+# Daily rebuild of the GitHub Pages deployment.
+#
+# Why this exists
+# ---------------
+# Some pages compute things from the current date at build time —
+# specifically, src/_data/conferences.js classifies entries into
+# `next` / `upcoming` / `past` based on `new Date()`. Without a
+# scheduled trigger, those classifications wouldn't change between
+# pushes; the homepage featured card would keep pointing at a
+# just-past conference until the next commit ships.
+#
+# Mechanism
+# ---------
+# Cron fires `repository_dispatch` against the deploy workflow once a
+# day. The deploy workflow re-checks out master and re-runs the
+# Eleventy build, picking up the new `today` value. Cheap operation
+# (~30 seconds of runner time) and well within the GH-Actions free
+# allowance.
+#
+# Manual trigger
+# --------------
+# `workflow_dispatch` is enabled so you can force a rebuild from the
+# Actions tab without waiting for the cron — useful when you've just
+# announced or finished a conference and want the site to reflect
+# that within minutes rather than overnight.
+#
+# Adjusting cadence
+# -----------------
+# Daily is sufficient for conference-cycle transitions (which happen
+# on a known day). If finer granularity is ever needed (e.g. hourly
+# while a conference is actively running and the homepage should
+# update mid-day), reduce the cron interval — but be conservative,
+# every cron tick burns a deploy.
+
+name: Scheduled rebuild
+
+on:
+  schedule:
+    # 04:15 UTC daily. After-midnight in Central European Time, before
+    # most European visitors wake up — the cut-off transitions land
+    # without anyone noticing.
+    - cron: "15 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  trigger-deploy:
+    name: Re-trigger the deploy workflow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch the build-and-deploy workflow
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'deploy.yml',
+              ref: 'master',
+            });
+            core.info('Dispatched deploy.yml on master');

@@ -2,7 +2,7 @@
 
 A planning document, not a commitment. Written to help the maintainer
 think through what's worth doing next, in what order, and at what
-effort. Last update: 22 May 2026 (immediately after v2.2.0).
+effort. **Last update: 22 May 2026, after v2.3.0.**
 
 Effort notation:
 
@@ -22,7 +22,7 @@ Dependencies on people / external systems are flagged in line.
 
 ---
 
-## Status as of v2.2.0
+## Status as of v2.3.0
 
 Where the site stands today, so the roadmap below makes sense:
 
@@ -47,6 +47,11 @@ Where the site stands today, so the roadmap below makes sense:
 - **Board page** — driven by `src/_data/board.json` (data-driven loop
   in `src/board.njk`). Member entries hand-edited today, will be
   Form-driven once activated.
+- **Conference cycle** — driven by `src/_data/conferences.js`. The
+  homepage "next conference" card and the `/past` archive list both
+  read from this single data source; the cut-off between `next` and
+  `past` advances automatically once a conference's end-date passes
+  (daily-rebuild workflow keeps quiet weeks from getting stale).
 - **Google Form pipeline** — built, dormant. `scripts/sync-board.py` +
   `.github/workflows/sync-board.yml` will write to `board.json` from
   a Form-linked Sheet, once `csv_url` is filled in.
@@ -269,45 +274,44 @@ mentioning to NetSec maintainers next time you sync.
 
 ---
 
-## P1 — Conference-cycle automation
+## ✅ Conference-cycle automation — shipped in v2.3.0
 
 The annual conference is the highest-touch artifact. Automating its
 publication cycle saves work every year.
 
-### `/2027.html` template
+**Shipped:**
 
-**Effort: M**
+- **`src/_data/conferences.js`** — central data source for all
+  conferences (2019 onward, structured entries with EN/FR/DE strings
+  for venue, dates, organisers, archive meta line). Exposes
+  `conferences.next` (the closest upcoming or in-progress) and
+  `conferences.past` (everything whose end-date is past today).
+- **Homepage + `/past` refactor** — the "Next conference" featured
+  card on `/index.{en,fr,de}.html` and the archive list on
+  `/past.{en,fr,de}.html` both iterate over the data file. Two
+  hardcoded conference blocks in three languages each (twelve
+  blocks total) collapsed into one data file plus two short
+  templates.
+- **Auto cut-off** — entries move from `next` → `past` automatically
+  on the first build after their `endDate`. No manual edit needed
+  when a conference ends.
+- **Daily scheduled rebuild** — `.github/workflows/scheduled-rebuild.yml`
+  fires every day at 04:15 UTC and dispatches the deploy workflow.
+  Conferences transition within ~24 hours of their end date even on
+  quiet weeks with no commits.
+- **`docs/new-conference.md`** — playbook for the next conference year.
+  Adding `/2027.html` is now: add one object to `conferences.js`, copy
+  `2026.njk` for the content, add one entry to `make-share-cards.py`,
+  run the drift-mark-fresh command. ~30 minutes total, no template
+  spelunking.
 
-When ESSC 2027 is announced, you'll need a new conference page. Today
-that means hand-copying `/2026.njk` and editing. A small Eleventy
-pagination helper (or just a documented template in
-`docs/new-conference.md`) would make this a 10-minute job.
+**Out of scope** (still hand-managed, by design):
 
-Template inputs:
-- year, host city, host institution
-- dates, venue
-- partner logos (NetSec + host)
-- programme PDF path (initially empty)
-
-Output: `src/2027.njk`, `src/2027.fr.njk`, `src/2027.de.njk`, the
-share-card entries in `scripts/make-share-cards.py`, and the
-metadata in `src/_data/i18n.js` updated.
-
-Could also generate the conference archive entry on `/past.html`
-automatically when the year flips.
-
-### Auto-archive past conferences
-
-**Effort: M**
-
-When the conference date passes, the "Next conference" featured
-card on the homepage should swap to the next-upcoming conference, and
-the just-past one should drop into the archive list on `/past.html`.
-
-A small `eleventyComputed` data hook based on `today()` could handle
-this without any explicit human action. Today's hardcoding requires
-you to remember to update both `/index.html` and `/past.html` after
-each conference.
+- The unique content of each `/<year>.html` page (programme, venue
+  description, neighbourhood tile grid, partner logos, funding
+  attribution). Too much per-conference variation to template.
+- 2017 and 2018 — kept in the historical-image section at the bottom
+  of `/past.html` because they predate the standalone-page convention.
 
 ---
 
@@ -488,7 +492,7 @@ A rough calendar, but skip/swap as needed:
 
 - P0: Native-speaker review pass — start with legal pages
 - P1: YouTube embeds on archive pages (2025, 2024, 2023 first)
-- P1: Conference cycle automation — auto-archive past conferences
+- ~~P1: Conference cycle automation~~ — **done** in v2.3.0
 - P2: Conference countdown widget
 
 **September → November 2026**
@@ -500,7 +504,9 @@ A rough calendar, but skip/swap as needed:
 
 **December 2026 → January 2027** (ESSC 2027 prep)
 
-- P1: `/2027.html` template + automation
+- P1: ESSC 2027 announcement — drop one entry into
+  `src/_data/conferences.js`, follow `docs/new-conference.md`. Now
+  a ~30-minute job rather than a multi-page hand-edit.
 - P0: refresh accessibility audit + update date
 - P1: Newsletter archive page if Mailchimp still hosting
 
