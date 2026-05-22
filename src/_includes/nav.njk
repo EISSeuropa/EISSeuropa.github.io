@@ -1,19 +1,31 @@
+{# Nav consumes `t` (the active-locale chrome catalog) and `lang` from base.njk.
+   Nav-item href / key / external flag stay in src/_data/site.js;
+   only the visible text label is looked up from `t.nav.<key>`. #}
 <header class="site-header">
   <nav class="container nav" aria-label="Primary">
-    <a class="nav-brand" href="/" aria-label="EISS — {{ site.fullName }}, home">
+    <a class="nav-brand" href="{{ '/' if lang == 'en' else '/index.' + lang + '.html' }}" aria-label="EISS — {{ site.fullName }}, home">
       <span class="nav-brand-mark" aria-hidden="true">E</span>
-      <span>EISS</span>
+      <span>{{ t.nav.brandLabel }}</span>
     </a>
 
     <ul class="nav-links" id="primary-nav" data-nav-menu>
       {% for item in site.nav %}
         {% if item.key != "home" %}
+          {%- set itemHref = item.href -%}
+          {%- if not item.external and lang != "en" -%}
+            {# For translated pages, point at the .lang.html sibling.
+               `replace` is a no-op on URLs without `.html` (e.g. "/"
+               and external URLs). We don't validate existence here —
+               if a sibling is missing, the page's own beta banner (and
+               the lang-switcher fallback) handle the experience. #}
+            {%- set itemHref = item.href | replace(".html", "." + lang + ".html") -%}
+          {%- endif -%}
           <li>
             <a class="nav-link"
-               href="{{ item.href }}"
+               href="{{ itemHref }}"
                {% if item.external %}target="_blank" rel="noopener"{% endif %}
                {% if item.key == navKey %}aria-current="page"{% endif %}>
-              {{ item.text }}
+              {{ t.nav[item.key] }}
             </a>
           </li>
         {% endif %}
@@ -21,11 +33,25 @@
     </ul>
 
     <div class="nav-actions">
+      {# Language switcher chips. Always shows all 3; on untranslated
+         pages the FR/DE chip falls back to the language homepage
+         (the `alternates` lookup handles the difference). #}
+      <div class="lang-switcher" role="group" aria-label="{{ t.langSwitcher.label }}">
+        {% for L in i18n._order %}
+          {%- set href = alternates[L] if alternates and alternates[L] else ('/' if L == 'en' else '/index.' + L + '.html') -%}
+          <a class="lang-chip"
+             href="{{ href }}"
+             hreflang="{{ L }}"
+             {% if L == lang %}aria-current="true"{% endif %}
+             title="{{ t.langSwitcher[L + 'Title'] }}">{{ t.langSwitcher[L] }}</a>
+        {% endfor %}
+      </div>
+
       {% include "theme-toggle.njk" %}
       <button class="icon-btn nav-menu-toggle"
               type="button"
               data-menu-toggle
-              aria-label="Toggle navigation menu"
+              aria-label="{{ t.nav.brandLabel }} — menu"
               aria-controls="primary-nav"
               aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

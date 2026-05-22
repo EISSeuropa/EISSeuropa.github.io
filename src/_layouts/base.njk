@@ -1,5 +1,23 @@
+{# Resolve the active locale and its chrome catalog.
+   - `lang` comes from page front-matter (e.g. `lang: fr` on /index.fr.html).
+     Untranslated pages have no `lang`, so they default to English.
+   - `t` is the chrome catalog (nav labels, footer labels, UI strings).
+     Available to this template AND every included partial via Nunjucks
+     variable scoping. See src/_data/i18n.js for the full schema.
+   - `status` (page front-matter, only set on .fr / .de pages) is either
+     "beta" or "reviewed". Surfaced as a `data-i18n-status` attribute on
+     <html> so the beta ribbon (src/_includes/beta-ribbon.njk) can render
+     conditionally without a JS check. #}
+{# `lang` arrives as a top-level front-matter variable on translated pages
+   (e.g. `lang: fr` on /index.fr.html). Default to "en" when absent. Using
+   `_lang` so we don't clobber the front-matter value via `set`. #}
+{%- set _lang = lang or "en" -%}
+{%- set t = i18n[_lang] -%}
+{# Keep the `lang` variable usable downstream — make sure includes see
+   the resolved value, not `undefined` on EN pages. #}
+{%- set lang = _lang -%}
 <!doctype html>
-<html lang="en">
+<html lang="{{ lang }}"{% if status %} data-i18n-status="{{ status }}"{% endif %}>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,6 +33,21 @@
   {% else %}
     <link rel="canonical" href="{{ site.url }}{{ page.url }}">
   {% endif %}
+
+  {# hreflang alternates. Only emitted when the page declares `alternates`
+     in its front-matter — most pages currently don't, and that's fine
+     (English-only pages don't need alternates). The shape is:
+       alternates:
+         en: /index.html
+         fr: /index.fr.html
+         de: /index.de.html  #}
+  {% if alternates %}
+    {%- for L in i18n._order -%}
+      {% if alternates[L] %}<link rel="alternate" hreflang="{{ L }}" href="{{ site.url }}{{ alternates[L] }}">{% endif %}
+    {%- endfor -%}
+    <link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ alternates.en or page.url }}">
+  {% endif %}
+
   {# Favicon stack — SVG for modern browsers (any size, theme-tolerant),
      PNG fallbacks for legacy + iOS home-screen + Android PWA. Generated from
      src/assets/favicon.svg; sizes pinned to standard 32/16 (legacy),
@@ -32,6 +65,7 @@
   <meta property="og:title" content="{{ title or site.fullName }}">
   <meta property="og:description" content="{{ description or site.description }}">
   <meta property="og:url" content="{{ site.url }}{{ redirectTo or page.url }}">
+  <meta property="og:locale" content="{{ lang }}_{{ lang | upper }}">
   <meta property="og:image" content="{{ site.url }}{{ metaImage or site.defaultMetaImage }}">
   <meta property="og:image:alt" content="{{ title or site.fullName }}">
 
@@ -64,10 +98,30 @@
   </script>
 
   <script>
+    // 1) Restore the user's chosen theme (light/dark) before paint to
+    //    avoid a flash. 2) If the user has a language preference saved
+    //    and they're landing on the English page but a translation
+    //    exists, redirect to the translated version. Done in <head> so
+    //    it fires before the body renders. Never auto-redirects AWAY
+    //    from English unless an alternate is declared in the head —
+    //    English is the unfailable fallback.
     (function(){
       try {
-        var t = localStorage.getItem('eiss-theme');
-        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+        var theme = localStorage.getItem('eiss-theme');
+        if (theme === 'light' || theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', theme);
+        }
+      } catch(_) {}
+
+      try {
+        var saved = localStorage.getItem('eiss-lang');
+        var current = document.documentElement.lang || 'en';
+        if (saved && saved !== current && current === 'en' && saved !== 'en') {
+          var alt = document.querySelector('link[rel="alternate"][hreflang="' + saved + '"]');
+          if (alt && alt.href && alt.href !== location.href) {
+            location.replace(alt.href);
+          }
+        }
       } catch(_) {}
     })();
   </script>
@@ -78,7 +132,9 @@
   <link rel="stylesheet" href="/assets/css/site.css">
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip-link" href="#main">{{ t.skipLink }}</a>
+
+  {% if status == "beta" %}{% include "beta-ribbon.njk" %}{% endif %}
 
   {% include "nav.njk" %}
 
@@ -89,5 +145,15 @@
   {% include "footer.njk" %}
 
   <script src="/assets/js/theme.js" defer></script>
+  <script>
+    // Save the user's chosen language when they click a switcher chip,
+    // so subsequent visits to English pages can auto-redirect them.
+    document.addEventListener('click', function(e) {
+      var chip = e.target.closest('.lang-switcher a[hreflang]');
+      if (chip) {
+        try { localStorage.setItem('eiss-lang', chip.getAttribute('hreflang')); } catch(_) {}
+      }
+    });
+  </script>
 </body>
 </html>

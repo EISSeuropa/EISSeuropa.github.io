@@ -1,0 +1,37 @@
+# Translation-drift CI guard.
+#
+# Runs on every push and PR. Calls scripts/check-i18n-drift.py to verify
+# that every translation registered in data/i18n-state.json still matches
+# the SHA-1 of its English source. If a translation drifts (i.e. the
+# English source was edited without updating the translation), the job
+# fails — forcing either a re-translation or an explicit re-stamp via
+#   python3 scripts/check-i18n-drift.py --mark-fresh src/<page>.njk <lang>
+#
+# Per docs/i18n.md, re-stamping without translating is acceptable for
+# trivial source edits (typo fixes, link updates) — the maintainer just
+# accepts that the translation lags those minor changes until the next
+# real translation pass. Don't re-stamp on substantive content edits.
+
+name: i18n drift check
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  drift:
+    name: Verify translations match their English sources
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run drift checker
+        run: python3 scripts/check-i18n-drift.py

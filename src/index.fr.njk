@@ -1,0 +1,139 @@
+---
+layout: base.njk
+permalink: /index.fr.html
+title: false
+description: Nous sommes le plus grand et le plus divers rassemblement européen de chercheurs et praticiens sur les questions de sécurité.
+metaImage: /assets/images/index-meta.jpg
+navKey: home
+lang: fr
+status: beta
+alternates:
+  en: /index.html
+  fr: /index.fr.html
+  de: /index.de.html
+---
+{% from "icons.njk" import icon %}
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-bg" aria-hidden="true">
+    <img src="/assets/images/8e43301e-7945-4a0c-aac2-04719ac702a8-1600x900.jpg"
+         alt=""
+         loading="eager"
+         fetchpriority="high"
+         width="1600" height="900">
+  </div>
+  <div class="container hero-inner">
+    <h1 id="hero-title" class="reveal">L'Initiative européenne pour les études de sécurité</h1>
+    <p class="hero-tagline reveal reveal-delay-1">
+      Le plus grand et le plus divers rassemblement européen de chercheurs et praticiens sur les questions de sécurité.
+    </p>
+    <div class="hero-actions reveal reveal-delay-2">
+      <a class="btn btn-primary" href="/2026.fr.html">Découvrir l'ESSC 2026 {{ icon("arrow-right") }}</a>
+      <a class="btn btn-ghost" href="/initiative.fr.html">À propos de l'Initiative</a>
+    </div>
+    <p class="reveal reveal-delay-3" style="margin-top: var(--space-6); font-size: var(--fs-sm); color: hsl(0 0% 100% / 0.85);">
+      <a href="{{ site.newsletterUrl }}" target="_blank" rel="noopener" style="color: inherit;">{{ icon("bell", "icon-inline") }}S'abonner à notre lettre d'information</a>
+      <span aria-hidden="true">&nbsp;·&nbsp;</span>
+      <a href="{{ site.social.youtube }}" target="_blank" rel="noopener" style="color: inherit;">{{ icon("youtube", "icon-inline") }}Suivre notre chaîne YouTube</a>
+      <span aria-hidden="true">&nbsp;·&nbsp;</span>
+      <a href="mailto:{{ site.contactEmail }}" style="color: inherit;">{{ icon("mail", "icon-inline") }}Nous contacter</a>
+    </p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="featured-title">
+  <div class="container">
+    <article class="card featured">
+      <div>
+        <div class="featured-eyebrow">Prochaine conférence</div>
+        <h2 id="featured-title">European Security Conference 2026</h2>
+        <p class="featured-orgs">
+          Organisée conjointement par l'Action COST NetSec, l'Initiative européenne pour les études de sécurité (EISS),
+          et l'Université de Stockholm.
+        </p>
+        <div class="featured-meta">
+          <div>
+            <strong>{{ icon("calendar", "icon-inline") }}Dates</strong>
+            11 — 12 juin 2026
+          </div>
+          <div>
+            <strong>{{ icon("map-pin", "icon-inline") }}Lieu</strong>
+            Université de Stockholm
+          </div>
+        </div>
+        <div>
+          <a class="btn btn-primary" href="/2026.fr.html">En savoir plus sur l'ESSC&nbsp;2026 {{ icon("arrow-right") }}</a>
+        </div>
+      </div>
+      <aside class="featured-date" aria-hidden="true">
+        <div class="month">Juin</div>
+        <div class="day">11<span aria-hidden="true">–</span>12</div>
+        <div class="year">2026 · Stockholm</div>
+      </aside>
+    </article>
+  </div>
+</section>
+
+<section class="section-tight" aria-labelledby="news-title">
+  <div class="container">
+    <article class="card announcement">
+      <div>
+        <div class="announcement-eyebrow">Bruxelles, 10 octobre 2025</div>
+        <h2 id="news-title">EISS lance une initiative majeure pour mettre en réseau les études européennes de sécurité</h2>
+        <p class="lead">
+          Grâce au généreux soutien de l'organisation
+          <a href="https://www.cost.eu" target="_blank" rel="noopener">European Cooperation in Science and Technology</a>
+          (COST), EISS — aux côtés d'une douzaine d'institutions à travers l'Europe — lance
+          <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">« Networking European Security Knowledge » (NetSec)</a>,
+          un programme de quatre ans visant à remédier à la fragmentation de la base intellectuelle et
+          analytique du continent dans le domaine des études de sécurité.
+        </p>
+        <p>
+          Le Dr Hugo Meijer, directeur fondateur d'EISS, et la Dre Marie Robin, trésorière d'EISS,
+          assurent respectivement la présidence et la vice-présidence de l'Action NetSec.
+        </p>
+
+        <blockquote class="pullquote">
+          « Le lancement de NetSec représente une étape majeure dans le développement d'EISS et de ses partenaires.
+          Restez attentifs aux ateliers politiques, écoles d'été et conférences à venir au cours des quatre prochaines années. »
+          <cite>— Dr Hugo Meijer, président de l'Action NetSec et directeur fondateur d'EISS</cite>
+        </blockquote>
+
+        <div>
+          <a class="btn btn-secondary" href="https://netsec-cost.eu/" target="_blank" rel="noopener">
+            En savoir plus sur NetSec {{ icon("external-link") }}
+          </a>
+        </div>
+      </div>
+
+      <figure class="announcement-figure">
+        <img src="/assets/images/1760518013943-1280x720.jpg"
+             alt="Membres du comité de gestion NetSec lors du lancement à Bruxelles."
+             loading="lazy"
+             width="1280" height="720">
+        <figcaption>
+          Membres du comité de gestion NetSec lors de l'événement de lancement à Bruxelles —
+          Dr Moritz Weiss (responsable du WG1, en haut) et Dr Hugo Meijer (président de l'Action et directeur fondateur d'EISS, en bas).
+        </figcaption>
+      </figure>
+    </article>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="join-title">
+  <div class="container">
+    <div class="join">
+      <h2 id="join-title">Rejoignez-nous</h2>
+      <p>
+        Les membres bénéficient d'un accès exclusif à nos événements en ligne et hybrides.
+        Les billets pour notre conférence annuelle incluent déjà une adhésion d'un an.
+      </p>
+      <div class="join-actions">
+        <a class="btn btn-primary" href="/membership.fr.html#content19-b9">{{ icon("user-plus") }} Devenir membre</a>
+        <a class="btn btn-secondary" href="https://billing.stripe.com/p/login/3cscOuaesfHceC4dQQ" target="_blank" rel="noopener">
+          Gérer mon adhésion {{ icon("external-link") }}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

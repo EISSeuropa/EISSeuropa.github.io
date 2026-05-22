@@ -1,0 +1,17 @@
+{# Beta-translation ribbon.
+   Rendered by base.njk only when the page's front-matter sets `status: "beta"`.
+   When a native speaker reviews and the page front-matter changes to
+   `status: "reviewed"`, the ribbon disappears with no other change.
+   Variables in scope (from base.njk):
+     - `t` — chrome catalog for the current locale
+     - `alternates.en` — URL of the English source (for the "view original" link)
+#}
+<div class="beta-ribbon" role="note" aria-label="{{ t.betaRibbon.text }}">
+  <div class="container beta-ribbon-inner">
+    <span class="beta-ribbon-badge" aria-hidden="true">β</span>
+    <span class="beta-ribbon-text">{{ t.betaRibbon.text }}</span>
+    {% if alternates and alternates.en %}
+      <a class="beta-ribbon-link" href="{{ alternates.en }}" hreflang="en">{{ t.betaRibbon.goToEnglish }}</a>
+    {% endif %}
+  </div>
+</div>
