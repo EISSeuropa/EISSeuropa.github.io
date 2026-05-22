@@ -15,10 +15,13 @@ What it does:
      - `upcoming`: members' events, workshops, anything NOT in
        ANNUAL_CONFERENCE_CATEGORY_IDS. Rendered on /index and /events.
      - `annualConferences`: dict keyed by year ("2026", "2027", ...)
-       holding the registration page event for that year's ESSC.
-       Consumed by /2026, /2027, … to derive the registration status
-       badge ("Registration open", "Happening now", "Past") and the
-       canonical Indico URL.
+       holding the registration page event for that year's ESSC,
+       enriched with a `livestreamed` list of plenary + roundtable
+       sessions pulled from the event timetable. Consumed by /2026,
+       /2027, … to derive the registration status badge ("Registration
+       open", "Happening now", "Past") and the Livestreamed sessions
+       block (introduction, roundtables, keynote, closing — each
+       with an "Online room TBA" / "Join online" CTA).
      The hand-maintained src/_data/conferences.js still owns dates,
      venues, organisers, programme tiles — Indico only contributes
      the registration link and a live signal of whether it's open.
@@ -61,18 +64,29 @@ ROOT_CATEGORY_ID = 0          # Indico root — returns events from all sub-cate
 LOOK_AHEAD_DAYS = 540          # ~18 months
 ANNUAL_CONFERENCE_CATEGORY_IDS = {1}  # ESSC editions — routed into `annualConferences` bucket
 
-# Indico session codes that flag plenary sessions in the EISS timetable.
-# Set on the session itself (visible as both `code` and `sessionCode` in
-# the timetable export). The 2026 ESSC uses:
+# Indico session codes that flag livestreamed sessions in the EISS
+# timetable. Set on the session itself (visible as both `code` and
+# `sessionCode` in the timetable export). The 2026 ESSC uses:
 #   "INTRO" — opening / introductory remarks
 #   "KEY"   — keynote talk
+#   "RT"    — roundtable (livestreamed panel-style discussion)
 #   "CONC"  — concluding remarks
 # Adjust if the convention changes in a future edition. The mapped value
 # is a stable identifier the templates use to pick a localised label.
-PLENARY_SESSION_CODES = {
+LIVESTREAM_SESSION_CODES = {
     "INTRO": "introduction",
     "KEY": "keynote",
+    "RT": "roundtable",
     "CONC": "conclusion",
+}
+
+# Fallback: title-prefix → type, applied when a session has no usable
+# sessionCode. This lets us pick up sessions that haven't been tagged
+# yet (e.g. a roundtable whose Indico title still starts with
+# "Roundtable:"). Tagging in Indico is preferred — it's the
+# authoritative signal and survives title edits.
+TITLE_PREFIX_FALLBACKS = {
+    "Roundtable:": "roundtable",
 }
 
 # Substring tokens we look for in URL fields when extracting video-room
@@ -167,16 +181,32 @@ def fetch_timetable(event_id: str) -> dict:
     return payload.get("results", {}) or {}
 
 
-def extract_plenaries(timetable_results: dict, event_id: str) -> list[dict]:
-    """Pick out plenary sessions (introduction / keynote / conclusion)
-    from a timetable export. Returns a sorted list of normalised dicts.
+def _classify_session(slot: dict) -> str | None:
+    """Return the livestream-type label for a session slot, or None
+    if it isn't livestreamed. Prefers `sessionCode` (authoritative)
+    over title-prefix matching (safety net for sessions not yet
+    tagged in Indico)."""
+    code = slot.get("sessionCode") or ""
+    mapped = LIVESTREAM_SESSION_CODES.get(code)
+    if mapped:
+        return mapped
+    title = (slot.get("title") or "").strip()
+    for prefix, kind in TITLE_PREFIX_FALLBACKS.items():
+        if title.startswith(prefix):
+            return kind
+    return None
+
+
+def extract_livestreamed(timetable_results: dict, event_id: str) -> list[dict]:
+    """Pick out livestreamed sessions (introduction / roundtable /
+    keynote / conclusion) from a timetable export. Returns a sorted
+    list of normalised dicts.
 
     Detection uses Indico's `sessionCode` field — set by the EISS
-    conference team on each plenary slot. We don't fall back to title-
-    substring matching because words like "Keynote" appear in many
-    descriptions and would produce false positives.
+    conference team on each livestreamed slot — with a title-prefix
+    fallback for slots not yet tagged.
     """
-    plenaries: list[dict] = []
+    sessions: list[dict] = []
     event_block = timetable_results.get(str(event_id), {})
     for day_key, day in event_block.items():
         if not isinstance(day, dict):
@@ -186,16 +216,23 @@ def extract_plenaries(timetable_results: dict, event_id: str) -> list[dict]:
                 continue
             if slot.get("entryType") != "Session":
                 continue
-            code = slot.get("sessionCode")
-            plenary_type = PLENARY_SESSION_CODES.get(code)
-            if not plenary_type:
+            session_type = _classify_session(slot)
+            if not session_type:
                 continue
             start = slot.get("startDate") or {}
             end = slot.get("endDate") or {}
-            plenaries.append({
-                "type": plenary_type,
+            # Strip the "Roundtable:" prefix from the displayed title —
+            # we already convey the type via the eyebrow.
+            raw_title = slot.get("title") or slot.get("slotTitle") or "(untitled session)"
+            display_title = raw_title
+            for prefix in TITLE_PREFIX_FALLBACKS:
+                if display_title.startswith(prefix):
+                    display_title = display_title[len(prefix):].strip()
+                    break
+            sessions.append({
+                "type": session_type,
                 "id": str(slot.get("id", slot_id)),
-                "title": slot.get("title") or slot.get("slotTitle") or "(untitled keynote)",
+                "title": display_title,
                 "slotTitle": slot.get("slotTitle") or "",
                 "startDate": start.get("date", ""),
                 "startTime": (start.get("time") or "")[:5],  # HH:MM
@@ -220,10 +257,10 @@ def extract_plenaries(timetable_results: dict, event_id: str) -> list[dict]:
                 # show a "TBA" placeholder in that case.
                 "videoUrl": _find_vc_url(slot),
             })
-    # Sort by start date+time so plenaries appear in programme order
-    # (introduction → keynotes → conclusion, day by day).
-    plenaries.sort(key=lambda k: (k["startDate"], k["startTime"]))
-    return plenaries
+    # Sort by start date+time so sessions appear in programme order
+    # (introduction → roundtables/keynotes → conclusion, day by day).
+    sessions.sort(key=lambda k: (k["startDate"], k["startTime"]))
+    return sessions
 
 
 def fetch_events() -> list[dict]:
@@ -273,25 +310,26 @@ def main() -> None:
     # when `order=start` is requested, but be defensive.
     upcoming.sort(key=lambda e: (e["start"] or "9999-12-31T23:59:59"))
 
-    # Enrich each Annual Conference with its timetable-derived plenary
-    # list (introduction + keynotes + conclusion). One extra HTTP
-    # request per ESSC year — currently 1 call. If a future edition
-    # adds half-a-dozen Indico events under the Annual Conferences
-    # category, this stays bounded because we only fetch timetables
-    # for the events we've kept (the latest per year).
+    # Enrich each Annual Conference with its timetable-derived
+    # livestreamed-sessions list (introduction + roundtables +
+    # keynotes + conclusion). One extra HTTP request per ESSC year —
+    # currently 1 call. If a future edition adds half-a-dozen Indico
+    # events under the Annual Conferences category, this stays
+    # bounded because we only fetch timetables for the events we've
+    # kept (the latest per year).
     for year, event in annual_by_year.items():
         tt = fetch_timetable(event["id"])
-        plenaries = extract_plenaries(tt, event["id"])
-        event["plenaries"] = plenaries
-        with_video = sum(1 for k in plenaries if k.get("videoUrl"))
+        livestreamed = extract_livestreamed(tt, event["id"])
+        event["livestreamed"] = livestreamed
+        with_video = sum(1 for k in livestreamed if k.get("videoUrl"))
         by_type: dict[str, int] = {}
-        for k in plenaries:
+        for k in livestreamed:
             by_type[k["type"]] = by_type.get(k["type"], 0) + 1
         print(
-            f"  {year}: {len(plenaries)} plenary session(s) "
+            f"  {year}: {len(livestreamed)} livestreamed session(s) "
             f"[{', '.join(f'{n} {t}' for t, n in sorted(by_type.items()))}]; "
             f"{with_video} with video link; "
-            f"{len(plenaries) - with_video} TBA",
+            f"{len(livestreamed) - with_video} TBA",
             file=sys.stderr,
         )
 
@@ -303,10 +341,11 @@ def main() -> None:
             ".github/workflows/sync-indico.yml). DO NOT EDIT BY HAND — "
             "the next sync will overwrite. `upcoming` holds members' "
             "events; `annualConferences` is a year-keyed map of ESSC "
-            "registration pages, each enriched with a `plenaries` list "
-            "(introduction + keynotes + conclusion, derived from the "
-            "Indico timetable). Consumed by /2026, /2027 to drive the "
-            "registration status badge and the live plenary block."
+            "registration pages, each enriched with a `livestreamed` "
+            "list (introduction + roundtables + keynotes + conclusion, "
+            "derived from the Indico timetable). Consumed by /2026, "
+            "/2027 to drive the registration status badge and the "
+            "Livestreamed sessions block."
         ),
         "syncedAt": dt.datetime.utcnow().isoformat(timespec="seconds") + "Z",
         "source": f"{INDICO_BASE}/export/categ/{ROOT_CATEGORY_ID}.json",
