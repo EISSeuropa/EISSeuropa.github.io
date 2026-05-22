@@ -455,7 +455,11 @@ def main() -> None:
             "/2027 to drive the registration status badge and the "
             "Livestreamed sessions block."
         ),
-        "syncedAt": dt.datetime.utcnow().isoformat(timespec="seconds") + "Z",
+        # `utcnow()` is deprecated in Python 3.12 — prefer a timezone-
+        # aware UTC datetime. Render as the same compact "Z"-suffixed
+        # ISO-8601 string the previous version emitted, so consumers
+        # comparing strings lexicographically still work.
+        "syncedAt": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "source": f"{INDICO_BASE}/export/categ/{ROOT_CATEGORY_ID}.json",
         "lookaheadDays": LOOK_AHEAD_DAYS,
         "upcoming": upcoming,

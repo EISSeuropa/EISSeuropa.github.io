@@ -118,6 +118,22 @@ issue, included in a screenshot, etc.):
 2. Issue a replacement, update the GitHub secret.
 3. Skim recent Indico API logs for unexpected activity.
 
+## Diagnosing endpoint availability
+
+If the daily sync's auto-detected fields ever stop populating (or you
+want to confirm which Indico endpoints respond to this token's scope),
+trigger the **Probe Indico API (manual)** workflow:
+
+1. Actions → *Probe Indico API (manual)* → **Run workflow**.
+2. Read the log. The summary table shows status codes + content-type
+   for each candidate endpoint. **Bodies are never printed**, so even
+   if registration data is exposed, it doesn't leak into Actions logs.
+3. If anything returned 2xx, share the table with Claude — they'll
+   wire the winning endpoint into the next sync release.
+
+The probe is read-only (GET only), doesn't commit, and uses the same
+token as the daily sync.
+
 ## Notes for future Claude sessions
 
 - The token is `${{ secrets.INDICO_API_TOKEN }}` in the workflow and
