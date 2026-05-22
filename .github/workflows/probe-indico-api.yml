@@ -1,0 +1,41 @@
+# One-shot manual probe of Indico's API surface.
+#
+# Used to figure out which Indico endpoint returns registration-form
+# state on this Indico version — different installations expose
+# different paths, so production code (sync-indico.py) waits for an
+# answer from this probe rather than guessing.
+#
+# Read-only. Calls only GET. Doesn't commit or push anything.
+# The log shows status codes + content-types, never response bodies
+# (those could contain attendee PII).
+#
+# To run: Actions → "Probe Indico API (manual)" → Run workflow.
+
+name: Probe Indico API (manual)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    name: Probe candidate endpoints
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Install Python dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Run probe
+        env:
+          INDICO_API_TOKEN: ${{ secrets.INDICO_API_TOKEN }}
+        run: python3 scripts/probe-indico-api.py
