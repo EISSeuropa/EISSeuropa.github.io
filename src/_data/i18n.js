@@ -145,12 +145,29 @@ const locales = {
       noEventsBody: "When members publish events through indico.eiss-europa.com, they'll appear here automatically.",
     },
 
+    keynotes: {
+      // Live keynote block above the static PDF programme on /YYYY pages.
+      // Populated from src/_data/indico.json by scripts/sync-indico.py
+      // (sessions with sessionCode == "KEY" in the Indico timetable).
+      // Hidden when there are no keynotes for the year.
+      sectionEyebrow: "Live from Indico",
+      sectionHeading: "Keynotes & online rooms",
+      sectionLead: "Pulled live from the Indico timetable. Online rooms appear here as soon as they're published — refresh the day of the conference for the join link.",
+      onlineRoomTba: "Online room TBA",
+      joinOnline: "Join online",
+      viewSession: "View on Indico",
+      lastSynced: "Last refreshed",
+    },
+
     registrationBadge: {
       // Live status badge on annual conference pages (/2026, /2027, ...).
       // Status is computed at build time from conferences.js dates and
-      // today's date. The Indico URL comes from src/_data/indico.json
-      // (annualConferences[year].url). Hidden if no Indico page exists.
+      // today's date, with a manual `registrationStatus` override on
+      // each conference entry (the Indico anonymous API doesn't expose
+      // registration-form state). The Indico URL comes from
+      // src/_data/indico.json (annualConferences[year].url).
       upcoming: "Registration open",
+      closed: "Registration closed",
       happeningNow: "Happening now",
       past: "Past edition",
       registerOnIndico: "Register on Indico",
@@ -259,8 +276,19 @@ const locales = {
       noEventsBody: "Lorsque les membres publient des événements via indico.eiss-europa.com, ils apparaîtront ici automatiquement.",
     },
 
+    keynotes: {
+      sectionEyebrow: "En direct depuis Indico",
+      sectionHeading: "Conférences plénières et salles en ligne",
+      sectionLead: "Tiré en direct du programme Indico. Les salles en ligne apparaissent ici dès qu'elles sont publiées — actualisez la page le jour de la conférence pour le lien de connexion.",
+      onlineRoomTba: "Salle en ligne à venir",
+      joinOnline: "Rejoindre en ligne",
+      viewSession: "Voir sur Indico",
+      lastSynced: "Dernière mise à jour",
+    },
+
     registrationBadge: {
       upcoming: "Inscriptions ouvertes",
+      closed: "Inscriptions fermées",
       happeningNow: "En cours",
       past: "Édition passée",
       registerOnIndico: "S'inscrire sur Indico",
@@ -369,8 +397,19 @@ const locales = {
       noEventsBody: "Wenn Mitglieder Veranstaltungen über indico.eiss-europa.com veröffentlichen, erscheinen sie hier automatisch.",
     },
 
+    keynotes: {
+      sectionEyebrow: "Live von Indico",
+      sectionHeading: "Keynotes & Online-Räume",
+      sectionLead: "Live aus dem Indico-Programm gezogen. Online-Räume erscheinen hier, sobald sie veröffentlicht werden — am Konferenztag die Seite aktualisieren, um den Beitritts-Link zu sehen.",
+      onlineRoomTba: "Online-Raum folgt",
+      joinOnline: "Online beitreten",
+      viewSession: "Auf Indico ansehen",
+      lastSynced: "Zuletzt aktualisiert",
+    },
+
     registrationBadge: {
       upcoming: "Anmeldung offen",
+      closed: "Anmeldung geschlossen",
       happeningNow: "Findet jetzt statt",
       past: "Vergangene Ausgabe",
       registerOnIndico: "Auf Indico anmelden",

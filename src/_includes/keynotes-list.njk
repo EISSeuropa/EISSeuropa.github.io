@@ -1,0 +1,74 @@
+{# Live-from-Indico keynote block for annual conference pages.
+   Renders nothing when the year has no keynotes (zero sessions with
+   sessionCode == "KEY" in the Indico timetable).
+
+   Variables in scope from the page template:
+     - `lang` — front-matter, defaults to "en"
+     - `year` — string, e.g. "2026"
+     - `indico` — src/_data/indico.json. The keynotes live at
+                  indico.annualConferences[year].keynotes (array).
+
+   Each keynote object has the shape produced by
+   scripts/sync-indico.py:extract_keynotes:
+     { title, startDate, startTime, endTime, location, room, url,
+       conveners: [{name, affiliation}], videoUrl }
+
+   When `videoUrl` is null we render an "Online room TBA" placeholder —
+   the moment Indico publishes the Zoom link, the next sync swaps the
+   placeholder for a real "Join online" button.
+#}
+{% from "icons.njk" import icon %}
+{%- set _lang = lang or "en" -%}
+{%- set t = i18n[_lang] -%}
+{%- set _conf = indico.annualConferences[year] -%}
+{%- set _keynotes = _conf.keynotes if _conf else [] -%}
+
+{% if _keynotes and _keynotes.length %}
+<section class="section-tight keynotes" aria-labelledby="keynotes-title">
+  <div class="container">
+    <div class="featured-eyebrow">{{ t.keynotes.sectionEyebrow }}</div>
+    <h2 id="keynotes-title">{{ t.keynotes.sectionHeading }}</h2>
+    <p class="muted" style="max-width: 44rem; margin-bottom: var(--space-5);">
+      {{ t.keynotes.sectionLead }}
+    </p>
+
+    <ul class="keynotes-list" role="list">
+      {%- for k in _keynotes %}
+      <li class="keynote">
+        <div class="keynote-when" aria-hidden="true">
+          {{ icon("calendar") }}
+          <span class="keynote-when-date">{{ k.startDate }}</span>
+          <span class="keynote-when-time">{{ k.startTime }} – {{ k.endTime }}</span>
+        </div>
+        <div class="keynote-body">
+          <p class="keynote-title">
+            <a href="{{ k.url }}" target="_blank" rel="noopener">{{ k.title }}</a>
+          </p>
+          {%- if k.conveners and k.conveners.length %}
+          <p class="keynote-conveners muted">
+            {%- for c in k.conveners -%}
+              {{ c.name }}{% if c.affiliation %} <em>({{ c.affiliation }})</em>{% endif %}{% if not loop.last %} · {% endif %}
+            {%- endfor -%}
+          </p>
+          {%- endif %}
+          <p class="keynote-meta muted">
+            {{ icon("map-pin") }} {{ k.location }}{% if k.room %} — {{ k.room }}{% endif %}
+          </p>
+        </div>
+        <div class="keynote-action">
+          {%- if k.videoUrl %}
+          <a class="btn btn-primary btn-sm" href="{{ k.videoUrl }}" target="_blank" rel="noopener">
+            {{ icon("video") }} {{ t.keynotes.joinOnline }}
+          </a>
+          {%- else %}
+          <span class="keynote-tba">
+            {{ icon("video-off") }} {{ t.keynotes.onlineRoomTba }}
+          </span>
+          {%- endif %}
+        </div>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+{% endif %}

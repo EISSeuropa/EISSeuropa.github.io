@@ -26,12 +26,21 @@
 
 {%- if _conf -%}
   {%- set _today = conferences.today -%}
-  {%- if _today < _conf.startDate -%}
-    {%- set _status = "upcoming" -%}
-  {%- elif _today <= _conf.endDate -%}
-    {%- set _status = "happening-now" -%}
-  {%- else -%}
+  {# Manual override wins over the date-only fallback. The anonymous
+     Indico API doesn't expose registration-form state, so the operator
+     flips `registrationStatus` in conferences.js as forms open / close.
+     The "past" state is still derived from the end date — that one
+     can't drift. #}
+  {%- if _today > _conf.endDate -%}
     {%- set _status = "past" -%}
+  {%- elif _today >= _conf.startDate -%}
+    {%- set _status = "happening-now" -%}
+  {%- elif _conf.registrationStatus == "closed" -%}
+    {%- set _status = "registration-closed" -%}
+  {%- elif _conf.registrationStatus == "open" -%}
+    {%- set _status = "upcoming" -%}
+  {%- else -%}
+    {%- set _status = "upcoming" -%}
   {%- endif -%}
 
   {# Days countdown — Eleventy 3 ships `Date` helpers via Nunjucks's globals.
@@ -52,6 +61,14 @@
     {%- if _indico %}
   <a class="registration-badge__cta" href="{{ _indico.url }}" target="_blank" rel="noopener">
     {{ t.registrationBadge.registerOnIndico }} {{ icon("external-link") }}
+  </a>
+    {%- endif %}
+  {%- elif _status == "registration-closed" %}
+  <span class="registration-badge__dot" aria-hidden="true"></span>
+  <span class="registration-badge__label">{{ t.registrationBadge.closed }}</span>
+    {%- if _indico %}
+  <a class="registration-badge__cta" href="{{ _indico.url }}" target="_blank" rel="noopener">
+    {{ t.registrationBadge.onIndico }} {{ icon("external-link") }}
   </a>
     {%- endif %}
   {%- elif _status == "happening-now" %}
