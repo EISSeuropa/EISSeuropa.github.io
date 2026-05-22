@@ -105,6 +105,15 @@ const locales = {
         accessibility: "Accessibility",
         sitemap: "Site map",
       },
+      // Authorship credit shown on the very last line of the footer, next
+      // to the legal-links row. The name itself links to the author's
+      // board card at /board.html#<slug>. Locale-specific verb + author
+      // name; the linked label is constant.
+      authorship: {
+        prefix: "Site designed and built by",
+        authorName: "Dr Arthur PB Laudrain",
+        authorSlug: "arthur-laudrain",
+      },
     },
 
     betaRibbon: {
@@ -223,6 +232,11 @@ const locales = {
         accessibility: "Accessibilité",
         sitemap: "Plan du site",
       },
+      authorship: {
+        prefix: "Site conçu et développé par",
+        authorName: "Dr Arthur PB Laudrain",
+        authorSlug: "arthur-laudrain",
+      },
     },
 
     betaRibbon: {
@@ -327,6 +341,11 @@ const locales = {
         privacy: "Datenschutzerklärung",
         accessibility: "Barrierefreiheit",
         sitemap: "Sitemap",
+      },
+      authorship: {
+        prefix: "Website konzipiert und entwickelt von",
+        authorName: "Dr Arthur PB Laudrain",
+        authorSlug: "arthur-laudrain",
       },
     },
 
