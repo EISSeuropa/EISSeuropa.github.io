@@ -102,9 +102,13 @@
     --text: hsl(210 24% 95%);
     --text-muted: hsl(220 14% 70%);
     --text-subtle: hsl(220 10% 58%);
-    --accent: hsl(216 95% 65%);
-    --accent-hover: hsl(216 95% 72%);
-    --accent-soft: hsl(216 95% 65% / 0.16);
+    /* Dark-mode accent: saturation bumped 95% → 100% so the blue keeps
+       its punch on a dark canvas. Lightness left at 65/72% — pushing
+       it higher washes the accent out. Borrowed from NetSec's
+       dark-mode tuning. */
+    --accent: hsl(216 100% 66%);
+    --accent-hover: hsl(216 100% 72%);
+    --accent-soft: hsl(216 100% 66% / 0.18);
     --accent-text: hsl(222 30% 8%);
     --warning: hsl(36 95% 60%);
     --hero-overlay: linear-gradient(180deg, hsl(220 50% 4% / 0.45) 0%, hsl(220 50% 4% / 0.75) 100%);
@@ -132,9 +136,9 @@
   --text: hsl(210 24% 95%);
   --text-muted: hsl(220 14% 70%);
   --text-subtle: hsl(220 10% 58%);
-  --accent: hsl(216 95% 65%);
-  --accent-hover: hsl(216 95% 72%);
-  --accent-soft: hsl(216 95% 65% / 0.16);
+  --accent: hsl(216 100% 66%);
+  --accent-hover: hsl(216 100% 72%);
+  --accent-soft: hsl(216 100% 66% / 0.18);
   --accent-text: hsl(222 30% 8%);
   --warning: hsl(36 95% 60%);
   --hero-overlay: linear-gradient(180deg, hsl(220 50% 4% / 0.45) 0%, hsl(220 50% 4% / 0.75) 100%);
@@ -681,10 +685,16 @@ h4 { font-size: var(--fs-lg); }
   color: var(--accent-text);
   box-shadow: var(--shadow-2), inset 0 1px 0 hsl(0 0% 100% / 0.18);
 }
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:focus-visible {
   background: var(--accent-hover);
   color: var(--accent-text);
-  box-shadow: var(--shadow-3), inset 0 1px 0 hsl(0 0% 100% / 0.22);
+  /* Soft accent-coloured glow on the lower edge — borrowed from NetSec.
+     Makes CTAs feel more clearly "lift on hover" instead of just shifting. */
+  box-shadow:
+    var(--shadow-3),
+    0 10px 24px var(--accent-soft),
+    inset 0 1px 0 hsl(0 0% 100% / 0.22);
 }
 
 .btn-ghost {
@@ -733,7 +743,14 @@ h4 { font-size: var(--fs-lg); }
               border-color var(--motion-base) var(--ease-out);
 }
 
-.card:hover { box-shadow: var(--shadow-3); }
+/* Deeper lift on hover — borrowed from NetSec. Cards now feel
+   distinctly "raise" on hover instead of merely brightening their
+   border. The transform is also re-applied below on .card-link
+   wrappers so card-as-link surfaces stay in sync. */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-3);
+}
 .card-solid { background: var(--bg-elev); }
 
 .card-link {
@@ -743,7 +760,7 @@ h4 { font-size: var(--fs-lg); }
 }
 
 .card-link:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   text-decoration: none;
   color: inherit;
 }
@@ -755,6 +772,14 @@ h4 { font-size: var(--fs-lg); }
   gap: var(--space-5);
   align-items: center;
   padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));
+  /* Subtle accent halo at the top-right corner — borrowed from the
+     NetSec featured-card treatment. Sits under the glass `--surface`
+     layer that .card already paints, so the halo is muted and the
+     card still feels glassy. Note: .card sets `background:
+     var(--surface)`, so we layer the halo via a backgound-image. */
+  background-image:
+    radial-gradient(circle at 100% 0%, var(--accent-soft), transparent 55%);
+  background-repeat: no-repeat;
 }
 
 @media (min-width: 720px) {
@@ -1282,6 +1307,17 @@ h4 { font-size: var(--fs-lg); }
 .page-header h1 {
   font-size: clamp(2rem, 1.4rem + 2.5vw, 3.25rem);
   margin-bottom: var(--space-3);
+  /* Subtle vertical gradient on inner-page headlines — borrowed from
+     NetSec. Goes from full --text at the top to --text-muted at the
+     bottom, giving the heading a touch of depth without changing
+     scale or weight. Only applied here (not on the photo-overlay
+     hero on /index and /YYYY) because gradient text over a photo
+     is muddy. Browsers without -webkit-background-clip fall back to
+     the inherited color, so worst case we render a solid heading. */
+  background: linear-gradient(180deg, var(--text) 0%, var(--text-muted) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .page-header .page-lead {
@@ -1415,13 +1451,15 @@ h4 { font-size: var(--fs-lg); }
   width: 40px;
   height: 40px;
   border-radius: var(--radius-sm);
-  background: var(--accent-soft);
+  /* Gradient badge — borrowed from NetSec's .objective-num. The icon
+     now sits on a 135° accent gradient instead of a flat pale tint,
+     giving the badge a touch of depth and pulling the eye to it. The
+     glyph colour switches to `--accent-text` (white in light, dark in
+     dark mode) so contrast stays AA on both. */
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: var(--accent-text);
   display: grid;
   place-items: center;
-  /* Use the darker accent for the icon text/glyph so a small badge meets
-     4.5:1 against the very pale accent-soft background. SVG icons inherit
-     this via stroke="currentColor". */
-  color: var(--accent-hover);
   margin-bottom: var(--space-3);
   font-weight: 700;
 }
