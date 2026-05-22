@@ -1775,6 +1775,207 @@ h4 { font-size: var(--fs-lg); }
   }
 }
 
+/* ---------- live programme grid ----------------------------------------
+   Day-by-day programme rendered from the Indico timetable on annual
+   conference pages. Sits above the polished PDF (which stays as the
+   archival/printable artefact post-event). See
+   docs/indico-programme-integration.md for the design rationale.
+*/
+
+.programme-days {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+
+.programme-day-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.4rem 0.875rem;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text);
+  transition: background var(--motion-fast) var(--ease-out);
+}
+
+.programme-day-chip:hover,
+.programme-day-chip:focus-visible {
+  background: var(--accent-soft);
+}
+
+.programme-day {
+  margin-top: var(--space-6);
+}
+
+.programme-day-title {
+  margin: 0 0 var(--space-4);
+  font-size: var(--fs-xl);
+}
+
+.programme-slots {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.programme-slot {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  gap: var(--space-3) var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  align-items: start;
+}
+
+/* Breaks are visually quieter — they're structural, not content. */
+.programme-slot--break {
+  background: transparent;
+  border-style: dashed;
+  color: var(--text-subtle);
+}
+
+.programme-when-time {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+
+.programme-slot-title {
+  margin: 0 0 var(--space-2);
+  font-weight: 600;
+  font-size: var(--fs-base);
+}
+
+.programme-slot-title a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--motion-fast) var(--ease-out);
+}
+
+.programme-slot-title a:hover,
+.programme-slot-title a:focus-visible {
+  border-bottom-color: var(--accent);
+}
+
+.programme-slot-subtitle,
+.programme-slot-meta {
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+}
+
+.programme-break-title {
+  margin: 0;
+  font-style: italic;
+}
+
+/* The expandable contributions block under each session. */
+.programme-contribs {
+  margin-top: var(--space-3);
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-3);
+}
+
+.programme-contribs > summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  color: var(--accent);
+  list-style: none;
+  padding: 0.25rem 0;
+}
+
+.programme-contribs > summary::-webkit-details-marker { display: none; }
+.programme-contribs > summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 0.4rem;
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+
+.programme-contribs[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.programme-contrib-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-3) 0 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.programme-contrib {
+  display: grid;
+  grid-template-columns: 3.25rem 1fr;
+  gap: var(--space-3);
+}
+
+.programme-contrib-when {
+  font-size: var(--fs-sm);
+  color: var(--text-subtle);
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.15rem;
+}
+
+.programme-contrib-title {
+  margin: 0 0 var(--space-1);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+}
+
+.programme-contrib-title a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.programme-contrib-title a:hover,
+.programme-contrib-title a:focus-visible {
+  border-bottom-color: var(--accent);
+}
+
+.programme-contrib-speakers,
+.programme-contrib-abstract {
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+}
+
+.programme-contrib-abstract {
+  color: var(--text-muted);
+}
+
+.programme-footnote {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-4);
+}
+
+@media (max-width: 720px) {
+  .programme-slot {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+  .programme-contrib {
+    grid-template-columns: 1fr;
+  }
+  .programme-contrib-when {
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+}
+
 /* ---------- registration-status badge --------------------------------
    Live "Registration open / Happening now / Past edition" pill rendered
    on annual-conference pages (src/2026.njk, ...) via the partial

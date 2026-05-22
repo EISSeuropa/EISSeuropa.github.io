@@ -78,6 +78,24 @@ const conferences = [
     },
     dayRange: "11–12",     // for the featured-card .day block
     yearLine: "2026 · Stockholm",
+    // Optional polished programme PDF. The live grid on /YYYY is the
+    // primary programme display (pulled daily from Indico); the PDF is
+    // the designer-made, print-friendly companion. See
+    // docs/indico-programme-integration.md for the rationale.
+    //
+    // - `status: "draft"`  → labelled "Working programme (subject to
+    //                        change)"; rendered as a small download
+    //                        block under the live grid.
+    // - `status: "final"`  → labelled "Final programme"; the polished
+    //                        archival artefact.
+    // - Omit the field entirely (or set to null) for years where you
+    //   don't have a PDF.
+    programmePdf: {
+      url: "/assets/files/EISS-2026-programme.pdf",
+      sizeKb: 107,
+      pages: 2,
+      status: "draft",
+    },
     // Manual override for the registration-status badge on /YYYY pages.
     //   "open"   — show the "Registration open" pill regardless of dates
     //   "closed" — show "Registration closed"; useful between the form
