@@ -56,6 +56,15 @@ jobs:
         run: pip install -r scripts/requirements.txt
 
       - name: Run sync script
+        env:
+          # Optional Indico API token (read-only, on a dedicated
+          # service account). Unlocks endpoints that aren't anonymously
+          # accessible — registration form state, auth-gated video
+          # links, etc. If the secret is absent, the script falls back
+          # to anonymous mode and the sync still works for public
+          # endpoints. To set: repo Settings → Secrets and variables →
+          # Actions → New secret named `INDICO_API_TOKEN`.
+          INDICO_API_TOKEN: ${{ secrets.INDICO_API_TOKEN }}
         run: python3 scripts/sync-indico.py
 
       - name: Commit + push if changed
