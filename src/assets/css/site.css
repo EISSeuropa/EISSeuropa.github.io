@@ -1654,14 +1654,15 @@ h4 { font-size: var(--fs-lg); }
   }
 }
 
-/* ---------- live keynote programme ------------------------------------
+/* ---------- livestreamed sessions block --------------------------------
    Block above the static PDF programme on annual conference pages. Each
    row shows when, what + who, and either a Zoom-style "Join online" CTA
-   or a "TBA" placeholder. Rendered by src/_includes/plenaries-list.njk
-   from src/_data/indico.json — Indico sessions whose sessionCode is
-   in {INTRO, KEY, CONC}. The .keynote class names are retained for
-   styling continuity (v2.7 → v2.8); semantically they cover all
-   plenary types.
+   or a "TBA" placeholder. Rendered by src/_includes/livestream-list.njk
+   from src/_data/indico.json — Indico sessions whose sessionCode is in
+   {INTRO, RT, KEY, CONC}, plus a "Roundtable:" title-prefix fallback.
+   The .keynote class names are retained for styling continuity
+   (v2.7 → v2.8 → v2.9); semantically they cover all livestreamed
+   session types.
 */
 .keynotes-list {
   list-style: none;

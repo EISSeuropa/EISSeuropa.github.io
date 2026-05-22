@@ -145,23 +145,25 @@ const locales = {
       noEventsBody: "When members publish events through indico.eiss-europa.com, they'll appear here automatically.",
     },
 
-    plenaries: {
-      // Live plenary-sessions block above the static PDF programme on
+    livestream: {
+      // Livestreamed-sessions block above the static PDF programme on
       // /YYYY pages. Populated from src/_data/indico.json by
-      // scripts/sync-indico.py (sessions whose sessionCode is in
-      // PLENARY_SESSION_CODES: INTRO, KEY, CONC). Hidden when there
-      // are no plenaries for the year.
+      // scripts/sync-indico.py — sessions whose sessionCode is in
+      // LIVESTREAM_SESSION_CODES (INTRO / RT / KEY / CONC), plus a
+      // title-prefix fallback for roundtables. Hidden when the year
+      // has no livestreamed sessions.
       sectionEyebrow: "Live from Indico",
-      sectionHeading: "Plenary sessions & online rooms",
-      sectionLead: "Pulled live from the Indico timetable. Online rooms appear here as soon as they're published — refresh the day of the conference for the join link.",
+      sectionHeading: "Livestreamed sessions",
+      sectionLead: "The plenary spine of the conference — introduction, roundtables, keynote and closing — streamed online. Join-online links appear here as soon as they're published in Indico.",
       onlineRoomTba: "Online room TBA",
       joinOnline: "Join online",
       viewSession: "View on Indico",
       lastSynced: "Last refreshed",
       // Per-session type labels — surfaced as a small eyebrow on each
-      // card so attendees can scan introduction vs. keynote vs. closing.
+      // card so attendees can scan the type at a glance.
       types: {
         introduction: "Introduction",
+        roundtable: "Roundtable",
         keynote: "Keynote",
         conclusion: "Closing",
       },
@@ -284,16 +286,17 @@ const locales = {
       noEventsBody: "Lorsque les membres publient des événements via indico.eiss-europa.com, ils apparaîtront ici automatiquement.",
     },
 
-    plenaries: {
+    livestream: {
       sectionEyebrow: "En direct depuis Indico",
-      sectionHeading: "Sessions plénières et salles en ligne",
-      sectionLead: "Tiré en direct du programme Indico. Les salles en ligne apparaissent ici dès qu'elles sont publiées — actualisez la page le jour de la conférence pour le lien de connexion.",
+      sectionHeading: "Sessions diffusées en direct",
+      sectionLead: "La colonne vertébrale de la conférence — introduction, tables rondes, conférence plénière et clôture — diffusée en ligne. Les liens de connexion apparaissent ici dès leur publication dans Indico.",
       onlineRoomTba: "Salle en ligne à venir",
       joinOnline: "Rejoindre en ligne",
       viewSession: "Voir sur Indico",
       lastSynced: "Dernière mise à jour",
       types: {
         introduction: "Introduction",
+        roundtable: "Table ronde",
         keynote: "Conférence plénière",
         conclusion: "Clôture",
       },
@@ -410,16 +413,17 @@ const locales = {
       noEventsBody: "Wenn Mitglieder Veranstaltungen über indico.eiss-europa.com veröffentlichen, erscheinen sie hier automatisch.",
     },
 
-    plenaries: {
+    livestream: {
       sectionEyebrow: "Live von Indico",
-      sectionHeading: "Plenarsitzungen & Online-Räume",
-      sectionLead: "Live aus dem Indico-Programm gezogen. Online-Räume erscheinen hier, sobald sie veröffentlicht werden — am Konferenztag die Seite aktualisieren, um den Beitritts-Link zu sehen.",
+      sectionHeading: "Live übertragene Sitzungen",
+      sectionLead: "Das Rückgrat der Konferenz — Eröffnung, Runde Tische, Keynote und Abschluss — wird online übertragen. Beitritts-Links erscheinen hier, sobald sie in Indico veröffentlicht werden.",
       onlineRoomTba: "Online-Raum folgt",
       joinOnline: "Online beitreten",
       viewSession: "Auf Indico ansehen",
       lastSynced: "Zuletzt aktualisiert",
       types: {
         introduction: "Eröffnung",
+        roundtable: "Runder Tisch",
         keynote: "Keynote",
         conclusion: "Abschluss",
       },
