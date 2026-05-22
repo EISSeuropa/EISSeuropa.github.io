@@ -2,7 +2,7 @@
 
 A planning document, not a commitment. Written to help the maintainer
 think through what's worth doing next, in what order, and at what
-effort. **Last update: 22 May 2026, after v2.5.0.**
+effort. **Last update: 22 May 2026, after v2.14.2.**
 
 Effort notation:
 
@@ -19,6 +19,62 @@ Priority notation:
 - **P3** — explicitly deferred to 2027+
 
 Dependencies on people / external systems are flagged in line.
+
+---
+
+## Release history
+
+Each tagged release at a glance — what landed, when, and the GitHub
+Release link. Convention borrowed from the NetSec website's roadmap;
+each entry is one short paragraph framing the release, followed by
+bullets only when there are several distinct pieces. Patch releases
+get a single line.
+
+### v2.14.2 · 22 May 2026 — *Live programme grid polish and parallel panels*
+
+Post-launch polish on the v2.14.0 grid. ESSC concurrent panels now render side-by-side under a shared time gutter on wide viewports; roundtable cards drop the misleading *View papers* expander and promote discussants to a top-level meta line; contribution URLs were absolutised; PDF subtitle separator spacing was fixed; Indico's idiosyncratic break classification was tamed. [Release notes →](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.14.2)
+
+### v2.14.0 · 22 May 2026 — *Live programme grid (Indico as source of truth)*
+
+Headline of the day. The conference programme on `/2026` is now two views over a single source of truth: a live grid pulled daily from Indico (sessions, contributions, speakers, abstracts) and an optional polished PDF the designer publishes alongside it. Design rationale documented at `docs/indico-programme-integration.md`, written to be transferable to the NetSec site when we wire the same pattern there. [Release notes →](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.14.0)
+
+### v2.13.0 · 22 May 2026 — *Indico API probe round 2*
+
+Second iteration of the manual probe workflow used to discover which Indico endpoint exposes registration-form state. Round 1 narrowed the field to the legacy `/export/` API; round 2 added schema inspection for 200-OK JSON responses and verbatim body preview for tiny responses, decisive enough to confirm that authenticated `/export/` doesn't actually unlock registration state on this Indico build. [Release notes →](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.13.0)
+
+### v2.12.0 · 22 May 2026 — *Indico API probe (manual)*
+
+Read-only `workflow_dispatch` workflow that hits a curated list of candidate Indico URLs and reports status codes + content-types only — no response bodies. Built to take the guesswork out of writing production code against an undocumented API surface. Folded a small `datetime.utcnow()` Python 3.12 deprecation fix into the same PR. [Release notes →](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.12.0)
+
+### v2.11.0 · 22 May 2026 — *Authenticated Indico sync pipeline*
+
+Plumbing for an optional `INDICO_API_TOKEN`. The sync script reads it from env, attaches a `Authorization: Bearer …` header to opted-in calls, and falls back to anonymous mode when the secret is absent. The token is never logged — only a startup mode banner reports `authenticated` / `anonymous`. Operator setup documented end-to-end at `docs/indico-api-token.md`. Followed by hotfix v2.11.1 once we discovered the legacy `/export/*` endpoints reject Bearer auth with 400. [Release notes →](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.11.0)
+
+### v2.10.0 · 22 May 2026 — *Type-field-first detection*
+
+Switched the livestreamed-sessions classifier to prefer Indico's session `Type` dropdown (Round Table / Plenary / Closed Panel / …) over freeform session codes. The bulk timetable export doesn't include Type, so the sync now fetches each session's detail endpoint (`~25 extra HTTP calls per daily run`, cached by `sessionId`) — anonymous, small, fine. Session codes remain as a fallback when Type is unset. [Release notes →](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.10.0)
+
+### v2.9.0 · 22 May 2026 — *Livestreamed sessions (intro + roundtables + keynote + closing)*
+
+The live block on `/2026` was renamed "Livestreamed sessions" and extended to include roundtables. Detection accepts `sessionCode` in `{INTRO, RT, KEY, CONC}` or a `Roundtable:` title prefix as a safety net. For 2026 this surfaces four rows in programme order, each ready to swap its "Online room TBA" placeholder for a real "Join online" CTA as Indico publishes Zoom links. [Release notes →](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.9.0)
+
+### v2.8.0 · 22 May 2026 — *Intro + concluding plenaries on /2026*
+
+Extended the live block from keynotes-only to surface introduction and closing plenary sessions too — the full plenary spine of the conference. Each row gains a small `Introduction` / `Keynote` / `Closing` eyebrow so attendees can scan the type at a glance. Localised in EN / FR / DE. [Release notes →](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.8.0)
+
+### v2.7.0 · 22 May 2026 — *Registration override and live keynotes*
+
+Two follow-ups after v2.5 met production: a manual `registrationStatus` override on each conference entry in `conferences.js` (because Indico's anonymous API doesn't expose form state and the date-only logic was wrong by months), and a live keynote-sessions block above the static PDF programme on `/2026`. Keynotes carry an "Online room TBA" placeholder until Indico publishes Zoom links, swapped automatically by the next sync. [Release notes →](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.7.0)
+
+### v2.6.0 · 22 May 2026 — *Footer cleanup and authorship credit*
+
+Light footer trim — image credits and legal status collapsed from two paragraphs into one fine-print line — plus a discreet authorship credit on the very last row: *Site designed and built by [Dr Arthur PB Laudrain](https://eiss-europa.com/board.html#arthur-laudrain)*, locale-aware. Anchored on a new opt-in `slug` field in `board.json` so future board members can deep-link in the same pattern. [Release notes →](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.6.0)
+
+### v2.5.0 · 22 May 2026 — *Announcement card data-driven and registration status badge*
+
+Two pieces. (1) The homepage NetSec announcement card moved from three hand-edited templates into `src/_data/announcement.js` — rotating the news item is now a one-file edit. (2) A glassy registration-status pill in the `/2026` hero reflects today vs. the conference dates: *Registration open* / *Happening now* / *Past edition*. [Release notes →](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.5.0)
+
+Earlier releases (v1.0 → v2.4) covered the site migration off Mobirise: i18n plumbing + FR/DE chrome (v2.0), translating the Tier 1 + Tier 2 pages (v2.1), localised share cards (v2.2), conference cycle automation (v2.3), Indico API sync for members' events on `/index` + `/events` (v2.4). Full list on [GitHub Releases](https://github.com/EISSeuropa/EISSeuropa.github.io/releases).
 
 ---
 
