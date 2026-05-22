@@ -394,6 +394,19 @@ def _normalise_person(p: dict) -> dict:
     }
 
 
+def _absolutize_indico_url(url: str) -> str:
+    """Indico's timetable export is inconsistent: session URLs come
+    back absolute (https://…), contribution URLs come back relative
+    (/event/22/contributions/521/). Browsers resolve the latter against
+    the EISS site domain, so the "Read full abstract" links 404. Fix
+    by prepending INDICO_BASE whenever we see a relative path."""
+    if not url:
+        return ""
+    if url.startswith("http://") or url.startswith("https://"):
+        return url
+    return f"{INDICO_BASE}{url}" if url.startswith("/") else f"{INDICO_BASE}/{url}"
+
+
 def _normalise_contribution(c: dict) -> dict:
     """Turn an Indico contribution (a single paper / talk) into a
     compact dict for the grid. Authors include both `presenters` (who
@@ -415,7 +428,7 @@ def _normalise_contribution(c: dict) -> dict:
         "speakers": [_normalise_person(p) for p in speakers_src],
         "abstract": teaser,
         "hasFullAbstract": len(abstract) > len(teaser),
-        "url": c.get("url") or "",
+        "url": _absolutize_indico_url(c.get("url") or ""),
     }
 
 
@@ -464,13 +477,22 @@ def extract_programme(timetable_results: dict, event_id: str) -> dict:
 
             start = slot.get("startDate") or {}
             end = slot.get("endDate") or {}
+            raw_slot_title = slot.get("title") or slot.get("slotTitle") or ""
+            display_title = raw_slot_title
+            # Strip the "Roundtable:" prefix from the displayed title —
+            # the subtype field below conveys the type so the prefix is
+            # redundant noise on the card.
+            for prefix in TITLE_PREFIX_FALLBACKS:
+                if display_title.startswith(prefix):
+                    display_title = display_title[len(prefix):].strip()
+                    break
             base = {
                 "id": str(slot.get("id", slot_id)),
-                "title": slot.get("title") or slot.get("slotTitle") or "",
+                "title": display_title,
                 "startTime": (start.get("time") or "")[:5],
                 "endTime": (end.get("time") or "")[:5],
                 "room": slot.get("room") or "",
-                "url": slot.get("url") or "",
+                "url": _absolutize_indico_url(slot.get("url") or ""),
             }
 
             if entry_type == "Session":
@@ -484,12 +506,36 @@ def extract_programme(timetable_results: dict, event_id: str) -> dict:
                 ]
                 # Sort contributions chronologically for readability.
                 contribs.sort(key=lambda c: c["startTime"])
+
+                # Classify subtype from sessionCode + title-prefix.
+                # Drives the template's decision to hide the
+                # "View papers" expander on roundtables (which carry a
+                # single placeholder "Contributors" entry, not real
+                # papers) and on plenaries (typically zero/one talk).
+                code = (slot.get("sessionCode") or "").strip()
+                subtype: str | None = None
+                if code == "RT" or raw_slot_title.startswith("Roundtable:"):
+                    subtype = "roundtable"
+                elif code in {"INTRO", "KEY", "CONC"}:
+                    subtype = "plenary"
+
+                # For roundtables, flatten the single "Contributors"
+                # placeholder into a top-level discussants list. That's
+                # the actually-useful info on the card; the placeholder
+                # itself doesn't add anything.
+                discussants: list[dict] = []
+                if subtype == "roundtable" and len(contribs) == 1:
+                    discussants = contribs[0]["speakers"]
+                    contribs = []  # suppress the expander entirely
+
                 slots.append({
                     **base,
                     "kind": "session",
+                    "subtype": subtype,
                     "slotTitle": slot.get("slotTitle") or "",
-                    "sessionCode": slot.get("sessionCode") or "",
+                    "sessionCode": code,
                     "conveners": [_normalise_person(c) for c in slot.get("conveners") or []],
+                    "discussants": discussants,
                     "contributions": contribs,
                 })
             elif entry_type == "Contribution":
