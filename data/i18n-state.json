@@ -42,6 +42,132 @@
         "translated_on": "2026-05-22",
         "status": "beta"
       }
+    },
+    "src/board.njk": {
+      "fr": {
+        "file": "src/board.fr.njk",
+        "source_sha1": "0ec45d9d9845b48b2725172e7d44286fe84b6f56",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/board.de.njk",
+        "source_sha1": "0ec45d9d9845b48b2725172e7d44286fe84b6f56",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      }
+    },
+    "src/events.njk": {
+      "fr": {
+        "file": "src/events.fr.njk",
+        "source_sha1": "f79bcbd728671e52c787beaec1e8a3fefebb2f4d",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/events.de.njk",
+        "source_sha1": "f79bcbd728671e52c787beaec1e8a3fefebb2f4d",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      }
+    },
+    "src/programmes.njk": {
+      "fr": {
+        "file": "src/programmes.fr.njk",
+        "source_sha1": "91e76d742319bc8ad41c096692fafde66fd1e325",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/programmes.de.njk",
+        "source_sha1": "91e76d742319bc8ad41c096692fafde66fd1e325",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      }
+    },
+    "src/past.njk": {
+      "fr": {
+        "file": "src/past.fr.njk",
+        "source_sha1": "eccd053eed184e32bd0a277e4b101bc03e2bdb9f",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/past.de.njk",
+        "source_sha1": "eccd053eed184e32bd0a277e4b101bc03e2bdb9f",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      }
+    },
+    "src/sitemap.njk": {
+      "fr": {
+        "file": "src/sitemap.fr.njk",
+        "source_sha1": "9bd42d563b03149e6976cc8539495b6a870a805b",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/sitemap.de.njk",
+        "source_sha1": "9bd42d563b03149e6976cc8539495b6a870a805b",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      }
+    },
+    "src/2026.njk": {
+      "fr": {
+        "file": "src/2026.fr.njk",
+        "source_sha1": "b116a0beaaf1003fa417ab6a3ab03117c65aa74b",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/2026.de.njk",
+        "source_sha1": "b116a0beaaf1003fa417ab6a3ab03117c65aa74b",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      }
+    },
+    "src/terms.njk": {
+      "fr": {
+        "file": "src/terms.fr.njk",
+        "source_sha1": "3417731d24fec0d6254999344f206f7bcaa92047",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/terms.de.njk",
+        "source_sha1": "3417731d24fec0d6254999344f206f7bcaa92047",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      }
+    },
+    "src/accessibility.njk": {
+      "fr": {
+        "file": "src/accessibility.fr.njk",
+        "source_sha1": "03b95dc3312a80aee0778274b24c2c7b3e2137a5",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/accessibility.de.njk",
+        "source_sha1": "03b95dc3312a80aee0778274b24c2c7b3e2137a5",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      }
+    },
+    "src/policy.njk": {
+      "fr": {
+        "file": "src/policy.fr.njk",
+        "source_sha1": "ca94b0b5315c3055500a46c0ed204913d9004264",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/policy.de.njk",
+        "source_sha1": "ca94b0b5315c3055500a46c0ed204913d9004264",
+        "translated_on": "2026-05-22",
+        "status": "beta"
+      }
     }
   }
 }
