@@ -48,6 +48,7 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -62,6 +63,17 @@ OUT = ROOT / "src" / "_data" / "indico.json"
 INDICO_BASE = "https://indico.eiss-europa.com"
 ROOT_CATEGORY_ID = 0          # Indico root — returns events from all sub-categories
 LOOK_AHEAD_DAYS = 540          # ~18 months
+
+# Indico API token (read-only, on a dedicated service account). When
+# present we add an `Authorization: Bearer …` header to every Indico
+# call, which unlocks endpoints that anonymous access can't see —
+# notably registration-form state and any video-conference URLs that
+# require auth. The script keeps working without it (anonymous mode),
+# so local runs and emergencies don't need the secret.
+#
+# Storage: GitHub Actions secret named `INDICO_API_TOKEN`, surfaced
+# to the workflow step via `env:`. NEVER hardcode the token here.
+INDICO_API_TOKEN = os.environ.get("INDICO_API_TOKEN")
 ANNUAL_CONFERENCE_CATEGORY_IDS = {1}  # ESSC editions — routed into `annualConferences` bucket
 
 # Classification — three signals, in priority order. A session ends
@@ -115,6 +127,17 @@ VC_URL_TOKENS = ("zoom.us", "meet.google", "teams.microsoft", "webex.com")
 # Common Eleventy/JS will compare ISO strings lexicographically and this works
 # fine for "is this future" comparisons as long as we always include the time.
 ISO_FMT = "%Y-%m-%dT%H:%M:%S"
+
+
+def _get(url: str) -> requests.Response:
+    """One-stop HTTP GET that adds the bearer token when present.
+    Pulled out so we don't have three almost-identical request lines
+    drifting from each other (one would inevitably forget to add the
+    auth header). The token is NEVER logged."""
+    headers = {"Accept": "application/json"}
+    if INDICO_API_TOKEN:
+        headers["Authorization"] = f"Bearer {INDICO_API_TOKEN}"
+    return requests.get(url, timeout=30, headers=headers)
 
 
 def _combine_indico_datetime(d: dict) -> str | None:
@@ -188,7 +211,7 @@ def fetch_timetable(event_id: str) -> dict:
     url = f"{INDICO_BASE}/export/timetable/{event_id}.json"
     print(f"GET {url}", file=sys.stderr)
     try:
-        r = requests.get(url, timeout=30, headers={"Accept": "application/json"})
+        r = _get(url)
         r.raise_for_status()
         payload = r.json()
     except Exception as exc:  # noqa: BLE001 — sync is best-effort
@@ -206,7 +229,7 @@ def fetch_session_type(event_id: str, session_id) -> str | None:
         return None
     url = f"{INDICO_BASE}/export/event/{event_id}/session/{session_id}.json"
     try:
-        r = requests.get(url, timeout=30, headers={"Accept": "application/json"})
+        r = _get(url)
         r.raise_for_status()
         payload = r.json()
     except Exception as exc:  # noqa: BLE001 — best-effort enrichment
@@ -340,7 +363,7 @@ def fetch_events() -> list[dict]:
         f"&detail=events&order=start"
     )
     print(f"GET {url}", file=sys.stderr)
-    r = requests.get(url, timeout=30, headers={"Accept": "application/json"})
+    r = _get(url)
     r.raise_for_status()
     payload = r.json()
     if payload.get("_type") != "HTTPAPIResult":
@@ -352,6 +375,11 @@ def fetch_events() -> list[dict]:
 
 
 def main() -> None:
+    # Log whether we're authenticated — without ever printing the token.
+    # Useful to confirm in CI that the secret is wired correctly.
+    mode = "authenticated" if INDICO_API_TOKEN else "anonymous"
+    print(f"Indico sync running in {mode} mode", file=sys.stderr)
+
     raw_events = fetch_events()
     print(f"Fetched {len(raw_events)} event(s) from Indico", file=sys.stderr)
 
