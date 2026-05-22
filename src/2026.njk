@@ -58,63 +58,16 @@ alternates:
 {% set year = "2026" %}
 {% include "livestream-list.njk" %}
 
-<section class="section" id="programme" aria-labelledby="programme-title">
-  <div class="container">
-    <h2 id="programme-title">Final programme</h2>
-    <p class="lead muted" style="max-width: 44rem;">
-      The conference runs across two days. Download or browse the full programme below.
-    </p>
+{# Live programme grid pulled from the Indico timetable, refreshed
+   daily. See docs/indico-programme-integration.md for the
+   pre-event-vs-post-event design rationale. #}
+{% include "programme-grid.njk" %}
 
-    <article class="card pdf-doc">
-      <header class="pdf-doc-header">
-        <span class="pdf-doc-icon" aria-hidden="true">PDF</span>
-        <div class="pdf-doc-meta">
-          <p class="pdf-doc-title">EISS Conference Programme&nbsp;— 2026</p>
-          <p class="pdf-doc-subtitle">
-            <span>2&nbsp;pages</span>
-            <span aria-hidden="true">·</span>
-            <span>107&nbsp;KB</span>
-            <span aria-hidden="true">·</span>
-            <span>11–12&nbsp;June, Stockholm</span>
-          </p>
-        </div>
-        <div class="pdf-doc-actions">
-          <a class="btn btn-secondary btn-sm"
-             href="/assets/files/EISS-2026-programme.pdf"
-             target="_blank" rel="noopener">
-            Open in new tab {{ icon("external-link") }}
-          </a>
-          <a class="btn btn-primary btn-sm"
-             href="/assets/files/EISS-2026-programme.pdf"
-             download="EISS-2026-programme.pdf">
-            {{ icon("download") }} Download
-          </a>
-        </div>
-      </header>
-
-      <div class="pdf-doc-frame">
-        <object
-          data="/assets/files/EISS-2026-programme.pdf#view=FitH&toolbar=0&navpanes=0"
-          type="application/pdf"
-          aria-label="Embedded 2026 conference programme. If your browser cannot display the PDF, use the download link above.">
-          <div class="pdf-doc-fallback">
-            <p>Your browser can't display the embedded PDF.</p>
-            <p>
-              <a class="btn btn-primary btn-sm"
-                 href="/assets/files/EISS-2026-programme.pdf"
-                 download="EISS-2026-programme.pdf">{{ icon("download") }} Download the programme (107&nbsp;KB)</a>
-            </p>
-          </div>
-        </object>
-      </div>
-    </article>
-
-    <p style="font-size: var(--fs-sm); color: var(--text-subtle);">
-      Two-day programme covering Thursday 11 and Friday 12 June 2026 at Stockholm University.
-      The programme may be updated as speakers are confirmed.
-    </p>
-  </div>
-</section>
+{# Polished designer-made PDF — the printable archival companion to
+   the live grid above. The partial hides itself when no programmePdf
+   is set on the conferences.js entry. Operator flips the entry's
+   `status` from "draft" to "final" when the polished version ships. #}
+{% include "programme-pdf.njk" %}
 
 <section class="section" id="venue" aria-labelledby="venue-title">
   <div class="container">

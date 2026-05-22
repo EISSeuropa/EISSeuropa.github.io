@@ -366,6 +366,153 @@ def extract_livestreamed(timetable_results: dict, event_id: str) -> list[dict]:
     return sessions
 
 
+# Description (abstract) length cap. Indico abstracts can run several
+# thousand characters; the grid only needs a teaser. The full text is
+# always one click away via the linked Indico session/contribution page.
+ABSTRACT_TEASER_CHARS = 360
+
+
+def _strip_html(s: str) -> str:
+    """Crude HTML → text. Indico's description fields contain inline
+    formatting (<p>, <em>, <a>) which we don't want to display verbatim
+    in the grid; we keep the text content and let the template render
+    it as a plain paragraph."""
+    import re
+    if not s:
+        return ""
+    no_tags = re.sub(r"<[^>]+>", " ", s)
+    return re.sub(r"\s+", " ", no_tags).strip()
+
+
+def _normalise_person(p: dict) -> dict:
+    """Strip Indico-internal fields from a person dict (presenter,
+    convener, author). Notably drops `emailHash`, which is a tracking
+    surface we don't need on the site."""
+    return {
+        "name": p.get("name") or p.get("fullName") or "",
+        "affiliation": p.get("affiliation") or "",
+    }
+
+
+def _normalise_contribution(c: dict) -> dict:
+    """Turn an Indico contribution (a single paper / talk) into a
+    compact dict for the grid. Authors include both `presenters` (who
+    actually talks) and `primaryauthors` if no presenters are listed."""
+    start = c.get("startDate") or {}
+    end = c.get("endDate") or {}
+    speakers_src = c.get("presenters") or c.get("speakers") or c.get("primaryauthors") or []
+    abstract = _strip_html(c.get("description") or "")
+    teaser = abstract[:ABSTRACT_TEASER_CHARS]
+    if len(abstract) > ABSTRACT_TEASER_CHARS:
+        # Trim back to the previous word boundary so we don't slice
+        # mid-word, then append an ellipsis.
+        cut = teaser.rsplit(" ", 1)[0]
+        teaser = cut + "…"
+    return {
+        "title": c.get("title") or "(untitled contribution)",
+        "startTime": (start.get("time") or "")[:5],
+        "endTime": (end.get("time") or "")[:5],
+        "speakers": [_normalise_person(p) for p in speakers_src],
+        "abstract": teaser,
+        "hasFullAbstract": len(abstract) > len(teaser),
+        "url": c.get("url") or "",
+    }
+
+
+# Slot types we deliberately surface in the programme grid.
+PROGRAMME_SLOT_ENTRY_TYPES = {"Session", "Contribution", "Break"}
+
+
+def extract_programme(timetable_results: dict, event_id: str) -> dict:
+    """Turn the full Indico timetable into a normalised programme
+    structure: days → slots → (per-session) contributions.
+
+    Stored under indico.annualConferences[year].programme and consumed
+    by src/_includes/programme-grid.njk to render the live, browsable
+    programme. PII surface is bounded: we keep names + affiliations
+    (already public on Indico) and drop email hashes / internal ids.
+
+    Top-level shape:
+      { "days": [
+          { "date": "2026-06-11", "label": "Day 1",
+            "slots": [ ...slot dicts in chronological order... ] },
+          ...
+      ] }
+
+    A slot is one of:
+      - kind="session"     — chaired panel / roundtable / keynote
+        with conveners[] and contributions[]
+      - kind="contribution"— a standalone contribution at the top level
+      - kind="break"       — coffee/lunch/reception
+    """
+    days: list[dict] = []
+    event_block = timetable_results.get(str(event_id), {})
+
+    for idx, day_key in enumerate(sorted(event_block.keys()), start=1):
+        day_block = event_block[day_key]
+        if not isinstance(day_block, dict):
+            continue
+        date_str = f"{day_key[:4]}-{day_key[4:6]}-{day_key[6:8]}"
+        slots: list[dict] = []
+
+        for slot_id, slot in day_block.items():
+            if not isinstance(slot, dict):
+                continue
+            entry_type = slot.get("entryType")
+            if entry_type not in PROGRAMME_SLOT_ENTRY_TYPES:
+                continue
+
+            start = slot.get("startDate") or {}
+            end = slot.get("endDate") or {}
+            base = {
+                "id": str(slot.get("id", slot_id)),
+                "title": slot.get("title") or slot.get("slotTitle") or "",
+                "startTime": (start.get("time") or "")[:5],
+                "endTime": (end.get("time") or "")[:5],
+                "room": slot.get("room") or "",
+                "url": slot.get("url") or "",
+            }
+
+            if entry_type == "Session":
+                # Inner `entries` carries the contributions making up
+                # the session (5-paper panels, single-talk plenaries, …).
+                inner_entries = slot.get("entries") or {}
+                contribs = [
+                    _normalise_contribution(c)
+                    for c in inner_entries.values()
+                    if isinstance(c, dict) and c.get("entryType") == "Contribution"
+                ]
+                # Sort contributions chronologically for readability.
+                contribs.sort(key=lambda c: c["startTime"])
+                slots.append({
+                    **base,
+                    "kind": "session",
+                    "slotTitle": slot.get("slotTitle") or "",
+                    "sessionCode": slot.get("sessionCode") or "",
+                    "conveners": [_normalise_person(c) for c in slot.get("conveners") or []],
+                    "contributions": contribs,
+                })
+            elif entry_type == "Contribution":
+                speakers_src = slot.get("presenters") or slot.get("speakers") or []
+                slots.append({
+                    **base,
+                    "kind": "contribution",
+                    "speakers": [_normalise_person(p) for p in speakers_src],
+                    "abstract": _strip_html(slot.get("description") or "")[:ABSTRACT_TEASER_CHARS],
+                })
+            else:  # Break
+                slots.append({**base, "kind": "break"})
+
+        slots.sort(key=lambda s: s["startTime"])
+        days.append({
+            "date": date_str,
+            "label": f"Day {idx}",
+            "slots": slots,
+        })
+
+    return {"days": days}
+
+
 def fetch_events() -> list[dict]:
     today = dt.date.today()
     to_date = today + dt.timedelta(days=LOOK_AHEAD_DAYS)
@@ -429,6 +576,10 @@ def main() -> None:
         tt = fetch_timetable(event["id"])
         livestreamed = extract_livestreamed(tt, event["id"])
         event["livestreamed"] = livestreamed
+        # Full normalised programme — drives the live programme grid
+        # on /YYYY pages. Same timetable, different shape: every slot,
+        # not just livestreamed ones.
+        event["programme"] = extract_programme(tt, event["id"])
         with_video = sum(1 for k in livestreamed if k.get("videoUrl"))
         by_type: dict[str, int] = {}
         for k in livestreamed:

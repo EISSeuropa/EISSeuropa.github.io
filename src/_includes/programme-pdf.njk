@@ -1,0 +1,52 @@
+{# Polished designer-made PDF card — the printable archival
+   companion to the live programme-grid.njk above. Rendered as a
+   compact download block when the year's conferences.js entry has a
+   `programmePdf` field; hidden otherwise. See
+   docs/indico-programme-integration.md for the rationale on why we
+   keep both grid and PDF in the operator's quiver.
+
+   Variables in scope from the page template:
+     - `lang`  — front-matter, defaults to "en"
+     - `year`  — string, e.g. "2026"
+     - `conferences` — src/_data/conferences.js
+     - `i18n`  — src/_data/i18n.js (we re-derive `t` locally because
+                 base.njk's `t` shorthand isn't in scope here)
+#}
+{% from "icons.njk" import icon %}
+{%- set _lang = lang or "en" -%}
+{%- set t = i18n[_lang] -%}
+{%- set _conf = conferences.byYear[year] -%}
+{%- set _pdf = _conf.programmePdf if _conf else null -%}
+
+{% if _pdf %}
+<section class="section" aria-labelledby="programme-pdf-title">
+  <div class="container">
+    <article class="card pdf-doc">
+      <header class="pdf-doc-header">
+        <span class="pdf-doc-icon" aria-hidden="true">PDF</span>
+        <div class="pdf-doc-meta">
+          <p class="pdf-doc-title" id="programme-pdf-title">
+            {% if _pdf.status == "final" %}{{ t.programme.pdfHeading }}{% else %}{{ t.programme.pdfHeadingDraft }}{% endif %}
+          </p>
+          <p class="pdf-doc-subtitle">
+            {%- if _pdf.pages %}<span>{{ _pdf.pages }}&nbsp;{% if _lang == "de" %}Seiten{% else %}pages{% endif %}</span><span aria-hidden="true"> · </span>{% endif %}
+            {%- if _pdf.sizeKb %}<span>{{ _pdf.sizeKb }}&nbsp;{% if _lang == "fr" %}Ko{% else %}KB{% endif %}</span><span aria-hidden="true"> · </span>{% endif %}
+            <span>{{ _conf.dates[_lang] }}, {{ _conf.city }}</span>
+          </p>
+        </div>
+        <div class="pdf-doc-actions">
+          <a class="btn btn-secondary btn-sm" href="{{ _pdf.url }}" target="_blank" rel="noopener">
+            {{ t.programme.pdfOpen }} {{ icon("external-link") }}
+          </a>
+          <a class="btn btn-primary btn-sm" href="{{ _pdf.url }}" download>
+            {{ icon("download") }} {{ t.programme.pdfDownload }}
+          </a>
+        </div>
+      </header>
+      <p class="muted" style="margin: var(--space-4) 0 0; font-size: var(--fs-sm);">
+        {% if _pdf.status == "final" %}{{ t.programme.pdfDescription }}{% else %}{{ t.programme.pdfDescriptionDraft }}{% endif %}
+      </p>
+    </article>
+  </div>
+</section>
+{% endif %}

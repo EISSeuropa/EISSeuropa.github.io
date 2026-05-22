@@ -145,6 +145,31 @@ const locales = {
       noEventsBody: "When members publish events through indico.eiss-europa.com, they'll appear here automatically.",
     },
 
+    programme: {
+      // Live programme grid on /YYYY pages. Pulled from Indico's
+      // timetable every day and rendered alongside the polished PDF
+      // (see docs/indico-programme-integration.md for the rationale).
+      eyebrow: "Live from Indico",
+      heading: "Programme",
+      lead: "Pulled directly from Indico. Updates daily, so changes in the run-up to the conference appear here within ~24 hours of being made.",
+      daysNav: "Jump to a day",
+      chairedBy: "Chair",
+      showContributions: "View papers",
+      readFullAbstract: "Read full abstract",
+      sourceNote: "Source of truth for the programme is Indico — this grid is a daily snapshot.",
+      viewOnIndico: "View the event on Indico",
+      // Static PDF block — surfaces the polished designer-made
+      // programme when the operator has uploaded one (see
+      // conferences.js `programmePdf` field). The grid above is
+      // always live; this block is the archival / printable artefact.
+      pdfHeading: "Final programme — printable PDF",
+      pdfHeadingDraft: "Working programme — printable PDF (subject to change)",
+      pdfDescription: "A polished, print-friendly version of the programme.",
+      pdfDescriptionDraft: "A working version of the programme — the live grid above reflects the latest changes.",
+      pdfOpen: "Open in new tab",
+      pdfDownload: "Download",
+    },
+
     livestream: {
       // Livestreamed-sessions block above the static PDF programme on
       // /YYYY pages. Populated from src/_data/indico.json by
@@ -286,6 +311,24 @@ const locales = {
       noEventsBody: "Lorsque les membres publient des événements via indico.eiss-europa.com, ils apparaîtront ici automatiquement.",
     },
 
+    programme: {
+      eyebrow: "En direct depuis Indico",
+      heading: "Programme",
+      lead: "Tiré directement d'Indico. Mis à jour quotidiennement — les modifications à l'approche de la conférence apparaissent ici dans les 24 heures.",
+      daysNav: "Aller à une journée",
+      chairedBy: "Présidence",
+      showContributions: "Voir les communications",
+      readFullAbstract: "Lire le résumé complet",
+      sourceNote: "Indico fait foi pour le programme — cette grille est un instantané quotidien.",
+      viewOnIndico: "Voir l'événement sur Indico",
+      pdfHeading: "Programme final — PDF imprimable",
+      pdfHeadingDraft: "Programme provisoire — PDF imprimable (susceptible de changer)",
+      pdfDescription: "Une version mise en page et imprimable du programme.",
+      pdfDescriptionDraft: "Une version provisoire du programme — la grille en direct ci-dessus reflète les dernières modifications.",
+      pdfOpen: "Ouvrir dans un nouvel onglet",
+      pdfDownload: "Télécharger",
+    },
+
     livestream: {
       sectionEyebrow: "En direct depuis Indico",
       sectionHeading: "Sessions diffusées en direct",
@@ -411,6 +454,24 @@ const locales = {
       lastSynced: "Zuletzt aktualisiert",
       noEventsTitle: "Noch keine kommenden Veranstaltungen auf Indico",
       noEventsBody: "Wenn Mitglieder Veranstaltungen über indico.eiss-europa.com veröffentlichen, erscheinen sie hier automatisch.",
+    },
+
+    programme: {
+      eyebrow: "Live von Indico",
+      heading: "Programm",
+      lead: "Direkt aus Indico bezogen. Tägliche Aktualisierung — Änderungen im Vorfeld der Konferenz erscheinen hier innerhalb von ~24 Stunden.",
+      daysNav: "Zu einem Tag springen",
+      chairedBy: "Vorsitz",
+      showContributions: "Beiträge anzeigen",
+      readFullAbstract: "Vollständiges Abstract lesen",
+      sourceNote: "Indico ist die maßgebliche Quelle für das Programm — dieses Raster ist ein tägliches Abbild.",
+      viewOnIndico: "Veranstaltung auf Indico ansehen",
+      pdfHeading: "Endgültiges Programm — druckbares PDF",
+      pdfHeadingDraft: "Arbeitsversion des Programms — druckbares PDF (Änderungen vorbehalten)",
+      pdfDescription: "Eine gestaltete und druckfreundliche Version des Programms.",
+      pdfDescriptionDraft: "Eine Arbeitsversion des Programms — das Live-Raster oben zeigt den aktuellen Stand.",
+      pdfOpen: "In neuem Tab öffnen",
+      pdfDownload: "Herunterladen",
     },
 
     livestream: {

@@ -52,64 +52,8 @@ alternates:
 {% set year = "2026" %}
 {% include "livestream-list.njk" %}
 
-<section class="section" id="programme" aria-labelledby="programme-title">
-  <div class="container">
-    <h2 id="programme-title">Endgültiges Programm</h2>
-    <p class="lead muted" style="max-width: 44rem;">
-      Die Konferenz erstreckt sich über zwei Tage. Laden Sie das vollständige Programm unten herunter
-      oder sehen Sie es sich an.
-    </p>
-
-    <article class="card pdf-doc">
-      <header class="pdf-doc-header">
-        <span class="pdf-doc-icon" aria-hidden="true">PDF</span>
-        <div class="pdf-doc-meta">
-          <p class="pdf-doc-title">EISS-Konferenzprogramm&nbsp;— 2026</p>
-          <p class="pdf-doc-subtitle">
-            <span>2&nbsp;Seiten</span>
-            <span aria-hidden="true">·</span>
-            <span>107&nbsp;KB</span>
-            <span aria-hidden="true">·</span>
-            <span>11.–12.&nbsp;Juni, Stockholm</span>
-          </p>
-        </div>
-        <div class="pdf-doc-actions">
-          <a class="btn btn-secondary btn-sm"
-             href="/assets/files/EISS-2026-programme.pdf"
-             target="_blank" rel="noopener">
-            In neuem Tab öffnen {{ icon("external-link") }}
-          </a>
-          <a class="btn btn-primary btn-sm"
-             href="/assets/files/EISS-2026-programme.pdf"
-             download="EISS-2026-programme.pdf">
-            {{ icon("download") }} Herunterladen
-          </a>
-        </div>
-      </header>
-
-      <div class="pdf-doc-frame">
-        <object
-          data="/assets/files/EISS-2026-programme.pdf#view=FitH&toolbar=0&navpanes=0"
-          type="application/pdf"
-          aria-label="Eingebettetes Konferenzprogramm 2026. Falls Ihr Browser das PDF nicht anzeigen kann, verwenden Sie den Download-Link oben.">
-          <div class="pdf-doc-fallback">
-            <p>Ihr Browser kann das eingebettete PDF nicht anzeigen.</p>
-            <p>
-              <a class="btn btn-primary btn-sm"
-                 href="/assets/files/EISS-2026-programme.pdf"
-                 download="EISS-2026-programme.pdf">{{ icon("download") }} Programm herunterladen (107&nbsp;KB)</a>
-            </p>
-          </div>
-        </object>
-      </div>
-    </article>
-
-    <p style="font-size: var(--fs-sm); color: var(--text-subtle);">
-      Zweitägiges Programm an Donnerstag, dem 11., und Freitag, dem 12. Juni 2026 an der Universität
-      Stockholm. Das Programm kann aktualisiert werden, sobald Referent:innen bestätigt sind.
-    </p>
-  </div>
-</section>
+{% include "programme-grid.njk" %}
+{% include "programme-pdf.njk" %}
 
 <section class="section" id="venue" aria-labelledby="venue-title">
   <div class="container">
