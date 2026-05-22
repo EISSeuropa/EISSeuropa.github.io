@@ -1,0 +1,72 @@
+# Daily sync of src/_data/indico.json from the EISS Indico instance.
+#
+# Why direct commit, not auto-PR
+# ------------------------------
+# Unlike scripts/sync-board.py (which produces board member edits that
+# warrant maintainer review), this sync is fully read-only against
+# public Indico data. The information is already visible on
+# indico.eiss-europa.com; surfacing the same titles + dates on the
+# static site doesn't introduce new privacy or accuracy risk.
+#
+# So this workflow commits directly to master when indico.json
+# changes. The deploy workflow then picks up the new data on its
+# next build (or on the next daily scheduled-rebuild).
+#
+# Failure handling
+# ----------------
+# If Indico is unreachable, sync-indico.py exits 1 and the workflow
+# fails. The existing indico.json snapshot in the repo is not
+# touched — the site keeps working with the last good data. The
+# only signal is a red badge on the Actions tab.
+
+name: Sync events from Indico
+
+on:
+  schedule:
+    # 03:45 UTC daily — 30 minutes BEFORE scheduled-rebuild (04:15 UTC).
+    # That way the rebuild picks up any fresh Indico data the same morning
+    # rather than waiting another full day. If sync-indico commits a
+    # change, it also triggers deploy.yml directly via the push → so
+    # the rebuild at 04:15 is often a no-op but stays useful for the
+    # conferences.js cut-off advance even on quiet weeks.
+    - cron: "45 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: indico-sync
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    name: Refresh indico.json from the export API
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Install Python dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Run sync script
+        run: python3 scripts/sync-indico.py
+
+      - name: Commit + push if changed
+        run: |
+          if [[ -n "$(git status --porcelain src/_data/indico.json)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add src/_data/indico.json
+            git commit -m "data: sync events from Indico ($(date -u +%Y-%m-%d))"
+            git push
+            echo "Pushed indico.json update to master."
+          else
+            echo "No change — indico.json already up to date."
+          fi

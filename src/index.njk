@@ -78,6 +78,12 @@ alternates:
 </section>
 {% endif %}
 
+{# Auto-synced upcoming events from indico.eiss-europa.com. Hides entirely
+   when src/_data/indico.json has no upcoming entries. Limit to 5 on the
+   homepage so the page doesn't grow unboundedly. #}
+{% set limit = 5 %}
+{% include "indico-events-list.njk" %}
+
 <section class="section-tight" aria-labelledby="news-title">
   <div class="container">
     <article class="card announcement">
