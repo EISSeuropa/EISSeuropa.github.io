@@ -66,17 +66,28 @@
       <p>
         <em>{{ t.footer.copyright | replace("{{year}}", "" | year) }}</em>
       </p>
+      {# Light trim: image credits + legal status used to be two separate
+         paragraphs. Merged into one fine-print line so the footer doesn't
+         feel bottom-heavy. #}
       <p>
         <em>{{ t.footer.imageCredits }}</em>
-      </p>
-      <p>
+        <span aria-hidden="true">&nbsp;·&nbsp;</span>
         {{ t.footer.legalStatus }}
       </p>
-      <p>
-        <a href="/refund{{ langSuffix }}.html">{{ t.footer.legalLinks.terms }}</a> ·
-        <a href="/policy{{ langSuffix }}.html">{{ t.footer.legalLinks.privacy }}</a> ·
-        <a href="/accessibility{{ langSuffix }}.html">{{ t.footer.legalLinks.accessibility }}</a> ·
-        <a href="/sitemap{{ langSuffix }}.html">{{ t.footer.legalLinks.sitemap }}</a>
+      <p class="footer-meta">
+        <span class="footer-meta-links">
+          <a href="/refund{{ langSuffix }}.html">{{ t.footer.legalLinks.terms }}</a> ·
+          <a href="/policy{{ langSuffix }}.html">{{ t.footer.legalLinks.privacy }}</a> ·
+          <a href="/accessibility{{ langSuffix }}.html">{{ t.footer.legalLinks.accessibility }}</a> ·
+          <a href="/sitemap{{ langSuffix }}.html">{{ t.footer.legalLinks.sitemap }}</a>
+        </span>
+        {# Authorship credit. The name links to the author's board card
+           via the slug from src/_data/board.json. Keep this discreet —
+           it doesn't compete with EISS branding. #}
+        <span class="footer-authorship">
+          {{ t.footer.authorship.prefix }}
+          <a href="/board{{ langSuffix }}.html#{{ t.footer.authorship.authorSlug }}">{{ t.footer.authorship.authorName }}</a>
+        </span>
       </p>
     </div>
   </div>

@@ -32,7 +32,7 @@ alternates:
     <h2 style="margin-bottom: var(--space-5);">Vorstand</h2>
     <div class="people-grid">
       {%- for person in board.members %}
-      <article class="person">
+      <article class="person"{% if person.slug %} id="{{ person.slug }}"{% endif %}>
         <img class="person-photo" src="{{ person.photo }}" alt="{{ person.alt or person.name }}" loading="lazy">
         <div class="person-body">
           <p class="person-role">{{ person.role }}</p>
@@ -53,7 +53,7 @@ alternates:
     <h2 style="margin-bottom: var(--space-5);">Unterstützungsteam</h2>
     <div class="people-grid">
       {%- for person in board.support %}
-      <article class="person">
+      <article class="person"{% if person.slug %} id="{{ person.slug }}"{% endif %}>
         <img class="person-photo" src="{{ person.photo }}" alt="{{ person.alt or person.name }}" loading="lazy">
         <div class="person-body">
           <p class="person-role">{{ person.role }}</p>

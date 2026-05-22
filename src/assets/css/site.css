@@ -1062,6 +1062,26 @@ h4 { font-size: var(--fs-lg); }
 
 .footer-fineprint p { margin-bottom: var(--space-3); }
 
+/* Bottom-most row in the footer: legal links on the left, authorship
+   credit on the right. Wraps to two lines on narrow viewports so the
+   authorship line never gets crushed under the link list. */
+.footer-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.footer-meta-links {
+  flex: 1 1 auto;
+}
+
+.footer-authorship {
+  flex: 0 1 auto;
+  white-space: nowrap;
+}
+
 /* ---------- WCAG conformance badge ---------- */
 .wcag-badge {
   display: inline-flex;
