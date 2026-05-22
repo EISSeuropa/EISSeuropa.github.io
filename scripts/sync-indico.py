@@ -436,6 +436,16 @@ def _normalise_contribution(c: dict) -> dict:
 PROGRAMME_SLOT_ENTRY_TYPES = {"Session", "Contribution", "Break"}
 
 
+def _looks_like_break(title: str) -> bool:
+    """Indico inconsistently marks coffee breaks: morning registration
+    coffee comes through as entryType=Break, but mid-day coffee breaks
+    are entryType=Session with no inner contributions. Recognise the
+    latter by title so the grid renders them in the quiet "break"
+    style rather than as full session cards."""
+    t = (title or "").strip().lower()
+    return t.startswith("coffee") or t.startswith("tea break") or t == "lunch"
+
+
 def extract_programme(timetable_results: dict, event_id: str) -> dict:
     """Turn the full Indico timetable into a normalised programme
     structure: days → slots → (per-session) contributions.
@@ -499,6 +509,15 @@ def extract_programme(timetable_results: dict, event_id: str) -> dict:
                 # Inner `entries` carries the contributions making up
                 # the session (5-paper panels, single-talk plenaries, …).
                 inner_entries = slot.get("entries") or {}
+
+                # Indico models some coffee breaks as Session entries
+                # with no contributions. Reclassify them as breaks so
+                # the grid renders them in the quiet style instead of
+                # mistaking them for a 0-paper panel.
+                if not inner_entries and _looks_like_break(raw_slot_title):
+                    slots.append({**base, "kind": "break"})
+                    continue
+
                 contribs = [
                     _normalise_contribution(c)
                     for c in inner_entries.values()
@@ -550,9 +569,50 @@ def extract_programme(timetable_results: dict, event_id: str) -> dict:
                 slots.append({**base, "kind": "break"})
 
         slots.sort(key=lambda s: s["startTime"])
+
+        # Group consecutive slots that share a startTime into "rows".
+        # Two panels happening in parallel (same start) get rendered
+        # side-by-side in the grid; solo slots get a full-width row.
+        # Breaks always sit on their own row regardless of timing.
+        rows: list[dict] = []
+        i = 0
+        while i < len(slots):
+            current = slots[i]
+            if current["kind"] == "break":
+                rows.append({
+                    "startTime": current["startTime"],
+                    "endTime": current["endTime"],
+                    "parallel": False,
+                    "items": [current],
+                })
+                i += 1
+                continue
+            # Greedy-collect every following non-break slot with the
+            # same startTime into a parallel row.
+            group = [current]
+            j = i + 1
+            while j < len(slots) and slots[j]["kind"] != "break" \
+                    and slots[j]["startTime"] == current["startTime"]:
+                group.append(slots[j])
+                j += 1
+            # End-time of the row is the latest among grouped items —
+            # parallel panels often end at the same minute but be safe.
+            row_end = max(s["endTime"] for s in group)
+            rows.append({
+                "startTime": current["startTime"],
+                "endTime": row_end,
+                "parallel": len(group) > 1,
+                "items": group,
+            })
+            i = j
+
         days.append({
             "date": date_str,
             "label": f"Day {idx}",
+            # `rows` is the new structure templates iterate over.
+            # `slots` is kept for backwards compatibility / debugging
+            # — same data, ungrouped.
+            "rows": rows,
             "slots": slots,
         })
 

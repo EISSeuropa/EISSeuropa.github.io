@@ -1185,15 +1185,24 @@ h4 { font-size: var(--fs-lg); }
 }
 
 .pdf-doc-subtitle {
+  /* Flex layout with gap — old inline-block + literal-text-separator
+     approach was eating whitespace around the dots, leaving them
+     visually stuck to neighbouring words. Flex gap doesn't lie. */
   margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.6rem;
   font-size: var(--fs-sm);
   color: var(--text-muted);
 }
 
 .pdf-doc-subtitle > span {
-  /* Each metadata chip can break to a new line but never mid-word. */
-  display: inline-block;
   white-space: nowrap;
+}
+
+.pdf-doc-subtitle > span[aria-hidden="true"] {
+  /* Separator dots: a touch dimmer so the metadata chips lead the eye. */
+  color: var(--text-subtle);
 }
 
 .pdf-doc-actions {
@@ -1818,7 +1827,11 @@ h4 { font-size: var(--fs-lg); }
   font-size: var(--fs-xl);
 }
 
-.programme-slots {
+/* Rows group concurrent slots. Each row has a single time gutter on
+   the left and one-or-more session cards on the right. When
+   `parallel` is true, multiple cards sit side-by-side; otherwise a
+   single card takes the full content width. */
+.programme-rows {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -1826,15 +1839,31 @@ h4 { font-size: var(--fs-lg); }
   gap: var(--space-3);
 }
 
-.programme-slot {
+.programme-row {
   display: grid;
   grid-template-columns: 6rem 1fr;
   gap: var(--space-3) var(--space-5);
+  align-items: start;
+}
+
+.programme-row-items {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: 1fr;
+}
+
+/* Parallel rows: two or three concurrent panels stack horizontally on
+   wide viewports and collapse to a column on narrow ones. The
+   `auto-fit` + minmax pattern self-balances. */
+.programme-row--parallel .programme-row-items {
+  grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+}
+
+.programme-slot {
   padding: var(--space-4) var(--space-5);
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  align-items: start;
 }
 
 /* Breaks are visually quieter — they're structural, not content. */
@@ -1963,9 +1992,13 @@ h4 { font-size: var(--fs-lg); }
 }
 
 @media (max-width: 720px) {
-  .programme-slot {
+  /* Collapse the time gutter so cards take the full width on phones. */
+  .programme-row {
     grid-template-columns: 1fr;
     gap: var(--space-2);
+  }
+  .programme-when-time {
+    font-size: var(--fs-sm);
   }
   .programme-contrib {
     grid-template-columns: 1fr;
