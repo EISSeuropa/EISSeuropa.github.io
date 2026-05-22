@@ -1212,6 +1212,17 @@ h4 { font-size: var(--fs-lg); }
   justify-content: flex-end;
 }
 
+/* Description paragraph rendered below the header. The card itself
+   has `padding: 0` (so the header can carry edge-to-edge borders),
+   so we inset this paragraph to match the header's horizontal pad
+   — otherwise the text bleeds to the card's left edge. */
+.pdf-doc-description {
+  margin: 0;
+  padding: var(--space-4) clamp(var(--space-5), 2vw + 1rem, var(--space-6)) var(--space-5);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+}
+
 .pdf-doc-frame {
   background: var(--bg-tinted);
   padding: var(--space-3);
