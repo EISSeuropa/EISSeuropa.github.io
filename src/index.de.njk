@@ -79,51 +79,7 @@ alternates:
 {% set limit = 5 %}
 {% include "indico-events-list.njk" %}
 
-<section class="section-tight" aria-labelledby="news-title">
-  <div class="container">
-    <article class="card announcement">
-      <div>
-        <div class="announcement-eyebrow">Brüssel, 10. Oktober 2025</div>
-        <h2 id="news-title">EISS startet Großinitiative zur Vernetzung der europäischen Sicherheitsstudien</h2>
-        <p class="lead">
-          Dank der großzügigen Unterstützung der Organisation
-          <a href="https://www.cost.eu" target="_blank" rel="noopener">European Cooperation in Science and Technology</a>
-          (COST) startet EISS — gemeinsam mit einem Dutzend Institutionen in ganz Europa —
-          <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">„Networking European Security Knowledge“ (NetSec)</a>,
-          ein vierjähriges Programm zur Bewältigung der Fragmentierung der intellektuellen und
-          analytischen Basis des Kontinents im Bereich der Sicherheitsstudien.
-        </p>
-        <p>
-          Dr. Hugo Meijer, Gründungsdirektor von EISS, und Dr. Marie Robin, Schatzmeisterin von EISS,
-          fungieren als Vorsitzender bzw. stellvertretende Vorsitzende der NetSec-Aktion.
-        </p>
-
-        <blockquote class="pullquote">
-          „Der Start von NetSec ist ein großer Schritt in der Entwicklung von EISS und seinen Partnern.
-          Achten Sie auf politische Workshops, Sommerschulen und Konferenzen in den nächsten vier Jahren.“
-          <cite>— Dr. Hugo Meijer, Vorsitzender der NetSec-Aktion und Gründungsdirektor von EISS</cite>
-        </blockquote>
-
-        <div>
-          <a class="btn btn-secondary" href="https://netsec-cost.eu/" target="_blank" rel="noopener">
-            Mehr über NetSec erfahren {{ icon("external-link") }}
-          </a>
-        </div>
-      </div>
-
-      <figure class="announcement-figure">
-        <img src="/assets/images/1760518013943-1280x720.jpg"
-             alt="Mitglieder des NetSec-Managementkomitees bei der Auftaktveranstaltung in Brüssel."
-             loading="lazy"
-             width="1280" height="720">
-        <figcaption>
-          Mitglieder des NetSec-Managementkomitees bei der Auftaktveranstaltung in Brüssel —
-          Dr. Moritz Weiss (Leiter der WG1, oben) und Dr. Hugo Meijer (Vorsitzender der Aktion und Gründungsdirektor von EISS, unten).
-        </figcaption>
-      </figure>
-    </article>
-  </div>
-</section>
+{% include "announcement-card.njk" %}
 
 <section class="section" aria-labelledby="join-title">
   <div class="container">

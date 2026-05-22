@@ -2,7 +2,7 @@
 
 A planning document, not a commitment. Written to help the maintainer
 think through what's worth doing next, in what order, and at what
-effort. **Last update: 22 May 2026, after v2.4.0.**
+effort. **Last update: 22 May 2026, after v2.5.0.**
 
 Effort notation:
 
@@ -206,17 +206,30 @@ Indico — the website just signposts them).
 which is filtered out as an Annual Conference. Once Members' Events
 get published to Indico, they'll appear within ~24h.
 
-### ⏳ Conference registration status indicator (P1, deferred to v2.5+)
+### ✅ Conference registration status indicator — shipped in v2.5.0
 
-**Effort: M**
+On `/2026.html` (and any future `/YYYY.html`), a glassy pill in the
+hero now shows one of three states based on today's date vs. the
+conference dates in `src/_data/conferences.js`:
 
-On `/2026.html` and `/membership.html`, show a small badge:
-- "Registration open · {N} attendees"
-- "Registration closed"
+- **Registration open** — green dot + "Register on Indico" CTA
+- **Happening now** — pulsing red dot + "View on Indico"
+- **Past edition** — neutral pill (no link unless Indico still has the page)
 
-Pulled from the same Indico data. Updates on every workflow run.
-Needs more API exploration to confirm what fields are returned for
-the EISS conference type — defer to v2.5.
+Implementation:
+- `scripts/sync-indico.py` v2.5 now routes Annual Conference events
+  (categoryId 1) into a separate `annualConferences = {year: event}`
+  bucket in `src/_data/indico.json`, instead of dropping them.
+- `src/_data/conferences.js` exposes a new `byYear` lookup.
+- The badge logic lives in `src/_includes/registration-badge.njk`.
+  Year pages pass `{% set year = "2026" %}` and include the partial.
+- i18n strings under `registrationBadge.*` in `src/_data/i18n.js`.
+- CSS in `src/assets/css/site.css` under `/* registration-status badge */`.
+
+The attendee count was dropped from the initial spec — Indico's
+anonymous export doesn't expose registration counts without auth, and
+the CTA pill already communicates the actionable status. If we ever
+add an authenticated sync, attendee counts can be appended trivially.
 
 ### Board member → Indico profile links
 
@@ -491,7 +504,7 @@ A rough calendar, but skip/swap as needed:
 
 - P0: Google Form for board bios
 - Cleanups: stale README, macOS duplicate files, unused assets
-- P1: NetSec announcement card → data-driven (small win)
+- ~~P1: NetSec announcement card → data-driven~~ — **done** in v2.5.0
 - P2: print stylesheet on /2026.html (before the conference)
 
 **June → August 2026** (post-ESSC 2026)
@@ -503,7 +516,7 @@ A rough calendar, but skip/swap as needed:
 
 **September → November 2026**
 
-- ~~P1: Indico API integration~~ — **done** in v2.4.0 (basic sync; registration-status badge still pending v2.5)
+- ~~P1: Indico API integration~~ — **done** in v2.4.0 (basic sync) + v2.5.0 (registration-status badge)
 - P1: NetSec co-branding strip standardised
 - P2: View Transitions API
 - P2: a11y_lint.py extensions

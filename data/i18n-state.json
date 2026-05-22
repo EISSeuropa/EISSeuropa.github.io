@@ -4,13 +4,13 @@
     "src/index.njk": {
       "fr": {
         "file": "src/index.fr.njk",
-        "source_sha1": "7dc99c196f75deabe531aea6efc584c2263d2206",
+        "source_sha1": "12c7ed14436b9efa85090c48bf7a6540f34ecf4e",
         "translated_on": "2026-05-22",
         "status": "beta"
       },
       "de": {
         "file": "src/index.de.njk",
-        "source_sha1": "7dc99c196f75deabe531aea6efc584c2263d2206",
+        "source_sha1": "12c7ed14436b9efa85090c48bf7a6540f34ecf4e",
         "translated_on": "2026-05-22",
         "status": "beta"
       }
@@ -116,13 +116,13 @@
     "src/2026.njk": {
       "fr": {
         "file": "src/2026.fr.njk",
-        "source_sha1": "b116a0beaaf1003fa417ab6a3ab03117c65aa74b",
+        "source_sha1": "b6d9bb4ce801d045afdc9246b474344499ab86a6",
         "translated_on": "2026-05-22",
         "status": "beta"
       },
       "de": {
         "file": "src/2026.de.njk",
-        "source_sha1": "b116a0beaaf1003fa417ab6a3ab03117c65aa74b",
+        "source_sha1": "b6d9bb4ce801d045afdc9246b474344499ab86a6",
         "translated_on": "2026-05-22",
         "status": "beta"
       }

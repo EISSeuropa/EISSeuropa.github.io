@@ -1634,6 +1634,103 @@ h4 { font-size: var(--fs-lg); }
   }
 }
 
+/* ---------- registration-status badge --------------------------------
+   Live "Registration open / Happening now / Past edition" pill rendered
+   on annual-conference pages (src/2026.njk, ...) via the partial
+   src/_includes/registration-badge.njk. Status is derived at build time
+   from conferences.js dates vs. today; the CTA links to the Indico
+   registration page from src/_data/indico.json.
+
+   The element sits on top of the hero photo, so it needs its own glassy
+   surface — not the page's regular card. Colours adapt per status:
+     upcoming      → primary brand accent (CTA-worthy)
+     happening-now → live red, pulsing dot
+     past          → neutral grey
+*/
+.registration-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0.5rem 0.875rem;
+  border-radius: 999px;
+  background: hsl(0 0% 100% / 0.14);
+  border: 1px solid hsl(0 0% 100% / 0.28);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: white;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+
+.registration-badge__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.registration-badge__dot--live {
+  background: #ff5b5b;
+  box-shadow: 0 0 0 0 hsl(0 100% 68% / 0.7);
+  animation: registrationBadgePulse 1.6s infinite;
+}
+
+@keyframes registrationBadgePulse {
+  0%   { box-shadow: 0 0 0 0 hsl(0 100% 68% / 0.65); }
+  70%  { box-shadow: 0 0 0 10px hsl(0 100% 68% / 0); }
+  100% { box-shadow: 0 0 0 0 hsl(0 100% 68% / 0); }
+}
+
+.registration-badge--upcoming .registration-badge__dot {
+  background: #5bff8a;
+}
+
+.registration-badge__label {
+  white-space: nowrap;
+}
+
+.registration-badge__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  background: white;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  transition: background var(--motion-fast) var(--ease-out),
+              transform var(--motion-fast) var(--ease-out);
+}
+
+.registration-badge__cta:hover,
+.registration-badge__cta:focus-visible {
+  background: hsl(0 0% 100% / 0.92);
+  transform: translateY(-1px);
+}
+
+.registration-badge--past {
+  background: hsl(0 0% 100% / 0.08);
+  border-color: hsl(0 0% 100% / 0.18);
+  color: hsl(0 0% 100% / 0.78);
+}
+
+.registration-badge--past .registration-badge__cta {
+  background: hsl(0 0% 100% / 0.18);
+  color: white;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .registration-badge__dot--live {
+    animation: none;
+  }
+}
+
 /* ---------- utilities ---------- */
 .sr-only {
   position: absolute;
