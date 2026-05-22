@@ -145,18 +145,26 @@ const locales = {
       noEventsBody: "When members publish events through indico.eiss-europa.com, they'll appear here automatically.",
     },
 
-    keynotes: {
-      // Live keynote block above the static PDF programme on /YYYY pages.
-      // Populated from src/_data/indico.json by scripts/sync-indico.py
-      // (sessions with sessionCode == "KEY" in the Indico timetable).
-      // Hidden when there are no keynotes for the year.
+    plenaries: {
+      // Live plenary-sessions block above the static PDF programme on
+      // /YYYY pages. Populated from src/_data/indico.json by
+      // scripts/sync-indico.py (sessions whose sessionCode is in
+      // PLENARY_SESSION_CODES: INTRO, KEY, CONC). Hidden when there
+      // are no plenaries for the year.
       sectionEyebrow: "Live from Indico",
-      sectionHeading: "Keynotes & online rooms",
+      sectionHeading: "Plenary sessions & online rooms",
       sectionLead: "Pulled live from the Indico timetable. Online rooms appear here as soon as they're published — refresh the day of the conference for the join link.",
       onlineRoomTba: "Online room TBA",
       joinOnline: "Join online",
       viewSession: "View on Indico",
       lastSynced: "Last refreshed",
+      // Per-session type labels — surfaced as a small eyebrow on each
+      // card so attendees can scan introduction vs. keynote vs. closing.
+      types: {
+        introduction: "Introduction",
+        keynote: "Keynote",
+        conclusion: "Closing",
+      },
     },
 
     registrationBadge: {
@@ -276,14 +284,19 @@ const locales = {
       noEventsBody: "Lorsque les membres publient des événements via indico.eiss-europa.com, ils apparaîtront ici automatiquement.",
     },
 
-    keynotes: {
+    plenaries: {
       sectionEyebrow: "En direct depuis Indico",
-      sectionHeading: "Conférences plénières et salles en ligne",
+      sectionHeading: "Sessions plénières et salles en ligne",
       sectionLead: "Tiré en direct du programme Indico. Les salles en ligne apparaissent ici dès qu'elles sont publiées — actualisez la page le jour de la conférence pour le lien de connexion.",
       onlineRoomTba: "Salle en ligne à venir",
       joinOnline: "Rejoindre en ligne",
       viewSession: "Voir sur Indico",
       lastSynced: "Dernière mise à jour",
+      types: {
+        introduction: "Introduction",
+        keynote: "Conférence plénière",
+        conclusion: "Clôture",
+      },
     },
 
     registrationBadge: {
@@ -397,14 +410,19 @@ const locales = {
       noEventsBody: "Wenn Mitglieder Veranstaltungen über indico.eiss-europa.com veröffentlichen, erscheinen sie hier automatisch.",
     },
 
-    keynotes: {
+    plenaries: {
       sectionEyebrow: "Live von Indico",
-      sectionHeading: "Keynotes & Online-Räume",
+      sectionHeading: "Plenarsitzungen & Online-Räume",
       sectionLead: "Live aus dem Indico-Programm gezogen. Online-Räume erscheinen hier, sobald sie veröffentlicht werden — am Konferenztag die Seite aktualisieren, um den Beitritts-Link zu sehen.",
       onlineRoomTba: "Online-Raum folgt",
       joinOnline: "Online beitreten",
       viewSession: "Auf Indico ansehen",
       lastSynced: "Zuletzt aktualisiert",
+      types: {
+        introduction: "Eröffnung",
+        keynote: "Keynote",
+        conclusion: "Abschluss",
+      },
     },
 
     registrationBadge: {

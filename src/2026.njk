@@ -51,10 +51,11 @@ alternates:
   </div>
 </section>
 
-{# Live keynotes pulled from the Indico timetable. Hidden when no
-   sessions are flagged with sessionCode == "KEY" in Indico. #}
+{# Live plenaries pulled from the Indico timetable — introduction,
+   keynotes, and concluding remarks. Hidden when no sessions are
+   flagged with INTRO / KEY / CONC sessionCodes in Indico. #}
 {% set year = "2026" %}
-{% include "keynotes-list.njk" %}
+{% include "plenaries-list.njk" %}
 
 <section class="section" id="programme" aria-labelledby="programme-title">
   <div class="container">
