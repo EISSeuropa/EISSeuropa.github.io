@@ -64,15 +64,31 @@ ROOT_CATEGORY_ID = 0          # Indico root — returns events from all sub-cate
 LOOK_AHEAD_DAYS = 540          # ~18 months
 ANNUAL_CONFERENCE_CATEGORY_IDS = {1}  # ESSC editions — routed into `annualConferences` bucket
 
-# Indico session codes that flag livestreamed sessions in the EISS
-# timetable. Set on the session itself (visible as both `code` and
-# `sessionCode` in the timetable export). The 2026 ESSC uses:
-#   "INTRO" — opening / introductory remarks
-#   "KEY"   — keynote talk
-#   "RT"    — roundtable (livestreamed panel-style discussion)
-#   "CONC"  — concluding remarks
-# Adjust if the convention changes in a future edition. The mapped value
-# is a stable identifier the templates use to pick a localised label.
+# Classification — three signals, in priority order. A session ends
+# up in the livestreamed list if ANY of them resolves to a known type.
+#
+# 1. Indico session "Type" (visible in Indico as: Round Table / Plenary
+#    / Closed Panel / Open Panel / Poster / Plenary / "No type
+#    selected"). This is the EISS operator's preferred convention going
+#    forward — it's clicked from a dropdown rather than typed, so it's
+#    less prone to typos than session codes. NOTE: the timetable export
+#    does NOT include this field; we have to fetch each session's
+#    detail endpoint separately to read it. One HTTP call per session,
+#    daily — fine.
+LIVESTREAM_SESSION_TYPES = {
+    "Round Table": "roundtable",
+    # "Plenary" alone is ambiguous (keynote vs. closing vs. intro), so
+    # it's only resolved with help from the sessionCode below.
+}
+
+# 2. Indico session code — the original signal. Kept as a second
+#    source of truth because (a) the introductory remarks slot has
+#    no Type set in 2026, (b) it disambiguates the otherwise
+#    overloaded "Plenary" type. The 2026 ESSC uses:
+#      "INTRO" — opening / introductory remarks
+#      "KEY"   — keynote talk
+#      "RT"    — roundtable
+#      "CONC"  — concluding remarks
 LIVESTREAM_SESSION_CODES = {
     "INTRO": "introduction",
     "KEY": "keynote",
@@ -80,11 +96,11 @@ LIVESTREAM_SESSION_CODES = {
     "CONC": "conclusion",
 }
 
-# Fallback: title-prefix → type, applied when a session has no usable
-# sessionCode. This lets us pick up sessions that haven't been tagged
-# yet (e.g. a roundtable whose Indico title still starts with
-# "Roundtable:"). Tagging in Indico is preferred — it's the
-# authoritative signal and survives title edits.
+# 3. Title-prefix safety net — applied only when neither Type nor
+#    sessionCode resolve. Lets a roundtable whose Indico title still
+#    starts with "Roundtable:" appear before someone tags it. The
+#    prefix is stripped from the displayed title since the type is
+#    conveyed by the row's eyebrow.
 TITLE_PREFIX_FALLBACKS = {
     "Roundtable:": "roundtable",
 }
@@ -181,15 +197,61 @@ def fetch_timetable(event_id: str) -> dict:
     return payload.get("results", {}) or {}
 
 
-def _classify_session(slot: dict) -> str | None:
+def fetch_session_type(event_id: str, session_id) -> str | None:
+    """Pull a single session's metadata to read the Indico `type`
+    field — the bulk timetable export doesn't include it. Returns the
+    raw type string ("Round Table", "Plenary", "Closed Panel", …) or
+    None if the field is unset / the call failed."""
+    if not session_id:
+        return None
+    url = f"{INDICO_BASE}/export/event/{event_id}/session/{session_id}.json"
+    try:
+        r = requests.get(url, timeout=30, headers={"Accept": "application/json"})
+        r.raise_for_status()
+        payload = r.json()
+    except Exception as exc:  # noqa: BLE001 — best-effort enrichment
+        print(f"  ! session {session_id} detail fetch failed: {exc}", file=sys.stderr)
+        return None
+    results = payload.get("results") or []
+    if not results:
+        return None
+    return (results[0].get("session") or {}).get("type")
+
+
+def _classify_session(slot: dict, indico_type: str | None) -> str | None:
     """Return the livestream-type label for a session slot, or None
-    if it isn't livestreamed. Prefers `sessionCode` (authoritative)
-    over title-prefix matching (safety net for sessions not yet
-    tagged in Indico)."""
-    code = slot.get("sessionCode") or ""
+    if it isn't livestreamed. Three signals checked in order:
+
+      1. Indico session Type (preferred — picked from a dropdown,
+         less prone to typos). "Plenary" alone is ambiguous, so we
+         disambiguate it with sessionCode (INTRO/KEY/CONC); without
+         a code it defaults to "keynote", which is the dominant
+         use of "Plenary" at EISS.
+      2. sessionCode — works when Type is unset (e.g. the 2026
+         INTRO slot has no Type in Indico).
+      3. Title prefix ("Roundtable:") — last-resort safety net.
+    """
+    code = (slot.get("sessionCode") or "").strip()
+
+    # 1. Indico Type
+    if indico_type:
+        mapped = LIVESTREAM_SESSION_TYPES.get(indico_type)
+        if mapped:
+            return mapped
+        if indico_type == "Plenary":
+            # Resolve the overloaded "Plenary" type via sessionCode.
+            # Without a code, default to keynote — that's the most
+            # common use of "Plenary" at EISS (e.g. invited speaker).
+            return LIVESTREAM_SESSION_CODES.get(code) or "keynote"
+        # Otherwise (Closed Panel / Open Panel / Poster / …) skip.
+        return None
+
+    # 2. sessionCode (when Type isn't set)
     mapped = LIVESTREAM_SESSION_CODES.get(code)
     if mapped:
         return mapped
+
+    # 3. Title prefix
     title = (slot.get("title") or "").strip()
     for prefix, kind in TITLE_PREFIX_FALLBACKS.items():
         if title.startswith(prefix):
@@ -202,11 +264,13 @@ def extract_livestreamed(timetable_results: dict, event_id: str) -> list[dict]:
     keynote / conclusion) from a timetable export. Returns a sorted
     list of normalised dicts.
 
-    Detection uses Indico's `sessionCode` field — set by the EISS
-    conference team on each livestreamed slot — with a title-prefix
-    fallback for slots not yet tagged.
+    For each timetable slot that's a Session, we first need the
+    session's Type field — which only the per-session detail endpoint
+    exposes. We cache by sessionId so each session is fetched once,
+    even when it spans multiple slots (e.g. coffee breaks).
     """
     sessions: list[dict] = []
+    type_cache: dict = {}  # sessionId → Indico type string (or None)
     event_block = timetable_results.get(str(event_id), {})
     for day_key, day in event_block.items():
         if not isinstance(day, dict):
@@ -216,7 +280,11 @@ def extract_livestreamed(timetable_results: dict, event_id: str) -> list[dict]:
                 continue
             if slot.get("entryType") != "Session":
                 continue
-            session_type = _classify_session(slot)
+            session_id = slot.get("sessionId")
+            if session_id not in type_cache:
+                type_cache[session_id] = fetch_session_type(event_id, session_id)
+            indico_type = type_cache[session_id]
+            session_type = _classify_session(slot, indico_type)
             if not session_type:
                 continue
             start = slot.get("startDate") or {}
