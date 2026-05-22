@@ -41,38 +41,40 @@ alternates:
   </div>
 </section>
 
+{% set conf = conferences.next %}
+{% if conf %}
 <section class="section" aria-labelledby="featured-title">
   <div class="container">
     <article class="card featured">
       <div>
         <div class="featured-eyebrow">Nächste Konferenz</div>
-        <h2 id="featured-title">European Security Conference 2026</h2>
+        <h2 id="featured-title">European Security Conference {{ conf.year }}</h2>
         <p class="featured-orgs">
-          Gemeinsam organisiert von der COST-Aktion NetSec, der Europäischen Initiative für Sicherheitsstudien (EISS)
-          und der Universität Stockholm.
+          {{ conf.organisers.de }}
         </p>
         <div class="featured-meta">
           <div>
             <strong>{{ icon("calendar", "icon-inline") }}Datum</strong>
-            11. — 12. Juni 2026
+            {{ conf.dates.de }}
           </div>
           <div>
             <strong>{{ icon("map-pin", "icon-inline") }}Ort</strong>
-            Universität Stockholm
+            {{ conf.venue.de }}
           </div>
         </div>
         <div>
-          <a class="btn btn-primary" href="/2026.de.html">Mehr über die ESSC&nbsp;2026 erfahren {{ icon("arrow-right") }}</a>
+          <a class="btn btn-primary" href="/{{ conf.slug }}.de.html">Mehr über die ESSC&nbsp;{{ conf.year }} erfahren {{ icon("arrow-right") }}</a>
         </div>
       </div>
       <aside class="featured-date" aria-hidden="true">
-        <div class="month">Juni</div>
-        <div class="day">11<span aria-hidden="true">–</span>12</div>
-        <div class="year">2026 · Stockholm</div>
+        <div class="month">{{ conf.monthLabel.de }}</div>
+        <div class="day">{{ conf.dayRange | replace("–", "<span aria-hidden='true'>–</span>") | safe }}</div>
+        <div class="year">{{ conf.year }} · {{ conf.city }}</div>
       </aside>
     </article>
   </div>
 </section>
+{% endif %}
 
 <section class="section-tight" aria-labelledby="news-title">
   <div class="container">

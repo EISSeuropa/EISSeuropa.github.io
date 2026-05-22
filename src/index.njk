@@ -40,38 +40,43 @@ alternates:
   </div>
 </section>
 
+{# Featured card: the next-upcoming (or currently-running) conference,
+   chosen from src/_data/conferences.js based on today's date. The card
+   disappears entirely if there's no upcoming conference. #}
+{% set conf = conferences.next %}
+{% if conf %}
 <section class="section" aria-labelledby="featured-title">
   <div class="container">
     <article class="card featured">
       <div>
         <div class="featured-eyebrow">Next conference</div>
-        <h2 id="featured-title">European Security Conference 2026</h2>
+        <h2 id="featured-title">European Security Conference {{ conf.year }}</h2>
         <p class="featured-orgs">
-          Jointly organised by the COST Action NetSec, the European Initiative for Security Studies (EISS),
-          and Stockholm University.
+          {{ conf.organisers.en }}
         </p>
         <div class="featured-meta">
           <div>
             <strong>{{ icon("calendar", "icon-inline") }}Dates</strong>
-            11 — 12 June 2026
+            {{ conf.dates.en }}
           </div>
           <div>
             <strong>{{ icon("map-pin", "icon-inline") }}Venue</strong>
-            Stockholm University
+            {{ conf.venue.en }}
           </div>
         </div>
         <div>
-          <a class="btn btn-primary" href="/2026.html">Learn more about ESSC&nbsp;2026 {{ icon("arrow-right") }}</a>
+          <a class="btn btn-primary" href="/{{ conf.slug }}.html">Learn more about ESSC&nbsp;{{ conf.year }} {{ icon("arrow-right") }}</a>
         </div>
       </div>
       <aside class="featured-date" aria-hidden="true">
-        <div class="month">June</div>
-        <div class="day">11<span aria-hidden="true">–</span>12</div>
-        <div class="year">2026 · Stockholm</div>
+        <div class="month">{{ conf.monthLabel.en }}</div>
+        <div class="day">{{ conf.dayRange | replace("–", "<span aria-hidden='true'>–</span>") | safe }}</div>
+        <div class="year">{{ conf.year }} · {{ conf.city }}</div>
       </aside>
     </article>
   </div>
 </section>
+{% endif %}
 
 <section class="section-tight" aria-labelledby="news-title">
   <div class="container">
