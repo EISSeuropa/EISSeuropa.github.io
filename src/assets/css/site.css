@@ -1548,6 +1548,92 @@ h4 { font-size: var(--fs-lg); }
   font-size: var(--fs-lg);
 }
 
+/* ---------- Indico events list ---------- */
+/* Surfaces upcoming events synced from indico.eiss-europa.com via
+   src/_data/indico.json. Rendered by src/_includes/indico-events-list.njk
+   on /index and /events when there are upcoming entries. */
+.indico-events-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.indico-event {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--space-4);
+  align-items: center;
+  padding: var(--space-4) var(--space-5);
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--motion-base) var(--ease-out),
+              border-color var(--motion-base) var(--ease-out),
+              box-shadow var(--motion-base) var(--ease-out);
+}
+
+.indico-event:hover,
+.indico-event:focus-visible {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-2);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.indico-event-date {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--accent-soft);
+  color: var(--accent-hover);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.indico-event-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.indico-event-body strong {
+  font-size: var(--fs-md);
+  letter-spacing: var(--tracking-tight);
+}
+
+.indico-event-meta {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.indico-event-arrow {
+  color: var(--text-subtle);
+  display: inline-flex;
+  align-items: center;
+}
+
+/* On narrow screens drop to a stacked layout so the title gets full width. */
+@media (max-width: 640px) {
+  .indico-event {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+  .indico-event-date {
+    justify-self: start;
+  }
+  .indico-event-arrow {
+    display: none;
+  }
+}
+
 /* ---------- utilities ---------- */
 .sr-only {
   position: absolute;

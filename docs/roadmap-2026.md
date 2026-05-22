@@ -2,7 +2,7 @@
 
 A planning document, not a commitment. Written to help the maintainer
 think through what's worth doing next, in what order, and at what
-effort. **Last update: 22 May 2026, after v2.3.0.**
+effort. **Last update: 22 May 2026, after v2.4.0.**
 
 Effort notation:
 
@@ -22,7 +22,7 @@ Dependencies on people / external systems are flagged in line.
 
 ---
 
-## Status as of v2.3.0
+## Status as of v2.4.0
 
 Where the site stands today, so the roadmap below makes sense:
 
@@ -55,6 +55,11 @@ Where the site stands today, so the roadmap below makes sense:
 - **Google Form pipeline** — built, dormant. `scripts/sync-board.py` +
   `.github/workflows/sync-board.yml` will write to `board.json` from
   a Form-linked Sheet, once `csv_url` is filled in.
+- **Indico events sync** — `scripts/sync-indico.py` runs daily, writes
+  the upcoming-events list to `src/_data/indico.json`. Homepage and
+  `/events` show those events automatically; the section hides if
+  none are pending. ESSC events filtered out (already in
+  `conferences.js`).
 
 ---
 
@@ -171,38 +176,37 @@ as a public URL — just iframe it or link out.
 
 ---
 
-## P1 — Indico integration
+## ✅ Indico integration (basic) — shipped in v2.4.0
 
-`indico.eiss-europa.com` already runs Indico for events and membership.
-The website currently links out to Indico from a few places. Closer
-integration would surface live conference data on the static site.
+`indico.eiss-europa.com` runs the EISS event-management system. v2.4.0
+adds a one-way read-only sync that surfaces Indico events on the static
+site without changing the source of truth (events are still managed in
+Indico — the website just signposts them).
 
-### Surface "next event" widget on the homepage
+**What landed:**
 
-**Effort: M (Indico API research) → L (full integration)**
-**Depends on: Indico admin access to enable API + token.**
+- **`scripts/sync-indico.py`** — fetches the public-export API
+  (`/export/categ/0.json?from=today&to=<today+18mo>`), filters out
+  Annual Conferences (already driven by `src/_data/conferences.js`),
+  writes the rest to `src/_data/indico.json`. Anonymous access — no
+  API token needed.
+- **`.github/workflows/sync-indico.yml`** — daily cron at 03:45 UTC
+  + `workflow_dispatch`. Uses direct-to-master commits (unlike
+  `sync-board.yml`'s PR pattern) because the data is already
+  fully public on Indico; human review adds nothing.
+- **`src/_includes/indico-events-list.njk`** — shared partial. Renders
+  the upcoming-events list as styled rows; hides the entire section
+  when `indico.upcoming` is empty.
+- **Surfaces on the site:** homepage shows up to 5 upcoming events
+  beneath the featured-conference card; `/events.html` shows the full
+  list above the existing format tiles. Both pages in EN / FR / DE.
+- **i18n catalog:** new `indicoEvents.*` keys in all three languages.
 
-Indico's [HTTP API](https://docs.getindico.io/en/stable/http-api/) can
-return the next event in JSON. A weekly GitHub Action could pull that
-into `src/_data/indico.json` and the homepage hero would render the
-next event card without manual editing.
+**Current real-world state:** Indico has 1 upcoming event (ESSC 2026)
+which is filtered out as an Annual Conference. Once Members' Events
+get published to Indico, they'll appear within ~24h.
 
-Like `sync-board.yml`, this would be a `workflow_dispatch` + weekly
-cron job, opening a PR on `indico-sync/auto` when the data changes.
-Re-uses the same auto-PR pattern.
-
-Sketch:
-
-```
-scripts/sync-indico.py        — fetches /export/event/{category}.json
-src/_data/indico.json         — { upcoming: [...], next: { name, url, ... } }
-.github/workflows/sync-indico.yml
-```
-
-The homepage's "Next conference" card could fall back to the static
-`/2026.html` content if `indico.json` is empty or stale.
-
-### Conference registration status indicator
+### ⏳ Conference registration status indicator (P1, deferred to v2.5+)
 
 **Effort: M**
 
@@ -211,6 +215,8 @@ On `/2026.html` and `/membership.html`, show a small badge:
 - "Registration closed"
 
 Pulled from the same Indico data. Updates on every workflow run.
+Needs more API exploration to confirm what fields are returned for
+the EISS conference type — defer to v2.5.
 
 ### Board member → Indico profile links
 
@@ -497,7 +503,7 @@ A rough calendar, but skip/swap as needed:
 
 **September → November 2026**
 
-- P1: Indico API integration — start with the "next event" widget
+- ~~P1: Indico API integration~~ — **done** in v2.4.0 (basic sync; registration-status badge still pending v2.5)
 - P1: NetSec co-branding strip standardised
 - P2: View Transitions API
 - P2: a11y_lint.py extensions

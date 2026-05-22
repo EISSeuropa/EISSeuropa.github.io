@@ -1,0 +1,63 @@
+{# Upcoming-events-from-Indico section.
+   Renders nothing when `indico.upcoming` is empty.
+   Consumed by /index and /events in all three languages.
+
+   This partial is included from the CHILD page template (not base.njk),
+   so base.njk's `t` shorthand isn't in scope. We re-derive it from the
+   global `i18n` data file using the page's `lang` front-matter. Same
+   for the icon macro — the include lives in src/_includes so we import
+   it locally.
+
+   Variables in scope from the page template:
+     - `lang` — front-matter, defaults to "en"
+     - `indico` — the data file from src/_data/indico.json. Shape:
+         { upcoming: [{id, title, category, start, end, location, room,
+                       url, type, startDateOnly, ...}, ...],
+           syncedAt: "ISO-8601", source: "...", lookaheadDays: N }
+     - `limit` (optional, default null) — slice the list to N entries.
+       Use 5 on the homepage; omit on /events to show everything.
+#}
+{% from "icons.njk" import icon %}
+{%- set _lang = lang or "en" -%}
+{%- set t = i18n[_lang] -%}
+
+{% if indico.upcoming and indico.upcoming.length %}
+<section class="section-tight indico-events" aria-labelledby="indico-events-title">
+  <div class="container">
+    <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">{{ t.indicoEvents.sectionEyebrow }}</div>
+    <h2 id="indico-events-title">{{ t.indicoEvents.sectionHeading }}</h2>
+    <p class="muted" style="max-width: 44rem; margin-bottom: var(--space-5);">
+      {{ t.indicoEvents.sectionLead }}
+    </p>
+
+    <ul class="indico-events-list" role="list">
+      {%- for ev in indico.upcoming -%}
+        {%- if not limit or loop.index <= limit %}
+      <li>
+        <a class="indico-event" href="{{ ev.url }}" target="_blank" rel="noopener">
+          <span class="indico-event-date" aria-hidden="true">{{ icon("calendar") }} {{ ev.startDateOnly }}</span>
+          <span class="indico-event-body">
+            <strong>{{ ev.title }}</strong>
+            {%- if ev.location or ev.category %}
+            <span class="indico-event-meta">
+              {%- if ev.category %}{{ ev.category }}{% endif -%}
+              {%- if ev.category and ev.location %} · {% endif -%}
+              {%- if ev.location %}{{ ev.location }}{% endif -%}
+            </span>
+            {%- endif %}
+          </span>
+          <span class="indico-event-arrow" aria-hidden="true">{{ icon("external-link") }}</span>
+        </a>
+      </li>
+        {%- endif -%}
+      {%- endfor %}
+    </ul>
+
+    <p style="margin-top: var(--space-5);">
+      <a class="btn btn-secondary btn-sm" href="https://indico.eiss-europa.com/" target="_blank" rel="noopener">
+        {{ t.indicoEvents.viewAll }} {{ icon("external-link") }}
+      </a>
+    </p>
+  </div>
+</section>
+{% endif %}

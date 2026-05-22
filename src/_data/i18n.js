@@ -121,6 +121,20 @@ const locales = {
       text: "This page is not yet available in {{language}}. You're seeing the {{language}} home page; the original page is available in English.",
       backToOriginal: "View the original page in English",
     },
+
+    indicoEvents: {
+      // Section heading + actions for the auto-synced upcoming-events
+      // list pulled from indico.eiss-europa.com. Visible on /index and
+      // /events when src/_data/indico.json has upcoming entries; the
+      // whole section is hidden when the list is empty.
+      sectionEyebrow: "Upcoming events",
+      sectionHeading: "Events on Indico",
+      sectionLead: "Members' events, summer schools, and policy workshops. Registration and full details on Indico.",
+      viewAll: "View all events on Indico",
+      lastSynced: "Last refreshed",
+      noEventsTitle: "No upcoming events on Indico yet",
+      noEventsBody: "When members publish events through indico.eiss-europa.com, they'll appear here automatically.",
+    },
   },
 
   fr: {
@@ -205,6 +219,16 @@ const locales = {
       text: "Cette page n'est pas encore disponible en {{language}}. Vous voyez la page d'accueil en {{language}} ; la page originale est disponible en anglais.",
       backToOriginal: "Voir la page originale en anglais",
     },
+
+    indicoEvents: {
+      sectionEyebrow: "Événements à venir",
+      sectionHeading: "Événements sur Indico",
+      sectionLead: "Événements des membres, écoles d'été et ateliers politiques. Inscriptions et détails complets sur Indico.",
+      viewAll: "Voir tous les événements sur Indico",
+      lastSynced: "Dernière mise à jour",
+      noEventsTitle: "Pas encore d'événements à venir sur Indico",
+      noEventsBody: "Lorsque les membres publient des événements via indico.eiss-europa.com, ils apparaîtront ici automatiquement.",
+    },
   },
 
   de: {
@@ -288,6 +312,16 @@ const locales = {
     untranslatedNotice: {
       text: "Diese Seite ist noch nicht auf {{language}} verfügbar. Sie sehen die {{language}}-Startseite; die Originalseite ist auf Englisch verfügbar.",
       backToOriginal: "Originalseite auf Englisch ansehen",
+    },
+
+    indicoEvents: {
+      sectionEyebrow: "Kommende Veranstaltungen",
+      sectionHeading: "Veranstaltungen auf Indico",
+      sectionLead: "Mitgliederveranstaltungen, Sommerschulen und politische Workshops. Anmeldung und vollständige Details auf Indico.",
+      viewAll: "Alle Veranstaltungen auf Indico ansehen",
+      lastSynced: "Zuletzt aktualisiert",
+      noEventsTitle: "Noch keine kommenden Veranstaltungen auf Indico",
+      noEventsBody: "Wenn Mitglieder Veranstaltungen über indico.eiss-europa.com veröffentlichen, erscheinen sie hier automatisch.",
     },
   },
 };

@@ -24,6 +24,12 @@ alternates:
   </div>
 </header>
 
+{# Auto-synced upcoming events from indico.eiss-europa.com — full list,
+   no limit. Hides entirely when the synced list is empty (see
+   src/_data/indico.json). #}
+{% set limit = null %}
+{% include "indico-events-list.njk" %}
+
 <section class="section">
   <div class="container">
     <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));">

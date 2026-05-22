@@ -4,13 +4,13 @@
     "src/index.njk": {
       "fr": {
         "file": "src/index.fr.njk",
-        "source_sha1": "2decba53ebb2ffb34850cba1e2f26bc224934d71",
+        "source_sha1": "7dc99c196f75deabe531aea6efc584c2263d2206",
         "translated_on": "2026-05-22",
         "status": "beta"
       },
       "de": {
         "file": "src/index.de.njk",
-        "source_sha1": "2decba53ebb2ffb34850cba1e2f26bc224934d71",
+        "source_sha1": "7dc99c196f75deabe531aea6efc584c2263d2206",
         "translated_on": "2026-05-22",
         "status": "beta"
       }
@@ -60,13 +60,13 @@
     "src/events.njk": {
       "fr": {
         "file": "src/events.fr.njk",
-        "source_sha1": "f79bcbd728671e52c787beaec1e8a3fefebb2f4d",
+        "source_sha1": "2c1b725ed397925e6e0beb2f101cb47301c6afbf",
         "translated_on": "2026-05-22",
         "status": "beta"
       },
       "de": {
         "file": "src/events.de.njk",
-        "source_sha1": "f79bcbd728671e52c787beaec1e8a3fefebb2f4d",
+        "source_sha1": "2c1b725ed397925e6e0beb2f101cb47301c6afbf",
         "translated_on": "2026-05-22",
         "status": "beta"
       }
