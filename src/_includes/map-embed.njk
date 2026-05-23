@@ -1,4 +1,4 @@
-{# Click-to-load Google Maps embed for the conference venue.
+{# Google Maps embed for the conference venue.
 
    Usage (from any /YYYY.njk):
      {% set conf = conferences.byYear[year] %}
@@ -6,54 +6,21 @@
        {% include "map-embed.njk" %}
      {% endif %}
 
-   Why click-to-load: the privacy policy (§3) commits to not embedding
-   any third-party widgets that load before the visitor clicks them.
-   The placeholder card is fully styled in the design-system CSS; on
-   click, the inline <script> swaps the placeholder for the real
-   iframe (lazy-loaded, sandboxed, no-referrer).
-
-   The script is small and self-contained; no global state. If JS is
-   disabled the placeholder simply stays put and the visitor can use
-   the "Open in Google Maps" CTA in the surrounding venue section. #}
+   The iframe loads on page view; Google Maps is therefore listed
+   under /policy §5 as a third-party service present on conference
+   pages. The strict no-social-widgets stance in §3 is preserved
+   (Maps isn't a social-media widget). #}
 
 {%- set lang = lang or "en" -%}
 {%- set t = i18n[lang] -%}
 {%- set mapEmbed = conferences.byYear[year].mapEmbed -%}
 {%- set addr = mapEmbed.address[lang] or mapEmbed.address.en -%}
 
-<div class="map-embed" data-map-embed>
-  <button type="button" class="map-embed__placeholder" data-map-embed-trigger
-          aria-label="{{ t.mapEmbed.loadButtonAria | replace('{{address}}', addr) }}">
-    <span class="map-embed__icon" aria-hidden="true">{{ icon("map-pin") }}</span>
-    <span class="map-embed__lines">
-      <span class="map-embed__address">{{ addr }}</span>
-      <span class="map-embed__cta">{{ t.mapEmbed.loadButton }}</span>
-      <span class="map-embed__privacy">{{ t.mapEmbed.privacyNote }}</span>
-    </span>
-  </button>
-  <template data-map-embed-iframe>
-    <iframe
-      src="{{ mapEmbed.src }}"
-      title="{{ t.mapEmbed.iframeTitle | replace('{{address}}', addr) }}"
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-      allowfullscreen></iframe>
-  </template>
+<div class="map-embed">
+  <iframe
+    src="{{ mapEmbed.src }}"
+    title="{{ t.mapEmbed.iframeTitle | replace('{{address}}', addr) }}"
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    allowfullscreen></iframe>
 </div>
-
-<script>
-  (function () {
-    document.querySelectorAll("[data-map-embed]").forEach(function (root) {
-      var trigger = root.querySelector("[data-map-embed-trigger]");
-      var tpl = root.querySelector("[data-map-embed-iframe]");
-      if (!trigger || !tpl) return;
-      trigger.addEventListener("click", function () {
-        var frame = tpl.content.firstElementChild.cloneNode(true);
-        root.replaceChildren(frame);
-        // Move keyboard focus to the iframe so screen-reader users land
-        // inside the embed they just opted into.
-        try { frame.focus({ preventScroll: true }); } catch (e) {}
-      }, { once: true });
-    });
-  })();
-</script>

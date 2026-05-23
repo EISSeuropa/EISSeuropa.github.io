@@ -233,14 +233,10 @@ const locales = {
     },
 
     mapEmbed: {
-      // Click-to-load Google Maps preview on /YYYY venue sections.
-      // See src/_includes/map-embed.njk + the /policy §3 privacy
-      // commitment that no third-party widgets load before the visitor
-      // opts in.
-      loadButton: "Show interactive map",
-      loadButtonAria: "Load Google Maps preview for {{address}}",
+      // Google Maps embed on /YYYY venue sections. Only the iframe
+      // title is i18n'd; the embed loads on page view, and is disclosed
+      // under /policy §5. See src/_includes/map-embed.njk.
       iframeTitle: "Google Maps preview for {{address}}",
-      privacyNote: "Loading the map will request data from Google.",
     },
   },
 
@@ -406,10 +402,7 @@ const locales = {
     },
 
     mapEmbed: {
-      loadButton: "Afficher la carte interactive",
-      loadButtonAria: "Charger l'aperçu Google Maps pour {{address}}",
       iframeTitle: "Aperçu Google Maps pour {{address}}",
-      privacyNote: "Charger la carte enverra une requête aux serveurs de Google.",
     },
   },
 
@@ -575,10 +568,7 @@ const locales = {
     },
 
     mapEmbed: {
-      loadButton: "Interaktive Karte anzeigen",
-      loadButtonAria: "Google-Maps-Vorschau für {{address}} laden",
       iframeTitle: "Google-Maps-Vorschau für {{address}}",
-      privacyNote: "Beim Laden der Karte werden Daten an Google übermittelt.",
     },
   },
 };
