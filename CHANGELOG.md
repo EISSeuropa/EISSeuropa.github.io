@@ -23,6 +23,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 - `/policy` §5 discloses Google Maps as a third-party embed on conference pages (EN / FR / DE). The §3 no-social-media-widgets bullet is unchanged.
 - `scripts/sync-indico.py` computes `roomDiffersFromDefault` per slot (lowercased last-segment comparison to handle the operator-format inconsistency between `"Lecture Hall 8"` and `"D House, Lecture Hall 8"`) and exposes the event default as `programme.defaultRoom` for the template's baseline hint.
+- Parallel rows now sort items so the default-room slot lands in the left column and off-default slots in the right column. Indico returns concurrent sessions in non-deterministic order, which had Hall 8 / Hall 9 flip-flopping row-to-row in the grid; sorting in the sync makes successive panels in the same room align vertically.
 
 ## [2.13.0r] · 2026-05-23 — Adopt NetSec versioning and release tooling
 

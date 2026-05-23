@@ -624,6 +624,20 @@ def extract_programme(timetable_results: dict, event_id: str, default_room: str 
                     and slots[j]["startTime"] == current["startTime"]:
                 group.append(slots[j])
                 j += 1
+            # Stable column assignment across rows: default-room slots
+            # always land in the left column; off-default slots (Hall 9
+            # next to Hall 8, etc.) always land in the right column.
+            # Indico returns parallel sessions in non-deterministic order,
+            # which would otherwise have Hall 8 / Hall 9 flip-flopping
+            # row-to-row and make the grid harder to scan. Tie-break by
+            # room name then title for stable ordering when both items
+            # share a room (which shouldn't happen in practice, but be
+            # defensive).
+            group.sort(key=lambda s: (
+                bool(s.get("roomDiffersFromDefault")),
+                s.get("room") or "",
+                s.get("title") or "",
+            ))
             # End-time of the row is the latest among grouped items —
             # parallel panels often end at the same minute but be safe.
             row_end = max(s["endTime"] for s in group)
