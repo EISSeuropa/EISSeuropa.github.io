@@ -195,6 +195,25 @@ const locales = {
       },
     },
 
+    notFound: {
+      // 404 page strings. GitHub Pages auto-serves /404.html for any
+      // unmatched path on the apex domain, so this surfaces whenever
+      // someone hits a typo'd URL or follows a stale link.
+      eyebrow: "404",
+      heading: "We couldn't find that page",
+      body: "The page you tried to reach doesn't exist, or it moved during the migration off Mobirise. The links below cover most of what people look for.",
+      backHome: "Back to the home page",
+      tryInstead: "Try one of these instead",
+      quickLinks: {
+        nextConference: "Next ESSC conference",
+        pastConferences: "Past conferences",
+        membership: "Membership",
+        board: "The board",
+        events: "Members' events",
+        initiative: "About the Initiative",
+      },
+    },
+
     registrationBadge: {
       // Live status badge on annual conference pages (/2026, /2027, ...).
       // Status is computed at build time from conferences.js dates and
@@ -347,6 +366,22 @@ const locales = {
       },
     },
 
+    notFound: {
+      eyebrow: "404",
+      heading: "Page introuvable",
+      body: "La page que vous cherchez n'existe pas, ou a été déplacée lors de la migration depuis Mobirise. Les liens ci-dessous couvrent la plupart des destinations recherchées.",
+      backHome: "Retour à l'accueil",
+      tryInstead: "Essayez plutôt l'une de ces pages",
+      quickLinks: {
+        nextConference: "Prochaine conférence ESSC",
+        pastConferences: "Conférences passées",
+        membership: "Adhésion",
+        board: "L'équipe",
+        events: "Événements des membres",
+        initiative: "À propos de l'Initiative",
+      },
+    },
+
     registrationBadge: {
       upcoming: "Inscriptions ouvertes",
       closed: "Inscriptions fermées",
@@ -490,6 +525,22 @@ const locales = {
         roundtable: "Runder Tisch",
         keynote: "Keynote",
         conclusion: "Abschluss",
+      },
+    },
+
+    notFound: {
+      eyebrow: "404",
+      heading: "Seite nicht gefunden",
+      body: "Die gesuchte Seite existiert nicht oder wurde während der Migration von Mobirise verschoben. Die folgenden Links decken die meisten Ziele ab.",
+      backHome: "Zurück zur Startseite",
+      tryInstead: "Versuchen Sie stattdessen eine dieser Seiten",
+      quickLinks: {
+        nextConference: "Nächste ESSC-Konferenz",
+        pastConferences: "Vergangene Konferenzen",
+        membership: "Mitgliedschaft",
+        board: "Das Team",
+        events: "Mitgliederveranstaltungen",
+        initiative: "Über die Initiative",
       },
     },
 

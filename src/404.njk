@@ -1,0 +1,67 @@
+---
+layout: base.njk
+permalink: /404.html
+title: 404 — Page not found
+description: The page you tried to reach doesn't exist on eiss-europa.com. Quick links to where you probably wanted to go.
+lang: en
+navKey: ""
+# GitHub Pages auto-serves this file for any unmatched path on the apex
+# domain. Keep it permalinked exactly at /404.html so GH Pages finds it.
+---
+{% from "icons.njk" import icon %}
+{# Child templates don't inherit `t` from base.njk because Eleventy
+   renders the child first then injects it into the layout. Derive
+   locally so the i18n catalog is reachable from the markup below. #}
+{%- set t = i18n[lang or "en"] -%}
+
+<section class="notfound" aria-labelledby="notfound-title">
+  <div class="container">
+    <p class="notfound-eyebrow" aria-hidden="true">{{ t.notFound.eyebrow }}</p>
+    <h1 id="notfound-title">{{ t.notFound.heading }}</h1>
+    <p class="lead notfound-body">{{ t.notFound.body }}</p>
+
+    <h2 class="notfound-section-title">{{ t.notFound.tryInstead }}</h2>
+    <ul class="notfound-links" role="list">
+      <li>
+        <a href="/2026.html">
+          {{ icon("calendar") }}
+          <span>{{ t.notFound.quickLinks.nextConference }}</span>
+        </a>
+      </li>
+      <li>
+        <a href="/past.html">
+          {{ icon("book-open") }}
+          <span>{{ t.notFound.quickLinks.pastConferences }}</span>
+        </a>
+      </li>
+      <li>
+        <a href="/membership.html">
+          {{ icon("user-plus") }}
+          <span>{{ t.notFound.quickLinks.membership }}</span>
+        </a>
+      </li>
+      <li>
+        <a href="/board.html">
+          {{ icon("users") }}
+          <span>{{ t.notFound.quickLinks.board }}</span>
+        </a>
+      </li>
+      <li>
+        <a href="/events.html">
+          {{ icon("users-round") }}
+          <span>{{ t.notFound.quickLinks.events }}</span>
+        </a>
+      </li>
+      <li>
+        <a href="/initiative.html">
+          {{ icon("lightbulb") }}
+          <span>{{ t.notFound.quickLinks.initiative }}</span>
+        </a>
+      </li>
+    </ul>
+
+    <p class="notfound-home">
+      <a class="btn btn-primary" href="/">{{ t.notFound.backHome }} {{ icon("arrow-right") }}</a>
+    </p>
+  </div>
+</section>
