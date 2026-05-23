@@ -2227,115 +2227,28 @@ h4 { font-size: var(--fs-lg); }
   }
 }
 
-/* ---------- click-to-load map embed ------------------------------------
-   Used in the venue section of /YYYY conference pages to preview the
-   site location without loading Google's servers on page view. The
-   privacy policy (§3) commits to not embedding third-party widgets
-   that load before the visitor clicks them, so the placeholder is the
-   default state; the real iframe only mounts after the click.
+/* ---------- venue map embed --------------------------------------------
+   Google Maps iframe for the conference venue. Renders inside a
+   frosted-glass frame sized to the section's content width, with a
+   16:9 aspect ratio reserving its space before the iframe paints so
+   the page doesn't reflow.
 
    Driven by src/_includes/map-embed.njk + the `mapEmbed` field on a
-   conferences.js entry. */
+   conferences.js entry. Listed under /policy §5 because the embed
+   loads on page view. */
 .map-embed {
   margin-block: var(--space-5) var(--space-5);
-  border-radius: var(--radius-3);
+  border-radius: var(--radius-lg);
   overflow: hidden;
   position: relative;
   background: var(--surface);
   border: 1px solid var(--border-glass);
   box-shadow: var(--shadow-1);
-  /* Reserve the same aspect ratio whether placeholder or iframe is
-     mounted, so loading the map doesn't reflow the page. */
   aspect-ratio: 16 / 9;
 }
 
 @supports not (aspect-ratio: 16 / 9) {
   .map-embed { min-height: 18rem; }
-}
-
-.map-embed__placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-3);
-  width: 100%;
-  height: 100%;
-  padding: var(--space-5);
-  background: linear-gradient(
-    135deg,
-    var(--accent-soft) 0%,
-    var(--surface) 60%
-  );
-  color: var(--text);
-  font: inherit;
-  text-align: center;
-  border: 0;
-  cursor: pointer;
-  appearance: none;
-  transition: background var(--motion-fast) var(--ease-out),
-              transform var(--motion-fast) var(--ease-out);
-}
-
-.map-embed__placeholder:hover,
-.map-embed__placeholder:focus-visible {
-  background: linear-gradient(
-    135deg,
-    var(--accent-soft) 0%,
-    var(--surface-strong) 60%
-  );
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .map-embed__placeholder:hover .map-embed__icon,
-  .map-embed__placeholder:focus-visible .map-embed__icon {
-    transform: translateY(-2px);
-  }
-}
-
-.map-embed__placeholder:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: -2px;
-}
-
-.map-embed__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 999px;
-  background: var(--accent);
-  color: white;
-  box-shadow: 0 8px 24px hsl(216 88% 38% / 0.25);
-  transition: transform var(--motion-fast) var(--ease-out);
-}
-
-.map-embed__icon svg {
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.map-embed__lines {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  max-width: 28rem;
-}
-
-.map-embed__address {
-  font-weight: 600;
-  color: var(--text);
-}
-
-.map-embed__cta {
-  color: var(--accent);
-  font-weight: 600;
-}
-
-.map-embed__privacy {
-  font-size: var(--fs-sm);
-  color: var(--text-subtle);
 }
 
 .map-embed iframe {
