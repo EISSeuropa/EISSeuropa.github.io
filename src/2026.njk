@@ -78,6 +78,10 @@ alternates:
         Each year, the European Security Conference is organised in a different European country.
         The 2026 conference will be held at Stockholm University, as part of the COST Action NetSec.
       </p>
+      {% set year = "2026" %}
+      {% if conferences.byYear[year].mapEmbed %}
+        {% include "map-embed.njk" %}
+      {% endif %}
       <p>
         <a class="btn btn-secondary btn-sm"
            href="https://www.google.com/maps/search/?api=1&query=Stockholm+University"

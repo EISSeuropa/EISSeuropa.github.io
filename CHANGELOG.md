@@ -14,7 +14,13 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
-_Nothing yet._
+### Added
+
+- Click-to-load Google Maps preview in the `/2026` venue section (`src/_includes/map-embed.njk` + `mapEmbed` field on `conferences.js` entries). Renders a styled placeholder card (frosted gradient + map-pin badge + address + privacy note); the real iframe mounts only after the visitor clicks, in line with `/policy` §3's commitment to no third-party widgets that load before opt-in. Localised in EN / FR / DE under `mapEmbed.*`. Hidden in print.
+
+### Changed
+
+- `/policy` §5 lists Google Maps as a click-to-load third party, mirroring the EN / FR / DE policy variants.
 
 ## [2.13.0r] · 2026-05-23 — Adopt NetSec versioning and release tooling
 
