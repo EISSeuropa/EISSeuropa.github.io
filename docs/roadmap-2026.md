@@ -30,6 +30,13 @@ each entry is one short paragraph framing the release, followed by
 bullets only when there are several distinct pieces. Patch releases
 get a single line.
 
+**Versioning rules**: see the *Versioning* section of
+[`README.md`](../README.md) for the canonical definition of what
+counts as MAJOR / MINOR / PATCH. `scripts/release.sh` enforces the
+process; `CHANGELOG.md` accumulates the entries between releases. One
+PR is *not* one release — PRs add to `[Unreleased]`; releases get
+cut at milestones.
+
 ### v2.14.2 · 22 May 2026 — *Live programme grid polish and parallel panels*
 
 Post-launch polish on the v2.14.0 grid. ESSC concurrent panels now render side-by-side under a shared time gutter on wide viewports; roundtable cards drop the misleading *View papers* expander and promote discussants to a top-level meta line; contribution URLs were absolutised; PDF subtitle separator spacing was fixed; Indico's idiosyncratic break classification was tamed. [Release notes →](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.14.2)
