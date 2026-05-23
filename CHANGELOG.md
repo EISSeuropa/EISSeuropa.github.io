@@ -14,6 +14,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+### Fixed
+
+- Translation drift on `/2026` (fr + de) and `/policy` (fr + de) accumulated from PRs #77 → #80. The map-embed include is now propagated to `src/2026.fr.njk` and `src/2026.de.njk`; the Google Maps disclosure in `policy.fr.njk` / `policy.de.njk` was already in place from #77 → #78 and just needed re-stamping. CI `i18n drift check` returns green again.
+
 ### Added
 
 - Google Maps embed in the `/2026` venue section, framed in a frosted-glass card with a 16:9 aspect ratio (`src/_includes/map-embed.njk` + `mapEmbed` field on `conferences.js` entries). The iframe loads on page view rather than behind a click — direct embed reads better and the `/policy` §3 no-social-widgets stance is preserved (Maps isn't a social-media widget). Hidden in print. Reusable: any future `/YYYY` page picks up the embed by adding a `mapEmbed` block to its conferences.js entry.

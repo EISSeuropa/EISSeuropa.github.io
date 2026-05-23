@@ -64,6 +64,10 @@ alternates:
         Jedes Jahr wird die European Security Conference in einem anderen europäischen Land organisiert.
         Die Konferenz 2026 findet im Rahmen der COST-Aktion NetSec an der Universität Stockholm statt.
       </p>
+      {% set year = "2026" %}
+      {% if conferences.byYear[year].mapEmbed %}
+        {% include "map-embed.njk" %}
+      {% endif %}
       <p>
         <a class="btn btn-secondary btn-sm"
            href="https://www.google.com/maps/search/?api=1&query=Stockholm+University"
