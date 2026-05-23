@@ -2229,3 +2229,197 @@ h4 { font-size: var(--fs-lg); }
     to   { opacity: 1; transform: translateY(0); }
   }
 }
+
+/* ---------- print stylesheet -------------------------------------------
+   Optimised for attendees printing the conference programme. Forces a
+   light theme regardless of OS / toggle, strips chrome (nav, footer,
+   livestream block, registration badge, share/social buttons), expands
+   the programme grid into a paper-friendly single-column flow with
+   sensible page breaks, and removes glass effects + animations.
+
+   Print is target-narrow: focus is /YYYY conference pages — the
+   primary print use case for EISS. Other pages are still printable;
+   they just inherit the chrome-stripping rules. */
+@media print {
+  /* Force light, ink-friendly colours regardless of OS theme. */
+  :root,
+  [data-theme="dark"] {
+    --bg: white;
+    --bg-elev: white;
+    --bg-tinted: white;
+    --surface: white;
+    --surface-strong: white;
+    --surface-nav: white;
+    --text: hsl(0 0% 10%);
+    --text-muted: hsl(0 0% 30%);
+    --text-subtle: hsl(0 0% 45%);
+    --accent: hsl(216 88% 38%);
+    --accent-hover: hsl(216 88% 32%);
+    --accent-soft: hsl(216 88% 38% / 0.08);
+    --border: hsl(0 0% 75%);
+    --border-strong: hsl(0 0% 55%);
+    --border-glass: hsl(0 0% 80%);
+    --shadow-1: none;
+    --shadow-2: none;
+    --shadow-3: none;
+  }
+
+  body {
+    background: white !important;
+    background-image: none !important;
+    color: hsl(0 0% 10%) !important;
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+
+  /* Strip glass + chrome effects across the board. */
+  *,
+  *::before,
+  *::after {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Hide site chrome and anything not useful on paper. */
+  .site-header,
+  .site-footer,
+  .nav-toggle,
+  .nav-menu,
+  .theme-toggle,
+  .lang-switcher,
+  .beta-ribbon,
+  .skip-link,
+  .registration-badge,
+  .keynotes,                     /* livestreamed sessions block */
+  .indico-events,                /* upcoming Members' events */
+  .announcement,                 /* homepage announcement card */
+  .hero,
+  .hero-bg,
+  .programme-footnote,           /* "source of truth is Indico" line */
+  .programme-days,               /* day-jump chips — no point on paper */
+  .programme-contribs > summary {/* "View papers" toggle */
+    display: none !important;
+  }
+
+  /* Force the contributions list open on paper — readers can't toggle. */
+  .programme-contribs {
+    border-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  .programme-contribs > .programme-contrib-list {
+    display: grid !important;
+  }
+  .programme-contribs[open] > summary {
+    display: none !important;
+  }
+  details {
+    /* `details` doesn't natively support open-via-CSS, but the contribs
+       list rule above already forces its grid layout to render. */
+  }
+
+  /* Tighten everything for paper. */
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .container {
+    max-width: 100% !important;
+    padding-inline: 0 !important;
+  }
+  .section,
+  .section-tight {
+    padding-block: 0.5cm !important;
+  }
+  .page-header {
+    background: white !important;
+    padding-block: 0 0 !important;
+    border-bottom: 1px solid hsl(0 0% 70%);
+  }
+
+  /* Programme grid — single column on paper, with page breaks between
+     days and between session rows. */
+  .programme-rows {
+    gap: 0.4cm !important;
+  }
+  .programme-row,
+  .programme-row--parallel .programme-row-items {
+    grid-template-columns: 1fr !important;
+  }
+  .programme-day {
+    page-break-before: always;
+  }
+  .programme-day:first-of-type {
+    page-break-before: avoid;
+  }
+  .programme-slot {
+    background: white !important;
+    border: 1px solid hsl(0 0% 80%) !important;
+    padding: 0.3cm 0.4cm !important;
+    page-break-inside: avoid;
+  }
+  .programme-slot--break {
+    border-style: dashed !important;
+    background: white !important;
+    color: hsl(0 0% 40%) !important;
+  }
+
+  /* Heading hierarchy stays intact but the gradient text trick from
+     v2.15 makes things ink-invisible on paper — undo. */
+  .page-header h1,
+  .hero h1 {
+    background: none !important;
+    -webkit-background-clip: border-box !important;
+    background-clip: border-box !important;
+    color: hsl(0 0% 10%) !important;
+  }
+  h1 { font-size: 18pt; }
+  h2 { font-size: 14pt; page-break-after: avoid; }
+  h3 { font-size: 12pt; page-break-after: avoid; }
+
+  /* Make every external link self-documenting on paper.
+     `[href^="http"]:not(.no-print-url)::after { content: " (" attr(href) ")"; }`
+     would surface URLs after the link text, but that's noisy on the
+     programme grid where almost every link points to Indico. Skip
+     for now; revisit if attendees request paper-with-URLs. */
+
+  a {
+    color: hsl(216 88% 35%) !important;
+    text-decoration: underline !important;
+  }
+
+  /* Tile icons (membership-page-style badges) and the featured-card
+     halo become noise on paper — flatten them. */
+  .tile-icon {
+    background: white !important;
+    color: hsl(216 88% 35%) !important;
+    border: 1px solid hsl(0 0% 75%) !important;
+  }
+  .card,
+  .featured {
+    background: white !important;
+    background-image: none !important;
+    border: 1px solid hsl(0 0% 80%) !important;
+    border-radius: 0 !important;
+  }
+
+  /* The polished printable-PDF embed card is redundant when the
+     attendee is *currently* printing the page itself. Hide the
+     download/open buttons and the embed object. */
+  .pdf-doc-frame,
+  .pdf-doc-actions {
+    display: none !important;
+  }
+  .pdf-doc-header {
+    padding: 0.2cm !important;
+    border-bottom: 0 !important;
+  }
+
+  /* Margins. */
+  @page {
+    margin: 1.5cm;
+  }
+}
