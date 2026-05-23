@@ -2030,6 +2030,42 @@ h4 { font-size: var(--fs-lg); }
   font-style: italic;
 }
 
+/* Room badge inside a slot card. Default presentation is muted —
+   the room is informational, not the headline. When the room
+   differs from the conference default (parallel-panel rooms, coffee
+   breaks in a different building floor), the `.--elsewhere` modifier
+   promotes it to a coloured pill so attendees scanning the grid spot
+   the exception at a glance. */
+.programme-slot-room {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  color: var(--text-subtle);
+}
+.programme-slot-room svg {
+  flex: 0 0 auto;
+}
+.programme-slot-room--elsewhere {
+  color: var(--accent);
+  font-weight: 600;
+  background: var(--accent-soft);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid hsl(216 88% 50% / 0.18);
+}
+
+/* The "Sessions take place in X unless marked otherwise" hint shown
+   above the grid. Quiet — it's the baseline, not an action. */
+.programme-default-room {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  font-size: var(--fs-sm);
+}
+.programme-default-room svg {
+  flex: 0 0 auto;
+}
+
 /* The expandable contributions block under each session. */
 .programme-contribs {
   margin-top: var(--space-3);
