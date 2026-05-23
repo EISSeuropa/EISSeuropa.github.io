@@ -65,6 +65,10 @@ Patches skip the lede + themed sections; ship the index only. People reading pat
 
 ## [Unreleased]
 
+_Nothing yet._
+
+## [2.21.0] · 2026-05-22 — Adopt NetSec versioning and release tooling
+
 > Adopts the versioning rules + release-cutting machinery from the sibling NetSec site, after a candid look at the last ten EISS releases revealed several were tagged MINOR but would be PATCH under those rules. Tags are immutable; this lands the convention so future releases are signal, not noise.
 
 ### Versioning rules now documented
