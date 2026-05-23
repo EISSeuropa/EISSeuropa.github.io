@@ -2263,6 +2263,57 @@ h4 { font-size: var(--fs-lg); }
   }
 }
 
+/* ---------- scroll-driven hero + header treatments ---------------------
+   Modern CSS `animation-timeline: scroll()` powers two effects on
+   supporting browsers (Chrome 115+, Edge 115+, Safari 26+, Firefox
+   behind a flag) and degrades cleanly on older ones via @supports.
+
+   1. HERO PARALLAX: the homepage hero photo drifts ~12% downward
+      relative to the rest of the page as you scroll past it.
+      Subtle — far from a Squarespace-90s gold-rush parallax.
+
+   2. NAV SHRINK + SHADOW: as you scroll past the first 200px, the
+      sticky nav gains a soft drop-shadow and the nav padding tightens
+      slightly. Pairs with the existing backdrop-filter to make the
+      header feel more "present" once you're below the hero.
+
+   Both wrapped in `@media (prefers-reduced-motion: no-preference)`
+   so the effects are completely skipped when the user has asked for
+   less motion. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+
+    .hero-bg img {
+      animation: heroParallax linear;
+      animation-timeline: scroll(root block);
+      animation-range: 0 100vh;
+      will-change: transform;
+    }
+    @keyframes heroParallax {
+      to { transform: translateY(12%); }
+    }
+
+    .site-header {
+      animation: headerScrolled linear;
+      animation-timeline: scroll(root block);
+      animation-range: 80px 260px;
+    }
+    @keyframes headerScrolled {
+      to { box-shadow: 0 4px 18px hsl(220 30% 4% / 0.12); }
+    }
+
+    .nav {
+      animation: navShrink linear;
+      animation-timeline: scroll(root block);
+      animation-range: 0 300px;
+    }
+    @keyframes navShrink {
+      to { padding-block: var(--space-2); }
+    }
+
+  }
+}
+
 /* ---------- 404 page ---------------------------------------------------
    The /404.html GitHub Pages auto-serves for any unmatched path. Tries
    to be more useful than the default "Page not found" by surfacing the
