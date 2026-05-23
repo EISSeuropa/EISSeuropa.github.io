@@ -17,10 +17,12 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 ### Added
 
 - Google Maps embed in the `/2026` venue section, framed in a frosted-glass card with a 16:9 aspect ratio (`src/_includes/map-embed.njk` + `mapEmbed` field on `conferences.js` entries). The iframe loads on page view rather than behind a click — direct embed reads better and the `/policy` §3 no-social-widgets stance is preserved (Maps isn't a social-media widget). Hidden in print. Reusable: any future `/YYYY` page picks up the embed by adding a `mapEmbed` block to its conferences.js entry.
+- Per-slot room display in the live programme grid. Coffee breaks and lunches now surface their Indico room (previously dropped); every slot whose room differs from the conference default — parallel panels in an adjacent room, breaks on a different floor — gets a coloured accent pill so attendees scanning the grid can spot the exception at a glance. A one-line baseline above the grid declares the default room ("Sessions take place in D House, Lecture Hall 8 unless marked otherwise") so the pills read as exceptions, not noise. Localised in EN / FR / DE.
 
 ### Changed
 
 - `/policy` §5 discloses Google Maps as a third-party embed on conference pages (EN / FR / DE). The §3 no-social-media-widgets bullet is unchanged.
+- `scripts/sync-indico.py` computes `roomDiffersFromDefault` per slot (lowercased last-segment comparison to handle the operator-format inconsistency between `"Lecture Hall 8"` and `"D House, Lecture Hall 8"`) and exposes the event default as `programme.defaultRoom` for the template's baseline hint.
 
 ## [2.13.0r] · 2026-05-23 — Adopt NetSec versioning and release tooling
 

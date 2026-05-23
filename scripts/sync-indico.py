@@ -446,7 +446,22 @@ def _looks_like_break(title: str) -> bool:
     return t.startswith("coffee") or t.startswith("tea break") or t == "lunch"
 
 
-def extract_programme(timetable_results: dict, event_id: str) -> dict:
+def _normalise_room_for_comparison(room: str) -> str:
+    """Collapse a room string to its most specific segment for
+    cross-format comparison. Indico operators sometimes enter
+    `D House, Lecture Hall 8` and sometimes just `Lecture Hall 8`;
+    both should compare equal when one is the conference default.
+
+    Strategy: lowercase + take the last comma-separated segment.
+    `"D House, Lecture Hall 8"` → `"lecture hall 8"`.
+    `"Lecture Hall 8"`           → `"lecture hall 8"`.
+    `"D House, Lecture Hall 9"`  → `"lecture hall 9"`."""
+    if not room:
+        return ""
+    return room.rsplit(",", 1)[-1].strip().lower()
+
+
+def extract_programme(timetable_results: dict, event_id: str, default_room: str = "") -> dict:
     """Turn the full Indico timetable into a normalised programme
     structure: days → slots → (per-session) contributions.
 
@@ -470,6 +485,10 @@ def extract_programme(timetable_results: dict, event_id: str) -> dict:
     """
     days: list[dict] = []
     event_block = timetable_results.get(str(event_id), {})
+    # Used to flag slots whose room differs from the event default so
+    # the template can highlight them (e.g. parallel panels in an
+    # adjacent room, coffee breaks in a different building floor).
+    default_room_norm = _normalise_room_for_comparison(default_room)
 
     for idx, day_key in enumerate(sorted(event_block.keys()), start=1):
         day_block = event_block[day_key]
@@ -496,12 +515,22 @@ def extract_programme(timetable_results: dict, event_id: str) -> dict:
                 if display_title.startswith(prefix):
                     display_title = display_title[len(prefix):].strip()
                     break
+            slot_room = slot.get("room") or ""
             base = {
                 "id": str(slot.get("id", slot_id)),
                 "title": display_title,
                 "startTime": (start.get("time") or "")[:5],
                 "endTime": (end.get("time") or "")[:5],
-                "room": slot.get("room") or "",
+                "room": slot_room,
+                # True when this slot's room differs from the event
+                # default. Templates render the room as an attention-
+                # drawing chip when true, and as quiet meta-text when
+                # false. Empty room → False (don't highlight nothing).
+                "roomDiffersFromDefault": bool(
+                    default_room_norm
+                    and _normalise_room_for_comparison(slot_room)
+                    and _normalise_room_for_comparison(slot_room) != default_room_norm
+                ),
                 "url": _absolutize_indico_url(slot.get("url") or ""),
             }
 
@@ -616,7 +645,11 @@ def extract_programme(timetable_results: dict, event_id: str) -> dict:
             "slots": slots,
         })
 
-    return {"days": days}
+    # `defaultRoom` lets the template render a one-line hint at the top
+    # of the grid ("Sessions take place in {{defaultRoom}} unless marked
+    # otherwise"), so attendees scanning the grid have a baseline to
+    # compare flagged rooms against.
+    return {"days": days, "defaultRoom": default_room or ""}
 
 
 def fetch_events() -> list[dict]:
@@ -685,7 +718,9 @@ def main() -> None:
         # Full normalised programme — drives the live programme grid
         # on /YYYY pages. Same timetable, different shape: every slot,
         # not just livestreamed ones.
-        event["programme"] = extract_programme(tt, event["id"])
+        event["programme"] = extract_programme(
+            tt, event["id"], default_room=event.get("room") or ""
+        )
         with_video = sum(1 for k in livestreamed if k.get("videoUrl"))
         by_type: dict[str, int] = {}
         for k in livestreamed:

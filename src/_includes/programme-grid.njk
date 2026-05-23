@@ -36,9 +36,16 @@
   <div class="container">
     <div class="featured-eyebrow">{{ t.programme.eyebrow }}</div>
     <h2 id="programme-title">{{ t.programme.heading }}</h2>
-    <p class="muted" style="max-width: 44rem; margin-bottom: var(--space-5);">
+    <p class="muted" style="max-width: 44rem; margin-bottom: var(--space-4);">
       {{ t.programme.lead }}
     </p>
+
+    {%- if _programme.defaultRoom %}
+    <p class="programme-default-room muted" style="margin-bottom: var(--space-5);">
+      {{ icon("map-pin") }}
+      {{ t.programme.defaultRoomLine | replace("{{room}}", _programme.defaultRoom) }}
+    </p>
+    {%- endif %}
 
     {%- if _programme.days.length > 1 %}
     <nav class="programme-days" aria-label="{{ t.programme.daysNav }}">
@@ -67,6 +74,11 @@
 
               {%- if slot.kind == "break" %}
               <p class="programme-break-title">{{ slot.title }}</p>
+              {%- if slot.room %}
+              <p class="programme-slot-meta programme-slot-room{% if slot.roomDiffersFromDefault %} programme-slot-room--elsewhere{% endif %}">
+                {{ icon("map-pin") }} {{ slot.room }}
+              </p>
+              {%- endif %}
 
               {%- elif slot.kind == "session" %}
               <p class="programme-slot-title">
@@ -80,7 +92,7 @@
               <p class="programme-slot-subtitle muted">{{ slot.slotTitle }}</p>
               {%- endif %}
               {%- if slot.room %}
-              <p class="programme-slot-meta muted">
+              <p class="programme-slot-meta programme-slot-room{% if slot.roomDiffersFromDefault %} programme-slot-room--elsewhere{% endif %}">
                 {{ icon("map-pin") }} {{ slot.room }}
               </p>
               {%- endif %}
