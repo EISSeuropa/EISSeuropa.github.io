@@ -1737,6 +1737,39 @@ h4 { font-size: var(--fs-lg); }
   align-items: center;
 }
 
+/* Empty-state card on /events when no upcoming events are synced.
+   Visible only when the page sets `showEmptyState = true`. The icon
+   echoes the calendar idiom used on event rows; the body explains
+   how events will appear here once published. */
+.indico-events-empty-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-5);
+  align-items: center;
+  padding: clamp(var(--space-5), 2vw + 1rem, var(--space-6));
+}
+
+.indico-events-empty-icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-md);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 1.6em;
+}
+
+@media (max-width: 540px) {
+  .indico-events-empty-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .indico-events-empty-icon {
+    justify-self: center;
+  }
+}
+
 /* On narrow screens drop to a stacked layout so the title gets full width. */
 @media (max-width: 640px) {
   .indico-event {

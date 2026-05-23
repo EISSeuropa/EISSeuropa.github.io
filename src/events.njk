@@ -25,9 +25,11 @@ alternates:
 </header>
 
 {# Auto-synced upcoming events from indico.eiss-europa.com — full list,
-   no limit. Hides entirely when the synced list is empty (see
-   src/_data/indico.json). #}
+   no limit. When the synced list is empty (see src/_data/indico.json)
+   the partial renders an empty-state placeholder rather than disappearing
+   — opt in via showEmptyState. #}
 {% set limit = null %}
+{% set showEmptyState = true %}
 {% include "indico-events-list.njk" %}
 
 <section class="section">
