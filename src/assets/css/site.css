@@ -219,6 +219,45 @@ button:focus-visible,
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: var(--radius-xs);
+  /* Brand-aligned focus halo: a soft accent-soft ring outside the
+     2px outline gives keyboard users a clear, accessible signal
+     without the harsh chrome-blue default browser ring. */
+  box-shadow: 0 0 0 6px var(--accent-soft);
+}
+
+/* Anchor targets shouldn't be hidden behind the sticky nav header.
+   ~6rem matches the nav's effective height + a small visual margin.
+   Applies anywhere an in-page anchor (`#programme`, `#venue`,
+   `#arthur-laudrain`, …) is the scroll target. */
+:where([id]) {
+  scroll-margin-top: 6rem;
+}
+
+/* `:target` highlight pulse. When a visitor lands on a deep link
+   (e.g. /board.html#arthur-laudrain), briefly draw an accent-soft
+   ring around the target so they know they've arrived. The pulse
+   fades out after ~1.6s; respects prefers-reduced-motion via the
+   global guard above. */
+:target {
+  animation: targetHighlight 1.6s var(--ease-out) 0.1s both;
+  border-radius: var(--radius-md);
+}
+@keyframes targetHighlight {
+  0%   { box-shadow: 0 0 0 0 var(--accent-soft), 0 0 0 0 var(--accent-soft); }
+  40%  { box-shadow: 0 0 0 8px var(--accent-soft), 0 0 24px 4px var(--accent-soft); }
+  100% { box-shadow: 0 0 0 0 hsl(216 88% 50% / 0), 0 0 0 0 hsl(216 88% 50% / 0); }
+}
+
+/* View Transitions API: smooth cross-fade on theme toggle.
+   When document.startViewTransition() is available (see
+   assets/js/theme.js), the browser takes a snapshot of the old DOM,
+   applies the new theme, and cross-fades between the two snapshots
+   over the duration below. Browsers without the API fall back to the
+   instant attribute swap — same end state, just no animation. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 220ms;
+  animation-timing-function: var(--ease-out);
 }
 
 p {

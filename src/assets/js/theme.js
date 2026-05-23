@@ -32,11 +32,26 @@
     };
     updateLabel();
 
+    // Theme-toggle handler. When the View Transitions API is available
+    // (Chrome 111+, Safari 18+), wrap the swap in startViewTransition()
+    // so the browser cross-fades between the old and new themes. Other
+    // browsers fall back to the instant attribute swap — same end
+    // state, just no animation. Respects prefers-reduced-motion: when
+    // the user has asked for less motion we skip the transition wrapper
+    // unconditionally.
+    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
     btn.addEventListener("click", () => {
       const next = currentEffective() === "dark" ? "light" : "dark";
-      applyTheme(next);
-      try { localStorage.setItem(STORAGE_KEY, next); } catch (_) {}
-      updateLabel();
+      const doSwap = () => {
+        applyTheme(next);
+        try { localStorage.setItem(STORAGE_KEY, next); } catch (_) {}
+        updateLabel();
+      };
+      if (document.startViewTransition && !reducedMotion.matches) {
+        document.startViewTransition(doSwap);
+      } else {
+        doSwap();
+      }
     });
 
     matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
