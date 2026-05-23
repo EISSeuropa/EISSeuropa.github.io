@@ -6,68 +6,17 @@ This project follows [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.
 
 ## Release-notes format (applies to `[Unreleased]` + every `[X.Y.Z]` section)
 
-Release notes here follow a **hybrid format**: a short prose lede, two-to-five themed sub-sections carrying the actual narrative, and a canonical **index of changes** at the bottom grouped by Keep-a-Changelog categories. The themes are where the writing happens; the index is the audit trail.
+Release notes here follow a **hybrid format**: a short prose lede, two-to-five themed sub-sections carrying the actual narrative, and a canonical **index of changes** at the bottom grouped by Keep-a-Changelog categories. Patches skip the lede + themes and ship the index only.
 
-### Shape (minor / major releases)
+## Retroactive renumber
 
-```markdown
-## [X.Y.Z] · YYYY-MM-DD — <short title>
-
-> One- to three-sentence lede in voice. What is this release
-> *about*? Who's it for? Why ship it now?
-
-### <First theme — name it for the thing that changed>
-
-Prose intro (~2-4 sentences). Inline links to docs / issues where
-relevant. Add bullets only if the theme has multiple distinct
-pieces; otherwise let the prose carry it.
-
-### <Second theme>
-
-Same shape.
-
-### Index of changes
-
-The themed sections above are the story; the index below is the
-audit trail. Same content, terser.
-
-#### Added
-- (one-line pointer bullets — what, not why)
-
-#### Changed
-- (…)
-
-#### Fixed
-- (…)
-```
-
-### Shape (patch releases)
-
-Patches skip the lede + themed sections; ship the index only. People reading patch notes care about specifics, not narrative.
-
-```markdown
-## [X.Y.Z] · YYYY-MM-DD — <short title>
-
-### Index of changes
-
-#### Fixed
-- (…)
-```
-
-### Rules
-
-1. **Each release section has at most one `### Index of changes` block and at most one of each `#### Added` / `#### Changed` / `#### Deprecated` / `#### Removed` / `#### Fixed` / `#### Security` sub-heading inside it**, in that order. When a PR adds an entry to `[Unreleased]` during the release cycle, the bullet goes into the existing index sub-heading; do not create a second one.
-2. **Themes are written at release-cutting time** — not when the PR lands. PRs accumulate raw bullets in `[Unreleased]`'s index; when the maintainer cuts the release, they read back through the index and shape it into a release story (the lede + themed sections).
-3. **`scripts/release.sh` extracts `[Unreleased]` verbatim** into the GitHub Release notes. Whatever lives in `[Unreleased]` lands on the public release page — eyeball the body before confirming the prompt.
-4. **No hard wraps in prose.** Each prose paragraph, blockquote lede, and multi-line bullet must be a single source line. GitHub Releases renders markdown with the *break-on-newline* GFM variant; every soft `\n` becomes a `<br>` and forces prose to render visibly narrow.
-
----
+At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spelt out in [`README.md`](README.md). Several pre-v2.13 tags had been bumped too liberally — features that should have been patches got minor labels. The renumbering swept through every existing release; the original tag is noted in italics under each section below. The corresponding git tags + GitHub Releases were re-cut at the same commit SHAs.
 
 ## [Unreleased]
 
 _Nothing yet._
 
-## [2.21.0] · 2026-05-22 — Adopt NetSec versioning and release tooling
+## [2.13.0r] · 2026-05-23 — Adopt NetSec versioning and release tooling
 
 > Adopts the versioning rules + release-cutting machinery from the sibling NetSec site, after a candid look at the last ten EISS releases revealed several were tagged MINOR but would be PATCH under those rules. Tags are immutable; this lands the convention so future releases are signal, not noise.
 
@@ -98,19 +47,569 @@ Releases v1.0.0 → v2.20.0 are not back-filled into the changelog. The canonica
 
 - Going forward, release-cutting goes through `scripts/release.sh` rather than ad-hoc `gh release create` calls. The script enforces the conventions automatically.
 
-## [Pre-2.21.0] · see GitHub Releases
+*Originally tagged as **v2.21.0**; renumbered to **v2.13.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
 
-This changelog was introduced at v2.21.0 alongside `scripts/release.sh` and the `## Versioning` README section. Releases v1.0.0 through v2.20.0 are not back-filled here — the canonical record for those is on the [GitHub Releases](https://github.com/EISSeuropa/EISSeuropa.github.io/releases) page and the *Release history* section of [`docs/roadmap-2026.md`](docs/roadmap-2026.md).
+## [2.12.1] · 2026-05-23 — Scroll-driven hero + nav shrink
 
-Notable bumps from that pre-changelog era:
+### Index of changes
 
-- **v2.14.0** — Live programme grid (the headline minor of the Indico-integration arc)
-- **v2.11.0** — Authenticated Indico sync pipeline
-- **v2.7.0** — Registration override + live keynotes
-- **v2.5.0** — Announcement → data-driven + registration status badge
-- **v2.0.0** — i18n plumbing + FR/DE chrome
-- **v1.0.0** — PWA + favicon + per-page OG + footer socials + button icons
+#### Added
 
-Several historical releases (v2.13, v2.15, v2.16, v2.18, v2.20) were tagged as MINOR under a looser version-bumping habit but would be PATCH under the rules formally adopted at v2.21.0 — they shipped small visual polish or UX tweaks on existing components, not "big new projects". Tags are immutable; those releases stay where they are.
+- Hero parallax: the homepage hero photo drifts ~12% downward as you scroll past, via CSS \`animation-timeline: scroll()\`.
+- Nav shrink + drop shadow: past the first ~80-300px of scroll, the sticky header gains a soft shadow and the nav padding tightens by one step. The header feels more \"present\" once you're below the hero.
 
-[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.20.0...HEAD
+Both effects:
+
+- Pure CSS, ~40 lines. No JS, no new templates, no new dependencies.
+- Wrapped in \`@supports (animation-timeline: scroll())\` — browsers without the modern API see the existing static nav and hero, unchanged.
+- Wrapped in \`@media (prefers-reduced-motion: no-preference)\` — fully skipped for users who request less motion.
+- Compositor-driven, so there's no scroll-thread cost.
+
+Supported on Chrome/Edge 115+, Safari 26+, Firefox behind a flag. Older browsers degrade gracefully to the v2.15 static visuals.
+
+*Originally tagged as **v2.20.0**; renumbered to **v2.12.1** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.12.0r] · 2026-05-23 — Custom 404 page
+
+### Index of changes
+
+#### Added
+
+- \`src/404.njk\` permalinked to \`/404.html\`. GitHub Pages auto-serves this for any unmatched path on the apex domain.
+- New \`notFound.*\` i18n catalog in EN/FR/DE (only EN renders today — GH Pages serves a single 404.html).
+- \`.notfound*\` CSS block: gradient \"404\" eyebrow, centered layout, auto-fit grid of six destination cards with icon + accent-on-hover border, back-home primary CTA.
+
+The destinations covered: next ESSC conference, past conferences, membership, the board, members' events, about the Initiative. Each has its Lucide icon. Hover lifts the card with a brand-coloured border.
+
+*Originally tagged as **v2.19.0**; renumbered to **v2.12.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.11.1] · 2026-05-23 — /events empty-state polish
+
+### Index of changes
+
+#### Added
+
+- Opt-in empty-state placeholder on \`indico-events-list.njk\`: a calendar-icon card + short explanation + Indico CTA, rendered when the parent template sets \`showEmptyState = true\`.
+- \`/events.{en,fr,de}\` now opts in. Homepage stays unchanged (no section on empty).
+
+#### Fixed
+
+- Previously-dead i18n strings \`indicoEvents.noEventsTitle\` and \`noEventsBody\` (defined in v2.4.0 but never rendered) are now live in EN/FR/DE.
+
+*Originally tagged as **v2.18.0**; renumbered to **v2.11.1** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.11.0r] · 2026-05-23 — Print stylesheet for /YYYY
+
+### Index of changes
+
+#### Added
+
+- \`@media print\` block covering the full site, with surgical rules around the programme grid on \`/YYYY\` conference pages.
+- 1.5 cm page margin via \`@page\`.
+
+#### Changed
+
+- On print, the v2.15 gradient-text headline is overridden to solid ink (gradient-text renders transparent on paper).
+- Forces light theme on print regardless of toggle / OS setting.
+
+Operational ahead of ESSC 2026: attendees printing \`/2026.html\` get a clean two-page programme.
+
+*Originally tagged as **v2.17.0**; renumbered to **v2.11.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.10.4] · 2026-05-23 — Polish-lift bundle
+
+### Index of changes
+
+#### Added
+
+- Anchor offset (\`scroll-margin-top\`) so deep links like \`/board.html#arthur-laudrain\` land below the sticky nav, not behind it.
+- \`:target\` highlight pulse — soft accent ring around the destination element after a deep-link arrival, ~1.6s, then fades.
+- Theme-toggle view transition via \`document.startViewTransition()\`. Cross-fades on supporting browsers; instant on others.
+
+#### Changed
+
+- Focus-visible ring gains a brand-aligned \`--accent-soft\` halo via \`box-shadow\`. Same outline, more presence.
+
+All respect \`prefers-reduced-motion\`. No template, build, or backend changes.
+
+*Originally tagged as **v2.16.0**; renumbered to **v2.10.4** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.10.3] · 2026-05-22 — Visual polish ported from NetSec
+
+> NetSec's sibling site does a handful of small things right that EISS didn't. Six borrowed treatments, all CSS-only, all within the existing design language.
+
+### Borrowed polish
+
+- **Inner-page H1 gradient** — a subtle vertical `--text → --text-muted` gradient via `background-clip: text` on every `.page-header h1`. Skipped on the photo-overlay hero on `/index` and `/YYYY` because gradient + photo is muddy.
+- **Primary-button hover glow** — every primary CTA now lifts with a soft accent-coloured glow shadow on the lower edge. Cumulative polish across the whole site.
+- **Gradient tile-icon badges** — `.tile-icon` shifts from flat `--accent-soft` to a 135° gradient with white glyphs. Tiles on `/membership`, `/events`, `/board`, `/programmes` all gain visible weight.
+- **Deeper card hover lift** — `translateY(-4px)` instead of `-2px`, paired with the next shadow tier up. Cards now actually feel like they raise on hover.
+- **Dark-mode accent recovery** — `--accent` saturation bumped from 95% to 100%; recovers the punch the previous value lost on a dark canvas. Applied in both the media-query and the explicit-toggle dark-mode blocks.
+- **Featured-card radial halo** — homepage \"Next conference\" card now carries a soft accent halo at its top-right corner, matching the idiom `.page-header` already uses.
+
+### Boundaries respected
+
+Per the operator's framing — *don't change the design language or the backend structure*:
+
+- Blue stays the only chromatic accent
+- Glass-card paradigm untouched
+- No new tokens introduced
+- No template, script, or workflow changes
+- No new dependencies
+
+Total diff: 53 insertions, 15 deletions, all in `src/assets/css/site.css`.
+
+*Originally tagged as **v2.15.0**; renumbered to **v2.10.3** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.10.2] · 2026-05-22 — Pad the PDF description
+
+### Index of changes
+
+#### Fixed
+
+- The printable-PDF card's description paragraph (*"A working version of the programme — the live grid above reflects the latest changes."*) was bleeding to the card's left edge, with the first character clipped behind the border. `.pdf-doc` carries `padding: 0` to let the header band span edge-to-edge; the description paragraph added in v2.14.0 sat directly inside the card with no padding of its own. Replaced the inline-styled `<p>` with a `.pdf-doc-description` class that mirrors the header's horizontal inset.
+
+*Originally tagged as **v2.14.3**; renumbered to **v2.10.2** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.10.1] · 2026-05-22 — Live programme grid polish and parallel panels
+
+> Polish on the v2.14.0 live programme grid: parallel panels now render side-by-side, roundtable cards stop pretending to have papers, and a handful of bugs around URLs, breaks, and PDF metadata spacing were tidied up.
+
+### Index of changes
+
+#### Added
+
+- **Parallel-panel layout** on the live programme grid. ESSC concurrent panels render side-by-side under a shared time gutter on wide viewports, collapsing to a column on phones. 9 of 20 time slots across ESSC 2026 carry parallel pairs.
+- **Inline discussant list** on roundtable session cards (previously hidden behind a misleading *View papers (1)* expander). Promoted to a top-level meta line alongside *Chair*.
+- New i18n string `programme.discussants` in EN / FR / DE (*Discussants* / *Intervenants* / *Diskutant:innen*).
+
+#### Changed
+
+- Roundtables (Indico `sessionCode=RT` or title prefix `Roundtable:`) are now classified with a `subtype` field in `indico.json` and rendered without a contributions expander — Indico stores a single placeholder *Contributors* entry, not real papers, so the toggle was misleading.
+- *Roundtable:* prefix stripped from displayed titles in the grid. The subtype already conveys the type; the prefix is redundant noise on the card.
+- Mid-day coffee breaks that Indico marks as `entryType=Session` (rather than `Break`) are now detected via a title heuristic (`coffee…` / `tea break` / `lunch`) and rendered in the quiet dashed-border break style. Six break slots across the two days instead of four.
+
+#### Fixed
+
+- Contribution URLs across the grid (including *Read full abstract* links) were relative — `/event/22/contributions/521/` — and browsers resolved them against eiss-europa.com, returning 404. Now absolutised at sync time, so they correctly target `https://indico.eiss-europa.com/event/22/contributions/521/`.
+- PDF subtitle metadata dots had no surrounding whitespace, rendering as *"2 pages·107 KB·"*. The old `display: inline-block` + literal-text-separator approach was collapsing the separator spaces; replaced with flex `gap` for deterministic separation.
+- `datetime.utcnow()` `DeprecationWarning` in the sync workflow log cleared (Python 3.12 noise).
+
+*Originally tagged as **v2.14.2**; renumbered to **v2.10.1** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.10.0r] · 2026-05-22 — live programme grid (Indico as source of truth)
+
+The conference programme on \`/2026\` is now a live, browsable, searchable grid pulled daily from Indico — alongside the polished printable PDF.
+
+## Why two views, not one
+
+A programme has two lifecycles:
+- **Pre-event months**: changes constantly. The PDF is a maintenance trap.
+- **Post-event**: frozen, citable, print-ready. The HTML alone isn't enough.
+
+So the design is: **Indico is the source of truth, the website shows two views over it.** The live grid carries the pre-event months without any PDF maintenance; the polished PDF arrives when it's ready and stays as the archival artefact.
+
+## What's live on /2026 today
+
+- 2 days, 29 timetable slots (25 sessions + 4 breaks)
+- 66 contributions with speakers, affiliations, abstract teasers
+- Day chips, expandable per-session contribution lists, deep-linkable
+- EN / FR / DE — full i18n
+
+## For NetSec, later
+
+The design rationale is documented at [\`docs/indico-programme-integration.md\`](https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/indico-programme-integration.md) — written to be transferable verbatim to the NetSec website when we wire the same pattern there. The data shape, the partials, and the operator workflow all generalise.
+
+*Originally tagged as **v2.14.0**; renumbered to **v2.10.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.9.1] · 2026-05-22 — Indico API probe round 2
+
+Second pass over the API probe. Round 1 narrowed the field to Indico's legacy \`/export/\` API; round 2 looks for the exact path that carries registration-form state.
+
+Two new affordances in the output:
+- **Top-level keys** for 200-OK JSON responses (schema only, no field values — no PII).
+- **Body preview** for tiny responses (<300 bytes), useful to read error envelopes.
+
+## Run it
+
+Actions → **Probe Indico API (manual)** → **Run workflow**. Paste the resulting table back to Claude; v2.14 wires the winning endpoint into the daily sync.
+
+*Originally tagged as **v2.13.0**; renumbered to **v2.9.1** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.9.0r] · 2026-05-22 — Indico API probe (manual)
+
+Operator-triggered, read-only workflow that probes Indico's API surface to discover which endpoint exposes registration-form state on your Indico version. Different installations expose different paths; this lets us land the right one in v2.13 instead of guessing.
+
+## Run it
+
+**Actions → Probe Indico API (manual) → Run workflow.** Read-only, no commits, status codes only. Paste the summary table back to Claude and v2.13 wires the winning endpoint into the daily sync.
+
+## Also
+
+- Cleared the Python 3.12 \`DeprecationWarning\` on \`datetime.utcnow()\` from the sync log.
+
+*Originally tagged as **v2.12.0**; renumbered to **v2.9.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.8.0r] · 2026-05-22 — authenticated Indico sync pipeline
+
+Plumbing for read-only authenticated Indico access. No behaviour changes today; the runway lands once the secret is set.
+
+## Highlights
+
+- Optional \`INDICO_API_TOKEN\` env var → \`Authorization: Bearer …\` header on every Indico call.
+- Mode banner at sync startup confirms in CI logs whether the secret reached the runner. Token value is never printed.
+- Anonymous fallback preserved — local runs and emergencies don't need the credential.
+- New operator guide: [docs/indico-api-token.md](https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/indico-api-token.md) — create a dedicated service account, scope to Reader on Annual Conferences, issue a read-only token, drop into GitHub secret, rotation cadence.
+
+## After this release: what unlocks once the token is set
+
+1. **Registration form state auto-detect** → drop the manual \`registrationStatus\` override in \`src/_data/conferences.js\`
+2. **Auth-gated Zoom join URLs** for any session whose video link Indico keeps behind auth
+3. Future: live attendee counts on /2026, deeper programme metadata
+
+*Originally tagged as **v2.11.0**; renumbered to **v2.8.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.7.1] · 2026-05-22 — type-field-first detection
+
+EISS leans on Indico's session **Type** dropdown rather than freeform session codes — clicks beat typing for reliability. This release makes \`session.type\` the primary signal for what's livestreamed on /2026.
+
+## New precedence
+
+1. \`session.type\` — \`Round Table\` → roundtable; \`Plenary\` (with code disambiguating intro/keynote/closing) → mapped; everything else (Closed Panel, Open Panel, Poster) → skip
+2. \`sessionCode\` — fallback when Type isn't set (e.g. 2026's INTRO slot has no Type)
+3. Title prefix \`"Roundtable:"\` — last-resort safety net
+
+## Cost
+
+The bulk timetable export doesn't include Type, so we fetch each session's detail endpoint and cache by \`sessionId\`. ~25 extra HTTP calls per daily sync — anonymous, small payload, fine.
+
+## Operator implications
+
+Going forward, set Types only and the sync still works. The one Plenary edge case still benefits from a code (KEY / INTRO / CONC) — without a code, Plenary defaults to **Keynote**.
+
+*Originally tagged as **v2.10.0**; renumbered to **v2.7.1** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.7.0r] · 2026-05-22 — livestreamed sessions (intro + roundtables + keynote + closing)
+
+The live block on \`/2026\` is now called **Livestreamed sessions** and includes everything EISS plans to stream online for ESSC 2026: introduction, roundtables, keynote, closing.
+
+## Detection
+
+Sessions are picked up if either holds:
+- \`sessionCode\` is \`INTRO\` / \`RT\` / \`KEY\` / \`CONC\` (preferred)
+- Title starts with \`"Roundtable:"\` (safety net — the prefix is stripped from the displayed title)
+
+## What's surfaced today
+
+- **Introductory Remarks** — Day 1, 09:30–09:45 (INTRO)
+- **Lt Gen Thomas Nilsson** — Day 1, 13:30–14:30 (KEY)
+- **Navigating the Job Market** — Day 2, 09:00–10:15 (title-prefix)
+- **Concluding Remarks** — Day 2, 17:30–18:00 (CONC)
+
+The Day-1 roundtable ("Taking Stock of European Security…") doesn't have either marker in Indico yet — tag it with \`sessionCode=RT\` and the next daily sync will pick it up.
+
+All four currently show "Online room TBA". As Zoom join links are published in Indico, the sync swaps placeholders for "Join online" CTAs automatically.
+
+*Originally tagged as **v2.9.0**; renumbered to **v2.7.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.6.1] · 2026-05-22 — intro + concluding plenaries on /2026
+
+The live block on \`/2026\` used to show only keynotes. Now it also surfaces the opening and closing plenary slots — the full plenary spine of the conference, in programme order.
+
+For ESSC 2026, that means three rows where there used to be one:
+
+- **Introductory Remarks** — Day 1, 09:30–09:45
+- **Lt Gen Thomas Nilsson** (keynote) — Day 1, 13:30–14:30
+- **Concluding Remarks** — Day 2, 17:30–18:00
+
+Each row carries a small eyebrow (\`Introduction\` / \`Keynote\` / \`Closing\`) so attendees can scan the type at a glance. Localised in EN/FR/DE.
+
+Detection still uses Indico's \`sessionCode\` field — \`INTRO\`, \`KEY\`, or \`CONC\`. If you ever want to surface another type (a roundtable, a discussant), just add a new code → label mapping in \`PLENARY_SESSION_CODES\` in \`scripts/sync-indico.py\` and the corresponding i18n string.
+
+*Originally tagged as **v2.8.0**; renumbered to **v2.6.1** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.6.0r] · 2026-05-22 — registration override + live keynotes
+
+Two follow-ups after v2.5 met production.
+
+## Fixed: badge said "Registration open" when it wasn't
+The pure date-based logic was wrong for the realistic case where EISS closes the registration form weeks before the conference starts. Added a manual override field `registrationStatus` on each conference entry in `src/_data/conferences.js`:
+
+- `"open"` — force "Registration open"
+- `"closed"` — show "Registration closed" with a "View on Indico" CTA
+- `null` / unset — derive from today vs. start/end dates (previous behaviour)
+
+2026 is now set to `"closed"`. Flip it back if the form reopens — the daily rebuild picks it up.
+
+## Added: live keynote programme above the PDF
+`scripts/sync-indico.py` now also pulls the timetable for each Annual Conference and extracts every session flagged with `sessionCode == "KEY"`. The conference page (`/2026`, `/2026.fr`, `/2026.de`) renders these as a card list above the existing PDF programme — showing speaker, time, location, and either a "Join online" CTA (when Indico publishes the Zoom/Meet/Teams/Webex link in any field) or an "Online room TBA" placeholder. When you populate the Indico join URLs, the next daily sync swaps placeholders for real CTAs automatically.
+
+New Lucide icons `video` and `video-off`. New i18n catalog `keynotes.*` in EN/FR/DE.
+
+*Originally tagged as **v2.7.0**; renumbered to **v2.6.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.5.1] · 2026-05-22 — footer cleanup + authorship credit
+
+Two small footer changes.
+
+## Highlights
+
+### Light footer trim
+Image credits and legal status used to be two separate paragraphs in the footer fine-print. They're now folded into a single line — same content, less visual weight at the bottom of every page.
+
+### Authorship credit
+A new last-row line: **Site designed and built by [Dr Arthur PB Laudrain](https://eiss-europa.com/board.html#arthur-laudrain)**, with the name deep-linking to his card on `/board.html`. Locale-aware: "Site conçu et développé par" in French, "Website konzipiert und entwickelt von" in German.
+
+## Implementation notes
+
+- `src/_data/board.json` gains an opt-in `slug` field on board entries; templates only render an `id` attribute when the field is set, so other board members are unaffected.
+- New i18n catalog keys `footer.authorship.{prefix, authorName, authorSlug}` in EN/FR/DE.
+- Footer uses a flex row for legal links + authorship — wraps gracefully on narrow viewports.
+
+*Originally tagged as **v2.6.0**; renumbered to **v2.5.1** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.5.0r] · 2026-05-22 — announcement → data-driven + conference registration badge
+
+Two improvements that unblock a wider class of content edits without template surgery.
+
+## Highlights
+
+### Announcement card → data-driven
+The homepage NetSec announcement card now reads from `src/_data/announcement.js` — one structured object per language with a shared image and CTA URL. The three `index{,.fr,.de}.njk` templates each include `src/_includes/announcement-card.njk`, so rotating the news item (a new programme launch, press release, partnership milestone) is a one-file edit instead of three. Flip `visible: false` in the data file to hide the section without deleting the content.
+
+### Conference registration status badge
+A glassy pill in the `/2026` hero (and any future `/YYYY` page) now reflects today's state vs. the conference dates from `src/_data/conferences.js`:
+
+- **Registration open** — green dot + "Register on Indico" CTA in brand blue
+- **Happening now** — pulsing red dot + "View on Indico"
+- **Past edition** — neutral pill (with an Indico link if the page is still around)
+
+Status flips automatically because the daily scheduled rebuild advances the today-cutoff in `conferences.js`. The Indico URL is pulled from `src/_data/indico.json`, populated by `scripts/sync-indico.py` v2.5.
+
+## Implementation notes
+
+- `scripts/sync-indico.py` v2.5 now routes Annual Conference events (categoryId 1) into a separate `annualConferences = {year: event}` bucket in `indico.json` instead of dropping them. The hand-maintained `conferences.js` still owns dates / venues / organisers; Indico only contributes the registration link.
+- `conferences.js` gains a `byYear` lookup keyed on `String(year)`.
+- New partials: `src/_includes/announcement-card.njk`, `src/_includes/registration-badge.njk`. Both re-derive `t = i18n[lang or "en"]` internally to stay independent of `base.njk` scoping.
+- i18n catalog keys `registrationBadge.{upcoming, happeningNow, past, registerOnIndico, onIndico, daysToGo, oneDayToGo, today}` added in EN/FR/DE.
+- CSS for the pill under `/* ---------- registration-status badge ---------- */` in `site.css`. Respects `prefers-reduced-motion`.
+
+## Roadmap
+
+Closes two items: "NetSec announcement card → data-driven" and "Conference registration status indicator" (deferred from v2.4 pending API exploration).
+
+*Originally tagged as **v2.5.0**; renumbered to **v2.5.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.4.0r] · 2026-05-22 — Indico API sync
+
+First Indico integration. The website now surfaces upcoming events from `indico.eiss-europa.com` automatically, without manual edits.
+
+## How it works
+
+```
+indico.eiss-europa.com              ← system of record (event management)
+        │
+        │  daily cron at 03:45 UTC + workflow_dispatch
+        ▼
+scripts/sync-indico.py              ← fetches /export/categ/0.json
+        │
+        ▼
+src/_data/indico.json               ← committed snapshot in git
+        │
+        ▼
+/index, /events  (EN / FR / DE)     ← rendered as upcoming-events list
+```
+
+**No API token needed** — the Indico export API is anonymously accessible for public events.
+
+**Filter logic**: Annual Conferences (`categoryId 1`) are excluded because they're already driven by `src/_data/conferences.js` with much richer per-language strings than Indico provides. Members' Events and any future sub-categories pass through.
+
+## What appears on the site
+
+- **Homepage** — section beneath the featured-conference card, top 5 upcoming events. Each event = clickable card → deep link to the Indico event page.
+- **`/events.html`** — full upcoming-events list above the existing "Roundtables / Early Career / Doctoral Workshops" format tiles. Concrete examples to complement the abstract format descriptions.
+- **All three languages** — section labels translated via `src/_data/i18n.js`. Event titles render as Indico provides them (typically English-only; Indico doesn't store multilingual event titles).
+
+## Resilience
+
+- **Indico unreachable** → sync script exits 1, workflow fails, existing snapshot stays. Site doesn't break.
+- **No upcoming events** → section hides entirely; no awkward "0 events" placeholder.
+- **Schema drift** → defensive `.get()` calls produce partial data rather than crashing.
+
+## Current state
+
+Only event currently in Indico is ESSC 2026 (excluded as Annual Conference). `indico.upcoming` is empty; the new section is hidden. When Members' Events get published to Indico, they appear within ~24h, or immediately if you trigger **Run workflow** on `sync-indico.yml` from the Actions tab.
+
+## Roadmap updated
+
+`docs/roadmap-2026.md` now marks Indico integration as ✅ done. Conference-registration-status badge (`"Registration open · N attendees"`) is deferred to v2.5 — needs more API exploration to confirm Indico returns those fields for the EISS conference type.
+
+*Originally tagged as **v2.4.0**; renumbered to **v2.4.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.3.0r] · 2026-05-22 — Conference cycle automation
+
+Conference cycle automation — single source of truth + daily auto-cutoff.
+
+## What changed
+
+**Before**: the "Next conference" card on `/`, the archive list on `/past`, and the upcoming-conference card on `/past` were all hardcoded in twelve separate places (3 languages × {1 upcoming + 7 past}). Adding ESSC 2027 would have meant editing 12+ blocks across 6 files. Moving 2026 from "upcoming" to "past" after the conference was a manual chore.
+
+**Now**: one `src/_data/conferences.js` file holds every conference entry with per-language strings. Templates loop over it. `conferences.next` is the closest upcoming conference; `conferences.past` is everything whose end-date is in the past. **Both update automatically** as the world moves past conference dates.
+
+## What's shipped
+
+| | |
+|---|---|
+| **`src/_data/conferences.js`** | Central data source — 8 conferences (2019–2026) with structured fields and EN/FR/DE strings |
+| **Homepage + `/past` refactor** | 12 hardcoded blocks → 1 data file + 2 short loops. Net **−127 lines** across the PR |
+| **`.github/workflows/scheduled-rebuild.yml`** | Daily cron at 04:15 UTC re-runs the build so the next-vs-past cut-off advances even on quiet weeks |
+| **`docs/new-conference.md`** | 5-step playbook for ESSC 2027 — ~30-minute job |
+
+## What's still hand-managed (by design)
+
+- The unique content of each `/<year>.html` page (programme, venue description, neighbourhood tile grid, partner logos, funding attribution). Too much per-conference variation to template.
+- 2017 and 2018 — kept in the historical-image section at the bottom of `/past.html` because they predate the standalone-page convention.
+
+## Roadmap updated + validated
+
+`docs/roadmap-2026.md` now reflects that Conference-cycle automation is done. Q4/Jan-2027 quarterly item rephrased: ESSC 2027 announcement is now a 30-minute drop-in, not a multi-page hand-edit. Several "future work" sentences that this PR makes obsolete have been rewritten.
+
+*Originally tagged as **v2.3.0**; renumbered to **v2.3.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.2.0r] · 2026-05-22 — Localised share cards
+
+Localised share cards for the [v2.1.0](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.1.0) translated pages.
+
+## What changed
+
+When you share a translated page (e.g. `/index.fr.html`, `/membership.de.html`) on LinkedIn, Twitter/X, Mastodon, or Bluesky, the preview card now shows up in the page's language — title and subtitle translated, design unchanged.
+
+## How it works
+
+- **22 new `-meta.{fr,de}.jpg` files** under `src/assets/images/`, one per translated page slug × language.
+- **`scripts/make-share-cards.py`**: each `CARDS` entry now carries `i18n: { en, fr, de }` with per-language `eyebrow`, `title`, and `subtitle` strings. The driver loops over (slug × language).
+- **`src/_layouts/base.njk`**: auto-swaps `-meta.jpg` → `-meta.fr.jpg` / `-meta.de.jpg` in og:image and twitter:image when the page's `lang` is `fr` or `de`. The English `metaImage` front-matter in each `.fr.njk` / `.de.njk` stays unchanged — the layer handles it.
+- **Subtitle auto-shrink** added to the generator. French and German subtitles often run 50–65 characters where English would be 40, so the previous fixed 38pt was clipping.
+
+## Coverage
+
+| Slug | EN | FR | DE |
+|---|---|---|---|
+| index, 2026, board, past, programmes, initiative, membership, events, accessibility, policy, terms | ✅ | ✅ | ✅ |
+| 2025, 2024 (archive only) | ✅ | — | — |
+| NetSecSchool, euroswamos, coercion, GlobalRisks (untranslated programme pages) | ✅ | — | — |
+
+## Verified
+
+- og:image tag on `/index.fr.html` → `/assets/images/index-meta.fr.jpg` ✅
+- og:image tag on `/membership.de.html` → `/assets/images/membership-meta.de.jpg` ✅
+- All 22 localised assets serve HTTP 200 in the local Eleventy build
+- Build clean: 71 HTML files (unchanged from v2.1.0); +22 image assets
+
+*Originally tagged as **v2.2.0**; renumbered to **v2.2.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.1.0r] · 2026-05-22 — Tier 1 + Tier 2 page translations
+
+Extends [v2.0.0](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.0.0)'s i18n plumbing with **full FR + DE translations for 9 additional pages**.
+
+## Coverage after this release
+
+Every core user-facing page is now available in English, French, and German:
+
+| Page | EN | FR | DE |
+|---|---|---|---|
+| `/` (home) | ✅ | ✅ beta | ✅ beta |
+| `/initiative` | ✅ | ✅ beta | ✅ beta |
+| `/membership` | ✅ | ✅ beta | ✅ beta |
+| `/board` | ✅ | ✅ beta | ✅ beta |
+| `/2026` | ✅ | ✅ beta | ✅ beta |
+| `/programmes` | ✅ | ✅ beta | ✅ beta |
+| `/events` | ✅ | ✅ beta | ✅ beta |
+| `/policy` | ✅ | ✅ beta | ✅ beta |
+| `/terms` | ✅ | ✅ beta | ✅ beta |
+| `/accessibility` | ✅ | ✅ beta | ✅ beta |
+| `/sitemap` | ✅ | ✅ beta | ✅ beta |
+| `/past` | ✅ | ✅ beta | ✅ beta |
+
+**Out of scope (English-only by design)**: archive conference pages 2019–2025, JPW2019, JPW2022, JPW23, NDC, Ukraine, panels, practical, page7/9/20/23 redirects, ticket-* redirects, individual programme pages (NetSecSchool, euroswamos, coercion, GlobalRisks).
+
+## Translation provenance
+
+All 24 new translation entries are marked `status: beta` — DeepL-quality machine translations produced during the PR work, awaiting native-speaker review. The beta ribbon flags every translated page, with an extra inline disclaimer on legal pages (`/policy`, `/terms`, `/accessibility`) noting that the English version remains the legally binding text.
+
+`scripts/check-i18n-drift.py` shows all 24 entries currently fresh against their source SHA-1.
+
+## Notes on specific pages
+
+- **`/board`** — chrome translated; member names, affiliations, and research themes stay in the language they were originally submitted in (matches NetSec's approach to member bios)
+- **`/policy`, `/terms`, `/accessibility`** — fully translated GDPR/WCAG documents; extra "translation in good faith" disclaimer at the top, beta ribbon below
+- **Conference and programme content** referencing English-only archive pages still link to those English pages from FR/DE — the language-switcher chips on those archive pages route back to the language homepage
+
+## What's next
+
+- **Native-speaker review pass** to promote the 24 beta translations to `status: reviewed` (especially the three legal pages)
+- **Localised share cards** — `scripts/make-share-cards.py` could produce `*-meta.{fr,de}.jpg` variants
+
+*Originally tagged as **v2.1.0**; renumbered to **v2.1.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+## [2.0.0r] · 2026-05-22 — Multilingual site (EN / FR / DE)
+
+First multilingual release.
+
+The EISS site is now available in **English (canonical)**, **French (beta)**, and **German (beta)** — with the full i18n plumbing in place for any future page to be translated.
+
+## URL convention
+
+| URL | Locale |
+|---|---|
+| `/page.html` | English (authoritative) |
+| `/page.fr.html` | French (beta until native-speaker review) |
+| `/page.de.html` | German (beta until native-speaker review) |
+
+Pattern borrowed from [netsec-cost.eu](https://netsec-cost.eu/) and adapted to EISS's Eleventy/Nunjucks layout.
+
+## What's translated
+
+### Chrome (site-wide)
+Nav labels, footer labels, button strings, theme-toggle aria text, beta-ribbon copy — all translated to FR + DE via `src/_data/i18n.js`. Appears on every page.
+
+### Page content (PoC)
+- `/index.{fr,de}.html` — homepage
+- `/initiative.{fr,de}.html` — about EISS
+- `/membership.{fr,de}.html` — pricing tiers + management portal
+
+All marked `status: beta` — they show a yellow ribbon at the top noting that the English version is authoritative.
+
+### Not translated (by design)
+35+ archive pages stay English-only: conferences 2019–2025, JPW, NDC, Ukraine, panel/practical details, ticket-flow redirects. The language-switcher chips remain visible on those pages and route FR/DE clicks to the language homepage as a friendly fallback.
+
+## User-facing features
+
+- **Language switcher** in the top nav — three pill chips (EN / FR / DE). Active chip highlighted in EISS blue.
+- **Beta ribbon** at the top of every translated page, with a "View in English" link back to the source.
+- **Saved preference** — clicking a chip sets `localStorage.eiss-lang`. Subsequent visits to the English version auto-redirect to the saved language *if* a translation exists for that page. Never auto-redirects away from English.
+- **hreflang link tags** on every translated page for search engines.
+- **og:locale meta tag** for social-media preview crawlers.
+
+## Maintainer tooling
+
+- **`scripts/check-i18n-drift.py`** — hashes each English source `.njk` and compares to `data/i18n-state.json`. Reports stale/missing translations.
+- **`.github/workflows/i18n-drift.yml`** — runs the drift checker on every push + PR. Fails the build if a translation has drifted, blocking the PR until either a re-translation lands or a `--mark-fresh` re-stamp is committed.
+- **`docs/i18n.md`** — full maintainer guide (adding a translation, refreshing after source changes, promoting beta → reviewed, translation policy, cost model).
+
+## What's next (v2.1+)
+
+- Translate remaining Tier-1 pages: `/board`, `/2026`, `/programmes`, `/events`, `/policy`
+- Translate Tier-2 (legal) pages: `/terms`, `/accessibility`, `/sitemap`, `/past`
+- Native-speaker review pass on the 6 PoC translations to promote `status: beta` → `reviewed`
+- Per-page localised share cards (currently English regardless of page locale)
+
+Each follow-up translation is one file copy + DeepL pass + `--mark-fresh` away.
+
+## Verified locally
+
+Preview MCP screenshots of `/index.fr.html`, `/index.de.html`, `/initiative.de.html` — all show the correct language for chrome + content, active chip highlighted, beta ribbon present, hreflang tags in place.
+
+*Originally tagged as **v2.0.0**; renumbered to **v2.0.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
+
+[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.13.0r...HEAD

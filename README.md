@@ -97,7 +97,7 @@ The format of `[Unreleased]` notes adapts to the release tier:
 
 If you can't write a meaningful lede about a release, it's a patch. The format mirrors the actual significance.
 
-**Caveat on historical tags.** This convention was formally adopted at v2.21.0. Several earlier releases (v2.13, v2.15, v2.16, v2.18, v2.20) were tagged as MINOR but would be PATCH under the rules above — small visual polish or UX tweaks on existing components, not "big new projects". Tags are immutable; those releases stay where they are. Going forward, the convention is enforced via `scripts/release.sh` + this section.
+**On the `r` suffix in older tag names.** At v2.13.0r the convention here was formally adopted. The earlier history had been bumped too liberally — several releases were tagged as MINOR but were PATCH-shaped (small visual polish or UX tweaks on existing components). A retroactive renumber swept through every existing release and re-cut tags at the same commit SHAs. GitHub's tag-immutability protection blocks reusing previously-deleted tag names, so the renumbered MINORs land with an `r` suffix (`v2.0.0r`, `v2.5.0r`, …, `v2.13.0r`) — `r` for "renumbered". PATCH tags that didn't collide with previously-existing names stayed clean (`v2.5.1`, `v2.10.1`, …). The full mapping with the original tag for each entry lives at the bottom of [`CHANGELOG.md`](CHANGELOG.md). Going forward we expect clean `vX.Y.Z` tags via `scripts/release.sh`.
 
 ## History
 
