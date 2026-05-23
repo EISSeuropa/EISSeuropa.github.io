@@ -231,6 +231,17 @@ const locales = {
       today: "Today",
       onIndico: "View on Indico",
     },
+
+    mapEmbed: {
+      // Click-to-load Google Maps preview on /YYYY venue sections.
+      // See src/_includes/map-embed.njk + the /policy §3 privacy
+      // commitment that no third-party widgets load before the visitor
+      // opts in.
+      loadButton: "Show interactive map",
+      loadButtonAria: "Load Google Maps preview for {{address}}",
+      iframeTitle: "Google Maps preview for {{address}}",
+      privacyNote: "Loading the map will request data from Google.",
+    },
   },
 
   fr: {
@@ -393,6 +404,13 @@ const locales = {
       today: "Aujourd'hui",
       onIndico: "Voir sur Indico",
     },
+
+    mapEmbed: {
+      loadButton: "Afficher la carte interactive",
+      loadButtonAria: "Charger l'aperçu Google Maps pour {{address}}",
+      iframeTitle: "Aperçu Google Maps pour {{address}}",
+      privacyNote: "Charger la carte enverra une requête aux serveurs de Google.",
+    },
   },
 
   de: {
@@ -554,6 +572,13 @@ const locales = {
       oneDayToGo: "Morgen",
       today: "Heute",
       onIndico: "Auf Indico ansehen",
+    },
+
+    mapEmbed: {
+      loadButton: "Interaktive Karte anzeigen",
+      loadButtonAria: "Google-Maps-Vorschau für {{address}} laden",
+      iframeTitle: "Google-Maps-Vorschau für {{address}}",
+      privacyNote: "Beim Laden der Karte werden Daten an Google übermittelt.",
     },
   },
 };
