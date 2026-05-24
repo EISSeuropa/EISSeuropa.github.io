@@ -204,6 +204,74 @@ alternates:
       since the 2017 inaugural at Université Panthéon-Assas:
     </p>
 
+    {#- ESSC tour map. Stylized Europe outline (mainland + UK + Ireland)
+        with accented dots at each host city's lat/long, projected into a
+        1000×700 viewBox via lat[35–71] / lon[−12–32]. Paris carries the
+        2017–2019 cluster as a single dot per the design decision; the
+        2020 online (COVID) edition is not on the map and is acknowledged
+        in the figcaption. -#}
+    <figure class="essc-map-figure card" style="padding: var(--space-5); margin-top: var(--space-5);">
+      <svg viewBox="0 0 1000 700" class="essc-map" role="img" aria-labelledby="essc-map-title essc-map-desc" preserveAspectRatio="xMidYMid meet">
+        <title id="essc-map-title">ESSC host cities across Europe, 2017–2026</title>
+        <desc id="essc-map-desc">A stylized map showing the European cities that have hosted the annual ESSC conference since 2017, with dots marking each host location.</desc>
+
+        <g class="essc-map-outline" aria-hidden="true">
+          <path d="M 386,253 L 386,117 L 682,19 L 909,19 L 1000,117 L 1000,408 L 1000,564 L 909,583 L 864,642 L 773,661 L 682,603 L 613,642 L 568,603 L 477,525 L 386,544 L 227,680 L 159,680 L 68,661 L 68,544 L 182,447 L 250,428 L 341,389 L 454,292 L 500,253 Z" />
+          <path d="M 159,408 L 159,253 L 250,253 L 295,350 L 295,389 Z" />
+          <path d="M 45,350 L 114,311 L 136,370 L 68,389 Z" />
+        </g>
+
+        <g class="essc-map-dots">
+          <a href="/2019.html" class="essc-map-link">
+            <title>Paris — 2017, 2018, 2019</title>
+            <circle cx="326" cy="431" r="14" class="essc-map-dot essc-map-dot--inaugural"/>
+            <text x="346" y="430" class="essc-map-label">Paris</text>
+            <text x="346" y="450" class="essc-map-years">2017 · 2018 · 2019</text>
+          </a>
+          <a href="/2021.html" class="essc-map-link">
+            <title>Lisbon — 2021</title>
+            <circle cx="65" cy="628" r="9" class="essc-map-dot"/>
+            <text x="85" y="627" class="essc-map-label">Lisbon</text>
+            <text x="85" y="647" class="essc-map-years">2021</text>
+          </a>
+          <a href="/2022.html" class="essc-map-link">
+            <title>Berlin — 2022</title>
+            <circle cx="577" cy="359" r="9" class="essc-map-dot"/>
+            <text x="597" y="358" class="essc-map-label">Berlin</text>
+            <text x="597" y="378" class="essc-map-years">2022</text>
+          </a>
+          <a href="/2023.html" class="essc-map-link">
+            <title>Barcelona — 2023</title>
+            <circle cx="322" cy="576" r="9" class="essc-map-dot"/>
+            <text x="342" y="575" class="essc-map-label">Barcelona</text>
+            <text x="342" y="595" class="essc-map-years">2023</text>
+          </a>
+          <a href="/2024.html" class="essc-map-link">
+            <title>Prague — 2024</title>
+            <circle cx="601" cy="407" r="9" class="essc-map-dot"/>
+            <text x="621" y="406" class="essc-map-label">Prague</text>
+            <text x="621" y="426" class="essc-map-years">2024</text>
+          </a>
+          <a href="/2025.html" class="essc-map-link">
+            <title>Thessaloniki — 2025</title>
+            <circle cx="794" cy="590" r="9" class="essc-map-dot"/>
+            <text x="784" y="610" class="essc-map-label essc-map-label--end">Thessaloniki</text>
+            <text x="784" y="630" class="essc-map-years essc-map-years--end">2025</text>
+          </a>
+          <a href="/2026.html" class="essc-map-link">
+            <title>Stockholm — 2026 (next)</title>
+            <circle cx="683" cy="227" r="11" class="essc-map-dot essc-map-dot--next"/>
+            <text x="703" y="226" class="essc-map-label">Stockholm</text>
+            <text x="703" y="246" class="essc-map-years">2026 · next</text>
+          </a>
+        </g>
+      </svg>
+      <figcaption class="essc-map-caption">
+        Host cities since the 2017 inaugural conference. The 2020 edition was held online during the
+        COVID-19 pandemic and is omitted from the map. Click a dot to open the per-edition page.
+      </figcaption>
+    </figure>
+
     <ul class="conf-tour" aria-label="ESSC editions, most recent first">
       <li class="conf-tour-card">
         <div class="conf-tour-year">2026 <span class="conf-tour-ordinal">9th</span></div>
