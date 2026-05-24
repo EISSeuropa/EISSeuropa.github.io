@@ -89,12 +89,39 @@ Board Member AND the Technology Coordinator):
 > as a quiet pill alongside the role on the card — purely descriptive,
 > not used for sorting or grouping.
 
-In *Settings → Responses*, **enable**:
+In *Settings → Responses*, set:
 
-- ☑ Collect email addresses
-- ☑ Allow response editing
-- ☑ Limit to 1 response (require Google sign-in — recommended; the
-  script uses email to dedupe re-submissions).
+- **Collect email addresses → Verified**
+  This requires Google sign-in (the verified address auto-fills
+  from the signed-in account, and the sync uses it to dedupe).
+- ☑ **Allow response editing** — members can tweak non-photo
+  fields via the confirmation-email link.
+- ☐ **Limit to 1 response** — leave **unchecked**. Multiple
+  submissions per signed-in account are intentional: the sync's
+  email-based dedup keeps the latest by timestamp, and members
+  resubmit the form when they need to replace their photo (see
+  the *Photo replacement workflow* note in Step 5 below).
+
+### Disclaimer to add to the Form
+
+Google Forms doesn't let a respondent replace a file upload when
+they edit a previous response — they see the old file and have no
+way to remove it (see the *Known limitations* in this repo's issue
+tracker for the long version). Set the **Form description** (top
+of the form) to include:
+
+> *Want to update your photo?* Google Forms does not let you replace
+> a file upload when editing an existing response. Submit a fresh
+> response (using this same form URL, not the edit link from your
+> confirmation email) and the sync will overwrite your old entry
+> with the new one. For non-photo updates, the edit link works fine.
+
+And on the **Headshot photo (optional)** question, set its
+**Description** to:
+
+> Already submitted once and want to change your photo? Don't edit
+> — submit a fresh response. The file-upload field is locked by
+> Google Forms after the first submission.
 
 ## Step 2 · Link the Form to a Sheet
 
@@ -156,11 +183,24 @@ This inherits to every file uploaded later.
 *Share* dance on each upload as submissions arrive. More secure, more
 work — fine for ~20 board members.)
 
-### Replacing a photo after a respondent has already submitted
+### Photo replacement workflow
 
-Google Forms does **not** let a respondent replace a file upload when
-editing an existing response (the previous file shows but can't be
-removed). Workaround:
+Google Forms locks the file-upload field once a response has been
+submitted — editing the response shows the old file but offers no
+way to remove it. To replace a photo, the respondent has two paths:
+
+**Standard path — submit a fresh response.** Because we leave
+"Limit to 1 response" unchecked (see Step 1), members can submit
+the form again with a fresh file upload. The sync's email-based
+dedup keeps the most recent submission per email, so the new entry
+overwrites the old. The old response stays in the spreadsheet (and
+the old file stays in the Drive folder), but the rendered card
+reflects the latest submission. Operator action: none — the daily
+sync workflow handles it.
+
+**Emergency hatch — `photoOverride`.** For the rare case where a
+respondent can't use the form (lost access, technical issue, urgent
+swap), the operator can hand-set the photo:
 
 1. The respondent emails you the new photo.
 2. You add the file to `src/assets/images/board/` — any filename;
@@ -174,6 +214,15 @@ removed). Workaround:
 The sync script preserves `photoOverride` across runs — it's never
 overwritten by what's in the Form. To revert to the Form's photo
 again, delete the `photoOverride` line.
+
+### Cleaning up old photo files in Drive
+
+Each fresh submission uploads a new file to the Form's response
+folder, and the old ones stick around. At ~22 board members with
+photo updates every year or two, that's negligible bloat. Purge
+manually once a year if it bothers you — look at the modified date
+on each file and delete anything that isn't the latest per
+respondent.
 
 ## Step 6 · Test the workflow
 
