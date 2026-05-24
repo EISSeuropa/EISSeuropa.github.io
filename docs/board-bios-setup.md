@@ -46,8 +46,8 @@ just don't merge.
 | # | Question text | Type | Required? |
 |---|---|---|---|
 | 1 | **Full name (with title — Dr / Prof / Mr / Ms)** | Short answer | ✅ |
-| 2 | **Do you have special Board responsibilities?** | Dropdown — see *Q2 options* below | ✅ |
-| 3 | **Functional responsibility (optional)** | Dropdown — see *Q3 options* below | ⬜ |
+| 2 | **What is your role at EISS?** | Dropdown — see *Q2 options* below | ✅ |
+| 3 | **Do you have functional responsibilities?** | Dropdown — see *Q3 options* below | ⬜ |
 | 4 | **Position or current role (e.g. PhD candidate, Associate Professor, Policy analyst)** | Short answer | ✅ |
 | 5 | **Institution or organisation** | Short answer | ✅ |
 | 6 | **Country** | Short answer | ✅ |
