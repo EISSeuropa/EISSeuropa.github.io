@@ -14,6 +14,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+### Changed
+
+- **`/initiative` — Our network section moved up** above *What we do*, so the leadership headshots + country flags appear immediately after the hero stats row instead of below the NetSec card. Visualises the **N people across M countries** stat right where the reader sees it.
+
 ### Fixed
 
 - **`scripts/release.sh` compare-link regex** now accepts letters and dashes after the dotted numerics, so `v2.13.0r` and any future suffixed tags update cleanly. Previous regex `v([0-9.]+)` silently failed to bind on `v2.13.0r`, leaving `[Unreleased]: …/compare/v2.13.0r...HEAD` stale across v2.22.0. Same PR repoints the live compare link at v2.22.0. (#121)
