@@ -294,9 +294,7 @@ def _classify_session(slot: dict, indico_type: str | None) -> str | None:
     return None
 
 
-def extract_livestreamed(
-    timetable_results: dict, event_id: str, default_room: str = ""
-) -> list[dict]:
+def extract_livestreamed(timetable_results: dict, event_id: str) -> list[dict]:
     """Pick out livestreamed sessions (introduction / roundtable /
     keynote / conclusion) from a timetable export. Returns a sorted
     list of normalised dicts.
@@ -448,11 +446,13 @@ def _looks_like_break(title: str) -> bool:
     return t.startswith("coffee") or t.startswith("tea break") or t == "lunch"
 
 
-def _normalise_room_for_comparison(room: str) -> str:
+def _room_identity(room: str) -> str:
     """Collapse a room string to its most specific segment for
-    cross-format comparison. Indico operators sometimes enter
+    cross-format identity. Indico operators sometimes enter
     `D House, Lecture Hall 8` and sometimes just `Lecture Hall 8`;
-    both should compare equal when one is the conference default.
+    both should bucket to the same room for colour-coding purposes
+    (the operator can fix the textual inconsistency on Indico without
+    the grid flipping colours).
 
     Strategy: lowercase + take the last comma-separated segment.
     `"D House, Lecture Hall 8"` → `"lecture hall 8"`.
@@ -463,7 +463,7 @@ def _normalise_room_for_comparison(room: str) -> str:
     return room.rsplit(",", 1)[-1].strip().lower()
 
 
-def extract_programme(timetable_results: dict, event_id: str, default_room: str = "") -> dict:
+def extract_programme(timetable_results: dict, event_id: str) -> dict:
     """Turn the full Indico timetable into a normalised programme
     structure: days → slots → (per-session) contributions.
 
@@ -487,10 +487,6 @@ def extract_programme(timetable_results: dict, event_id: str, default_room: str 
     """
     days: list[dict] = []
     event_block = timetable_results.get(str(event_id), {})
-    # Used to flag slots whose room differs from the event default so
-    # the template can highlight them (e.g. parallel panels in an
-    # adjacent room, coffee breaks in a different building floor).
-    default_room_norm = _normalise_room_for_comparison(default_room)
 
     for idx, day_key in enumerate(sorted(event_block.keys()), start=1):
         day_block = event_block[day_key]
@@ -524,15 +520,10 @@ def extract_programme(timetable_results: dict, event_id: str, default_room: str 
                 "startTime": (start.get("time") or "")[:5],
                 "endTime": (end.get("time") or "")[:5],
                 "room": slot_room,
-                # True when this slot's room differs from the event
-                # default. Templates render the room as an attention-
-                # drawing chip when true, and as quiet meta-text when
-                # false. Empty room → False (don't highlight nothing).
-                "roomDiffersFromDefault": bool(
-                    default_room_norm
-                    and _normalise_room_for_comparison(slot_room)
-                    and _normalise_room_for_comparison(slot_room) != default_room_norm
-                ),
+                # roomColorIndex is assigned in a post-pass below, once
+                # all slots have been collected and room frequencies
+                # can be counted. Most-used room gets index 0 (the
+                # primary accent colour); ties broken alphabetically.
                 "url": _absolutize_indico_url(slot.get("url") or ""),
             }
 
@@ -626,20 +617,6 @@ def extract_programme(timetable_results: dict, event_id: str, default_room: str 
                     and slots[j]["startTime"] == current["startTime"]:
                 group.append(slots[j])
                 j += 1
-            # Stable column assignment across rows: default-room slots
-            # always land in the left column; off-default slots (Hall 9
-            # next to Hall 8, etc.) always land in the right column.
-            # Indico returns parallel sessions in non-deterministic order,
-            # which would otherwise have Hall 8 / Hall 9 flip-flopping
-            # row-to-row and make the grid harder to scan. Tie-break by
-            # room name then title for stable ordering when both items
-            # share a room (which shouldn't happen in practice, but be
-            # defensive).
-            group.sort(key=lambda s: (
-                bool(s.get("roomDiffersFromDefault")),
-                s.get("room") or "",
-                s.get("title") or "",
-            ))
             # End-time of the row is the latest among grouped items —
             # parallel panels often end at the same minute but be safe.
             row_end = max(s["endTime"] for s in group)
@@ -661,11 +638,42 @@ def extract_programme(timetable_results: dict, event_id: str, default_room: str 
             "slots": slots,
         })
 
-    # `defaultRoom` lets the template render a one-line hint at the top
-    # of the grid ("Sessions take place in {{defaultRoom}} unless marked
-    # otherwise"). Passed through verbatim from Indico — the operator
-    # is the source of truth for how this should read.
-    return {"days": days, "defaultRoom": default_room or ""}
+    # Colour-index post-pass. Count how often each distinct room is
+    # used across the whole programme, then assign indices in
+    # frequency-descending order (alphabetical tie-break for
+    # determinism). The most-used room gets index 0 — the primary
+    # accent colour. This way the "main panel hall" anchors visually
+    # regardless of which room happens to appear earliest in time.
+    from collections import Counter
+    counts: Counter = Counter()
+    for d in days:
+        for row in d["rows"]:
+            for s in row["items"]:
+                key = _room_identity(s.get("room") or "")
+                if key:
+                    counts[key] += 1
+    room_order = sorted(counts.keys(), key=lambda k: (-counts[k], k))
+    index_map = {k: i for i, k in enumerate(room_order)}
+
+    for d in days:
+        for row in d["rows"]:
+            for s in row["items"]:
+                key = _room_identity(s.get("room") or "")
+                s["roomColorIndex"] = index_map.get(key) if key else None
+            # Re-sort parallel rows now that indices are set: items
+            # with the lower colour index (= more-frequent room) land
+            # in the left column. The most-used room therefore always
+            # appears in the leftmost column across all parallel rows.
+            if row.get("parallel"):
+                row["items"].sort(key=lambda s: (
+                    s.get("roomColorIndex") if s.get("roomColorIndex") is not None else 9999,
+                    s.get("room") or "",
+                    s.get("title") or "",
+                ))
+        # Keep `slots` (debug surface) in sync with rebuilt rows.
+        d["slots"] = [s for row in d["rows"] for s in row["items"]]
+
+    return {"days": days}
 
 
 def fetch_events() -> list[dict]:
@@ -729,16 +737,12 @@ def main() -> None:
     # kept (the latest per year).
     for year, event in annual_by_year.items():
         tt = fetch_timetable(event["id"])
-        livestreamed = extract_livestreamed(
-            tt, event["id"], default_room=event.get("room") or ""
-        )
+        livestreamed = extract_livestreamed(tt, event["id"])
         event["livestreamed"] = livestreamed
         # Full normalised programme — drives the live programme grid
         # on /YYYY pages. Same timetable, different shape: every slot,
         # not just livestreamed ones.
-        event["programme"] = extract_programme(
-            tt, event["id"], default_room=event.get("room") or ""
-        )
+        event["programme"] = extract_programme(tt, event["id"])
         with_video = sum(1 for k in livestreamed if k.get("videoUrl"))
         by_type: dict[str, int] = {}
         for k in livestreamed:

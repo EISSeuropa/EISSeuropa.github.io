@@ -152,11 +152,6 @@ const locales = {
       eyebrow: "Live from Indico",
       heading: "Programme",
       lead: "Pulled directly from Indico. Updates daily, so changes in the run-up to the conference appear here within ~24 hours of being made.",
-      // One-line baseline shown above the grid: tells attendees the
-      // default room, so any slot flagged with the "elsewhere" treatment
-      // (parallel panels in an adjacent room, coffee breaks in a
-      // different building floor) reads as the exception, not the rule.
-      defaultRoomLine: "Sessions take place in {{room}} unless marked otherwise.",
       daysNav: "Jump to a day",
       chairedBy: "Chair",
       discussants: "Discussants",
@@ -347,7 +342,6 @@ const locales = {
       eyebrow: "En direct depuis Indico",
       heading: "Programme",
       lead: "Tiré directement d'Indico. Mis à jour quotidiennement — les modifications à l'approche de la conférence apparaissent ici dans les 24 heures.",
-      defaultRoomLine: "Les sessions se déroulent en {{room}}, sauf indication contraire.",
       daysNav: "Aller à une journée",
       chairedBy: "Présidence",
       discussants: "Intervenants",
@@ -514,7 +508,6 @@ const locales = {
       eyebrow: "Live von Indico",
       heading: "Programm",
       lead: "Direkt aus Indico bezogen. Tägliche Aktualisierung — Änderungen im Vorfeld der Konferenz erscheinen hier innerhalb von ~24 Stunden.",
-      defaultRoomLine: "Die Sitzungen finden in {{room}} statt, sofern nicht anders angegeben.",
       daysNav: "Zu einem Tag springen",
       chairedBy: "Vorsitz",
       discussants: "Diskutant:innen",
