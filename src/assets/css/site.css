@@ -1720,58 +1720,70 @@ h4 { font-size: var(--fs-lg); }
   flex: 0 0 auto;
 }
 
-/* Bio teaser with optional Read-more expander. boardSorted.js splits
-   the bio into `teaser` + `rest`; the teaser renders inline always,
-   the rest only when <details> is opened. The trailing ellipsis is
-   visible while the expander is closed, hidden once open (via :has()
-   on the wrapping div). Result: opening the expander reveals only new
-   text rather than repeating the teaser. */
+/* Bio + Read-more toggle. The full bio always renders as a single
+   continuous paragraph (no awkward sentence break across a button);
+   CSS line-clamp visually truncates it to 3 lines when collapsed,
+   with the browser auto-rendering an ellipsis. The button toggles
+   the clamp on/off via a data attribute set by ~5 lines of JS in
+   src/assets/js/theme.js. Short bios (boardSorted.js's bioIsLong
+   = false) skip the toggle entirely. */
 .person-bio-wrap {
   margin: var(--space-3) 0 0;
 }
-.person-bio,
-.person-bio-rest {
+.person-bio {
   font-size: var(--fs-sm);
   color: var(--text-muted);
   line-height: var(--lh-snug);
   margin: 0;
 }
-.person-bio-ellipsis {
-  /* Visually flush with the preceding word; hidden when the rest is
-     unfolded so the prose flows continuously. */
+.person-bio-wrap[data-collapsible="true"] .person-bio {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
-.person-bio-wrap:has(.person-bio-more[open]) .person-bio-ellipsis {
-  display: none;
+.person-bio-wrap[data-expanded="true"] .person-bio {
+  display: block;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  overflow: visible;
 }
-.person-bio-more {
-  margin: var(--space-1) 0 0;
-}
-.person-bio-more > summary {
-  cursor: pointer;
-  color: var(--accent);
-  font-weight: 600;
-  font-size: var(--fs-sm);
-  list-style: none;
-  padding: 0.15rem 0;
+
+.person-bio-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 0.25em;
+  gap: 0.3em;
+  margin-top: var(--space-1);
+  padding: 0.15rem 0;
+  background: none;
+  border: 0;
+  font: inherit;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
 }
-.person-bio-more > summary::-webkit-details-marker { display: none; }
-.person-bio-more > summary::after {
+.person-bio-toggle:hover {
+  text-decoration: underline;
+}
+.person-bio-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+.person-bio-toggle::after {
   content: "▸";
   font-size: 0.85em;
   transition: transform var(--motion-fast) var(--ease-out);
 }
-.person-bio-more[open] > summary::after { transform: rotate(90deg); }
-.person-bio-more > summary:hover { text-decoration: underline; }
-.person-bio-more[open] > summary {
-  /* Once open, quiet the trigger so the prose takes focus. */
+.person-bio-toggle[aria-expanded="true"]::after {
+  transform: rotate(90deg);
+}
+.person-bio-toggle[aria-expanded="true"] {
+  /* Once expanded, quiet the trigger so the prose takes focus. */
   color: var(--text-subtle);
   font-weight: 500;
-}
-.person-bio-more > .person-bio-rest {
-  margin-top: var(--space-2);
 }
 
 /* "Research themes:" line — currently rendered with a thin border-top

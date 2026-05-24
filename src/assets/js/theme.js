@@ -81,3 +81,30 @@
     init();
   }
 })();
+
+/* Bio Read-more toggle on /board. The bio paragraph is line-clamped
+   to 3 lines via CSS by default; this script flips a data attribute
+   on the wrapping div that removes the clamp. Button text + aria-
+   expanded swap to match. Build-time decides which bios get a toggle
+   (boardSorted.js `bioIsLong` boolean) so short bios stay clean. */
+(function () {
+  function bindBioToggle(btn) {
+    btn.addEventListener("click", function () {
+      var wrap = btn.parentElement;
+      var nowExpanded = wrap.dataset.expanded !== "true";
+      wrap.dataset.expanded = String(nowExpanded);
+      btn.setAttribute("aria-expanded", String(nowExpanded));
+      btn.textContent = nowExpanded
+        ? btn.dataset.labelExpanded
+        : btn.dataset.labelCollapsed;
+    });
+  }
+  function init() {
+    document.querySelectorAll(".person-bio-toggle").forEach(bindBioToggle);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();

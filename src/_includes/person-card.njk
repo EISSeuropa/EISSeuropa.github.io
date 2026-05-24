@@ -53,14 +53,17 @@
     </p>
     {%- endif %}
 
-    {%- if person.bioTeaser %}
-    <div class="person-bio-wrap">
-      <p class="person-bio">{{ person.bioTeaser | safe }}{% if person.bioRest %}<span class="person-bio-ellipsis">…</span>{% endif %}</p>
-      {%- if person.bioRest %}
-      <details class="person-bio-more">
-        <summary>{{ t.boardPage.readMore }}</summary>
-        <p class="person-bio-rest">{{ person.bioRest | safe }}</p>
-      </details>
+    {%- if person.bio %}
+    <div class="person-bio-wrap"{% if person.bioIsLong %} data-collapsible="true"{% endif %}>
+      <p class="person-bio">{{ person.bio | safe }}</p>
+      {%- if person.bioIsLong %}
+      <button type="button"
+              class="person-bio-toggle"
+              aria-expanded="false"
+              data-label-collapsed="{{ t.boardPage.readMore }}"
+              data-label-expanded="{{ t.boardPage.readLess }}">
+        {{ t.boardPage.readMore }}
+      </button>
       {%- endif %}
     </div>
     {%- endif %}
