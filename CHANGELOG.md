@@ -16,9 +16,11 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
-- **Auto-expiring board cards for time-bound roles** — interns, visiting fellows, and fixed-term contracts. A new optional `roleEndDate` field on each board entry (Form question 18, Date type) carries the role end-date. `src/_data/boardSorted.js` applies a **7-day grace** after that date, then moves the entry from the active sections into a new `pastMembers` array. The daily-rebuild workflow re-evaluates each build so the transition is automatic, no manual gardening required. (#126)
-- **"Past board members and interns" folded footer** on `/board` — a `<details>`-based collapsed footer rendering all expired entries with a compact people-grid. Closed by default, opens to a quieter grid (smaller min column, slightly muted). Copy in EN / FR / DE reinforces the "they remain part of the broader European security-studies family" framing. (#126)
-- **Date-shape tolerance in `scripts/sync-board.py`** — accepts `YYYY-MM-DD` (Forms default), `DD/MM/YYYY`, `DD.MM.YYYY`, `YYYY/MM/DD`, and `MM/DD/YYYY`; normalises everything to ISO. Unparseable values log a warning and leave the entry permanent (no silent expiry on garbage input). (#126)
+- **`/initiative` — founder pull-quote, two founding objectives, and "Filling a gap" framing** in a new *"What EISS was founded to do"* card that replaces the generic *"How we work"* block. Quote attribution links to Meijer's 2017 *Champs de Mars* article on Cairn — the page now signposts its own founding document.
+- **`/initiative` — research-themes pill grid** listing the nine permanent thematic sections from the 2017 inaugural conference. Renders as a wrapped row of accented pills below NetSec. Localised EN / FR / DE.
+- **`/initiative` — *First conference* facts aside** on the *How EISS started* section: a side card with the 13–14 January 2017 date, Panthéon-Assas venue, attendance figures, Sir Hew Strachan keynote, AEGES · Centre Thucydide · CERSA co-organisers, and a footer citation to the Cairn article.
+- **`/initiative` — expanded origins prose** names Jean-Vincent Holeindre (AEGES president, Univ. Poitiers), the CNRS Éditions + Armand Colin book series, the planned English-language series, and the **Prix Bastien Irondelle** PhD thesis prize. Adds *legal scholars / juristes* to the multidisciplinary list.
+- **`.theme-pills` + `.origin-layout` + `.inaugural-facts` styles** in `src/assets/css/site.css` — pill row, two-column prose-plus-aside grid that collapses on narrow viewports, and a compact two-column definition list for the facts aside.
 
 ### Changed
 
