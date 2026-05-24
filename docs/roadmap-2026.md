@@ -2,7 +2,7 @@
 
 A planning document, not a commitment. Written to help the maintainer
 think through what's worth doing next, in what order, and at what
-effort. **Last update: 22 May 2026, after v2.14.2.**
+effort. **Last update: 24 May 2026, after v2.22.0.**
 
 Effort notation:
 
@@ -36,6 +36,10 @@ counts as MAJOR / MINOR / PATCH. `scripts/release.sh` enforces the
 process; `CHANGELOG.md` accumulates the entries between releases. One
 PR is *not* one release — PRs add to `[Unreleased]`; releases get
 cut at milestones.
+
+### v2.22.0 · 24 May 2026 — *Live board pipeline and Initiative refresh*
+
+The Google Form board pipeline goes live (identity-key dedup, `photoOverride` hatch for the Forms file-upload edit limitation, descriptive auto-PR titles + rich Markdown bodies, multi-submission workflow). `/board` is rebuilt around three sections (Leadership · Board Members · Support Staff) with bio teaser + Read-more, functional-responsibility pill, ESSC-speaker mic, country flag glued inline to the institution. `/initiative` is redesigned to read as concrete activities + numbers + people (stats row, four activity tiles, leadership + flag strip, 2017 AEGES origin paragraph, compact CTA). Programme grid carries colour-coded room pills; `/2026` venue embeds a Google Map. Version jumps from v2.13.0r straight to v2.22.0 because GitHub's immutable-releases tombstones permanently reserve every tag name once attached to a release — the entire v2.14.0 → v2.21.0 range is burned by the retroactive renumber. [Release notes →](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.22.0)
 
 ### v2.14.2 · 22 May 2026 — *Live programme grid polish and parallel panels*
 
