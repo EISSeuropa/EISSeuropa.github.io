@@ -49,53 +49,6 @@ alternates:
   </div>
 </header>
 
-<section class="section" id="network" aria-labelledby="network-title">
-  <div class="container">
-    <div class="featured-eyebrow">Unser Netzwerk</div>
-    <h2 id="network-title">
-      {{ boardSorted.counts.peopleTotal }} Personen in {{ boardSorted.counts.countriesTotal }} Ländern
-    </h2>
-    <p class="muted" style="max-width: 44rem;">
-      EISS wird von einem Vorstand aus {{ boardSorted.counts.peopleTotal }} Wissenschaftlerinnen und
-      Wissenschaftlern sowie einem kleinen Support-Team geleitet. Die Zusammensetzung spiegelt EISSs
-      geografische Reichweite in Europa und darüber hinaus wider.
-    </p>
-
-    {%- if boardSorted.leadership.length %}
-    <ul class="leadership-strip" aria-label="EISS-Leitung">
-      {%- for person in boardSorted.leadership %}
-      <li>
-        <a href="/board.de.html{% if person.slug %}#{{ person.slug }}{% endif %}">
-          <img src="{{ person.photoOverride or person.photo }}" alt="{{ person.alt or person.name }}" loading="lazy">
-          <span class="leadership-strip-role">{{ person.role }}</span>
-          <span class="leadership-strip-name">{{ person.name }}</span>
-        </a>
-      </li>
-      {%- endfor %}
-    </ul>
-    {%- endif %}
-
-    {%- if boardSorted.countries.length %}
-    <ul class="country-strip" aria-label="Im EISS-Team vertretene Länder">
-      {%- for c in boardSorted.countries %}
-      {%- if c.iso %}
-      <li>
-        <img src="/assets/images/flags/{{ c.iso }}.svg"
-             alt="{{ c.name }}"
-             title="{{ c.name }}"
-             width="28" height="28" loading="lazy">
-      </li>
-      {%- endif %}
-      {%- endfor %}
-    </ul>
-    {%- endif %}
-
-    <p style="margin-top: var(--space-5);">
-      <a class="btn btn-secondary" href="/board.de.html">Das gesamte Team {{ icon("arrow-right") }}</a>
-    </p>
-  </div>
-</section>
-
 <section class="section" aria-labelledby="what-we-do-title">
   <div class="container">
     <h2 id="what-we-do-title">Was wir tun</h2>
@@ -245,27 +198,171 @@ alternates:
   </div>
 </section>
 
+<section class="section" id="essc" aria-labelledby="essc-title">
+  <div class="container">
+    <span class="eyebrow">Flaggschiff-Veranstaltung</span>
+    <h2 id="essc-title">ESSC — Die Europäische Konferenz für Sicherheitsstudien</h2>
+    <p class="muted" style="max-width: 50rem;">
+      Die jährliche ESSC ist die Flaggschiff-Veranstaltung von EISS — das größte europäische Treffen
+      von Wissenschaftlerinnen und Praktikern, die zu Sicherheitsfragen arbeiten. Per Konvention
+      wechselt die Konferenz jedes Jahr Stadt und gastgebende Institution und baut so das Netzwerk
+      Stück für Stück aus. Editionen seit der Eröffnungskonferenz 2017 an der Université
+      Panthéon-Assas:
+    </p>
+
+    <ul class="conf-tour" aria-label="ESSC-Editionen, neueste zuerst">
+      <li class="conf-tour-card">
+        <div class="conf-tour-year">2026 <span class="conf-tour-ordinal">9.</span></div>
+        <div class="conf-tour-city">
+          <img src="/assets/images/flags/se.svg" alt="Schweden" title="Schweden" width="22" height="22" loading="lazy">
+          Stockholm
+        </div>
+        <div class="conf-tour-host">Universität Stockholm</div>
+        <a class="conf-tour-link" href="/2026.de.html">Programm &rarr;</a>
+      </li>
+      <li class="conf-tour-card">
+        <div class="conf-tour-year">2025 <span class="conf-tour-ordinal">8.</span></div>
+        <div class="conf-tour-city">
+          <img src="/assets/images/flags/gr.svg" alt="Griechenland" title="Griechenland" width="22" height="22" loading="lazy">
+          Thessaloniki
+        </div>
+        <div class="conf-tour-host">Universität Makedonien</div>
+        <a class="conf-tour-link" href="/2025.de.html">Rückblick &rarr;</a>
+      </li>
+      <li class="conf-tour-card">
+        <div class="conf-tour-year">2024 <span class="conf-tour-ordinal">7.</span></div>
+        <div class="conf-tour-city">
+          <img src="/assets/images/flags/cz.svg" alt="Tschechien" title="Tschechien" width="22" height="22" loading="lazy">
+          Prag
+        </div>
+        <div class="conf-tour-host">Karls-Universität</div>
+        <a class="conf-tour-link" href="/2024.de.html">Rückblick &rarr;</a>
+      </li>
+      <li class="conf-tour-card">
+        <div class="conf-tour-year">2023 <span class="conf-tour-ordinal">6.</span></div>
+        <div class="conf-tour-city">
+          <img src="/assets/images/flags/es.svg" alt="Spanien" title="Spanien" width="22" height="22" loading="lazy">
+          Barcelona
+        </div>
+        <div class="conf-tour-host">IBEI (Institut Barcelona d'Estudis Internacionals)</div>
+        <a class="conf-tour-link" href="/2023.de.html">Rückblick &rarr;</a>
+      </li>
+      <li class="conf-tour-card">
+        <div class="conf-tour-year">2022 <span class="conf-tour-ordinal">5.</span></div>
+        <div class="conf-tour-city">
+          <img src="/assets/images/flags/de.svg" alt="Deutschland" title="Deutschland" width="22" height="22" loading="lazy">
+          Berlin
+        </div>
+        <div class="conf-tour-host">Hertie School</div>
+        <a class="conf-tour-link" href="/2022.de.html">Rückblick &rarr;</a>
+      </li>
+      <li class="conf-tour-card">
+        <div class="conf-tour-year">2021 <span class="conf-tour-ordinal">4.</span></div>
+        <div class="conf-tour-city">
+          <img src="/assets/images/flags/pt.svg" alt="Portugal" title="Portugal" width="22" height="22" loading="lazy">
+          Lissabon
+        </div>
+        <div class="conf-tour-host">ISCTE — Universitätsinstitut Lissabon</div>
+        <a class="conf-tour-link" href="/2021.de.html">Rückblick &rarr;</a>
+      </li>
+      <li class="conf-tour-card conf-tour-online">
+        <div class="conf-tour-year">2020 <span class="conf-tour-ordinal">3.</span></div>
+        <div class="conf-tour-city">{{ icon("globe") }} Online-Ausgabe</div>
+        <div class="conf-tour-host">Online abgehalten (COVID-19)</div>
+        <a class="conf-tour-link" href="/2020.de.html">Rückblick &rarr;</a>
+      </li>
+      <li class="conf-tour-card">
+        <div class="conf-tour-year">2019 <span class="conf-tour-ordinal">2.</span></div>
+        <div class="conf-tour-city">
+          <img src="/assets/images/flags/fr.svg" alt="Frankreich" title="Frankreich" width="22" height="22" loading="lazy">
+          Paris
+        </div>
+        <div class="conf-tour-host">Sciences Po CERI</div>
+        <a class="conf-tour-link" href="/2019.de.html">Rückblick &rarr;</a>
+      </li>
+      <li class="conf-tour-card">
+        <div class="conf-tour-year">2018 <span class="conf-tour-ordinal">2. Ausg.</span></div>
+        <div class="conf-tour-city">
+          <img src="/assets/images/flags/fr.svg" alt="Frankreich" title="Frankreich" width="22" height="22" loading="lazy">
+          Paris
+        </div>
+        <div class="conf-tour-host">Université Panthéon-Assas</div>
+      </li>
+      <li class="conf-tour-card conf-tour-inaugural">
+        <div class="conf-tour-year">2017 <span class="conf-tour-ordinal">Eröffnung</span></div>
+        <div class="conf-tour-city">
+          <img src="/assets/images/flags/fr.svg" alt="Frankreich" title="Frankreich" width="22" height="22" loading="lazy">
+          Paris
+        </div>
+        <div class="conf-tour-host">Université Panthéon-Assas</div>
+      </li>
+    </ul>
+
+    <p style="margin-top: var(--space-5);">
+      <a class="btn btn-secondary" href="/past.de.html">Vollständiges Konferenz-Archiv {{ icon("arrow-right") }}</a>
+    </p>
+  </div>
+</section>
+
 <section class="section" id="netsec" aria-labelledby="netsec-title">
   <div class="container">
     <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <div class="featured-eyebrow">Unsere COST-Aktion</div>
+      <div class="featured-eyebrow">Unser erweitertes Netzwerk</div>
       <h2 id="netsec-title">NetSec — Networking European Security Knowledge</h2>
       <p class="lead">
-        2025 hat EISS gemeinsam mit zwölf Partnerinstitutionen in ganz Europa NetSec gegründet —
-        eine vierjährige COST-Aktion (European Cooperation in Science and Technology), die die
-        Fragmentierung der intellektuellen und analytischen Basis des Kontinents in den
-        Sicherheitsstudien angeht — durch politische Workshops, Sommerschulen und Konferenzen.
+        2025 hat EISS gemeinsam mit {{ netsec.partnerInstitutions }} Partnerinstitutionen in ganz
+        Europa NetSec gegründet — eine vierjährige COST-Aktion (European Cooperation in Science and
+        Technology), die die Fragmentierung der intellektuellen und analytischen Basis des Kontinents
+        in den Sicherheitsstudien angeht — durch politische Workshops, Sommerschulen und Konferenzen.
       </p>
-      <p>
-        Da NetSec von COST finanziert wird, sind alle Veranstaltungen kostenlos und offen für alle,
-        die in den europäischen Sicherheitsstudien arbeiten — keine Mitgliedschaft erforderlich.
+
+      <dl class="stats-row stats-row--inset" aria-label="NetSec-Reichweite auf einen Blick" style="margin-top: var(--space-5);">
+        <div class="stat">
+          <dt>{{ netsec.managementCommittee.members }}</dt>
+          <dd>Mitglieder im Lenkungsausschuss <span class="muted">der Aktion</span></dd>
+        </div>
+        <div class="stat">
+          <dt>{{ netsec.managementCommittee.countries }}</dt>
+          <dd>vertretene Länder <span class="muted">im Lenkungsausschuss</span></dd>
+        </div>
+        <div class="stat">
+          <dt>{{ netsec.partnerInstitutions }}</dt>
+          <dd>Gründungspartnerinstitutionen</dd>
+        </div>
+      </dl>
+
+      <p class="muted" style="font-size: var(--fs-sm); margin-top: var(--space-2);">
+        Das Forschungsnetzwerk, das EISS zusammenbringt, reicht weit über die
+        {{ boardSorted.counts.peopleTotal }} Personen im EISS-Vorstand hinaus — durch NetSec umfasst
+        es nun {{ netsec.managementCommittee.members }} Mitglieder des Lenkungsausschusses in
+        {{ netsec.managementCommittee.countries }} Ländern. Da NetSec von COST finanziert wird, sind
+        alle Veranstaltungen kostenlos und offen für alle, die in den europäischen Sicherheitsstudien
+        arbeiten — keine Mitgliedschaft erforderlich.
       </p>
+
+      {%- if boardSorted.leadership.length %}
+      <div style="margin-top: var(--space-5);">
+        <p class="eyebrow" style="margin-bottom: var(--space-3);">EISS-Leitung</p>
+        <ul class="leadership-strip" aria-label="EISS-Leitung">
+          {%- for person in boardSorted.leadership %}
+          <li>
+            <a href="/board.de.html{% if person.slug %}#{{ person.slug }}{% endif %}">
+              <img src="{{ person.photoOverride or person.photo }}" alt="{{ person.alt or person.name }}" loading="lazy">
+              <span class="leadership-strip-role">{{ person.role }}</span>
+              <span class="leadership-strip-name">{{ person.name }}</span>
+            </a>
+          </li>
+          {%- endfor %}
+        </ul>
+      </div>
+      {%- endif %}
+
       <p style="margin-top: var(--space-5);">
         <a class="btn btn-primary btn-sm" href="https://netsec-cost.eu/" target="_blank" rel="noopener">
           netsec-cost.eu besuchen {{ icon("external-link") }}
         </a>
-        <a class="btn btn-secondary btn-sm" href="/programmes.de.html" style="margin-left: var(--space-2);">
-          Alle EISS-Aktivitäten
+        <a class="btn btn-secondary btn-sm" href="/board.de.html" style="margin-left: var(--space-2);">
+          Der EISS-Vorstand
         </a>
       </p>
     </article>
