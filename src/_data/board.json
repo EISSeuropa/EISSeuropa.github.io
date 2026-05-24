@@ -7,7 +7,8 @@
       "photo": "/assets/images/meijer-2-140x175.jpg",
       "alt": "Dr Hugo MEIJER",
       "affiliation": "CNRS Research Fellow — Sciences Po, Center for International Studies (CERI).",
-      "themes": "International Relations, Foreign Policy Analysis, Security Studies, Alliances."
+      "themes": "International Relations, Foreign Policy Analysis, Security Studies, Alliances.",
+      "country": "France"
     },
     {
       "name": "Dr Marie Robin",
@@ -15,7 +16,8 @@
       "photo": "/assets/images/screenshot-2024-03-25-at-18.29.49-348x391.png",
       "alt": "Dr Marie Robin",
       "affiliation": "Assistant Professor of War Studies — Leiden University.",
-      "themes": "Revenge in international relations, Strategic use of emotions, Evolution of conflictuality, Ethics of war."
+      "themes": "Revenge in international relations, Strategic use of emotions, Evolution of conflictuality, Ethics of war.",
+      "country": "Netherlands"
     },
     {
       "name": "Prof. Moritz Weiss",
@@ -23,7 +25,8 @@
       "photo": "/assets/images/moritzweiss-eiss2024-348x305.jpg",
       "alt": "Prof. Moritz Weiss",
       "affiliation": "Senior Lecturer and Principal Investigator — Ludwig Maximilian University of Munich.",
-      "themes": "International Relations, Theorizing (informal) institutions, European integration, Governance of international security."
+      "themes": "International Relations, Theorizing (informal) institutions, European integration, Governance of international security.",
+      "country": "Germany"
     },
     {
       "name": "Prof. Nicolas Blarel",
@@ -31,7 +34,8 @@
       "photo": "/assets/images/d200x250-3.jpeg",
       "alt": "Prof. Nicolas Blarel",
       "affiliation": "Associate Professor of International Relations and Director of Studies — Leiden University.",
-      "themes": "Foreign Policy Analysis, Politics of migration governance, International politics of South Asia."
+      "themes": "Foreign Policy Analysis, Politics of migration governance, International politics of South Asia.",
+      "country": "Netherlands"
     },
     {
       "name": "Prof. Antonio Calcara",
@@ -39,7 +43,8 @@
       "photo": "/assets/images/r2sk57tg-400x400.jpg",
       "alt": "Prof. Antonio Calcara",
       "affiliation": "Professor — Vrije Universiteit Brussels.",
-      "themes": "European Security and Defence, Defence Industry, Political Economy."
+      "themes": "European Security and Defence, Defence Industry, Political Economy.",
+      "country": "Belgium"
     },
     {
       "name": "Dr Julia Carver",
@@ -47,7 +52,8 @@
       "photo": "/assets/images/julia20carver20headshot-253x169.jpeg",
       "alt": "Dr Julia Carver",
       "affiliation": "Assistant Professor — Leiden University.",
-      "themes": "Foreign policymaking, Strategic concepts, Emerging digital technologies."
+      "themes": "Foreign policymaking, Strategic concepts, Emerging digital technologies.",
+      "country": "Netherlands"
     },
     {
       "name": "Prof. Silvia D’Amato",
@@ -55,7 +61,8 @@
       "photo": "/assets/images/1-2.jpeg",
       "alt": "Prof. Silvia D’Amato",
       "affiliation": "Associate Professor — James Madison University.",
-      "themes": "Terrorism, Political Violence and War, Peace and Justice."
+      "themes": "Terrorism, Political Violence and War, Peace and Justice.",
+      "country": "United States"
     },
     {
       "name": "Prof. Filip Ejdus",
@@ -63,7 +70,8 @@
       "photo": "/assets/images/ejdus-photo-253x253.jpg",
       "alt": "Prof. Filip Ejdus",
       "affiliation": "Professor of Security Studies — Faculty of Political Science, University of Belgrade.",
-      "themes": "Identity, memory, and emotions, International interventions, Civil-military relations, Security sector reform."
+      "themes": "Identity, memory, and emotions, International interventions, Civil-military relations, Security sector reform.",
+      "country": "Serbia"
     },
     {
       "name": "Dr Eliza Gheorghe",
@@ -71,7 +79,8 @@
       "photo": "/assets/images/eliza-gheorghe.jpg",
       "alt": "Dr Eliza Gheorghe",
       "affiliation": "Assistant Professor — Department of International Relations, Bilkent University.",
-      "themes": "International Relations Theory, International Security, Nuclear Politics."
+      "themes": "International Relations Theory, International Security, Nuclear Politics.",
+      "country": "Turkey"
     },
     {
       "name": "Dr John NT Helferich",
@@ -80,7 +89,8 @@
       "photo": "/assets/images/helferich-portrait-college-3.jpeg",
       "alt": "Dr John NT Helferich",
       "affiliation": "DPhil Candidate in International Relations — St. Antony's College, Oxford.",
-      "bio": "John is your first point of contact. He is in charge of our email communications, and ensures smooth coordination between chairs and panel members, among other things. He is a DPhil candidate in International Relations at St. Antony's College, Oxford. John joined the Initiative in 2018."
+      "bio": "John is your first point of contact. He is in charge of our email communications, and ensures smooth coordination between chairs and panel members, among other things. He is a DPhil candidate in International Relations at St. Antony's College, Oxford. John joined the Initiative in 2018.",
+      "country": "United Kingdom"
     },
     {
       "name": "Prof. Marina Henke",
@@ -88,7 +98,8 @@
       "photo": "/assets/images/henke-marina-3-347x521.jpg",
       "alt": "Prof. Marina Henke",
       "affiliation": "Professor of International Relations and Director of the Centre for International Security — Hertie School.",
-      "themes": "Intervention decision-making, Nuclear security, U.S. and European Grand Strategy."
+      "themes": "Intervention decision-making, Nuclear security, U.S. and European Grand Strategy.",
+      "country": "Germany"
     },
     {
       "name": "Alisa Kerschbaum",
@@ -96,7 +107,8 @@
       "photo": "/assets/images/alisa-kerschbaum-uva-253x371.jpeg",
       "alt": "Alisa Kerschbaum",
       "affiliation": "Research Grant Advisor — University of Amsterdam.",
-      "themes": "Global affairs, International Peace &amp; Security, Environmental security."
+      "themes": "Global affairs, International Peace &amp; Security, Environmental security.",
+      "country": "Netherlands"
     },
     {
       "name": "Sarka Kolmasova",
@@ -104,7 +116,8 @@
       "photo": "/assets/images/citations.jpeg",
       "alt": "Sarka Kolmasova",
       "affiliation": "Deputy Head &amp; Assistant Professor — Department of International Relations and European Studies, Metropolitan University Prague.",
-      "themes": "Norms, Military Interventions, Responsibility to Protect, Human Rights in International Politics."
+      "themes": "Norms, Military Interventions, Responsibility to Protect, Human Rights in International Politics.",
+      "country": "Czechia"
     },
     {
       "name": "Dr Arthur Laudrain",
@@ -130,7 +143,8 @@
       "photo": "/assets/images/chiara-l3303ibiseller.x2806b916.jpg.webp",
       "alt": "Dr Chiara Libiseller",
       "affiliation": "Lecturer in Strategic Studies — King’s College London.",
-      "themes": "Knowledge production on war, Changing character of war, Impact of technology on the theory and practice of war."
+      "themes": "Knowledge production on war, Changing character of war, Impact of technology on the theory and practice of war.",
+      "country": "United Kingdom"
     },
     {
       "name": "Prof. Revecca Pedi",
@@ -138,7 +152,8 @@
       "photo": "/assets/images/5731-revecca-pedi-1-2-253x253.jpg",
       "alt": "Prof. Revecca Pedi",
       "affiliation": "Associate Professor of International Relations — University of Macedonia.",
-      "themes": "International relations of small states, Theories of international relations, International relations and the European Union."
+      "themes": "International relations of small states, Theories of international relations, International relations and the European Union.",
+      "country": "Greece"
     },
     {
       "name": "Prof. Chiara Ruffa",
@@ -146,7 +161,8 @@
       "photo": "/assets/images/jritvrpl-400x400.jpg",
       "alt": "Prof. Chiara Ruffa",
       "affiliation": "Professor of Political Science — Sciences Po, Center for International Studies (CERI).",
-      "themes": "Multilateralism on the ground, Peacekeeping, Civil-military relations, Political sociology, Fieldwork."
+      "themes": "Multilateralism on the ground, Peacekeeping, Civil-military relations, Political sociology, Fieldwork.",
+      "country": "France"
     },
     {
       "name": "Prof. Olivier Schmitt",
@@ -154,7 +170,8 @@
       "photo": "/assets/images/schmitt-olivier-2-213x320.jpg",
       "alt": "Prof. Olivier Schmitt",
       "affiliation": "Head of Research — Institute for Military Operations at the Royal Danish Defence College.",
-      "themes": "Military Operations, Alliances, Transformation."
+      "themes": "Military Operations, Alliances, Transformation.",
+      "country": "Denmark"
     },
     {
       "name": "Dr Tim Sweijs",
@@ -162,7 +179,8 @@
       "photo": "/assets/images/1071-07280937-s001tim-003-1-705x705.png",
       "alt": "Dr Tim Sweijs",
       "affiliation": "Senior Research Fellow — Netherlands’ War Studies Research Centre; Director of Research — The Hague Centre for Strategic Studies.",
-      "themes": "Warfare (past, present, future), Strategy, Coercion, Deterrence, Emerging technologies."
+      "themes": "Warfare (past, present, future), Strategy, Coercion, Deterrence, Emerging technologies.",
+      "country": "Netherlands"
     },
     {
       "name": "Dr Sanne Verschuren",
@@ -170,7 +188,8 @@
       "photo": "/assets/images/picture-sanne-verschuren-sanne-verschuren-348x348.jpg",
       "alt": "Dr Sanne Verschuren",
       "affiliation": "Assistant Professor of International Security — Boston University.",
-      "themes": "Domestic determinants of security policy, Role of ideas, norms, and institutions in national security decision-making."
+      "themes": "Domestic determinants of security policy, Role of ideas, norms, and institutions in national security decision-making.",
+      "country": "United States"
     },
     {
       "name": "Prof. Marco Wyss",
@@ -178,7 +197,8 @@
       "photo": "/assets/images/wyss-1-403x564.jpg",
       "alt": "Prof. Marco Wyss",
       "affiliation": "Professor of International History and Security — Lancaster University; Research Fellow — Stellenbosch University; Senior Research Fellow — School of Advanced Study, University of London.",
-      "themes": "Cold War, African and European defence, Neutrality."
+      "themes": "Cold War, African and European defence, Neutrality.",
+      "country": "United Kingdom"
     }
   ],
   "support": [
@@ -189,7 +209,8 @@
       "photo": "/assets/images/1659415900816.jpeg",
       "alt": "Eugenio Sanchez",
       "affiliation": "PhD Candidate in International Relations — Sciences Po Paris.",
-      "bio": "Eugenio assists with the development of our communication strategy and the logistics of our events. He is a PhD candidate in International Relations at Sciences Po Paris. Eugenio joined the Initiative in 2023."
+      "bio": "Eugenio assists with the development of our communication strategy and the logistics of our events. He is a PhD candidate in International Relations at Sciences Po Paris. Eugenio joined the Initiative in 2023.",
+      "country": "France"
     }
   ]
 }
