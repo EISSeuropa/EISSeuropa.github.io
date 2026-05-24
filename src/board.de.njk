@@ -59,5 +59,13 @@ alternates:
         {%- include "person-card.njk" %}
       {%- endfor %}
     </div>
+
+    {%- if boardSorted.formUrl %}
+    <p class="board-update-link">
+      <a href="{{ boardSorted.formUrl }}" target="_blank" rel="noopener">
+        Im EISS-Team? Aktualisieren Sie Ihre Bio →
+      </a>
+    </p>
+    {%- endif %}
   </div>
 </section>

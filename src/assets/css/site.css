@@ -1710,6 +1710,29 @@ h4 { font-size: var(--fs-lg); }
   line-height: var(--lh-snug);
 }
 
+/* Quiet "Update your bio" link at the bottom of /board. Intended to
+   be visible to anyone scanning the page but not loud enough to be
+   read as a call to action — small, muted, centred under the Support
+   Staff grid. Lifts to accent colour on hover/focus. */
+.board-update-link {
+  text-align: center;
+  margin-top: var(--space-6);
+  font-size: var(--fs-sm);
+}
+.board-update-link a {
+  color: var(--text-subtle);
+  border-bottom: 1px dotted currentColor;
+  padding-bottom: 1px;
+  text-decoration: none;
+  transition: color var(--motion-fast) var(--ease-out),
+              border-color var(--motion-fast) var(--ease-out);
+}
+.board-update-link a:hover,
+.board-update-link a:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
 /* Social-link icon row at the bottom of the card. Rendered only when
    at least one link is present on the person entry (publicEmail /
    website / orcid / linkedin / twitter / bluesky / mastodon). Quiet

@@ -125,5 +125,10 @@ module.exports = function () {
   const boardMembers = sortMembers(annotated.filter((m) => m.tier >= 100));
   const support = (board.support || []).map(annotate); // ordering preserved
 
-  return { leadership, boardMembers, support };
+  // Exposed for the page footer link ("Update your bio"). Sourced
+  // from scripts/board-source.json so the URL stays in sync with the
+  // Form configuration the sync workflow uses.
+  const formUrl = (boardSource.form_url || "").trim();
+
+  return { leadership, boardMembers, support, formUrl };
 };
