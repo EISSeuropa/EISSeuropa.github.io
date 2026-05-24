@@ -30,8 +30,7 @@ What it does:
          to Board Member (tier 100).
        - No entries are removed by the sync. To remove someone, edit
          src/_data/board.json directly in a PR (see docs/board-bios-setup.md).
-  4. Sorts each output section by (tier, year_joined ASC, surname ASC).
-     Missing year_joined sorts to the end of its tier.
+  4. Sorts each output section by (tier ASC, surname ASC).
   5. Writes src/_data/board.json only if the content has actually
      changed — so re-running the script when nothing has moved leaves
      a clean working tree.
@@ -74,7 +73,6 @@ PHOTO_DIR = ROOT / "src" / "assets" / "images" / "board"
 
 MAX_PHOTO_WIDTH = 600
 DEFAULT_ROLE = {"label": "Board Member", "kind": "board", "tier": 100}
-UNKNOWN_YEAR = 9999  # sorts to the end of a tier
 
 # ──────────────────────────── helpers ────────────────────────────
 
@@ -132,16 +130,6 @@ def parse_timestamp(raw: str) -> float:
         except ValueError:
             continue
     return 0.0
-
-
-def parse_year(raw: str) -> int:
-    """Parse the optional 'year you joined' field. Returns UNKNOWN_YEAR
-    (sorts to end) for blank or unparseable values. Accepts a bare
-    integer ('2019') or a fragment containing one ('Joined in 2019')."""
-    if not raw:
-        return UNKNOWN_YEAR
-    m = re.search(r"\b(19|20)\d{2}\b", raw)
-    return int(m.group(0)) if m else UNKNOWN_YEAR
 
 
 def consent_ok(raw: str) -> bool:
@@ -433,9 +421,8 @@ def main() -> None:
             )
             role_info = DEFAULT_ROLE
 
-        year = parse_year(row.get(cols.get("year_joined", ""), ""))
         entry = build_from_row(row, cols, role_info, prior)
-        entry["_sort"] = (role_info["tier"], year, surname_key(name))
+        entry["_sort"] = (role_info["tier"], surname_key(name))
 
         if role_info["kind"] == "support":
             support.append(entry)
@@ -448,11 +435,7 @@ def main() -> None:
         if slug in matched_slugs:
             continue
         entry, role_info = carry_over(prior, roles_map)
-        entry["_sort"] = (
-            role_info["tier"],
-            UNKNOWN_YEAR,
-            surname_key(entry["name"]),
-        )
+        entry["_sort"] = (role_info["tier"], surname_key(entry["name"]))
         if role_info["kind"] == "support":
             support.append(entry)
         else:

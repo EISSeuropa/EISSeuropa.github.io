@@ -47,12 +47,11 @@ just don't merge.
 |---|---|---|---|
 | 1 | **Full name (with title — Dr / Prof / Mr / Ms)** | Short answer | ✅ |
 | 2 | **Your role** | Dropdown — see roles table below | ✅ |
-| 3 | **Year you joined the EISS board / support team (optional)** | Short answer | ⬜ |
-| 4 | **Position and institution (e.g. 'Associate Professor — Leiden University')** | Short answer | ✅ |
-| 5 | **Research themes (3–5 short phrases, comma-separated)** | Short answer | ⬜ |
-| 6 | **Long bio (optional — used for the support-team display style)** | Paragraph | ⬜ |
-| 7 | **Headshot photo (optional)** | File upload — image only — max 5 MB | ⬜ |
-| 8 | **I consent to publication of my bio on eiss-europa.com** | Checkboxes — single option | ✅ |
+| 3 | **Position and institution (e.g. 'Associate Professor — Leiden University')** | Short answer | ✅ |
+| 4 | **Research themes (3–5 short phrases, comma-separated)** | Short answer | ⬜ |
+| 5 | **Long bio (optional — used for the support-team display style)** | Paragraph | ⬜ |
+| 6 | **Headshot photo (optional)** | File upload — image only — max 5 MB | ⬜ |
+| 7 | **I consent to publication of my bio on eiss-europa.com** | Checkboxes — single option | ✅ |
 
 **Dropdown options for "Your role"** — must match exactly the `label`
 values in `scripts/board-source.json` → `roles` table. Current list:
@@ -70,11 +69,6 @@ values in `scripts/board-source.json` → `roles` table. Current list:
 > (Coordinator titles) get a flowing bio paragraph instead. The script
 > picks the right shape from `kind` in the roles table, looked up by
 > the role label the member chose.
-
-> **Year joined.** Used only for sort order within the "Board Member"
-> tier (longest tenured appears first; missing years sort to the end
-> alphabetically). Founding Director / Treasurer / Secretary-General
-> are unique titles, so year doesn't affect their position.
 
 In *Settings → Responses*, **enable**:
 
