@@ -1598,8 +1598,12 @@ h4 { font-size: var(--fs-lg); }
    discussing, or speaking at the live ESSC edition. Match between
    board.json and indico.json is computed at build time by
    src/_data/boardSorted.js. Amber tone — "active right now" — without
-   stealing focus from the role text. */
+   stealing focus from the role text. Carries a styled CSS tooltip
+   (data-tooltip attr) that pops above the icon on hover/focus with
+   no delay (browser's native `title` tooltip is too slow + too plain
+   for this small surface). */
 .person-essc-speaker {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1607,15 +1611,76 @@ h4 { font-size: var(--fs-lg); }
   text-transform: none;
   letter-spacing: 0;
   margin-inline-start: auto;  /* push to end of role row when room */
+  cursor: help;
 }
 .person-essc-speaker svg {
   width: 1em;
   height: 1em;
   flex: 0 0 auto;
+  pointer-events: none;  /* hover bubbles to the parent span */
+}
+
+/* CSS tooltip. Pops above the icon, hidden by default, fades in on
+   hover / keyboard focus. Plain dark pill with the design-system
+   tokens — same surface language as a generic UI tooltip. */
+.person-essc-speaker::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  right: 0;
+  background: hsl(220 30% 12%);
+  color: white;
+  padding: 0.3rem 0.55rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-fast) var(--ease-out),
+              transform var(--motion-fast) var(--ease-out);
+  transform: translateY(2px);
+  z-index: 10;
+  box-shadow: 0 4px 12px hsl(220 30% 0% / 0.18);
+}
+.person-essc-speaker::before {
+  /* Small arrow on the underside of the tooltip pointing at the icon. */
+  content: "";
+  position: absolute;
+  bottom: calc(100% + 2px);
+  right: 0.5em;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid hsl(220 30% 12%);
+  opacity: 0;
+  transition: opacity var(--motion-fast) var(--ease-out);
+  z-index: 10;
+}
+.person-essc-speaker:hover::after,
+.person-essc-speaker:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+.person-essc-speaker:hover::before,
+.person-essc-speaker:focus-visible::before {
+  opacity: 1;
+}
+.person-essc-speaker:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
 }
 
 [data-theme="dark"] .person-essc-speaker {
   color: hsl(40 95% 65%);
+}
+[data-theme="dark"] .person-essc-speaker::after {
+  background: hsl(220 12% 20%);
+}
+[data-theme="dark"] .person-essc-speaker::before {
+  border-top-color: hsl(220 12% 20%);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -1655,26 +1720,37 @@ h4 { font-size: var(--fs-lg); }
   flex: 0 0 auto;
 }
 
-/* Bio teaser with optional Read-more expander. The teaser is the
-   leading paragraph (truncated at the word boundary by the template),
-   the <details>/<summary> below it ships the rest. Native <details>
-   gives free keyboard / a11y / no-JS behaviour. */
-.person-bio {
-  font-size: var(--fs-sm);
-  color: var(--text-muted);
-  line-height: var(--lh-snug);
+/* Bio teaser with optional Read-more expander. boardSorted.js splits
+   the bio into `teaser` + `rest`; the teaser renders inline always,
+   the rest only when <details> is opened. The trailing ellipsis is
+   visible while the expander is closed, hidden once open (via :has()
+   on the wrapping div). Result: opening the expander reveals only new
+   text rather than repeating the teaser. */
+.person-bio-wrap {
   margin: var(--space-3) 0 0;
 }
-.person-bio-more {
+.person-bio,
+.person-bio-rest {
   font-size: var(--fs-sm);
   color: var(--text-muted);
   line-height: var(--lh-snug);
+  margin: 0;
+}
+.person-bio-ellipsis {
+  /* Visually flush with the preceding word; hidden when the rest is
+     unfolded so the prose flows continuously. */
+}
+.person-bio-wrap:has(.person-bio-more[open]) .person-bio-ellipsis {
+  display: none;
+}
+.person-bio-more {
   margin: var(--space-1) 0 0;
 }
 .person-bio-more > summary {
   cursor: pointer;
   color: var(--accent);
   font-weight: 600;
+  font-size: var(--fs-sm);
   list-style: none;
   padding: 0.15rem 0;
   display: inline-flex;
@@ -1690,13 +1766,12 @@ h4 { font-size: var(--fs-lg); }
 .person-bio-more[open] > summary::after { transform: rotate(90deg); }
 .person-bio-more > summary:hover { text-decoration: underline; }
 .person-bio-more[open] > summary {
-  /* When expanded, the prose inside becomes the focus — quiet the
-     trigger so it doesn't compete. */
+  /* Once open, quiet the trigger so the prose takes focus. */
   color: var(--text-subtle);
   font-weight: 500;
 }
-.person-bio-more > p {
-  margin: var(--space-2) 0 0;
+.person-bio-more > .person-bio-rest {
+  margin-top: var(--space-2);
 }
 
 /* "Research themes:" line — currently rendered with a thin border-top

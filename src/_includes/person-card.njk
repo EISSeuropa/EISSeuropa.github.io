@@ -23,9 +23,6 @@
 {% from "icons.njk" import icon %}
 {%- set lang = lang or "en" -%}
 {%- set t = i18n[lang] -%}
-{%- set bio = person.bio or "" -%}
-{%- set BIO_TEASER_LEN = 180 -%}
-{%- set bioHasMore = bio | length > BIO_TEASER_LEN -%}
 
 <article class="person"{% if person.slug %} id="{{ person.slug }}"{% endif %}>
   <img class="person-photo" src="{{ person.photo }}" alt="{{ person.alt or person.name }}" loading="lazy">
@@ -36,7 +33,10 @@
       <span class="person-functional-resp">{{ person.functionalResponsibility }}</span>
       {%- endif %}
       {%- if person.isEsscActive %}
-      <span class="person-essc-speaker" title="{{ t.boardPage.esscSpeakerTitle }}" aria-label="{{ t.boardPage.esscSpeakerTitle }}">
+      <span class="person-essc-speaker"
+            data-tooltip="{{ t.boardPage.esscSpeakerTitle }}"
+            aria-label="{{ t.boardPage.esscSpeakerTitle }}"
+            tabindex="0">
         {{ icon("mic") }}
       </span>
       {%- endif %}
@@ -53,16 +53,16 @@
     </p>
     {%- endif %}
 
-    {%- if bio %}
-      {%- if bioHasMore %}
-      <p class="person-bio">{{ bio | truncate(BIO_TEASER_LEN, false, "…") }}</p>
+    {%- if person.bioTeaser %}
+    <div class="person-bio-wrap">
+      <p class="person-bio">{{ person.bioTeaser | safe }}{% if person.bioRest %}<span class="person-bio-ellipsis">…</span>{% endif %}</p>
+      {%- if person.bioRest %}
       <details class="person-bio-more">
         <summary>{{ t.boardPage.readMore }}</summary>
-        <p>{{ bio | safe }}</p>
+        <p class="person-bio-rest">{{ person.bioRest | safe }}</p>
       </details>
-      {%- else %}
-      <p class="person-bio">{{ bio | safe }}</p>
       {%- endif %}
+    </div>
     {%- endif %}
 
     {%- if person.themes %}
