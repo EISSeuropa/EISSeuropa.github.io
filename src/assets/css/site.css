@@ -3273,6 +3273,141 @@ h4 { font-size: var(--fs-lg); }
   line-height: 1;
 }
 
+/* ---------- /initiative — ESSC host-city map --------------------------
+   A stylized SVG map of Europe (mainland + UK + Ireland) with accented
+   dots at each ESSC host city. Sits inside the glass-card aesthetic of
+   the rest of the site. Hand-drawn outline (~25 path points) rather
+   than a Wikimedia blank-Europe SVG, which weighs 400+ KB — keeps the
+   page footprint small. Lat/long → viewBox conversion documented in
+   the partial: lat [35,71] → y [700,0], lon [-12,32] → x [0,1000].
+
+   Each city is wrapped in an <a> so the whole dot+label area is
+   clickable to the per-year page. Hover/focus lifts the dot. The
+   2017 inaugural cluster (Paris, holds 2017+2018+2019) gets a larger
+   accent-coloured dot; the next-up 2026 (Stockholm) uses a quieter
+   accent variant to distinguish forthcoming from historical. */
+.essc-map-figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.essc-map {
+  width: 100%;
+  height: auto;
+  max-height: 28rem;
+  display: block;
+}
+
+.essc-map-outline path {
+  fill: var(--accent-soft);
+  stroke: var(--border);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+@media (prefers-color-scheme: dark) {
+  .essc-map-outline path {
+    fill: hsl(216 88% 50% / 0.14);
+    stroke: hsl(222 14% 28%);
+  }
+}
+
+.essc-map-link {
+  cursor: pointer;
+  outline: none;
+}
+
+.essc-map-dot {
+  fill: var(--accent);
+  stroke: var(--surface);
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+  transition: r var(--motion-base) var(--ease-out);
+}
+
+.essc-map-link:hover .essc-map-dot,
+.essc-map-link:focus-visible .essc-map-dot {
+  r: 16;
+  fill: var(--accent);
+  filter: drop-shadow(0 2px 6px hsl(216 88% 50% / 0.4));
+}
+
+.essc-map-dot--inaugural {
+  fill: hsl(36 90% 52%);
+  stroke: var(--surface);
+}
+
+.essc-map-link:hover .essc-map-dot--inaugural,
+.essc-map-link:focus-visible .essc-map-dot--inaugural {
+  fill: hsl(36 90% 52%);
+  filter: drop-shadow(0 2px 6px hsl(36 90% 52% / 0.5));
+}
+
+.essc-map-dot--next {
+  fill: hsl(150 60% 42%);
+  stroke: var(--surface);
+}
+
+.essc-map-link:hover .essc-map-dot--next,
+.essc-map-link:focus-visible .essc-map-dot--next {
+  fill: hsl(150 60% 42%);
+  filter: drop-shadow(0 2px 6px hsl(150 60% 42% / 0.5));
+}
+
+.essc-map-label {
+  font-size: 22px;
+  font-weight: 600;
+  fill: var(--text);
+  text-anchor: start;
+  pointer-events: none;
+  font-family: inherit;
+}
+
+.essc-map-label--end {
+  text-anchor: end;
+}
+
+.essc-map-years {
+  font-size: 17px;
+  font-weight: 400;
+  fill: var(--text-muted);
+  text-anchor: start;
+  pointer-events: none;
+  font-family: inherit;
+}
+
+.essc-map-years--end {
+  text-anchor: end;
+}
+
+.essc-map-link:hover .essc-map-label,
+.essc-map-link:focus-visible .essc-map-label,
+.essc-map-link:hover .essc-map-years,
+.essc-map-link:focus-visible .essc-map-years {
+  fill: var(--accent);
+}
+
+.essc-map-caption {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* On narrow viewports the SVG labels get cramped. Drop the inline text
+   labels and rely on the conf-tour card grid below for the names —
+   `<title>` tooltips on hover/focus still announce city + year via
+   the browser/AT layer. */
+@media (max-width: 38rem) {
+  .essc-map-label,
+  .essc-map-years {
+    display: none;
+  }
+}
+
 /* ---------- print stylesheet -------------------------------------------
    Optimised for attendees printing the conference programme. Forces a
    light theme regardless of OS / toggle, strips chrome (nav, footer,
