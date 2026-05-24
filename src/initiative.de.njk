@@ -158,46 +158,90 @@ alternates:
   </div>
 </section>
 
-<section class="section-tight" id="how-we-work" aria-labelledby="how-we-work-title">
+<section class="section-tight" id="founded-to-do" aria-labelledby="founded-to-do-title">
   <div class="container">
-    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <h2 id="how-we-work-title">Wie wir arbeiten</h2>
-      <p class="lead">
-        EISS ist thematisch offen, multidisziplinär, geografisch inklusiv und steht allen
-        Hintergründen offen.
+    <article class="card prose" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8)); max-width: none;">
+      <h2 id="founded-to-do-title" style="margin-top: 0;">Wofür EISS gegründet wurde</h2>
+
+      <blockquote>
+        EISS will diese Lücke schließen, indem sie zur Bildung einer europäischen Gemeinschaft von
+        Forschenden im Bereich der Sicherheitsstudien beiträgt.
+        <footer style="margin-top: var(--space-2); font-style: normal; font-size: var(--fs-sm); color: var(--text-muted);">
+          — Hugo Meijer, Gründer ·
+          <cite><a href="https://shs.cairn.info/annuaire-francais-de-relations--9791090429956-page-95?lang=fr"
+                  target="_blank" rel="noopener">Champs de Mars, 2017</a></cite>
+        </footer>
+      </blockquote>
+
+      <p>
+        Die Initiative wurde 2017 mit zwei Gründungszielen ins Leben gerufen, beide explizit in den
+        Akten der Eröffnungskonferenz: ein europäisches akademisches Netzwerk für Sicherheitsstudien
+        aufzubauen, und ein Forum für gemeinsame Forschungsprojekte zwischen Institutionen zu schaffen.
       </p>
 
-      <dl class="definition-list">
-        <div>
-          <dt>Offen für alle Ansätze</dt>
-          <dd>
-            Keine bestimmte theoretische Schule. Die ESSC-Panels decken das gesamte Spektrum der
-            Sicherheitsstudien ab — traditionelle und nicht-traditionelle gleichermaßen.
-          </dd>
-        </div>
-        <div>
-          <dt>Multidisziplinär</dt>
-          <dd>
-            Historikerinnen, Politik-, Wirtschafts-, Geografie-, Anthropologie- und Sozial­wissen­schaftler —
-            alle mit Interesse an der Entwicklung der Sicherheitsstudien in Europa.
-          </dd>
-        </div>
-        <div>
-          <dt>Geografisch inklusiv</dt>
-          <dd>
-            Wissenschaftler aus Süd-, Ost-, Nord- und Westeuropa. Die Jahreskonferenz findet jedes
-            Jahr in einem anderen europäischen Land statt.
-          </dd>
-        </div>
-        <div>
-          <dt>Offen für alle Hintergründe</dt>
-          <dd>
-            Nachwuchsforschende, Angehörige der Streitkräfte und des diplomatischen Dienstes sowie
-            Verwaltungsbeamte sind neben Akademikerinnen und Akademikern willkommen.
-          </dd>
-        </div>
-      </dl>
+      <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); margin-top: var(--space-5);">
+        <article class="tile">
+          <div class="tile-icon" aria-hidden="true">{{ icon("users") }}</div>
+          <h3>Das europäische akademische Netzwerk aufbauen</h3>
+          <p>
+            Über die Jahreskonferenz ESSC und ständige thematische Sektionen, in denen Forschende
+            <em>laufende</em> Arbeiten vorstellen — keine fertigen Aufsätze — um das Feld in seiner
+            Entstehung zu entwickeln.
+          </p>
+        </article>
+
+        <article class="tile">
+          <div class="tile-icon" aria-hidden="true">{{ icon("globe") }}</div>
+          <h3>Ein Forum für gemeinsame Projekte</h3>
+          <p>
+            Bewusst das Gegenteil einer klassischen Vortragskonferenz: Die ESSC bringt neue Ideen hervor
+            und stiftet institutionsübergreifende Forschungspartnerschaften, anstatt fertige Ergebnisse
+            zu verbreiten.
+          </p>
+        </article>
+      </div>
+
+      <h3 style="margin-top: var(--space-6);">Eine Lücke in den europäischen Sicherheitsstudien schließen</h3>
+      <p>
+        Mehrere europäische Vereinigungen decken bereits die Internationalen Beziehungen im weiteren Sinne
+        ab — die European International Studies Association (EISA), die Standing Group on International
+        Relations des ECPR, die Nordic International Studies Association (NISA), die Central and Eastern
+        European International Studies Association (CEEISA). <strong>Keine ist speziell den
+        Sicherheitsstudien gewidmet.</strong> EISS existiert, um diese Lücke zu schließen und eine
+        europäische Forschungsgemeinschaft im Feld zu konsolidieren.
+      </p>
+
+      <p class="muted" style="margin-top: var(--space-5); font-size: var(--fs-sm);">
+        Multidisziplinär konzipiert — Historikerinnen, Politik-, Wirtschafts-, Geografie-, Anthropologie-
+        und Sozialwissenschaftler sowie Juristinnen und Juristen — und offen für Nachwuchsforschende,
+        Angehörige der Streitkräfte und des diplomatischen Dienstes sowie Verwaltungsbeamte neben
+        Akademikerinnen und Akademikern. Die Jahreskonferenz findet jedes Jahr in einem anderen
+        europäischen Land statt.
+      </p>
     </article>
+  </div>
+</section>
+
+<section class="section" id="research-themes" aria-labelledby="research-themes-title">
+  <div class="container">
+    <span class="eyebrow">Thematische Sektionen</span>
+    <h2 id="research-themes-title">Neun ständige thematische Sektionen</h2>
+    <p class="muted" style="max-width: 44rem;">
+      Die Eröffnungskonferenz von EISS organisierte die Beiträge um neun ständige thematische Sektionen,
+      die bis heute durch das ESSC-Programm verfolgt werden. Die Liste erweitert sich, wenn teilnehmende
+      Universitäten neue Querschnittsthemen vorschlagen.
+    </p>
+    <ul class="theme-pills" aria-label="Thematische Sektionen von EISS">
+      <li>Transformationen des Krieges und der Konfliktualität</li>
+      <li>Aufkommende Domänen (Cybersicherheit)</li>
+      <li>Rüstungsbeschaffung und Rüstungstransfer</li>
+      <li>Private militärische Akteure</li>
+      <li>Verteidigungskooperation und militärische Unterstützung</li>
+      <li>Militärische Interventionen</li>
+      <li>Nichtverbreitung und Rüstungskontrolle</li>
+      <li>Terrorismus und Terrorismusbekämpfung</li>
+      <li>Theoretische Entwicklungen in den Sicherheitsstudien</li>
+    </ul>
   </div>
 </section>
 
@@ -230,24 +274,47 @@ alternates:
 
 <section class="section-tight" id="origin" aria-labelledby="origin-title">
   <div class="container">
-    <article class="prose" style="max-width: 44rem;">
-      <h2 id="origin-title">Wie EISS entstanden ist</h2>
-      <p>
-        EISS wurde 2017 von Hugo Meijer als europäische Erweiterung der
-        <a href="https://aeges.fr/" target="_blank" rel="noopener">Association pour les Études sur la Guerre et la Stratégie (AEGES)</a>
-        gegründet — einer 2015 ins Leben gerufenen französischen akademischen Vereinigung zur
-        Konsolidierung der Sicherheitsstudien an französischen Universitäten. Die erste
-        Jahreskonferenz fand vom 13. bis 14. Januar 2017 an der Université Panthéon-Assas in Paris
-        statt und versammelte rund 100 Forschende aus 62 Universitäten in 15 europäischen Ländern.
-      </p>
-      <p>
-        Die Initiative wurde von Anfang an als europaweites Netzwerk konzipiert — offen für alle
-        theoretischen Ansätze, alle Disziplinen und Forschende auf jeder Karrierestufe. 2025 hat
-        EISS die COST-Aktion <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">NetSec</a>
-        gestartet und damit die Rolle des Netzwerks als zentrale europäische Plattform der
-        Sicherheitsstudien formalisiert.
-      </p>
-    </article>
+    <h2 id="origin-title" style="margin-bottom: var(--space-5);">Wie EISS entstanden ist</h2>
+    <div class="origin-layout">
+      <article class="prose" style="max-width: none;">
+        <p>
+          EISS wurde 2017 von Hugo Meijer als europäische Erweiterung der
+          <a href="https://aeges.fr/" target="_blank" rel="noopener">Association pour les Études sur la Guerre et la Stratégie (AEGES)</a>
+          gegründet — einer 2015 unter dem Vorsitz von Jean-Vincent Holeindre (Université de Poitiers)
+          ins Leben gerufenen französischen akademischen Vereinigung, die die nach langer
+          Marginalisierung geschwächten Sicherheitsstudien an französischen Universitäten neu aufbauen
+          sollte. Die AEGES verankert die französische Seite des Netzwerks über zwei Buchreihen — bei
+          <strong>CNRS Éditions</strong> und <strong>Armand Colin</strong> — eine geplante
+          englischsprachige Reihe sowie den seit 2017 jährlich vergebenen <strong>Prix Bastien
+          Irondelle</strong> für die beste Dissertation in den strategischen Studien.
+        </p>
+        <p>
+          Hugo Meijer leitete die internationalen Forschungspartnerschaften der AEGES und gründete EISS,
+          um das Projekt auf die europäische Ebene auszuweiten. Die Initiative wurde von Anfang an als
+          europaweites Netzwerk konzipiert — offen für alle theoretischen Ansätze, alle Disziplinen und
+          Forschende auf jeder Karrierestufe. 2025 hat EISS die COST-Aktion
+          <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">NetSec</a> gestartet und damit
+          die Rolle des Netzwerks als zentrale europäische Plattform der Sicherheitsstudien formalisiert.
+        </p>
+      </article>
+
+      <aside class="card inaugural-facts" style="padding: var(--space-5);">
+        <div class="featured-eyebrow">Erste Konferenz</div>
+        <dl>
+          <dt>Datum</dt>     <dd>13. — 14. Januar 2017</dd>
+          <dt>Ort</dt>       <dd>Université Panthéon-Assas (Paris II)</dd>
+          <dt>Teilnahme</dt> <dd>~100 Forschende · 62 Universitäten · 15 europäische Länder</dd>
+          <dt>Eröffnungsvortrag</dt> <dd>Sir Hew Strachan</dd>
+          <dt>Veranstalter</dt> <dd>AEGES · Centre Thucydide · CERSA</dd>
+        </dl>
+        <p class="citation">
+          Ausführlicher Bericht:
+          <a href="https://shs.cairn.info/annuaire-francais-de-relations--9791090429956-page-95?lang=fr"
+             target="_blank" rel="noopener">Meijer, <em>Die Europäische Initiative für
+            Sicherheitsstudien</em>, Champs de Mars, 2017</a>.
+        </p>
+      </aside>
+    </div>
   </div>
 </section>
 

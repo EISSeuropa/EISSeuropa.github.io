@@ -14,6 +14,14 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+### Added
+
+- **`/initiative` — founder pull-quote, two founding objectives, and "Filling a gap" framing** in a new *"What EISS was founded to do"* card that replaces the generic *"How we work"* block. Quote attribution links to Meijer's 2017 *Champs de Mars* article on Cairn — the page now signposts its own founding document.
+- **`/initiative` — research-themes pill grid** listing the nine permanent thematic sections from the 2017 inaugural conference. Renders as a wrapped row of accented pills below NetSec. Localised EN / FR / DE.
+- **`/initiative` — *First conference* facts aside** on the *How EISS started* section: a side card with the 13–14 January 2017 date, Panthéon-Assas venue, attendance figures, Sir Hew Strachan keynote, AEGES · Centre Thucydide · CERSA co-organisers, and a footer citation to the Cairn article.
+- **`/initiative` — expanded origins prose** names Jean-Vincent Holeindre (AEGES president, Univ. Poitiers), the CNRS Éditions + Armand Colin book series, the planned English-language series, and the **Prix Bastien Irondelle** PhD thesis prize. Adds *legal scholars / juristes* to the multidisciplinary list.
+- **`.theme-pills` + `.origin-layout` + `.inaugural-facts` styles** in `src/assets/css/site.css` — pill row, two-column prose-plus-aside grid that collapses on narrow viewports, and a compact two-column definition list for the facts aside.
+
 ### Changed
 
 - **`/initiative` — Our network section moved up** above *What we do*, so the leadership headshots + country flags appear immediately after the hero stats row instead of below the NetSec card. Visualises the **N people across M countries** stat right where the reader sees it.
