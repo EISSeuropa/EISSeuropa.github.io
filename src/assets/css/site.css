@@ -1534,12 +1534,16 @@ h4 { font-size: var(--fs-lg); }
 }
 
 .person {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: var(--bg-elev);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  overflow: hidden;
+  /* overflow stays visible so absolutely-positioned descendants
+     (the ESSC-speaker tooltip in particular) can escape the card.
+     Corner-clipping for the photo is handled on `.person-photo`
+     itself via border-radius below. */
   box-shadow: var(--shadow-1);
   transition: transform var(--motion-base) var(--ease-out),
               box-shadow var(--motion-base) var(--ease-out);
@@ -1555,6 +1559,10 @@ h4 { font-size: var(--fs-lg); }
   background: var(--bg-tinted);
   object-fit: cover;
   width: 100%;
+  /* Round only the top corners to inherit the card's outer shape.
+     1px subtracted to nest cleanly inside the card's border. */
+  border-top-left-radius: calc(var(--radius-md) - 1px);
+  border-top-right-radius: calc(var(--radius-md) - 1px);
 }
 
 .person-body {
@@ -1628,19 +1636,22 @@ h4 { font-size: var(--fs-lg); }
   position: absolute;
   bottom: calc(100% + 6px);
   right: 0;
+  max-width: 14rem;
   background: hsl(220 30% 12%);
   color: white;
   padding: 0.3rem 0.55rem;
   border-radius: var(--radius-sm);
   font-size: var(--fs-xs);
   font-weight: 500;
-  white-space: nowrap;
+  line-height: 1.35;
+  white-space: normal;
+  text-align: left;
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--motion-fast) var(--ease-out),
               transform var(--motion-fast) var(--ease-out);
   transform: translateY(2px);
-  z-index: 10;
+  z-index: 100;
   box-shadow: 0 4px 12px hsl(220 30% 0% / 0.18);
 }
 .person-essc-speaker::before {
