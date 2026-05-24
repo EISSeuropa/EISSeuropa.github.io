@@ -216,14 +216,49 @@ def download_photo(url: str, dest_no_ext: Path) -> str | None:
 # ──────────────────────────── core build ────────────────────────────
 
 
+def _cell(row: dict, cols: dict, key: str) -> str:
+    """Read a cell from the form row by mapped column name. Returns the
+    trimmed string, or "" when missing."""
+    col_name = cols.get(key, "")
+    if not col_name:
+        return ""
+    return (row.get(col_name, "") or "").strip()
+
+
+def _join_affiliation(position: str, institution: str) -> str:
+    """Join the two free-text fields into the single `affiliation` line
+    that the card renders ("Position — Institution"). Either may be
+    empty; in that case we render what we have without a stray dash."""
+    p, i = position.strip(), institution.strip()
+    if p and i:
+        return f"{p} — {i}"
+    return p or i
+
+
+# Map of board.json `links` keys → board-source.json `columns` keys.
+# Centralised here so the form-driven URL set stays in sync between
+# extract (build_from_row) and merge (carry_over).
+LINK_FIELDS = {
+    "publicEmail": "publicEmail",
+    "website": "website",
+    "orcid": "orcid",
+    "linkedin": "linkedin",
+    "twitter": "twitter",
+    "bluesky": "bluesky",
+    "mastodon": "mastodon",
+}
+
+
 def build_from_row(row: dict, cols: dict, role_info: dict, prior: dict | None) -> dict:
     """Build a board.json entry from one form submission, falling back
     to fields from `prior` (the existing board.json entry for this
-    person, if any) when the submission left a field blank."""
-    name = (row.get(cols["name"], "") or "").strip()
-    if not name and prior:
-        name = prior["name"]
-    kind = role_info["kind"]
+    person, if any) when the submission left a field blank.
+
+    The form collects much richer data than the page currently surfaces
+    (working-group involvement, country, social-media URLs). Everything
+    is captured into board.json; the template decides what to render
+    based on field presence."""
+    name = _cell(row, cols, "name") or (prior or {}).get("name", "")
     person: dict = {
         "name": name,
         "role": role_info["label"],
@@ -231,7 +266,7 @@ def build_from_row(row: dict, cols: dict, role_info: dict, prior: dict | None) -
     }
 
     # Photo: new upload wins; otherwise inherit prior.
-    photo_url = (row.get(cols.get("photo", ""), "") or "").strip()
+    photo_url = _cell(row, cols, "photo")
     photo_path = None
     if photo_url:
         photo_path = download_photo(photo_url, PHOTO_DIR / slugify(name))
@@ -242,22 +277,71 @@ def build_from_row(row: dict, cols: dict, role_info: dict, prior: dict | None) -
     else:
         person["photo"] = ""
 
-    if kind == "support":
-        bio = (row.get(cols.get("bio", ""), "") or "").strip()
-        if not bio and prior:
-            bio = prior.get("bio", "")
-        person["bio"] = bio
-    else:
-        affiliation = (row.get(cols.get("affiliation", ""), "") or "").strip()
-        if not affiliation and prior:
-            affiliation = prior.get("affiliation", "")
+    # Functional responsibility — separate from role, rendered as a
+    # pill alongside the role on the card. Optional; we accept any
+    # string the form provides but warn when it's outside the known
+    # set (forward-compatible if the operator adds new options).
+    func_resp = _cell(row, cols, "functionalResponsibility")
+    if not func_resp and prior:
+        func_resp = prior.get("functionalResponsibility", "")
+    if func_resp:
+        person["functionalResponsibility"] = func_resp
+
+    # Affiliation is now stitched from the form's split fields. Falls
+    # back to the prior single-field value if neither half is present
+    # (i.e. existing entries that pre-date this Form shape).
+    position = _cell(row, cols, "position")
+    institution = _cell(row, cols, "institution")
+    affiliation = _join_affiliation(position, institution)
+    if not affiliation and prior:
+        affiliation = prior.get("affiliation", "")
+    if affiliation:
         person["affiliation"] = affiliation
 
-        themes = (row.get(cols.get("themes", ""), "") or "").strip()
-        if not themes and prior:
-            themes = prior.get("themes", "")
-        if themes:
-            person["themes"] = themes
+    # Country: optional separate field, rendered as a small line below
+    # the affiliation. Not joined into the affiliation string itself.
+    country = _cell(row, cols, "country") or (prior or {}).get("country", "")
+    if country:
+        person["country"] = country
+
+    # Bio is now available for every entry (board members AND support
+    # staff). The card decides what to render: teaser + Read-more
+    # expander when long, single paragraph when short.
+    bio = _cell(row, cols, "bio") or (prior or {}).get("bio", "")
+    if bio:
+        person["bio"] = bio
+
+    # Themes (was "research themes" — the form calls them keywords).
+    themes = _cell(row, cols, "themes") or (prior or {}).get("themes", "")
+    if themes:
+        person["themes"] = themes
+
+    # Social-media + ORCID + website links. Nested under `links` so
+    # they're easy to spot in board.json + don't clutter the top-level
+    # entry. Each key is independent — any subset may be present.
+    links: dict = {}
+    prior_links = (prior or {}).get("links", {}) or {}
+    for out_key, col_key in LINK_FIELDS.items():
+        v = _cell(row, cols, col_key) or prior_links.get(out_key, "")
+        if v:
+            links[out_key] = v
+    if links:
+        person["links"] = links
+
+    # Working-group involvement — comma-separated list from the form's
+    # multi-select checkboxes. Stored verbatim; the template doesn't
+    # render it yet (deferred until WG structure is settled).
+    working_groups = _cell(row, cols, "workingGroups") or (prior or {}).get("workingGroups", "")
+    if working_groups:
+        person["workingGroups"] = working_groups
+
+    # Slug + alt are preserved across syncs if the prior entry has them
+    # (a hand-set slug for deep linking, or a custom alt for a11y).
+    if prior:
+        if prior.get("slug"):
+            person["slug"] = prior["slug"]
+        if prior.get("alt"):
+            person["alt"] = prior["alt"]
 
     return person
 
@@ -267,11 +351,6 @@ def carry_over(prior: dict, roles_map: dict[str, dict]) -> tuple[dict, dict]:
     unchanged, paired with a synthesised role_info for sorting (looked
     up from the roles table by the entry's existing `role` string)."""
     role_info = roles_map.get(prior.get("role", ""), DEFAULT_ROLE)
-    # If the prior entry's role isn't in the table but it has a "bio"
-    # field (the support-team marker), treat it as support so the
-    # display-style is preserved.
-    if prior.get("role") not in roles_map and "bio" in prior:
-        role_info = {**DEFAULT_ROLE, "kind": "support", "tier": 100}
     return dict(prior), role_info
 
 

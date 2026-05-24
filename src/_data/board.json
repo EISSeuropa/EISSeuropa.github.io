@@ -1,6 +1,5 @@
 {
   "_documentation": "Data source for /board.html. The page template (src/board.njk) loops over `members` and `support`. New people, role changes, photo swaps — edit this file, not the template. A future workflow will overwrite this file from the linked Google Sheet (see docs/board-bios-setup.md once added).",
-
   "members": [
     {
       "name": "Dr Hugo Meijer",
@@ -27,78 +26,6 @@
       "themes": "International Relations, Theorizing (informal) institutions, European integration, Governance of international security."
     },
     {
-      "name": "Prof. Silvia D’Amato",
-      "role": "Board Member",
-      "photo": "/assets/images/1-2.jpeg",
-      "alt": "Prof. Silvia D’Amato",
-      "affiliation": "Associate Professor — James Madison University.",
-      "themes": "Terrorism, Political Violence and War, Peace and Justice."
-    },
-    {
-      "name": "Dr Julia Carver",
-      "role": "Board Member",
-      "photo": "/assets/images/julia20carver20headshot-253x169.jpeg",
-      "alt": "Dr Julia Carver",
-      "affiliation": "Assistant Professor — Leiden University.",
-      "themes": "Foreign policymaking, Strategic concepts, Emerging digital technologies."
-    },
-    {
-      "name": "Prof. Marco Wyss",
-      "role": "Board Member",
-      "photo": "/assets/images/wyss-1-403x564.jpg",
-      "alt": "Prof. Marco Wyss",
-      "affiliation": "Professor of International History and Security — Lancaster University; Research Fellow — Stellenbosch University; Senior Research Fellow — School of Advanced Study, University of London.",
-      "themes": "Cold War, African and European defence, Neutrality."
-    },
-    {
-      "name": "Dr Eliza Gheorghe",
-      "role": "Board Member",
-      "photo": "/assets/images/eliza-gheorghe.jpg",
-      "alt": "Dr Eliza Gheorghe",
-      "affiliation": "Assistant Professor — Department of International Relations, Bilkent University.",
-      "themes": "International Relations Theory, International Security, Nuclear Politics."
-    },
-    {
-      "name": "Prof. Marina Henke",
-      "role": "Board Member",
-      "photo": "/assets/images/henke-marina-3-347x521.jpg",
-      "alt": "Prof. Marina Henke",
-      "affiliation": "Professor of International Relations and Director of the Centre for International Security — Hertie School.",
-      "themes": "Intervention decision-making, Nuclear security, U.S. and European Grand Strategy."
-    },
-    {
-      "name": "Dr Sanne Verschuren",
-      "role": "Board Member",
-      "photo": "/assets/images/picture-sanne-verschuren-sanne-verschuren-348x348.jpg",
-      "alt": "Dr Sanne Verschuren",
-      "affiliation": "Assistant Professor of International Security — Boston University.",
-      "themes": "Domestic determinants of security policy, Role of ideas, norms, and institutions in national security decision-making."
-    },
-    {
-      "name": "Prof. Revecca Pedi",
-      "role": "Board Member",
-      "photo": "/assets/images/5731-revecca-pedi-1-2-253x253.jpg",
-      "alt": "Prof. Revecca Pedi",
-      "affiliation": "Associate Professor of International Relations — University of Macedonia.",
-      "themes": "International relations of small states, Theories of international relations, International relations and the European Union."
-    },
-    {
-      "name": "Dr Chiara Libiseller",
-      "role": "Board Member",
-      "photo": "/assets/images/chiara-l3303ibiseller.x2806b916.jpg.webp",
-      "alt": "Dr Chiara Libiseller",
-      "affiliation": "Lecturer in Strategic Studies — King’s College London.",
-      "themes": "Knowledge production on war, Changing character of war, Impact of technology on the theory and practice of war."
-    },
-    {
-      "name": "Alisa Kerschbaum",
-      "role": "Board Member",
-      "photo": "/assets/images/alisa-kerschbaum-uva-253x371.jpeg",
-      "alt": "Alisa Kerschbaum",
-      "affiliation": "Research Grant Advisor — University of Amsterdam.",
-      "themes": "Global affairs, International Peace &amp; Security, Environmental security."
-    },
-    {
       "name": "Prof. Nicolas Blarel",
       "role": "Board Member",
       "photo": "/assets/images/d200x250-3.jpeg",
@@ -115,28 +42,20 @@
       "themes": "European Security and Defence, Defence Industry, Political Economy."
     },
     {
-      "name": "Prof. Olivier Schmitt",
+      "name": "Dr Julia Carver",
       "role": "Board Member",
-      "photo": "/assets/images/schmitt-olivier-2-213x320.jpg",
-      "alt": "Prof. Olivier Schmitt",
-      "affiliation": "Head of Research — Institute for Military Operations at the Royal Danish Defence College.",
-      "themes": "Military Operations, Alliances, Transformation."
+      "photo": "/assets/images/julia20carver20headshot-253x169.jpeg",
+      "alt": "Dr Julia Carver",
+      "affiliation": "Assistant Professor — Leiden University.",
+      "themes": "Foreign policymaking, Strategic concepts, Emerging digital technologies."
     },
     {
-      "name": "Prof. Chiara Ruffa",
+      "name": "Prof. Silvia D’Amato",
       "role": "Board Member",
-      "photo": "/assets/images/jritvrpl-400x400.jpg",
-      "alt": "Prof. Chiara Ruffa",
-      "affiliation": "Professor of Political Science — Sciences Po, Center for International Studies (CERI).",
-      "themes": "Multilateralism on the ground, Peacekeeping, Civil-military relations, Political sociology, Fieldwork."
-    },
-    {
-      "name": "Dr Tim Sweijs",
-      "role": "Board Member",
-      "photo": "/assets/images/1071-07280937-s001tim-003-1-705x705.png",
-      "alt": "Dr Tim Sweijs",
-      "affiliation": "Senior Research Fellow — Netherlands’ War Studies Research Centre; Director of Research — The Hague Centre for Strategic Studies.",
-      "themes": "Warfare (past, present, future), Strategy, Coercion, Deterrence, Emerging technologies."
+      "photo": "/assets/images/1-2.jpeg",
+      "alt": "Prof. Silvia D’Amato",
+      "affiliation": "Associate Professor — James Madison University.",
+      "themes": "Terrorism, Political Violence and War, Peace and Justice."
     },
     {
       "name": "Prof. Filip Ejdus",
@@ -145,6 +64,39 @@
       "alt": "Prof. Filip Ejdus",
       "affiliation": "Professor of Security Studies — Faculty of Political Science, University of Belgrade.",
       "themes": "Identity, memory, and emotions, International interventions, Civil-military relations, Security sector reform."
+    },
+    {
+      "name": "Dr Eliza Gheorghe",
+      "role": "Board Member",
+      "photo": "/assets/images/eliza-gheorghe.jpg",
+      "alt": "Dr Eliza Gheorghe",
+      "affiliation": "Assistant Professor — Department of International Relations, Bilkent University.",
+      "themes": "International Relations Theory, International Security, Nuclear Politics."
+    },
+    {
+      "name": "Dr John NT Helferich",
+      "role": "Board Member",
+      "functionalResponsibility": "Events Coordinator",
+      "photo": "/assets/images/helferich-portrait-college-3.jpeg",
+      "alt": "Dr John NT Helferich",
+      "affiliation": "DPhil Candidate in International Relations — St. Antony's College, Oxford.",
+      "bio": "John is your first point of contact. He is in charge of our email communications, and ensures smooth coordination between chairs and panel members, among other things. He is a DPhil candidate in International Relations at St. Antony's College, Oxford. John joined the Initiative in 2018."
+    },
+    {
+      "name": "Prof. Marina Henke",
+      "role": "Board Member",
+      "photo": "/assets/images/henke-marina-3-347x521.jpg",
+      "alt": "Prof. Marina Henke",
+      "affiliation": "Professor of International Relations and Director of the Centre for International Security — Hertie School.",
+      "themes": "Intervention decision-making, Nuclear security, U.S. and European Grand Strategy."
+    },
+    {
+      "name": "Alisa Kerschbaum",
+      "role": "Board Member",
+      "photo": "/assets/images/alisa-kerschbaum-uva-253x371.jpeg",
+      "alt": "Alisa Kerschbaum",
+      "affiliation": "Research Grant Advisor — University of Amsterdam.",
+      "themes": "Global affairs, International Peace &amp; Security, Environmental security."
     },
     {
       "name": "Sarka Kolmasova",
@@ -161,24 +113,74 @@
       "functionalResponsibility": "Technology Coordinator",
       "photo": "/assets/images/rsd25-cropped-348x332.jpg",
       "alt": "Dr Arthur PB Laudrain",
-      "affiliation": "Team Lead and Senior Researcher for Cyber Security — Center for Security Studies, ETH Zurich."
+      "affiliation": "Team Lead and Senior Researcher for Cyber Security — Center for Security Studies, ETH Zurich.",
+      "bio": "Arthur is responsible for most of the online logistics of the organisation. He is Team Lead and a Senior Researcher for Cyber Security at the Center for Security Studies at ETH Zurich. Arthur has been with us since 2017."
     },
     {
-      "name": "Dr John NT Helferich",
+      "name": "Dr Chiara Libiseller",
       "role": "Board Member",
-      "functionalResponsibility": "Events Coordinator",
-      "photo": "/assets/images/helferich-portrait-college-3.jpeg",
-      "alt": "Dr John NT Helferich",
-      "affiliation": "DPhil Candidate in International Relations — St. Antony's College, Oxford."
+      "photo": "/assets/images/chiara-l3303ibiseller.x2806b916.jpg.webp",
+      "alt": "Dr Chiara Libiseller",
+      "affiliation": "Lecturer in Strategic Studies — King’s College London.",
+      "themes": "Knowledge production on war, Changing character of war, Impact of technology on the theory and practice of war."
+    },
+    {
+      "name": "Prof. Revecca Pedi",
+      "role": "Board Member",
+      "photo": "/assets/images/5731-revecca-pedi-1-2-253x253.jpg",
+      "alt": "Prof. Revecca Pedi",
+      "affiliation": "Associate Professor of International Relations — University of Macedonia.",
+      "themes": "International relations of small states, Theories of international relations, International relations and the European Union."
+    },
+    {
+      "name": "Prof. Chiara Ruffa",
+      "role": "Board Member",
+      "photo": "/assets/images/jritvrpl-400x400.jpg",
+      "alt": "Prof. Chiara Ruffa",
+      "affiliation": "Professor of Political Science — Sciences Po, Center for International Studies (CERI).",
+      "themes": "Multilateralism on the ground, Peacekeeping, Civil-military relations, Political sociology, Fieldwork."
+    },
+    {
+      "name": "Prof. Olivier Schmitt",
+      "role": "Board Member",
+      "photo": "/assets/images/schmitt-olivier-2-213x320.jpg",
+      "alt": "Prof. Olivier Schmitt",
+      "affiliation": "Head of Research — Institute for Military Operations at the Royal Danish Defence College.",
+      "themes": "Military Operations, Alliances, Transformation."
+    },
+    {
+      "name": "Dr Tim Sweijs",
+      "role": "Board Member",
+      "photo": "/assets/images/1071-07280937-s001tim-003-1-705x705.png",
+      "alt": "Dr Tim Sweijs",
+      "affiliation": "Senior Research Fellow — Netherlands’ War Studies Research Centre; Director of Research — The Hague Centre for Strategic Studies.",
+      "themes": "Warfare (past, present, future), Strategy, Coercion, Deterrence, Emerging technologies."
+    },
+    {
+      "name": "Dr Sanne Verschuren",
+      "role": "Board Member",
+      "photo": "/assets/images/picture-sanne-verschuren-sanne-verschuren-348x348.jpg",
+      "alt": "Dr Sanne Verschuren",
+      "affiliation": "Assistant Professor of International Security — Boston University.",
+      "themes": "Domestic determinants of security policy, Role of ideas, norms, and institutions in national security decision-making."
+    },
+    {
+      "name": "Prof. Marco Wyss",
+      "role": "Board Member",
+      "photo": "/assets/images/wyss-1-403x564.jpg",
+      "alt": "Prof. Marco Wyss",
+      "affiliation": "Professor of International History and Security — Lancaster University; Research Fellow — Stellenbosch University; Senior Research Fellow — School of Advanced Study, University of London.",
+      "themes": "Cold War, African and European defence, Neutrality."
     }
   ],
-
   "support": [
     {
       "name": "Eugenio Sanchez",
-      "role": "Communications Coordinator",
+      "role": "Support Staff",
+      "functionalResponsibility": "Communications Coordinator",
       "photo": "/assets/images/1659415900816.jpeg",
       "alt": "Eugenio Sanchez",
+      "affiliation": "PhD Candidate in International Relations — Sciences Po Paris.",
       "bio": "Eugenio assists with the development of our communication strategy and the logistics of our events. He is a PhD candidate in International Relations at Sciences Po Paris. Eugenio joined the Initiative in 2023."
     }
   ]

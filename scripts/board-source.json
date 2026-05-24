@@ -2,33 +2,52 @@
   "_documentation": "Configuration for scripts/sync-board.py. See docs/board-bios-setup.md for the step-by-step on creating the Google Form, linking it to a Sheet, and filling in the URLs below. While `csv_url` is empty, the workflow runs but no-ops cleanly — so the workflow stays green while the Form is still being set up.",
 
   "sheet": {
-    "csv_url": ""
+    "csv_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTWseHxKibKgtZEkkASIMFdHgDNFjTrc2XERSLXNj1kmTfiFY2_HryBKgtCDWzc8T_j0gT_RMWJIMSR/pub?gid=1495344520&single=true&output=csv"
   },
-  "form_url": "",
+  "form_url": "https://docs.google.com/forms/d/e/1FAIpQLSeVVwOHOwukLF9bzryNj1WeApuXOjxM-sOGbK_O908OLaPyGg/viewform",
 
-  "_columns_doc": "Header names exactly as Google Sheets writes them for this form. Timestamp + email columns are localised to the form owner's account language (e.g. French → 'Horodateur' / 'Adresse e-mail'). If you ever change a question's text in the form, mirror the change here so the sync script keeps matching.",
+  "_columns_doc": "Header names exactly as Google Sheets writes them for this form. Timestamp + email columns are localised to the form owner's account language (this form is owned by an FR-locale account, so the timestamp column is 'Horodateur' and email is 'Adresse e-mail'). If you ever rename a question in the form, mirror the change here so the sync script keeps matching. The `functionalResponsibility` column needs to be added to the form (see _form_pending_changes below) before the sync can populate that field.",
 
   "columns": {
-    "timestamp": "Timestamp",
-    "email": "Email Address",
+    "timestamp": "Horodateur",
+    "email": "Adresse e-mail",
     "name": "Full name (with title — Dr / Prof / Mr / Ms)",
-    "role": "Your role",
-    "affiliation": "Position and institution (e.g. 'Associate Professor — Leiden University')",
-    "themes": "Research themes (3–5 short phrases, comma-separated)",
-    "bio": "Long bio (optional — used for the support-team display style)",
+    "role": "Do you have special Board responsibilities?",
+    "functionalResponsibility": "Functional responsibility (optional)",
+    "position": "Position or current role (e.g. PhD candidate, Associate Professor, Policy analyst)",
+    "institution": "Institution or organisation",
+    "country": "Country",
+    "publicEmail": "Public email (optional)",
+    "bio": "Short bio (max. 300 words)",
+    "themes": "Research keywords (comma-separated, 3 to 5 suggested)",
+    "workingGroups": "Working Group involvement (tick all that apply)",
+    "website": "Personal or institutional website (optional)",
+    "orcid": "ORCID iD (optional)",
+    "linkedin": "LinkedIn URL (optional)",
+    "twitter": "X / Twitter URL (optional)",
+    "bluesky": "Bluesky URL (optional)",
+    "mastodon": "Mastodon URL (optional)",
     "photo": "Headshot photo (optional)",
     "consent": "I consent to publication of my bio on eiss-europa.com"
   },
 
-  "_roles_doc": "Allowed values for the 'Your role' Form dropdown. The Form question's options must exactly match the `label` values below. `kind` determines which output section the entry lands in (board → /board.html — split into 'Leadership' for tier < 100 and 'Board Members' for tier ≥ 100, with research themes; support → 'Support Team' with flowing bio). `tier` is the primary sort key — lower tiers appear higher on the page. Within a tier, entries sort alphabetical by surname. To add a new role: append to this list AND add the matching option to the Form dropdown.",
+  "_form_pending_changes": "Two adjustments needed on the Google Form before the sync will work end-to-end: (1) the Q 'Do you have special Board responsibilities?' should be a single-select dropdown with options 'Founding Director', 'Treasurer', 'Secretary-General', 'Support Staff' (default = 'None' or just an empty option, which the script treats as 'Board Member'). (2) Add a new optional single-select dropdown 'Functional responsibility (optional)' with values 'Technology Coordinator', 'Events Coordinator', 'Communications Coordinator', plus a 'None' default. This separates the formal role (which drives section + tier) from the functional title (rendered as a pill on the card).",
+
+  "_roles_doc": "Allowed values for the 'Your role' Form dropdown. The Form question's options must exactly match the `label` values below. `kind` determines which output section the entry lands in (board → /board.html — split into 'Leadership' for tier < 100 and 'Board Members' for tier ≥ 100; support → 'Support Staff' section). `tier` is the primary sort key — lower tiers appear higher within their section. Within a tier, entries sort alphabetical by surname. To add a new role: append to this list AND add the matching option to the Form dropdown.",
 
   "roles": [
-    { "label": "Founding Director",          "kind": "board",   "tier": 1 },
-    { "label": "Treasurer",                  "kind": "board",   "tier": 2 },
-    { "label": "Secretary-General",          "kind": "board",   "tier": 3 },
-    { "label": "Board Member",               "kind": "board",   "tier": 100 },
-    { "label": "Technology Coordinator",     "kind": "support", "tier": 1 },
-    { "label": "Events Coordinator",         "kind": "support", "tier": 2 },
-    { "label": "Communications Coordinator", "kind": "support", "tier": 3 }
+    { "label": "Founding Director",  "kind": "board",   "tier": 1   },
+    { "label": "Treasurer",          "kind": "board",   "tier": 2   },
+    { "label": "Secretary-General",  "kind": "board",   "tier": 3   },
+    { "label": "Board Member",       "kind": "board",   "tier": 100 },
+    { "label": "Support Staff",      "kind": "support", "tier": 100 }
+  ],
+
+  "_functional_responsibilities_doc": "Allowed values for the new 'Functional responsibility' Form dropdown. The script copies whichever value the member picks into the entry's `functionalResponsibility` field verbatim; the template renders it as a quiet pill alongside the primary role. The list here exists only as a sanity check on the Form options — if a member submits an unrecognised value, the script accepts it (forward-compatible) but logs a warning.",
+
+  "functional_responsibilities": [
+    "Technology Coordinator",
+    "Events Coordinator",
+    "Communications Coordinator"
   ]
 }

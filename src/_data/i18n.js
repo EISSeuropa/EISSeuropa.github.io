@@ -217,6 +217,8 @@ const locales = {
     boardPage: {
       // Strings used by src/_includes/person-card.njk on /board.
       researchThemes: "Research themes",
+      readMore: "Read more",
+      linksAriaLabel: "Links",
       // Tooltip + accessible name for the mic icon shown next to people
       // who are chairing, discussing, or speaking at the live ESSC
       // edition (matched against the Indico programme at build time).
@@ -400,6 +402,8 @@ const locales = {
 
     boardPage: {
       researchThemes: "Thèmes de recherche",
+      readMore: "Lire la suite",
+      linksAriaLabel: "Liens",
       esscSpeakerTitle: "Préside ou intervient à l'ESSC en cours",
     },
 
@@ -571,6 +575,8 @@ const locales = {
 
     boardPage: {
       researchThemes: "Forschungsthemen",
+      readMore: "Mehr lesen",
+      linksAriaLabel: "Links",
       esscSpeakerTitle: "Leitet oder spricht beim aktuellen ESSC",
     },
 
