@@ -43,31 +43,57 @@
     </p>
     <p class="person-name">{{ person.name }}</p>
 
-    {%- if person.affiliation %}
-    <p class="person-affiliation">{{ person.affiliation | safe }}</p>
-    {%- endif %}
+    {# Affiliation rendering. Two lines when position + institution
+       are stored separately (the modern shape that the Form sync
+       writes); a single legacy line when only `affiliation` is set
+       (fallback for any entry that pre-dates this split). The
+       country flag is inline at the end of the institution line so
+       it anchors to the same visual position on every card. #}
+    {%- set countryKey = (person.country or '') | lower | trim %}
+    {%- set iso = countryFlags.byName[countryKey] -%}
 
-    {%- if person.country %}
-    {%- set countryKey = person.country | lower | trim %}
-    {%- set iso = countryFlags.byName[countryKey] %}
-    {%- if iso %}
-    {# Flag-only rendering. The country name lives in `alt` + `title`
-       so screen readers + hover tooltips still convey it; the visible
-       text is suppressed per the operator's "replace the text"
-       request. Fallback (else branch) keeps the labelled map-pin
-       form for countries we don't yet have a flag SVG for. #}
-    <p class="person-country">
-      <img class="person-flag"
-           src="/assets/images/flags/{{ iso }}.svg"
-           alt="{{ person.country }}"
-           title="{{ person.country }}"
-           width="22" height="22" loading="lazy">
-    </p>
-    {%- else %}
-    <p class="person-country">
-      {{ icon("map-pin") }} {{ person.country }}
-    </p>
-    {%- endif %}
+    {%- if person.position or person.institution %}
+      {%- if person.position %}
+      <p class="person-position">{{ person.position | safe }}</p>
+      {%- endif %}
+      {%- if person.institution %}
+      <p class="person-institution">
+        <span>{{ person.institution | safe }}</span>
+        {%- if iso %}
+        <img class="person-flag"
+             src="/assets/images/flags/{{ iso }}.svg"
+             alt="{{ person.country }}"
+             title="{{ person.country }}"
+             width="20" height="20" loading="lazy">
+        {%- elif person.country %}
+        <span class="person-country-fallback">{{ icon("map-pin") }} {{ person.country }}</span>
+        {%- endif %}
+      </p>
+      {%- elif person.country %}
+      {# Position-only entry (rare): country goes on its own line. #}
+      <p class="person-country">
+        {%- if iso %}
+        <img class="person-flag"
+             src="/assets/images/flags/{{ iso }}.svg"
+             alt="{{ person.country }}"
+             title="{{ person.country }}"
+             width="20" height="20" loading="lazy">
+        {%- else %}
+        {{ icon("map-pin") }} {{ person.country }}
+        {%- endif %}
+      </p>
+      {%- endif %}
+    {%- elif person.affiliation %}
+      <p class="person-affiliation">
+        <span>{{ person.affiliation | safe }}</span>
+        {%- if iso %}
+        <img class="person-flag"
+             src="/assets/images/flags/{{ iso }}.svg"
+             alt="{{ person.country }}"
+             title="{{ person.country }}"
+             width="20" height="20" loading="lazy">
+        {%- endif %}
+      </p>
     {%- endif %}
 
     {%- if person.bio %}

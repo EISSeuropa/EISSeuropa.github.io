@@ -6,81 +6,90 @@
       "role": "Founding Director",
       "photo": "/assets/images/meijer-2-140x175.jpg",
       "alt": "Dr Hugo MEIJER",
-      "affiliation": "CNRS Research Fellow — Sciences Po, Center for International Studies (CERI).",
       "themes": "International Relations, Foreign Policy Analysis, Security Studies, Alliances.",
-      "country": "France"
+      "country": "France",
+      "position": "CNRS Research Fellow",
+      "institution": "Sciences Po, Center for International Studies (CERI)"
     },
     {
       "name": "Dr Marie Robin",
       "role": "Treasurer",
       "photo": "/assets/images/screenshot-2024-03-25-at-18.29.49-348x391.png",
       "alt": "Dr Marie Robin",
-      "affiliation": "Assistant Professor of War Studies — Leiden University.",
       "themes": "Revenge in international relations, Strategic use of emotions, Evolution of conflictuality, Ethics of war.",
-      "country": "Netherlands"
+      "country": "Netherlands",
+      "position": "Assistant Professor of War Studies",
+      "institution": "Leiden University"
     },
     {
       "name": "Prof. Moritz Weiss",
       "role": "Secretary-General",
       "photo": "/assets/images/moritzweiss-eiss2024-348x305.jpg",
       "alt": "Prof. Moritz Weiss",
-      "affiliation": "Senior Lecturer and Principal Investigator — Ludwig Maximilian University of Munich.",
       "themes": "International Relations, Theorizing (informal) institutions, European integration, Governance of international security.",
-      "country": "Germany"
+      "country": "Germany",
+      "position": "Senior Lecturer and Principal Investigator",
+      "institution": "Ludwig Maximilian University of Munich"
     },
     {
       "name": "Prof. Nicolas Blarel",
       "role": "Board Member",
       "photo": "/assets/images/d200x250-3.jpeg",
       "alt": "Prof. Nicolas Blarel",
-      "affiliation": "Associate Professor of International Relations and Director of Studies — Leiden University.",
       "themes": "Foreign Policy Analysis, Politics of migration governance, International politics of South Asia.",
-      "country": "Netherlands"
+      "country": "Netherlands",
+      "position": "Associate Professor of International Relations and Director of Studies",
+      "institution": "Leiden University"
     },
     {
       "name": "Prof. Antonio Calcara",
       "role": "Board Member",
       "photo": "/assets/images/r2sk57tg-400x400.jpg",
       "alt": "Prof. Antonio Calcara",
-      "affiliation": "Professor — Vrije Universiteit Brussels.",
       "themes": "European Security and Defence, Defence Industry, Political Economy.",
-      "country": "Belgium"
+      "country": "Belgium",
+      "position": "Professor",
+      "institution": "Vrije Universiteit Brussels"
     },
     {
       "name": "Dr Julia Carver",
       "role": "Board Member",
       "photo": "/assets/images/julia20carver20headshot-253x169.jpeg",
       "alt": "Dr Julia Carver",
-      "affiliation": "Assistant Professor — Leiden University.",
       "themes": "Foreign policymaking, Strategic concepts, Emerging digital technologies.",
-      "country": "Netherlands"
+      "country": "Netherlands",
+      "position": "Assistant Professor",
+      "institution": "Leiden University"
     },
     {
       "name": "Prof. Silvia D’Amato",
       "role": "Board Member",
       "photo": "/assets/images/1-2.jpeg",
       "alt": "Prof. Silvia D’Amato",
-      "affiliation": "Associate Professor — James Madison University.",
       "themes": "Terrorism, Political Violence and War, Peace and Justice.",
-      "country": "United States"
+      "country": "United States",
+      "position": "Associate Professor",
+      "institution": "James Madison University"
     },
     {
       "name": "Prof. Filip Ejdus",
       "role": "Board Member",
       "photo": "/assets/images/ejdus-photo-253x253.jpg",
       "alt": "Prof. Filip Ejdus",
-      "affiliation": "Professor of Security Studies — Faculty of Political Science, University of Belgrade.",
       "themes": "Identity, memory, and emotions, International interventions, Civil-military relations, Security sector reform.",
-      "country": "Serbia"
+      "country": "Serbia",
+      "position": "Professor of Security Studies",
+      "institution": "Faculty of Political Science, University of Belgrade"
     },
     {
       "name": "Dr Eliza Gheorghe",
       "role": "Board Member",
       "photo": "/assets/images/eliza-gheorghe.jpg",
       "alt": "Dr Eliza Gheorghe",
-      "affiliation": "Assistant Professor — Department of International Relations, Bilkent University.",
       "themes": "International Relations Theory, International Security, Nuclear Politics.",
-      "country": "Turkey"
+      "country": "Turkey",
+      "position": "Assistant Professor",
+      "institution": "Department of International Relations, Bilkent University"
     },
     {
       "name": "Dr John NT Helferich",
@@ -88,36 +97,40 @@
       "functionalResponsibility": "Events Coordinator",
       "photo": "/assets/images/helferich-portrait-college-3.jpeg",
       "alt": "Dr John NT Helferich",
-      "affiliation": "DPhil Candidate in International Relations — St. Antony's College, Oxford.",
       "bio": "John is your first point of contact. He is in charge of our email communications, and ensures smooth coordination between chairs and panel members, among other things. He is a DPhil candidate in International Relations at St. Antony's College, Oxford. John joined the Initiative in 2018.",
-      "country": "United Kingdom"
+      "country": "United Kingdom",
+      "position": "DPhil Candidate in International Relations",
+      "institution": "St. Antony's College, Oxford"
     },
     {
       "name": "Prof. Marina Henke",
       "role": "Board Member",
       "photo": "/assets/images/henke-marina-3-347x521.jpg",
       "alt": "Prof. Marina Henke",
-      "affiliation": "Professor of International Relations and Director of the Centre for International Security — Hertie School.",
       "themes": "Intervention decision-making, Nuclear security, U.S. and European Grand Strategy.",
-      "country": "Germany"
+      "country": "Germany",
+      "position": "Professor of International Relations and Director of the Centre for International Security",
+      "institution": "Hertie School"
     },
     {
       "name": "Alisa Kerschbaum",
       "role": "Board Member",
       "photo": "/assets/images/alisa-kerschbaum-uva-253x371.jpeg",
       "alt": "Alisa Kerschbaum",
-      "affiliation": "Research Grant Advisor — University of Amsterdam.",
       "themes": "Global affairs, International Peace &amp; Security, Environmental security.",
-      "country": "Netherlands"
+      "country": "Netherlands",
+      "position": "Research Grant Advisor",
+      "institution": "University of Amsterdam"
     },
     {
       "name": "Sarka Kolmasova",
       "role": "Board Member",
       "photo": "/assets/images/citations.jpeg",
       "alt": "Sarka Kolmasova",
-      "affiliation": "Deputy Head &amp; Assistant Professor — Department of International Relations and European Studies, Metropolitan University Prague.",
       "themes": "Norms, Military Interventions, Responsibility to Protect, Human Rights in International Politics.",
-      "country": "Czechia"
+      "country": "Czechia",
+      "position": "Deputy Head & Assistant Professor",
+      "institution": "Department of International Relations and European Studies, Metropolitan University Prague"
     },
     {
       "name": "Dr Arthur Laudrain",
@@ -125,7 +138,6 @@
       "alt": "Dr Arthur PB Laudrain",
       "photo": "/assets/images/board/arthur-laudrain.jpg",
       "functionalResponsibility": "Technology Coordinator",
-      "affiliation": "Team Lead and Senior Researcher — ETH Zurich - Center for Security Studies",
       "country": "Switzerland",
       "bio": "Arthur specialises in election interference, disinformation, subversion, and military cyber operations. Previously, he was the Richard Lounsbery US-France Security Fellow at Stanford CISAC, and a Research Associate in Cyber Diplomacy at the Department of War Studies at King's College London. He is a member of the Management Committee of NetSec (Networking European Security Knowledge), a European Cooperation in Science and Technology project. He also maintains affiliations with Stanford CISAC and King's College London. Arthur has a wide profesionnal experience spanning think-tanks (CSS 2017; IISS 2019; HCSS 2022), consulting (Oxford Analytica, ISTARI), and government projects. He obtained his DPhil from the University of Oxford (Wolfson College), and holds an MA (London) and LLM (Leiden). He is an Associate of King's College (AKC) and Fellow of the Higher Education Academy (FHEA).",
       "themes": "election interference, disinformation, subversion",
@@ -135,70 +147,79 @@
         "orcid": "https://orcid.org/0000-0002-8642-2671",
         "linkedin": "https://www.linkedin.com/in/apb-ldn/"
       },
-      "slug": "arthur-laudrain"
+      "slug": "arthur-laudrain",
+      "position": "Team Lead and Senior Researcher",
+      "institution": "Center for Security Studies, ETH Zurich"
     },
     {
       "name": "Dr Chiara Libiseller",
       "role": "Board Member",
       "photo": "/assets/images/chiara-l3303ibiseller.x2806b916.jpg.webp",
       "alt": "Dr Chiara Libiseller",
-      "affiliation": "Lecturer in Strategic Studies — King’s College London.",
       "themes": "Knowledge production on war, Changing character of war, Impact of technology on the theory and practice of war.",
-      "country": "United Kingdom"
+      "country": "United Kingdom",
+      "position": "Lecturer in Strategic Studies",
+      "institution": "King’s College London"
     },
     {
       "name": "Prof. Revecca Pedi",
       "role": "Board Member",
       "photo": "/assets/images/5731-revecca-pedi-1-2-253x253.jpg",
       "alt": "Prof. Revecca Pedi",
-      "affiliation": "Associate Professor of International Relations — University of Macedonia.",
       "themes": "International relations of small states, Theories of international relations, International relations and the European Union.",
-      "country": "Greece"
+      "country": "Greece",
+      "position": "Associate Professor of International Relations",
+      "institution": "University of Macedonia"
     },
     {
       "name": "Prof. Chiara Ruffa",
       "role": "Board Member",
       "photo": "/assets/images/jritvrpl-400x400.jpg",
       "alt": "Prof. Chiara Ruffa",
-      "affiliation": "Professor of Political Science — Sciences Po, Center for International Studies (CERI).",
       "themes": "Multilateralism on the ground, Peacekeeping, Civil-military relations, Political sociology, Fieldwork.",
-      "country": "France"
+      "country": "France",
+      "position": "Professor of Political Science",
+      "institution": "Sciences Po, Center for International Studies (CERI)"
     },
     {
       "name": "Prof. Olivier Schmitt",
       "role": "Board Member",
       "photo": "/assets/images/schmitt-olivier-2-213x320.jpg",
       "alt": "Prof. Olivier Schmitt",
-      "affiliation": "Head of Research — Institute for Military Operations at the Royal Danish Defence College.",
       "themes": "Military Operations, Alliances, Transformation.",
-      "country": "Denmark"
+      "country": "Denmark",
+      "position": "Head of Research",
+      "institution": "Institute for Military Operations, Royal Danish Defence College"
     },
     {
       "name": "Dr Tim Sweijs",
       "role": "Board Member",
       "photo": "/assets/images/1071-07280937-s001tim-003-1-705x705.png",
       "alt": "Dr Tim Sweijs",
-      "affiliation": "Senior Research Fellow — Netherlands’ War Studies Research Centre; Director of Research — The Hague Centre for Strategic Studies.",
       "themes": "Warfare (past, present, future), Strategy, Coercion, Deterrence, Emerging technologies.",
-      "country": "Netherlands"
+      "country": "Netherlands",
+      "position": "Director of Research",
+      "institution": "The Hague Centre for Strategic Studies"
     },
     {
       "name": "Dr Sanne Verschuren",
       "role": "Board Member",
       "photo": "/assets/images/picture-sanne-verschuren-sanne-verschuren-348x348.jpg",
       "alt": "Dr Sanne Verschuren",
-      "affiliation": "Assistant Professor of International Security — Boston University.",
       "themes": "Domestic determinants of security policy, Role of ideas, norms, and institutions in national security decision-making.",
-      "country": "United States"
+      "country": "United States",
+      "position": "Assistant Professor of International Security",
+      "institution": "Boston University"
     },
     {
       "name": "Prof. Marco Wyss",
       "role": "Board Member",
       "photo": "/assets/images/wyss-1-403x564.jpg",
       "alt": "Prof. Marco Wyss",
-      "affiliation": "Professor of International History and Security — Lancaster University; Research Fellow — Stellenbosch University; Senior Research Fellow — School of Advanced Study, University of London.",
       "themes": "Cold War, African and European defence, Neutrality.",
-      "country": "United Kingdom"
+      "country": "United Kingdom",
+      "position": "Professor of International History and Security",
+      "institution": "Lancaster University"
     }
   ],
   "support": [
@@ -208,9 +229,10 @@
       "functionalResponsibility": "Communications Coordinator",
       "photo": "/assets/images/1659415900816.jpeg",
       "alt": "Eugenio Sanchez",
-      "affiliation": "PhD Candidate in International Relations — Sciences Po Paris.",
       "bio": "Eugenio assists with the development of our communication strategy and the logistics of our events. He is a PhD candidate in International Relations at Sciences Po Paris. Eugenio joined the Initiative in 2023.",
-      "country": "France"
+      "country": "France",
+      "position": "PhD Candidate in International Relations",
+      "institution": "Sciences Po Paris"
     }
   ]
 }

@@ -286,14 +286,14 @@ def _cell(row: dict, cols: dict, key: str) -> str:
     return (row.get(col_name, "") or "").strip()
 
 
-def _join_affiliation(position: str, institution: str) -> str:
-    """Join the two free-text fields into the single `affiliation` line
-    that the card renders ("Position — Institution"). Either may be
-    empty; in that case we render what we have without a stray dash."""
-    p, i = position.strip(), institution.strip()
-    if p and i:
-        return f"{p} — {i}"
-    return p or i
+## (No-op kept for git-history clarity.)
+##
+## _join_affiliation() used to merge the Form's separate Position +
+## Institution fields into a single "Position — Institution" string
+## stored as `affiliation` on each entry. Removed when the card
+## switched to rendering Position + Institution on separate lines
+## (with the country flag inline on the institution line). The two
+## fields are now stored as-is in board.json.
 
 
 # Map of board.json `links` keys → board-source.json `columns` keys.
@@ -348,19 +348,20 @@ def build_from_row(row: dict, cols: dict, role_info: dict, prior: dict | None) -
     if func_resp:
         person["functionalResponsibility"] = func_resp
 
-    # Affiliation is now stitched from the form's split fields. Falls
-    # back to the prior single-field value if neither half is present
-    # (i.e. existing entries that pre-date this Form shape).
-    position = _cell(row, cols, "position")
-    institution = _cell(row, cols, "institution")
-    affiliation = _join_affiliation(position, institution)
-    if not affiliation and prior:
-        affiliation = prior.get("affiliation", "")
-    if affiliation:
-        person["affiliation"] = affiliation
+    # Position + institution stay as separate fields on the entry so
+    # the card can render them on dedicated lines (with the country
+    # flag inline on the institution line). Each falls back to the
+    # prior value when blank in the new submission.
+    position = _cell(row, cols, "position") or (prior or {}).get("position", "")
+    institution = _cell(row, cols, "institution") or (prior or {}).get("institution", "")
+    if position:
+        person["position"] = position
+    if institution:
+        person["institution"] = institution
 
-    # Country: optional separate field, rendered as a small line below
-    # the affiliation. Not joined into the affiliation string itself.
+    # Country: separate field rendered as a flag icon inline on the
+    # institution line (or as a fallback map-pin + text line when no
+    # flag SVG is mapped for the country).
     country = _cell(row, cols, "country") or (prior or {}).get("country", "")
     if country:
         person["country"] = country
