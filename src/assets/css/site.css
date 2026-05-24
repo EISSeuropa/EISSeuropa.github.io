@@ -1716,7 +1716,12 @@ h4 { font-size: var(--fs-lg); }
 }
 
 /* Optional "country" line under the affiliation. Tiny, scannable —
-   reads as a quiet metadata row. */
+   reads as a quiet metadata row. Two render modes:
+     - Flag SVG (preferred): the country name lives in alt/title only;
+       the visible element is just the round flag. See
+       src/_includes/person-card.njk.
+     - Map-pin + text (fallback): when countryFlags.byName has no
+       entry for this country, we keep the labelled form. */
 .person-country {
   display: inline-flex;
   align-items: center;
@@ -1729,6 +1734,19 @@ h4 { font-size: var(--fs-lg); }
   width: 0.9em;
   height: 0.9em;
   flex: 0 0 auto;
+}
+.person-flag {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;        /* defensive — circle-flags already round */
+  display: block;
+  box-shadow: 0 0 0 1px hsl(220 30% 12% / 0.10);
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .person:hover .person-flag {
+    transform: scale(1.08);
+  }
 }
 
 /* Bio + Read-more toggle. The full bio always renders as a single
