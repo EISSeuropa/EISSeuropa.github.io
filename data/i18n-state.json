@@ -46,14 +46,14 @@
     "src/board.njk": {
       "fr": {
         "file": "src/board.fr.njk",
-        "source_sha1": "5e081bd5443ded871dd9e4260a3b759de423e756",
-        "translated_on": "2026-05-22",
+        "source_sha1": "b8e515c788f286ac0425ec1e1b56604c66afa08b",
+        "translated_on": "2026-05-24",
         "status": "beta"
       },
       "de": {
         "file": "src/board.de.njk",
-        "source_sha1": "5e081bd5443ded871dd9e4260a3b759de423e756",
-        "translated_on": "2026-05-22",
+        "source_sha1": "b8e515c788f286ac0425ec1e1b56604c66afa08b",
+        "translated_on": "2026-05-24",
         "status": "beta"
       }
     },

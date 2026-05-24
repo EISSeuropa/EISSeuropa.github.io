@@ -1,0 +1,32 @@
+{# Shared card mark-up for /board (Leadership / Board / Support).
+   Variables in scope:
+     - person   — entry from boardSorted.leadership / .boardMembers /
+                  .support. Contains the raw board.json fields plus the
+                  computed `isEsscActive` boolean.
+     - isSupport — true when rendering a support-team card. Switches the
+                  body text from `themes` (research themes) to `bio`
+                  (longer-form prose). Defaults to false. #}
+{%- set isSupport = isSupport or false -%}
+{%- set lang = lang or "en" -%}
+{%- set t = i18n[lang] -%}
+
+<article class="person"{% if person.slug %} id="{{ person.slug }}"{% endif %}>
+  <img class="person-photo" src="{{ person.photo }}" alt="{{ person.alt or person.name }}" loading="lazy">
+  <div class="person-body">
+    <p class="person-role">
+      {{ person.role }}
+      {%- if person.isEsscActive %}
+      <span class="person-essc-star" title="{{ t.boardPage.esscStarTitle }}" aria-label="{{ t.boardPage.esscStarTitle }}">★</span>
+      {%- endif %}
+    </p>
+    <p class="person-name">{{ person.name }}</p>
+    {%- if isSupport %}
+    <p class="person-affiliation">{{ person.bio | safe }}</p>
+    {%- else %}
+    <p class="person-affiliation">{{ person.affiliation | safe }}</p>
+    {%- if person.themes %}
+    <p class="person-affiliation muted" style="margin-top: var(--space-2); font-size: var(--fs-xs); border-top: 1px solid var(--border); padding-top: var(--space-2);"><strong>{{ t.boardPage.researchThemes }}:</strong> {{ person.themes | safe }}</p>
+    {%- endif %}
+    {%- endif %}
+  </div>
+</article>
