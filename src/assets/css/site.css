@@ -2776,6 +2776,152 @@ h4 { font-size: var(--fs-lg); }
   }
 }
 
+/* ---------- /initiative page components --------------------------------
+   Stats row in the hero, the four-tile "What we do" block, the
+   leadership-faces strip + country-flag strip in "Our network", and
+   the compact CTA strip at the bottom. All bespoke to /initiative —
+   moved out of the inline styles in initiative.njk so they're
+   reusable in FR/DE mirrors and easier to tune. */
+
+/* Hero stats row. Big numbers, small captions. Responsive grid that
+   collapses to 2-up on tablet and 1-up on phones. */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: var(--space-4) var(--space-5);
+  margin: var(--space-6) 0 0;
+  padding: 0;
+}
+.stats-row .stat {
+  margin: 0;
+}
+.stats-row .stat > dt {
+  font-size: clamp(2rem, 1.4rem + 1.6vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent);
+  margin: 0 0 var(--space-2);
+  letter-spacing: -0.02em;
+}
+.stats-row .stat > dd {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: var(--lh-snug);
+  margin: 0;
+}
+.stats-row .stat > dd .muted {
+  display: block;
+  font-size: var(--fs-xs);
+}
+
+/* "Learn more →" link inside tiles + cards. Underline appears on
+   hover; arrow shifts a hair to the right. Matches the existing
+   .btn-ghost typography but reads as a plain link. */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+.link-arrow svg {
+  flex: 0 0 auto;
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+.link-arrow:hover { text-decoration: underline; }
+.link-arrow:hover svg { transform: translateX(2px); }
+
+/* Leadership-faces strip in the "Our network" section. Three small
+   circular portraits with role + name underneath, all linked to
+   /board#slug. Wraps on narrow viewports. */
+.leadership-strip {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-5) 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+.leadership-strip > li {
+  flex: 0 1 9rem;
+}
+.leadership-strip a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-2);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition: background var(--motion-fast) var(--ease-out),
+              transform var(--motion-fast) var(--ease-out);
+}
+.leadership-strip a:hover,
+.leadership-strip a:focus-visible {
+  background: var(--surface-strong);
+  transform: translateY(-2px);
+}
+.leadership-strip img {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px hsl(220 30% 12% / 0.10);
+}
+.leadership-strip-role {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+.leadership-strip-name {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text);
+  line-height: var(--lh-snug);
+}
+
+/* Country-flag strip. Compact horizontal row of every distinct
+   country represented on the team. Each flag carries a tooltip with
+   the country name. Wraps to a second line on narrow viewports. */
+.country-strip {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-5) 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.country-strip > li { margin: 0; }
+.country-strip img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: block;
+  box-shadow: 0 0 0 1px hsl(220 30% 12% / 0.10);
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .country-strip img:hover {
+    transform: scale(1.12);
+  }
+}
+
+/* Bottom CTA strip — three pill buttons in a row. Replaces the
+   standalone "Join us!" + "Meet the Board" cards that used to live
+   at the bottom of /initiative. */
+.cta-strip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
 /* ---------- 404 page ---------------------------------------------------
    The /404.html GitHub Pages auto-serves for any unmatched path. Tries
    to be more useful than the default "Page not found" by surfacing the

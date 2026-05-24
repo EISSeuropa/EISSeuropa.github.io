@@ -2,7 +2,7 @@
 layout: base.njk
 permalink: /initiative.fr.html
 title: L'Initiative
-description: L'Initiative européenne pour les études de sécurité (EISS) est un réseau européen multidisciplinaire de chercheurs visant à consolider les études de sécurité en Europe.
+description: L'Initiative européenne pour les études de sécurité (EISS) est un réseau européen multidisciplinaire de chercheurs consolidant les études de sécurité en Europe. Fondée en 2017 ; organisatrice de l'Action COST NetSec.
 metaImage: /assets/images/initiative-meta.jpg
 navKey: initiative
 lang: fr
@@ -13,6 +13,8 @@ alternates:
   de: /initiative.de.html
 ---
 {% from "icons.njk" import icon %}
+
+{%- set confCount = (conferences.past | length) + (1 if conferences.next else 0) + 2 -%}
 
 <header class="page-header">
   <div class="container">
@@ -25,80 +27,125 @@ alternates:
       <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">NetSec</a>,
       qui rassemble une douzaine d'institutions partenaires à travers le continent.
     </p>
+
+    <dl class="stats-row" aria-label="EISS en bref">
+      <div class="stat">
+        <dt>{{ confCount }}</dt>
+        <dd>conférences annuelles <span class="muted">depuis 2017</span></dd>
+      </div>
+      <div class="stat">
+        <dt>{{ boardSorted.counts.peopleTotal }}</dt>
+        <dd>membres du bureau et personnel</dd>
+      </div>
+      <div class="stat">
+        <dt>{{ boardSorted.counts.countriesTotal }}</dt>
+        <dd>pays représentés</dd>
+      </div>
+      <div class="stat">
+        <dt>1</dt>
+        <dd>Action COST (<a href="https://netsec-cost.eu/" target="_blank" rel="noopener">NetSec</a>)</dd>
+      </div>
+    </dl>
   </div>
 </header>
 
-<section class="section">
+<section class="section" aria-labelledby="what-we-do-title">
   <div class="container">
-    <article class="prose">
-      <p>Plus précisément, les objectifs de l'EISS sont doubles :</p>
-    </article>
+    <h2 id="what-we-do-title">Nos activités</h2>
+    <p class="muted" style="max-width: 44rem;">
+      Des activités concrètes qui construisent le champ européen des études de sécurité — rencontres
+      annuelles, Action COST, formation de la nouvelle génération, enquêtes périodiques, et un calendrier
+      d'événements du réseau.
+    </p>
 
-    <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); margin-block: var(--space-7);">
+    <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); margin-top: var(--space-5);">
       <article class="tile">
-        <div class="tile-icon" aria-hidden="true">{{ icon("users-round") }}</div>
-        <h2>Créer un réseau</h2>
+        <div class="tile-icon" aria-hidden="true">{{ icon("users") }}</div>
+        <h3>Conférence annuelle (ESSC)</h3>
         <p>
-          Développer et entretenir un réseau européen dans le domaine des études de sécurité. Cela
-          donne de la visibilité à l'ensemble des projets de recherche individuels et collectifs
-          actuellement en cours en Europe et au-delà.
+          {{ confCount }} éditions à travers l'Europe depuis 2017 — le plus grand rassemblement européen
+          de chercheurs et praticiens travaillant sur les questions de sécurité.
+        </p>
+        <p style="margin-top: var(--space-3);">
+          <a class="link-arrow" href="/past.fr.html">Archive des conférences {{ icon("arrow-right") }}</a>
         </p>
       </article>
+
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("globe") }}</div>
-        <h2>Créer une plateforme</h2>
+        <h3>Action COST NetSec</h3>
         <p>
-          Établir un forum d'échange d'idées afin de favoriser de nouveaux projets de recherche
-          conjoints et de développer des partenariats de recherche internationaux.
+          Une Action COST de quatre ans (2025 — 2029) qu'EISS a lancée avec douze institutions
+          partenaires pour s'attaquer à la fragmentation de la base européenne des études de sécurité.
+        </p>
+        <p style="margin-top: var(--space-3);">
+          <a class="link-arrow" href="https://netsec-cost.eu/" target="_blank" rel="noopener">Visiter NetSec {{ icon("external-link") }}</a>
+        </p>
+      </article>
+
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("graduation-cap") }}</div>
+        <h3>École d'été et formation</h3>
+        <p>
+          L'École d'été NetSec pour jeunes chercheurs et Euro-SWAMOS forment les doctorants et
+          jeunes chercheurs aux études de sécurité et de stratégie.
+        </p>
+        <p style="margin-top: var(--space-3);">
+          <a class="link-arrow" href="/programmes.fr.html">Toutes les activités {{ icon("arrow-right") }}</a>
+        </p>
+      </article>
+
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("file-text") }}</div>
+        <h3>Enquêtes et ateliers</h3>
+        <p>
+          L'enquête d'experts Global Risks to the EU, le programme Coercition étatique, et des tables
+          rondes régulières sur les enjeux critiques de la sécurité européenne.
+        </p>
+        <p style="margin-top: var(--space-3);">
+          <a class="link-arrow" href="/events.fr.html">Événements du réseau {{ icon("arrow-right") }}</a>
         </p>
       </article>
     </div>
   </div>
 </section>
 
-<section class="section-tight" id="what-makes-us-unique">
+<section class="section-tight" id="how-we-work" aria-labelledby="how-we-work-title">
   <div class="container">
     <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <h2>Ce qui nous distingue</h2>
+      <h2 id="how-we-work-title">Comment nous travaillons</h2>
       <p class="lead">
-        L'EISS présente trois caractéristiques principales : (1) une approche thématique ouverte à toutes
-        les approches théoriques, (2) une démarche multidisciplinaire et interdisciplinaire,
-        et (3) une inclusion géographique.
+        EISS est thématiquement ouverte, multidisciplinaire, géographiquement inclusive, et accessible
+        à tous les profils.
       </p>
 
       <dl class="definition-list">
         <div>
-          <dt>Ouverte à toutes les approches</dt>
+          <dt>Ouvert à toutes les approches</dt>
           <dd>
-            L'EISS ne se limite pas à une approche théorique spécifique des études de sécurité, mais
-            cherche au contraire à être inclusive. Cela se reflète, par exemple, dans les panels
-            de la conférence EISS, qui couvrent une vaste gamme de thèmes du large champ des études
-            de sécurité. L'EISS accueille les contributions portant aussi bien sur les questions
-            de sécurité dites « traditionnelles » que « non traditionnelles ».
+            Aucune école théorique unique. Les panels de l'ESSC couvrent l'éventail complet des thèmes
+            d'études de sécurité — traditionnels comme non traditionnels.
           </dd>
         </div>
         <div>
           <dt>Multidisciplinaire</dt>
           <dd>
-            L'EISS est multidisciplinaire et interdisciplinaire en ce qu'elle rassemble, entre autres,
-            historiens, politologues, économistes, géographes, anthropologues et sociologues partageant
-            un intérêt pour le développement des études de sécurité en Europe.
+            Historiens, politistes, économistes, géographes, anthropologues, sociologues — tous
+            partageant un intérêt pour le développement des études de sécurité en Europe.
           </dd>
         </div>
         <div>
           <dt>Géographiquement inclusive</dt>
           <dd>
-            L'EISS cherche à être aussi inclusive que possible d'un point de vue géographique, intégrant
-            des chercheurs de toute l'Europe (Sud, Est, Nord et Ouest). Dans le même temps, l'EISS
-            accueille les projets portant sur toute région du monde. Chaque année, la conférence
-            annuelle est organisée par rotation dans un pays européen différent.
+            Chercheurs d'Europe méridionale, orientale, septentrionale et occidentale. La conférence
+            annuelle se tient chaque année dans un pays européen différent.
           </dd>
         </div>
         <div>
-          <dt>Ouverte à tous les profils</dt>
+          <dt>Ouvert à tous les profils</dt>
           <dd>
-            Les chercheurs en début de carrière, les membres des forces armées, des services
-            diplomatiques, ainsi que les fonctionnaires nationaux et internationaux sont tous les bienvenus.
+            Jeunes chercheurs, militaires, diplomates et fonctionnaires sont les bienvenus aux côtés
+            des universitaires.
           </dd>
         </div>
       </dl>
@@ -133,57 +180,86 @@ alternates:
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="network" aria-labelledby="network-title">
   <div class="container">
-    <article class="prose">
-      <h2>Notre ambition</h2>
-      <ul>
-        <li>
-          Contribuer à surmonter la fragmentation existante dans les études européennes de sécurité,
-          et favoriser et consolider un champ européen des études de sécurité.
-        </li>
-        <li>
-          Contribuer à promouvoir l'excellence académique en Europe et à nourrir le développement
-          d'une nouvelle génération de chercheurs qui s'engagent sur les questions de sécurité
-          internationale avec leurs homologues à travers le monde.
-        </li>
-        <li>
-          Favoriser un réseau d'universitaires capables de contribuer aux débats publics à travers
-          la recherche et l'enseignement, et de soutenir un jugement éclairé sur les questions de
-          défense et de sécurité au sein de la société civile.
-        </li>
-      </ul>
+    <div class="featured-eyebrow">Notre réseau</div>
+    <h2 id="network-title">
+      {{ boardSorted.counts.peopleTotal }} personnes dans {{ boardSorted.counts.countriesTotal }} pays
+    </h2>
+    <p class="muted" style="max-width: 44rem;">
+      EISS est dirigée par un bureau de {{ boardSorted.counts.peopleTotal }} chercheurs et une petite
+      équipe de soutien. La composition reflète la portée géographique d'EISS à travers l'Europe et
+      au-delà.
+    </p>
+
+    {%- if boardSorted.leadership.length %}
+    <ul class="leadership-strip" aria-label="Direction d'EISS">
+      {%- for person in boardSorted.leadership %}
+      <li>
+        <a href="/board.fr.html{% if person.slug %}#{{ person.slug }}{% endif %}">
+          <img src="{{ person.photoOverride or person.photo }}" alt="{{ person.alt or person.name }}" loading="lazy">
+          <span class="leadership-strip-role">{{ person.role }}</span>
+          <span class="leadership-strip-name">{{ person.name }}</span>
+        </a>
+      </li>
+      {%- endfor %}
+    </ul>
+    {%- endif %}
+
+    {%- if boardSorted.countries.length %}
+    <ul class="country-strip" aria-label="Pays représentés dans l'équipe EISS">
+      {%- for c in boardSorted.countries %}
+      {%- if c.iso %}
+      <li>
+        <img src="/assets/images/flags/{{ c.iso }}.svg"
+             alt="{{ c.name }}"
+             title="{{ c.name }}"
+             width="28" height="28" loading="lazy">
+      </li>
+      {%- endif %}
+      {%- endfor %}
+    </ul>
+    {%- endif %}
+
+    <p style="margin-top: var(--space-5);">
+      <a class="btn btn-secondary" href="/board.fr.html">Voir toute l'équipe {{ icon("arrow-right") }}</a>
+    </p>
+  </div>
+</section>
+
+<section class="section-tight" id="origin" aria-labelledby="origin-title">
+  <div class="container">
+    <article class="prose" style="max-width: 44rem;">
+      <h2 id="origin-title">Les origines d'EISS</h2>
+      <p>
+        EISS a été fondée en 2017 par Hugo Meijer comme extension européenne de l'
+        <a href="https://aeges.fr/" target="_blank" rel="noopener">Association pour les Études sur la Guerre et la Stratégie (AEGES)</a>,
+        une association universitaire française créée en 2015 pour consolider les études de sécurité
+        dans les universités françaises. La première conférence annuelle s'est tenue les 13 et 14 janvier 2017
+        à l'Université Panthéon-Assas à Paris, rassemblant une centaine de chercheurs de 62 universités
+        dans 15 pays européens.
+      </p>
+      <p>
+        L'initiative a été conçue dès l'origine comme un réseau paneuropéen — ouvert à toutes les approches
+        théoriques, toutes les disciplines, et à tous les profils de chercheurs. En 2025, EISS a lancé
+        l'Action COST <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">NetSec</a>,
+        formalisant le rôle du réseau comme principal lieu de convergence européen des études de sécurité.
+      </p>
     </article>
   </div>
 </section>
 
-<section class="section-tight" aria-labelledby="people-cta-title">
+<section class="section" aria-labelledby="cta-title">
   <div class="container">
-    <article class="card" style="display: grid; gap: var(--space-5); grid-template-columns: 1fr; padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <div>
-        <div class="featured-eyebrow">Qui dirige l'EISS</div>
-        <h2 id="people-cta-title" style="margin-bottom: var(--space-3);">Découvrez le bureau et l'équipe</h2>
-        <p class="muted">
-          Les membres de notre bureau conseillent et orientent l'organisation, notamment à travers
-          des groupes de travail thématiques. Une petite équipe de soutien assure les opérations
-          quotidiennes.
-        </p>
-        <p style="margin-top: var(--space-4);">
-          <a class="btn btn-secondary" href="/board.fr.html">Voir les personnes derrière EISS {{ icon("arrow-right") }}</a>
-        </p>
-      </div>
-    </article>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="join">
-      <h2>Rejoignez-nous !</h2>
-      <p>Devenez membre et rejoignez la communauté.</p>
-      <div class="join-actions">
-        <a class="btn btn-primary" href="/membership.fr.html">{{ icon("user-plus") }} Adhérer</a>
-      </div>
+    <h2 id="cta-title" class="sr-only">Restons en contact</h2>
+    <div class="cta-strip">
+      <a class="btn btn-primary" href="/membership.fr.html">{{ icon("user-plus") }} Devenir membre</a>
+      <a class="btn btn-secondary" href="{{ site.newsletterUrl }}" target="_blank" rel="noopener">
+        {{ icon("mail") }} Newsletter
+      </a>
+      <a class="btn btn-secondary" href="mailto:{{ site.contactEmail }}">
+        {{ icon("mail") }} Nous contacter
+      </a>
     </div>
   </div>
 </section>

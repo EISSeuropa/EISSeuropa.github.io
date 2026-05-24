@@ -140,5 +140,32 @@ module.exports = function () {
   // Form configuration the sync workflow uses.
   const formUrl = (boardSource.form_url || "").trim();
 
-  return { leadership, boardMembers, support, formUrl };
+  // Distinct countries across the whole team, alphabetised. Each
+  // entry includes the iso code so the /initiative page's flag strip
+  // can render them without re-doing the countryFlags lookup at
+  // template time. Skips empty country fields.
+  const countryFlags = require("./countryFlags.js");
+  const seen = new Set();
+  const countries = [];
+  const allAnnotated = [...annotated, ...(board.support || []).map(annotate)];
+  for (const p of allAnnotated) {
+    if (!p.country) continue;
+    const key = p.country.toLowerCase().trim();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    const iso = countryFlags.byName[key] || null;
+    countries.push({ name: p.country, iso });
+  }
+  countries.sort((a, b) => a.name.localeCompare(b.name));
+
+  // Top-line counts the /initiative page uses in the stats row.
+  // peopleTotal includes everyone (board + support); countriesTotal
+  // is the distinct count above.
+  const counts = {
+    peopleTotal: leadership.length + boardMembers.length + support.length,
+    countriesTotal: countries.length,
+    leadershipTotal: leadership.length,
+  };
+
+  return { leadership, boardMembers, support, formUrl, countries, counts };
 };
