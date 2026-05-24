@@ -74,6 +74,14 @@ PHOTO_DIR = ROOT / "src" / "assets" / "images" / "board"
 MAX_PHOTO_WIDTH = 600
 DEFAULT_ROLE = {"label": "Board Member", "kind": "board", "tier": 100}
 
+# Repo-relative paths of photo files whose bytes were rewritten during
+# the current run. Filled by download_photo() each time a new image
+# differs from what's already on disk. Used by main()'s "did anything
+# change?" check so a photo update doesn't get silently swallowed when
+# the board.json `photo` field string is unchanged (path stays the
+# same; only the file bytes change).
+PHOTOS_CHANGED: list[str] = []
+
 # ──────────────────────────── helpers ────────────────────────────
 
 
@@ -250,8 +258,15 @@ def download_photo(url: str, dest_no_ext: Path) -> str | None:
     else:
         out_bytes = data
 
-    if not (dest.exists() and dest.read_bytes() == out_bytes):
+    bytes_changed = not (dest.exists() and dest.read_bytes() == out_bytes)
+    if bytes_changed:
         dest.write_bytes(out_bytes)
+        # Track on the module so main() can include photo-file changes
+        # in its "did anything change?" decision. board.json paths
+        # don't change when only the photo bytes change (the URL path
+        # stays the same), so without this we'd silently swallow new
+        # uploads.
+        PHOTOS_CHANGED.append(dest.relative_to(ROOT).as_posix())
 
     rel = dest.relative_to(ROOT).as_posix()
     # board.json paths are absolute-from-site-root (e.g. /assets/...);
@@ -663,13 +678,30 @@ def main() -> None:
     new_data["members"] = members
     new_data["support"] = support
 
-    if new_data == prior_raw:
+    json_unchanged = new_data == prior_raw
+
+    if json_unchanged and not PHOTOS_CHANGED:
         print()
         print("No substantive changes — leaving src/_data/board.json untouched.")
         return
 
+    if json_unchanged and PHOTOS_CHANGED:
+        print()
+        print(
+            "board.json bytes unchanged, but headshot file(s) updated "
+            "on disk — the create-pull-request action below will commit them:"
+        )
+        for p in PHOTOS_CHANGED:
+            print(f"  ~ {p}")
+        return
+
     print()
     print(diff_summary(prior_raw, new_data))
+    if PHOTOS_CHANGED:
+        print()
+        print("Headshot file(s) updated on disk:")
+        for p in PHOTOS_CHANGED:
+            print(f"  ~ {p}")
 
     BOARD.write_text(
         json.dumps(new_data, indent=2, ensure_ascii=False) + "\n",
