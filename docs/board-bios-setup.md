@@ -156,6 +156,25 @@ This inherits to every file uploaded later.
 *Share* dance on each upload as submissions arrive. More secure, more
 work — fine for ~20 board members.)
 
+### Replacing a photo after a respondent has already submitted
+
+Google Forms does **not** let a respondent replace a file upload when
+editing an existing response (the previous file shows but can't be
+removed). Workaround:
+
+1. The respondent emails you the new photo.
+2. You add the file to `src/assets/images/board/` — any filename;
+   ideally something stable like `firstname-lastname-2026.jpg`.
+3. Open `src/_data/board.json`, find the person's entry, and add:
+   ```json
+   "photoOverride": "/assets/images/board/firstname-lastname-2026.jpg"
+   ```
+4. Commit + push. The card immediately picks up the new photo.
+
+The sync script preserves `photoOverride` across runs — it's never
+overwritten by what's in the Form. To revert to the Form's photo
+again, delete the `photoOverride` line.
+
 ## Step 6 · Test the workflow
 
 After Step 4, trigger the workflow manually:
