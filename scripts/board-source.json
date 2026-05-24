@@ -28,7 +28,7 @@
     "bluesky": "Bluesky URL (optional)",
     "mastodon": "Mastodon URL (optional)",
     "photo": "Headshot photo (optional)",
-    "roleEndDate": "End date for time-bound roles (optional)",
+    "roleEndDate": "Internship end date (optional)",
     "consent": "I consent to publication of my bio on eiss-europa.com"
   },
 
