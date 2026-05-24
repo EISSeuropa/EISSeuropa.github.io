@@ -214,6 +214,15 @@ const locales = {
       },
     },
 
+    boardPage: {
+      // Strings used by src/_includes/person-card.njk on /board.
+      researchThemes: "Research themes",
+      // Tooltip + accessible name for the ★ shown next to people who
+      // are chairing, discussing, or speaking at the live ESSC edition
+      // (matched against the Indico programme at build time).
+      esscStarTitle: "Active in the current ESSC programme",
+    },
+
     registrationBadge: {
       // Live status badge on annual conference pages (/2026, /2027, ...).
       // Status is computed at build time from conferences.js dates and
@@ -389,6 +398,11 @@ const locales = {
       },
     },
 
+    boardPage: {
+      researchThemes: "Thèmes de recherche",
+      esscStarTitle: "Intervient dans le programme ESSC en cours",
+    },
+
     registrationBadge: {
       upcoming: "Inscriptions ouvertes",
       closed: "Inscriptions fermées",
@@ -553,6 +567,11 @@ const locales = {
         events: "Mitgliederveranstaltungen",
         initiative: "Über die Initiative",
       },
+    },
+
+    boardPage: {
+      researchThemes: "Forschungsthemen",
+      esscStarTitle: "Wirkt im aktuellen ESSC-Programm mit",
     },
 
     registrationBadge: {

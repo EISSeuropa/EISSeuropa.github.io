@@ -1568,6 +1568,38 @@ h4 { font-size: var(--fs-lg); }
   letter-spacing: 0.08em;
   color: var(--accent);
   margin-bottom: var(--space-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+/* Small star next to the role on cards whose person is chairing,
+   discussing, or speaking at the live ESSC edition. Match between
+   board.json and indico.json is computed at build time by
+   src/_data/boardSorted.js. Amber to evoke "active right now" without
+   stealing focus from the role text. */
+.person-essc-star {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1em;
+  height: 1.1em;
+  font-size: 1em;
+  line-height: 1;
+  color: hsl(36 90% 50%);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+[data-theme="dark"] .person-essc-star {
+  color: hsl(40 95% 65%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .person:hover .person-essc-star {
+    transform: scale(1.15);
+    transition: transform var(--motion-fast) var(--ease-out);
+  }
 }
 
 .person-name {

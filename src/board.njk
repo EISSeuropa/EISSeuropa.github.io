@@ -23,22 +23,31 @@ alternates:
   </div>
 </header>
 
+{# Three sections, all using the same card size + grid. Splitting
+   Leadership out brings tiered roles (Founding Director / Treasurer /
+   Secretary-General) into a focal block at the top instead of being
+   absorbed into a 19-person flat grid. Card mark-up below is shared
+   via the `person-card.njk` partial. #}
+
+{%- if boardSorted.leadership and boardSorted.leadership.length %}
 <section class="section">
   <div class="container">
-    <h2 style="margin-bottom: var(--space-5);">Board</h2>
+    <h2 style="margin-bottom: var(--space-5);">Leadership</h2>
     <div class="people-grid">
-      {%- for person in board.members %}
-      <article class="person"{% if person.slug %} id="{{ person.slug }}"{% endif %}>
-        <img class="person-photo" src="{{ person.photo }}" alt="{{ person.alt or person.name }}" loading="lazy">
-        <div class="person-body">
-          <p class="person-role">{{ person.role }}</p>
-          <p class="person-name">{{ person.name }}</p>
-          <p class="person-affiliation">{{ person.affiliation | safe }}</p>
-          {%- if person.themes %}
-          <p class="person-affiliation muted" style="margin-top: var(--space-2); font-size: var(--fs-xs); border-top: 1px solid var(--border); padding-top: var(--space-2);"><strong>Research themes:</strong> {{ person.themes | safe }}</p>
-          {%- endif %}
-        </div>
-      </article>
+      {%- for person in boardSorted.leadership %}
+        {%- include "person-card.njk" %}
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+{%- endif %}
+
+<section class="section">
+  <div class="container">
+    <h2 style="margin-bottom: var(--space-5);">Board Members</h2>
+    <div class="people-grid">
+      {%- for person in boardSorted.boardMembers %}
+        {%- include "person-card.njk" %}
       {%- endfor %}
     </div>
   </div>
@@ -48,15 +57,9 @@ alternates:
   <div class="container">
     <h2 style="margin-bottom: var(--space-5);">Support Team</h2>
     <div class="people-grid">
-      {%- for person in board.support %}
-      <article class="person"{% if person.slug %} id="{{ person.slug }}"{% endif %}>
-        <img class="person-photo" src="{{ person.photo }}" alt="{{ person.alt or person.name }}" loading="lazy">
-        <div class="person-body">
-          <p class="person-role">{{ person.role }}</p>
-          <p class="person-name">{{ person.name }}</p>
-          <p class="person-affiliation">{{ person.bio | safe }}</p>
-        </div>
-      </article>
+      {%- for person in boardSorted.support %}
+        {%- set isSupport = true %}
+        {%- include "person-card.njk" %}
       {%- endfor %}
     </div>
   </div>
