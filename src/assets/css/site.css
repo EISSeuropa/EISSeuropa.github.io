@@ -1570,23 +1570,28 @@ h4 { font-size: var(--fs-lg); }
   margin-bottom: var(--space-2);
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.3em 0.45em;
+  align-items: center;
+  gap: 0.35em 0.5em;
   line-height: 1.4;
 }
 
-/* Secondary "Functional Responsibility" label rendered alongside the
-   primary role (e.g. "BOARD MEMBER · Technology Coordinator"). Quieter
-   weight, normal-case, sentence casing — signals secondary status. */
-.person-role-sep {
-  color: var(--text-subtle);
-  font-weight: 400;
-}
+/* "Functional Responsibility" pill rendered alongside the primary role
+   (e.g. for Arthur: BOARD MEMBER + a "Technology Coordinator" pill).
+   Quieter neutral treatment so it doesn't fight the accent-coloured
+   role — same shape language as the programme room pills. */
 .person-functional-resp {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15em 0.6em;
+  border-radius: 999px;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.92em;
+  font-weight: 500;
   text-transform: none;
   letter-spacing: 0;
-  font-weight: 500;
-  color: var(--text-muted);
+  line-height: 1.4;
 }
 
 /* Microphone icon next to the role on cards whose person is chairing,
@@ -1632,6 +1637,138 @@ h4 { font-size: var(--fs-lg); }
   color: var(--text-muted);
   margin: 0;
   line-height: var(--lh-snug);
+}
+
+/* Optional "country" line under the affiliation. Tiny, scannable —
+   reads as a quiet metadata row. */
+.person-country {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  margin: var(--space-1) 0 0;
+  font-size: var(--fs-xs);
+  color: var(--text-subtle);
+}
+.person-country svg {
+  width: 0.9em;
+  height: 0.9em;
+  flex: 0 0 auto;
+}
+
+/* Bio teaser with optional Read-more expander. The teaser is the
+   leading paragraph (truncated at the word boundary by the template),
+   the <details>/<summary> below it ships the rest. Native <details>
+   gives free keyboard / a11y / no-JS behaviour. */
+.person-bio {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: var(--lh-snug);
+  margin: var(--space-3) 0 0;
+}
+.person-bio-more {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: var(--lh-snug);
+  margin: var(--space-1) 0 0;
+}
+.person-bio-more > summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: 600;
+  list-style: none;
+  padding: 0.15rem 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+}
+.person-bio-more > summary::-webkit-details-marker { display: none; }
+.person-bio-more > summary::after {
+  content: "▸";
+  font-size: 0.85em;
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+.person-bio-more[open] > summary::after { transform: rotate(90deg); }
+.person-bio-more > summary:hover { text-decoration: underline; }
+.person-bio-more[open] > summary {
+  /* When expanded, the prose inside becomes the focus — quiet the
+     trigger so it doesn't compete. */
+  color: var(--text-subtle);
+  font-weight: 500;
+}
+.person-bio-more > p {
+  margin: var(--space-2) 0 0;
+}
+
+/* "Research themes:" line — currently rendered with a thin border-top
+   divider to separate from affiliation. Same treatment as before, just
+   moved to its own class. */
+.person-themes {
+  font-size: var(--fs-xs);
+  margin: var(--space-3) 0 0;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border);
+  line-height: var(--lh-snug);
+}
+
+/* Quiet "Update your bio" link at the bottom of /board. Intended to
+   be visible to anyone scanning the page but not loud enough to be
+   read as a call to action — small, muted, centred under the Support
+   Staff grid. Lifts to accent colour on hover/focus. */
+.board-update-link {
+  text-align: center;
+  margin-top: var(--space-6);
+  font-size: var(--fs-sm);
+}
+.board-update-link a {
+  color: var(--text-subtle);
+  border-bottom: 1px dotted currentColor;
+  padding-bottom: 1px;
+  text-decoration: none;
+  transition: color var(--motion-fast) var(--ease-out),
+              border-color var(--motion-fast) var(--ease-out);
+}
+.board-update-link a:hover,
+.board-update-link a:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* Social-link icon row at the bottom of the card. Rendered only when
+   at least one link is present on the person entry (publicEmail /
+   website / orcid / linkedin / twitter / bluesky / mastodon). Quiet
+   neutral icons that lift to the accent on hover/focus. */
+.person-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.person-links > li { margin: 0; }
+.person-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 999px;
+  color: var(--text-subtle);
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  transition: color var(--motion-fast) var(--ease-out),
+              background var(--motion-fast) var(--ease-out),
+              border-color var(--motion-fast) var(--ease-out);
+}
+.person-links a:hover,
+.person-links a:focus-visible {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: hsl(216 88% 50% / 0.22);
+}
+.person-links a svg {
+  width: 1rem;
+  height: 1rem;
 }
 
 /* ---------- definition-list rows (Who are you?, FAQ) ---------- */

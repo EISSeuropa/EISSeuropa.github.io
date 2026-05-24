@@ -2,33 +2,50 @@
   "_documentation": "Configuration for scripts/sync-board.py. See docs/board-bios-setup.md for the step-by-step on creating the Google Form, linking it to a Sheet, and filling in the URLs below. While `csv_url` is empty, the workflow runs but no-ops cleanly — so the workflow stays green while the Form is still being set up.",
 
   "sheet": {
-    "csv_url": ""
+    "csv_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSM-A0lurXgcXcQV2PX3vgDVNGJbqW7SnDSM_LcCxbZ9UnlfoTdG1Mp2kp2wrLKbbE_HG3ljsrojZ0x/pub?gid=1270406305&single=true&output=csv"
   },
-  "form_url": "",
+  "form_url": "https://docs.google.com/forms/d/e/1FAIpQLSeVVwOHOwukLF9bzryNj1WeApuXOjxM-sOGbK_O908OLaPyGg/viewform",
 
-  "_columns_doc": "Header names exactly as Google Sheets writes them for this form. Timestamp + email columns are localised to the form owner's account language (e.g. French → 'Horodateur' / 'Adresse e-mail'). If you ever change a question's text in the form, mirror the change here so the sync script keeps matching.",
+  "_columns_doc": "Header names exactly as Google Sheets writes them for this form. Timestamp + email columns are localised to the form owner's account language (this form is owned by an FR-locale account, so the timestamp column is 'Horodateur' and email is 'Adresse e-mail'). If you ever rename a question in the form, mirror the change here so the sync script keeps matching.",
 
   "columns": {
-    "timestamp": "Timestamp",
-    "email": "Email Address",
+    "timestamp": "Horodateur",
+    "email": "Adresse e-mail",
     "name": "Full name (with title — Dr / Prof / Mr / Ms)",
-    "role": "Your role",
-    "affiliation": "Position and institution (e.g. 'Associate Professor — Leiden University')",
-    "themes": "Research themes (3–5 short phrases, comma-separated)",
-    "bio": "Long bio (optional — used for the support-team display style)",
+    "role": "What is your role at EISS?",
+    "functionalResponsibility": "Do you have functional responsibilities?",
+    "position": "Position or current role (e.g. PhD candidate, Associate Professor, Policy analyst)",
+    "institution": "Institution or organisation",
+    "country": "Country",
+    "publicEmail": "Public email (optional)",
+    "bio": "Short bio (max. 300 words)",
+    "themes": "Research keywords (comma-separated, 3 to 5 suggested)",
+    "workingGroups": "Working Group involvement (tick all that apply)",
+    "website": "Personal or institutional website (optional)",
+    "orcid": "ORCID iD (optional)",
+    "linkedin": "LinkedIn URL (optional)",
+    "twitter": "X / Twitter URL (optional)",
+    "bluesky": "Bluesky URL (optional)",
+    "mastodon": "Mastodon URL (optional)",
     "photo": "Headshot photo (optional)",
     "consent": "I consent to publication of my bio on eiss-europa.com"
   },
 
-  "_roles_doc": "Allowed values for the 'Your role' Form dropdown. The Form question's options must exactly match the `label` values below. `kind` determines which output section the entry lands in (board → /board.html — split into 'Leadership' for tier < 100 and 'Board Members' for tier ≥ 100, with research themes; support → 'Support Team' with flowing bio). `tier` is the primary sort key — lower tiers appear higher on the page. Within a tier, entries sort alphabetical by surname. To add a new role: append to this list AND add the matching option to the Form dropdown.",
+  "_roles_doc": "Allowed values for the 'Your role' Form dropdown. The Form question's options must exactly match the `label` values below. `kind` determines which output section the entry lands in (board → /board.html — split into 'Leadership' for tier < 100 and 'Board Members' for tier ≥ 100; support → 'Support Staff' section). `tier` is the primary sort key — lower tiers appear higher within their section. Within a tier, entries sort alphabetical by surname. To add a new role: append to this list AND add the matching option to the Form dropdown.",
 
   "roles": [
-    { "label": "Founding Director",          "kind": "board",   "tier": 1 },
-    { "label": "Treasurer",                  "kind": "board",   "tier": 2 },
-    { "label": "Secretary-General",          "kind": "board",   "tier": 3 },
-    { "label": "Board Member",               "kind": "board",   "tier": 100 },
-    { "label": "Technology Coordinator",     "kind": "support", "tier": 1 },
-    { "label": "Events Coordinator",         "kind": "support", "tier": 2 },
-    { "label": "Communications Coordinator", "kind": "support", "tier": 3 }
+    { "label": "Founding Director",  "kind": "board",   "tier": 1   },
+    { "label": "Treasurer",          "kind": "board",   "tier": 2   },
+    { "label": "Secretary-General",  "kind": "board",   "tier": 3   },
+    { "label": "Board Member",       "kind": "board",   "tier": 100 },
+    { "label": "Support Staff",      "kind": "support", "tier": 100 }
+  ],
+
+  "_functional_responsibilities_doc": "Allowed values for the new 'Functional responsibility' Form dropdown. The script copies whichever value the member picks into the entry's `functionalResponsibility` field verbatim; the template renders it as a quiet pill alongside the primary role. The list here exists only as a sanity check on the Form options — if a member submits an unrecognised value, the script accepts it (forward-compatible) but logs a warning.",
+
+  "functional_responsibilities": [
+    "Technology Coordinator",
+    "Events Coordinator",
+    "Communications Coordinator"
   ]
 }

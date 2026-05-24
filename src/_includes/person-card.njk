@@ -1,23 +1,31 @@
 {# Shared card mark-up for /board (Leadership / Board Members /
    Support Staff). Variables in scope:
      - person   — entry from boardSorted.leadership / .boardMembers /
-                  .support. Contains the raw board.json fields plus
+                  .support. Carries the raw board.json fields plus
                   the computed `isEsscActive` boolean.
-     - isSupport — true when rendering a support-staff card. Switches
-                  the body text from `themes` (research themes) to
-                  `bio` (longer-form prose). Defaults to false.
 
-   Optional fields on `person` that change the rendering:
-     - functionalResponsibility — a secondary role label (e.g.
-       "Technology Coordinator") shown alongside the primary role.
-       Used for Board Members who also hold a coordinator function.
+   Optional fields on `person`:
+     - functionalResponsibility — secondary role label, rendered as a
+       quiet pill next to the primary role (e.g. for Arthur:
+       "BOARD MEMBER" + a "Technology Coordinator" pill).
+     - bio — narrative paragraph; rendered as a teaser with a
+       Read-more <details> expander when longer than ~200 chars.
+     - affiliation — single line above the bio.
+     - themes — comma-separated phrases, rendered under a thin
+       divider. Empty / missing → row skipped.
+     - country — small line under the affiliation when present.
+     - links{} — optional object with publicEmail / website / orcid /
+       linkedin / twitter / bluesky / mastodon URLs. Renders as an
+       icon row at the bottom of the card when at least one is set.
      - isEsscActive — when true, a mic icon appears next to the role
        indicating the person is chairing, discussing, or speaking at
        the live ESSC edition. #}
 {% from "icons.njk" import icon %}
-{%- set isSupport = isSupport or false -%}
 {%- set lang = lang or "en" -%}
 {%- set t = i18n[lang] -%}
+{%- set bio = person.bio or "" -%}
+{%- set BIO_TEASER_LEN = 180 -%}
+{%- set bioHasMore = bio | length > BIO_TEASER_LEN -%}
 
 <article class="person"{% if person.slug %} id="{{ person.slug }}"{% endif %}>
   <img class="person-photo" src="{{ person.photo }}" alt="{{ person.alt or person.name }}" loading="lazy">
@@ -25,7 +33,6 @@
     <p class="person-role">
       <span class="person-role-primary">{{ person.role }}</span>
       {%- if person.functionalResponsibility %}
-      <span class="person-role-sep" aria-hidden="true">·</span>
       <span class="person-functional-resp">{{ person.functionalResponsibility }}</span>
       {%- endif %}
       {%- if person.isEsscActive %}
@@ -35,13 +42,61 @@
       {%- endif %}
     </p>
     <p class="person-name">{{ person.name }}</p>
-    {%- if isSupport %}
-    <p class="person-affiliation">{{ person.bio | safe }}</p>
-    {%- else %}
+
+    {%- if person.affiliation %}
     <p class="person-affiliation">{{ person.affiliation | safe }}</p>
-    {%- if person.themes %}
-    <p class="person-affiliation muted" style="margin-top: var(--space-2); font-size: var(--fs-xs); border-top: 1px solid var(--border); padding-top: var(--space-2);"><strong>{{ t.boardPage.researchThemes }}:</strong> {{ person.themes | safe }}</p>
     {%- endif %}
+
+    {%- if person.country %}
+    <p class="person-country">
+      {{ icon("map-pin") }} {{ person.country }}
+    </p>
+    {%- endif %}
+
+    {%- if bio %}
+      {%- if bioHasMore %}
+      <p class="person-bio">{{ bio | truncate(BIO_TEASER_LEN, false, "…") }}</p>
+      <details class="person-bio-more">
+        <summary>{{ t.boardPage.readMore }}</summary>
+        <p>{{ bio | safe }}</p>
+      </details>
+      {%- else %}
+      <p class="person-bio">{{ bio | safe }}</p>
+      {%- endif %}
+    {%- endif %}
+
+    {%- if person.themes %}
+    <p class="person-themes muted">
+      <strong>{{ t.boardPage.researchThemes }}:</strong> {{ person.themes | safe }}
+    </p>
+    {%- endif %}
+
+    {%- set links = person.links or {} -%}
+    {%- set hasAnyLink = links.publicEmail or links.website or links.orcid or links.linkedin or links.twitter or links.bluesky or links.mastodon -%}
+    {%- if hasAnyLink %}
+    <ul class="person-links" aria-label="{{ t.boardPage.linksAriaLabel }}">
+      {%- if links.publicEmail %}
+      <li><a href="mailto:{{ links.publicEmail }}" aria-label="Email {{ person.name }}">{{ icon("mail") }}</a></li>
+      {%- endif %}
+      {%- if links.website %}
+      <li><a href="{{ links.website }}" target="_blank" rel="noopener" aria-label="{{ person.name }}'s website">{{ icon("globe") }}</a></li>
+      {%- endif %}
+      {%- if links.orcid %}
+      <li><a href="{{ links.orcid }}" target="_blank" rel="noopener" aria-label="{{ person.name }}'s ORCID iD">{{ icon("orcid") }}</a></li>
+      {%- endif %}
+      {%- if links.linkedin %}
+      <li><a href="{{ links.linkedin }}" target="_blank" rel="noopener" aria-label="{{ person.name }} on LinkedIn">{{ icon("linkedin") }}</a></li>
+      {%- endif %}
+      {%- if links.twitter %}
+      <li><a href="{{ links.twitter }}" target="_blank" rel="noopener" aria-label="{{ person.name }} on X / Twitter">{{ icon("twitter") }}</a></li>
+      {%- endif %}
+      {%- if links.bluesky %}
+      <li><a href="{{ links.bluesky }}" target="_blank" rel="noopener" aria-label="{{ person.name }} on Bluesky">{{ icon("bluesky") }}</a></li>
+      {%- endif %}
+      {%- if links.mastodon %}
+      <li><a href="{{ links.mastodon }}" target="_blank" rel="noopener" aria-label="{{ person.name }} on Mastodon">{{ icon("mastodon") }}</a></li>
+      {%- endif %}
+    </ul>
     {%- endif %}
   </div>
 </article>

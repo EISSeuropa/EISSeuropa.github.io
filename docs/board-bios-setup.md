@@ -46,29 +46,48 @@ just don't merge.
 | # | Question text | Type | Required? |
 |---|---|---|---|
 | 1 | **Full name (with title — Dr / Prof / Mr / Ms)** | Short answer | ✅ |
-| 2 | **Your role** | Dropdown — see roles table below | ✅ |
-| 3 | **Position and institution (e.g. 'Associate Professor — Leiden University')** | Short answer | ✅ |
-| 4 | **Research themes (3–5 short phrases, comma-separated)** | Short answer | ⬜ |
-| 5 | **Long bio (optional — used for the support-team display style)** | Paragraph | ⬜ |
-| 6 | **Headshot photo (optional)** | File upload — image only — max 5 MB | ⬜ |
-| 7 | **I consent to publication of my bio on eiss-europa.com** | Checkboxes — single option | ✅ |
+| 2 | **What is your role at EISS?** | Dropdown — see *Q2 options* below | ✅ |
+| 3 | **Do you have functional responsibilities?** | Dropdown — see *Q3 options* below | ⬜ |
+| 4 | **Position or current role (e.g. PhD candidate, Associate Professor, Policy analyst)** | Short answer | ✅ |
+| 5 | **Institution or organisation** | Short answer | ✅ |
+| 6 | **Country** | Short answer | ✅ |
+| 7 | **Public email (optional)** | Short answer | ⬜ |
+| 8 | **Short bio (max. 300 words)** | Paragraph | ✅ |
+| 9 | **Research keywords (comma-separated, 3 to 5 suggested)** | Short answer | ⬜ |
+| 10 | **Working Group involvement (tick all that apply)** | Checkboxes | ⬜ |
+| 11 | **Personal or institutional website (optional)** | Short answer | ⬜ |
+| 12 | **ORCID iD (optional)** | Short answer | ⬜ |
+| 13 | **LinkedIn URL (optional)** | Short answer | ⬜ |
+| 14 | **X / Twitter URL (optional)** | Short answer | ⬜ |
+| 15 | **Bluesky URL (optional)** | Short answer | ⬜ |
+| 16 | **Mastodon URL (optional)** | Short answer | ⬜ |
+| 17 | **Headshot photo (optional)** | File upload — image only — max 5 MB | ⬜ |
+| 18 | **I consent to publication of my bio on eiss-europa.com** | Checkboxes — single option | ✅ |
 
-**Dropdown options for "Your role"** — must match exactly the `label`
-values in `scripts/board-source.json` → `roles` table. Current list:
+**Q2 options** — must match exactly the `label` values in
+`scripts/board-source.json` → `roles` table:
 
+- *(None — leave blank)* → falls through to *Board Member* (tier 100)
 - Founding Director
 - Treasurer
 - Secretary-General
-- Board Member
+- Support Staff
+
+**Q3 options** — must match values in `scripts/board-source.json` →
+`functional_responsibilities` list. A member can hold a Functional
+Responsibility independently of their formal role (Arthur is both a
+Board Member AND the Technology Coordinator):
+
+- *(None — leave blank)*
 - Technology Coordinator
 - Events Coordinator
 - Communications Coordinator
 
-> **Themes vs long bio.** Board roles get the "Research themes" line
-> styled separately from their affiliation. Support-team roles
-> (Coordinator titles) get a flowing bio paragraph instead. The script
-> picks the right shape from `kind` in the roles table, looked up by
-> the role label the member chose.
+> **Role vs Functional Responsibility.** *Role* drives which section
+> the card lands in (Leadership / Board Members / Support Staff) and
+> the sort order within it. *Functional Responsibility* is rendered
+> as a quiet pill alongside the role on the card — purely descriptive,
+> not used for sorting or grouping.
 
 In *Settings → Responses*, **enable**:
 
