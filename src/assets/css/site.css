@@ -3075,6 +3075,204 @@ h4 { font-size: var(--fs-lg); }
   margin: 0;
 }
 
+/* ---------- /board — past members folded footer ------------------------
+   Renders alumni (interns / visiting fellows / fixed-term contracts
+   whose `roleEndDate` has passed by more than the 7-day grace) as a
+   collapsed <details> at the bottom of /board. Closed by default.
+   When expanded the people-grid stays narrow (compact variant) so the
+   alumni section reads as a footer rather than competing with the
+   active team. (Restored in PR #130 after the manual #127 merge
+   dropped this block during conflict resolution.) */
+.past-members {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-5);
+}
+
+.past-members > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  align-items: baseline;
+  padding: var(--space-2) 0;
+  transition: color var(--motion-base) var(--ease-out);
+}
+
+.past-members > summary::-webkit-details-marker {
+  display: none;
+}
+
+.past-members > summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-inline-end: var(--space-2);
+  color: var(--text-muted);
+  transition: transform var(--motion-base) var(--ease-out);
+}
+
+.past-members[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.past-members > summary:hover,
+.past-members > summary:focus-visible {
+  color: var(--accent);
+  outline: none;
+}
+
+.past-members-label {
+  font-weight: 600;
+  font-size: var(--fs-lg);
+  color: var(--text);
+}
+
+.past-members-count {
+  display: inline-block;
+  margin-inline-start: var(--space-2);
+  padding: 0.1em 0.55em;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-muted);
+  background: var(--surface);
+}
+
+.past-members-hint {
+  flex: 1;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.past-members[open] .people-grid {
+  margin-top: var(--space-5);
+}
+
+.people-grid--compact {
+  /* Slightly smaller min column so alumni cards pack denser than the
+     active grid — visual signal that this is a quieter section. */
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  opacity: 0.92;
+}
+
+/* ---------- /initiative — ESSC tour grid + NetSec inset stats ----------
+   The conf-tour list is a wrapping grid of compact cards, one per
+   annual ESSC edition, ordered most-recent first. Each card carries
+   year + ordinal pill, country flag + city, host institution, and
+   (when a per-year page exists) a recap link. The online 2020 edition
+   uses a muted variant; the 2017 inaugural uses an accented variant
+   to mark it as the founding edition. */
+.conf-tour {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin: var(--space-5) 0 0;
+}
+
+.conf-tour-card {
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  transition: transform var(--motion-base) var(--ease-out),
+              border-color var(--motion-base) var(--ease-out),
+              box-shadow var(--motion-base) var(--ease-out);
+}
+
+.conf-tour-card:hover,
+.conf-tour-card:focus-within {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-2);
+}
+
+.conf-tour-year {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.conf-tour-ordinal {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.1em 0.55em;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+.conf-tour-city {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.conf-tour-city > img {
+  border-radius: 999px;
+  flex: none;
+}
+
+.conf-tour-host {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.conf-tour-link {
+  font-size: var(--fs-sm);
+  margin-top: auto;
+  align-self: flex-start;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--accent);
+}
+
+.conf-tour-link:hover,
+.conf-tour-link:focus-visible {
+  border-bottom-style: solid;
+}
+
+.conf-tour-online {
+  opacity: 0.78;
+}
+
+.conf-tour-online .conf-tour-city {
+  font-style: italic;
+}
+
+.conf-tour-inaugural {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* NetSec inset stats: a .stats-row variant used inside the NetSec
+   card. The --inset variant trims the visual prominence (smaller
+   numbers, tighter gap) so the embedded row reads as supporting
+   evidence rather than a hero. */
+.stats-row--inset {
+  gap: var(--space-5);
+}
+
+.stats-row--inset .stat dt {
+  font-size: clamp(var(--fs-2xl), 2vw + 1rem, var(--fs-3xl));
+  line-height: 1;
+}
+
 /* ---------- print stylesheet -------------------------------------------
    Optimised for attendees printing the conference programme. Forces a
    light theme regardless of OS / toggle, strips chrome (nav, footer,
