@@ -62,7 +62,7 @@ just don't merge.
 | 15 | **Bluesky URL (optional)** | Short answer | ⬜ |
 | 16 | **Mastodon URL (optional)** | Short answer | ⬜ |
 | 17 | **Headshot photo (optional)** | File upload — image only — max 5 MB | ⬜ |
-| 18 | **End date for time-bound roles (optional)** | Date | ⬜ |
+| 18 | **Internship end date (optional)** | Date | ⬜ |
 | 19 | **I consent to publication of my bio on eiss-europa.com** | Checkboxes — single option | ✅ |
 
 **Q2 options** — must match exactly the `label` values in
@@ -124,20 +124,30 @@ And on the **Headshot photo (optional)** question, set its
 > — submit a fresh response. The file-upload field is locked by
 > Google Forms after the first submission.
 
-### End-date question — time-bound roles
+### End-date question — interns
 
-Q18 (**End date for time-bound roles (optional)**, Date) lets interns,
-visiting fellows, and anyone on a fixed-term contract record when
-their role ends. Set the question **Description** to:
+Q18 (**Internship end date (optional)**, Date) is scoped to interns —
+the only category of EISS contributor where automatic time-based
+expiry on `/board` makes sense. Board Members and Leadership have
+elected terms of ~3 years, but they typically re-up and shouldn't
+vanish into the past-members footer during a re-election gap; their
+ins and outs are tracked through election minutes by hand-editing
+`board.json` directly. Permanent Support Staff (e.g. the
+Communications Coordinator) likewise leave this field blank.
 
-> Leave blank if your EISS role is open-ended. Fill in only if you're
-> on a fixed-term role (internship, visiting fellow, contract). Your
-> card will stay on the board for ~1 week after this date, then move
-> to a folded *"Past board members and interns"* footer — you remain
-> part of the broader European security studies family.
+Set the question **Description** to:
+
+> For interns only. Leave blank if your EISS role is open-ended
+> (Board Member, Leadership, permanent Support Staff). If you're an
+> intern, fill in the date your internship ends — your card will
+> stay on the board for ~1 week after this date, then move to a
+> folded *"Past board members and interns"* footer. You remain part
+> of the broader European security studies family.
 
 The sync writes whatever the respondent picks straight through to
-`board.json` as `roleEndDate` (ISO `YYYY-MM-DD`).
+`board.json` as `roleEndDate` (ISO `YYYY-MM-DD`) — the internal field
+key stays generic so we can also hand-set it on a former Board
+Member's entry when election minutes record a departure.
 `src/_data/boardSorted.js` applies a 7-day grace at build time and
 moves expired entries into `pastMembers` for the folded footer on
 `/board`. The daily-rebuild workflow re-evaluates this with each
