@@ -651,6 +651,152 @@ def emit_github_output(key: str, value: str) -> None:
         f.write(f"{key}={value}\n")
 
 
+# Human-readable labels for the fields the form populates. Used by the
+# rich PR body to describe what changed on an updated entry. Keep the
+# label short — these end up in a comma-separated list per person.
+FIELD_LABELS: dict[str, str] = {
+    "bio": "bio",
+    "affiliation": "affiliation",
+    "themes": "research keywords",
+    "country": "country",
+    "role": "role",
+    "functionalResponsibility": "functional responsibility",
+    "photo": "headshot path",
+    "alt": "alt text",
+    "workingGroups": "working groups",
+}
+LINK_LABELS: dict[str, str] = {
+    "publicEmail": "public email",
+    "website": "website",
+    "orcid": "ORCID",
+    "linkedin": "LinkedIn",
+    "twitter": "X / Twitter",
+    "bluesky": "Bluesky",
+    "mastodon": "Mastodon",
+}
+
+
+def describe_field_changes(old: dict, new: dict) -> list[str]:
+    """Return a list of human-readable field names that differ between
+    `old` and `new` entries. Used in the rich PR body's "Updated
+    members" section to surface exactly what each respondent changed."""
+    changes: list[str] = []
+    for key, label in FIELD_LABELS.items():
+        if old.get(key) != new.get(key):
+            changes.append(label)
+    old_links = old.get("links") or {}
+    new_links = new.get("links") or {}
+    for key, label in LINK_LABELS.items():
+        if old_links.get(key) != new_links.get(key):
+            changes.append(label)
+    return changes
+
+
+def compose_rich_body(
+    prior_raw: dict, new_data: dict, photos_changed: list[str]
+) -> str:
+    """Build a Markdown-rich auto-PR body. Sections cover:
+      - New members (name · country · _affiliation_)
+      - Updated members (name: comma-separated field labels)
+      - Removed members (name)
+      - Headshot files updated (paths)
+
+    Excludes the run-log section — that's appended by the workflow
+    from the script's stdout, after this body is composed."""
+    def by_name(d: dict) -> dict[str, dict]:
+        return {p["name"]: p for p in d.get("members", []) + d.get("support", [])}
+
+    old, new = by_name(prior_raw), by_name(new_data)
+    added = sorted(set(new) - set(old))
+    removed = sorted(set(old) - set(new))
+    # Map photo paths to person slugs so we can annotate each Updated
+    # entry with "+ headshot" when their image was rewritten.
+    photo_slugs = {Path(p).stem for p in photos_changed}
+    persons_with_photo_change = {
+        n for n in (set(old) & set(new)) if slugify(n) in photo_slugs
+    }
+    # "Updated" = anyone whose entry's JSON differs OR whose photo
+    # bytes changed on disk. The latter alone won't appear in the
+    # JSON diff (the `photo` path string stays the same), so we union
+    # them in to catch the photo-only case.
+    json_changed = {
+        n for n in (set(old) & set(new))
+        if json.dumps(old[n], sort_keys=True)
+        != json.dumps(new[n], sort_keys=True)
+    }
+    changed = sorted(json_changed | persons_with_photo_change)
+
+    lines: list[str] = ["## What changed", ""]
+
+    if added:
+        lines.append(f"### New members ({len(added)})")
+        for n in added:
+            p = new[n]
+            extras: list[str] = []
+            if p.get("country"):
+                extras.append(p["country"])
+            if p.get("affiliation"):
+                extras.append(f"_{p['affiliation']}_")
+            line = f"- **{n}**"
+            if extras:
+                line += " · " + " · ".join(extras)
+            lines.append(line)
+        lines.append("")
+
+    if changed:
+        lines.append(f"### Updated members ({len(changed)})")
+        for n in changed:
+            field_changes = describe_field_changes(old[n], new[n])
+            person_slug = slugify(n)
+            photo_changed = person_slug in photo_slugs
+            if photo_changed:
+                # Photo bytes changed on disk but the `photo` path
+                # string might be unchanged — promote it as an
+                # explicit "+ headshot" suffix instead of mixing in
+                # with the per-field list.
+                suffix = " + headshot"
+            else:
+                suffix = ""
+            if field_changes:
+                lines.append(f"- **{n}**: {', '.join(field_changes)}{suffix}")
+            elif photo_changed:
+                lines.append(f"- **{n}**: headshot replaced")
+            else:
+                # Shouldn't reach here (changed implies *something*
+                # differs), but stay defensive.
+                lines.append(f"- **{n}**: (other)")
+        lines.append("")
+
+    if removed:
+        lines.append(f"### Removed members ({len(removed)})")
+        for n in removed:
+            lines.append(f"- **{n}**")
+        lines.append("")
+
+    # Standalone "Headshot files" section gives the paths for code
+    # review. Includes photos whose person's other fields didn't
+    # change too — useful so reviewers see the file diff list at a
+    # glance even when the JSON diff hides it.
+    if photos_changed:
+        lines.append(f"### Headshot files updated ({len(photos_changed)})")
+        for p in photos_changed:
+            lines.append(f"- `{p}`")
+        lines.append("")
+
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def emit_pr_body_file(prior_raw: dict, new_data: dict, photos_changed: list[str]) -> None:
+    """Write the rich PR body to $SYNC_BOARD_BODY_FILE when set (the
+    workflow points it at /tmp/...). The workflow appends its own
+    run-log footer."""
+    path = os.environ.get("SYNC_BOARD_BODY_FILE")
+    if not path:
+        return
+    body = compose_rich_body(prior_raw, new_data, photos_changed)
+    Path(path).write_text(body, encoding="utf-8")
+
+
 def main() -> None:
     config = json.loads(CONFIG.read_text())
     csv_url = (config.get("sheet", {}).get("csv_url") or "").strip()
@@ -755,12 +901,13 @@ def main() -> None:
         print("No substantive changes — leaving src/_data/board.json untouched.")
         return
 
-    # Emit the PR title for the workflow's create-pull-request step.
-    # Computed before we mutate anything so the function sees the
-    # before/after pair cleanly.
+    # Emit the PR title + rich body for the workflow's create-pull-
+    # request step. Computed before we mutate anything so the
+    # functions see the before/after pair cleanly.
     title = compute_pr_title(prior_raw, new_data, PHOTOS_CHANGED)
     if title:
         emit_github_output("title", title)
+    emit_pr_body_file(prior_raw, new_data, PHOTOS_CHANGED)
 
     if json_unchanged and PHOTOS_CHANGED:
         print()

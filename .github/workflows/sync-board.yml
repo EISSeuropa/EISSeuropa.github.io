@@ -60,12 +60,28 @@ jobs:
 
       - name: Run sync script and capture diff
         id: sync
+        env:
+          # Script writes a structured "What changed" Markdown body
+          # here when something actually changed. The next block
+          # appends the run-log footer.
+          SYNC_BOARD_BODY_FILE: /tmp/sync-board-body.md
         run: |
           set -o pipefail
           python3 scripts/sync-board.py | tee /tmp/sync-board.txt
           {
-            echo "Auto-detected changes from the board-bios Google Sheet"
-            echo "(form linked from scripts/board-source.json)."
+            if [ -s /tmp/sync-board-body.md ]; then
+              cat /tmp/sync-board-body.md
+              echo ""
+            else
+              # Defensive: script didn't write a rich body (older
+              # version, no changes, or it errored before emitting).
+              # Fall back to the previous wrapper so the PR still
+              # has *some* body.
+              echo "Auto-detected changes from the board-bios Google Sheet"
+              echo "(form linked from scripts/board-source.json)."
+              echo ""
+            fi
+            echo "## Run log"
             echo ""
             echo '```'
             cat /tmp/sync-board.txt
