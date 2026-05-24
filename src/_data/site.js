@@ -21,9 +21,10 @@ module.exports = {
   nav: [
     { href: "/", text: "Home", key: "home" },
     { href: "/past.html", text: "Conferences", key: "conferences" },
-    { href: "/programmes.html", text: "Programmes", key: "programmes" },
+    { href: "/programmes.html", text: "Activities", key: "programmes" },
     { href: "/initiative.html", text: "The Initiative", key: "initiative" },
+    { href: "/board.html", text: "People", key: "people" },
     { href: "/membership.html", text: "Membership", key: "membership" },
-    { href: "https://indico.eiss-europa.com/", text: "Events", key: "events", external: true },
+    { href: "/events.html", text: "Network events", key: "events" },
   ],
 };
