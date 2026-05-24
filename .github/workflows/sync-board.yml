@@ -59,6 +59,7 @@ jobs:
         run: pip install -r scripts/requirements.txt
 
       - name: Run sync script and capture diff
+        id: sync
         run: |
           set -o pipefail
           python3 scripts/sync-board.py | tee /tmp/sync-board.txt
@@ -81,7 +82,12 @@ jobs:
           branch: board-sync/auto
           base: master
           delete-branch: true
-          title: "data: sync board bios from Google Form"
+          # Title is computed by sync-board.py based on the kind of
+          # change (photo-only, single update, addition, etc.) so the
+          # PR list reads at a glance. Falls back to the generic
+          # multi-change title when the script doesn't emit one (e.g.
+          # version of the script that pre-dates this output).
+          title: ${{ steps.sync.outputs.title || 'data: sync board bios from Google Form' }}
           commit-message: |
             data: sync board.json from Google Form
 

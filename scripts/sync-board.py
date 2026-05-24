@@ -581,6 +581,76 @@ def diff_summary(old: dict, new: dict) -> str:
     return "\n".join(lines)
 
 
+def compute_pr_title(
+    prior_raw: dict, new_data: dict, photos_changed: list[str]
+) -> str | None:
+    """Compose a short, situation-specific PR title for the auto-sync
+    PR that the workflow opens. Returns None when nothing changed
+    (the workflow won't open a PR in that case anyway).
+
+    Cases:
+      - photo-only, 1 person: "data: refresh headshot for <name>"
+      - photo-only, N people: "data: refresh N headshots"
+      - 1 addition:           "data: add <name> to the board"
+      - 1 removal:            "data: remove <name> from the board"
+      - 1 update:             "data: update bio for <name>"
+      - everything else:      "data: sync board bios (N changes)"
+    """
+    def by_name(d: dict) -> dict[str, dict]:
+        return {p["name"]: p for p in d.get("members", []) + d.get("support", [])}
+
+    old_p, new_p = by_name(prior_raw), by_name(new_data)
+    added = sorted(set(new_p) - set(old_p))
+    removed = sorted(set(old_p) - set(new_p))
+    changed = sorted(
+        n for n in (set(old_p) & set(new_p))
+        if json.dumps(old_p[n], sort_keys=True)
+        != json.dumps(new_p[n], sort_keys=True)
+    )
+    n_json = len(added) + len(removed) + len(changed)
+    n_photo = len(photos_changed)
+
+    if n_json == 0 and n_photo == 0:
+        return None
+
+    # Photo-only change(s) — surface the case the previous version of
+    # this script swallowed.
+    if n_json == 0 and n_photo > 0:
+        if n_photo == 1:
+            slug = Path(photos_changed[0]).stem  # e.g. "arthur-laudrain"
+            name = next(
+                (n for n in new_p if slugify(n) == slug),
+                slug.replace("-", " ").title(),
+            )
+            return f"data: refresh headshot for {name}"
+        return f"data: refresh {n_photo} headshots"
+
+    # Single, unambiguous JSON change → describe it specifically.
+    if n_photo == 0 and len(added) == 1 and not removed and not changed:
+        return f"data: add {added[0]} to the board"
+    if n_photo == 0 and not added and len(removed) == 1 and not changed:
+        return f"data: remove {removed[0]} from the board"
+    if n_photo == 0 and not added and not removed and len(changed) == 1:
+        return f"data: update bio for {changed[0]}"
+
+    # Everything else (multi-change runs, mixed JSON + photo) — fall
+    # back to a count.
+    total = n_json + n_photo
+    plural = "" if total == 1 else "s"
+    return f"data: sync board bios ({total} change{plural})"
+
+
+def emit_github_output(key: str, value: str) -> None:
+    """Write `key=value` to $GITHUB_OUTPUT when running under GitHub
+    Actions, so the next workflow step can read it as a step output.
+    No-op outside CI."""
+    path = os.environ.get("GITHUB_OUTPUT")
+    if not path:
+        return
+    with open(path, "a", encoding="utf-8") as f:
+        f.write(f"{key}={value}\n")
+
+
 def main() -> None:
     config = json.loads(CONFIG.read_text())
     csv_url = (config.get("sheet", {}).get("csv_url") or "").strip()
@@ -684,6 +754,13 @@ def main() -> None:
         print()
         print("No substantive changes — leaving src/_data/board.json untouched.")
         return
+
+    # Emit the PR title for the workflow's create-pull-request step.
+    # Computed before we mutate anything so the function sees the
+    # before/after pair cleanly.
+    title = compute_pr_title(prior_raw, new_data, PHOTOS_CHANGED)
+    if title:
+        emit_github_output("title", title)
 
     if json_unchanged and PHOTOS_CHANGED:
         print()
