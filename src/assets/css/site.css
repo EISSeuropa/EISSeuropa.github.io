@@ -1708,11 +1708,38 @@ h4 { font-size: var(--fs-lg); }
   letter-spacing: -0.005em;
 }
 
-.person-affiliation {
+.person-affiliation,
+.person-position,
+.person-institution {
   font-size: var(--fs-sm);
   color: var(--text-muted);
   margin: 0;
   line-height: var(--lh-snug);
+}
+
+/* Position sits on its own line above the institution. Quieter
+   than the institution since the institution is what visitors look
+   for to place the person geographically + institutionally. */
+.person-position {
+  color: var(--text-subtle);
+}
+
+/* Institution line carries an inline country flag at the end. Use
+   inline-flex on the parent so the flag aligns with the *last*
+   line of the institution text when the text wraps onto multiple
+   lines — gives every card a flag in roughly the same visual slot. */
+.person-institution {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.4em;
+}
+.person-institution > span {
+  /* Lets the text wrap naturally; the flag follows on the same row
+     when there's room, drops below on a narrow card. */
+}
+.person-institution .person-flag {
+  align-self: center;
 }
 
 /* Optional "country" line under the affiliation. Tiny, scannable —
@@ -1736,12 +1763,29 @@ h4 { font-size: var(--fs-lg); }
   flex: 0 0 auto;
 }
 .person-flag {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;        /* defensive — circle-flags already round */
-  display: block;
+  flex: 0 0 auto;
+  display: inline-block;
   box-shadow: 0 0 0 1px hsl(220 30% 12% / 0.10);
   transition: transform var(--motion-fast) var(--ease-out);
+}
+
+/* Fallback "📍 Country" label when no flag SVG is mapped — appears
+   inline on the institution line instead of the flag. Quieter than
+   the institution text so it still reads as metadata. */
+.person-country-fallback {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  color: var(--text-subtle);
+  font-size: var(--fs-xs);
+}
+.person-country-fallback svg {
+  width: 0.85em;
+  height: 0.85em;
+  flex: 0 0 auto;
 }
 @media (prefers-reduced-motion: no-preference) {
   .person:hover .person-flag {
