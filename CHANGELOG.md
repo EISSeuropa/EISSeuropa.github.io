@@ -14,7 +14,9 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
-_Nothing yet._
+### Fixed
+
+- **`scripts/release.sh` compare-link regex** now accepts letters and dashes after the dotted numerics, so `v2.13.0r` and any future suffixed tags update cleanly. Previous regex `v([0-9.]+)` silently failed to bind on `v2.13.0r`, leaving `[Unreleased]: …/compare/v2.13.0r...HEAD` stale across v2.22.0. Same PR repoints the live compare link at v2.22.0. (#121)
 
 ## [2.22.0] · 2026-05-24 — Live board pipeline and Initiative refresh
 
@@ -677,4 +679,5 @@ Preview MCP screenshots of `/index.fr.html`, `/index.de.html`, `/initiative.de.h
 
 *Originally tagged as **v2.0.0**; renumbered to **v2.0.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
 
-[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.13.0r...HEAD
+[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.22.0...HEAD
+[2.22.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.13.0r...v2.22.0
