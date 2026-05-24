@@ -17,7 +17,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 ### Fixed
 
 - Translation drift on `/2026` (fr + de) and `/policy` (fr + de) accumulated from PRs #77 → #80. The map-embed include is now propagated to `src/2026.fr.njk` and `src/2026.de.njk`; the Google Maps disclosure in `policy.fr.njk` / `policy.de.njk` was already in place from #77 → #78 and just needed re-stamping. CI `i18n drift check` returns green again.
-- Inconsistent room display on the programme grid and livestreamed-sessions cards. The Indico operator entered `"Lecture Hall 8"` for one slot and `"D House, Lecture Hall 8"` for the others — so the same default room rendered two different ways on the page. The sync now canonicalises every slot's room by stripping the event-default building prefix (`D House, `), so all rooms display at the same level of detail: `Lecture Hall 8`, `Lecture Hall 9`, `Floor 3`. Applies to both `extract_programme` and `extract_livestreamed`. The baseline hint above the grid now reads "Sessions take place in Lecture Hall 8 unless marked otherwise" instead of the verbose form.
+- Programme room badges no longer pick two different visual languages depending on whether the room matches the conference default. Every slot's room renders as a pill now — neutral grey for default-room slots, accent blue for off-default (parallel panels in a different hall, breaks on a different floor). The pill shape unifies the grid visually while colour still distinguishes the exceptions. Indico is now the single source of truth for the room string: the sync passes the field through verbatim (the operator added `D House, ` to all locations on Indico, so no normalisation is needed). Removed the `_canonical_room_display` helper.
 
 ### Added
 

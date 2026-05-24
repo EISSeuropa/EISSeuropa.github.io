@@ -2030,17 +2030,21 @@ h4 { font-size: var(--fs-lg); }
   font-style: italic;
 }
 
-/* Room badge inside a slot card. Default presentation is muted —
-   the room is informational, not the headline. When the room
-   differs from the conference default (parallel-panel rooms, coffee
-   breaks in a different building floor), the `.--elsewhere` modifier
-   promotes it to a coloured pill so attendees scanning the grid spot
-   the exception at a glance. */
+/* Room badge inside a slot card. Every room renders as a pill so
+   the grid reads consistently visit-to-visit; the colour distinguishes
+   default-room slots (neutral grey) from off-default ones — parallel-
+   panel rooms, coffee breaks in a different floor — which get an
+   accent-blue treatment so attendees scanning the grid spot the
+   exception at a glance. */
 .programme-slot-room {
   display: inline-flex;
   align-items: center;
   gap: 0.4em;
   color: var(--text-subtle);
+  background: var(--surface-strong);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
 }
 .programme-slot-room svg {
   flex: 0 0 auto;
@@ -2049,9 +2053,7 @@ h4 { font-size: var(--fs-lg); }
   color: var(--accent);
   font-weight: 600;
   background: var(--accent-soft);
-  padding: 0.2rem 0.55rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid hsl(216 88% 50% / 0.18);
+  border-color: hsl(216 88% 50% / 0.18);
 }
 
 /* The "Sessions take place in X unless marked otherwise" hint shown
