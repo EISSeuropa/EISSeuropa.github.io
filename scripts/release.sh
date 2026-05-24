@@ -252,8 +252,13 @@ if n != 1:
     raise SystemExit("Could not find a unique [Unreleased] heading.")
 
 # 2. Update the compare-link block at the bottom.
+# The tag-name group allows letters and dashes after the dotted
+# numerics so "r"-suffixed renumbered tags (v2.13.0r) match too.
+# Earlier the regex was v([0-9.]+), which silently failed to update
+# the link past a v2.13.0r baseline and left
+# "[Unreleased]: …/compare/v2.13.0r...HEAD" stale through v2.22.0.
 m = re.search(
-    r"^\[Unreleased\]:\s*(https://github\.com/[^/]+/[^/]+)/compare/v([0-9.]+)\.\.\.HEAD\s*$",
+    r"^\[Unreleased\]:\s*(https://github\.com/[^/]+/[^/]+)/compare/v([0-9A-Za-z.\-]+?)\.\.\.HEAD\s*$",
     src,
     flags=re.M,
 )
