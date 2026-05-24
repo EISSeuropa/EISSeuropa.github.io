@@ -102,9 +102,32 @@ function buildTierMap() {
 // can't expand into anything new.
 const BIO_LONG_THRESHOLD = 180;
 
+// Time-bound roles (interns, visiting fellows, fixed-term contracts)
+// carry a `roleEndDate` (ISO `YYYY-MM-DD`). We hide a person from the
+// active sections one week after that date — the grace period keeps
+// the card visible for ~7 days past departure so anyone bookmarking
+// the page just after the end date still finds them. Entries without
+// `roleEndDate` are permanent and never filtered.
+//
+// Past entries move to `pastMembers` so the template can render them
+// as a folded "Past board members and interns" footer — they remain
+// part of the broader European security studies family, just not the
+// active team.
+const GRACE_PERIOD_DAYS = 7;
+function isExpired(person, todayMs) {
+  if (!person || !person.roleEndDate) return false;
+  // Treat the end-date as end-of-day UTC so a same-day check returns
+  // false (the person is still active on their last day).
+  const endMs = Date.parse(person.roleEndDate + "T23:59:59Z");
+  if (Number.isNaN(endMs)) return false; // malformed → never expire
+  const cutoffMs = endMs + GRACE_PERIOD_DAYS * 24 * 60 * 60 * 1000;
+  return todayMs > cutoffMs;
+}
+
 module.exports = function () {
   const esscNames = collectEsscNames();
   const tierByRole = buildTierMap();
+  const todayMs = Date.now();
 
   function annotate(person) {
     const bio = (person.bio || "").trim();
@@ -130,25 +153,39 @@ module.exports = function () {
     });
   }
 
-  const annotated = (board.members || []).map(annotate);
-  const leadership = sortMembers(annotated.filter((m) => m.tier < 100));
-  const boardMembers = sortMembers(annotated.filter((m) => m.tier >= 100));
-  const support = (board.support || []).map(annotate); // ordering preserved
+  // Annotate everyone (board members + support), then split into
+  // active vs. past based on `roleEndDate` + 7-day grace.
+  const allMembersAnnotated = (board.members || []).map(annotate);
+  const allSupportAnnotated = (board.support || []).map(annotate);
+
+  const activeMembers = allMembersAnnotated.filter((m) => !isExpired(m, todayMs));
+  const activeSupport = allSupportAnnotated.filter((m) => !isExpired(m, todayMs));
+
+  const leadership = sortMembers(activeMembers.filter((m) => m.tier < 100));
+  const boardMembers = sortMembers(activeMembers.filter((m) => m.tier >= 100));
+  const support = activeSupport; // ordering preserved
+
+  // Past members: union of expired entries from both sources, sorted
+  // by surname for the folded footer. Tier is preserved so the
+  // template can show their last role.
+  const pastMembers = [...allMembersAnnotated, ...allSupportAnnotated]
+    .filter((m) => isExpired(m, todayMs))
+    .sort(bySurname);
 
   // Exposed for the page footer link ("Update your bio"). Sourced
   // from scripts/board-source.json so the URL stays in sync with the
   // Form configuration the sync workflow uses.
   const formUrl = (boardSource.form_url || "").trim();
 
-  // Distinct countries across the whole team, alphabetised. Each
-  // entry includes the iso code so the /initiative page's flag strip
-  // can render them without re-doing the countryFlags lookup at
-  // template time. Skips empty country fields.
+  // Distinct countries across the whole active team, alphabetised.
+  // Each entry includes the iso code so the /initiative page's flag
+  // strip can render them without re-doing the countryFlags lookup at
+  // template time. Skips empty country fields. Past members are
+  // excluded so the stats row reflects only the active team.
   const countryFlags = require("./countryFlags.js");
   const seen = new Set();
   const countries = [];
-  const allAnnotated = [...annotated, ...(board.support || []).map(annotate)];
-  for (const p of allAnnotated) {
+  for (const p of [...activeMembers, ...activeSupport]) {
     if (!p.country) continue;
     const key = p.country.toLowerCase().trim();
     if (seen.has(key)) continue;
@@ -159,13 +196,24 @@ module.exports = function () {
   countries.sort((a, b) => a.name.localeCompare(b.name));
 
   // Top-line counts the /initiative page uses in the stats row.
-  // peopleTotal includes everyone (board + support); countriesTotal
-  // is the distinct count above.
+  // peopleTotal includes everyone *active* (board + support);
+  // countriesTotal is the distinct count above. Past members are not
+  // counted — the "N people across M countries" headline reflects the
+  // present team, not the cumulative roster.
   const counts = {
     peopleTotal: leadership.length + boardMembers.length + support.length,
     countriesTotal: countries.length,
     leadershipTotal: leadership.length,
+    pastTotal: pastMembers.length,
   };
 
-  return { leadership, boardMembers, support, formUrl, countries, counts };
+  return {
+    leadership,
+    boardMembers,
+    support,
+    pastMembers,
+    formUrl,
+    countries,
+    counts,
+  };
 };

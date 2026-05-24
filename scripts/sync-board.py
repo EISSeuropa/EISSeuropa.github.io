@@ -286,6 +286,41 @@ def _cell(row: dict, cols: dict, key: str) -> str:
     return (row.get(col_name, "") or "").strip()
 
 
+# Google Forms' Date question writes values as YYYY-MM-DD by default in
+# the linked Sheet, but the respondent can also type free-text into a
+# Short-answer question. _normalize_date() accepts the common shapes
+# we've actually seen (YYYY-MM-DD, DD/MM/YYYY, DD.MM.YYYY, MM/DD/YYYY)
+# and emits a canonical ISO `YYYY-MM-DD` string. Anything it can't parse
+# returns "" so boardSorted.js leaves the entry permanent rather than
+# silently expiring it on garbage input.
+_DATE_PATTERNS = [
+    "%Y-%m-%d",       # 2026-06-30 (Google Forms default)
+    "%d/%m/%Y",       # 30/06/2026 (FR/UK)
+    "%d.%m.%Y",       # 30.06.2026 (DE)
+    "%Y/%m/%d",       # 2026/06/30
+    "%m/%d/%Y",       # 06/30/2026 (US — accept last because it's most
+                      # ambiguous with the FR form)
+]
+
+
+def _normalize_date(raw: str) -> str:
+    s = (raw or "").strip()
+    if not s:
+        return ""
+    from datetime import datetime
+    for fmt in _DATE_PATTERNS:
+        try:
+            d = datetime.strptime(s, fmt)
+            return d.strftime("%Y-%m-%d")
+        except ValueError:
+            continue
+    print(
+        f"  ⚠ unparseable roleEndDate {s!r} — leaving entry permanent.",
+        file=sys.stderr,
+    )
+    return ""
+
+
 ## (No-op kept for git-history clarity.)
 ##
 ## _join_affiliation() used to merge the Form's separate Position +
@@ -396,6 +431,19 @@ def build_from_row(row: dict, cols: dict, role_info: dict, prior: dict | None) -
     working_groups = _cell(row, cols, "workingGroups") or (prior or {}).get("workingGroups", "")
     if working_groups:
         person["workingGroups"] = working_groups
+
+    # Role end-date for time-bound roles (interns, visiting fellows,
+    # fixed-term contracts). Normalised to ISO `YYYY-MM-DD` if the
+    # respondent typed a recognisable date; left out of the entry if
+    # the field is blank or unparseable. boardSorted.js applies a
+    # 7-day grace then moves the entry to the folded "Past board
+    # members and interns" footer.
+    role_end_raw = _cell(row, cols, "roleEndDate")
+    role_end = _normalize_date(role_end_raw) if role_end_raw else ""
+    if not role_end:
+        role_end = (prior or {}).get("roleEndDate", "")
+    if role_end:
+        person["roleEndDate"] = role_end
 
     # Slug + alt are preserved across syncs if the prior entry has them
     # (a hand-set slug for deep linking, or a custom alt for a11y).
@@ -665,6 +713,7 @@ FIELD_LABELS: dict[str, str] = {
     "photo": "headshot path",
     "alt": "alt text",
     "workingGroups": "working groups",
+    "roleEndDate": "role end-date",
 }
 LINK_LABELS: dict[str, str] = {
     "publicEmail": "public email",

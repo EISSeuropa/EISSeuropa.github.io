@@ -24,6 +24,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- **`boardSorted.counts.peopleTotal` / `countriesTotal` now count active members only** — past members no longer show up in the `/initiative` stats row, so the **N people across M countries** headline reflects the present team rather than the cumulative roster. `counts.pastTotal` exposes the alumni count for any future template that wants it. (#126)
 - **`/initiative` — Our network section moved up** above *What we do*, so the leadership headshots + country flags appear immediately after the hero stats row instead of below the NetSec card. Visualises the **N people across M countries** stat right where the reader sees it.
 
 ### Fixed
