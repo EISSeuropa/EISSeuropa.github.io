@@ -14,6 +14,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+_Nothing yet._
+
+## [2.14.0] · 2026-05-24 — Live board pipeline and Initiative refresh
+
 > The Google Form board pipeline goes live, the `/board` page is rebuilt around it, and `/initiative` is redesigned to read as concrete activities + numbers + people. Same scope-cycle also tightens the programme grid (per-slot rooms, Google Maps embed) and the sync workflow itself (descriptive PR titles, honest reporting, country flags).
 
 ### Live board pipeline
