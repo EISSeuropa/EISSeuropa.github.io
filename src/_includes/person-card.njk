@@ -52,48 +52,33 @@
     {%- set countryKey = (person.country or '') | lower | trim %}
     {%- set iso = countryFlags.byName[countryKey] -%}
 
+    {# The country flag (or country-fallback span) sits at the END
+       of the institution text as an inline element, NOT a flex
+       child. A non-breaking space ( ) glues the last word of
+       the institution to the flag so the flag never lands on its
+       own wrapped line — either everything fits, or "(last word)
+       🇨🇭" wraps together. The macro keeps the inline markup
+       consistent across the three render paths. #}
+    {%- macro flag_inline(iso, country, icon) -%}
+      {%- if iso -%}
+        <img class="person-flag" src="/assets/images/flags/{{ iso }}.svg" alt="{{ country }}" title="{{ country }}" width="20" height="20" loading="lazy">
+      {%- elif country -%}
+        <span class="person-country-fallback">{{ icon("map-pin") }} {{ country }}</span>
+      {%- endif -%}
+    {%- endmacro -%}
+
     {%- if person.position or person.institution %}
       {%- if person.position %}
       <p class="person-position">{{ person.position | safe }}</p>
       {%- endif %}
       {%- if person.institution %}
-      <p class="person-institution">
-        <span>{{ person.institution | safe }}</span>
-        {%- if iso %}
-        <img class="person-flag"
-             src="/assets/images/flags/{{ iso }}.svg"
-             alt="{{ person.country }}"
-             title="{{ person.country }}"
-             width="20" height="20" loading="lazy">
-        {%- elif person.country %}
-        <span class="person-country-fallback">{{ icon("map-pin") }} {{ person.country }}</span>
-        {%- endif %}
-      </p>
+      <p class="person-institution">{{ person.institution | safe }}{%- if iso or person.country %}&nbsp;{{ flag_inline(iso, person.country, icon) }}{%- endif %}</p>
       {%- elif person.country %}
       {# Position-only entry (rare): country goes on its own line. #}
-      <p class="person-country">
-        {%- if iso %}
-        <img class="person-flag"
-             src="/assets/images/flags/{{ iso }}.svg"
-             alt="{{ person.country }}"
-             title="{{ person.country }}"
-             width="20" height="20" loading="lazy">
-        {%- else %}
-        {{ icon("map-pin") }} {{ person.country }}
-        {%- endif %}
-      </p>
+      <p class="person-country">{{ flag_inline(iso, person.country, icon) }}</p>
       {%- endif %}
     {%- elif person.affiliation %}
-      <p class="person-affiliation">
-        <span>{{ person.affiliation | safe }}</span>
-        {%- if iso %}
-        <img class="person-flag"
-             src="/assets/images/flags/{{ iso }}.svg"
-             alt="{{ person.country }}"
-             title="{{ person.country }}"
-             width="20" height="20" loading="lazy">
-        {%- endif %}
-      </p>
+      <p class="person-affiliation">{{ person.affiliation | safe }}{%- if iso or person.country %}&nbsp;{{ flag_inline(iso, person.country, icon) }}{%- endif %}</p>
     {%- endif %}
 
     {%- if person.bio %}

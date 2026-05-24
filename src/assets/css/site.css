@@ -1724,22 +1724,15 @@ h4 { font-size: var(--fs-lg); }
   color: var(--text-subtle);
 }
 
-/* Institution line carries an inline country flag at the end. Use
-   inline-flex on the parent so the flag aligns with the *last*
-   line of the institution text when the text wraps onto multiple
-   lines — gives every card a flag in roughly the same visual slot. */
+/* Institution line carries an inline country flag at the end. The
+   flag is an inline-block element appended directly after the text,
+   with a non-breaking space ( ) keeping the last word + flag
+   together — so the flag never wraps onto its own line. Plain
+   block-level <p>, no flex (which would treat the whole text as one
+   indivisible flex item and shove the flag onto a new flex line
+   when the text wraps). */
 .person-institution {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0 0.4em;
-}
-.person-institution > span {
-  /* Lets the text wrap naturally; the flag follows on the same row
-     when there's room, drops below on a narrow card. */
-}
-.person-institution .person-flag {
-  align-self: center;
+  /* No flex — let inline flow handle the flag placement. */
 }
 
 /* Optional "country" line under the affiliation. Tiny, scannable —
@@ -1766,8 +1759,8 @@ h4 { font-size: var(--fs-lg); }
   width: 20px;
   height: 20px;
   border-radius: 50%;        /* defensive — circle-flags already round */
-  flex: 0 0 auto;
   display: inline-block;
+  vertical-align: -0.3em;    /* sits nicely on the text baseline */
   box-shadow: 0 0 0 1px hsl(220 30% 12% / 0.10);
   transition: transform var(--motion-fast) var(--ease-out);
 }
