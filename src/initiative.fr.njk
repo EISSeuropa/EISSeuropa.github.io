@@ -49,6 +49,53 @@ alternates:
   </div>
 </header>
 
+<section class="section" id="network" aria-labelledby="network-title">
+  <div class="container">
+    <div class="featured-eyebrow">Notre réseau</div>
+    <h2 id="network-title">
+      {{ boardSorted.counts.peopleTotal }} personnes dans {{ boardSorted.counts.countriesTotal }} pays
+    </h2>
+    <p class="muted" style="max-width: 44rem;">
+      EISS est dirigée par un bureau de {{ boardSorted.counts.peopleTotal }} chercheurs et une petite
+      équipe de soutien. La composition reflète la portée géographique d'EISS à travers l'Europe et
+      au-delà.
+    </p>
+
+    {%- if boardSorted.leadership.length %}
+    <ul class="leadership-strip" aria-label="Direction d'EISS">
+      {%- for person in boardSorted.leadership %}
+      <li>
+        <a href="/board.fr.html{% if person.slug %}#{{ person.slug }}{% endif %}">
+          <img src="{{ person.photoOverride or person.photo }}" alt="{{ person.alt or person.name }}" loading="lazy">
+          <span class="leadership-strip-role">{{ person.role }}</span>
+          <span class="leadership-strip-name">{{ person.name }}</span>
+        </a>
+      </li>
+      {%- endfor %}
+    </ul>
+    {%- endif %}
+
+    {%- if boardSorted.countries.length %}
+    <ul class="country-strip" aria-label="Pays représentés dans l'équipe EISS">
+      {%- for c in boardSorted.countries %}
+      {%- if c.iso %}
+      <li>
+        <img src="/assets/images/flags/{{ c.iso }}.svg"
+             alt="{{ c.name }}"
+             title="{{ c.name }}"
+             width="28" height="28" loading="lazy">
+      </li>
+      {%- endif %}
+      {%- endfor %}
+    </ul>
+    {%- endif %}
+
+    <p style="margin-top: var(--space-5);">
+      <a class="btn btn-secondary" href="/board.fr.html">Voir toute l'équipe {{ icon("arrow-right") }}</a>
+    </p>
+  </div>
+</section>
+
 <section class="section" aria-labelledby="what-we-do-title">
   <div class="container">
     <h2 id="what-we-do-title">Nos activités</h2>
@@ -177,53 +224,6 @@ alternates:
         </a>
       </p>
     </article>
-  </div>
-</section>
-
-<section class="section" id="network" aria-labelledby="network-title">
-  <div class="container">
-    <div class="featured-eyebrow">Notre réseau</div>
-    <h2 id="network-title">
-      {{ boardSorted.counts.peopleTotal }} personnes dans {{ boardSorted.counts.countriesTotal }} pays
-    </h2>
-    <p class="muted" style="max-width: 44rem;">
-      EISS est dirigée par un bureau de {{ boardSorted.counts.peopleTotal }} chercheurs et une petite
-      équipe de soutien. La composition reflète la portée géographique d'EISS à travers l'Europe et
-      au-delà.
-    </p>
-
-    {%- if boardSorted.leadership.length %}
-    <ul class="leadership-strip" aria-label="Direction d'EISS">
-      {%- for person in boardSorted.leadership %}
-      <li>
-        <a href="/board.fr.html{% if person.slug %}#{{ person.slug }}{% endif %}">
-          <img src="{{ person.photoOverride or person.photo }}" alt="{{ person.alt or person.name }}" loading="lazy">
-          <span class="leadership-strip-role">{{ person.role }}</span>
-          <span class="leadership-strip-name">{{ person.name }}</span>
-        </a>
-      </li>
-      {%- endfor %}
-    </ul>
-    {%- endif %}
-
-    {%- if boardSorted.countries.length %}
-    <ul class="country-strip" aria-label="Pays représentés dans l'équipe EISS">
-      {%- for c in boardSorted.countries %}
-      {%- if c.iso %}
-      <li>
-        <img src="/assets/images/flags/{{ c.iso }}.svg"
-             alt="{{ c.name }}"
-             title="{{ c.name }}"
-             width="28" height="28" loading="lazy">
-      </li>
-      {%- endif %}
-      {%- endfor %}
-    </ul>
-    {%- endif %}
-
-    <p style="margin-top: var(--space-5);">
-      <a class="btn btn-secondary" href="/board.fr.html">Voir toute l'équipe {{ icon("arrow-right") }}</a>
-    </p>
   </div>
 </section>
 
