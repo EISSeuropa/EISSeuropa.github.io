@@ -16,7 +16,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 _Nothing yet._
 
-## [2.14.0] · 2026-05-24 — Live board pipeline and Initiative refresh
+## [2.15.0] · 2026-05-24 — Live board pipeline and Initiative refresh
 
 > The Google Form board pipeline goes live, the `/board` page is rebuilt around it, and `/initiative` is redesigned to read as concrete activities + numbers + people. Same scope-cycle also tightens the programme grid (per-slot rooms, Google Maps embed) and the sync workflow itself (descriptive PR titles, honest reporting, country flags).
 
@@ -78,6 +78,8 @@ The programme grid carries colour-coded room pills (blue / purple / amber for th
 - Translation drift on `/2026` (fr + de) and `/policy` (fr + de) accumulated from PRs #77 → #80. The map-embed include propagated; the Google Maps disclosure already in place from #77 → #78 was re-stamped. CI `i18n drift check` green again. (#81)
 - **ESSC-speaker tooltip clipped** by the card's `overflow: hidden`. Moved the corner-clipping responsibility onto `.person-photo` via `border-top-{left,right}-radius`; the card becomes `overflow: visible` so the tooltip can escape. Tooltip max-width raised + z-index bumped to clear neighbouring cards. (#103)
 - **Country flag wrapping alone on narrow cards** — on 4K-ish viewports the institution wrapped to multiple lines and the flag, sitting as a separate flex item, got pushed onto a fresh flex line. Switched the institution line to plain inline flow with a non-breaking space gluing the last word to the flag — flag never lands alone now. (#112)
+
+*Version number jumps from v2.13.0r straight to v2.15.0: GitHub's **immutable-releases** feature permanently reserves any tag name that was once attached to a release, and `v2.14.0` had been used by the original "live programme grid on /2026" release (since renumbered to v2.10.0r in the v2.13.0r retroactive cleanup). The tag is therefore unrecoverable; we skip the number rather than work around it.*
 
 ## [2.13.0r] · 2026-05-23 — Adopt NetSec versioning and release tooling
 
