@@ -69,3 +69,26 @@ alternates:
     {%- endif %}
   </div>
 </section>
+
+{%- if boardSorted.pastMembers and boardSorted.pastMembers.length %}
+<section class="section-tight">
+  <div class="container">
+    <details class="past-members">
+      <summary>
+        <span class="past-members-label">
+          Ehemalige Vorstandsmitglieder und Praktikanten
+          <span class="past-members-count">{{ boardSorted.pastMembers.length }}</span>
+        </span>
+        <span class="past-members-hint">
+          Sie bleiben Teil der weiteren europäischen Forschungsgemeinschaft für Sicherheitsstudien.
+        </span>
+      </summary>
+      <div class="people-grid people-grid--compact">
+        {%- for person in boardSorted.pastMembers %}
+          {%- include "person-card.njk" %}
+        {%- endfor %}
+      </div>
+    </details>
+  </div>
+</section>
+{%- endif %}
