@@ -14,7 +14,29 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
-### Added
+> The Google Form board pipeline goes live, the `/board` page is rebuilt around it, and `/initiative` is redesigned to read as concrete activities + numbers + people. Same scope-cycle also tightens the programme grid (per-slot rooms, Google Maps embed) and the sync workflow itself (descriptive PR titles, honest reporting, country flags).
+
+### Live board pipeline
+
+`scripts/sync-board.py` is now wired to the production Google Form (18 questions, five-role table, social-link URLs, country, public email, functional responsibility). A first-token + last-token identity key replaces the strict-slug dedup, collapsing middle-initial drift, honorific changes, and same-person-different-Google-account submissions. The Google Form's *Limit to 1 response* is off + *Collect email addresses* is Verified, so members re-submit when they want to change their photo — the documented workaround for the Forms file-upload edit limitation. A `photoOverride` field on board entries lets the operator hand-set a headshot path that survives every future sync.
+
+Auto-PR titles are situation-specific (`data: refresh headshot for Dr Arthur Laudrain`, `data: add Dr Jane Doe to the board`, `data: sync board bios (5 changes)`); bodies group changes by type — New members · Updated members · Removed members · Headshot files updated — with field-level diffs. The script's "No substantive changes" guard now considers photo-file diffs on disk, not just `board.json`, so photo-only updates are reported honestly.
+
+### Board page rebuilt
+
+`/board` is split into three sections (Leadership · Board Members · Support Staff) using the existing `tier` field. Same card size across all sections; hierarchy comes from headings, not card sizing. Each card carries a bio teaser with CSS `line-clamp: 3` + a JS Read-more toggle (full bio renders as one continuous paragraph — no sentence-cut by the button). A quiet `functionalResponsibility` pill sits beside the primary role; an amber 🎤 marks anyone chairing or speaking at the live ESSC edition. Affiliation now splits into `position` + `institution` rendered on two lines, with a round circle-flag SVG glued inline to the institution (35 flags shipped, mapped via a new `src/_data/countryFlags.js`). A muted "Update your bio" footer link nudges members toward self-service.
+
+### `/initiative` redesigned
+
+The page now opens with a stats row (**10 · 22 · 12 · 1** — conferences / people / countries / COST Action), then four activity tiles (ESSC, NetSec, Summer School + Training, Surveys + Workshops), then a "Our network" strip showing leadership headshots inline with country flags, then "How EISS started" with the 2017 AEGES origin paragraph, then a compact CTA strip (Become member · Newsletter · Get in touch). Replaces the previous restatements of "multidisciplinary inclusive network" with concrete activities + numbers + people.
+
+### Programme grid + workflow polish
+
+The programme grid carries colour-coded room pills (blue / purple / amber for the three rooms at ESSC 2026), assigned in frequency-descending order and stable across parallel rows so a given room always lands in the same column. Coffee breaks and lunches now show their Indico room (previously dropped). `/2026` venue section embeds a Google Map inside a frosted-glass 16:9 card (disclosed in `/policy` §5). Together with the sync-script honesty fix above, the workflow now produces release-quality auto-PRs.
+
+### Index of changes
+
+#### Added
 
 - **`/board` modernised** — three sections (Leadership, Board Members, Support Staff) split from the previous flat 19-card grid using the existing `tier` field on `scripts/board-source.json`. Same card size across all sections; visual hierarchy comes from the section headings, not card sizing. Each section's cards sort by tier then surname. The new `src/_data/boardSorted.js` is a pure-derived view: `board.json` (the Form-pipeline contract) and `scripts/board-source.json` stay untouched. (#86)
 - **ESSC-speaker mic icon** on board cards — a small amber 🎤 appears next to the role on any card whose person is chairing, discussing, or speaking at the live ESSC edition. Matched at build time between `board.json` and `indico.json` programme data via a "first-token + last-token" identity key (handles "Dr Arthur PB Laudrain" matching "Arthur Laudrain"). Styled CSS tooltip on hover/focus reads "Chairing or speaking at the current ESSC". (#86, #92, #103)
@@ -31,7 +53,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 - **Country flags + leadership-faces strip on `/initiative`** — new "Our network" section shows 3 leadership headshots inline + 12 country flags as a row. Data-driven from `boardSorted.countries` + `boardSorted.leadership`. (#113)
 - **Hero stats row + 4-tile "What we do" + origin paragraph on `/initiative`** — page now opens with **10 · 22 · 12 · 1** (conferences / people / countries / COST Action), then four activity tiles (ESSC, NetSec, Summer School + Training, Surveys + Workshops), then "How EISS started" with the 2017 AEGES origin. Replaces the old two-fold-aims abstraction + the redundant "Our ambition" bullet list. (#113)
 
-### Changed
+#### Changed
 
 - **Arthur and John moved from Support Team to Board** — their old Technology / Events Coordinator titles become `functionalResponsibility`. Eugenio remains in Support Staff (now with `role: "Support Staff"` + `functionalResponsibility: "Communications Coordinator"`). (#88)
 - **`Support Team` → `Support Staff`** (EN), `Équipe de soutien → Personnel de soutien` (FR), `Unterstützungsteam → Support-Personal` (DE). (#88)
@@ -47,7 +69,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 - **`/initiative` substantially redesigned** — see *Added* above. Page now reads as concrete activities + numbers + people rather than three restatements of "multidisciplinary inclusive network". (#113)
 - **Google Form settings** — *Limit to 1 response* unchecked; *Collect email addresses* set to Verified. Members re-submit the form when they want to change their photo (workaround for the Google Forms file-upload edit limitation). Disclaimer copy added to the Form description and to the Headshot photo question. Documented in `docs/board-bios-setup.md`. (#101)
 
-### Fixed
+#### Fixed
 
 - Translation drift on `/2026` (fr + de) and `/policy` (fr + de) accumulated from PRs #77 → #80. The map-embed include propagated; the Google Maps disclosure already in place from #77 → #78 was re-stamped. CI `i18n drift check` green again. (#81)
 - **ESSC-speaker tooltip clipped** by the card's `overflow: hidden`. Moved the corner-clipping responsibility onto `.person-photo` via `border-top-{left,right}-radius`; the card becomes `overflow: visible` so the tooltip can escape. Tooltip max-width raised + z-index bumped to clear neighbouring cards. (#103)
