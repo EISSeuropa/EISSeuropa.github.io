@@ -1,10 +1,10 @@
 ---
 layout: base.njk
 permalink: /events.html
-title: Members' Events
-description: Online and hybrid events organised by EISS members — roundtables, early-career seminars, and doctoral training workshops.
+title: Network events
+description: Online and hybrid events organised by EISS, the COST Action NetSec, and partner institutions — roundtables, early-career seminars, and doctoral training workshops.
 metaImage: /assets/images/events-meta.jpg
-navKey: ""
+navKey: events
 lang: en
 alternates:
   en: /events.html
@@ -15,11 +15,10 @@ alternates:
 
 <header class="page-header">
   <div class="container">
-    <span class="eyebrow">For members</span>
-    <h1>Members' Events</h1>
+    <span class="eyebrow">Beyond the conference</span>
+    <h1>Network events</h1>
     <p class="page-lead">
-      Our members are called upon to organise a wide range of events. EISS will support these
-      bottom-up initiatives to make them available online to all members.
+      Online and hybrid events organised by EISS, the COST Action <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">NetSec</a>, and partner institutions. All events are free and open to anyone working in or alongside European security studies — no membership required.
     </p>
   </div>
 </header>
@@ -34,38 +33,34 @@ alternates:
 
 <section class="section">
   <div class="container">
+    <h2 style="margin-bottom: var(--space-5);">Event formats</h2>
     <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));">
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("users-round") }}</div>
         <h2>Roundtables &amp; Conferences</h2>
         <p>
-          Online and hybrid events organised by EISS members with guests from academia and/or
-          the policy world to talk about critical issues in international security. EISS members
-          suggest a topic, gather a group of colleagues, and EISS gives access to the online
-          roundtable to the EISS community.
+          Online and hybrid events with guests from academia and the policy world on critical
+          issues in international security. Scholars and partners propose a topic, assemble a
+          panel, and EISS provides the platform.
         </p>
       </article>
 
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("graduation-cap") }}</div>
-        <h2>Early Career Seminars</h2>
+        <h2>Early-career seminars</h2>
         <p>
-          Online and hybrid seminars organised by PhD students or early career academics to share
-          their research and exchange ideas with the broader EISS community. PhD students or
-          PostDocs who are EISS members organise a seminar or conference in person at their
-          university (or elsewhere), and EISS gives virtual access to the EISS membership.
+          Online and hybrid seminars organised by PhD students and early-career researchers to
+          share their work and exchange ideas with the wider European security studies community.
         </p>
       </article>
 
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("book-open") }}</div>
-        <h2>Doctoral Training Workshops</h2>
+        <h2>Doctoral training workshops</h2>
         <p>
-          Online and hybrid workshops organised by members of EISS, intended and tailored for
-          PhD students and early career academics. These online training workshops can revolve
-          around the academic job market, devising an effective publication strategy, navigating
-          academic journals and publishing, and how to turn the PhD manuscript into a book.
-          Early-career academics and senior scholars alike can put forward proposals.
+          Workshops tailored for PhD students and early-career researchers — covering the academic
+          job market, publication strategy, navigating peer review, and turning a thesis into a
+          book. Proposals welcome from both early-career and senior scholars.
         </p>
       </article>
     </div>
@@ -75,26 +70,16 @@ alternates:
 <section class="section">
   <div class="container">
     <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <div class="featured-eyebrow">Call for Abstracts</div>
-      <h2>Submit a Members' Event proposal</h2>
+      <div class="featured-eyebrow">Propose an event</div>
+      <h2>Have an event in mind?</h2>
       <p class="lead">
-        We are now accepting abstracts for our Online &amp; Hybrid Events. Send us your abstract
-        via Indico.
-      </p>
-      <p>For all three formats, please submit a short abstract mentioning:</p>
-      <ul>
-        <li>The format of your event (one of the three described above).</li>
-        <li>The main topic to be addressed.</li>
-        <li>The purpose of the event.</li>
-        <li>The chair and speakers.</li>
-      </ul>
-      <p>
-        Abstracts can be submitted throughout the year and must be sent at least 4 weeks before
-        the event.
+        We host roundtables, seminars, and workshops on a rolling basis. If you'd like to propose
+        an event in one of the three formats above, get in touch — we'll work out the format and
+        timing together.
       </p>
       <p style="margin-top: var(--space-5);">
-        <a class="btn btn-primary" href="https://indico.eiss-europa.com/event/3/" target="_blank" rel="noopener">
-          Submit now {{ icon("external-link") }}
+        <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}">
+          {{ icon("mail") }} {{ site.contactEmail }}
         </a>
       </p>
     </article>

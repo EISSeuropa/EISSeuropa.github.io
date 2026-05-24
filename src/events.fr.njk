@@ -1,10 +1,10 @@
 ---
 layout: base.njk
 permalink: /events.fr.html
-title: Événements des membres
-description: Événements en ligne et hybrides organisés par les membres d'EISS — tables rondes, séminaires pour jeunes chercheurs et ateliers de formation doctorale.
+title: Événements du réseau
+description: Événements en ligne et hybrides organisés par EISS, l'Action COST NetSec et nos institutions partenaires — tables rondes, séminaires pour jeunes chercheurs et ateliers de formation doctorale.
 metaImage: /assets/images/events-meta.jpg
-navKey: ""
+navKey: events
 lang: fr
 status: beta
 alternates:
@@ -16,11 +16,10 @@ alternates:
 
 <header class="page-header">
   <div class="container">
-    <span class="eyebrow">Pour les membres</span>
-    <h1>Événements des membres</h1>
+    <span class="eyebrow">Au-delà de la conférence</span>
+    <h1>Événements du réseau</h1>
     <p class="page-lead">
-      Nos membres sont invités à organiser une large gamme d'événements. EISS soutient ces initiatives
-      ascendantes pour les rendre accessibles en ligne à tous les membres.
+      Événements en ligne et hybrides organisés par EISS, l'Action COST <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">NetSec</a> et nos institutions partenaires. Tous les événements sont gratuits et ouverts à toute personne travaillant dans le domaine des études européennes de sécurité — sans adhésion requise.
     </p>
   </div>
 </header>
@@ -31,15 +30,15 @@ alternates:
 
 <section class="section">
   <div class="container">
+    <h2 style="margin-bottom: var(--space-5);">Formats d'événements</h2>
     <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));">
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("users-round") }}</div>
-        <h2>Tables rondes et conférences</h2>
+        <h2>Tables rondes &amp; conférences</h2>
         <p>
-          Événements en ligne et hybrides organisés par les membres d'EISS avec des invités issus du monde
-          universitaire et/ou de la sphère politique, pour discuter de questions critiques en sécurité
-          internationale. Les membres d'EISS proposent un sujet, rassemblent un groupe de collègues,
-          et EISS donne accès à la table ronde en ligne à toute la communauté EISS.
+          Événements en ligne et hybrides avec des intervenants du monde académique et politique sur
+          des questions critiques de sécurité internationale. Chercheurs et partenaires proposent
+          un sujet, réunissent un panel, et EISS met à disposition la plateforme.
         </p>
       </article>
 
@@ -47,11 +46,9 @@ alternates:
         <div class="tile-icon" aria-hidden="true">{{ icon("graduation-cap") }}</div>
         <h2>Séminaires pour jeunes chercheurs</h2>
         <p>
-          Séminaires en ligne et hybrides organisés par des doctorants ou des chercheurs en début de
-          carrière pour partager leurs recherches et échanger des idées avec la communauté EISS au sens
-          large. Les doctorants ou post-doctorants membres d'EISS organisent un séminaire ou une
-          conférence en présentiel dans leur université (ou ailleurs), et EISS donne un accès virtuel
-          à l'ensemble des membres.
+          Séminaires en ligne et hybrides organisés par des doctorants et jeunes chercheurs pour
+          partager leurs travaux et échanger des idées avec la communauté européenne des études
+          de sécurité.
         </p>
       </article>
 
@@ -59,12 +56,10 @@ alternates:
         <div class="tile-icon" aria-hidden="true">{{ icon("book-open") }}</div>
         <h2>Ateliers de formation doctorale</h2>
         <p>
-          Ateliers en ligne et hybrides organisés par les membres d'EISS, conçus et adaptés pour
-          les doctorants et chercheurs en début de carrière. Ces ateliers de formation en ligne peuvent
-          porter sur le marché du travail académique, la mise au point d'une stratégie de publication
-          efficace, la navigation dans les revues académiques et l'édition, ou la transformation d'un
-          manuscrit de thèse en livre. Les jeunes chercheurs comme les chercheurs confirmés peuvent
-          soumettre des propositions.
+          Ateliers conçus pour les doctorants et jeunes chercheurs — couvrant le marché de
+          l'emploi académique, la stratégie de publication, la navigation dans l'évaluation par les
+          pairs, et la transformation d'une thèse en livre. Propositions bienvenues de la part de
+          chercheurs juniors comme seniors.
         </p>
       </article>
     </div>
@@ -74,26 +69,16 @@ alternates:
 <section class="section">
   <div class="container">
     <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <div class="featured-eyebrow">Appel à résumés</div>
-      <h2>Soumettre une proposition d'événement membre</h2>
+      <div class="featured-eyebrow">Proposer un événement</div>
+      <h2>Une idée d'événement ?</h2>
       <p class="lead">
-        Nous acceptons actuellement les résumés pour nos événements en ligne et hybrides.
-        Envoyez-nous votre résumé via Indico.
-      </p>
-      <p>Pour les trois formats, veuillez soumettre un court résumé mentionnant :</p>
-      <ul>
-        <li>Le format de votre événement (l'un des trois décrits ci-dessus).</li>
-        <li>Le sujet principal abordé.</li>
-        <li>L'objectif de l'événement.</li>
-        <li>La présidence et les intervenants.</li>
-      </ul>
-      <p>
-        Les résumés peuvent être soumis tout au long de l'année et doivent être envoyés au moins
-        4 semaines avant l'événement.
+        Nous accueillons des tables rondes, séminaires et ateliers tout au long de l'année. Si
+        vous souhaitez proposer un événement dans l'un des trois formats ci-dessus, contactez-nous —
+        nous discuterons ensemble du format et du calendrier.
       </p>
       <p style="margin-top: var(--space-5);">
-        <a class="btn btn-primary" href="https://indico.eiss-europa.com/event/3/" target="_blank" rel="noopener">
-          Soumettre {{ icon("external-link") }}
+        <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}">
+          {{ icon("mail") }} {{ site.contactEmail }}
         </a>
       </p>
     </article>
