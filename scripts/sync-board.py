@@ -81,18 +81,64 @@ def norm_email(s: str) -> str:
     return (s or "").strip().lower()
 
 
-def slugify(name: str) -> str:
-    """Stable slug from a person's name. Strips diacritics, titles, and
-    apostrophes before collapsing non-alphanumerics to hyphens. Used
-    for photo filenames AND for matching submissions against existing
-    board.json entries during the transitional period."""
+# Honorific tokens we strip from the *start* of a name before keying.
+# Case-insensitive at match time. Mirrors the equivalent regex in
+# src/_data/boardSorted.js — keep the two in lockstep. Covers academic
+# titles, French/Spanish/Portuguese variants, and the military ranks
+# that have shown up in ESSC programmes. Multiple consecutive titles
+# (e.g. "Lt Gen Dr Thomas Nilsson") are stripped via the two-pass loop
+# in identity_key().
+HONORIFIC_RE = re.compile(
+    r"^(?:dr|prof(?:essor)?|pr|mr|ms|mrs|mx|"
+    r"lic|lt\s+gen(?:eral)?|lieutenant\s+general|general|"
+    r"colonel|admiral)\.?\s+",
+    re.IGNORECASE,
+)
+
+
+def _strip_honorifics_and_diacritics(name: str) -> str:
+    """Lower-case, strip diacritics, drop up to two leading honorifics
+    (covers e.g. 'Lt Gen Dr X'). Used by both slugify() and
+    identity_key()."""
     s = unicodedata.normalize("NFKD", name or "")
     s = "".join(c for c in s if not unicodedata.combining(c))
-    s = re.sub(r"^(Dr|Prof|Mr|Ms|Mrs)\.?\s+", "", s)
-    s = s.lower()
+    for _ in range(2):  # at most two leading honorifics
+        m = HONORIFIC_RE.match(s)
+        if not m:
+            break
+        s = s[m.end():]
+    return s.lower().strip()
+
+
+def slugify(name: str) -> str:
+    """Stable slug from a person's name. Lowercases, strips diacritics
+    + honorifics + apostrophes, collapses non-alphanumerics to hyphens.
+    Used for photo filenames + as a secondary identity key during
+    dedup (after identity_key() does the heavy lifting)."""
+    s = _strip_honorifics_and_diacritics(name)
     s = re.sub(r"[‘’ʼ'`]", "", s)
     s = re.sub(r"[^a-z0-9]+", "-", s).strip("-")
     return s or "member"
+
+
+def identity_key(name: str) -> str:
+    """First-token + last-token identity key for cross-format matching.
+    Collapses middle initials and middle names so 'Dr Arthur PB Laudrain'
+    and 'Arthur Laudrain' map to the same key 'arthur laudrain'.
+    Two people on the EISS board who share both first and last name
+    would collide here; we surface that case as a warning rather than
+    silently merging.
+
+    Mirrors the equivalent helper in src/_data/boardSorted.js — keep
+    the two in lockstep."""
+    s = _strip_honorifics_and_diacritics(name)
+    s = re.sub(r"[‘’ʼ'`]", "", s)
+    tokens = re.findall(r"[a-z0-9]+", s)
+    if not tokens:
+        return ""
+    if len(tokens) == 1:
+        return tokens[0]
+    return f"{tokens[0]} {tokens[-1]}"
 
 
 def surname_key(name: str) -> str:
@@ -357,22 +403,42 @@ def carry_over(prior: dict, roles_map: dict[str, dict]) -> tuple[dict, dict]:
 # ──────────────────────────── orchestration ────────────────────────────
 
 
-def load_prior() -> tuple[dict, dict[str, dict]]:
-    """Return (raw board.json data, slug → existing entry across both
-    members + support)."""
+def load_prior() -> tuple[dict, dict[str, dict], dict[str, dict]]:
+    """Return (raw board.json data, slug → entry, identity_key → entry)
+    for every existing entry across both members + support.
+
+    Two indices: `slug` is the strict legacy match (used for the
+    URL-fragment anchor + photo filenames), `identity_key` is the
+    first-token-last-token fuzzy match that survives middle-initial
+    drift, honorific changes, etc. The sync prefers identity-key when
+    the two diverge — and logs the divergence so the reviewer sees it."""
     raw = json.loads(BOARD.read_text())
     by_slug: dict[str, dict] = {}
+    by_identity: dict[str, dict] = {}
     for p in raw.get("members", []) + raw.get("support", []):
         by_slug[slugify(p["name"])] = p
-    return raw, by_slug
+        ik = identity_key(p["name"])
+        if ik:
+            by_identity[ik] = p
+    return raw, by_slug, by_identity
 
 
 def dedupe_submissions(rows: list[dict], cols: dict) -> list[dict]:
-    """Reduce CSV rows to a list of one submission per person. Two-pass
-    dedup: first by email (newest wins), then by name slug across what
-    survived (catches the case where the same person submitted from
-    two different Google accounts)."""
+    """Reduce CSV rows to a list of one submission per person. Three-
+    pass dedup, in priority order:
+      1. email — same Google account → keep latest by timestamp
+      2. identity_key (first + last token) — same person from two
+         different Google accounts, or with middle initials added /
+         removed, or honorific changed
+      3. slug — strict fallback, mostly redundant with (2) but cheap
+
+    Each later pass only sees submissions the earlier passes haven't
+    already collapsed away. Logs a `~ collapsed` line when (2) catches
+    a near-match across email boundaries — surfaces the assumption
+    that two different emails belong to the same person so the PR
+    reviewer can sanity-check."""
     ts_col = cols.get("timestamp", "")
+    name_col = cols.get("name", "")
 
     def ts_of(r: dict) -> float:
         return parse_timestamp(r.get(ts_col, ""))
@@ -385,7 +451,7 @@ def dedupe_submissions(rows: list[dict], cols: dict) -> list[dict]:
         if not consent_ok(row.get(cols.get("consent", ""), "")):
             print(
                 f"  · skipping (no consent): "
-                f"{row.get(cols.get('name', ''), '') or '<unnamed>'}",
+                f"{row.get(name_col, '') or '<unnamed>'}",
                 file=sys.stderr,
             )
             continue
@@ -397,10 +463,46 @@ def dedupe_submissions(rows: list[dict], cols: dict) -> list[dict]:
             continue
         by_email[email] = row
 
-    # Pass 2: name-slug dedup across the survivors
-    by_slug: dict[str, dict] = {}
-    name_col = cols.get("name", "")
+    # Pass 2: identity-key dedup across the email-pass survivors.
+    # When two different emails resolve to the same first+last name,
+    # we treat them as the same person and keep the latest. We log
+    # the collapse so the reviewer can spot a false positive (very
+    # rare but worth surfacing).
+    by_identity: dict[str, dict] = {}
     for row in list(by_email.values()) + no_email:
+        name = row.get(name_col, "")
+        ik = identity_key(name)
+        if not ik:
+            continue
+        if ik in by_identity:
+            other = by_identity[ik]
+            other_name = other.get(name_col, "")
+            other_email = norm_email(other.get(cols.get("email", ""), ""))
+            this_email = norm_email(row.get(cols.get("email", ""), ""))
+            # Same identity key + different emails OR different names
+            # → loud "collapsed" note. The script keeps the newer one
+            # silently, the reviewer eyeballs the warning.
+            if other_email != this_email or other_name != name:
+                kept = row if ts_of(row) > ts_of(other) else other
+                dropped = other if kept is row else row
+                print(
+                    f"  ~ collapsed {dropped.get(name_col, '')!r} "
+                    f"<{norm_email(dropped.get(cols.get('email', ''), ''))}> "
+                    f"into {kept.get(name_col, '')!r} "
+                    f"<{norm_email(kept.get(cols.get('email', ''), ''))}> "
+                    f"(same first+last name). Verify they're the same "
+                    "person before merging.",
+                    file=sys.stderr,
+                )
+            if ts_of(by_identity[ik]) >= ts_of(row):
+                continue
+        by_identity[ik] = row
+
+    # Pass 3: slug fallback. Mostly redundant with identity-key but
+    # cheap insurance for the edge case where two submissions have
+    # *no* email AND identity_key returns "" (e.g. CJK names).
+    by_slug: dict[str, dict] = {}
+    for row in by_identity.values():
         slug = slugify(row.get(name_col, ""))
         if not slug:
             continue
@@ -466,7 +568,7 @@ def main() -> None:
     if not roles_map:
         sys.exit("board-source.json has no `roles` table — refusing to run.")
 
-    prior_raw, prior_by_slug = load_prior()
+    prior_raw, prior_by_slug, prior_by_identity = load_prior()
 
     # Fetch the Sheet
     print(f"Fetching {csv_url}")
@@ -480,7 +582,7 @@ def main() -> None:
     # before writing.
     members: list[dict] = []
     support: list[dict] = []
-    matched_slugs: set[str] = set()
+    matched_priors: set[int] = set()  # id() of prior entries we've claimed
 
     for row in submissions:
         name = (row.get(cols.get("name", ""), "") or "").strip()
@@ -488,7 +590,23 @@ def main() -> None:
             print("  · skipping submission with empty name", file=sys.stderr)
             continue
         slug = slugify(name)
-        prior = prior_by_slug.get(slug)
+        ik = identity_key(name)
+
+        # Prior match: identity_key first (fuzzy, survives middle-
+        # initial drift), slug fallback (strict). When identity_key
+        # finds a prior whose strict slug differs from the new name's
+        # slug, log it — the operator should see the rename happening.
+        prior = prior_by_identity.get(ik) if ik else None
+        if prior is None:
+            prior = prior_by_slug.get(slug)
+        elif slugify(prior["name"]) != slug:
+            print(
+                f"  ~ matched submission {name!r} to existing entry "
+                f"{prior['name']!r} via first+last name. The entry's "
+                "displayed name will be updated to the new form.",
+                file=sys.stderr,
+            )
+
         role_label = (row.get(cols.get("role", ""), "") or "").strip()
         role_info = roles_map.get(role_label)
         if role_info is None:
@@ -507,11 +625,13 @@ def main() -> None:
             support.append(entry)
         else:
             members.append(entry)
-        matched_slugs.add(slug)
+        if prior is not None:
+            matched_priors.add(id(prior))
 
-    # Carry over existing entries that no submission matched yet.
-    for slug, prior in prior_by_slug.items():
-        if slug in matched_slugs:
+    # Carry over existing entries that no submission matched. Using
+    # id() so we don't re-add an entry that two indices both pointed at.
+    for prior in prior_raw.get("members", []) + prior_raw.get("support", []):
+        if id(prior) in matched_priors:
             continue
         entry, role_info = carry_over(prior, roles_map)
         entry["_sort"] = (role_info["tier"], surname_key(entry["name"]))
