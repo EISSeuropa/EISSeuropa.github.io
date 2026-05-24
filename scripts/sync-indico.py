@@ -294,7 +294,9 @@ def _classify_session(slot: dict, indico_type: str | None) -> str | None:
     return None
 
 
-def extract_livestreamed(timetable_results: dict, event_id: str) -> list[dict]:
+def extract_livestreamed(
+    timetable_results: dict, event_id: str, default_room: str = ""
+) -> list[dict]:
     """Pick out livestreamed sessions (introduction / roundtable /
     keynote / conclusion) from a timetable export. Returns a sorted
     list of normalised dicts.
@@ -342,7 +344,9 @@ def extract_livestreamed(timetable_results: dict, event_id: str) -> list[dict]:
                 "endTime": (end.get("time") or "")[:5],
                 "tz": start.get("tz", ""),
                 "location": slot.get("location") or "",
-                "room": slot.get("room") or "",
+                "room": _canonical_room_display(
+                    slot.get("room") or "", default_room
+                ),
                 "url": (slot.get("url") or "").lstrip("/") and (
                     slot["url"] if slot["url"].startswith("http")
                     else f"{INDICO_BASE}{slot['url']}"
@@ -446,6 +450,30 @@ def _looks_like_break(title: str) -> bool:
     return t.startswith("coffee") or t.startswith("tea break") or t == "lunch"
 
 
+def _canonical_room_display(slot_room: str, default_room: str) -> str:
+    """Build a uniform-format room string for grid display, regardless
+    of how the Indico operator entered the field. The building / venue
+    prefix is already established in the surrounding venue section of
+    the conference page, so strip it from all rooms so the grid reads
+    consistently.
+
+    Concretely: when the event default is `"D House, Lecture Hall 8"`,
+    every slot whose room *starts with* `"D House, "` has that prefix
+    stripped. The operator's inconsistency between entering
+    `"D House, Lecture Hall 8"` and `"Lecture Hall 8"` for the same
+    default room collapses into a single display string. Rooms in a
+    different building (e.g. `"Main Hall, Room 12"`) keep their full
+    form because the prefix won't match."""
+    if not slot_room:
+        return ""
+    if "," not in (default_room or ""):
+        return slot_room  # No prefix to strip
+    default_prefix = default_room.rsplit(",", 1)[0].strip() + ","
+    if slot_room.startswith(default_prefix):
+        return slot_room[len(default_prefix):].strip()
+    return slot_room
+
+
 def _normalise_room_for_comparison(room: str) -> str:
     """Collapse a room string to its most specific segment for
     cross-format comparison. Indico operators sometimes enter
@@ -515,7 +543,8 @@ def extract_programme(timetable_results: dict, event_id: str, default_room: str 
                 if display_title.startswith(prefix):
                     display_title = display_title[len(prefix):].strip()
                     break
-            slot_room = slot.get("room") or ""
+            slot_room_raw = slot.get("room") or ""
+            slot_room = _canonical_room_display(slot_room_raw, default_room)
             base = {
                 "id": str(slot.get("id", slot_id)),
                 "title": display_title,
@@ -661,9 +690,13 @@ def extract_programme(timetable_results: dict, event_id: str, default_room: str 
 
     # `defaultRoom` lets the template render a one-line hint at the top
     # of the grid ("Sessions take place in {{defaultRoom}} unless marked
-    # otherwise"), so attendees scanning the grid have a baseline to
-    # compare flagged rooms against.
-    return {"days": days, "defaultRoom": default_room or ""}
+    # otherwise"). Use the last comma-separated segment so the hint
+    # reads at the same level of detail as the slot room labels (which
+    # have the building prefix stripped by _canonical_room_display).
+    default_room_display = (
+        default_room.rsplit(",", 1)[-1].strip() if default_room else ""
+    )
+    return {"days": days, "defaultRoom": default_room_display}
 
 
 def fetch_events() -> list[dict]:
@@ -727,7 +760,9 @@ def main() -> None:
     # kept (the latest per year).
     for year, event in annual_by_year.items():
         tt = fetch_timetable(event["id"])
-        livestreamed = extract_livestreamed(tt, event["id"])
+        livestreamed = extract_livestreamed(
+            tt, event["id"], default_room=event.get("room") or ""
+        )
         event["livestreamed"] = livestreamed
         # Full normalised programme — drives the live programme grid
         # on /YYYY pages. Same timetable, different shape: every slot,
