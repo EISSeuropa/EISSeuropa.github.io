@@ -1,11 +1,20 @@
-{# Shared card mark-up for /board (Leadership / Board / Support).
-   Variables in scope:
+{# Shared card mark-up for /board (Leadership / Board Members /
+   Support Staff). Variables in scope:
      - person   — entry from boardSorted.leadership / .boardMembers /
-                  .support. Contains the raw board.json fields plus the
-                  computed `isEsscActive` boolean.
-     - isSupport — true when rendering a support-team card. Switches the
-                  body text from `themes` (research themes) to `bio`
-                  (longer-form prose). Defaults to false. #}
+                  .support. Contains the raw board.json fields plus
+                  the computed `isEsscActive` boolean.
+     - isSupport — true when rendering a support-staff card. Switches
+                  the body text from `themes` (research themes) to
+                  `bio` (longer-form prose). Defaults to false.
+
+   Optional fields on `person` that change the rendering:
+     - functionalResponsibility — a secondary role label (e.g.
+       "Technology Coordinator") shown alongside the primary role.
+       Used for Board Members who also hold a coordinator function.
+     - isEsscActive — when true, a mic icon appears next to the role
+       indicating the person is chairing, discussing, or speaking at
+       the live ESSC edition. #}
+{% from "icons.njk" import icon %}
 {%- set isSupport = isSupport or false -%}
 {%- set lang = lang or "en" -%}
 {%- set t = i18n[lang] -%}
@@ -14,9 +23,15 @@
   <img class="person-photo" src="{{ person.photo }}" alt="{{ person.alt or person.name }}" loading="lazy">
   <div class="person-body">
     <p class="person-role">
-      {{ person.role }}
+      <span class="person-role-primary">{{ person.role }}</span>
+      {%- if person.functionalResponsibility %}
+      <span class="person-role-sep" aria-hidden="true">·</span>
+      <span class="person-functional-resp">{{ person.functionalResponsibility }}</span>
+      {%- endif %}
       {%- if person.isEsscActive %}
-      <span class="person-essc-star" title="{{ t.boardPage.esscStarTitle }}" aria-label="{{ t.boardPage.esscStarTitle }}">★</span>
+      <span class="person-essc-speaker" title="{{ t.boardPage.esscSpeakerTitle }}" aria-label="{{ t.boardPage.esscSpeakerTitle }}">
+        {{ icon("mic") }}
+      </span>
       {%- endif %}
     </p>
     <p class="person-name">{{ person.name }}</p>

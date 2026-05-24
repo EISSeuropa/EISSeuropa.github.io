@@ -217,10 +217,10 @@ const locales = {
     boardPage: {
       // Strings used by src/_includes/person-card.njk on /board.
       researchThemes: "Research themes",
-      // Tooltip + accessible name for the ★ shown next to people who
-      // are chairing, discussing, or speaking at the live ESSC edition
-      // (matched against the Indico programme at build time).
-      esscStarTitle: "Active in the current ESSC programme",
+      // Tooltip + accessible name for the mic icon shown next to people
+      // who are chairing, discussing, or speaking at the live ESSC
+      // edition (matched against the Indico programme at build time).
+      esscSpeakerTitle: "Chairing or speaking at the current ESSC",
     },
 
     registrationBadge: {
@@ -400,7 +400,7 @@ const locales = {
 
     boardPage: {
       researchThemes: "Thèmes de recherche",
-      esscStarTitle: "Intervient dans le programme ESSC en cours",
+      esscSpeakerTitle: "Préside ou intervient à l'ESSC en cours",
     },
 
     registrationBadge: {
@@ -571,7 +571,7 @@ const locales = {
 
     boardPage: {
       researchThemes: "Forschungsthemen",
-      esscStarTitle: "Wirkt im aktuellen ESSC-Programm mit",
+      esscSpeakerTitle: "Leitet oder spricht beim aktuellen ESSC",
     },
 
     registrationBadge: {

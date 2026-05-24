@@ -1568,36 +1568,54 @@ h4 { font-size: var(--fs-lg); }
   letter-spacing: 0.08em;
   color: var(--accent);
   margin-bottom: var(--space-2);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4em;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3em 0.45em;
+  line-height: 1.4;
 }
 
-/* Small star next to the role on cards whose person is chairing,
+/* Secondary "Functional Responsibility" label rendered alongside the
+   primary role (e.g. "BOARD MEMBER · Technology Coordinator"). Quieter
+   weight, normal-case, sentence casing — signals secondary status. */
+.person-role-sep {
+  color: var(--text-subtle);
+  font-weight: 400;
+}
+.person-functional-resp {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* Microphone icon next to the role on cards whose person is chairing,
    discussing, or speaking at the live ESSC edition. Match between
    board.json and indico.json is computed at build time by
-   src/_data/boardSorted.js. Amber to evoke "active right now" without
+   src/_data/boardSorted.js. Amber tone — "active right now" — without
    stealing focus from the role text. */
-.person-essc-star {
+.person-essc-speaker {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.1em;
-  height: 1.1em;
-  font-size: 1em;
-  line-height: 1;
   color: hsl(36 90% 50%);
   text-transform: none;
   letter-spacing: 0;
+  margin-inline-start: auto;  /* push to end of role row when room */
+}
+.person-essc-speaker svg {
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
 }
 
-[data-theme="dark"] .person-essc-star {
+[data-theme="dark"] .person-essc-speaker {
   color: hsl(40 95% 65%);
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .person:hover .person-essc-star {
-    transform: scale(1.15);
+  .person:hover .person-essc-speaker {
+    transform: translateY(-1px);
     transition: transform var(--motion-fast) var(--ease-out);
   }
 }

@@ -153,25 +153,27 @@
       "alt": "Sarka Kolmasova",
       "affiliation": "Deputy Head &amp; Assistant Professor — Department of International Relations and European Studies, Metropolitan University Prague.",
       "themes": "Norms, Military Interventions, Responsibility to Protect, Human Rights in International Politics."
+    },
+    {
+      "name": "Dr Arthur PB Laudrain",
+      "slug": "arthur-laudrain",
+      "role": "Board Member",
+      "functionalResponsibility": "Technology Coordinator",
+      "photo": "/assets/images/rsd25-cropped-348x332.jpg",
+      "alt": "Dr Arthur PB Laudrain",
+      "affiliation": "Team Lead and Senior Researcher for Cyber Security — Center for Security Studies, ETH Zurich."
+    },
+    {
+      "name": "Dr John NT Helferich",
+      "role": "Board Member",
+      "functionalResponsibility": "Events Coordinator",
+      "photo": "/assets/images/helferich-portrait-college-3.jpeg",
+      "alt": "Dr John NT Helferich",
+      "affiliation": "DPhil Candidate in International Relations — St. Antony's College, Oxford."
     }
   ],
 
   "support": [
-    {
-      "name": "Dr Arthur PB Laudrain",
-      "slug": "arthur-laudrain",
-      "role": "Technology Coordinator",
-      "photo": "/assets/images/rsd25-cropped-348x332.jpg",
-      "alt": "Dr Arthur PB Laudrain",
-      "bio": "Arthur is responsible for most of the online logistics of the organisation. He is Team Lead and a Senior Researcher for Cyber Security at the Center for Security Studies at ETH Zurich. Arthur has been with us since 2017."
-    },
-    {
-      "name": "Dr John NT Helferich",
-      "role": "Events Coordinator",
-      "photo": "/assets/images/helferich-portrait-college-3.jpeg",
-      "alt": "Dr John NT Helferich",
-      "bio": "John is your first point of contact. He is in charge of our email communications, and ensures smooth coordination between chairs and panel members, among other things. He is a DPhil candidate in International Relations at St. Antony's College, Oxford. John joined the Initiative in 2018."
-    },
     {
       "name": "Eugenio Sanchez",
       "role": "Communications Coordinator",
