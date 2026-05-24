@@ -383,11 +383,22 @@ def build_from_row(row: dict, cols: dict, role_info: dict, prior: dict | None) -
 
     # Slug + alt are preserved across syncs if the prior entry has them
     # (a hand-set slug for deep linking, or a custom alt for a11y).
+    #
+    # `photoOverride` is also preserved as-is. Google Forms doesn't let
+    # respondents replace a file upload when editing an existing
+    # response, so the only path to swap a headshot is hand-editing
+    # board.json: the operator uploads a new file to
+    # src/assets/images/board/ and sets `photoOverride` to its path.
+    # The template prefers photoOverride > photo, and the sync never
+    # touches this field — so a manual swap survives every future
+    # Form-driven update.
     if prior:
         if prior.get("slug"):
             person["slug"] = prior["slug"]
         if prior.get("alt"):
             person["alt"] = prior["alt"]
+        if prior.get("photoOverride"):
+            person["photoOverride"] = prior["photoOverride"]
 
     return person
 
