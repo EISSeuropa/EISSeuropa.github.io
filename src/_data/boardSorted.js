@@ -94,40 +94,25 @@ function buildTierMap() {
   return map;
 }
 
-// Split a bio into a teaser + remainder for the card's "Read more"
-// expander. The teaser ends at the last word boundary at or before
-// BIO_TEASER_LEN; the remainder is everything after, leading-trimmed.
-// When the bio is shorter than the threshold, returns the full bio
-// as the teaser with an empty remainder.
-const BIO_TEASER_LEN = 180;
-
-function makeBioParts(bio) {
-  const s = (bio || "").trim();
-  if (!s || s.length <= BIO_TEASER_LEN) {
-    return { teaser: s, rest: "" };
-  }
-  let cut = s.lastIndexOf(" ", BIO_TEASER_LEN);
-  // If there's no space in the first 70% of the teaser window
-  // (CJK / very long words), fall back to a hard cut at the limit.
-  if (cut < BIO_TEASER_LEN * 0.7) cut = BIO_TEASER_LEN;
-  return {
-    teaser: s.slice(0, cut),
-    rest: s.slice(cut).replace(/^\s+/, ""),
-  };
-}
+// Heuristic threshold for "this bio is long enough to need a
+// Read-more toggle". The actual visual truncation is done by CSS
+// line-clamp (3 lines), not by character count — but we need a
+// build-time signal to decide whether to render the toggle button
+// at all, so short bios don't get a pointless "Read more" they
+// can't expand into anything new.
+const BIO_LONG_THRESHOLD = 180;
 
 module.exports = function () {
   const esscNames = collectEsscNames();
   const tierByRole = buildTierMap();
 
   function annotate(person) {
-    const { teaser, rest } = makeBioParts(person.bio);
+    const bio = (person.bio || "").trim();
     return {
       ...person,
       tier: tierByRole[person.role] ?? 999,
       isEsscActive: esscNames.has(identityKey(person.name)),
-      bioTeaser: teaser,
-      bioRest: rest,
+      bioIsLong: bio.length > BIO_LONG_THRESHOLD,
     };
   }
 
