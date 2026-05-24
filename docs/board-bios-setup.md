@@ -62,7 +62,8 @@ just don't merge.
 | 15 | **Bluesky URL (optional)** | Short answer | ⬜ |
 | 16 | **Mastodon URL (optional)** | Short answer | ⬜ |
 | 17 | **Headshot photo (optional)** | File upload — image only — max 5 MB | ⬜ |
-| 18 | **I consent to publication of my bio on eiss-europa.com** | Checkboxes — single option | ✅ |
+| 18 | **End date for time-bound roles (optional)** | Date | ⬜ |
+| 19 | **I consent to publication of my bio on eiss-europa.com** | Checkboxes — single option | ✅ |
 
 **Q2 options** — must match exactly the `label` values in
 `scripts/board-source.json` → `roles` table:
@@ -122,6 +123,26 @@ And on the **Headshot photo (optional)** question, set its
 > Already submitted once and want to change your photo? Don't edit
 > — submit a fresh response. The file-upload field is locked by
 > Google Forms after the first submission.
+
+### End-date question — time-bound roles
+
+Q18 (**End date for time-bound roles (optional)**, Date) lets interns,
+visiting fellows, and anyone on a fixed-term contract record when
+their role ends. Set the question **Description** to:
+
+> Leave blank if your EISS role is open-ended. Fill in only if you're
+> on a fixed-term role (internship, visiting fellow, contract). Your
+> card will stay on the board for ~1 week after this date, then move
+> to a folded *"Past board members and interns"* footer — you remain
+> part of the broader European security studies family.
+
+The sync writes whatever the respondent picks straight through to
+`board.json` as `roleEndDate` (ISO `YYYY-MM-DD`).
+`src/_data/boardSorted.js` applies a 7-day grace at build time and
+moves expired entries into `pastMembers` for the folded footer on
+`/board`. The daily-rebuild workflow re-evaluates this with each
+build, so the transition is automatic. Empty / unparseable values
+leave the entry permanent — no silent surprises.
 
 ## Step 2 · Link the Form to a Sheet
 

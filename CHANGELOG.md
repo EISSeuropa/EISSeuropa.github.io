@@ -14,8 +14,15 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+### Added
+
+- **Auto-expiring board cards for time-bound roles** — interns, visiting fellows, and fixed-term contracts. A new optional `roleEndDate` field on each board entry (Form question 18, Date type) carries the role end-date. `src/_data/boardSorted.js` applies a **7-day grace** after that date, then moves the entry from the active sections into a new `pastMembers` array. The daily-rebuild workflow re-evaluates each build so the transition is automatic, no manual gardening required. (#126)
+- **"Past board members and interns" folded footer** on `/board` — a `<details>`-based collapsed footer rendering all expired entries with a compact people-grid. Closed by default, opens to a quieter grid (smaller min column, slightly muted). Copy in EN / FR / DE reinforces the "they remain part of the broader European security-studies family" framing. (#126)
+- **Date-shape tolerance in `scripts/sync-board.py`** — accepts `YYYY-MM-DD` (Forms default), `DD/MM/YYYY`, `DD.MM.YYYY`, `YYYY/MM/DD`, and `MM/DD/YYYY`; normalises everything to ISO. Unparseable values log a warning and leave the entry permanent (no silent expiry on garbage input). (#126)
+
 ### Changed
 
+- **`boardSorted.counts.peopleTotal` / `countriesTotal` now count active members only** — past members no longer show up in the `/initiative` stats row, so the **N people across M countries** headline reflects the present team rather than the cumulative roster. `counts.pastTotal` exposes the alumni count for any future template that wants it. (#126)
 - **`/initiative` — Our network section moved up** above *What we do*, so the leadership headshots + country flags appear immediately after the hero stats row instead of below the NetSec card. Visualises the **N people across M countries** stat right where the reader sees it.
 
 ### Fixed
