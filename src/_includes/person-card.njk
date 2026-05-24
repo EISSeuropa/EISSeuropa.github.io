@@ -48,9 +48,26 @@
     {%- endif %}
 
     {%- if person.country %}
+    {%- set countryKey = person.country | lower | trim %}
+    {%- set iso = countryFlags.byName[countryKey] %}
+    {%- if iso %}
+    {# Flag-only rendering. The country name lives in `alt` + `title`
+       so screen readers + hover tooltips still convey it; the visible
+       text is suppressed per the operator's "replace the text"
+       request. Fallback (else branch) keeps the labelled map-pin
+       form for countries we don't yet have a flag SVG for. #}
+    <p class="person-country">
+      <img class="person-flag"
+           src="/assets/images/flags/{{ iso }}.svg"
+           alt="{{ person.country }}"
+           title="{{ person.country }}"
+           width="22" height="22" loading="lazy">
+    </p>
+    {%- else %}
     <p class="person-country">
       {{ icon("map-pin") }} {{ person.country }}
     </p>
+    {%- endif %}
     {%- endif %}
 
     {%- if person.bio %}
