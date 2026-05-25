@@ -348,11 +348,21 @@ h4 { font-size: var(--fs-lg); }
   background: var(--accent);
 }
 
-/* On narrow viewports the chips can wrap below the nav.
-   Hidden on the smallest mobile widths to keep the top bar tidy —
-   users can still switch via the footer or by editing the URL. */
+/* On narrow viewports the chips compact — language switching is a
+   primary action and dropping it on mobile (the previous behaviour,
+   `display: none` below 480px) stranded FR/DE speakers on whichever
+   locale they landed on. Closes #137. */
 @media (max-width: 480px) {
-  .lang-switcher { display: none; }
+  .lang-switcher {
+    /* Drop the right margin so the switcher hugs the theme toggle
+       (the nav-actions container has its own gap). */
+    margin-right: 0;
+    padding: 2px;
+  }
+  .lang-chip {
+    padding: 3px 7px;
+    font-size: 10px;
+  }
 }
 
 /* ---------- beta-translation ribbon ---------- */
@@ -625,6 +635,18 @@ h4 { font-size: var(--fs-lg); }
 
   .nav-menu-toggle {
     display: grid;
+  }
+
+  /* At this breakpoint .nav-links becomes a fixed drawer below the
+     header bar, so it stops taking flex space and its previous
+     `margin-left: auto` no longer pushes .nav-actions to the right.
+     The actions cluster (lang switcher + theme toggle + burger) was
+     ending up squeezed against the brand, looking like it was
+     "floating in the middle" of the bar. Pushing nav-actions itself
+     right restores the right-aligned utility cluster the desktop
+     bar has. Closes #137. */
+  .nav-actions {
+    margin-inline-start: auto;
   }
 }
 
