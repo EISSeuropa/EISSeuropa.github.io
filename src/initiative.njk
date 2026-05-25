@@ -211,56 +211,65 @@ alternates:
         2020 online (COVID) edition is not on the map and is acknowledged
         in the figcaption. -#}
     <figure class="essc-map-figure card" style="padding: var(--space-5); margin-top: var(--space-5);">
-      <svg viewBox="0 0 1000 700" class="essc-map" role="img" aria-labelledby="essc-map-title essc-map-desc" preserveAspectRatio="xMidYMid meet">
+      {#- viewBox 1000 × 1274 (10:12.74 ≈ 0.785 W/H) matches Europe's
+          real geographic aspect in this lat[35–71] / lon[−12–32] slice
+          at central latitude 50°N. The europe-outline path data was
+          generated from a naïve Plate-Carrée projection (no cos(φ)
+          correction), which compressed the map vertically by 1/cos(50°)
+          ≈ 1.82×. We compensate by scaling the outline `<g>` in y by
+          1.82 and placing dots/labels in the new (1000 × 1274) space —
+          dot cy and text y are pre-multiplied by 1.82 here so the
+          labels render at upright proportions. -#}
+      <svg viewBox="0 0 1000 1274" class="essc-map" role="img" aria-labelledby="essc-map-title essc-map-desc" preserveAspectRatio="xMidYMid meet">
         <title id="essc-map-title">ESSC host cities across Europe, 2017–2026</title>
         <desc id="essc-map-desc">A stylized map showing the European cities that have hosted the annual ESSC conference since 2017, with dots marking each host location.</desc>
 
-        <g class="essc-map-outline" aria-hidden="true">
+        <g class="essc-map-outline" aria-hidden="true" transform="scale(1, 1.82)">
           {%- include "europe-outline.njk" %}
         </g>
 
         <g class="essc-map-dots">
           <a href="/2019.html" class="essc-map-link">
             <title>Paris — 2017, 2018, 2019</title>
-            <circle cx="326" cy="431" r="14" class="essc-map-dot essc-map-dot--inaugural"/>
-            <text x="346" y="430" font-size="26" class="essc-map-label">Paris</text>
-            <text x="346" y="462" font-size="20" class="essc-map-years">2017 – 2019</text>
+            <circle cx="326" cy="784" r="14" class="essc-map-dot essc-map-dot--inaugural"/>
+            <text x="346" y="783" font-size="26" class="essc-map-label">Paris</text>
+            <text x="346" y="815" font-size="20" class="essc-map-years">2017 – 2019</text>
           </a>
           <a href="/2021.html" class="essc-map-link">
             <title>Lisbon — 2021</title>
-            <circle cx="65" cy="628" r="9" class="essc-map-dot"/>
-            <text x="85" y="627" font-size="26" class="essc-map-label">Lisbon</text>
-            <text x="85" y="659" font-size="20" class="essc-map-years">2021</text>
+            <circle cx="65" cy="1143" r="9" class="essc-map-dot"/>
+            <text x="85" y="1142" font-size="26" class="essc-map-label">Lisbon</text>
+            <text x="85" y="1174" font-size="20" class="essc-map-years">2021</text>
           </a>
           <a href="/2022.html" class="essc-map-link">
             <title>Berlin — 2022</title>
-            <circle cx="577" cy="359" r="9" class="essc-map-dot"/>
-            <text x="597" y="358" font-size="26" class="essc-map-label">Berlin</text>
-            <text x="597" y="390" font-size="20" class="essc-map-years">2022</text>
+            <circle cx="577" cy="653" r="9" class="essc-map-dot"/>
+            <text x="597" y="652" font-size="26" class="essc-map-label">Berlin</text>
+            <text x="597" y="684" font-size="20" class="essc-map-years">2022</text>
           </a>
           <a href="/2023.html" class="essc-map-link">
             <title>Barcelona — 2023</title>
-            <circle cx="322" cy="576" r="9" class="essc-map-dot"/>
-            <text x="342" y="575" font-size="26" class="essc-map-label">Barcelona</text>
-            <text x="342" y="607" font-size="20" class="essc-map-years">2023</text>
+            <circle cx="322" cy="1048" r="9" class="essc-map-dot"/>
+            <text x="342" y="1047" font-size="26" class="essc-map-label">Barcelona</text>
+            <text x="342" y="1079" font-size="20" class="essc-map-years">2023</text>
           </a>
           <a href="/2024.html" class="essc-map-link">
             <title>Prague — 2024</title>
-            <circle cx="601" cy="407" r="9" class="essc-map-dot"/>
-            <text x="621" y="406" font-size="26" class="essc-map-label">Prague</text>
-            <text x="621" y="438" font-size="20" class="essc-map-years">2024</text>
+            <circle cx="601" cy="741" r="9" class="essc-map-dot"/>
+            <text x="621" y="740" font-size="26" class="essc-map-label">Prague</text>
+            <text x="621" y="772" font-size="20" class="essc-map-years">2024</text>
           </a>
           <a href="/2025.html" class="essc-map-link">
             <title>Thessaloniki — 2025</title>
-            <circle cx="794" cy="590" r="9" class="essc-map-dot"/>
-            <text x="784" y="610" font-size="26" class="essc-map-label essc-map-label--end">Thessaloniki</text>
-            <text x="784" y="642" font-size="20" class="essc-map-years essc-map-years--end">2025</text>
+            <circle cx="794" cy="1074" r="9" class="essc-map-dot"/>
+            <text x="784" y="1094" font-size="26" class="essc-map-label essc-map-label--end">Thessaloniki</text>
+            <text x="784" y="1126" font-size="20" class="essc-map-years essc-map-years--end">2025</text>
           </a>
           <a href="/2026.html" class="essc-map-link">
             <title>Stockholm — 2026 (next)</title>
-            <circle cx="683" cy="227" r="11" class="essc-map-dot essc-map-dot--next"/>
-            <text x="703" y="226" font-size="26" class="essc-map-label">Stockholm</text>
-            <text x="703" y="258" font-size="20" class="essc-map-years">2026 · next</text>
+            <circle cx="683" cy="413" r="11" class="essc-map-dot essc-map-dot--next"/>
+            <text x="703" y="412" font-size="26" class="essc-map-label">Stockholm</text>
+            <text x="703" y="444" font-size="20" class="essc-map-years">2026 · next</text>
           </a>
         </g>
       </svg>
