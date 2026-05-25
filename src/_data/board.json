@@ -138,6 +138,8 @@
       "alt": "Dr Arthur PB Laudrain",
       "photo": "/assets/images/board/arthur-laudrain.jpg",
       "functionalResponsibility": "Technology Coordinator",
+      "position": "Team Lead and Senior Researcher",
+      "institution": "ETH Zurich - Center for Security Studies",
       "country": "Switzerland",
       "bio": "Arthur specialises in election interference, disinformation, subversion, and military cyber operations. Previously, he was the Richard Lounsbery US-France Security Fellow at Stanford CISAC, and a Research Associate in Cyber Diplomacy at the Department of War Studies at King's College London. He is a member of the Management Committee of NetSec (Networking European Security Knowledge), a European Cooperation in Science and Technology project. He also maintains affiliations with Stanford CISAC and King's College London. Arthur has a wide profesionnal experience spanning think-tanks (CSS 2017; IISS 2019; HCSS 2022), consulting (Oxford Analytica, ISTARI), and government projects. He obtained his DPhil from the University of Oxford (Wolfson College), and holds an MA (London) and LLM (Leiden). He is an Associate of King's College (AKC) and Fellow of the Higher Education Academy (FHEA).",
       "themes": "election interference, disinformation, subversion",
@@ -147,9 +149,7 @@
         "orcid": "https://orcid.org/0000-0002-8642-2671",
         "linkedin": "https://www.linkedin.com/in/apb-ldn/"
       },
-      "slug": "arthur-laudrain",
-      "position": "Team Lead and Senior Researcher",
-      "institution": "Center for Security Studies, ETH Zurich"
+      "slug": "arthur-laudrain"
     },
     {
       "name": "Dr Chiara Libiseller",
@@ -180,6 +180,18 @@
       "country": "France",
       "position": "Professor of Political Science",
       "institution": "Sciences Po, Center for International Studies (CERI)"
+    },
+    {
+      "name": "Ms. Angela Sajewicz",
+      "role": "Board Member",
+      "alt": "Ms. Angela Sajewicz",
+      "photo": "",
+      "functionalResponsibility": "None",
+      "position": "Masters Student",
+      "institution": "James Madison University",
+      "country": "United States",
+      "workingGroups": "None yet",
+      "roleEndDate": "2026-06-19"
     },
     {
       "name": "Prof. Olivier Schmitt",
