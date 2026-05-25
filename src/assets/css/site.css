@@ -3307,12 +3307,13 @@ h4 { font-size: var(--fs-lg); }
 }
 
 .essc-map-outline path {
-  /* Slightly stronger fill + stroke so individual countries read on
-     a light background; in light mode the previous 10%-opacity blue
-     blended too much with the card background and the country
-     borders disappeared. */
-  fill: hsl(216 60% 88%);
-  stroke: hsl(216 20% 70%);
+  /* Pale neutral fill so the labels + dots pop in light mode. The
+     earlier hsl(216 60% 88%) was still saturated enough to compete
+     with the dark text on top — bumped lightness up and saturation
+     down so countries register as "pale background" rather than
+     "pale-blue tint", which the eye reads as part of the text. */
+  fill: hsl(216 30% 94%);
+  stroke: hsl(216 15% 78%);
   stroke-width: 1;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
@@ -3323,6 +3324,14 @@ h4 { font-size: var(--fs-lg); }
     fill: hsl(216 30% 22%);
     stroke: hsl(222 14% 32%);
   }
+  /* Subtle dark stroke around dots in dark mode rather than bright
+     white — keeps the dark-mode look the user explicitly approved
+     in PR #134. */
+  .essc-map-dot,
+  .essc-map-dot--inaugural,
+  .essc-map-dot--next {
+    stroke: hsl(222 24% 10%);
+  }
 }
 
 .essc-map-link {
@@ -3332,7 +3341,7 @@ h4 { font-size: var(--fs-lg); }
 
 .essc-map-dot {
   fill: var(--accent);
-  stroke: var(--surface);
+  stroke: hsl(0 0% 100%);
   stroke-width: 3;
   vector-effect: non-scaling-stroke;
   transition: r var(--motion-base) var(--ease-out);
@@ -3347,7 +3356,7 @@ h4 { font-size: var(--fs-lg); }
 
 .essc-map-dot--inaugural {
   fill: hsl(36 90% 52%);
-  stroke: var(--surface);
+  stroke: hsl(0 0% 100%);
 }
 
 .essc-map-link:hover .essc-map-dot--inaugural,
@@ -3358,7 +3367,7 @@ h4 { font-size: var(--fs-lg); }
 
 .essc-map-dot--next {
   fill: hsl(150 60% 42%);
-  stroke: var(--surface);
+  stroke: hsl(0 0% 100%);
 }
 
 .essc-map-link:hover .essc-map-dot--next,
@@ -3367,20 +3376,32 @@ h4 { font-size: var(--fs-lg); }
   filter: drop-shadow(0 2px 6px hsl(150 60% 42% / 0.5));
 }
 
-/* Labels carry a halo stroke matched to the card background so the
-   text stays readable when it crosses a country polygon — in light
-   mode plain dark text on a pale-blue fill loses contrast at small
-   sizes. paint-order: stroke fill draws the halo behind the glyph
-   so the letterforms stay sharp. The halo colour is the surface
-   token so it tracks light + dark mode automatically. */
+/* Labels carry a halo stroke so the text stays readable when it
+   crosses a country polygon. paint-order: stroke fill draws the
+   halo behind the glyph so the letterforms stay sharp.
+
+   IMPORTANT: the halo must be FULLY OPAQUE to actually mask the
+   country fill underneath. Earlier this used var(--surface), which
+   in light mode resolves to `hsl(0 0% 100% / 0.72)` (72% alpha) —
+   that let 28% of the country fill bleed through the halo and made
+   the labels look fuzzy / hard to read against country backgrounds.
+   Light mode now uses opaque white; the dark-mode override below
+   uses an opaque near-black. */
 .essc-map-label,
 .essc-map-years {
   pointer-events: none;
   font-family: inherit;
-  stroke: var(--surface);
-  stroke-width: 5;
+  stroke: hsl(0 0% 100%);
+  stroke-width: 6;
   stroke-linejoin: round;
   paint-order: stroke fill;
+}
+
+@media (prefers-color-scheme: dark) {
+  .essc-map-label,
+  .essc-map-years {
+    stroke: hsl(222 24% 10%);
+  }
 }
 
 .essc-map-label {
