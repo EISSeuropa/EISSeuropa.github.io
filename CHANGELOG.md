@@ -6,7 +6,59 @@ This project follows [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.
 
 ## Release-notes format (applies to `[Unreleased]` + every `[X.Y.Z]` section)
 
-Release notes here follow a **hybrid format**: a short prose lede, two-to-five themed sub-sections carrying the actual narrative, and a canonical **index of changes** at the bottom grouped by Keep-a-Changelog categories. Patches skip the lede + themes and ship the index only.
+Release notes here follow a **hybrid format**: a short prose lede, two-to-five themed sub-sections carrying the actual narrative, and a canonical **index of changes** at the bottom grouped by Keep-a-Changelog categories. The themes are where the writing happens; the index is the audit trail.
+
+### Shape
+
+```markdown
+## [X.Y.Z] · YYYY-MM-DD — <short title>
+
+> One- to three-sentence lede in voice. What is this release *about*?
+> Who's it for? Why ship it now?
+
+### <First theme — name it for the thing that changed>
+
+Prose intro (~2-4 sentences). Inline links to docs / issues where
+relevant. Add bullets only if the theme has multiple distinct pieces;
+otherwise let the prose carry it.
+
+### <Second theme>
+
+Same shape.
+
+### Index of changes
+
+The themed sections above are the story; the index below is the
+audit trail. Same content, terser.
+
+#### Added
+- (one-line pointer bullets, what not why)
+
+#### Changed
+- (…)
+
+#### Fixed
+- (…)
+```
+
+### Rules
+
+1. **One Index block per release.** Each release section has at most one `### Index of changes` block and at most one of each `#### Added` / `#### Changed` / `#### Deprecated` / `#### Removed` / `#### Fixed` / `#### Security` sub-heading inside it, in that order. When a PR adds an entry to `[Unreleased]`, the bullet goes inside the *existing* sub-heading, never a new one with the same name below it.
+
+2. **The lede + themes are written when the release is cut**, not accumulated bullet-by-bullet through the development cycle. The release-cutting moment is where the maintainer reads back through `[Unreleased]`, picks the 2-5 most coherent themes, drafts the lede, and weaves the bullets into prose sections.
+
+3. **Self-policing tier**:
+   - **Patch** (`X.Y.Z` with `Z > 0`) ships the Index block only, no lede or themes. People reading patch notes care about specifics.
+   - **Minor / major** ships the full hybrid: lede + themes + index.
+   - If you can't write a meaningful lede about a release, it's a patch. The format mirrors the actual significance.
+
+4. **Within a theme**, order content by user impact: headline first, smaller polish after. Within the index, same ordering inside each `####` block.
+
+5. **The release script (`scripts/release.sh`) extracts the `[Unreleased]` body verbatim** into the GitHub Release notes. Eyeball the body before confirming the script's prompt.
+
+6. **No hard wraps in prose.** Each prose paragraph, blockquote lede, and multi-line bullet must be a single source line. Do not break mid-sentence with a `\n`. GitHub Releases renders markdown with the *break-on-newline* GFM variant; every soft `\n` becomes a `<br>` and forces the prose to render narrow on the Releases page (even though it looks flowing on the `github.com` file view). One long line per paragraph keeps both renderings correct. Code fences, headings, blank lines, and the compare-link footer are unaffected.
+
+See [`CLAUDE.md`](CLAUDE.md) §4 for the operator-facing version of these rules.
 
 ## Retroactive renumber
 
@@ -16,10 +68,13 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
+- **`CLAUDE.md` at repo root**, ~270 lines of operator-facing convention adapted from the sister repo [`netsec.github.io`](https://github.com/EISSeuropa/netsec.github.io)'s `CLAUDE.md`. Codifies eleven numbered rule sections: language (British English, no machine translation), PR workflow (auto-merge default, visual carve-out, squash), the "open an issue for every deferred item" rule with informal template, release-notes hybrid format, the four-point release cross-check (roadmap, sitemap, translations, repo docs + the milestone hygiene gate), public-copy voice (no developer jargon, show-don't-tell), prose voice (no em dashes, no rule-of-three rhythm, no synonym cycling), working-tree hygiene, accessibility + i18n cadence, milestone tagging (every issue carries one of the five thematic milestones), and documentation currency. Adapted where the EISS convention diverges from NetSec's: thematic milestones rather than per-release version milestones; `master` branch rather than `main`; no Wiki or stakeholder PDF; sync-board + sync-indico data pipelines rather than sync-cost + sync-bios. Future Claude sessions read this on every invocation, so the conventions survive context-window expiry.
 - **`/initiative` hero brand banner (PR C of 3)** — the full EISS lockup (constellation + EiSS wordmark + "The European Initiative for Security Studies" tagline) renders above the eyebrow on the about page in all three locales, sized for a one-line tagline on desktop and graceful wrap on mobile. Acts as a visual statement of identity right where new visitors land. Left-aligned to flow with the existing eyebrow + H1 + page-lead stack rather than competing with them; `aria-hidden` because the H1 already names the section. Uses the same `inlineSvg` shortcode added in PR B so the wordmark's `currentColor` cascades from the `.initiative-hero-brand { color: #007bc6 }` rule.
 
 ### Changed
 
+- **`SECURITY.md` rewritten from an 84-byte stub to a full security policy** adapted from the sister repo `netsec.github.io`'s template, ~110 lines covering scope (in-scope vs out-of-scope, listed third-party vendors with their own reporting URLs), the private-disclosure channels (GitHub Security Advisories preferred, email fallback), expected acknowledgement and resolution SLAs by severity, safe-harbour terms for good-faith researchers, and a list of the security hygiene the repo already maintains (pinned dependencies, no production secrets in-repo, least-privilege Actions, no tracking pixels).
+- **`CHANGELOG.md` preamble expanded** with the full hybrid release-notes shape (template + six rules), so the format is documented in the same file that uses it rather than only in `README.md` and `CLAUDE.md`. The new rules cover one-Index-per-release, write-themes-at-release-time-not-PR-time, self-policing patch vs minor tier, content ordering by user impact, the release-script verbatim extraction guarantee, and the critical "no hard wraps in prose" rule (every soft `\n` becomes a `<br>` in GitHub Releases). Links to `CLAUDE.md` §4 for the operator-facing version.
 - **Schema.org `Organization` `logo` upgraded from a stale Mobirise-era JPEG to the new high-res brand PNG (PR C of 3)** — the JSON-LD in `base.njk` head now points at `/assets/images/brand/logo-full-1024.png` (1024×712, ≈1.44:1 aspect — within Google's required 1:1-to-4:1 range for Knowledge Panel logos) and uses an `ImageObject` with explicit `width` / `height` so Google's parser can size it without an extra fetch. Also adds `foundingDate: "2017"` to tie the org to the inaugural Panthéon-Assas conference — helps disambiguate from other "EISS" acronyms in the Knowledge Panel and surfaces the founding year on rich-results cards.
 - **EISS logo replaces the placeholder "E" mark across site chrome (PR B of 3)** — every header, every footer, the favicon, the Apple touch icon, the Android adaptive icon, and the PWA manifest theme colour now use the real brand identity from `src/assets/images/brand/` (shipped in PR A). The header inlines the constellation + EiSS wordmark lockup on desktop and collapses to just the iconmark + a small text label below 600 px (the breakpoint where the nav's lang switcher + menu button start crowding the brand). The footer carries the full lockup including the tagline as a polished closing sign-off. The favicon is a brand-blue rounded square containing a simplified 4-dot constellation (the full 7-dot constellation is illegible at 16-32 px; this captures the network metaphor with strokes thick enough to survive downscaling — verified at 16 / 32 / 180 / 192 / 512). `theme-color` and PWA `background_color` switch from `#1e6bcb` to the canonical brand `#007bc6`, sampled from the master PDF in the brand bundle. A new `inlineSvg` Eleventy shortcode reads the SVG bytes at build time so the inlined markup picks up cascading `color:` from the parent — that's how the wordmark's `currentColor` fills resolve to brand blue (set on `.brand-logo`) without forking the SVG per surface. Maintains brand blue in both light + dark modes per the agreed identity rule.
 - **`scripts/derive-logo-variants.py`: unique title/desc IDs per variant** (`t-mark/d-mark`, `t-lockup/d-lockup`, `t-full/d-full`) so the lockup + iconmark can be inlined on the same page (as `nav.njk` does for desktop/mobile responsive swap) without producing duplicate HTML IDs in the rendered page.
