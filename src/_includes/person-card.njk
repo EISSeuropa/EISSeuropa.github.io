@@ -39,6 +39,12 @@
   <div class="person-body">
     <p class="person-role">
       <span class="person-role-primary">{{ person.role }}</span>
+      {%- if person.activeYear %}
+      {# Set by boardSorted.js on the pastMembers array only. Renders
+         as a quiet "· YYYY" suffix on the EISS community cards
+         indicating the year the person was active with EISS. #}
+      <span class="person-active-year">· {{ person.activeYear }}</span>
+      {%- endif %}
       {%- if person.functionalResponsibility %}
       <span class="person-functional-resp">{{ person.functionalResponsibility }}</span>
       {%- endif %}

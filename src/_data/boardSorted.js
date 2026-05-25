@@ -187,10 +187,18 @@ module.exports = function () {
   const support = activeSupport; // ordering preserved
 
   // Past members: union of expired entries from both sources, sorted
-  // by surname for the folded footer. Tier is preserved so the
-  // template can show their last role.
+  // by surname for the community section. Tier is preserved so the
+  // template can show their last role. `activeYear` is the year of
+  // the entry's roleEndDate — per spec, when an internship spans
+  // two calendar years, this picks the most recent one. Only set
+  // on past members (the field is template-conditional, so active
+  // entries don't get a misleading "until YYYY" badge).
   const pastMembers = [...allMembersAnnotated, ...allSupportAnnotated]
     .filter((m) => isExpired(m, todayMs))
+    .map((m) => ({
+      ...m,
+      activeYear: m.roleEndDate ? m.roleEndDate.slice(0, 4) : null,
+    }))
     .sort(bySurname);
 
   // Exposed for the page footer link ("Update your bio"). Sourced

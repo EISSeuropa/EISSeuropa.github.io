@@ -1658,6 +1658,17 @@ h4 { font-size: var(--fs-lg); }
   line-height: 1.4;
 }
 
+/* "· YYYY" suffix on EISS community cards indicating the year the
+   person was active with EISS. Inherits the role line's uppercase /
+   tracking; muted colour so it reads as quiet meta, not a primary
+   element. Only ever rendered when `activeYear` is set on the
+   person object, which `boardSorted.js` only sets on the pastMembers
+   array — active section cards never show it. */
+.person-active-year {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
 /* Microphone icon next to the role on cards whose person is chairing,
    discussing, or speaking at the live ESSC edition. Match between
    board.json and indico.json is computed at build time by

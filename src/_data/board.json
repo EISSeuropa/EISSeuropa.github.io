@@ -244,6 +244,157 @@
       "country": "United States",
       "workingGroups": "None yet",
       "roleEndDate": "2026-06-19"
+    },
+    {
+      "name": "Kim Hirsch-Hoffmann",
+      "role": "Support Staff",
+      "alt": "Kim Hirsch-Hoffmann",
+      "photo": "",
+      "roleEndDate": "2023-02-14"
+    },
+    {
+      "name": "Yiqi Yu",
+      "role": "Support Staff",
+      "alt": "Yiqi Yu",
+      "photo": "",
+      "roleEndDate": "2023-05-31"
+    },
+    {
+      "name": "Francisco Ferreira",
+      "role": "Support Staff",
+      "alt": "Francisco Ferreira",
+      "photo": "",
+      "roleEndDate": "2023-06-30"
+    },
+    {
+      "name": "Camilo Torres Casanova",
+      "role": "Support Staff",
+      "alt": "Camilo Torres Casanova",
+      "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
+      "roleEndDate": "2023-07-06"
+    },
+    {
+      "name": "Ulysse Richard",
+      "role": "Support Staff",
+      "alt": "Ulysse Richard",
+      "photo": "",
+      "roleEndDate": "2023-07-10"
+    },
+    {
+      "name": "Robin Staes-Polet",
+      "role": "Support Staff",
+      "alt": "Robin Staes-Polet",
+      "photo": "",
+      "roleEndDate": "2023-07-31"
+    },
+    {
+      "name": "Giulia Bretel De Simone",
+      "role": "Support Staff",
+      "alt": "Giulia Bretel De Simone",
+      "photo": "",
+      "roleEndDate": "2023-09-29"
+    },
+    {
+      "name": "Haoyu Wang",
+      "role": "Support Staff",
+      "alt": "Haoyu Wang",
+      "photo": "",
+      "roleEndDate": "2023-10-31"
+    },
+    {
+      "name": "Eva Castelletti",
+      "role": "Support Staff",
+      "alt": "Eva Castelletti",
+      "photo": "",
+      "roleEndDate": "2024-05-31"
+    },
+    {
+      "name": "Federico Pirino",
+      "role": "Support Staff",
+      "alt": "Federico Pirino",
+      "photo": "",
+      "roleEndDate": "2024-11-30"
+    },
+    {
+      "name": "Teresa Marzo",
+      "role": "Support Staff",
+      "alt": "Teresa Marzo",
+      "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
+      "roleEndDate": "2025-02-28"
+    },
+    {
+      "name": "Trinabh Banerjee",
+      "role": "Support Staff",
+      "alt": "Trinabh Banerjee",
+      "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
+      "roleEndDate": "2025-04-10"
+    },
+    {
+      "name": "Gillian Gonnord",
+      "role": "Support Staff",
+      "alt": "Gillian Gonnord",
+      "photo": "",
+      "roleEndDate": "2025-04-17"
+    },
+    {
+      "name": "Raaghavi Tandon",
+      "role": "Support Staff",
+      "alt": "Raaghavi Tandon",
+      "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
+      "roleEndDate": "2025-05-21"
+    },
+    {
+      "name": "Adam Gajdosik",
+      "role": "Support Staff",
+      "alt": "Adam Gajdosik",
+      "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
+      "roleEndDate": "2025-05-31"
+    },
+    {
+      "name": "Shirley Tian",
+      "role": "Support Staff",
+      "alt": "Shirley Tian",
+      "photo": "",
+      "institution": "University of Edinburgh",
+      "country": "United Kingdom",
+      "roleEndDate": "2026-01-02"
+    },
+    {
+      "name": "Ali Gohar",
+      "role": "Support Staff",
+      "alt": "Ali Gohar",
+      "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
+      "roleEndDate": "2026-02-09"
+    },
+    {
+      "name": "Lise Mai",
+      "role": "Support Staff",
+      "alt": "Lise Mai",
+      "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
+      "roleEndDate": "2026-04-02"
+    },
+    {
+      "name": "James Roughan",
+      "role": "Support Staff",
+      "alt": "James Roughan",
+      "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
+      "roleEndDate": "2026-05-16"
     }
   ]
 }
