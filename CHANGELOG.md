@@ -41,6 +41,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- **`sync-board.yml` was an invalid workflow file** since PR #107 (2026-05-24) — line 106 was `title: ${{ steps.sync.outputs.title || 'data: sync board bios from Google Form' }}` without enclosing quotes, and the colon inside the fallback string made the YAML parser treat it as a mapping separator. Every push to `master` since then triggered a workflow-validation failure (68 failed runs by the time it was spotted), and GitHub hid the **Run workflow** button on the Actions page, leaving the board-bios sync un-triggerable from the UI. Wrapped the `${{ … }}` expression in double quotes so YAML reads the whole thing as a single scalar; added an inline comment explaining the why.
 - **`scripts/release.sh` compare-link regex** now accepts letters and dashes after the dotted numerics, so `v2.13.0r` and any future suffixed tags update cleanly. Previous regex `v([0-9.]+)` silently failed to bind on `v2.13.0r`, leaving `[Unreleased]: …/compare/v2.13.0r...HEAD` stale across v2.22.0. Same PR repoints the live compare link at v2.22.0. (#121)
 
 ## [2.22.0] · 2026-05-24 — Live board pipeline and Initiative refresh
