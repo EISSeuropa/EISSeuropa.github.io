@@ -499,19 +499,71 @@ h4 { font-size: var(--fs-lg); }
   text-decoration: none;
 }
 
-.nav-brand-mark {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-sm);
-  background:
-    radial-gradient(circle at 30% 30%, hsl(216 95% 65%), hsl(216 88% 40%) 60%, hsl(216 88% 28%) 100%);
-  box-shadow: var(--shadow-1), inset 0 1px 0 hsl(0 0% 100% / 0.25);
-  display: grid;
-  place-items: center;
-  color: white;
-  font-weight: 800;
-  font-size: 0.85rem;
-  letter-spacing: -0.04em;
+/* ---------- brand logo (shared) -----------------------------------------
+   `.brand-logo` is the wrapper around an inlined SVG (mark / lockup /
+   full). Inside the SVG, the wordmark/tagline paths use
+   `fill="currentColor"` so the parent's `color:` controls them; the
+   constellation paths use a literal #73caff that survives the cascade
+   (with a class hook for surfaces that need to override it, e.g. an
+   all-white footer over a coloured background). Keeping the brand
+   blue across light + dark modes is intentional — the brand identity
+   is strongest when the colours don't flip per OS preference.
+
+   The wrapper itself sets `display: inline-flex` so the SVG inherits
+   the line-box height without unwanted descender space, and
+   `color: #007bc6` pins the wordmark to the canonical brand blue
+   regardless of the surrounding text colour. */
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  color: #007bc6;
+  line-height: 0;
+}
+
+.brand-logo svg {
+  display: block;
+  width: auto;
+  height: 100%;
+}
+
+/* Desktop header: show the constellation + EiSS wordmark lockup. The
+   28 px height matches the prior .nav-brand-mark footprint so the
+   surrounding nav layout doesn't shift on the swap. */
+.brand-logo--lockup {
+  height: 28px;
+}
+
+/* Mobile header: show just the constellation iconmark. Visible only
+   below the 600 px breakpoint via the media query at the end of this
+   block; the small text label (`.nav-brand-label`) renders alongside
+   so the brand name still appears on phones. */
+.brand-logo--mark {
+  display: none;
+  height: 24px;
+}
+
+/* Footer: the full lockup (constellation + EiSS + tagline) — wider,
+   quieter surface than the header, can carry the complete identity
+   as a polished closing sign-off. Height accommodates the two-line
+   tagline at readable size. */
+.brand-logo--footer {
+  height: 56px;
+}
+
+/* The localised brand-label text used on mobile (hidden on desktop
+   where the lockup's wordmark already carries the name). Sits to the
+   right of the iconmark with the existing nav-brand gap. */
+.nav-brand-label {
+  display: none;
+}
+
+/* Mobile breakpoint — collapse the lockup to iconmark + text label.
+   600 px chosen to match the nav's natural reflow point (the menu
+   button + lang switcher start crowding the brand around here). */
+@media (max-width: 600px) {
+  .brand-logo--lockup { display: none; }
+  .brand-logo--mark { display: inline-flex; }
+  .nav-brand-label { display: inline; }
 }
 
 .nav-links {

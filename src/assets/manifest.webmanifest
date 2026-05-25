@@ -4,8 +4,8 @@
   "description": "The largest and most diverse European gathering of scholars and practitioners on security issues.",
   "start_url": "/",
   "display": "browser",
-  "background_color": "#ffffff",
-  "theme_color": "#1e6bcb",
+  "background_color": "#007bc6",
+  "theme_color": "#007bc6",
   "icons": [
     {
       "src": "/assets/android-chrome-192x192.png",
@@ -16,6 +16,12 @@
       "src": "/assets/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "/assets/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "/assets/favicon.svg",

@@ -3,9 +3,25 @@
    only the visible text label is looked up from `t.nav.<key>`. #}
 <header class="site-header">
   <nav class="container nav" aria-label="Primary">
+    {# Brand link. The `<a>` carries the accessible name; SVGs inside
+       are aria-hidden so screen readers don't double-announce "EISS".
+       Two visual variants are inlined and CSS swaps them at the 600 px
+       breakpoint — desktop shows the constellation + EiSS wordmark
+       lockup, mobile collapses to the iconmark + the localised brand
+       label text so the link always carries a name (the lockup SVG's
+       EiSS wordmark is decorative, not text).
+       Inlining (rather than <img src=...>) lets `currentColor` cascade
+       from the header's `--text` token, so the wordmark adapts to
+       light/dark while the constellation keeps its literal brand
+       light-blue. #}
     <a class="nav-brand" href="{{ '/' if lang == 'en' else '/index.' + lang + '.html' }}" aria-label="EISS — {{ site.fullName }}, home">
-      <span class="nav-brand-mark" aria-hidden="true">E</span>
-      <span>{{ t.nav.brandLabel }}</span>
+      <span class="brand-logo brand-logo--lockup" aria-hidden="true">
+        {% inlineSvg "assets/images/brand/logo-lockup.svg" %}
+      </span>
+      <span class="brand-logo brand-logo--mark" aria-hidden="true">
+        {% inlineSvg "assets/images/brand/logo-mark.svg" %}
+      </span>
+      <span class="nav-brand-label">{{ t.nav.brandLabel }}</span>
     </a>
 
     <ul class="nav-links" id="primary-nav" data-nav-menu>

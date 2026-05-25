@@ -57,7 +57,11 @@
   <link rel="icon" href="/assets/favicon-16x16.png" sizes="16x16" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180">
   <link rel="manifest" href="/assets/manifest.webmanifest">
-  <meta name="theme-color" content="#1e6bcb">
+  {# theme-color = the canonical EISS brand blue (sampled from the
+     master PDF in the brand bundle). Drives Android Chrome's address-
+     bar tint + the iOS PWA status bar so the chrome around the page
+     matches the rounded-square favicon. #}
+  <meta name="theme-color" content="#007bc6">
 
   {# Localised share card. The EN URL is `/assets/images/<slug>-meta.jpg`;
      translated variants live at `<slug>-meta.fr.jpg` / `<slug>-meta.de.jpg`,
