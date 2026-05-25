@@ -1587,6 +1587,31 @@ h4 { font-size: var(--fs-lg); }
   border-top-right-radius: calc(var(--radius-md) - 1px);
 }
 
+/* Initials placeholder when a member hasn't uploaded a headshot.
+   Same 4:5 box as the <img> so the card layout doesn't shift; soft
+   accent-tinted background with the initials centred in a muted
+   accent colour. Reads as "intentional placeholder" rather than
+   "missing image". */
+.person-photo-placeholder {
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(135deg, hsl(216 40% 90%) 0%, hsl(216 50% 82%) 100%);
+  color: hsl(216 60% 28%);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 6vw + 0.5rem, 4rem);
+  letter-spacing: -0.02em;
+  font-feature-settings: "tnum" 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  .person-photo-placeholder {
+    background:
+      linear-gradient(135deg, hsl(216 28% 22%) 0%, hsl(216 32% 28%) 100%);
+    color: hsl(216 65% 78%);
+  }
+}
+
 .person-body {
   padding: var(--space-4) var(--space-4) var(--space-5);
 }

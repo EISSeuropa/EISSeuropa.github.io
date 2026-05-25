@@ -34,12 +34,14 @@
 
   "_roles_doc": "Allowed values for the 'Your role' Form dropdown. The Form question's options must exactly match the `label` values below. `kind` determines which output section the entry lands in (board → /board.html — split into 'Leadership' for tier < 100 and 'Board Members' for tier ≥ 100; support → 'Support Staff' section). `tier` is the primary sort key — lower tiers appear higher within their section. Within a tier, entries sort alphabetical by surname. To add a new role: append to this list AND add the matching option to the Form dropdown.",
 
+  "_roles_aliases_doc": "Each role entry MAY carry an optional `aliases` array — list of additional Form-dropdown labels that should map to the same canonical role. The script tries an exact match against `label` first, then walks each role's `aliases` for a match. The CANONICAL `label` is what gets written into board.json (and therefore rendered on the card), regardless of which alias the Form used. Use aliases when the Form's display label evolves (e.g. clarifying 'Support Staff' to 'Support Staff (incl. intern)') without forcing a board.json rewrite.",
+
   "roles": [
     { "label": "Founding Director",  "kind": "board",   "tier": 1   },
     { "label": "Treasurer",          "kind": "board",   "tier": 2   },
     { "label": "Secretary-General",  "kind": "board",   "tier": 3   },
     { "label": "Board Member",       "kind": "board",   "tier": 100 },
-    { "label": "Support Staff",      "kind": "support", "tier": 100 }
+    { "label": "Support Staff",      "kind": "support", "tier": 100, "aliases": ["Support Staff (incl. intern)"] }
   ],
 
   "_functional_responsibilities_doc": "Allowed values for the new 'Functional responsibility' Form dropdown. The script copies whichever value the member picks into the entry's `functionalResponsibility` field verbatim; the template renders it as a quiet pill alongside the primary role. The list here exists only as a sanity check on the Form options — if a member submits an unrecognised value, the script accepts it (forward-compatible) but logs a warning.",

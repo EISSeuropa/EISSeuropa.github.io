@@ -182,18 +182,6 @@
       "institution": "Sciences Po, Center for International Studies (CERI)"
     },
     {
-      "name": "Ms. Angela Sajewicz",
-      "role": "Board Member",
-      "alt": "Ms. Angela Sajewicz",
-      "photo": "",
-      "functionalResponsibility": "None",
-      "position": "Masters Student",
-      "institution": "James Madison University",
-      "country": "United States",
-      "workingGroups": "None yet",
-      "roleEndDate": "2026-06-19"
-    },
-    {
       "name": "Prof. Olivier Schmitt",
       "role": "Board Member",
       "photo": "/assets/images/schmitt-olivier-2-213x320.jpg",
@@ -245,6 +233,17 @@
       "country": "France",
       "position": "PhD Candidate in International Relations",
       "institution": "Sciences Po Paris"
+    },
+    {
+      "name": "Ms. Angela Sajewicz",
+      "role": "Support Staff",
+      "alt": "Ms. Angela Sajewicz",
+      "photo": "",
+      "position": "Masters Student",
+      "institution": "James Madison University",
+      "country": "United States",
+      "workingGroups": "None yet",
+      "roleEndDate": "2026-06-19"
     }
   ]
 }

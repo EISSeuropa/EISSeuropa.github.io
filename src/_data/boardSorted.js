@@ -129,6 +129,26 @@ module.exports = function () {
   const tierByRole = buildTierMap();
   const todayMs = Date.now();
 
+  // Two-letter initials derived from the person's full name, used by
+  // person-card.njk to render a placeholder when they haven't uploaded
+  // a photo (the Form's headshot question is optional). Strips
+  // honorifics via the same regex as identityKey() so "Ms. Angela
+  // Sajewicz" → "AS", not "MS". Falls back to "?" if a name is
+  // somehow empty after stripping.
+  function computeInitials(name) {
+    if (!name) return "?";
+    let n = String(name).trim();
+    for (let i = 0; i < 2; i++) {
+      const m = n.match(HONORIFIC_RE);
+      if (!m) break;
+      n = n.slice(m[0].length).trim();
+    }
+    const tokens = n.split(/\s+/).filter(Boolean);
+    if (tokens.length === 0) return "?";
+    if (tokens.length === 1) return tokens[0].charAt(0).toUpperCase();
+    return (tokens[0].charAt(0) + tokens[tokens.length - 1].charAt(0)).toUpperCase();
+  }
+
   function annotate(person) {
     const bio = (person.bio || "").trim();
     return {
@@ -136,6 +156,7 @@ module.exports = function () {
       tier: tierByRole[person.role] ?? 999,
       isEsscActive: esscNames.has(identityKey(person.name)),
       bioIsLong: bio.length > BIO_LONG_THRESHOLD,
+      initials: computeInitials(person.name),
     };
   }
 
