@@ -1971,6 +1971,91 @@ h4 { font-size: var(--fs-lg); }
   height: 1rem;
 }
 
+/* ---------- /board — mobile compact card layout --------------------
+   At narrow widths (≤ 36 rem, ~576 px) the default vertical card
+   becomes too tall to scroll through comfortably — a 4:5 photo at
+   100 % container width is ~400 px just for the photo, and the
+   active /board has 20+ cards. Switch to a side-by-side layout: the
+   photo collapses to a fixed 96 px column on the left, and the body
+   flows in the remaining space on the right. Body padding tightens
+   slightly. Photo / placeholder corner radii change so only the
+   left edge inherits the card's outer shape.
+
+   Applies to both `.people-grid` (active sections) and
+   `.people-grid--compact` (alumni footer) since they share the
+   same `.person` card markup. */
+@media (max-width: 36rem) {
+  .people-grid,
+  .people-grid--compact {
+    /* Collapse to a single column at narrow widths instead of letting
+       the auto-fill grid take over — at 320–400 px viewports a
+       two-column attempt would crush each card to ~150 px. */
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  .person {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    align-items: stretch;
+    /* Keep the card's own border + shadow; the photo column lives
+       inside it via its own corner-radius rules below. */
+  }
+
+  .person-photo,
+  .person-photo-placeholder {
+    /* Photo fills its 96 px column at the full card height; object-fit
+       crops the image to portrait orientation. Without the explicit
+       aspect-ratio reset, .person-photo would still try to enforce
+       4:5 and overflow the cell. */
+    aspect-ratio: auto;
+    width: 96px;
+    height: 100%;
+    min-height: 96px;
+    /* Round the LEFT corners (top + bottom) instead of just top; the
+     photo sits along the left edge of the card now. */
+    border-top-left-radius: calc(var(--radius-md) - 1px);
+    border-top-right-radius: 0;
+    border-bottom-left-radius: calc(var(--radius-md) - 1px);
+  }
+
+  .person-photo-placeholder {
+    /* Initials look better at a smaller size in the smaller box. */
+    font-size: 2rem;
+  }
+
+  .person-body {
+    padding: var(--space-3) var(--space-4);
+    /* Allow body content to flow naturally; without min-width: 0 a
+       long unbreakable institution name could push the column wider
+       than the grid track. */
+    min-width: 0;
+  }
+
+  /* Name + position labels can stay full-width but tighten margins. */
+  .person-name {
+    margin-block-end: var(--space-1);
+  }
+
+  .person-position,
+  .person-institution {
+    /* Truncate to one line each on mobile — institution name + flag
+       can wrap awkwardly otherwise. The full text is still in the
+       DOM so screen readers and copy-paste work. */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Hover-lift transform is jarring on touch (transform fires on tap)
+     so drop it at this breakpoint — pointer:coarse devices don't
+     need the lift cue anyway. */
+  .person:hover {
+    transform: none;
+    box-shadow: var(--shadow-1);
+  }
+}
+
 /* ---------- definition-list rows (Who are you?, FAQ) ---------- */
 .definition-list {
   display: grid;
