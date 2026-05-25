@@ -1997,26 +1997,30 @@ h4 { font-size: var(--fs-lg); }
   .person {
     display: grid;
     grid-template-columns: 96px 1fr;
-    align-items: stretch;
-    /* Keep the card's own border + shadow; the photo column lives
-       inside it via its own corner-radius rules below. */
+    /* align-items: start so the photo pins to the TOP of the card
+       instead of stretching to its full height. Without this,
+       expanding a long bio grows the card vertically and the photo
+       column grows with it — object-fit: cover then crops more of
+       the head as the card gets taller, which reads as the photo
+       "zooming in" when the bio is expanded. Standard directory-card
+       pattern: fixed-size photo top-left, body extends below it. */
+    align-items: start;
   }
 
   .person-photo,
   .person-photo-placeholder {
-    /* Photo fills its 96 px column at the full card height; object-fit
-       crops the image to portrait orientation. Without the explicit
-       aspect-ratio reset, .person-photo would still try to enforce
-       4:5 and overflow the cell. */
-    aspect-ratio: auto;
+    /* Fixed 96 × 96 square anchored to the top-left of the card,
+       independent of the card's overall height. Expanding a long
+       bio leaves the photo at its natural framing. */
+    aspect-ratio: 1;
     width: 96px;
-    height: 100%;
-    min-height: 96px;
-    /* Round the LEFT corners (top + bottom) instead of just top; the
-     photo sits along the left edge of the card now. */
+    height: 96px;
+    /* Only the TOP-LEFT corner rounds. The photo no longer reaches
+       the card's bottom-left corner (the body extends below it),
+       so rounding the bottom-left would look odd. */
     border-top-left-radius: calc(var(--radius-md) - 1px);
     border-top-right-radius: 0;
-    border-bottom-left-radius: calc(var(--radius-md) - 1px);
+    border-bottom-left-radius: 0;
   }
 
   .person-photo-placeholder {
