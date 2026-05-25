@@ -3268,10 +3268,48 @@ h4 { font-size: var(--fs-lg); }
 }
 
 .people-grid--compact {
-  /* Slightly smaller min column so alumni cards pack denser than the
-     active grid — visual signal that this is a quieter section. */
+  /* Slightly smaller min column so the community grid packs denser
+     than the active sections — visual signal that this is a quieter
+     register. */
   grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
   opacity: 0.92;
+}
+
+/* Community section card refinements — make each card noticeably
+   smaller than the active /board cards and drop the long-form
+   content (bio, research themes, social links). At-a-glance
+   recognition is the goal here: photo + role + name + position +
+   institution. Bio / themes / links stay in board.json for the
+   record but are intentionally not rendered in this section so the
+   community register doesn't eat half the page. */
+.community-alumni .people-grid--compact {
+  /* Even denser packing than the default --compact (16 rem). At
+     11 rem each card is ~176 px wide minimum, so a 1024 px container
+     fits ~5 cards per row vs the ~3.5 the default would allow. */
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: var(--space-4);
+}
+
+.community-alumni .person-photo,
+.community-alumni .person-photo-placeholder {
+  /* Square photo (1:1) instead of the active grid's 4:5 portrait.
+     Reads more clearly as a compact "directory" thumbnail. */
+  aspect-ratio: 1;
+}
+
+.community-alumni .person-body {
+  padding: var(--space-3) var(--space-3) var(--space-4);
+}
+
+.community-alumni .person-bio-wrap,
+.community-alumni .person-themes,
+.community-alumni .person-links {
+  /* Hidden via display:none so screen readers skip them too — the
+     EISS community section is a "where did they go" overview, not
+     a place to dwell on each person's biography. The data is still
+     in board.json for whichever audience does want it (active
+     sections, search engines, etc.). */
+  display: none;
 }
 
 /* ---------- /initiative — ESSC tour grid + NetSec inset stats ----------
