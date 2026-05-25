@@ -1407,6 +1407,34 @@ h4 { font-size: var(--fs-lg); }
     var(--bg-elev);
 }
 
+/* /initiative hero brand banner — full lockup (constellation + EiSS
+   + tagline) above the eyebrow, sized so the tagline reads as a
+   one-line statement on desktop and wraps naturally on mobile.
+   Left-aligned to flow with the eyebrow + H1 + page-lead below it
+   (the hero is left-aligned, not centered). color: brand blue pins
+   the wordmark across light + dark modes; the constellation paths
+   keep their literal #73caff regardless. */
+.initiative-hero-brand {
+  display: block;
+  max-width: 22rem;
+  margin: 0 0 var(--space-5);
+  color: #007bc6;
+  line-height: 0;
+}
+
+.initiative-hero-brand svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .initiative-hero-brand {
+    max-width: 16rem;
+    margin-bottom: var(--space-4);
+  }
+}
+
 .page-header .eyebrow {
   display: inline-block;
   font-size: var(--fs-xs);

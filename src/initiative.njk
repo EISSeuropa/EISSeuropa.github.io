@@ -20,6 +20,15 @@ alternates:
 
 <header class="page-header">
   <div class="container">
+    {# Brand banner above the section eyebrow — the full lockup with
+       tagline acts as a visual statement of "this is EISS" right where
+       new visitors land. The tagline embedded in the SVG mirrors what
+       the page is about, so it doesn't compete with the H1 below
+       (which names the section, not the org). aria-hidden because the
+       eyebrow + H1 already carry the heading hierarchy. #}
+    <div class="initiative-hero-brand" aria-hidden="true">
+      {% inlineSvg "assets/images/brand/logo-full.svg" %}
+    </div>
     <span class="eyebrow">About</span>
     <h1>The Initiative</h1>
     <p class="page-lead">

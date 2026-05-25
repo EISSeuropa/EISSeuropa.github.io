@@ -95,9 +95,21 @@
   <meta name="twitter:image" content="{{ site.url }}{{ localisedMeta }}">
   {% if site.social.twitterHandle %}<meta name="twitter:site" content="{{ site.social.twitterHandle }}">{% endif %}
 
-  {# JSON-LD Organization schema — helps Google Knowledge Panel attach
-     name, logo, and verified social profiles to the eiss-europa.com
-     domain. Emitted on every page; search engines deduplicate. #}
+  {# JSON-LD Organization schema — gives Google the canonical signal
+     it uses to attach a logo, name, and verified social profiles to
+     the eiss-europa.com domain in the Knowledge Panel. Emitted on
+     every page; search engines deduplicate.
+
+     `logo` is now an ImageObject pointing at the high-res lockup PNG
+     from the brand bundle (was a stale JPEG from the Mobirise era).
+     Per Google's docs the logo image must be ≥60×60 with an aspect
+     ratio between 1:1 and 4:1 — `logo-full-1024.png` is 1024×712
+     (≈1.44:1), well within range, and carries the full identity
+     (mark + EiSS + tagline) for the Knowledge Panel render.
+
+     `foundingDate` ties the org to its 2017 inaugural conference
+     at Panthéon-Assas — surfaces in the Knowledge Panel and helps
+     disambiguate from other "EISS" acronyms. #}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -105,9 +117,15 @@
     "name": "{{ site.fullName }}",
     "alternateName": "{{ site.title }}",
     "url": "{{ site.url }}/",
-    "logo": "{{ site.url }}/assets/images/logo-eiss-cmjn-2.jpeg",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ site.url }}/assets/images/brand/logo-full-1024.png",
+      "width": 1024,
+      "height": 712
+    },
     "description": "{{ site.description }}",
     "email": "{{ site.contactEmail }}",
+    "foundingDate": "2017",
     "sameAs": [
       "{{ site.social.twitter }}",
       "{{ site.social.linkedin }}",
