@@ -1407,31 +1407,36 @@ h4 { font-size: var(--fs-lg); }
     var(--bg-elev);
 }
 
-/* /initiative hero brand banner — full lockup (constellation + EiSS
-   + tagline) above the eyebrow, sized so the tagline reads as a
-   one-line statement on desktop and wraps naturally on mobile.
-   Left-aligned to flow with the eyebrow + H1 + page-lead below it
-   (the hero is left-aligned, not centered). color: brand blue pins
-   the wordmark across light + dark modes; the constellation paths
-   keep their literal #73caff regardless. */
+/* /initiative hero brand banner — small full lockup (constellation +
+   EiSS + tagline) above the eyebrow as a tasteful brand cue, NOT a
+   poster. Width is set directly on the SVG (rather than on the
+   wrapper via max-width) because an SVG with only a viewBox + CSS
+   `width: 100%` on a no-defined-width block parent renders at the
+   parent's full width — the wrapper's max-width didn't bite, so
+   pin the width on the SVG itself. `max-width: 100%` keeps it
+   from overflowing narrow viewports. color: brand blue pins the
+   wordmark across light + dark modes; the constellation paths keep
+   their literal #73caff regardless. */
 .initiative-hero-brand {
   display: block;
-  max-width: 22rem;
   margin: 0 0 var(--space-5);
   color: #007bc6;
   line-height: 0;
 }
 
 .initiative-hero-brand svg {
-  width: 100%;
-  height: auto;
   display: block;
+  width: 14rem;
+  max-width: 100%;
+  height: auto;
 }
 
 @media (max-width: 600px) {
   .initiative-hero-brand {
-    max-width: 16rem;
     margin-bottom: var(--space-4);
+  }
+  .initiative-hero-brand svg {
+    width: 10rem;
   }
 }
 
