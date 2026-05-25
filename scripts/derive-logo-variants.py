@@ -92,7 +92,8 @@ def extract_drawings(pdf_path: Path) -> tuple[list[str], list[tuple[float, float
 
 
 def emit_svg(paths: list[str], bbox: tuple[float, float, float, float],
-             title: str, desc: str, pad: float = 4.0) -> str:
+             title: str, desc: str, id_suffix: str,
+             pad: float = 4.0) -> str:
     """Build a clean SVG document around the given paths.
 
     `bbox` is the union of the chosen paths' bboxes (in source PDF
@@ -124,13 +125,21 @@ def emit_svg(paths: list[str], bbox: tuple[float, float, float, float],
         )
         rewritten.append(q)
 
+    # Title/desc IDs need a per-variant suffix because nav.njk inlines
+    # the lockup AND the mark on the same page (one shown desktop, one
+    # mobile via CSS) — sharing "id=t" and "id=d" between them would
+    # produce duplicate IDs in the rendered HTML, which validators
+    # flag and which break `getElementById()` lookups against the
+    # ARIA description.
+    title_id = f"t-{id_suffix}"
+    desc_id = f"d-{id_suffix}"
     body = "\n  ".join(rewritten)
     return (
         f'<svg xmlns="http://www.w3.org/2000/svg" '
         f'viewBox="{vx:.2f} {vy:.2f} {vw:.2f} {vh:.2f}" '
-        f'role="img" aria-labelledby="t d">\n'
-        f'  <title id="t">{title}</title>\n'
-        f'  <desc id="d">{desc}</desc>\n'
+        f'role="img" aria-labelledby="{title_id} {desc_id}">\n'
+        f'  <title id="{title_id}">{title}</title>\n'
+        f'  <desc id="{desc_id}">{desc}</desc>\n'
         f'  {body}\n'
         f'</svg>\n'
     )
@@ -172,6 +181,7 @@ def main() -> int:
     variants = [
         (
             "logo-mark.svg",
+            "mark",
             [0],  # constellation only
             "EISS — network mark",
             "Constellation of dots and connecting lines representing the "
@@ -179,12 +189,14 @@ def main() -> int:
         ),
         (
             "logo-lockup.svg",
+            "lockup",
             list(WORDMARK_INDICES),  # constellation + EiSS wordmark
             "EISS",
             "The EISS network mark above the EiSS wordmark.",
         ),
         (
             "logo-full.svg",
+            "full",
             list(FULL_INDICES),  # everything
             "EISS — The European Initiative for Security Studies",
             "The EISS network mark, the EiSS wordmark, and the "
@@ -192,10 +204,10 @@ def main() -> int:
         ),
     ]
 
-    for name, indices, title, desc in variants:
+    for name, id_suffix, indices, title, desc in variants:
         bbox = bbox_union(indices)
         chosen = [paths[i] for i in indices]
-        svg = emit_svg(chosen, bbox, title, desc)
+        svg = emit_svg(chosen, bbox, title, desc, id_suffix)
         (args.out / name).write_text(svg)
         size = len(svg)
         print(f"  wrote {name:18s}  paths={len(indices):2d}  "

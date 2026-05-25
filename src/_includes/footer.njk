@@ -8,9 +8,17 @@
   <div class="container footer">
     <div class="footer-grid">
       <div>
+        {# Footer brand block. The footer is a wider, quieter surface
+           than the header — it can carry the full lockup (constellation
+           + EiSS + tagline) as a polished sign-off. The site.fullName
+           text is redundant (already in the SVG) so it's dropped here;
+           the visually-hidden caption keeps the brand accessible to
+           screen readers without doubling the on-screen text. #}
         <div class="footer-brand">
-          <span class="nav-brand-mark" aria-hidden="true">E</span>
-          <span>{{ site.fullName }}</span>
+          <span class="brand-logo brand-logo--footer" aria-hidden="true">
+            {% inlineSvg "assets/images/brand/logo-full.svg" %}
+          </span>
+          <span class="sr-only">{{ site.fullName }}</span>
         </div>
         <p class="text-subtle">
           {{ t.footer.tagline }}
