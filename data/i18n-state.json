@@ -18,14 +18,14 @@
     "src/initiative.njk": {
       "fr": {
         "file": "src/initiative.fr.njk",
-        "source_sha1": "9d4d79642327ce420e596d3be89b8a150a33f956",
-        "translated_on": "2026-05-24",
+        "source_sha1": "6cfdf6543b6f7182447b15e4b9accd0c6766fcb3",
+        "translated_on": "2026-05-25",
         "status": "beta"
       },
       "de": {
         "file": "src/initiative.de.njk",
-        "source_sha1": "9d4d79642327ce420e596d3be89b8a150a33f956",
-        "translated_on": "2026-05-24",
+        "source_sha1": "6cfdf6543b6f7182447b15e4b9accd0c6766fcb3",
+        "translated_on": "2026-05-25",
         "status": "beta"
       }
     },
