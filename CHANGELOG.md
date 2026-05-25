@@ -40,6 +40,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- **Mobile nav: utility icons + lang switcher restored to the right edge** — at the `880 px` drawer breakpoint, `.nav-links` becomes a fixed-position dropdown which stopped taking flex space, so its previous `margin-left: auto` no longer pushed `.nav-actions` right. The lang switcher + theme toggle + burger menu were ending up squeezed against the brand, looking centered-ish. Added `margin-inline-start: auto` on `.nav-actions` inside the drawer breakpoint so the utility cluster aligns to the right edge of the bar. Same PR drops the `@media (max-width: 480px) { .lang-switcher { display: none; } }` rule that was hiding the EN/FR/DE switcher on phones — FR and DE speakers couldn't switch locales without going to desktop or editing the URL. The switcher now compacts (smaller padding + 10 px chips) at very narrow widths but stays visible. Closes #137. (#138)
 - **`scripts/release.sh` compare-link regex** now accepts letters and dashes after the dotted numerics, so `v2.13.0r` and any future suffixed tags update cleanly. Previous regex `v([0-9.]+)` silently failed to bind on `v2.13.0r`, leaving `[Unreleased]: …/compare/v2.13.0r...HEAD` stale across v2.22.0. Same PR repoints the live compare link at v2.22.0. (#121)
 
 ## [2.22.0] · 2026-05-24 — Live board pipeline and Initiative refresh
