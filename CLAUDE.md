@@ -1,4 +1,4 @@
-# Claude project rules — EISSeuropa.github.io
+# Claude project rules: EISSeuropa.github.io
 
 Read by Claude Code on every session in this repository. Codifies the
 standing constraints the maintainer has set for AI-assisted work, so
@@ -95,7 +95,7 @@ Specific enough that a future maintainer can pick it up without
 re-deriving the analysis. Code paths, file names, line numbers.
 
 ## Milestone
-One of the thematic milestones (rule §10) — never leave it blank.
+One of the thematic milestones (rule §10). Never leave it blank.
 ```
 
 **Set the GitHub milestone at creation time** (rule §10):
@@ -293,15 +293,15 @@ drifts.
 EISS uses **thematic milestones** rather than per-release version
 milestones (NetSec's convention is different). The current set:
 
-- **NetSec & shared infra** — anything touching the NetSec relationship
+- **NetSec & shared infra**: anything touching the NetSec relationship
   or shared scripts / tokens / data sources between the two sister sites.
-- **Indico integration deepening** — sync-indico work, live programme
+- **Indico integration deepening**: sync-indico work, live programme
   grids, Indico API probing.
-- **ESSC 2026 ops** — anything specific to the current annual
+- **ESSC 2026 ops**: anything specific to the current annual
   conference cycle.
-- **i18n native-speaker review** — FR / DE translation refreshes,
+- **i18n native-speaker review**: FR / DE translation refreshes,
   native-reviewer feedback.
-- **Maintenance & reliability** — CI, build hygiene, dependency
+- **Maintenance & reliability**: CI, build hygiene, dependency
   bumps, accessibility fixes, security hardening.
 
 When the active work no longer fits any of these, propose a new
