@@ -92,15 +92,20 @@
       "institution": "Department of International Relations, Bilkent University"
     },
     {
-      "name": "Dr John NT Helferich",
+      "name": "Dr John N.T. Helferich",
       "role": "Board Member",
-      "functionalResponsibility": "Events Coordinator",
-      "photo": "/assets/images/helferich-portrait-college-3.jpeg",
       "alt": "Dr John NT Helferich",
-      "bio": "John is your first point of contact. He is in charge of our email communications, and ensures smooth coordination between chairs and panel members, among other things. He is a DPhil candidate in International Relations at St. Antony's College, Oxford. John joined the Initiative in 2018.",
+      "photo": "/assets/images/board/john-n-t-helferich.jpg",
+      "functionalResponsibility": "Events Coordinator",
+      "position": "College Lecturer in International Relations",
+      "institution": "University of Oxford",
       "country": "United Kingdom",
-      "position": "DPhil Candidate in International Relations",
-      "institution": "St. Antony's College, Oxford"
+      "bio": "John Helferich is a Lecturer in Politics at Hertford College and a researcher with the Oxford Global Security Programme. His research focuses on European security and transformations in international order. He holds a Doctor of Philosophy (DPhil) in International Relations from the University of Oxford and a Master’s degree in International Security (summa cum laude) from Sciences Po. His dissertation on EU defence integration won the PSA Best Dissertation Prize in International Relations. He chairs the Working Group on Transfer of Knowledge within the COST Action Networking European Security Knowledge and serves as a board member of the European Initiative for Security Studies (EISS).",
+      "themes": "Foreign Policy Analysis, European Security, Political Psychology, Research Methods",
+      "links": {
+        "website": "johnhelferich.com"
+      },
+      "workingGroups": "WG1, WG2"
     },
     {
       "name": "Prof. Marina Henke",
@@ -224,15 +229,121 @@
   ],
   "support": [
     {
-      "name": "Eugenio Sanchez",
+      "name": "Trinabh Banerjee",
       "role": "Support Staff",
-      "functionalResponsibility": "Communications Coordinator",
-      "photo": "/assets/images/1659415900816.jpeg",
-      "alt": "Eugenio Sanchez",
-      "bio": "Eugenio assists with the development of our communication strategy and the logistics of our events. He is a PhD candidate in International Relations at Sciences Po Paris. Eugenio joined the Initiative in 2023.",
+      "alt": "Trinabh Banerjee",
+      "photo": "",
+      "institution": "Sciences Po",
       "country": "France",
-      "position": "PhD Candidate in International Relations",
-      "institution": "Sciences Po Paris"
+      "roleEndDate": "2025-04-10"
+    },
+    {
+      "name": "Camilo Torres Casanova",
+      "role": "Support Staff",
+      "alt": "Camilo Torres Casanova",
+      "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
+      "roleEndDate": "2023-07-06"
+    },
+    {
+      "name": "Eva Castelletti",
+      "role": "Support Staff",
+      "alt": "Eva Castelletti",
+      "photo": "",
+      "institution": "Università Cattolica del Sacro Cuore",
+      "country": "Italy",
+      "roleEndDate": "2024-05-31"
+    },
+    {
+      "name": "Francisco Ferreira",
+      "role": "Support Staff",
+      "alt": "Francisco Ferreira",
+      "photo": "",
+      "institution": "College of Europe",
+      "country": "Belgium",
+      "roleEndDate": "2023-06-30"
+    },
+    {
+      "name": "Adam Gajdosik",
+      "role": "Support Staff",
+      "alt": "Adam Gajdosik",
+      "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
+      "roleEndDate": "2025-05-31"
+    },
+    {
+      "name": "Ali Gohar",
+      "role": "Support Staff",
+      "alt": "Ali Gohar",
+      "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
+      "roleEndDate": "2026-02-09"
+    },
+    {
+      "name": "Gillian Gonnord",
+      "role": "Support Staff",
+      "alt": "Gillian Gonnord",
+      "photo": "",
+      "institution": "The University of Edinburgh",
+      "country": "United Kingdom",
+      "roleEndDate": "2025-04-17"
+    },
+    {
+      "name": "Kim Hirsch-Hoffmann",
+      "role": "Support Staff",
+      "alt": "Kim Hirsch-Hoffmann",
+      "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
+      "roleEndDate": "2023-02-14"
+    },
+    {
+      "name": "Lise Mai",
+      "role": "Support Staff",
+      "alt": "Lise Mai",
+      "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
+      "roleEndDate": "2026-04-02"
+    },
+    {
+      "name": "Teresa Marzo",
+      "role": "Support Staff",
+      "alt": "Teresa Marzo",
+      "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
+      "roleEndDate": "2025-02-28"
+    },
+    {
+      "name": "Federico Pirino",
+      "role": "Support Staff",
+      "alt": "Federico Pirino",
+      "photo": "",
+      "institution": "Columbia SIPA",
+      "country": "United States",
+      "roleEndDate": "2024-11-30"
+    },
+    {
+      "name": "Ulysse Richard",
+      "role": "Support Staff",
+      "alt": "Ulysse Richard",
+      "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
+      "roleEndDate": "2023-07-10"
+    },
+    {
+      "name": "James Roughan",
+      "role": "Support Staff",
+      "alt": "James Roughan",
+      "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
+      "roleEndDate": "2026-05-16"
     },
     {
       "name": "Ms. Angela Sajewicz",
@@ -246,58 +357,15 @@
       "roleEndDate": "2026-06-19"
     },
     {
-      "name": "Kim Hirsch-Hoffmann",
+      "name": "Eugenio Sanchez",
       "role": "Support Staff",
-      "alt": "Kim Hirsch-Hoffmann",
-      "photo": "",
-      "institution": "Sciences Po",
+      "functionalResponsibility": "Communications Coordinator",
+      "photo": "/assets/images/1659415900816.jpeg",
+      "alt": "Eugenio Sanchez",
+      "bio": "Eugenio assists with the development of our communication strategy and the logistics of our events. He is a PhD candidate in International Relations at Sciences Po Paris. Eugenio joined the Initiative in 2023.",
       "country": "France",
-      "roleEndDate": "2023-02-14"
-    },
-    {
-      "name": "Yiqi Yu",
-      "role": "Support Staff",
-      "alt": "Yiqi Yu",
-      "photo": "",
-      "institution": "Harvard Kennedy School",
-      "country": "United States",
-      "roleEndDate": "2023-05-31"
-    },
-    {
-      "name": "Francisco Ferreira",
-      "role": "Support Staff",
-      "alt": "Francisco Ferreira",
-      "photo": "",
-      "institution": "College of Europe",
-      "country": "Belgium",
-      "roleEndDate": "2023-06-30"
-    },
-    {
-      "name": "Camilo Torres Casanova",
-      "role": "Support Staff",
-      "alt": "Camilo Torres Casanova",
-      "photo": "",
-      "institution": "Sciences Po",
-      "country": "France",
-      "roleEndDate": "2023-07-06"
-    },
-    {
-      "name": "Ulysse Richard",
-      "role": "Support Staff",
-      "alt": "Ulysse Richard",
-      "photo": "",
-      "institution": "Sciences Po",
-      "country": "France",
-      "roleEndDate": "2023-07-10"
-    },
-    {
-      "name": "Robin Staes-Polet",
-      "role": "Support Staff",
-      "alt": "Robin Staes-Polet",
-      "photo": "",
-      "institution": "Sciences Po",
-      "country": "France",
-      "roleEndDate": "2023-07-31"
+      "position": "PhD Candidate in International Relations",
+      "institution": "Sciences Po Paris"
     },
     {
       "name": "Giulia Bretel De Simone",
@@ -309,58 +377,13 @@
       "roleEndDate": "2023-09-29"
     },
     {
-      "name": "Haoyu Wang",
+      "name": "Robin Staes-Polet",
       "role": "Support Staff",
-      "alt": "Haoyu Wang",
+      "alt": "Robin Staes-Polet",
       "photo": "",
       "institution": "Sciences Po",
       "country": "France",
-      "roleEndDate": "2023-10-31"
-    },
-    {
-      "name": "Eva Castelletti",
-      "role": "Support Staff",
-      "alt": "Eva Castelletti",
-      "photo": "",
-      "institution": "Università Cattolica del Sacro Cuore",
-      "country": "Italy",
-      "roleEndDate": "2024-05-31"
-    },
-    {
-      "name": "Federico Pirino",
-      "role": "Support Staff",
-      "alt": "Federico Pirino",
-      "photo": "",
-      "institution": "Columbia SIPA",
-      "country": "United States",
-      "roleEndDate": "2024-11-30"
-    },
-    {
-      "name": "Teresa Marzo",
-      "role": "Support Staff",
-      "alt": "Teresa Marzo",
-      "photo": "",
-      "institution": "Sciences Po",
-      "country": "France",
-      "roleEndDate": "2025-02-28"
-    },
-    {
-      "name": "Trinabh Banerjee",
-      "role": "Support Staff",
-      "alt": "Trinabh Banerjee",
-      "photo": "",
-      "institution": "Sciences Po",
-      "country": "France",
-      "roleEndDate": "2025-04-10"
-    },
-    {
-      "name": "Gillian Gonnord",
-      "role": "Support Staff",
-      "alt": "Gillian Gonnord",
-      "photo": "",
-      "institution": "The University of Edinburgh",
-      "country": "United Kingdom",
-      "roleEndDate": "2025-04-17"
+      "roleEndDate": "2023-07-31"
     },
     {
       "name": "Raaghavi Tandon",
@@ -372,15 +395,6 @@
       "roleEndDate": "2025-05-21"
     },
     {
-      "name": "Adam Gajdosik",
-      "role": "Support Staff",
-      "alt": "Adam Gajdosik",
-      "photo": "",
-      "institution": "Sciences Po",
-      "country": "France",
-      "roleEndDate": "2025-05-31"
-    },
-    {
       "name": "Shirley Tian",
       "role": "Support Staff",
       "alt": "Shirley Tian",
@@ -390,31 +404,22 @@
       "roleEndDate": "2026-01-02"
     },
     {
-      "name": "Ali Gohar",
+      "name": "Haoyu Wang",
       "role": "Support Staff",
-      "alt": "Ali Gohar",
+      "alt": "Haoyu Wang",
       "photo": "",
       "institution": "Sciences Po",
       "country": "France",
-      "roleEndDate": "2026-02-09"
+      "roleEndDate": "2023-10-31"
     },
     {
-      "name": "Lise Mai",
+      "name": "Yiqi Yu",
       "role": "Support Staff",
-      "alt": "Lise Mai",
+      "alt": "Yiqi Yu",
       "photo": "",
-      "institution": "Sciences Po",
-      "country": "France",
-      "roleEndDate": "2026-04-02"
-    },
-    {
-      "name": "James Roughan",
-      "role": "Support Staff",
-      "alt": "James Roughan",
-      "photo": "",
-      "institution": "Sciences Po",
-      "country": "France",
-      "roleEndDate": "2026-05-16"
+      "institution": "Harvard Kennedy School",
+      "country": "United States",
+      "roleEndDate": "2023-05-31"
     }
   ]
 }
