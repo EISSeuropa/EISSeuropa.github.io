@@ -377,10 +377,20 @@ def build_from_row(row: dict, cols: dict, role_info: dict, prior: dict | None) -
     # pill alongside the role on the card. Optional; we accept any
     # string the form provides but warn when it's outside the known
     # set (forward-compatible if the operator adds new options).
+    #
+    # The "I don't have one" sentinels are dropped here rather than
+    # stored — otherwise the template renders a meaningless "NONE"
+    # pill alongside the role. We normalise case + whitespace so
+    # variants ("none", "None", "(None — leave blank)", etc.) all
+    # collapse to "no field set".
+    FUNC_RESP_NULL_SENTINELS = {
+        "", "none", "(none)", "(none — leave blank)",
+        "(none - leave blank)", "n/a", "na",
+    }
     func_resp = _cell(row, cols, "functionalResponsibility")
     if not func_resp and prior:
         func_resp = prior.get("functionalResponsibility", "")
-    if func_resp:
+    if func_resp and func_resp.strip().lower() not in FUNC_RESP_NULL_SENTINELS:
         person["functionalResponsibility"] = func_resp
 
     # Position + institution stay as separate fields on the entry so
@@ -856,9 +866,20 @@ def main() -> None:
         return
 
     cols = config.get("columns", {})
+    # Two indices into the roles table:
+    #  - roles_map: canonical-label → role row (used everywhere downstream)
+    #  - roles_by_form_label: every "Form-side" name (label OR any alias)
+    #    → the same role row. Form dropdowns sometimes get cosmetic edits
+    #    (e.g. "Support Staff" → "Support Staff (incl. intern)") to clarify
+    #    for respondents; aliases let those edits land without rewriting
+    #    board.json or splitting the canonical taxonomy.
     roles_map = {r["label"]: r for r in config.get("roles", [])}
     if not roles_map:
         sys.exit("board-source.json has no `roles` table — refusing to run.")
+    roles_by_form_label = dict(roles_map)
+    for r in config.get("roles", []):
+        for alias in r.get("aliases", []) or []:
+            roles_by_form_label.setdefault(alias, r)
 
     prior_raw, prior_by_slug, prior_by_identity = load_prior()
 
@@ -900,12 +921,16 @@ def main() -> None:
             )
 
         role_label = (row.get(cols.get("role", ""), "") or "").strip()
-        role_info = roles_map.get(role_label)
+        # Match against canonical labels first, then any registered
+        # aliases (cosmetic Form-side variants like "Support Staff
+        # (incl. intern)"). The canonical role row is what gets stored.
+        role_info = roles_by_form_label.get(role_label)
         if role_info is None:
             print(
                 f"  ⚠ {name!r}: unknown role {role_label!r} — falling back "
-                "to 'Board Member'. Fix the Form dropdown or the roles "
-                "table in scripts/board-source.json if this is wrong.",
+                "to 'Board Member'. Add an entry (or alias) to the roles "
+                "table in scripts/board-source.json if this Form value "
+                "is intentional.",
                 file=sys.stderr,
             )
             role_info = DEFAULT_ROLE

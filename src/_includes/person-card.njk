@@ -25,7 +25,17 @@
 {%- set t = i18n[lang] -%}
 
 <article class="person"{% if person.slug %} id="{{ person.slug }}"{% endif %}>
-  <img class="person-photo" src="{{ person.photoOverride or person.photo }}" alt="{{ person.alt or person.name }}" loading="lazy">
+  {%- set photoSrc = person.photoOverride or person.photo -%}
+  {%- if photoSrc %}
+  <img class="person-photo" src="{{ photoSrc }}" alt="{{ person.alt or person.name }}" loading="lazy">
+  {%- else %}
+  {# Placeholder for members who haven't uploaded a headshot. Renders
+     a coloured circle with their initials. boardSorted.js derives
+     `initials` from the name (with honorifics stripped). #}
+  <div class="person-photo person-photo-placeholder" role="img" aria-label="{{ person.alt or person.name }}">
+    <span aria-hidden="true">{{ person.initials or "?" }}</span>
+  </div>
+  {%- endif %}
   <div class="person-body">
     <p class="person-role">
       <span class="person-role-primary">{{ person.role }}</span>
