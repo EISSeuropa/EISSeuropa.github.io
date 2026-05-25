@@ -199,7 +199,17 @@ module.exports = function () {
       ...m,
       activeYear: m.roleEndDate ? m.roleEndDate.slice(0, 4) : null,
     }))
-    .sort(bySurname);
+    // Sort most-recent-end-date first, then by surname within a tie.
+    // The community section reads better when 2026's interns appear
+    // above 2023's — newcomers see "who left recently" first.
+    // ISO YYYY-MM-DD strings sort lexicographically = chronologically,
+    // so localeCompare(b, a) gives descending date order.
+    .sort((a, b) => {
+      const dateA = a.roleEndDate || "";
+      const dateB = b.roleEndDate || "";
+      if (dateA !== dateB) return dateB.localeCompare(dateA);
+      return bySurname(a, b);
+    });
 
   // Exposed for the page footer link ("Update your bio"). Sourced
   // from scripts/board-source.json so the URL stays in sync with the
