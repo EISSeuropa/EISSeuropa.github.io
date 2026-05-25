@@ -72,24 +72,31 @@ alternates:
   </div>
 </section>
 
-{# EISS community alumni — former board members, support staff, and
-   interns whose `roleEndDate` is more than a week in the past. The
-   mechanism is shared across all three categories: the entry stays
-   in board.json (members[] or support[]) but `boardSorted.js` filters
+{# EISS community — former board members, support staff, and interns
+   whose `roleEndDate` is more than a week in the past. The mechanism
+   is shared across all three categories: the entry stays in
+   board.json (members[] or support[]) but `boardSorted.js` filters
    it out of the active sections and into `pastMembers`. For interns,
    the date arrives automatically through Form question 18; for board
    members and support staff, an operator hand-edits the entry when
    the user reports a departure. Hidden entirely when there are no
-   alumni yet. #}
+   past members yet.
+
+   CSS classes still carry the historical `community-alumni-*` names
+   from when this section was titled "EISS community alumni"; the
+   visible label was relaxed to just "EISS community" because
+   "alumni" reads awkwardly when applied to former board members
+   (who weren't students). Renaming the classes was deemed not worth
+   the diff churn — class names are internal. #}
 {%- if boardSorted.pastMembers and boardSorted.pastMembers.length %}
 <section class="section community-alumni">
   <div class="container">
     <h2 class="community-alumni-title">
-      EISS community alumni
-      <span class="community-alumni-count" aria-label="{{ boardSorted.pastMembers.length }} alumni">{{ boardSorted.pastMembers.length }}</span>
+      EISS community
+      <span class="community-alumni-count" aria-label="{{ boardSorted.pastMembers.length }} members">{{ boardSorted.pastMembers.length }}</span>
     </h2>
     <p class="community-alumni-lead">
-      Former board members, support staff, and interns. They remain part of our wider European security studies network.
+      People who have shaped EISS over the years — former board members, support staff, and interns. They remain part of our wider European security studies network.
     </p>
     <div class="people-grid people-grid--compact">
       {%- for person in boardSorted.pastMembers %}
