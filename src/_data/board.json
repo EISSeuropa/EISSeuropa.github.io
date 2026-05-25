@@ -250,6 +250,8 @@
       "role": "Support Staff",
       "alt": "Kim Hirsch-Hoffmann",
       "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
       "roleEndDate": "2023-02-14"
     },
     {
@@ -257,6 +259,8 @@
       "role": "Support Staff",
       "alt": "Yiqi Yu",
       "photo": "",
+      "institution": "Harvard Kennedy School",
+      "country": "United States",
       "roleEndDate": "2023-05-31"
     },
     {
@@ -264,6 +268,8 @@
       "role": "Support Staff",
       "alt": "Francisco Ferreira",
       "photo": "",
+      "institution": "College of Europe",
+      "country": "Belgium",
       "roleEndDate": "2023-06-30"
     },
     {
@@ -280,6 +286,8 @@
       "role": "Support Staff",
       "alt": "Ulysse Richard",
       "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
       "roleEndDate": "2023-07-10"
     },
     {
@@ -287,6 +295,8 @@
       "role": "Support Staff",
       "alt": "Robin Staes-Polet",
       "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
       "roleEndDate": "2023-07-31"
     },
     {
@@ -294,6 +304,8 @@
       "role": "Support Staff",
       "alt": "Giulia Bretel De Simone",
       "photo": "",
+      "institution": "Sciences Po",
+      "country": "France",
       "roleEndDate": "2023-09-29"
     },
     {
@@ -308,6 +320,8 @@
       "role": "Support Staff",
       "alt": "Eva Castelletti",
       "photo": "",
+      "institution": "Università Cattolica del Sacro Cuore",
+      "country": "Italy",
       "roleEndDate": "2024-05-31"
     },
     {
@@ -340,6 +354,8 @@
       "role": "Support Staff",
       "alt": "Gillian Gonnord",
       "photo": "",
+      "institution": "The University of Edinburgh",
+      "country": "United Kingdom",
       "roleEndDate": "2025-04-17"
     },
     {
@@ -365,7 +381,7 @@
       "role": "Support Staff",
       "alt": "Shirley Tian",
       "photo": "",
-      "institution": "University of Edinburgh",
+      "institution": "The University of Edinburgh",
       "country": "United Kingdom",
       "roleEndDate": "2026-01-02"
     },
