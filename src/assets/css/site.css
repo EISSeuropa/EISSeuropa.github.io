@@ -3296,22 +3296,32 @@ h4 { font-size: var(--fs-lg); }
 .essc-map {
   width: 100%;
   height: auto;
-  max-height: 28rem;
+  /* Lock the natural viewBox ratio (1000:700) so the SVG isn't
+     vertically compressed by a max-height clip — earlier max-height
+     was capping the rendered height to 28rem on laptop viewports,
+     which scaled the geometry down rather than letting it fill the
+     glass card. aspect-ratio lets the browser do the right thing
+     across viewport widths. */
+  aspect-ratio: 10 / 7;
   display: block;
 }
 
 .essc-map-outline path {
-  fill: var(--accent-soft);
-  stroke: var(--border);
-  stroke-width: 1.5;
+  /* Slightly stronger fill + stroke so individual countries read on
+     a light background; in light mode the previous 10%-opacity blue
+     blended too much with the card background and the country
+     borders disappeared. */
+  fill: hsl(216 60% 88%);
+  stroke: hsl(216 20% 70%);
+  stroke-width: 1;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
 }
 
 @media (prefers-color-scheme: dark) {
   .essc-map-outline path {
-    fill: hsl(216 88% 50% / 0.14);
-    stroke: hsl(222 14% 28%);
+    fill: hsl(216 30% 22%);
+    stroke: hsl(222 14% 32%);
   }
 }
 
@@ -3357,13 +3367,27 @@ h4 { font-size: var(--fs-lg); }
   filter: drop-shadow(0 2px 6px hsl(150 60% 42% / 0.5));
 }
 
-.essc-map-label {
-  font-size: 22px;
-  font-weight: 600;
-  fill: var(--text);
-  text-anchor: start;
+/* Labels carry a halo stroke matched to the card background so the
+   text stays readable when it crosses a country polygon — in light
+   mode plain dark text on a pale-blue fill loses contrast at small
+   sizes. paint-order: stroke fill draws the halo behind the glyph
+   so the letterforms stay sharp. The halo colour is the surface
+   token so it tracks light + dark mode automatically. */
+.essc-map-label,
+.essc-map-years {
   pointer-events: none;
   font-family: inherit;
+  stroke: var(--surface);
+  stroke-width: 5;
+  stroke-linejoin: round;
+  paint-order: stroke fill;
+}
+
+.essc-map-label {
+  font-size: 22px;
+  font-weight: 700;
+  fill: var(--text);
+  text-anchor: start;
 }
 
 .essc-map-label--end {
@@ -3372,15 +3396,24 @@ h4 { font-size: var(--fs-lg); }
 
 .essc-map-years {
   font-size: 17px;
-  font-weight: 400;
+  font-weight: 500;
   fill: var(--text-muted);
+  stroke-width: 4;
   text-anchor: start;
-  pointer-events: none;
-  font-family: inherit;
 }
 
 .essc-map-years--end {
   text-anchor: end;
+}
+
+@media (prefers-color-scheme: dark) {
+  /* In dark mode --surface is a low-alpha dark colour; we want the
+     halo opaque enough to actually mask the underlying country
+     polygon. Use the page background token instead. */
+  .essc-map-label,
+  .essc-map-years {
+    stroke: hsl(222 24% 8%);
+  }
 }
 
 .essc-map-link:hover .essc-map-label,
@@ -3397,14 +3430,29 @@ h4 { font-size: var(--fs-lg); }
   line-height: 1.5;
 }
 
-/* On narrow viewports the SVG labels get cramped. Drop the inline text
-   labels and rely on the conf-tour card grid below for the names —
-   `<title>` tooltips on hover/focus still announce city + year via
-   the browser/AT layer. */
+/* On narrow viewports the SVG labels get cramped. Drop the inline
+   text labels and lean on the conf-tour card grid below for the
+   names — `<title>` tooltips on hover/focus still announce city +
+   year via the browser/AT layer.
+   At the same time, bump dot radii and label sizing so the dots are
+   tappable: at 360px viewport the SVG is ~340px wide → viewBox
+   scale ~0.34, so a r=10 dot becomes a 6.8px circle which is too
+   small for a finger. r=18 → 12px which is closer to a 44pt target
+   area once the surrounding <a> hitbox is factored in. */
 @media (max-width: 38rem) {
   .essc-map-label,
   .essc-map-years {
     display: none;
+  }
+  .essc-map-dot {
+    r: 16;
+    stroke-width: 4;
+  }
+  .essc-map-dot--inaugural {
+    r: 20;
+  }
+  .essc-map-dot--next {
+    r: 18;
   }
 }
 
