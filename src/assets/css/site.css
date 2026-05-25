@@ -2922,6 +2922,19 @@ h4 { font-size: var(--fs-lg); }
   margin-top: var(--space-4);
 }
 
+/* Generic two-or-more button row used inside cards (e.g. the NetSec
+   block on /initiative). Flex with wrap so on narrow viewports the
+   buttons stack to their own lines rather than overflowing inline
+   off the card edge. Each <a class="btn"> retains its own width so
+   the buttons stay pill-sized; the gap handles vertical spacing
+   when they wrap. */
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
 /* ---------- 404 page ---------------------------------------------------
    The /404.html GitHub Pages auto-serves for any unmatched path. Tries
    to be more useful than the default "Page not found" by surfacing the
@@ -3287,7 +3300,15 @@ h4 { font-size: var(--fs-lg); }
    accent-coloured dot; the next-up 2026 (Stockholm) uses a quieter
    accent variant to distinguish forthcoming from historical. */
 .essc-map-figure {
-  margin: 0;
+  margin: 0 auto;
+  /* Cap on laptop / desktop so the 10:7 aspect ratio doesn't push
+     the map full-viewport-tall (a 1024 px container × 10/7 was
+     ~717 px, which dominated the screen on a MacBook Pro). 48rem
+     keeps the map ~768 × 538 — substantial but not in your face,
+     leaves room above the fold for the conf-tour grid. On mobile
+     and narrow tablets, max-width caps below the container width
+     so this rule is a no-op. */
+  max-width: 48rem;
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
@@ -3324,14 +3345,12 @@ h4 { font-size: var(--fs-lg); }
     fill: hsl(216 30% 22%);
     stroke: hsl(222 14% 32%);
   }
-  /* Subtle dark stroke around dots in dark mode rather than bright
-     white — keeps the dark-mode look the user explicitly approved
-     in PR #134. */
-  .essc-map-dot,
-  .essc-map-dot--inaugural,
-  .essc-map-dot--next {
-    stroke: hsl(222 24% 10%);
-  }
+  /* Bright white dot ring in dark mode — earlier I matched the
+     stroke to the page background so the ring "disappeared", but
+     on small / mobile dark-mode renders the dots then sat against
+     the dark country fill with no edge separation and were hard
+     to pick out. Keep the white stroke from the base rule so each
+     dot has a clearly defined ring in both modes. */
 }
 
 .essc-map-link {
@@ -3451,19 +3470,32 @@ h4 { font-size: var(--fs-lg); }
   line-height: 1.5;
 }
 
-/* On narrow viewports the SVG labels get cramped. Drop the inline
-   text labels and lean on the conf-tour card grid below for the
-   names — `<title>` tooltips on hover/focus still announce city +
-   year via the browser/AT layer.
-   At the same time, bump dot radii and label sizing so the dots are
-   tappable: at 360px viewport the SVG is ~340px wide → viewBox
-   scale ~0.34, so a r=10 dot becomes a 6.8px circle which is too
-   small for a finger. r=18 → 12px which is closer to a 44pt target
-   area once the surrounding <a> hitbox is factored in. */
+/* On narrow viewports the SVG labels would default to the desktop
+   font sizes (22px / 17px in viewBox units), which at viewBox scale
+   ~0.34 render too small to read. Earlier we hid them outright and
+   leaned on the conf-tour card grid below — but mobile users
+   couldn't tell which dot was which city without scrolling and
+   counting against the grid. Now we keep the labels visible at
+   beefier viewBox sizes so they scale up to a legible final size
+   on mobile (~12-14 px rendered at 0.34 scale), and ratchet the
+   halo thicker so they read against any country fill.
+   At the same time, bump dot radii so they're tappable: at 360 px
+   viewport the SVG is ~340 px wide → viewBox scale ~0.34, so a r=10
+   dot becomes a 6.8 px circle which is too small for a finger.
+   r=18 → 12 px which is closer to a 44 pt target area once the
+   surrounding <a> hitbox is factored in. */
 @media (max-width: 38rem) {
+  .essc-map-label {
+    font-size: 38px;
+    font-weight: 800;
+  }
+  .essc-map-years {
+    font-size: 30px;
+    font-weight: 600;
+  }
   .essc-map-label,
   .essc-map-years {
-    display: none;
+    stroke-width: 9;
   }
   .essc-map-dot {
     r: 16;
