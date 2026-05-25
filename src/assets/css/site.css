@@ -3464,12 +3464,14 @@ h4 { font-size: var(--fs-lg); }
 .essc-map-figure {
   margin: 0 auto;
   /* Cap on laptop / desktop so the corrected ~0.785 W/H aspect (see
-     .essc-map note) doesn't push the map full-viewport-tall. 32rem
-     keeps the map ~512 × 652 — taller than wide, as a real map of
-     Europe should be, but still leaves room above the fold for the
-     conf-tour grid below. On mobile and narrow tablets, max-width
-     caps below the container width so this rule is a no-op. */
-  max-width: 32rem;
+     .essc-map note) doesn't push the map full-viewport-tall. 40rem
+     keeps the map ~640 × 815 — taller than wide, as a real map of
+     Europe should be, while giving each city dot enough horizontal
+     breathing room to read its label cleanly on desktop. (32rem felt
+     tight horizontally on a laptop viewport; 48rem was too tall.) On
+     mobile and narrow tablets, max-width caps below the container
+     width so this rule is a no-op. */
+  max-width: 40rem;
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
