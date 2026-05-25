@@ -103,7 +103,13 @@ jobs:
           # PR list reads at a glance. Falls back to the generic
           # multi-change title when the script doesn't emit one (e.g.
           # version of the script that pre-dates this output).
-          title: ${{ steps.sync.outputs.title || 'data: sync board bios from Google Form' }}
+          #
+          # Wrapped in double quotes so the YAML parser treats the
+          # whole `${{ … }}` expression as a single scalar — the
+          # fallback string contains a colon ("data: sync board…")
+          # which would otherwise be interpreted as a YAML mapping
+          # separator, invalidating the workflow file. (#108 → #139)
+          title: "${{ steps.sync.outputs.title || 'data: sync board bios from Google Form' }}"
           commit-message: |
             data: sync board.json from Google Form
 
