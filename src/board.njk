@@ -72,29 +72,30 @@ alternates:
   </div>
 </section>
 
-{# Past board members + interns whose `roleEndDate` is more than a week
-   in the past. Rendered as a folded <details> footer — they remain
-   part of the broader European security studies family, just not the
-   active team. Hidden entirely when nobody has expired. #}
+{# EISS community alumni — former board members, support staff, and
+   interns whose `roleEndDate` is more than a week in the past. The
+   mechanism is shared across all three categories: the entry stays
+   in board.json (members[] or support[]) but `boardSorted.js` filters
+   it out of the active sections and into `pastMembers`. For interns,
+   the date arrives automatically through Form question 18; for board
+   members and support staff, an operator hand-edits the entry when
+   the user reports a departure. Hidden entirely when there are no
+   alumni yet. #}
 {%- if boardSorted.pastMembers and boardSorted.pastMembers.length %}
-<section class="section-tight">
+<section class="section community-alumni">
   <div class="container">
-    <details class="past-members">
-      <summary>
-        <span class="past-members-label">
-          Past board members and interns
-          <span class="past-members-count">{{ boardSorted.pastMembers.length }}</span>
-        </span>
-        <span class="past-members-hint">
-          They remain part of the broader European security studies family.
-        </span>
-      </summary>
-      <div class="people-grid people-grid--compact">
-        {%- for person in boardSorted.pastMembers %}
-          {%- include "person-card.njk" %}
-        {%- endfor %}
-      </div>
-    </details>
+    <h2 class="community-alumni-title">
+      EISS community alumni
+      <span class="community-alumni-count" aria-label="{{ boardSorted.pastMembers.length }} alumni">{{ boardSorted.pastMembers.length }}</span>
+    </h2>
+    <p class="community-alumni-lead">
+      Former board members, support staff, and interns. They remain part of our wider European security studies network.
+    </p>
+    <div class="people-grid people-grid--compact">
+      {%- for person in boardSorted.pastMembers %}
+        {%- include "person-card.njk" %}
+      {%- endfor %}
+    </div>
   </div>
 </section>
 {%- endif %}

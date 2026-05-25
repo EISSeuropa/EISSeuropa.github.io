@@ -72,24 +72,21 @@ alternates:
 </section>
 
 {%- if boardSorted.pastMembers and boardSorted.pastMembers.length %}
-<section class="section-tight">
+<section class="section community-alumni">
   <div class="container">
-    <details class="past-members">
-      <summary>
-        <span class="past-members-label">
-          Anciens membres et stagiaires
-          <span class="past-members-count">{{ boardSorted.pastMembers.length }}</span>
-        </span>
-        <span class="past-members-hint">
-          Ils font toujours partie de la communauté européenne des études de sécurité.
-        </span>
-      </summary>
-      <div class="people-grid people-grid--compact">
-        {%- for person in boardSorted.pastMembers %}
-          {%- include "person-card.njk" %}
-        {%- endfor %}
-      </div>
-    </details>
+    <h2 class="community-alumni-title">
+      Anciens membres de la communauté EISS
+      <span class="community-alumni-count" aria-label="{{ boardSorted.pastMembers.length }} anciens">{{ boardSorted.pastMembers.length }}</span>
+    </h2>
+    <p class="community-alumni-lead">
+      Anciens membres du bureau, du personnel d'appui et stagiaires. Ils font toujours partie de notre
+      réseau européen des études de sécurité au sens large.
+    </p>
+    <div class="people-grid people-grid--compact">
+      {%- for person in boardSorted.pastMembers %}
+        {%- include "person-card.njk" %}
+      {%- endfor %}
+    </div>
   </div>
 </section>
 {%- endif %}

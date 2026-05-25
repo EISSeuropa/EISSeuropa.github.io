@@ -3088,61 +3088,34 @@ h4 { font-size: var(--fs-lg); }
   margin: 0;
 }
 
-/* ---------- /board — past members folded footer ------------------------
-   Renders alumni (interns / visiting fellows / fixed-term contracts
-   whose `roleEndDate` has passed by more than the 7-day grace) as a
-   collapsed <details> at the bottom of /board. Closed by default.
-   When expanded the people-grid stays narrow (compact variant) so the
-   alumni section reads as a footer rather than competing with the
-   active team. (Restored in PR #130 after the manual #127 merge
-   dropped this block during conflict resolution.) */
-.past-members {
+/* ---------- /board — EISS community alumni --------------------------
+   Renders alumni — former board members, support staff, and interns
+   whose `roleEndDate` has passed by more than the 7-day grace — as
+   a full visible section at the bottom of /board. The mechanism is
+   shared across all three categories (intern dates arrive via the
+   Form pipeline; board/staff departures are hand-edited by the
+   operator); only the display treatment is alumni-specific.
+
+   Earlier this was a folded <details> block, which buried the
+   alumni. The user's framing is "they remain part of the wider EISS
+   community" — so the section is visible by default and reads as a
+   first-class part of /board. The grid uses people-grid--compact so
+   the section packs denser than the active sections, signalling
+   that this is a quieter "alumni" register rather than active team. */
+.community-alumni {
   border-top: 1px solid var(--border);
-  padding-top: var(--space-5);
 }
 
-.past-members > summary {
-  list-style: none;
-  cursor: pointer;
+.community-alumni-title {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2) var(--space-4);
   align-items: baseline;
-  padding: var(--space-2) 0;
-  transition: color var(--motion-base) var(--ease-out);
+  gap: var(--space-2) var(--space-3);
+  margin-block-end: var(--space-2);
 }
 
-.past-members > summary::-webkit-details-marker {
-  display: none;
-}
-
-.past-members > summary::before {
-  content: "▸";
+.community-alumni-count {
   display: inline-block;
-  margin-inline-end: var(--space-2);
-  color: var(--text-muted);
-  transition: transform var(--motion-base) var(--ease-out);
-}
-
-.past-members[open] > summary::before {
-  transform: rotate(90deg);
-}
-
-.past-members > summary:hover,
-.past-members > summary:focus-visible {
-  color: var(--accent);
-  outline: none;
-}
-
-.past-members-label {
-  font-weight: 600;
-  font-size: var(--fs-lg);
-  color: var(--text);
-}
-
-.past-members-count {
-  display: inline-block;
-  margin-inline-start: var(--space-2);
   padding: 0.1em 0.55em;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -3152,15 +3125,10 @@ h4 { font-size: var(--fs-lg); }
   background: var(--surface);
 }
 
-.past-members-hint {
-  flex: 1;
-  font-size: var(--fs-sm);
+.community-alumni-lead {
   color: var(--text-muted);
-  font-style: italic;
-}
-
-.past-members[open] .people-grid {
-  margin-top: var(--space-5);
+  max-width: 44rem;
+  margin-block-end: var(--space-5);
 }
 
 .people-grid--compact {
