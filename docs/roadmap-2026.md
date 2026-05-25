@@ -4,6 +4,19 @@ A planning document, not a commitment. Written to help the maintainer
 think through what's worth doing next, in what order, and at what
 effort. **Last update: 24 May 2026, after v2.22.0.**
 
+<!-- AUTOSTAMP:BEGIN -->
+> _Auto-tracked: **35 entries** in [`[Unreleased]`](../CHANGELOG.md#unreleased) since **v2.22.0** (16 Added, 9 Changed, 10 Fixed). Last refresh by `scripts/sync-roadmap.py`: 25 May 2026. Prose in the timeline below may lag; the maintainer resynthesises on release-time §5 sweep._
+<!-- AUTOSTAMP:END -->
+
+> **Sync convention.** This file is the source of truth. The block
+> above between `<!-- AUTOSTAMP:BEGIN -->` markers is machine-managed
+> by `scripts/sync-roadmap.py` (fires from
+> `.github/workflows/sync-roadmap.yml` on every push that touches
+> `CHANGELOG.md`, plus a weekly Monday 06:00 UTC belt-and-braces run).
+> The count surfaces staleness, the maintainer decides when the
+> prose timeline below needs a refresh (release-time §5 cross-check
+> per `CLAUDE.md`).
+
 Effort notation:
 
 - **S** — under 2 hours of focused work (one short Claude session)

@@ -339,20 +339,22 @@ cadence for staying current.
    their target doc inline, so the sweep is the safety net rather
    than the workhorse.
 
-#### Automation note: roadmap autostamp (planned)
+#### Automation note: roadmap autostamp
 
-A workflow modelled on
-[`netsec.github.io`'s `sync-roadmap.yml`](https://github.com/EISSeuropa/netsec.github.io/blob/main/.github/workflows/sync-roadmap.yml)
-will keep an autostamp block at the top of `docs/roadmap-2026.md` in
-sync with `CHANGELOG.md`'s `[Unreleased]` section, counting bullets
-per category and anchoring against the most recent SemVer tag. This
-is an open import task: Import PR 2 in the NetSec-convention rollout.
+`.github/workflows/sync-roadmap.yml` keeps the AUTOSTAMP block near
+the top of `docs/roadmap-2026.md` in sync with `CHANGELOG.md`'s
+`[Unreleased]` section. It counts the bullets per Keep-a-Changelog
+category, records the freshness date, and anchors against the most
+recent SemVer tag. Triggers on every push to `master` that touches
+`CHANGELOG.md` (plus weekly Monday 06:00 UTC + manual dispatch),
+opens an auto-PR on `roadmap-sync/auto` with auto-merge armed.
 
-So the maintainer will never have to manually refresh the count or
-freshness stamp once that lands. **What the automation does not do**:
-rewrite the prose timeline rows. When the count visibly diverges from
-what the prose says is in flight, the maintainer resynthesises by
-hand (which is also a §5 cross-check item at release time).
+So the maintainer never has to manually refresh the count or
+freshness stamp; that's handled. **What the automation does not
+do**: rewrite the prose timeline rows. When the count visibly
+diverges from what the prose says is in flight, the maintainer
+resynthesises by hand (also a §5 cross-check item at release time).
+The autostamp is the staleness alarm; humans write the synthesis.
 
 ---
 
