@@ -1604,8 +1604,17 @@ h4 { font-size: var(--fs-lg); }
   font-feature-settings: "tnum" 1;
 }
 
+/* Dark-mode placeholder — same pattern as the ESSC map: respect
+   both the explicit toggle and the OS preference (with the toggle
+   winning when both apply). */
+[data-theme="dark"] .person-photo-placeholder {
+  background:
+    linear-gradient(135deg, hsl(216 28% 22%) 0%, hsl(216 32% 28%) 100%);
+  color: hsl(216 65% 78%);
+}
+
 @media (prefers-color-scheme: dark) {
-  .person-photo-placeholder {
+  :root:not([data-theme="light"]) .person-photo-placeholder {
     background:
       linear-gradient(135deg, hsl(216 28% 22%) 0%, hsl(216 32% 28%) 100%);
     color: hsl(216 65% 78%);
@@ -3444,17 +3453,24 @@ h4 { font-size: var(--fs-lg); }
   vector-effect: non-scaling-stroke;
 }
 
+/* Dark-mode country fill — applied EITHER when the site is
+   explicitly toggled to dark via [data-theme="dark"] OR when the
+   OS prefers dark AND the user hasn't explicitly toggled to light.
+   The previous version only had the @media branch, which meant a
+   user with an OS-dark preference who clicked the sun icon to
+   force light mode still saw a dark map (the rest of the page
+   went light). Mirrors the pattern used by the design-token block
+   at the top of the file. */
+[data-theme="dark"] .essc-map-outline path {
+  fill: hsl(216 30% 22%);
+  stroke: hsl(222 14% 32%);
+}
+
 @media (prefers-color-scheme: dark) {
-  .essc-map-outline path {
+  :root:not([data-theme="light"]) .essc-map-outline path {
     fill: hsl(216 30% 22%);
     stroke: hsl(222 14% 32%);
   }
-  /* Bright white dot ring in dark mode — earlier I matched the
-     stroke to the page background so the ring "disappeared", but
-     on small / mobile dark-mode renders the dots then sat against
-     the dark country fill with no edge separation and were hard
-     to pick out. Keep the white stroke from the base rule so each
-     dot has a clearly defined ring in both modes. */
 }
 
 .essc-map-link {
@@ -3520,13 +3536,6 @@ h4 { font-size: var(--fs-lg); }
   paint-order: stroke fill;
 }
 
-@media (prefers-color-scheme: dark) {
-  .essc-map-label,
-  .essc-map-years {
-    stroke: hsl(222 24% 10%);
-  }
-}
-
 /* font-size is set as an SVG attribute on each <text> element (user-
    space units that scale with the viewBox) rather than a CSS px
    value (fixed regardless of SVG scale). Earlier this used CSS
@@ -3554,12 +3563,20 @@ h4 { font-size: var(--fs-lg); }
   text-anchor: end;
 }
 
+/* Dark-mode label halo — opaque near-black so it masks the dark
+   country polygon underneath. Same dual-selector pattern as the
+   country fill above so the site's explicit theme toggle is
+   honoured even when the OS prefers dark. Earlier this had two
+   different @media blocks (with slightly different hsl values,
+   24% 10% vs 24% 8%) — consolidated into a single 24% 8% value. */
+[data-theme="dark"] .essc-map-label,
+[data-theme="dark"] .essc-map-years {
+  stroke: hsl(222 24% 8%);
+}
+
 @media (prefers-color-scheme: dark) {
-  /* In dark mode --surface is a low-alpha dark colour; we want the
-     halo opaque enough to actually mask the underlying country
-     polygon. Use the page background token instead. */
-  .essc-map-label,
-  .essc-map-years {
+  :root:not([data-theme="light"]) .essc-map-label,
+  :root:not([data-theme="light"]) .essc-map-years {
     stroke: hsl(222 24% 8%);
   }
 }
