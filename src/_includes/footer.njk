@@ -1,9 +1,8 @@
 {# Footer consumes the active-locale catalog `t` from base.njk.
-   Brand+legal text is i18n'd, but link `href` values stay constant
-   (and where possible point at the appropriate-language sibling
-   when one exists). #}
+   Brand+legal text is i18n'd; link `href` values point at the
+   `.lang.html` sibling when it exists, and fall back to the English
+   page otherwise via the `localizedHref` filter (#162). #}
 {% from "icons.njk" import icon %}
-{%- set langSuffix = "" if lang == "en" else "." + lang -%}
 <footer class="site-footer" role="contentinfo">
   <div class="container footer">
     <div class="footer-grid">
@@ -28,29 +27,29 @@
       <div>
         <h2>{{ t.footer.conferencesHeading }}</h2>
         <ul class="footer-list">
-          <li><a href="/2026{{ langSuffix }}.html">{{ t.footer.conferencesItems.c2026 }}</a></li>
-          <li><a href="/2025{{ langSuffix }}.html">{{ t.footer.conferencesItems.c2025 }}</a></li>
-          <li><a href="/2024{{ langSuffix }}.html">{{ t.footer.conferencesItems.c2024 }}</a></li>
-          <li><a href="/past{{ langSuffix }}.html">{{ t.footer.conferencesItems.allPast }}</a></li>
+          <li><a href="{{ '/2026.html' | localizedHref(lang) }}">{{ t.footer.conferencesItems.c2026 }}</a></li>
+          <li><a href="{{ '/2025.html' | localizedHref(lang) }}">{{ t.footer.conferencesItems.c2025 }}</a></li>
+          <li><a href="{{ '/2024.html' | localizedHref(lang) }}">{{ t.footer.conferencesItems.c2024 }}</a></li>
+          <li><a href="{{ '/past.html' | localizedHref(lang) }}">{{ t.footer.conferencesItems.allPast }}</a></li>
         </ul>
       </div>
 
       <div>
         <h2>{{ t.footer.programmesHeading }}</h2>
         <ul class="footer-list">
-          <li><a href="/NetSecSchool{{ langSuffix }}.html">{{ t.footer.programmesItems.netsec }}</a></li>
-          <li><a href="/euroswamos{{ langSuffix }}.html">{{ t.footer.programmesItems.euroswamos }}</a></li>
-          <li><a href="/coercion{{ langSuffix }}.html">{{ t.footer.programmesItems.coercion }}</a></li>
-          <li><a href="/GlobalRisks{{ langSuffix }}.html">{{ t.footer.programmesItems.globalRisks }}</a></li>
+          <li><a href="{{ '/NetSecSchool.html' | localizedHref(lang) }}">{{ t.footer.programmesItems.netsec }}</a></li>
+          <li><a href="{{ '/euroswamos.html' | localizedHref(lang) }}">{{ t.footer.programmesItems.euroswamos }}</a></li>
+          <li><a href="{{ '/coercion.html' | localizedHref(lang) }}">{{ t.footer.programmesItems.coercion }}</a></li>
+          <li><a href="{{ '/GlobalRisks.html' | localizedHref(lang) }}">{{ t.footer.programmesItems.globalRisks }}</a></li>
         </ul>
       </div>
 
       <div>
         <h2>{{ t.footer.aboutHeading }}</h2>
         <ul class="footer-list">
-          <li><a href="/initiative{{ langSuffix }}.html">{{ t.footer.aboutItems.initiative }}</a></li>
-          <li><a href="/board{{ langSuffix }}.html">{{ t.footer.aboutItems.people }}</a></li>
-          <li><a href="/membership{{ langSuffix }}.html">{{ t.footer.aboutItems.membership }}</a></li>
+          <li><a href="{{ '/initiative.html' | localizedHref(lang) }}">{{ t.footer.aboutItems.initiative }}</a></li>
+          <li><a href="{{ '/board.html' | localizedHref(lang) }}">{{ t.footer.aboutItems.people }}</a></li>
+          <li><a href="{{ '/membership.html' | localizedHref(lang) }}">{{ t.footer.aboutItems.membership }}</a></li>
           <li><a href="{{ site.newsletterUrl }}" target="_blank" rel="noopener">{{ t.footer.aboutItems.newsletter }}</a></li>
           <li><a href="mailto:{{ site.contactEmail }}">{{ t.footer.aboutItems.contact }}</a></li>
         </ul>
@@ -84,17 +83,17 @@
       </p>
       <p class="footer-meta">
         <span class="footer-meta-links">
-          <a href="/refund{{ langSuffix }}.html">{{ t.footer.legalLinks.terms }}</a> ·
-          <a href="/policy{{ langSuffix }}.html">{{ t.footer.legalLinks.privacy }}</a> ·
-          <a href="/accessibility{{ langSuffix }}.html">{{ t.footer.legalLinks.accessibility }}</a> ·
-          <a href="/sitemap{{ langSuffix }}.html">{{ t.footer.legalLinks.sitemap }}</a>
+          <a href="{{ '/refund.html' | localizedHref(lang) }}">{{ t.footer.legalLinks.terms }}</a> ·
+          <a href="{{ '/policy.html' | localizedHref(lang) }}">{{ t.footer.legalLinks.privacy }}</a> ·
+          <a href="{{ '/accessibility.html' | localizedHref(lang) }}">{{ t.footer.legalLinks.accessibility }}</a> ·
+          <a href="{{ '/sitemap.html' | localizedHref(lang) }}">{{ t.footer.legalLinks.sitemap }}</a>
         </span>
         {# Authorship credit. The name links to the author's board card
            via the slug from src/_data/board.json. Keep this discreet —
            it doesn't compete with EISS branding. #}
         <span class="footer-authorship">
           {{ t.footer.authorship.prefix }}
-          <a href="/board{{ langSuffix }}.html#{{ t.footer.authorship.authorSlug }}">{{ t.footer.authorship.authorName }}</a>
+          <a href="{{ '/board.html' | localizedHref(lang) }}#{{ t.footer.authorship.authorSlug }}">{{ t.footer.authorship.authorName }}</a>
         </span>
       </p>
     </div>
