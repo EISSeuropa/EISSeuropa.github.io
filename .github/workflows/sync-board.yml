@@ -117,6 +117,15 @@ jobs:
             src/assets/images/board/) from the linked Google Sheet.
             See the PR body for the exact diff.
           body-path: /tmp/board-pr-body.md
+          # Auto-assigning the maintainer fires GitHub's standard
+          # PR-assignee notification, so the run produces an email
+          # + mobile push (per the user's global notification
+          # preferences) without needing a webhook or third-party
+          # integration. Also true on follow-up syncs: when the
+          # action updates the existing PR with a new commit on the
+          # `board-sync/auto` branch, GitHub re-notifies the
+          # assignee on the new push.
+          assignees: APB-LDN
           labels: |
             automated
             data-sync
