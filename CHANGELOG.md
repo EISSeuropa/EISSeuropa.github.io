@@ -66,19 +66,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
-### Added
-
-- **`localizedHref` Eleventy filter** in `.eleventy.js` returns the `.lang.html` sibling of an internal `/foo.html` URL when that translated source exists in `src/`, and falls back to the English page otherwise (closes [#162](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/162)). External URLs, anchors, `mailto:` / `tel:`, and non-html targets pass through unchanged. Used by `nav.njk`, `footer.njk`, `programmes.{fr,de}.njk`, and `initiative.{fr,de}.njk` to replace the previous unconditional `.html → .lang.html` swap that produced 14 broken internal links to untranslated pages on every FR / DE page. The link checker is no longer advisory: it gates PRs, and the script now reports zero broken links across 1,590+ internal references.
-
-### Fixed
-
-- **John Helferich's `board.json` website link** stored as bare `johnhelferich.com` without the `https://` scheme, which the link checker correctly resolved as a relative path against `/board.html` and flagged as 404. Added the scheme. The sync pipeline (`scripts/sync-board.py`) doesn't currently auto-prefix bare hostnames; that's a separate hardening if more entries surface the same shape.
-
 ### Changed
 
-- **`.github/workflows/link-check.yml` flipped from advisory to gating**. The pre-existing untranslated-page breakage that justified `continue-on-error: true` in PR #164 is resolved, so the workflow now fails the PR on any broken link (internal or external). The weekly Monday 07:00 UTC cron continues to surface external rot.
-
-## [2.23.0] · 2026-05-26 — Brand identity and Initiative depth
+- **`/initiative` Meijer pull-quote replaced** with the longer founder quote on European fragmentation in security studies (EN, FR, DE). Reads as a clearer statement of what EISS was set up to do: overcome the fragmentation of European security studies by federating and consolidating a Europe-wide field. The previous quote, "EISS aims to fill this gap by contributing to the formation of a European community of researchers in security studies", was the closing line of the same Meijer 2017 *Champs de Mars* piece; the new quote opens with the problem framing and lands on the solution. Citation link unchanged.
+- **`/initiative` origins section recentred on EISS rather than AEGES** (EN, FR, DE). The two paragraphs previously dwelled on AEGES history (Holeindre's 2015 founding, the CNRS Éditions + Armand Colin book series, the Prix Bastien Irondelle) before pivoting to EISS. Recast to keep AEGES as the founding context in one short sentence, then foreground what EISS has become independently: a Europe-wide network spanning N countries, N+ ESSC editions across the continent, founding member of the NetSec COST Action in 2025. AEGES is acknowledged as a sister organisation; EISS's centre of gravity is now European.
 
 ## [2.23.0] · 2026-05-26 — Brand identity and Initiative depth
 
