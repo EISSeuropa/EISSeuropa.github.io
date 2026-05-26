@@ -2,7 +2,7 @@
 
 A planning document, not a commitment. Written to help the maintainer
 think through what's worth doing next, in what order, and at what
-effort. **Last update: 24 May 2026, after v2.22.0.**
+effort. **Last update: 26 May 2026, after v2.23.0.**
 
 <!-- AUTOSTAMP:BEGIN -->
 > _Auto-tracked: `[Unreleased]` is empty since **v2.22.0**. Last refresh by `scripts/sync-roadmap.py`: 26 May 2026._
@@ -49,6 +49,10 @@ counts as MAJOR / MINOR / PATCH. `scripts/release.sh` enforces the
 process; `CHANGELOG.md` accumulates the entries between releases. One
 PR is *not* one release — PRs add to `[Unreleased]`; releases get
 cut at milestones.
+
+### v2.23.0 · 26 May 2026 — *Brand identity and Initiative depth*
+
+The designer's EISS lockup replaces the placeholder "E" gradient tile across every header, every footer, the favicon (brand-blue rounded square with a simplified 4-dot constellation), the Apple touch icon, the Android adaptive icon, and the PWA manifest. The Schema.org `Organization.logo` JSON-LD upgrades from a stale Mobirise-era JPEG to the new high-res brand PNG with explicit dimensions and `foundingDate: "2017"`. `/initiative` deepens into a complete founding story: founder pull-quote + two founding objectives + "Filling a gap" framing, an ESSC flagship section with a 10-card grid of every annual edition, a Natural-Earth-projected host-city map, a research-themes pill row, expanded origins prose, and a *First conference* facts aside. `/board` formalises the EISS community as a first-class section with auto-expiring intern entries (19 past interns backfilled with affiliations) and a mobile photo-drop. Operator + CI conventions imported from the sister `netsec.github.io` repo: `CLAUDE.md` operator playbook, full `SECURITY.md`, hybrid CHANGELOG preamble, a `sync-roadmap.py` autostamp pattern keeping the freshness count on this very file refreshed automatically, and a `check-links.sh` workflow walking `_site/**/*.html` on every PR + Monday cron. ESSC map projection corrected for cos(latitude) so Europe no longer renders squat, plus theme-toggle blindness, label overlap, and mobile tap targets fixed. [Release notes →](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.23.0)
 
 ### v2.22.0 · 24 May 2026 — *Live board pipeline and Initiative refresh*
 
