@@ -18,6 +18,54 @@ module.exports = function (eleventyConfig) {
     fs.readFileSync(path.join("src", relPath), "utf-8")
   );
 
+  // {{ "/2025.html" | localizedHref(lang) }} — given an internal
+  // page href + a target locale, return the localised URL if a
+  // translated source file actually exists, otherwise return the
+  // original (English) href unchanged. Pre-empts the link-rot
+  // pattern (#162) where the footer and a few inline links used
+  // to unconditionally rewrite `/foo.html` to `/foo.fr.html` on
+  // every FR page, producing dead links to pages that have not
+  // been translated yet.
+  //
+  // Resolution: check both `src/<slug>.<lang>.njk` and the legacy
+  // `src/<slug>.<lang>.html` for the existence of a localised
+  // source. Cheap (one stat) and runs at build time, so the cost
+  // is paid once per page-render rather than per visitor.
+  //
+  // Pass-throughs (returned unchanged):
+  //   - lang === "en"        (no swap needed)
+  //   - external URLs        (http:// or https:// or //)
+  //   - non-html targets     (PDFs, assets, mailto:, tel:)
+  //   - anchor-only          (starts with "#")
+  //   - missing href         (empty string or null)
+  eleventyConfig.addFilter("localizedHref", (href, lang) => {
+    if (!href || typeof href !== "string") return href;
+    if (lang === "en") return href;
+    if (
+      href.startsWith("http://") ||
+      href.startsWith("https://") ||
+      href.startsWith("//") ||
+      href.startsWith("#") ||
+      href.startsWith("mailto:") ||
+      href.startsWith("tel:")
+    ) {
+      return href;
+    }
+    if (!href.endsWith(".html")) return href;
+    // Strip query and fragment for the source lookup, but reattach
+    // them on the localised return so deep links keep working.
+    const [pathPart, ...rest] = href.split(/([?#])/);
+    const tail = rest.join("");
+    const slug = pathPart.replace(/^\//, "").replace(/\.html$/, "");
+    if (!slug) return href; // bare "/" stays as-is
+    const localizedSource = path.join("src", `${slug}.${lang}.njk`);
+    const localizedHtml = path.join("src", `${slug}.${lang}.html`);
+    if (fs.existsSync(localizedSource) || fs.existsSync(localizedHtml)) {
+      return `/${slug}.${lang}.html${tail}`;
+    }
+    return href; // localised version doesn't exist; fall back to EN
+  });
+
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addPassthroughCopy({ "src/.well-known": "/.well-known" });
   eleventyConfig.addPassthroughCopy({ "src/CNAME": "CNAME" });
