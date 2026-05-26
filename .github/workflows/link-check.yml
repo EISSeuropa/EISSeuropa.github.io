@@ -9,16 +9,12 @@
 #     it)
 #   - manual dispatch from the Actions tab
 #
-# Status: **advisory** (continue-on-error). The first run will report
-# ~14 pre-existing broken internal links to `.fr.html` / `.de.html`
-# pages that nav.njk synthesises but where the translation hasn't
-# been written yet. Tracked separately; see the open issue tagged
-# "i18n native-speaker review". Once that's fixed, flip
-# `continue-on-error: false` on the run step so this workflow
-# actually gates merges.
-#
-# The headline value during the advisory window is the weekly cron
-# catching external link rot, not the per-PR gate.
+# Status: **gating**. The script exits non-zero on any broken link
+# (internal or external) and the workflow fails accordingly. The
+# pre-existing untranslated-page nav-synthesis breakage that gated
+# this workflow as advisory in PR #164 was resolved by #162's
+# `localizedHref` filter, and the script now reports 0 broken links
+# across all 1500+ internal references.
 #
 # Adapted from the sister repo
 # EISSeuropa/netsec.github.io/.github/workflows/launch-qa-link-check.yml.
@@ -72,7 +68,4 @@ jobs:
           python-version: '3.12'
 
       - name: Run link check
-        # Advisory until the pre-existing untranslated-page link
-        # breakage is resolved. Flip to `false` once that's done.
-        continue-on-error: true
         run: ./scripts/check-links.sh --quiet

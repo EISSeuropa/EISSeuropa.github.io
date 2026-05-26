@@ -66,7 +66,19 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
-_Nothing yet._
+### Added
+
+- **`localizedHref` Eleventy filter** in `.eleventy.js` returns the `.lang.html` sibling of an internal `/foo.html` URL when that translated source exists in `src/`, and falls back to the English page otherwise (closes [#162](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/162)). External URLs, anchors, `mailto:` / `tel:`, and non-html targets pass through unchanged. Used by `nav.njk`, `footer.njk`, `programmes.{fr,de}.njk`, and `initiative.{fr,de}.njk` to replace the previous unconditional `.html → .lang.html` swap that produced 14 broken internal links to untranslated pages on every FR / DE page. The link checker is no longer advisory: it gates PRs, and the script now reports zero broken links across 1,590+ internal references.
+
+### Fixed
+
+- **John Helferich's `board.json` website link** stored as bare `johnhelferich.com` without the `https://` scheme, which the link checker correctly resolved as a relative path against `/board.html` and flagged as 404. Added the scheme. The sync pipeline (`scripts/sync-board.py`) doesn't currently auto-prefix bare hostnames; that's a separate hardening if more entries surface the same shape.
+
+### Changed
+
+- **`.github/workflows/link-check.yml` flipped from advisory to gating**. The pre-existing untranslated-page breakage that justified `continue-on-error: true` in PR #164 is resolved, so the workflow now fails the PR on any broken link (internal or external). The weekly Monday 07:00 UTC cron continues to surface external rot.
+
+## [2.23.0] · 2026-05-26 — Brand identity and Initiative depth
 
 ## [2.23.0] · 2026-05-26 — Brand identity and Initiative depth
 

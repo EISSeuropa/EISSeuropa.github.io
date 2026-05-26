@@ -27,15 +27,12 @@
     <ul class="nav-links" id="primary-nav" data-nav-menu>
       {% for item in site.nav %}
         {% if item.key != "home" %}
-          {%- set itemHref = item.href -%}
-          {%- if not item.external and lang != "en" -%}
-            {# For translated pages, point at the .lang.html sibling.
-               `replace` is a no-op on URLs without `.html` (e.g. "/"
-               and external URLs). We don't validate existence here —
-               if a sibling is missing, the page's own beta banner (and
-               the lang-switcher fallback) handle the experience. #}
-            {%- set itemHref = item.href | replace(".html", "." + lang + ".html") -%}
-          {%- endif -%}
+          {# `localizedHref` returns the `.lang.html` sibling when it
+             exists in src/ (Eleventy generates the matching output
+             file), and falls back to the English page otherwise.
+             External URLs and the home "/" pass through unchanged.
+             See .eleventy.js for the full filter contract (#162). #}
+          {%- set itemHref = item.href if item.external else (item.href | localizedHref(lang)) -%}
           <li>
             <a class="nav-link"
                href="{{ itemHref }}"
