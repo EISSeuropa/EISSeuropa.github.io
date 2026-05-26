@@ -68,6 +68,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- **`/initiative` Meijer pull-quote attribution corrected** (EN, FR, DE). The blockquote in the *What EISS was founded to do* card credited the Champs de Mars 2017 article alongside Hugo Meijer. The quote was direct from Hugo, not lifted from the article. Attribution now reads simply "— Hugo Meijer, founder" (or *fondateur* / *Gründer*). The Champs de Mars reference is preserved in its proper home, the *First conference* aside on the *How EISS started* section, which is where the post-conference write-up belongs.
 - **`sync-roadmap.yml` self-feeding loop broken**. The workflow used to fire when `docs/roadmap-2026.md` changed, which included the auto-PR's own merge commit (the auto-PR updates exactly that file). When several content PRs landed in quick succession the cycles overlapped, GitHub's anti-abuse heuristic flagged a couple of the runs as **disruptive**, and the workflow_dispatch endpoint started returning `Failed to queue workflow run` for ~30 minutes. The fix removes `docs/roadmap-2026.md` from the path trigger so the workflow listens only to its inputs (`CHANGELOG.md`, the script, the workflow file). Output-change retriggering is gone; the loop is impossible.
 
 ### Removed
