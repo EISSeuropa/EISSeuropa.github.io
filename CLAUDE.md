@@ -235,15 +235,23 @@ liveness with a visual cue. The pulsing accent ring on the
 registration badge in `/2026.njk` is the canonical example.
 Mechanism descriptions belong in the maintainer docs.
 
-## 7. Prose voice (em dashes and AI patterns)
+## 7. Prose voice (em dashes, semicolons, AI patterns)
 
 These apply to every piece of prose I author in this project: the
 public site, the CHANGELOG, PR descriptions, the documentation pack
 body text, multi-paragraph code comments. (One-line `# label` code
-comments stay flexible.)
+comments stay flexible. Code itself is out of scope: a JavaScript
+`for (;;) {}` or CSS `color: red;` keeps its semicolons.)
 
-**No em dashes.** Use commas, parentheses, full stops, or colons. Em
-dashes pattern-match to AI-generated prose; a careful reader notices.
+**Minimise em dashes.** Default to commas, parentheses, full stops,
+or colons. Em dashes pattern-match to AI-generated prose. A careful
+reader notices. Rare deliberate use is fine when no other punctuation
+fits cleanly, but the default should be "not an em dash".
+
+**No semicolons.** Use a full stop and a new sentence, or restructure.
+Semicolons read as overly formal in the site's voice and, like em
+dashes, pattern-match to AI prose. (This rule covers prose only. Code
+inside fenced blocks keeps its language-required semicolons.)
 
 **No rule-of-three rhythm.** If there are two items, write two. If
 there are five, write five. Manufactured triplets for cadence are
@@ -255,9 +263,9 @@ then "the workflow" for the same thing in three sentences is an AI
 tell, even when each label is technically accurate.
 
 The rules are forward-looking. They apply to prose authored from the
-PR that introduces them onwards; pre-existing em dashes in the repo
-aren't retroactively scrubbed unless the surrounding text is being
-edited anyway.
+PR that introduces them onwards. Pre-existing em dashes and semicolons
+in the repo aren't retroactively scrubbed unless the surrounding text
+is being edited anyway.
 
 ## 8. Working tree hygiene
 
