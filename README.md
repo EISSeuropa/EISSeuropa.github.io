@@ -17,28 +17,39 @@ src/
   _includes/             partials: nav, footer, theme toggle, content
                          partials shared between pages (terms-body, jpw-2019-body,
                          redirect-body)
-  _data/site.js          global nav config + site identity
+  _data/                 site identity, conferences, i18n catalogs, NetSec
+                         stats, the board roster, Indico events, country
+                         flags lookup
   assets/
-    css/site.css         the design system — design tokens + every component
+    css/site.css         the design system, design tokens + every component
     js/theme.js          theme toggle + mobile menu logic
-    images/              photos, logos, OG cards
+    images/              photos, logos, OG cards, brand/ for the EISS lockup
     files/               PDFs (conference programmes, etc.)
   .well-known/           Apple Pay merchant verification
   CNAME, robots.txt, sitemap.xml, .nojekyll
-  legacy/                pages still on raw Mobirise/AMP passthrough (the five
-                         ticket-*.html flow pages — kept verbatim because they
-                         may still be linked from external Stripe-style flows)
-  *.njk                  one file per modernised page (39 pages — index, archive
-                         years 2019-2026, programmes, board, membership, …)
-.eleventy.js             Eleventy config (passthrough rules + year filter)
-.github/workflows/       CI: build → upload-pages-artifact → deploy-pages
+  *.njk                  one file per page (~72 templates including FR / DE
+                         locales)
+.eleventy.js             Eleventy config (passthrough rules, year filter,
+                         inlineSvg shortcode, localizedHref filter)
+.github/workflows/       CI: build, deploy, link check, i18n drift, roadmap
+                         autostamp, scheduled rebuild, Indico + board sync
 scripts/                 dev helpers (a11y_lint.py, sync-board.py,
                          sync-indico.py, sync-roadmap.py, release.sh,
-                         check-links.sh, etc.) — not part of the
-                         deployed site
+                         check-links.sh, derive-logo-variants.py, etc.),
+                         not part of the deployed site
+docs/                    maintainer-facing markdown documentation
+                         (board-bios-setup, i18n, indico-api-token,
+                         indico-programme-integration, new-conference,
+                         roadmap-2026)
+
+CLAUDE.md                operator-facing convention for AI-assisted work
+                         (read by Claude Code on every session)
+SECURITY.md              vulnerability disclosure policy
+CHANGELOG.md             release history with hybrid lede + themes + index
+                         format
 ```
 
-The site is fully built by Eleventy. All 39 modernised pages live as `.njk` templates under `src/`; the 5 ticket-* URLs remain on legacy passthrough. URLs are preserved from the original Mobirise export (`/2019.html`, `/JPW2022.html`, `/.well-known/apple-developer-merchantid-domain-association`, …) so external bookmarks survive.
+The site is fully built by Eleventy. Every page lives as a `.njk` template under `src/`. URLs are preserved from the original Mobirise export (`/2019.html`, `/JPW2022.html`, `/.well-known/apple-developer-merchantid-domain-association`, and friends) so external bookmarks survive.
 
 ## Working on the site
 
@@ -101,7 +112,7 @@ If you can't write a meaningful lede about a release, it's a patch. The format m
 
 **On the `r` suffix in older tag names.** At v2.13.0r the convention here was formally adopted. The earlier history had been bumped too liberally — several releases were tagged as MINOR but were PATCH-shaped (small visual polish or UX tweaks on existing components). A retroactive renumber swept through every existing release and re-cut tags at the same commit SHAs. GitHub's tag-immutability protection blocks reusing previously-deleted tag names, so the renumbered MINORs land with an `r` suffix (`v2.0.0r`, `v2.5.0r`, …, `v2.13.0r`) — `r` for "renumbered". PATCH tags that didn't collide with previously-existing names stayed clean (`v2.5.1`, `v2.10.1`, …). The full mapping with the original tag for each entry lives at the bottom of [`CHANGELOG.md`](CHANGELOG.md).
 
-**The v2.14.0 → v2.21.0 burn.** A consequence of the renumber, only fully visible when we tried to cut the next forward-going MINOR after v2.13.0r: GitHub's **immutable-releases** feature permanently reserves every tag name once attached to a Release, even after deletion and even after the feature itself is turned off at the repo level. The retroactive renumber deleted the original `v2.14.0`, `v2.15.0`, …, `v2.21.0` tags — so every one of those names is now an unrecoverable tombstone. Pushing any of them fails with `GH013: Cannot create ref due to creations being restricted`, with no ruleset visible in the UI to explain it. The v2.22.0 release ceremony hit this on v2.14.0, then again on v2.15.0, before probing confirmed the whole range was burned and skipping forward to v2.22.0 (the smallest safe next MINOR). The CHANGELOG footer for `[2.22.0]` documents the discovery for future readers. **Going forward, expect clean `vX.Y.Z` tags from v2.22.0 onwards** via `scripts/release.sh` — the burned range is closed and the next bump after v2.22.0 will be v2.23.0 (or v2.22.1 for a PATCH).
+**The v2.14.0 → v2.21.0 burn.** A consequence of the renumber, only fully visible when we tried to cut the next forward-going MINOR after v2.13.0r: GitHub's **immutable-releases** feature permanently reserves every tag name once attached to a Release, even after deletion and even after the feature itself is turned off at the repo level. The retroactive renumber deleted the original `v2.14.0`, `v2.15.0`, …, `v2.21.0` tags — so every one of those names is now an unrecoverable tombstone. Pushing any of them fails with `GH013: Cannot create ref due to creations being restricted`, with no ruleset visible in the UI to explain it. The v2.22.0 release ceremony hit this on v2.14.0, then again on v2.15.0, before probing confirmed the whole range was burned and skipping forward to v2.22.0 (the smallest safe next MINOR). The CHANGELOG footer for `[2.22.0]` documents the discovery for future readers. **Going forward, expect clean `vX.Y.Z` tags from v2.22.0 onwards** via `scripts/release.sh`. The burned range is closed. v2.23.0 cut cleanly in May 2026; the next bump will be v2.24.0 (MINOR) or v2.23.1 (PATCH).
 
 ## History
 
