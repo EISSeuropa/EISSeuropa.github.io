@@ -8,7 +8,7 @@
      - functionalResponsibility — secondary role label, rendered as a
        quiet pill next to the primary role (e.g. for Arthur:
        "BOARD MEMBER" + a "Technology Coordinator" pill).
-     - bio — narrative paragraph; rendered as a teaser with a
+     - bio — narrative paragraph, rendered as a teaser with a
        Read-more <details> expander when longer than ~200 chars.
      - affiliation — single line above the bio.
      - themes — comma-separated phrases, rendered under a thin
@@ -61,7 +61,7 @@
 
     {# Affiliation rendering. Two lines when position + institution
        are stored separately (the modern shape that the Form sync
-       writes); a single legacy line when only `affiliation` is set
+       writes), a single legacy line when only `affiliation` is set
        (fallback for any entry that pre-dates this split). The
        country flag is inline at the end of the institution line so
        it anchors to the same visual position on every card. #}
