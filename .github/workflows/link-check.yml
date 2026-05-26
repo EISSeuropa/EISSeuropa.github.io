@@ -1,0 +1,78 @@
+# Broken-link check.
+#
+# Runs scripts/check-links.sh against the built `_site/` on:
+#   - every PR touching files that affect the built output (catches a
+#     bad link before merge once we flip to gating mode, see below)
+#   - weekly on master (catches external link rot; academic and
+#     COST URLs sometimes shuffle, and we want to hear about it
+#     within a week rather than weeks later when a visitor reports
+#     it)
+#   - manual dispatch from the Actions tab
+#
+# Status: **advisory** (continue-on-error). The first run will report
+# ~14 pre-existing broken internal links to `.fr.html` / `.de.html`
+# pages that nav.njk synthesises but where the translation hasn't
+# been written yet. Tracked separately; see the open issue tagged
+# "i18n native-speaker review". Once that's fixed, flip
+# `continue-on-error: false` on the run step so this workflow
+# actually gates merges.
+#
+# The headline value during the advisory window is the weekly cron
+# catching external link rot, not the per-PR gate.
+#
+# Adapted from the sister repo
+# EISSeuropa/netsec.github.io/.github/workflows/launch-qa-link-check.yml.
+# Two adaptations: needs a Node + Eleventy build step to produce
+# `_site/` before the script can walk it; cron sequence moves to
+# 07:00 UTC Monday so it doesn't collide with the 06:00 sync-roadmap.
+name: Link check
+
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'scripts/check-links.sh'
+      - '.github/workflows/link-check.yml'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.eleventy.js'
+  schedule:
+    # Weekly on Mondays at 07:00 UTC. After the 06:00 sync-roadmap
+    # belt-and-braces; before workhours in Europe so a Monday-morning
+    # external rot report lands at the start of the maintainer's week.
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    name: Resolve every internal + external link in `_site/`
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Build site
+        run: npm run build
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run link check
+        # Advisory until the pre-existing untranslated-page link
+        # breakage is resolved. Flip to `false` once that's done.
+        continue-on-error: true
+        run: ./scripts/check-links.sh --quiet
