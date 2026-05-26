@@ -1,6 +1,6 @@
-# EISS website — rest-of-2026 roadmap
+# EISS website: Rest-of-2026 roadmap
 
-A planning document, not a commitment. Written to help the maintainer
+A planning document written to help the maintainer
 think through what's worth doing next, in what order, and at what
 effort. **Last update: 26 May 2026, after v2.23.0.**
 
