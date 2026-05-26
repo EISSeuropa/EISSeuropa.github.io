@@ -18,13 +18,13 @@
     "src/initiative.njk": {
       "fr": {
         "file": "src/initiative.fr.njk",
-        "source_sha1": "447a821e4a499d63384468b228a5d9c70dab8ef3",
+        "source_sha1": "4879c256b81a38252db4430808d26ef95ff37106",
         "translated_on": "2026-05-26",
         "status": "beta"
       },
       "de": {
         "file": "src/initiative.de.njk",
-        "source_sha1": "447a821e4a499d63384468b228a5d9c70dab8ef3",
+        "source_sha1": "4879c256b81a38252db4430808d26ef95ff37106",
         "translated_on": "2026-05-26",
         "status": "beta"
       }

@@ -66,7 +66,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
-_Nothing yet._
+### Changed
+
+- **`/initiative` Meijer pull-quote replaced** with the longer founder quote on European fragmentation in security studies (EN, FR, DE). Reads as a clearer statement of what EISS was set up to do: overcome the fragmentation of European security studies by federating and consolidating a Europe-wide field. The previous quote, "EISS aims to fill this gap by contributing to the formation of a European community of researchers in security studies", was the closing line of the same Meijer 2017 *Champs de Mars* piece; the new quote opens with the problem framing and lands on the solution. Citation link unchanged.
+- **`/initiative` origins section recentred on EISS rather than AEGES** (EN, FR, DE). The two paragraphs previously dwelled on AEGES history (Holeindre's 2015 founding, the CNRS Éditions + Armand Colin book series, the Prix Bastien Irondelle) before pivoting to EISS. Recast to keep AEGES as the founding context in one short sentence, then foreground what EISS has become independently: a Europe-wide network spanning N countries, N+ ESSC editions across the continent, founding member of the NetSec COST Action in 2025. AEGES is acknowledged as a sister organisation; EISS's centre of gravity is now European.
 
 ## [2.23.0] · 2026-05-26 — Brand identity and Initiative depth
 
