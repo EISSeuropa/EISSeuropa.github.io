@@ -38,8 +38,17 @@ on:
   push:
     branches: [master]
     paths:
+      # Triggers only on the workflow's INPUTS, not its output. The
+      # autostamp lives in docs/roadmap-2026.md, so a previous version
+      # of this list included that file. That created a self-feeding
+      # loop: the auto-PR's merge would touch the roadmap, retrigger
+      # the workflow, possibly open another auto-PR if the count had
+      # moved meanwhile, and so on. With several content PRs landing
+      # close together the cycles overlapped and GitHub's anti-abuse
+      # heuristic flagged the runs as disruptive, blocking other
+      # workflow_dispatch calls for ~30 minutes. Listening to inputs
+      # only breaks the loop cleanly.
       - 'CHANGELOG.md'
-      - 'docs/roadmap-2026.md'
       - 'scripts/sync-roadmap.py'
       - '.github/workflows/sync-roadmap.yml'
   # Weekly belt-and-braces in case a push trigger ever misses

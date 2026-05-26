@@ -66,6 +66,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+### Fixed
+
+- **`sync-roadmap.yml` self-feeding loop broken**. The workflow used to fire when `docs/roadmap-2026.md` changed, which included the auto-PR's own merge commit (the auto-PR updates exactly that file). When several content PRs landed in quick succession the cycles overlapped, GitHub's anti-abuse heuristic flagged a couple of the runs as **disruptive**, and the workflow_dispatch endpoint started returning `Failed to queue workflow run` for ~30 minutes. The fix removes `docs/roadmap-2026.md` from the path trigger so the workflow listens only to its inputs (`CHANGELOG.md`, the script, the workflow file). Output-change retriggering is gone; the loop is impossible.
+
 ### Removed
 
 - **`scripts/extract_legacy.py` and `scripts/extract_prose.py` retired.** Two Mobirise-era utility scripts CodeQL had flagged as `py/bad-tag-filter` warnings for their `<script[^>]*>.*?</script>` / `<style[^>]*>.*?</style>` regex patterns (vulnerable to the classic split-tag bypass, e.g. `<script ><script>...</script ></script>`). Both scripts targeted `src/legacy/`, which was itself retired in v1.0; nothing else referenced them. `a11y_lint.py` stays as the useful survivor. Closes both open Code Scanning alerts at source rather than rewriting dead code. The roadmap's *Consolidate `scripts/`* P2 item is marked done. (Closes [code-scanning #1](https://github.com/EISSeuropa/EISSeuropa.github.io/security/code-scanning/1) + [#2](https://github.com/EISSeuropa/EISSeuropa.github.io/security/code-scanning/2).)
