@@ -4,27 +4,27 @@
     "src/index.njk": {
       "fr": {
         "file": "src/index.fr.njk",
-        "source_sha1": "12c7ed14436b9efa85090c48bf7a6540f34ecf4e",
-        "translated_on": "2026-05-22",
+        "source_sha1": "fb97fccfd331bba79e93970efa49f9fd685725e6",
+        "translated_on": "2026-05-26",
         "status": "beta"
       },
       "de": {
         "file": "src/index.de.njk",
-        "source_sha1": "12c7ed14436b9efa85090c48bf7a6540f34ecf4e",
-        "translated_on": "2026-05-22",
+        "source_sha1": "fb97fccfd331bba79e93970efa49f9fd685725e6",
+        "translated_on": "2026-05-26",
         "status": "beta"
       }
     },
     "src/initiative.njk": {
       "fr": {
         "file": "src/initiative.fr.njk",
-        "source_sha1": "132a41a564e9a91d652ce8d49a307ebdd10152da",
+        "source_sha1": "ac7843b2d3cfac1b74f6ea5eae178b5b813f275c",
         "translated_on": "2026-05-26",
         "status": "beta"
       },
       "de": {
         "file": "src/initiative.de.njk",
-        "source_sha1": "132a41a564e9a91d652ce8d49a307ebdd10152da",
+        "source_sha1": "ac7843b2d3cfac1b74f6ea5eae178b5b813f275c",
         "translated_on": "2026-05-26",
         "status": "beta"
       }
@@ -46,14 +46,14 @@
     "src/board.njk": {
       "fr": {
         "file": "src/board.fr.njk",
-        "source_sha1": "7fb4e5a2c0dc0764be894bd0f719f389376f8d19",
-        "translated_on": "2026-05-25",
+        "source_sha1": "74a0099e1e25492b68f56dba0dffb33913e8c94a",
+        "translated_on": "2026-05-26",
         "status": "beta"
       },
       "de": {
         "file": "src/board.de.njk",
-        "source_sha1": "7fb4e5a2c0dc0764be894bd0f719f389376f8d19",
-        "translated_on": "2026-05-25",
+        "source_sha1": "74a0099e1e25492b68f56dba0dffb33913e8c94a",
+        "translated_on": "2026-05-26",
         "status": "beta"
       }
     },
