@@ -622,30 +622,5 @@ A rough calendar, but skip/swap as needed:
 
 ---
 
-## Things I'd love to know before next iteration
-
-A short list — would inform what to prioritise:
-
-1. **Indico API access** — is there an existing admin token, or
-   would you need to create one? Determines whether Indico
-   integration is M or L.
-2. **NetSec maintainer overlap** — am I (Claude) able to also push
-   changes to `netsec.github.io`, or is that a separate
-   coordination? Determines whether shared-design-tokens makes sense.
-3. **Board enthusiasm for translations** — do you have specific
-   French- or German-speaking board members who'd review the beta
-   translations? Without that, the beta ribbons stay for a while.
-4. **Conference photography** — do conferences typically get a
-   group photo + venue shots? Those would lift the share cards
-   from typographic-only to photo-based for v2.3.
-5. **Sponsorship visibility expectations** — does COST require
-   specific logo placement for the NetSec funding? Today the
-   "Funded by the European Union" image is on `/2026.html`; might
-   need to surface on more pages.
-
-No rush on any of these — write me back when convenient.
-
----
-
 _This document lives in the repo. Treat it as a living plan: revise
 freely as priorities shift. The git history will track changes._
