@@ -2163,6 +2163,22 @@ h4 { font-size: var(--fs-lg); }
     transform: none;
     box-shadow: var(--shadow-1);
   }
+
+  /* Community-alumni cards on mobile: drop the photo column entirely.
+     Most past members carry only an initials placeholder rather than
+     a real headshot, and at 96 px the initials column ate ~40 % of a
+     360 px card while the text wrapped awkwardly into the remaining
+     space. Falling back to a single text column gives each card a
+     compact, readable layout: role line, name, institution. The image
+     elements stay in the DOM (with `aria-hidden` already on the
+     placeholder) so screen-reader behaviour is unchanged. */
+  .community-alumni .person {
+    grid-template-columns: 1fr;
+  }
+  .community-alumni .person-photo,
+  .community-alumni .person-photo-placeholder {
+    display: none;
+  }
 }
 
 /* ---------- definition-list rows (Who are you?, FAQ) ---------- */
