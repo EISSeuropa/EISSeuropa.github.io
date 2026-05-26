@@ -172,6 +172,7 @@
   <a class="skip-link" href="#main">{{ t.skipLink }}</a>
 
   {% if status == "beta" %}{% include "beta-ribbon.njk" %}{% endif %}
+  {% if status == "archive" %}{% include "archive-ribbon.njk" %}{% endif %}
 
   {% include "nav.njk" %}
 

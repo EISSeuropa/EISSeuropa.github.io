@@ -414,6 +414,57 @@ h4 { font-size: var(--fs-lg); }
 
 .beta-ribbon-text { flex: 1; }
 
+/* ---------- archive-page disclaimer ribbon ---------- */
+/* Rendered by src/_includes/archive-ribbon.njk when page front-matter
+   sets status: "archive". Used on past-conference and past-workshop
+   pages where the content is preserved for the record but won't get
+   the same ongoing polish as live pages. Sits in the same slot above
+   the nav as the beta ribbon, but uses a quieter neutral tone:
+   archive content isn't broken, just static. */
+.archive-ribbon {
+  background: hsl(220, 14%, 94%);
+  color: hsl(220, 18%, 32%);
+  border-bottom: 1px solid hsl(220, 12%, 82%);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+}
+
+[data-theme="dark"] .archive-ribbon {
+  background: hsl(220, 14%, 18%);
+  color: hsl(220, 16%, 75%);
+  border-bottom-color: hsl(220, 14%, 28%);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .archive-ribbon {
+    background: hsl(220, 14%, 18%);
+    color: hsl(220, 16%, 75%);
+    border-bottom-color: hsl(220, 14%, 28%);
+  }
+}
+
+.archive-ribbon-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.archive-ribbon-badge {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: hsl(220, 18%, 50%);
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.archive-ribbon-text { flex: 1; }
+
 .beta-ribbon-link {
   color: inherit;
   font-weight: 600;

@@ -66,6 +66,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+### Added
+
+- **Archive-page disclaimer ribbon** on past-conference and past-workshop pages. New `src/_includes/archive-ribbon.njk` renders above the nav whenever a page's frontmatter sets `status: archive`, mirroring the existing beta-translation ribbon pattern but in a quieter neutral grey rather than warning-yellow. Visitors landing on `/2019.html` through `/2025.html`, `/JPW2019.html`, `/JPW2022.html`, `/JPW23.html`, `/NDC.html`, and `/Ukraine.html` now see a one-line note: *"This page is part of our archive. It documents a past EISS event and may not be as complete or polished as current pages."* Sets expectations so the static-since-Mobirise pages don't read as broken or neglected against the polished current-conference and live-programme pages. The 2026 conference page, NetSec / Euro-SWAMOS / Coercive Statecraft / Global Risks programme pages stay unmarked, since they're current content. Ribbon text hardcoded EN for now (every archive page is currently EN-only); if any archive page gets translated, switch to a `t.archiveRibbon.*` i18n catalog lookup as the beta-ribbon partial does.
+
 ### Fixed
 
 - **Link-checker skip list expanded with three bot-blocking hosts**. The first PR that ran the link checker after the brand rollout failed on three external links that GitHub Actions' anonymous HEAD/GET requests can't reach: `www.linkedin.com` (HTTP 999 to all bots, blanket block), `shs.cairn.info` (academic publisher, 403 to anonymous fetches), and `www.berlin-airport.de` (anti-bot UA filter, 403). All three URLs work for real visitors. Added them to the existing `SKIP_HOSTS` set in `scripts/check-links.sh`, alongside the two pre-existing entries (`docs.google.com`, `indico.eiss-europa.com`). The skip-list comment was expanded to distinguish the two reasons a host lands here: auth-gated services and anti-bot filters.
