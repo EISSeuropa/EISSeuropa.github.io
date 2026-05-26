@@ -1,3 +1,19 @@
+# Build and deploy site to GitHub Pages.
+#
+# Triggers on push-to-master, on PR-into-master (for build validation),
+# and via manual dispatch from the Actions tab.
+#
+# Known gotcha: GitHub Actions intentionally does NOT cascade workflow
+# runs when a workflow's GITHUB_TOKEN does the merging. So if a PR is
+# merged via `gh pr merge --auto --squash` and that auto-merge is
+# resolved by the same GITHUB_TOKEN that opened the PR (e.g. the
+# sync-roadmap auto-PR loop), this workflow does NOT fire on the
+# resulting master push. Symptom: master has new commits, the live
+# site is stale. Diagnosis: `gh run list --workflow=deploy.yml --limit
+# 5` shows no run at the timestamp of the merge. Cure: push any commit
+# manually (an empty commit works) or run this workflow via
+# `gh workflow run deploy.yml --ref master` from a real user account.
+
 name: Build and deploy site
 
 on:
