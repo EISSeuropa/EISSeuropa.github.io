@@ -1,0 +1,24 @@
+{# Archive-page disclaimer ribbon.
+   Rendered by base.njk when the page's front-matter sets
+   `status: "archive"`. Used on documentation of past conferences and
+   workshops (the /YYYY.html year pages, the /JPW*.html policy
+   workshops, the one-off /Ukraine.html and /NDC.html pages) where
+   the content is preserved for the record but won't get the same
+   ongoing polish as live pages.
+
+   Text is hardcoded EN because every archive page on the site today
+   is EN-only. If an archive page gets translated, switch to a
+   `t.archiveRibbon.*` lookup against the i18n catalog (mirroring the
+   pattern in beta-ribbon.njk).
+
+   Visually quieter than the beta-translation ribbon: a neutral grey
+   tone rather than the warning-yellow used for unreviewed
+   translations. Archive content is fine, it's just static. #}
+<div class="archive-ribbon" role="note" aria-label="Archive page disclaimer">
+  <div class="container archive-ribbon-inner">
+    <span class="archive-ribbon-badge" aria-hidden="true">A</span>
+    <span class="archive-ribbon-text">
+      This page is part of our archive. It documents a past EISS event and may not be as complete or polished as current pages.
+    </span>
+  </div>
+</div>
