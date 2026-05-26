@@ -32,8 +32,10 @@ src/
                          years 2019-2026, programmes, board, membership, …)
 .eleventy.js             Eleventy config (passthrough rules + year filter)
 .github/workflows/       CI: build → upload-pages-artifact → deploy-pages
-scripts/                 dev helpers (a11y_lint.py, extract_legacy.py,
-                         extract_prose.py) — not part of the deployed site
+scripts/                 dev helpers (a11y_lint.py, sync-board.py,
+                         sync-indico.py, sync-roadmap.py, release.sh,
+                         check-links.sh, etc.) — not part of the
+                         deployed site
 ```
 
 The site is fully built by Eleventy. All 39 modernised pages live as `.njk` templates under `src/`; the 5 ticket-* URLs remain on legacy passthrough. URLs are preserved from the original Mobirise export (`/2019.html`, `/JPW2022.html`, `/.well-known/apple-developer-merchantid-domain-association`, …) so external bookmarks survive.

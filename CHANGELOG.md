@@ -66,6 +66,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+### Removed
+
+- **`scripts/extract_legacy.py` and `scripts/extract_prose.py` retired.** Two Mobirise-era utility scripts CodeQL had flagged as `py/bad-tag-filter` warnings for their `<script[^>]*>.*?</script>` / `<style[^>]*>.*?</style>` regex patterns (vulnerable to the classic split-tag bypass, e.g. `<script ><script>...</script ></script>`). Both scripts targeted `src/legacy/`, which was itself retired in v1.0; nothing else referenced them. `a11y_lint.py` stays as the useful survivor. Closes both open Code Scanning alerts at source rather than rewriting dead code. The roadmap's *Consolidate `scripts/`* P2 item is marked done. (Closes [code-scanning #1](https://github.com/EISSeuropa/EISSeuropa.github.io/security/code-scanning/1) + [#2](https://github.com/EISSeuropa/EISSeuropa.github.io/security/code-scanning/2).)
+
 ### Changed
 
 - **`/initiative` Meijer pull-quote replaced** with the longer founder quote on European fragmentation in security studies (EN, FR, DE). Reads as a clearer statement of what EISS was set up to do: overcome the fragmentation of European security studies by federating and consolidating a Europe-wide field. The previous quote, "EISS aims to fill this gap by contributing to the formation of a European community of researchers in security studies", was the closing line of the same Meijer 2017 *Champs de Mars* piece; the new quote opens with the problem framing and lands on the solution. Citation link unchanged.
