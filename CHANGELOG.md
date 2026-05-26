@@ -66,6 +66,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+_Nothing yet._
+
+## [2.23.0] · 2026-05-26 — Brand identity and Initiative depth
+
 > This release brings the real EISS brand identity to the site, expands `/initiative` from a thin About into a full founding story, formalises the EISS community on `/board` as a first-class section with auto-expiring intern entries, and imports operator + CI conventions from the sister `netsec.github.io` repo. A careful set of ESSC host-city map projection fixes lands alongside.
 
 ### Brand identity rollout
@@ -819,5 +823,6 @@ Preview MCP screenshots of `/index.fr.html`, `/index.de.html`, `/initiative.de.h
 
 *Originally tagged as **v2.0.0**; renumbered to **v2.0.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
 
-[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.22.0...HEAD
+[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.23.0...HEAD
+[2.23.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.22.0...v2.23.0
 [2.22.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.13.0r...v2.22.0
