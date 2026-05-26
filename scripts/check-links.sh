@@ -76,15 +76,33 @@ GET_HOSTS = {
     "docs.google.com", "forms.google.com",
 }
 
-# Hosts we deliberately skip (auth-gated, internal-only):
+# Hosts we deliberately skip. Two categories collapse here. (a)
+# Auth-gated services that require login (the form/page works for
+# real visitors but returns 4xx to anonymous HEAD/GET). (b) Anti-bot
+# filters that block automated requests regardless of method, the
+# destination still works fine for human visitors.
 SKIP_HOSTS = {
-    "docs.google.com",          # Google Forms require user auth; the
+    "docs.google.com",          # Google Forms require user auth. The
                                 # form works for real visitors but
                                 # returns 401 to unauthenticated HEAD
                                 # /GET from this checker.
-    "indico.eiss-europa.com",   # Indico HEADs return 400; works for
+    "indico.eiss-europa.com",   # Indico HEADs return 400, works for
                                 # visitors. Real-URL health is
                                 # confirmed manually.
+    "www.linkedin.com",         # LinkedIn 999s every automated
+                                # request regardless of UA. Member
+                                # profile URLs (board cards) work for
+                                # any logged-out visitor with a
+                                # browser.
+    "shs.cairn.info",           # Cairn (academic publisher hosting
+                                # the Champs de Mars article in /
+                                # initiative) returns 403 to anonymous
+                                # HEAD/GET. Article reads fine in a
+                                # browser.
+    "www.berlin-airport.de",    # Anti-bot UA filter, returns 403 to
+                                # unrecognised User-Agent strings.
+                                # The transit-info page works for
+                                # visitors heading to ESSC 2022.
 }
 
 internal_links = {}  # (file, target) for de-dupe display
