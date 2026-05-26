@@ -68,6 +68,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- **Link-checker skip list expanded with three bot-blocking hosts**. The first PR that ran the link checker after the brand rollout failed on three external links that GitHub Actions' anonymous HEAD/GET requests can't reach: `www.linkedin.com` (HTTP 999 to all bots, blanket block), `shs.cairn.info` (academic publisher, 403 to anonymous fetches), and `www.berlin-airport.de` (anti-bot UA filter, 403). All three URLs work for real visitors. Added them to the existing `SKIP_HOSTS` set in `scripts/check-links.sh`, alongside the two pre-existing entries (`docs.google.com`, `indico.eiss-europa.com`). The skip-list comment was expanded to distinguish the two reasons a host lands here: auth-gated services and anti-bot filters.
 - **`sync-roadmap.yml` self-feeding loop broken**. The workflow used to fire when `docs/roadmap-2026.md` changed, which included the auto-PR's own merge commit (the auto-PR updates exactly that file). When several content PRs landed in quick succession the cycles overlapped, GitHub's anti-abuse heuristic flagged a couple of the runs as **disruptive**, and the workflow_dispatch endpoint started returning `Failed to queue workflow run` for ~30 minutes. The fix removes `docs/roadmap-2026.md` from the path trigger so the workflow listens only to its inputs (`CHANGELOG.md`, the script, the workflow file). Output-change retriggering is gone; the loop is impossible.
 
 ### Removed
