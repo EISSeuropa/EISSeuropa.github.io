@@ -500,14 +500,15 @@ the deployed `_site/` modestly and the repo more substantially.
 Don't delete photos with potential historical/sentimental value
 (conference group shots, etc.) without checking.
 
-### Consolidate `scripts/`
+### ~~Consolidate `scripts/`~~ — _done_
 
-**Effort: S**
-
-`a11y_lint.py`, `extract_legacy.py`, `extract_prose.py` are utility
-scripts from the migration. The first is still useful, the latter
-two are likely dead. Audit, remove the dead ones, document the
-survivors in `scripts/README.md`.
+`extract_legacy.py` and `extract_prose.py`, two Mobirise-era
+utility scripts, were retired in
+[#170](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/170)
+after CodeQL flagged their `<script>` / `<style>` regex patterns
+as vulnerable to the classic bad-tag-filter bypass. Both scripts
+targeted `src/legacy/`, which itself was retired in v1.0; nothing
+referenced them. `a11y_lint.py` stays as the useful survivor.
 
 ### Accessibility statement: tighten the audit date
 
