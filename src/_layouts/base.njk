@@ -171,10 +171,16 @@
 <body>
   <a class="skip-link" href="#main">{{ t.skipLink }}</a>
 
-  {% if status == "beta" %}{% include "beta-ribbon.njk" %}{% endif %}
-  {% if status == "archive" %}{% include "archive-ribbon.njk" %}{% endif %}
-
-  {% include "nav.njk" %}
+  {# Sticky chrome wrapper. The ribbon (when present) + the nav stick
+     together as one unit, so visitors keep both visible while
+     scrolling. Previously only the nav stuck; the archive / beta
+     ribbon scrolled out of view, which lost the disclaimer once the
+     page got long. #}
+  <div class="sticky-chrome">
+    {% if status == "beta" %}{% include "beta-ribbon.njk" %}{% endif %}
+    {% if status == "archive" %}{% include "archive-ribbon.njk" %}{% endif %}
+    {% include "nav.njk" %}
+  </div>
 
   <main id="main" role="main">
     {{ content | safe }}
