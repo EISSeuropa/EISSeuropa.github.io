@@ -106,44 +106,62 @@ Earlier releases (v1.0 → v2.4.0r, all `r`-suffixed for the renumber) covered t
 
 ---
 
-## Status as of v2.4.0r
+## Status as of v2.23.0
 
 Where the site stands today, so the roadmap below makes sense:
 
-- **Stack** — Eleventy 3 + Nunjucks. GH Actions builds + deploys.
-  No client-side framework. ~30 lines of hand-written JS for theme
-  + mobile menu.
-- **Pages** — 47 modernised templates. Last 5 Mobirise/AMP files
-  retired in v1.0; `src/legacy/` is empty. All URLs preserved from
-  the original export.
-- **Design** — Apple-style glass, auto + manual dark mode, Inter font,
-  reveal animations gated on `prefers-reduced-motion`.
-- **Accessibility** — WCAG 2.1 AA, axe-core clean across light + dark.
-- **SEO** — full OG + Twitter Card meta, JSON-LD Organization,
-  per-page bespoke share cards (in all three languages), favicon stack,
-  webmanifest, robots.txt + sitemap.xml.
-- **Icons** — Lucide via `src/_includes/icons.njk` macro. Semantic
+- **Stack**: Eleventy 3 + Nunjucks. GH Actions builds + deploys. No
+  client-side framework. ~30 lines of hand-written JS for theme +
+  mobile menu.
+- **Pages**: 72 `.njk` templates including the FR / DE locales. All
+  URLs preserved from the original Mobirise export. `src/legacy/`
+  fully retired in v1.0.
+- **Brand identity**: real EISS lockup (constellation + EiSS wordmark)
+  deployed across header, footer, favicon, Apple touch icon, Android
+  adaptive icon, PWA manifest, OG card watermark target. Schema.org
+  `Organization.logo` points at the high-res brand PNG. Shipped in
+  v2.23.0.
+- **Design**: Apple-style glass, auto + manual dark mode, Inter font,
+  reveal animations gated on `prefers-reduced-motion`. Brand-blue
+  (`#007bc6`) is the canonical accent.
+- **Accessibility**: WCAG 2.1 AA, axe-core clean across light + dark.
+- **SEO**: full OG + Twitter Card meta, JSON-LD Organization with
+  `ImageObject` logo + `foundingDate: "2017"`, per-page bespoke
+  share cards (in all three languages), favicon stack, webmanifest,
+  robots.txt + sitemap.xml.
+- **Icons**: Lucide via `src/_includes/icons.njk` macro. Semantic
   vocabulary across the site (globe = international, map-pin =
-  location, etc.).
-- **i18n** — EN / FR / DE. Chrome strings in `src/_data/i18n.js`;
-  12 fully translated pages × 3 langs. Beta ribbon on FR/DE pages
-  until native-speaker review. Drift detection in CI.
-- **Board page** — driven by `src/_data/board.json` (data-driven loop
-  in `src/board.njk`). Member entries hand-edited today, will be
-  Form-driven once activated.
-- **Conference cycle** — driven by `src/_data/conferences.js`. The
+  location, and so on).
+- **i18n**: EN / FR / DE. Chrome strings in `src/_data/i18n.js`. 12+
+  fully translated pages × 3 langs. Beta ribbon on FR/DE pages until
+  native-speaker review. Drift detection in CI. A `localizedHref`
+  filter on the Eleventy config falls cross-locale links back to the
+  English page when the target locale doesn't exist (added in #168).
+- **Board page**: driven by `src/_data/board.json`, Form-pipeline
+  populated. Three sections (Leadership · Board Members · Support
+  Staff) plus an *EISS community* footer for former members and past
+  interns (auto-expiring via `roleEndDate` + 7-day grace).
+- **Conference cycle**: driven by `src/_data/conferences.js`. The
   homepage "next conference" card and the `/past` archive list both
-  read from this single data source; the cut-off between `next` and
+  read from this single data source. The cut-off between `next` and
   `past` advances automatically once a conference's end-date passes
   (daily-rebuild workflow keeps quiet weeks from getting stale).
-- **Google Form pipeline** — built, dormant. `scripts/sync-board.py` +
-  `.github/workflows/sync-board.yml` will write to `board.json` from
-  a Form-linked Sheet, once `csv_url` is filled in.
-- **Indico events sync** — `scripts/sync-indico.py` runs daily, writes
-  the upcoming-events list to `src/_data/indico.json`. Homepage and
-  `/events` show those events automatically; the section hides if
-  none are pending. ESSC events filtered out (already in
-  `conferences.js`).
+- **Archive pages**: past-conference and past-workshop `.njk` pages
+  carry `status: archive` in frontmatter, which renders a sticky
+  grey banner above the nav. Sets expectations that the content
+  won't be as polished as live pages.
+- **Google Form board pipeline**: live. Weekly + on-demand sync via
+  `scripts/sync-board.py`, opens auto-PR with rich descriptive body.
+  Maintainer auto-assigned for notification.
+- **Indico events sync**: `scripts/sync-indico.py` runs daily,
+  writes upcoming-events to `src/_data/indico.json`. Homepage and
+  `/events` show those events automatically. ESSC events filtered
+  out (already in `conferences.js`). Live programme grid on `/2026`
+  pulls the full ESSC programme.
+- **Operator + CI conventions** (imported from `netsec.github.io`):
+  `CLAUDE.md` operator playbook, full `SECURITY.md`, hybrid
+  CHANGELOG format, roadmap autostamp via `sync-roadmap.py`, link
+  checker on every PR + Monday cron.
 
 ---
 
@@ -152,26 +170,15 @@ Where the site stands today, so the roadmap below makes sense:
 These are the things sitting idle. Doing them turns existing code into
 visible value.
 
-### Google Form for board bios — finally activate
+### ~~Google Form for board bios — finally activate~~ — _done in v2.22.0_
 
-**Effort: M (mostly your time — Google Forms UI)**
-**Depends on: you.**
-
-Pipeline (`scripts/sync-board.py`, `.github/workflows/sync-board.yml`,
-`scripts/board-source.json`) has been built since [PR #22] and updated
-in #32. While `csv_url` is empty the workflow runs but no-ops cleanly.
-
-Step-by-step in [`docs/board-bios-setup.md`](board-bios-setup.md).
-Roughly: create the Google Form (8 questions in a specific order),
-link it to a Sheet, publish the Sheet as CSV, drop the URL into
-`scripts/board-source.json`. Then the script can produce PRs against
-`src/_data/board.json` on demand.
-
-**Why P0**: smallest activation cost of any pending work; gives every
-board member a one-time link to keep their bio fresh without you
-hand-editing JSON.
-
-[PR #22]: https://github.com/EISSeuropa/EISSeuropa.github.io/pull/22
+The Google Form pipeline went live in v2.22.0. `scripts/sync-board.py`
++ `.github/workflows/sync-board.yml` now read the live Google Sheet,
+diff against `src/_data/board.json`, and open a rich auto-PR with a
+*What changed* summary. Identity-key dedup, `photoOverride` hatch for
+the Forms file-upload edit limitation, multi-submission workflow,
+maintainer auto-assigned on the PR for notification (#165). Operator
+walkthrough in [`docs/board-bios-setup.md`](board-bios-setup.md).
 
 ### Native-speaker review pass on the 24 beta FR/DE pages
 
@@ -433,14 +440,14 @@ in only when the user opens the search modal.
 Worth considering when content volume grows; right now you can
 honestly find any page from the nav or sitemap.
 
-### Print stylesheet for conference programmes
+### ~~Print stylesheet for conference programmes~~ — _shipped in v2.17.0_
 
-**Effort: S**
-
-The 2026 programme PDF is the canonical printable artefact, but a
-print CSS rule (`@media print`) on `/2026.html` would let users
-hit Cmd+P and get a clean two-page summary. Hides nav, footer,
-beta ribbon; flattens the PDF embed; tunes margins.
+Print CSS for `/YYYY` pages went in as the v2.17.0 release. Cmd+P
+on the conference page now drops nav, footer, beta ribbon, archive
+ribbon, livestream block, and social buttons. Expands the programme
+grid into a paper-friendly single-column flow with sensible page
+breaks. Page 1 carries a full cover masthead, pages 2+ get a thin
+running header and a bottom-right page counter (locale-aware).
 
 ### Conference countdown widget
 
@@ -472,13 +479,12 @@ helps with sponsorship outreach and recognition.
 
 ## P2 — Cleanups
 
-### Stale README
+### ~~Stale README~~ — _swept_
 
-**Effort: S**
-
-`README.md` line 53 still says "5 ticket-* URLs remain on legacy
-passthrough" — they were retired in v1.0 (PR #23). Sweep for similar
-stale claims after each release.
+The stale `src/legacy/` references were removed, the repo-layout
+diagram refreshed, the §Versioning "next bump" line updated to
+reflect v2.23.0 having shipped, and pointers added to the new
+root-level docs (`CLAUDE.md`, `SECURITY.md`, `docs/`).
 
 ### macOS Finder duplicate files in the repo root
 
@@ -587,10 +593,10 @@ A rough calendar, but skip/swap as needed:
 
 **Now → June 2026** (mostly activating what's built)
 
-- P0: Google Form for board bios
-- Cleanups: stale README, macOS duplicate files, unused assets
+- ~~P0: Google Form for board bios~~ — **done** in v2.22.0
+- Cleanups: ~~stale README~~ (swept), macOS duplicate files, unused assets
 - ~~P1: NetSec announcement card → data-driven~~ — **done** in v2.5.0
-- P2: print stylesheet on /2026.html (before the conference)
+- ~~P2: print stylesheet on /2026.html~~ — **done** in v2.17.0
 
 **June → August 2026** (post-ESSC 2026)
 
