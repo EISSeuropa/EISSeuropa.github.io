@@ -3564,15 +3564,10 @@ h4 { font-size: var(--fs-lg); }
    accent variant to distinguish forthcoming from historical. */
 .essc-map-figure {
   margin: 0 auto;
-  /* Cap on laptop / desktop so the corrected ~0.785 W/H aspect (see
-     .essc-map note) doesn't push the map full-viewport-tall. 40rem
-     keeps the map ~640 × 815 — taller than wide, as a real map of
-     Europe should be, while giving each city dot enough horizontal
-     breathing room to read its label cleanly on desktop. (32rem felt
-     tight horizontally on a laptop viewport; 48rem was too tall.) On
-     mobile and narrow tablets, max-width caps below the container
-     width so this rule is a no-op. */
-  max-width: 40rem;
+  /* Cap on laptop / desktop so the map doesn't push the page
+     full-viewport-tall. 44rem at the ~1.02 W/H aspect keeps the
+     rendered map at ~704 × 690 px, balanced and readable. */
+  max-width: 44rem;
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
@@ -3581,16 +3576,17 @@ h4 { font-size: var(--fs-lg); }
 .essc-map {
   width: 100%;
   height: auto;
-  /* Aspect ratio matches Europe's real geographic proportions in this
-     slice — 1000:1274 ≈ 0.785 W/H, derived from a corrected
-     equirectangular projection at central latitude 50°N (cos(50°) ≈
-     0.643). The europe-outline path data was generated from a naïve
-     Plate-Carrée projection that compressed the map vertically by
-     1/cos(50°) ≈ 1.82×; the SVG markup compensates by scaling the
-     outline group in y by 1.82 and pre-multiplying the dot/label y
-     values. Before this fix, the SVG was 10:7 (≈ 1.43 W/H), giving a
-     visibly stretched / vertically compressed Europe. */
-  aspect-ratio: 1000 / 1274;
+  /* Aspect ratio 1000:980 ≈ 1.02 (essentially square). The path data
+     comes from a naïve Plate-Carrée projection at lat[35,71] →
+     y[700,0] / lon[-12,32] → x[0,1000], which on its own renders
+     Europe horizontally stretched. The SVG markup compensates by
+     scaling the outline group in y by 1.4 and pre-multiplying the
+     dot/label y values. The factor was tuned by eye against typical
+     reference maps for this slice of Europe: a previous 1.82×
+     correction (full cos(50°)) rendered Italy / Norway too tall,
+     and a 1.0× revert (no correction) left Europe noticeably squat.
+     1.4× sits between, close to what textbook maps tend to use. */
+  aspect-ratio: 1000 / 980;
   display: block;
 }
 
