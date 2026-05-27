@@ -66,7 +66,9 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
-_Nothing yet._
+### Added
+
+- **`CLAUDE.md` §4 gains a *"Concurrent-PR CHANGELOG conflict trap"* paragraph.** Documents the failure mode caught during v2.23.1 prep: when two PRs both add a bullet to the same `### Added` / `### Changed` / `### Fixed` / `### Removed` sub-section in close succession, GitHub's auto-merge can resolve the conflict by keeping only one side. The dropped bullet's code change still lands on `master` but the CHANGELOG no longer records it, so the audit trail breaks silently. Real-world example linked (PR #179 lost two `### Changed` entries when PR #180's auto-merge wiped them). Includes the diagnostic recipe (`[Unreleased]` bullet count vs `git log v<prev>..HEAD --merges --oneline`) and the recovery path (`git log -G '<headline phrase>' -- CHANGELOG.md` to trace, restore in the release-prep commit).
 
 ## [2.23.1] · 2026-05-27 — Archive banner and post-release polish
 

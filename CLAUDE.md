@@ -150,6 +150,20 @@ hygiene). When in doubt, add the bullet. Cutting a release becomes:
 review what's already there, decide on the title,
 `scripts/release.sh`.
 
+**Concurrent-PR CHANGELOG conflict trap.** When two PRs both add a
+bullet to the same `### Added` / `### Changed` / `### Fixed` /
+`### Removed` sub-section in close succession, GitHub's auto-merge
+can resolve the conflict by keeping only one side. The dropped
+bullet's code change still lands on `master`, but the CHANGELOG no
+longer records it and the audit trail breaks silently. Caught in
+v2.23.1 prep: PR #179 added two `### Changed` entries (Champs de
+Mars citation drop, map projection re-tune), PR #180 added its own
+bullet, the merge wiped the #179 lines. Recipe at release-cut time:
+cross-check the `[Unreleased]` bullet count against
+`git log v<prev>..HEAD --merges --oneline`. Mismatches mean a
+bullet was lost. Use `git log -G '<headline phrase>' -- CHANGELOG.md`
+to trace where, then restore in the release-prep commit.
+
 ## 5. Release-time four-point cross-check (minor / major only)
 
 Every **minor (`X.Y.0` where `Y > prev`) or major (`X.0.0`)
