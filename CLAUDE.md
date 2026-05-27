@@ -46,6 +46,17 @@ authoritative for EISS.
   harder to undo than a merge.
 - **Squash, not merge commits.** Every PR ends as a single commit on
   `master`. The release-cutter then writes the release commit on top.
+- **Once a PR is opened, treat its branch as frozen.** Auto-merge
+  plus a fast-merging maintainer means any commit pushed after PR
+  creation can be left orphaned: the squash fires off the commits
+  GitHub saw at merge time, and anything pushed afterwards never
+  reaches `master`. The pattern bit three times in one session
+  (PR #199 → #201, #202 → #204, also lost commits in #199
+  pre-merge). Default for any post-creation fix-up: **new branch
+  off current master, cherry-pick the fix-up commit, fresh PR**.
+  Don't push more commits to a branch whose PR is already open,
+  even if "the merge hasn't happened yet" — by the time `git push`
+  returns, it often has.
 
 ## 3. Open a GitHub issue for every deferred item
 
