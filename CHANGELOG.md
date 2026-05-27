@@ -66,6 +66,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+_Nothing yet._
+
+## [2.23.1] · 2026-05-27 — Archive banner and post-release polish
+
 ### Added
 
 - **Archive-page disclaimer ribbon** on past-conference and past-workshop pages. New `src/_includes/archive-ribbon.njk` renders above the nav whenever a page's frontmatter sets `status: archive`, mirroring the existing beta-translation ribbon pattern but in a quieter neutral grey rather than warning-yellow. Visitors landing on `/2019.html` through `/2025.html`, `/JPW2019.html`, `/JPW2022.html`, `/JPW23.html`, `/NDC.html`, and `/Ukraine.html` now see a one-line note: *"This page is part of our archive. It documents a past EISS event and may not be as complete or polished as current pages."* Sets expectations so the static-since-Mobirise pages don't read as broken or neglected against the polished current-conference and live-programme pages. The 2026 conference page, NetSec / Euro-SWAMOS / Coercive Statecraft / Global Risks programme pages stay unmarked, since they're current content. Ribbon text hardcoded EN for now (every archive page is currently EN-only); if any archive page gets translated, switch to a `t.archiveRibbon.*` i18n catalog lookup as the beta-ribbon partial does.
@@ -847,6 +851,7 @@ Preview MCP screenshots of `/index.fr.html`, `/index.de.html`, `/initiative.de.h
 
 *Originally tagged as **v2.0.0**; renumbered to **v2.0.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
 
-[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.23.0...HEAD
+[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.23.1...HEAD
+[2.23.1]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.23.0...v2.23.1
 [2.23.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.22.0...v2.23.0
 [2.22.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.13.0r...v2.22.0
