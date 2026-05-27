@@ -36,10 +36,15 @@
 <div class="youtube-embed-error" aria-hidden="true" hidden>youtube-embed.njk: missing youtubeId or youtubeTitle</div>
 {%- else -%}
 {%- set _thumbId = youtubeId if not youtubeIsList else "" -%}
-{%- set _embedUrl = "https://www.youtube-nocookie.com/embed/" + youtubeId if not youtubeIsList else "https://www.youtube-nocookie.com/embed/videoseries?list=" + youtubeId -%}
-{%- set _startParam = "?start=" + (youtubeStartAt | string) if (youtubeStartAt and not youtubeIsList) else "" -%}
+{# Pass only the ID + flags to the JS mount, never a pre-assembled
+   URL. theme.js validates the ID against ^[A-Za-z0-9_-]+$ and builds
+   the youtube-nocookie.com URL from a hard-coded prefix. This makes
+   `javascript:` URL injection structurally impossible regardless of
+   how the ID got into the attribute (CodeQL js/xss-through-dom #3). -#}
 <div class="youtube-embed"
-     data-embed-url="{{ _embedUrl }}{{ _startParam }}"
+     data-youtube-id="{{ youtubeId }}"
+     data-youtube-list="{{ 'true' if youtubeIsList else 'false' }}"
+     {% if youtubeStartAt and not youtubeIsList %}data-youtube-start="{{ youtubeStartAt }}"{% endif %}
      data-title="{{ youtubeTitle }}">
   {%- if _thumbId %}
   <img class="youtube-embed-poster"
