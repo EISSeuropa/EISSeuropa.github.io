@@ -44,6 +44,21 @@ status: archive
   </div>
 </section>
 
+<section class="section-tight" aria-labelledby="recordings-2023-title">
+  <div class="container">
+    <h2 id="recordings-2023-title" style="margin-bottom: var(--space-5);">Session recordings</h2>
+    <p class="muted" style="max-width: 44rem; margin-bottom: var(--space-5);">
+      Selected sessions from EISS 2023 are available on the EISS YouTube channel
+      (<a href="https://www.youtube.com/@eiss-europe/" target="_blank" rel="noopener">@eiss-europe</a>).
+      Clicking play loads the YouTube iframe; before that, no YouTube cookies are set.
+    </p>
+    {%- set youtubeId = "PLkI2R8FsFqV4zwz12-ZFd_dV_ENX14--6" -%}
+    {%- set youtubeIsList = true -%}
+    {%- set youtubeTitle = "EISS 2023 — Barcelona, session recordings" -%}
+    {% include "youtube-embed.njk" %}
+  </div>
+</section>
+
 <section class="section">
   <div class="container">
     <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
