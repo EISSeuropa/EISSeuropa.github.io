@@ -3973,10 +3973,34 @@ h4 { font-size: var(--fs-lg); }
 .joint-orgs-list a:hover { color: var(--accent); }
 
 .joint-orgs-logo {
-  height: 28px;
+  height: 32px;
   width: auto;
   display: block;
   flex: none;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+/* Dark-mode tile behind partner logos. Most institutional brand
+   assets are designed for a light background (e.g. Stockholm
+   University's navy #002F5F wordmark, NetSec's dark-blue mark),
+   so we give each logo a soft off-white tile + a touch of padding
+   when the page is in dark mode so they stay legible against the
+   dark --bg-elev panel. The EISS network mark (bright #73caff) sits
+   happily on the same tile in dark mode too.
+
+   Explicit toggle takes precedence: [data-theme="dark"] always
+   applies the tile, [data-theme="light"] never does. The OS-pref
+   media query only applies when the user hasn't pinned a theme. */
+[data-theme="dark"] .joint-orgs-logo {
+  background: hsl(0 0% 98%);
+  padding: 3px 6px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .joint-orgs-logo {
+    background: hsl(0 0% 98%);
+    padding: 3px 6px;
+  }
 }
 
 /* ---------- print stylesheet -------------------------------------------
