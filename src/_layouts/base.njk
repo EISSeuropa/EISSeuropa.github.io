@@ -190,12 +190,19 @@
 
   <script src="/assets/js/theme.js" defer></script>
   <script>
-    // Save the user's chosen language when they click a switcher chip,
-    // so subsequent visits to English pages can auto-redirect them.
+    // Save the user's chosen language whenever they click any link
+    // that carries an `hreflang` attribute. The two sources on the
+    // site today are the language-switcher chips in the nav and the
+    // "View English" link in the beta-translation ribbon. Treating
+    // both the same way fixes the bug where a FR / DE visitor who
+    // clicked the ribbon link landed on the EN page, got their saved
+    // `eiss-lang=fr/de` preference re-applied by the in-head
+    // redirect script, and bounced straight back to the translated
+    // page. Issue #190.
     document.addEventListener('click', function(e) {
-      var chip = e.target.closest('.lang-switcher a[hreflang]');
-      if (chip) {
-        try { localStorage.setItem('eiss-lang', chip.getAttribute('hreflang')); } catch(_) {}
+      var link = e.target.closest('a[hreflang]');
+      if (link) {
+        try { localStorage.setItem('eiss-lang', link.getAttribute('hreflang')); } catch(_) {}
       }
     });
   </script>
