@@ -102,9 +102,60 @@
   function init() {
     document.querySelectorAll(".person-bio-toggle").forEach(bindBioToggle);
   }
+
+  // ─── YouTube lazy-embed (Issue #197) ────────────────────────────────
+  // Each `.youtube-embed` block ships as a poster image + a play
+  // button. The iframe is mounted only when the visitor clicks. Keeps
+  // YouTube's JS, cookies, and ~500 KB of CSS off the page until the
+  // visitor actively asks for the video. Privacy-enhanced via
+  // youtube-nocookie.com; the poster img is the only YouTube domain
+  // reached before click.
+  // Read only the YouTube ID + a boolean from the DOM; construct the
+  // URL in JS from a hard-coded prefix. The strict allowlist regex
+  // makes `javascript:` URL injection structurally impossible even
+  // if someone later wires `data-youtube-id` to a runtime source.
+  // Addresses CodeQL js/xss-through-dom alert #3.
+  var YT_ID_RE = /^[A-Za-z0-9_-]+$/;
+  var YT_BASE = "https://www.youtube-nocookie.com/embed/";
+  function mountYouTube(wrap) {
+    var id = wrap.getAttribute("data-youtube-id");
+    var isList = wrap.getAttribute("data-youtube-list") === "true";
+    var startAt = wrap.getAttribute("data-youtube-start");
+    var title = wrap.getAttribute("data-title") || "YouTube video";
+    if (!id || !YT_ID_RE.test(id)) return;
+    var url = isList
+      ? YT_BASE + "videoseries?list=" + id + "&autoplay=1&rel=0"
+      : YT_BASE + id + "?autoplay=1&rel=0";
+    if (!isList && startAt && /^[0-9]+$/.test(startAt)) {
+      url += "&start=" + startAt;
+    }
+    var iframe = document.createElement("iframe");
+    iframe.src = url;
+    iframe.title = title;
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.allowFullscreen = true;
+    iframe.loading = "lazy";
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
+    wrap.innerHTML = "";
+    wrap.appendChild(iframe);
+    wrap.dataset.mounted = "true";
+  }
+  function bindYouTube(wrap) {
+    var btn = wrap.querySelector(".youtube-embed-play");
+    if (!btn) return;
+    btn.addEventListener("click", function () { mountYouTube(wrap); });
+  }
+  function initYouTube() {
+    document.querySelectorAll(".youtube-embed").forEach(bindYouTube);
+  }
+
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
+    document.addEventListener("DOMContentLoaded", function () {
+      init();
+      initYouTube();
+    });
   } else {
     init();
+    initYouTube();
   }
 })();

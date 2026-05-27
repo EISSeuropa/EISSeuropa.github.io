@@ -51,6 +51,32 @@ alternates:
   </div>
 </section>
 
+{# Joint-organisers strip. Restates the collaboration footprint as a
+   structured component below the hero, so the relationship reads
+   visually rather than as a sentence buried in the tagline. Logo
+   paths are placeholders for now (partial gracefully falls back to
+   text-only when `logo` is absent); operator fills in real logo
+   files when they're available. See issue #198. #}
+<section class="section" aria-label="Conference organisers" style="padding-block: var(--space-5);">
+  <div class="container">
+    {%- set jointOrgs = [
+      {
+        "name": "European Initiative for Security Studies (EISS)",
+        "url": "https://eiss-europa.com/"
+      },
+      {
+        "name": "NetSec (COST Action CA24154)",
+        "url": "https://netsec-cost.eu/"
+      },
+      {
+        "name": "Stockholm University",
+        "url": "https://www.su.se/"
+      }
+    ] -%}
+    {% include "joint-orgs.njk" %}
+  </div>
+</section>
+
 {# Livestreamed sessions, pulled from the Indico timetable —
    introduction, roundtables, keynote, and closing. Hidden when no
    sessions match the INTRO / RT / KEY / CONC sessionCodes (or the
