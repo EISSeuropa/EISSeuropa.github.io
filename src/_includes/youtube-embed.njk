@@ -1,0 +1,61 @@
+{# Lazy-loaded YouTube embed (privacy-enhanced via youtube-nocookie.com).
+
+   Used on past-conference archive pages to surface session recordings
+   without pulling in YouTube's JS until the visitor clicks. Two-stage
+   load: until then the poster image + a play button sit in place of
+   the iframe, with NO YouTube cookies, no tracking, no large JS
+   payload.
+
+   Required arguments (set via `{% set youtubeId = "..." %}` before
+   the include, or via `{% include "youtube-embed.njk" %}` with the
+   variables in scope):
+
+     youtubeId      — either an 11-char video ID or a playlist ID
+                      (starts with "PL", "UU", "FL", etc.)
+     youtubeIsList  — boolean, true for playlists. When true, the
+                      iframe URL uses ?listType=playlist&list=ID,
+                      otherwise just the video ID is embedded.
+     youtubeTitle   — accessible label shown on the poster button and
+                      used as the iframe `title` attribute. Required.
+
+   Optional:
+
+     youtubeStartAt — seconds offset for a single-video embed,
+                      ignored for playlists.
+
+   The privacy posture matches the rest of the site: no external JS
+   loaded until interaction, no fonts pulled from YouTube, no
+   third-party cookies until the iframe mounts. The poster is the
+   YouTube-served thumbnail (img.youtube.com), which is the only
+   YouTube domain reached before click. /policy.html §5 documents
+   this.
+-#}
+{%- if not youtubeId or not youtubeTitle -%}
+{# Fail loud in development if the caller forgot a required arg. The
+   build doesn't fall over; the empty <div> just renders as no-op. -#}
+<div class="youtube-embed-error" aria-hidden="true" hidden>youtube-embed.njk: missing youtubeId or youtubeTitle</div>
+{%- else -%}
+{%- set _thumbId = youtubeId if not youtubeIsList else "" -%}
+{%- set _embedUrl = "https://www.youtube-nocookie.com/embed/" + youtubeId if not youtubeIsList else "https://www.youtube-nocookie.com/embed/videoseries?list=" + youtubeId -%}
+{%- set _startParam = "?start=" + (youtubeStartAt | string) if (youtubeStartAt and not youtubeIsList) else "" -%}
+<div class="youtube-embed"
+     data-embed-url="{{ _embedUrl }}{{ _startParam }}"
+     data-title="{{ youtubeTitle }}">
+  {%- if _thumbId %}
+  <img class="youtube-embed-poster"
+       src="https://i.ytimg.com/vi/{{ _thumbId }}/hqdefault.jpg"
+       alt=""
+       loading="lazy"
+       width="480"
+       height="360">
+  {%- endif %}
+  <button class="youtube-embed-play"
+          type="button"
+          aria-label="Play: {{ youtubeTitle }}">
+    <svg viewBox="0 0 68 48" aria-hidden="true" focusable="false">
+      <path class="youtube-embed-play-bg" d="M66.5,7.7c-0.8-2.9-2.5-5.4-5.4-6.2C55.8,0,34,0,34,0S12.2,0,6.9,1.4C4,2.2,2.2,4.8,1.5,7.7C0,13.1,0,24,0,24s0,10.9,1.5,16.3c0.8,2.9,2.5,5.4,5.4,6.2C12.2,48,34,48,34,48s21.8,0,27.1-1.4c2.9-0.8,4.7-3.3,5.4-6.2C68,34.9,68,24,68,24S68,13.1,66.5,7.7z" fill="currentColor"/>
+      <path d="M 45,24 27,14 27,34" fill="#fff"/>
+    </svg>
+  </button>
+</div>
+{%- endif -%}

@@ -102,9 +102,45 @@
   function init() {
     document.querySelectorAll(".person-bio-toggle").forEach(bindBioToggle);
   }
+
+  // ─── YouTube lazy-embed (Issue #197) ────────────────────────────────
+  // Each `.youtube-embed` block ships as a poster image + a play
+  // button. The iframe is mounted only when the visitor clicks. Keeps
+  // YouTube's JS, cookies, and ~500 KB of CSS off the page until the
+  // visitor actively asks for the video. Privacy-enhanced via
+  // youtube-nocookie.com; the poster img is the only YouTube domain
+  // reached before click.
+  function mountYouTube(wrap) {
+    var url = wrap.getAttribute("data-embed-url");
+    var title = wrap.getAttribute("data-title") || "YouTube video";
+    if (!url) return;
+    var iframe = document.createElement("iframe");
+    iframe.src = url + (url.indexOf("?") === -1 ? "?" : "&") + "autoplay=1&rel=0";
+    iframe.title = title;
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.allowFullscreen = true;
+    iframe.loading = "lazy";
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
+    wrap.innerHTML = "";
+    wrap.appendChild(iframe);
+    wrap.dataset.mounted = "true";
+  }
+  function bindYouTube(wrap) {
+    var btn = wrap.querySelector(".youtube-embed-play");
+    if (!btn) return;
+    btn.addEventListener("click", function () { mountYouTube(wrap); });
+  }
+  function initYouTube() {
+    document.querySelectorAll(".youtube-embed").forEach(bindYouTube);
+  }
+
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
+    document.addEventListener("DOMContentLoaded", function () {
+      init();
+      initYouTube();
+    });
   } else {
     init();
+    initYouTube();
   }
 })();

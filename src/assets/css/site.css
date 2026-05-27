@@ -3844,6 +3844,141 @@ h4 { font-size: var(--fs-lg); }
   }
 }
 
+/* ---------- YouTube lazy-embed (#197) ----------------------------------
+   Poster + play button until clicked, iframe afterwards. The
+   wrapping div keeps a 16:9 aspect-ratio block so the page layout
+   doesn't shift when the iframe mounts. Brand-blue play button at
+   rest, lifts on hover/focus.
+
+   The privacy posture (no YouTube JS / cookies before click) is
+   the whole point of this pattern; see /policy.html for the
+   user-facing GDPR write-up. */
+.youtube-embed {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: hsl(220 18% 12%);
+  box-shadow: var(--shadow-1);
+}
+
+.youtube-embed-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Slight darken so the play button reads against any thumbnail.
+     Drops on hover so the visitor sees the poster more clearly. */
+  filter: brightness(0.85);
+  transition: filter var(--motion-base) var(--ease-out);
+}
+
+.youtube-embed:hover .youtube-embed-poster,
+.youtube-embed:focus-within .youtube-embed-poster {
+  filter: brightness(1);
+}
+
+.youtube-embed-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px;
+  height: 50px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: hsl(0 84% 50% / 0.92);
+  cursor: pointer;
+  transition: transform var(--motion-base) var(--ease-out),
+              color var(--motion-base) var(--ease-out);
+}
+
+.youtube-embed:hover .youtube-embed-play,
+.youtube-embed-play:focus-visible {
+  transform: translate(-50%, -50%) scale(1.06);
+  color: hsl(0 84% 56%);
+  outline: none;
+}
+
+.youtube-embed-play svg { width: 100%; height: 100%; display: block; }
+
+.youtube-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Hide the poster on print — the iframe won't render in PDF either,
+   but the poster as a screenshot would be misleading. The conference
+   programme PDF stays the printable artefact. */
+@media print {
+  .youtube-embed { display: none; }
+}
+
+/* ---------- joint-organisers strip (#198) ------------------------------
+   Reusable horizontal row of co-organising institutions. Renders
+   above the hero on per-conference and joint-event pages so the
+   collaboration footprint reads structurally rather than buried in
+   prose. Wraps on narrow viewports. Renders text-only when no logo
+   image is provided per partner (fallback path). */
+.joint-orgs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-elev);
+  font-size: var(--fs-sm);
+}
+
+.joint-orgs-label {
+  flex: none;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: var(--fs-xs);
+}
+
+.joint-orgs-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+}
+
+.joint-orgs-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.joint-orgs-list a,
+.joint-orgs-list .joint-orgs-name {
+  color: var(--text);
+  font-weight: 500;
+  text-decoration: none;
+}
+.joint-orgs-list a:hover { color: var(--accent); }
+
+.joint-orgs-logo {
+  height: 28px;
+  width: auto;
+  display: block;
+  flex: none;
+}
+
 /* ---------- print stylesheet -------------------------------------------
    Optimised for attendees printing the conference programme. Forces a
    light theme regardless of OS / toggle, strips chrome (nav, footer,

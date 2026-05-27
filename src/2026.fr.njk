@@ -49,6 +49,27 @@ alternates:
   </div>
 </section>
 
+<section class="section" aria-label="Organisateurs de la conférence" style="padding-block: var(--space-5);">
+  <div class="container">
+    {%- set jointOrgs = [
+      {
+        "name": "Initiative européenne pour les études de sécurité (EISS)",
+        "url": "https://eiss-europa.com/"
+      },
+      {
+        "name": "NetSec (Action COST CA24154)",
+        "url": "https://netsec-cost.eu/"
+      },
+      {
+        "name": "Université de Stockholm",
+        "url": "https://www.su.se/"
+      }
+    ] -%}
+    {%- set jointOrgsLabel = "Organisée conjointement par" -%}
+    {% include "joint-orgs.njk" %}
+  </div>
+</section>
+
 {% set year = "2026" %}
 {% include "livestream-list.njk" %}
 
