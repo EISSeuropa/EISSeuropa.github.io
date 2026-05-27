@@ -3973,12 +3973,12 @@ h4 { font-size: var(--fs-lg); }
 .joint-orgs-list a:hover { color: var(--accent); }
 
 .joint-orgs-logo {
-  height: 32px;
+  height: 56px;
   width: auto;
   display: block;
   flex: none;
   border-radius: 4px;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, padding 0.2s ease;
 }
 
 /* Dark-mode tile behind partner logos. Most institutional brand
@@ -3993,13 +3993,13 @@ h4 { font-size: var(--fs-lg); }
    applies the tile, [data-theme="light"] never does. The OS-pref
    media query only applies when the user hasn't pinned a theme. */
 [data-theme="dark"] .joint-orgs-logo {
-  background: hsl(0 0% 98%);
-  padding: 3px 6px;
+  background: hsl(0 0% 100%);
+  padding: 6px 10px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .joint-orgs-logo {
-    background: hsl(0 0% 98%);
-    padding: 3px 6px;
+    background: hsl(0 0% 100%);
+    padding: 6px 10px;
   }
 }
 
