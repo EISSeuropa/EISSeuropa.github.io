@@ -6,19 +6,21 @@
 
     Coordinate notes
     ----------------
-    viewBox is 1000 × 800. The host-city map outline uses a Natural
-    Earth lat/lon projection into a 1000 × 700 box, included here at
-    full scale (no Y stretch — geographic accuracy isn't the point,
-    visual familiarity is). The 11 stars sit on an invisible circle
-    centred at (500, 400) with radius 180; star outer radius 32 to
-    keep the canonical EU flag readability. The 12 o'clock slot at
-    (500, 220) is empty; five star-shard fragments drift up and out
-    from that anchor.
+    viewBox is 600 × 480 (small, fits in a card-sized container). The
+    11 stars sit on an invisible circle centred at (300, 250) with
+    radius 130; star outer radius 24 keeps the canonical EU flag
+    readable without overlap. The 12 o'clock slot at (300, 120) is
+    empty; five shards drift up and out from that anchor.
 
-    Renders pure SVG (no Nunjucks vars) so it inlines verbatim into
-    callers. Theme colours are applied via CSS in site.css — see the
-    .notfound-illustration block. -#}
-<svg viewBox="0 0 1000 800"
+    Styling is applied via SVG presentation attributes (fill /
+    opacity) rather than external CSS so the illustration renders
+    correctly even if the stylesheet hasn't loaded or has been
+    cached stale. Theme tinting still uses `currentColor` for the
+    Europe outline so the body text colour drives its tint.
+
+    Renders pure SVG (no Nunjucks vars) so it inlines verbatim. -#}
+<svg viewBox="0 0 600 480"
+     width="100%"
      class="notfound-illustration"
      role="img"
      aria-labelledby="notfound-illustration-title notfound-illustration-desc"
@@ -29,44 +31,67 @@
   <desc id="notfound-illustration-desc">Eleven of the twelve European Union flag stars are arranged in their canonical circle. The twelfth star at the top is broken into drifting golden fragments. A faint outline of the European landmass sits behind.</desc>
 
   <defs>
-    <symbol id="notfound-star" overflow="visible">
-      <polygon points="0,-32 7.19,-9.89 30.43,-9.89 11.63,3.78 18.81,25.89 0,12.24 -18.81,25.89 -11.63,3.78 -30.43,-9.89 -7.19,-9.89"/>
+    {#- 5-pointed star polygons. Outer radius noted in each id; inner
+        radius is outer × 0.382 (golden-ratio inverse) for a regular
+        star. Origin centred so the symbol can be placed by translate
+        on the use element. -#}
+    <symbol id="notfound-star-r24" overflow="visible">
+      <polygon points="0,-24 5.39,-7.42 22.82,-7.42 8.72,2.83 14.11,19.42 0,9.17 -14.11,19.42 -8.72,2.83 -22.82,-7.42 -5.39,-7.42"/>
     </symbol>
-    <symbol id="notfound-shard-mid" overflow="visible">
-      <polygon points="0,-16 3.59,-4.94 15.22,-4.94 5.81,1.89 9.41,12.95 0,6.12 -9.41,12.95 -5.81,1.89 -15.22,-4.94 -3.59,-4.94"/>
+    <symbol id="notfound-shard-r12" overflow="visible">
+      <polygon points="0,-12 2.69,-3.71 11.41,-3.71 4.36,1.41 7.06,9.71 0,4.59 -7.06,9.71 -4.36,1.41 -11.41,-3.71 -2.69,-3.71"/>
     </symbol>
-    <symbol id="notfound-shard-small" overflow="visible">
-      <polygon points="0,-10 2.24,-3.09 9.51,-3.09 3.63,1.18 5.88,8.09 0,3.82 -5.88,8.09 -3.63,1.18 -9.51,-3.09 -2.24,-3.09"/>
+    <symbol id="notfound-shard-r8" overflow="visible">
+      <polygon points="0,-8 1.79,-2.47 7.61,-2.47 2.91,0.94 4.70,6.47 0,3.06 -4.70,6.47 -2.91,0.94 -7.61,-2.47 -1.79,-2.47"/>
     </symbol>
-    <symbol id="notfound-shard-tiny" overflow="visible">
-      <polygon points="0,-6 1.35,-1.85 5.71,-1.85 2.18,0.71 3.53,4.85 0,2.29 -3.53,4.85 -2.18,0.71 -5.71,-1.85 -1.35,-1.85"/>
+    <symbol id="notfound-shard-r5" overflow="visible">
+      <polygon points="0,-5 1.12,-1.55 4.76,-1.55 1.82,0.59 2.94,4.05 0,1.91 -2.94,4.05 -1.82,0.59 -4.76,-1.55 -1.12,-1.55"/>
     </symbol>
   </defs>
 
-  <g class="notfound-illustration-europe" aria-hidden="true"
-     transform="translate(60 80) scale(0.88 0.92)">
+  {#- Faint Europe landmass. The europe-outline partial projects into
+      a 1000 × 700 viewBox; we shrink it to ~ 540 × 480 area inside
+      our 600 × 480 viewBox via translate + scale, centred behind the
+      star ring. `opacity` is set as an SVG attribute (not CSS) so
+      stale stylesheets can't leave the silhouette fully opaque.
+      `fill="currentColor"` lets the body text colour tint it. -#}
+  <g class="notfound-illustration-europe"
+     aria-hidden="true"
+     fill="currentColor"
+     opacity="0.08"
+     transform="translate(30 50) scale(0.54 0.54)">
     {%- include "europe-outline.njk" %}
   </g>
 
-  <g class="notfound-illustration-stars" aria-hidden="true">
-    <use href="#notfound-star" transform="translate(680 400)"/>
-    <use href="#notfound-star" transform="translate(655.9 490)"/>
-    <use href="#notfound-star" transform="translate(590 555.9)"/>
-    <use href="#notfound-star" transform="translate(500 580)"/>
-    <use href="#notfound-star" transform="translate(410 555.9)"/>
-    <use href="#notfound-star" transform="translate(344.1 490)"/>
-    <use href="#notfound-star" transform="translate(320 400)"/>
-    <use href="#notfound-star" transform="translate(344.1 310)"/>
-    <use href="#notfound-star" transform="translate(410 244.1)"/>
-    <use href="#notfound-star" transform="translate(590 244.1)"/>
-    <use href="#notfound-star" transform="translate(655.9 310)"/>
+  {#- 11 EU flag stars in canonical positions (top / 12 o'clock empty).
+      Circle: centre (300, 250), radius 130. Fill set as SVG attribute
+      so the illustration renders even with no CSS loaded. -#}
+  <g class="notfound-illustration-stars"
+     aria-hidden="true"
+     fill="#f5b800">
+    <use href="#notfound-star-r24" transform="translate(430 250)"/>   {#- 3 o'clock -#}
+    <use href="#notfound-star-r24" transform="translate(412.6 315)"/> {#- 4 o'clock -#}
+    <use href="#notfound-star-r24" transform="translate(365 362.6)"/> {#- 5 o'clock -#}
+    <use href="#notfound-star-r24" transform="translate(300 380)"/>   {#- 6 o'clock -#}
+    <use href="#notfound-star-r24" transform="translate(235 362.6)"/> {#- 7 o'clock -#}
+    <use href="#notfound-star-r24" transform="translate(187.4 315)"/> {#- 8 o'clock -#}
+    <use href="#notfound-star-r24" transform="translate(170 250)"/>   {#- 9 o'clock -#}
+    <use href="#notfound-star-r24" transform="translate(187.4 185)"/> {#- 10 o'clock -#}
+    <use href="#notfound-star-r24" transform="translate(235 137.4)"/> {#- 11 o'clock -#}
+    <use href="#notfound-star-r24" transform="translate(365 137.4)"/> {#- 1 o'clock -#}
+    <use href="#notfound-star-r24" transform="translate(412.6 185)"/> {#- 2 o'clock -#}
   </g>
 
-  <g class="notfound-illustration-fragments" aria-hidden="true">
-    <use href="#notfound-shard-mid"   transform="translate(525 195) rotate(18)"  opacity="0.85"/>
-    <use href="#notfound-shard-small" transform="translate(470 158) rotate(-32)" opacity="0.68"/>
-    <use href="#notfound-shard-small" transform="translate(560 138) rotate(48)"  opacity="0.60"/>
-    <use href="#notfound-shard-tiny"  transform="translate(515 95)  rotate(72)"  opacity="0.45"/>
-    <use href="#notfound-shard-tiny"  transform="translate(445 110) rotate(-58)" opacity="0.40"/>
+  {#- Five drifting shards where the 12 o'clock star would have been.
+      Anchor point: (300, 120). Sizes step down (R=12, 8, 8, 5, 5),
+      opacities step down (0.85 → 0.40), rotations scatter. -#}
+  <g class="notfound-illustration-fragments"
+     aria-hidden="true"
+     fill="#f5b800">
+    <use href="#notfound-shard-r12" transform="translate(320 95) rotate(18)"   opacity="0.85"/>
+    <use href="#notfound-shard-r8"  transform="translate(275 65) rotate(-32)"  opacity="0.68"/>
+    <use href="#notfound-shard-r8"  transform="translate(340 50) rotate(48)"   opacity="0.60"/>
+    <use href="#notfound-shard-r5"  transform="translate(305 22) rotate(72)"   opacity="0.45"/>
+    <use href="#notfound-shard-r5"  transform="translate(255 32) rotate(-58)"  opacity="0.40"/>
   </g>
 </svg>
