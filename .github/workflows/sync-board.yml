@@ -92,7 +92,7 @@ jobs:
           } > /tmp/board-pr-body.md
 
       - name: Open or update PR if board.json or photos changed
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: board-sync/auto
