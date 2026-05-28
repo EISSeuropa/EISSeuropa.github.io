@@ -1,9 +1,11 @@
 {#- 404 illustration — nine of the twelve EU flag stars in their
     canonical circular positions, with three at the top (11, 12, 1
-    o'clock) replaced by drifting golden fragments. A faint outline
-    of the European landmass sits behind, reusing the Natural-Earth
-    host-city map partial. Metaphor: a piece of the Union has gone
-    missing — a wedge at the top of the circle has broken apart.
+    o'clock) caught and carried away by a left-to-right wind. The
+    fragments form a single sweeping trail rather than three static
+    clusters: anchor remnants at each original position, then a long
+    arc of shards drifting rightward and gently rising as they go.
+    A faint outline of the European landmass sits behind. Metaphor:
+    a piece of the Union has gone missing — and the wind is taking it.
 
     Coordinate notes
     ----------------
@@ -11,7 +13,9 @@
     nine remaining stars sit on an invisible circle centred at
     (300, 250) with radius 130; star outer radius 24 keeps the EU
     flag readable without overlap. The 11, 12, and 1 o'clock slots
-    are empty; nine shards drift up and out from those three anchors.
+    are empty; three anchor shards mark the originals and eight more
+    sweep left → right in a wind trail with decreasing size and
+    opacity, increasing rotation, ending near the right edge.
 
     Styling is applied via SVG presentation attributes (fill /
     opacity) rather than external CSS so the illustration renders
@@ -29,7 +33,7 @@
      aria-hidden="true"
      focusable="false">
   <title id="notfound-illustration-title">A piece of the Union has gone missing</title>
-  <desc id="notfound-illustration-desc">Nine of the twelve European Union flag stars are arranged in their canonical circle. The three stars at the top of the circle are broken into drifting golden fragments. A faint outline of the European landmass sits behind.</desc>
+  <desc id="notfound-illustration-desc">Nine of the twelve European Union flag stars are arranged in their canonical circle. The three stars at the top of the circle have broken into golden fragments, swept rightward by an implied wind in a long trail that fades into the upper-right edge. A faint outline of the European landmass sits behind.</desc>
 
   <defs>
     {#- 5-pointed star polygons. Outer radius noted in each id; inner
@@ -81,28 +85,37 @@
     <use href="#notfound-star-r24" transform="translate(412.6 185)"/> {#- 2 o'clock -#}
   </g>
 
-  {#- Nine drifting shards across the missing-arc (11, 12, 1 o'clock).
-      Three clusters of three shards each, anchored on where each
-      missing star used to sit: 11 o'clock ≈ (235, 137), 12 o'clock
-      = (300, 120), 1 o'clock ≈ (365, 137). Sizes alternate
-      (r12 / r8 / r5), opacities step down as shards drift outward,
-      rotations scatter to read as motion. -#}
+  {#- Wind-blown shard trail. Reads as the three missing stars (11, 12,
+      1 o'clock) caught and carried by a left-to-right wind. Anchored
+      shards near each original star position show the breakup; the
+      trail sweeps rightward and arcs slightly upward as shards drift
+      further from where the stars stood. Sizes step down from r12 →
+      r8 → r5, opacities step down from 0.88 → 0.15, and rotations
+      tilt progressively clockwise (more spin further into the wind)
+      so the trail reads as motion rather than a static scatter.
+
+      Anchor coordinates: 11 o'clock ≈ (235, 137), 12 o'clock = (300,
+      120), 1 o'clock ≈ (365, 137). Trail x-range: 215 → 525; trail
+      y-range: 130 → 50 (rising ~80 px over 310 px of horizontal
+      travel — the arc of a gentle wind lift). -#}
   <g class="notfound-illustration-fragments"
      aria-hidden="true"
      fill="#f5b800">
-    {#- 11 o'clock cluster — drifts up and out to the left -#}
-    <use href="#notfound-shard-r12" transform="translate(220 115) rotate(-18)" opacity="0.82"/>
-    <use href="#notfound-shard-r8"  transform="translate(180 85)  rotate(-42)" opacity="0.62"/>
-    <use href="#notfound-shard-r5"  transform="translate(150 55)  rotate(-65)" opacity="0.42"/>
+    {#- Three small anchor shards at each original star position, showing
+        where the wind first caught the stars. Low opacity so they read
+        as fading remnants rather than fresh debris. -#}
+    <use href="#notfound-shard-r5"  transform="translate(232 135) rotate(-12)" opacity="0.42"/>
+    <use href="#notfound-shard-r5"  transform="translate(298 118) rotate(6)"   opacity="0.46"/>
+    <use href="#notfound-shard-r5"  transform="translate(363 134) rotate(20)"  opacity="0.42"/>
 
-    {#- 12 o'clock cluster — drifts straight up -#}
-    <use href="#notfound-shard-r12" transform="translate(315 92)  rotate(15)"  opacity="0.85"/>
-    <use href="#notfound-shard-r8"  transform="translate(285 58)  rotate(-25)" opacity="0.65"/>
-    <use href="#notfound-shard-r5"  transform="translate(305 22)  rotate(72)"  opacity="0.45"/>
-
-    {#- 1 o'clock cluster — drifts up and out to the right -#}
-    <use href="#notfound-shard-r12" transform="translate(385 118) rotate(28)"  opacity="0.78"/>
-    <use href="#notfound-shard-r8"  transform="translate(425 88)  rotate(50)"  opacity="0.58"/>
-    <use href="#notfound-shard-r5"  transform="translate(455 58)  rotate(78)"  opacity="0.40"/>
+    {#- Wind trail — eight shards sweeping left to right, arcing up. -#}
+    <use href="#notfound-shard-r12" transform="translate(215 128) rotate(-5)"  opacity="0.88"/>
+    <use href="#notfound-shard-r12" transform="translate(260 112) rotate(12)"  opacity="0.78"/>
+    <use href="#notfound-shard-r8"  transform="translate(305 96)  rotate(24)"  opacity="0.68"/>
+    <use href="#notfound-shard-r8"  transform="translate(350 82)  rotate(34)"  opacity="0.56"/>
+    <use href="#notfound-shard-r8"  transform="translate(395 72)  rotate(42)"  opacity="0.46"/>
+    <use href="#notfound-shard-r5"  transform="translate(440 64)  rotate(52)"  opacity="0.36"/>
+    <use href="#notfound-shard-r5"  transform="translate(485 56)  rotate(62)"  opacity="0.25"/>
+    <use href="#notfound-shard-r5"  transform="translate(525 50)  rotate(72)"  opacity="0.15"/>
   </g>
 </svg>
