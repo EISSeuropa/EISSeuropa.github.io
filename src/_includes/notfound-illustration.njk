@@ -1,16 +1,17 @@
-{#- 404 illustration — eleven of the twelve EU flag stars in their
-    canonical circular positions, with the twelfth (top) replaced by
-    drifting golden fragments. A faint outline of the European
-    landmass sits behind, reusing the Natural-Earth host-city map
-    partial. Metaphor: a piece of the Union has gone missing.
+{#- 404 illustration — nine of the twelve EU flag stars in their
+    canonical circular positions, with three at the top (11, 12, 1
+    o'clock) replaced by drifting golden fragments. A faint outline
+    of the European landmass sits behind, reusing the Natural-Earth
+    host-city map partial. Metaphor: a piece of the Union has gone
+    missing — a wedge at the top of the circle has broken apart.
 
     Coordinate notes
     ----------------
     viewBox is 600 × 480 (small, fits in a card-sized container). The
-    11 stars sit on an invisible circle centred at (300, 250) with
-    radius 130; star outer radius 24 keeps the canonical EU flag
-    readable without overlap. The 12 o'clock slot at (300, 120) is
-    empty; five shards drift up and out from that anchor.
+    nine remaining stars sit on an invisible circle centred at
+    (300, 250) with radius 130; star outer radius 24 keeps the EU
+    flag readable without overlap. The 11, 12, and 1 o'clock slots
+    are empty; nine shards drift up and out from those three anchors.
 
     Styling is applied via SVG presentation attributes (fill /
     opacity) rather than external CSS so the illustration renders
@@ -28,7 +29,7 @@
      aria-hidden="true"
      focusable="false">
   <title id="notfound-illustration-title">A piece of the Union has gone missing</title>
-  <desc id="notfound-illustration-desc">Eleven of the twelve European Union flag stars are arranged in their canonical circle. The twelfth star at the top is broken into drifting golden fragments. A faint outline of the European landmass sits behind.</desc>
+  <desc id="notfound-illustration-desc">Nine of the twelve European Union flag stars are arranged in their canonical circle. The three stars at the top of the circle are broken into drifting golden fragments. A faint outline of the European landmass sits behind.</desc>
 
   <defs>
     {#- 5-pointed star polygons. Outer radius noted in each id; inner
@@ -63,7 +64,7 @@
     {%- include "europe-outline.njk" %}
   </g>
 
-  {#- 11 EU flag stars in canonical positions (top / 12 o'clock empty).
+  {#- 9 EU flag stars in canonical positions (11, 12, 1 o'clock empty).
       Circle: centre (300, 250), radius 130. Fill set as SVG attribute
       so the illustration renders even with no CSS loaded. -#}
   <g class="notfound-illustration-stars"
@@ -77,21 +78,31 @@
     <use href="#notfound-star-r24" transform="translate(187.4 315)"/> {#- 8 o'clock -#}
     <use href="#notfound-star-r24" transform="translate(170 250)"/>   {#- 9 o'clock -#}
     <use href="#notfound-star-r24" transform="translate(187.4 185)"/> {#- 10 o'clock -#}
-    <use href="#notfound-star-r24" transform="translate(235 137.4)"/> {#- 11 o'clock -#}
-    <use href="#notfound-star-r24" transform="translate(365 137.4)"/> {#- 1 o'clock -#}
     <use href="#notfound-star-r24" transform="translate(412.6 185)"/> {#- 2 o'clock -#}
   </g>
 
-  {#- Five drifting shards where the 12 o'clock star would have been.
-      Anchor point: (300, 120). Sizes step down (R=12, 8, 8, 5, 5),
-      opacities step down (0.85 → 0.40), rotations scatter. -#}
+  {#- Nine drifting shards across the missing-arc (11, 12, 1 o'clock).
+      Three clusters of three shards each, anchored on where each
+      missing star used to sit: 11 o'clock ≈ (235, 137), 12 o'clock
+      = (300, 120), 1 o'clock ≈ (365, 137). Sizes alternate
+      (r12 / r8 / r5), opacities step down as shards drift outward,
+      rotations scatter to read as motion. -#}
   <g class="notfound-illustration-fragments"
      aria-hidden="true"
      fill="#f5b800">
-    <use href="#notfound-shard-r12" transform="translate(320 95) rotate(18)"   opacity="0.85"/>
-    <use href="#notfound-shard-r8"  transform="translate(275 65) rotate(-32)"  opacity="0.68"/>
-    <use href="#notfound-shard-r8"  transform="translate(340 50) rotate(48)"   opacity="0.60"/>
-    <use href="#notfound-shard-r5"  transform="translate(305 22) rotate(72)"   opacity="0.45"/>
-    <use href="#notfound-shard-r5"  transform="translate(255 32) rotate(-58)"  opacity="0.40"/>
+    {#- 11 o'clock cluster — drifts up and out to the left -#}
+    <use href="#notfound-shard-r12" transform="translate(220 115) rotate(-18)" opacity="0.82"/>
+    <use href="#notfound-shard-r8"  transform="translate(180 85)  rotate(-42)" opacity="0.62"/>
+    <use href="#notfound-shard-r5"  transform="translate(150 55)  rotate(-65)" opacity="0.42"/>
+
+    {#- 12 o'clock cluster — drifts straight up -#}
+    <use href="#notfound-shard-r12" transform="translate(315 92)  rotate(15)"  opacity="0.85"/>
+    <use href="#notfound-shard-r8"  transform="translate(285 58)  rotate(-25)" opacity="0.65"/>
+    <use href="#notfound-shard-r5"  transform="translate(305 22)  rotate(72)"  opacity="0.45"/>
+
+    {#- 1 o'clock cluster — drifts up and out to the right -#}
+    <use href="#notfound-shard-r12" transform="translate(385 118) rotate(28)"  opacity="0.78"/>
+    <use href="#notfound-shard-r8"  transform="translate(425 88)  rotate(50)"  opacity="0.58"/>
+    <use href="#notfound-shard-r5"  transform="translate(455 58)  rotate(78)"  opacity="0.40"/>
   </g>
 </svg>
