@@ -1,0 +1,72 @@
+{#- 404 illustration — eleven of the twelve EU flag stars in their
+    canonical circular positions, with the twelfth (top) replaced by
+    drifting golden fragments. A faint outline of the European
+    landmass sits behind, reusing the Natural-Earth host-city map
+    partial. Metaphor: a piece of the Union has gone missing.
+
+    Coordinate notes
+    ----------------
+    viewBox is 1000 × 800. The host-city map outline uses a Natural
+    Earth lat/lon projection into a 1000 × 700 box, included here at
+    full scale (no Y stretch — geographic accuracy isn't the point,
+    visual familiarity is). The 11 stars sit on an invisible circle
+    centred at (500, 400) with radius 180; star outer radius 32 to
+    keep the canonical EU flag readability. The 12 o'clock slot at
+    (500, 220) is empty; five star-shard fragments drift up and out
+    from that anchor.
+
+    Renders pure SVG (no Nunjucks vars) so it inlines verbatim into
+    callers. Theme colours are applied via CSS in site.css — see the
+    .notfound-illustration block. -#}
+<svg viewBox="0 0 1000 800"
+     class="notfound-illustration"
+     role="img"
+     aria-labelledby="notfound-illustration-title notfound-illustration-desc"
+     preserveAspectRatio="xMidYMid meet"
+     aria-hidden="true"
+     focusable="false">
+  <title id="notfound-illustration-title">A piece of the Union has gone missing</title>
+  <desc id="notfound-illustration-desc">Eleven of the twelve European Union flag stars are arranged in their canonical circle. The twelfth star at the top is broken into drifting golden fragments. A faint outline of the European landmass sits behind.</desc>
+
+  <defs>
+    <symbol id="notfound-star" overflow="visible">
+      <polygon points="0,-32 7.19,-9.89 30.43,-9.89 11.63,3.78 18.81,25.89 0,12.24 -18.81,25.89 -11.63,3.78 -30.43,-9.89 -7.19,-9.89"/>
+    </symbol>
+    <symbol id="notfound-shard-mid" overflow="visible">
+      <polygon points="0,-16 3.59,-4.94 15.22,-4.94 5.81,1.89 9.41,12.95 0,6.12 -9.41,12.95 -5.81,1.89 -15.22,-4.94 -3.59,-4.94"/>
+    </symbol>
+    <symbol id="notfound-shard-small" overflow="visible">
+      <polygon points="0,-10 2.24,-3.09 9.51,-3.09 3.63,1.18 5.88,8.09 0,3.82 -5.88,8.09 -3.63,1.18 -9.51,-3.09 -2.24,-3.09"/>
+    </symbol>
+    <symbol id="notfound-shard-tiny" overflow="visible">
+      <polygon points="0,-6 1.35,-1.85 5.71,-1.85 2.18,0.71 3.53,4.85 0,2.29 -3.53,4.85 -2.18,0.71 -5.71,-1.85 -1.35,-1.85"/>
+    </symbol>
+  </defs>
+
+  <g class="notfound-illustration-europe" aria-hidden="true"
+     transform="translate(60 80) scale(0.88 0.92)">
+    {%- include "europe-outline.njk" %}
+  </g>
+
+  <g class="notfound-illustration-stars" aria-hidden="true">
+    <use href="#notfound-star" transform="translate(680 400)"/>
+    <use href="#notfound-star" transform="translate(655.9 490)"/>
+    <use href="#notfound-star" transform="translate(590 555.9)"/>
+    <use href="#notfound-star" transform="translate(500 580)"/>
+    <use href="#notfound-star" transform="translate(410 555.9)"/>
+    <use href="#notfound-star" transform="translate(344.1 490)"/>
+    <use href="#notfound-star" transform="translate(320 400)"/>
+    <use href="#notfound-star" transform="translate(344.1 310)"/>
+    <use href="#notfound-star" transform="translate(410 244.1)"/>
+    <use href="#notfound-star" transform="translate(590 244.1)"/>
+    <use href="#notfound-star" transform="translate(655.9 310)"/>
+  </g>
+
+  <g class="notfound-illustration-fragments" aria-hidden="true">
+    <use href="#notfound-shard-mid"   transform="translate(525 195) rotate(18)"  opacity="0.85"/>
+    <use href="#notfound-shard-small" transform="translate(470 158) rotate(-32)" opacity="0.68"/>
+    <use href="#notfound-shard-small" transform="translate(560 138) rotate(48)"  opacity="0.60"/>
+    <use href="#notfound-shard-tiny"  transform="translate(515 95)  rotate(72)"  opacity="0.45"/>
+    <use href="#notfound-shard-tiny"  transform="translate(445 110) rotate(-58)" opacity="0.40"/>
+  </g>
+</svg>

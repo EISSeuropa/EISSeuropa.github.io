@@ -3340,10 +3340,64 @@ h4 { font-size: var(--fs-lg); }
 /* ---------- 404 page ---------------------------------------------------
    The /404.html GitHub Pages auto-serves for any unmatched path. Tries
    to be more useful than the default "Page not found" by surfacing the
-   six destinations people actually look for, each with an icon. */
+   six destinations people actually look for, each with an icon. A
+   decorative illustration sits above the eyebrow: 11 of 12 EU flag stars
+   in their canonical circle, the 12th replaced by drifting golden
+   fragments over a faint European landmass. Metaphor: a piece of the
+   Union has gone missing — on theme for both COST/EU identity and the
+   "page got disconnected" idea, without being heavy-handed. */
 .notfound {
-  padding-block: clamp(var(--space-7), 6vw + 1rem, var(--space-9));
+  padding-block: clamp(var(--space-6), 6vw + 1rem, var(--space-9));
   text-align: center;
+}
+
+.notfound-illustration-wrap {
+  max-width: clamp(280px, 38vw + 4rem, 460px);
+  margin: 0 auto var(--space-5);
+}
+
+.notfound-illustration {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Stars + fragments use the canonical EU gold. Kept slightly muted
+   from the pure flag #FFCC00 so they read as illustration rather than
+   asserting a flag reproduction. */
+.notfound-illustration-stars,
+.notfound-illustration-fragments {
+  fill: #f5b800;
+}
+
+.notfound-illustration-stars use {
+  filter: drop-shadow(0 1px 1px hsl(38 100% 28% / 0.18));
+}
+
+/* Faint European landmass behind the circle of stars. Uses the body
+   text colour at low opacity so it sits as a quiet trace rather than a
+   geographic statement. Dark mode bumps it slightly so it doesn't
+   disappear against the dark page background. */
+.notfound-illustration-europe path {
+  fill: var(--text);
+  opacity: 0.06;
+}
+
+[data-theme="dark"] .notfound-illustration-europe path {
+  fill: var(--text);
+  opacity: 0.08;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .notfound-illustration-europe path {
+    fill: var(--text);
+    opacity: 0.08;
+  }
+}
+
+/* Reduced motion: nothing animates here today, but if a gentle drift
+   animation is added later, the gate is already in place. */
+@media (prefers-reduced-motion: reduce) {
+  .notfound-illustration-fragments use { animation: none; }
 }
 
 .notfound-eyebrow {

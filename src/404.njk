@@ -16,6 +16,14 @@ navKey: ""
 
 <section class="notfound" aria-labelledby="notfound-title">
   <div class="container">
+    {# Illustration: 11 of 12 EU stars in their canonical circle, the
+       12th replaced by drifting golden fragments over a faint European
+       landmass. Decorative — the heading carries the meaning for
+       assistive tech, so the SVG itself is aria-hidden. #}
+    <div class="notfound-illustration-wrap">
+      {% include "notfound-illustration.njk" %}
+    </div>
+
     <p class="notfound-eyebrow" aria-hidden="true">{{ t.notFound.eyebrow }}</p>
     <h1 id="notfound-title">{{ t.notFound.heading }}</h1>
     <p class="lead notfound-body">{{ t.notFound.body }}</p>
