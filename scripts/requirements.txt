@@ -3,7 +3,7 @@
 # Pinned by major version so security patches still apply automatically
 # and the GitHub Actions pip cache key stays stable.
 
-requests>=2.31,<3
+requests>=2.34.2,<3
 
 # Pillow is used by sync-board.py to downscale + re-encode headshots
 # uploaded via the Google Form. Optional at runtime — sync-board.py
