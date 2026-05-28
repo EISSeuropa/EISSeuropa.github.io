@@ -1,20 +1,24 @@
 {# Joint-organisers strip (Issue #198).
 
-   Renders a horizontal row of co-organising institutions for joint
-   events, so the collaboration footprint reads as a structured
-   component rather than buried in body prose.
+   Renders a polished horizontal grid of co-organising institutions
+   for joint events. Each org becomes a stacked sponsor card — fixed-
+   size white logo slot above the institution name. The whole card is
+   the link when a URL is provided. Equal-width grid columns ensure
+   the three native logo aspect ratios (EISS lockup, NetSec mark +
+   wordmark, Stockholm University landscape wordmark) read with
+   equivalent visual weight regardless of native dimensions.
 
    Required argument:
      jointOrgs — array of { name, url?, logo? } objects.
                    name  required, plain text
-                   url   optional, omit to render the name as plain
-                         text instead of a link
+                   url   optional, omit to render the card as a non-
+                         interactive block instead of a link
                    logo  optional, path under /assets/images/. When
-                         set, renders the logo next to the name.
-                         When unset, the name carries on its own.
+                         set, renders the logo above the name. When
+                         unset, the name carries on its own.
 
    Optional argument:
-     jointOrgsLabel — short heading shown to the left of the list.
+     jointOrgsLabel — short heading shown centred above the grid.
                       Defaults to "Jointly organised with" but can
                       be overridden, e.g. "Hosts", "In partnership
                       with", or the locale equivalent.
@@ -32,21 +36,30 @@
    No-op when `jointOrgs` is empty or undefined, so it's safe to
    include conditionally without guarding at each call site. -#}
 {%- if jointOrgs and (jointOrgs | length) > 0 -%}
-<div class="joint-orgs" role="complementary" aria-label="{{ jointOrgsLabel or 'Jointly organised with' }}">
-  <span class="joint-orgs-label">{{ jointOrgsLabel or 'Jointly organised with' }}</span>
+{%- set _label = jointOrgsLabel or 'Jointly organised with' -%}
+<div class="joint-orgs" role="complementary" aria-label="{{ _label }}">
+  <p class="joint-orgs-label">{{ _label }}</p>
   <ul class="joint-orgs-list">
     {%- for org in jointOrgs %}
-    <li>
-      {%- if org.logo %}
-      <img class="joint-orgs-logo"
-           src="{{ org.logo }}"
-           alt="{{ org.name }}"
-           loading="lazy">
+    <li class="joint-orgs-item">
+      {%- if org.url -%}
+      <a class="joint-orgs-card" href="{{ org.url }}" target="_blank" rel="noopener">
+      {%- else -%}
+      <div class="joint-orgs-card">
       {%- endif %}
-      {%- if org.url %}
-      <a href="{{ org.url }}" target="_blank" rel="noopener" class="joint-orgs-name">{{ org.name }}</a>
-      {%- else %}
-      <span class="joint-orgs-name">{{ org.name }}</span>
+        {%- if org.logo %}
+        <span class="joint-orgs-logo-slot">
+          <img class="joint-orgs-logo"
+               src="{{ org.logo }}"
+               alt=""
+               loading="lazy">
+        </span>
+        {%- endif %}
+        <span class="joint-orgs-name">{{ org.name }}</span>
+      {%- if org.url -%}
+      </a>
+      {%- else -%}
+      </div>
       {%- endif %}
     </li>
     {%- endfor %}

@@ -4007,128 +4007,160 @@ h4 { font-size: var(--fs-lg); }
 }
 
 /* ---------- joint-organisers strip (#198) ------------------------------
-   Reusable horizontal row of co-organising institutions. Renders above
-   the hero on per-conference and joint-event pages so the collaboration
-   footprint reads as a structured component rather than prose. Each
-   institution sits in a clean card with the logo dropped on a white
-   tile for visual consistency across native aspect ratios (EISS lockup,
-   NetSec square + wordmark, SU landscape wordmark — all read uniformly).
-   The card treatment is present in both light and dark modes; only the
-   surrounding panel changes contrast. Renders text-only when no logo
-   image is provided per partner (fallback path). */
+   Polished sponsor-card grid for co-organising institutions. Each org
+   becomes a stacked card: equal-size white logo slot on top, full
+   institution name as a caption below. Equal-width grid columns mean
+   the three native logo aspect ratios (EISS lockup, NetSec mark +
+   wordmark, Stockholm University landscape wordmark) read with
+   equivalent visual weight on the page.
+
+   Structure:
+     .joint-orgs          — outer wrapper, no card chrome
+       .joint-orgs-label  — centred uppercase eyebrow with accent rule
+       .joint-orgs-list   — CSS grid, 3 columns on desktop, 1 on mobile
+         .joint-orgs-item
+           .joint-orgs-card        — <a> or <div>, stacks slot + name
+             .joint-orgs-logo-slot — fixed-height white tile
+               .joint-orgs-logo    — img, scaled to fit the slot
+             .joint-orgs-name      — caption below the slot
+*/
 .joint-orgs {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-4) var(--space-5);
-  padding: var(--space-4) var(--space-5);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  background: var(--bg-elev);
-  font-size: var(--fs-sm);
-  box-shadow: 0 1px 2px hsl(0 0% 0% / 0.03);
+  /* No outer card framing — the strip sits cleanly on the page section
+     that includes it. Each org has its own contained card instead. */
 }
 
 .joint-orgs-label {
-  flex: none;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  display: block;
+  text-align: center;
   font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin: 0 0 var(--space-6);
+  padding-bottom: var(--space-3);
   position: relative;
 }
-@media (min-width: 760px) {
-  .joint-orgs-label {
-    padding-right: var(--space-5);
-  }
-  .joint-orgs-label::after {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 1px;
-    height: 2rem;
-    background: var(--border);
-  }
+.joint-orgs-label::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
 }
 
 .joint-orgs-list {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
-  gap: var(--space-3);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+  max-width: 880px;
+  margin-inline: auto;
 }
 
-.joint-orgs-list li {
+@media (max-width: 720px) {
+  .joint-orgs-list {
+    grid-template-columns: 1fr;
+    max-width: 320px;
+    gap: var(--space-4);
+  }
+}
+
+.joint-orgs-item {
+  display: block;
+}
+
+.joint-orgs-card {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2);
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+}
+
+.joint-orgs-logo-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 96px;
+  padding: var(--space-3) var(--space-4);
   background: hsl(0 0% 100%);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
+  box-shadow: 0 1px 2px hsl(0 0% 0% / 0.04);
   transition: transform 0.2s var(--ease-out, ease),
               box-shadow 0.2s var(--ease-out, ease),
               border-color 0.2s var(--ease-out, ease);
 }
 
-.joint-orgs-list li:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px hsl(0 0% 0% / 0.08);
-  border-color: hsl(0 0% 0% / 0.15);
+a.joint-orgs-card:hover .joint-orgs-logo-slot {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px hsl(0 0% 0% / 0.10);
+  border-color: hsl(0 0% 0% / 0.18);
 }
-
-.joint-orgs-list a,
-.joint-orgs-list .joint-orgs-name {
-  color: hsl(0 0% 12%);
-  font-weight: 500;
-  text-decoration: none;
-  line-height: 1.3;
-}
-.joint-orgs-list a:hover { color: var(--accent); }
 
 .joint-orgs-logo {
-  height: 48px;
+  max-height: 100%;
+  max-width: 100%;
   width: auto;
-  max-width: 180px;
+  height: auto;
   display: block;
-  flex: none;
   object-fit: contain;
-  /* Inner white tile so logos sit on the same background regardless of
-     the page theme. The li card already provides this — keeping the
-     logo background transparent so the tile read is unified. */
-  background: transparent;
-  padding: 4px 6px;
 }
 
-/* Dark-mode polish: the white card stays white (institutional marks
-   are designed for light backgrounds — Stockholm University's navy
-   #002F5F wordmark, NetSec's grey marks all need a light substrate),
-   the border becomes transparent so cards float cleanly against the
-   dark --bg-elev panel. Text inside the card reads dark on white as
-   intended.
+.joint-orgs-name {
+  font-size: var(--fs-sm);
+  color: var(--text);
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.4;
+  /* Cap width so the longer EISS / NetSec names break tidily */
+  max-width: 24ch;
+}
+
+a.joint-orgs-card:hover .joint-orgs-name {
+  color: var(--accent);
+}
+
+/* Dark-mode polish: the white logo slot stays white (institutional marks
+   are designed for light substrates — Stockholm University's navy
+   #002F5F wordmark, NetSec's grey marks), the border becomes transparent
+   so each tile floats cleanly against the dark page. Name captions stay
+   in the body text colour (light on dark page bg).
 
    Explicit theme toggle takes precedence: [data-theme="dark"] always
    applies; the OS-pref media query only fires when no theme is pinned. */
-[data-theme="dark"] .joint-orgs-list li {
+[data-theme="dark"] .joint-orgs-logo-slot {
   border-color: transparent;
+  box-shadow: 0 2px 8px hsl(0 0% 0% / 0.25);
 }
-[data-theme="dark"] .joint-orgs-list li:hover {
-  box-shadow: 0 6px 18px hsl(0 0% 0% / 0.35);
+[data-theme="dark"] a.joint-orgs-card:hover .joint-orgs-logo-slot {
+  box-shadow: 0 10px 24px hsl(0 0% 0% / 0.40);
   border-color: transparent;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .joint-orgs-list li {
+  :root:not([data-theme="light"]) .joint-orgs-logo-slot {
+    border-color: transparent;
+    box-shadow: 0 2px 8px hsl(0 0% 0% / 0.25);
+  }
+  :root:not([data-theme="light"]) a.joint-orgs-card:hover .joint-orgs-logo-slot {
+    box-shadow: 0 10px 24px hsl(0 0% 0% / 0.40);
     border-color: transparent;
   }
-  :root:not([data-theme="light"]) .joint-orgs-list li:hover {
-    box-shadow: 0 6px 18px hsl(0 0% 0% / 0.35);
-    border-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.joint-orgs-card:hover .joint-orgs-logo-slot {
+    transform: none;
   }
 }
 
