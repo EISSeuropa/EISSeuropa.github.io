@@ -3351,53 +3351,34 @@ h4 { font-size: var(--fs-lg); }
   text-align: center;
 }
 
+/* Container for the 404 illustration. Hard-clamped max-width because
+   the SVG's intrinsic dimensions come from its viewBox (600 × 480),
+   so without an upper bound it could render at the full container
+   width. The wrap also inherits `color: var(--text)` so the SVG's
+   `fill="currentColor"` on the Europe outline tints with the body
+   text colour. */
 .notfound-illustration-wrap {
-  max-width: clamp(280px, 38vw + 4rem, 460px);
+  width: 100%;
+  max-width: 320px;
   margin: 0 auto var(--space-5);
+  color: var(--text);
 }
 
 .notfound-illustration {
   display: block;
   width: 100%;
   height: auto;
+  aspect-ratio: 600 / 480;
 }
 
-/* Stars + fragments use the canonical EU gold. Kept slightly muted
-   from the pure flag #FFCC00 so they read as illustration rather than
-   asserting a flag reproduction. */
-.notfound-illustration-stars,
-.notfound-illustration-fragments {
-  fill: #f5b800;
-}
-
+/* Subtle drop-shadow on the stars so they sit slightly lifted from the
+   page surface. Skipped in print and on reduced-motion preferences. */
 .notfound-illustration-stars use {
   filter: drop-shadow(0 1px 1px hsl(38 100% 28% / 0.18));
 }
 
-/* Faint European landmass behind the circle of stars. Uses the body
-   text colour at low opacity so it sits as a quiet trace rather than a
-   geographic statement. Dark mode bumps it slightly so it doesn't
-   disappear against the dark page background. */
-.notfound-illustration-europe path {
-  fill: var(--text);
-  opacity: 0.06;
-}
-
-[data-theme="dark"] .notfound-illustration-europe path {
-  fill: var(--text);
-  opacity: 0.08;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .notfound-illustration-europe path {
-    fill: var(--text);
-    opacity: 0.08;
-  }
-}
-
-/* Reduced motion: nothing animates here today, but if a gentle drift
-   animation is added later, the gate is already in place. */
 @media (prefers-reduced-motion: reduce) {
-  .notfound-illustration-fragments use { animation: none; }
+  .notfound-illustration-stars use { filter: none; }
 }
 
 .notfound-eyebrow {
