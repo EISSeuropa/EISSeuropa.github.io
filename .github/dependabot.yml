@@ -1,0 +1,61 @@
+# Dependabot configuration.
+#
+# Watches two surfaces for upstream updates:
+#
+#   1. GitHub Actions used in any .github/workflows/*.yml. We SHA-pin
+#      every third-party action. Dependabot opens a PR each time an
+#      upstream tag moves to a new SHA, so the pin stays current without
+#      manual sweeps.
+#
+#   2. Python dependencies in scripts/requirements.txt (requests, Pillow).
+#      Used by sync-board.py and make-share-cards.py, which run with
+#      `contents: write` in the sync workflows, so a compromised package
+#      on the chain matters.
+#
+# Weekly cadence keeps the PR volume manageable. Each PR is auto-mergeable
+# once CI is green (link-check + CodeQL + drift checkers cover the surface
+# Dependabot bumps could break).
+#
+# No npm ecosystem: there is no package.json — Eleventy is invoked via npx
+# at deploy time and that is a separate concern.
+
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Europe/Stockholm"
+    reviewers:
+      - "APB-LDN"
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "deps(actions)"
+    open-pull-requests-limit: 5
+    groups:
+      # All GitHub-published actions (actions/*) tend to move in lockstep
+      # when a Node runtime version is deprecated. Group them so we get
+      # one PR per weekly run rather than multiple.
+      gha-platform:
+        patterns:
+          - "actions/*"
+      # Third-party actions stay individual so the SHA-pin diff is easy
+      # to review per dependency.
+
+  - package-ecosystem: "pip"
+    directory: "/scripts"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Europe/Stockholm"
+    reviewers:
+      - "APB-LDN"
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "deps(python)"
+    open-pull-requests-limit: 5

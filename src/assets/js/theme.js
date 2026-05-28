@@ -159,3 +159,96 @@
     initYouTube();
   }
 })();
+
+/* What's New banner — sparingly-used site-wide announcement.
+   ──────────────────────────────────────────────────────────
+   Reads /data/whats-new.json. If `active: true` and the visitor
+   hasn't dismissed this exact `version`, renders a dismissible
+   banner fixed at the top of the viewport. Dismissal is saved to
+   localStorage so the visitor sees each version at most once.
+   See CLAUDE.md §12 for the discipline rules (use 3-4× per year
+   max; natural activation: new visible sections, live programme,
+   content milestones). Silent no-op on fetch error or JSON 404. */
+(function () {
+  fetch("/data/whats-new.json", { cache: "no-cache" })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (data) {
+      if (!data || !data.active || !data.version) return;
+      var dismissed = null;
+      try { dismissed = localStorage.getItem("eiss-whats-new-dismissed-" + data.version); } catch (e) {}
+      if (dismissed) return;
+      renderWhatsNewBanner(data);
+    })
+    .catch(function () {});
+
+  function renderWhatsNewBanner(data) {
+    var lang = (document.documentElement.lang || "en").toLowerCase().slice(0, 2);
+    var headline = (data.headline && (data.headline[lang] || data.headline.en)) || "";
+    if (!headline) return;
+    var ctaLabel = data.cta && data.cta.i18n && (data.cta.i18n[lang] || data.cta.i18n.en);
+    var rawHref = data.cta && data.cta.href;
+    var ctaHref = typeof rawHref === "string"
+      ? rawHref
+      : (rawHref && (rawHref[lang] || rawHref.en)) || "";
+
+    var banner = document.createElement("div");
+    banner.className = "whats-new-banner";
+    banner.setAttribute("role", "status");
+
+    var sparkle = document.createElement("span");
+    sparkle.className = "whats-new-sparkle";
+    sparkle.setAttribute("aria-hidden", "true");
+    sparkle.textContent = "✦";
+    banner.appendChild(sparkle);
+
+    var text = document.createElement("span");
+    text.className = "whats-new-text";
+    text.textContent = headline;
+    banner.appendChild(text);
+
+    if (ctaLabel && ctaHref) {
+      var cta = document.createElement("a");
+      cta.className = "whats-new-cta";
+      cta.href = ctaHref;
+      cta.textContent = ctaLabel;
+      if (data.cta.external) {
+        cta.target = "_blank";
+        cta.rel = "noopener";
+      }
+      banner.appendChild(cta);
+    }
+
+    var close = document.createElement("button");
+    close.type = "button";
+    close.className = "whats-new-close";
+    var closeLabel = { en: "Dismiss", fr: "Fermer", de: "Schließen" }[lang] || "Dismiss";
+    close.setAttribute("aria-label", closeLabel);
+    close.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+    close.addEventListener("click", function () {
+      try { localStorage.setItem("eiss-whats-new-dismissed-" + data.version, "1"); } catch (e) {}
+      banner.classList.add("whats-new-banner--closing");
+      setTimeout(function () {
+        document.documentElement.style.removeProperty("--whats-new-h");
+        banner.remove();
+      }, 240);
+    });
+    banner.appendChild(close);
+
+    document.body.insertBefore(banner, document.body.firstChild);
+
+    var syncH = function () {
+      var h = banner.offsetHeight;
+      if (h > 0) {
+        document.documentElement.style.setProperty("--whats-new-h", h + "px");
+      }
+    };
+    syncH();
+    if (document.readyState !== "complete") {
+      window.addEventListener("load", syncH, { once: true });
+    }
+    window.addEventListener("resize", syncH, { passive: true });
+    if (typeof ResizeObserver === "function") {
+      try { new ResizeObserver(syncH).observe(banner); } catch (e) {}
+    }
+  }
+})();
