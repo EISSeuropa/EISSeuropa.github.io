@@ -80,6 +80,12 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 ### Changed
 
 - **`CLAUDE.md` gains §12 (What's New banner discipline) and §13 (cross-repo Project).** §12 codifies when to activate the banner (high bar: new visible sections, live programme, content milestones), when not to (patches, refactors, infra), cadence (3-4× per year max, 4-6 week on-state), and how to update the JSON file. §13 documents the private GitHub Project at <https://github.com/users/EISSeuropa/projects/1> spanning open enhancement issues from both the EISS and NetSec repos — scope, boundary against milestones, single `Effort` custom field, and retirement threshold. Both ported and adapted from the NetSec sister site CLAUDE.md §§13-14.
+- **Joint-organisers strip polished into per-organisation cards.** Each institution now sits in its own clean card with the logo dropped on a white tile, a subtle border + elevation in light mode, and a borderless white card on dark backgrounds. Logo height fixed at 48 px with a 180 px max width so the three native aspect ratios (EISS lockup, NetSec square + wordmark, SU landscape wordmark) read as visually equivalent. Hover lifts the card 1 px with a soft shadow. The "JOINTLY ORGANISED WITH" label gets a vertical divider against the list on viewports ≥ 760 px. Mobile cards wrap without losing their per-card framing.
+
+### Fixed
+
+- **What's New banner now actually renders.** The first cut shipped `whats-new.json` under `src/_data/`, which is Eleventy's build-time data cascade — files in there are never copied to the build output. The runtime fetch for `/data/whats-new.json` 404'd silently and the banner stayed dormant. Moved the JSON to `src/data/whats-new.json` (no underscore prefix) and added a passthrough-copy rule in `.eleventy.js` so it lands at `_site/data/whats-new.json`. Banner now appears on first visit per version and dismisses cleanly.
+- **EISS partner logo on `/2026` is the full lockup, not just the constellation mark.** The first cut wired `eiss-mark.svg` (the constellation alone) into the joint-organisers strip, while NetSec and Stockholm University used full lockups with text. The asymmetry read as the EISS brand being incomplete next to two complete institutional marks. New `src/assets/images/partners/eiss-lockup.svg` carries the mark + the EiSS wordmark with the brand-blue `#007bc6` baked in (so the `<img>`-loaded SVG resolves without depending on parent CSS for `currentColor`). The old constellation-only partner asset is removed.
 
 ### Security
 
