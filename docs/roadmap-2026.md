@@ -2,7 +2,7 @@
 
 A planning document written to help the maintainer
 think through what's worth doing next, in what order, and at what
-effort. **Last update: 26 May 2026, after v2.23.0.**
+effort. **Last update: 28 May 2026, after v2.23.1.**
 
 <!-- AUTOSTAMP:BEGIN -->
 > _Auto-tracked: **7 entries** in [`[Unreleased]`](../CHANGELOG.md#unreleased) since **v2.23.1** (6 Added, 1 Security). Last refresh by `scripts/sync-roadmap.py`: 27 May 2026. Prose in the timeline below may lag; the maintainer resynthesises on release-time §5 sweep._
@@ -49,6 +49,10 @@ counts as MAJOR / MINOR / PATCH. `scripts/release.sh` enforces the
 process; `CHANGELOG.md` accumulates the entries between releases. One
 PR is *not* one release — PRs add to `[Unreleased]`; releases get
 cut at milestones.
+
+### v2.23.1 · 27 May 2026 — *Archive banner and post-release polish*
+
+Sticky archive-page disclaimer ribbon on all past-conference and past-workshop pages. Beta-ribbon *View English* link fixed (was bouncing FR/DE visitors back to the translated page via `localStorage`). Link-checker skip list expanded for three bot-blocking hosts. `sync-roadmap.yml` self-feeding loop broken. Two Mobirise-era utility scripts retired, closing two CodeQL alerts. Meijer pull-quote attribution corrected on `/initiative`. ESSC host-city map projection re-tuned (1.4× y-scale, was 1.82×). README + roadmap refreshed against current site state. [Release notes →](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.23.1)
 
 ### v2.23.0 · 26 May 2026 — *Brand identity and Initiative depth*
 
@@ -159,9 +163,16 @@ Where the site stands today, so the roadmap below makes sense:
   out (already in `conferences.js`). Live programme grid on `/2026`
   pulls the full ESSC programme.
 - **Operator + CI conventions** (imported from `netsec.github.io`):
-  `CLAUDE.md` operator playbook, full `SECURITY.md`, hybrid
+  `CLAUDE.md` operator playbook (§§1–13), full `SECURITY.md`, hybrid
   CHANGELOG format, roadmap autostamp via `sync-roadmap.py`, link
-  checker on every PR + Monday cron.
+  checker on every PR + Monday cron. Dependabot watches GitHub
+  Actions and Python deps weekly. Cross-repo GitHub Project
+  ([#1](https://github.com/users/EISSeuropa/projects/1)) spans
+  open enhancement issues across EISS + NetSec.
+- **What's New banner**: `src/_data/whats-new.json`-driven dismissible
+  site-wide announcement. Currently active, pointing visitors to the
+  live ESSC 2026 programme. Off-switch: flip `active: false` after
+  the conference. CLAUDE.md §12 governs the activation discipline.
 
 ---
 
@@ -203,28 +214,15 @@ traffic), then the rest.
 
 ## P1 — Socials integration
 
-### YouTube embeds on conference archive pages
+### ~~YouTube embeds on conference archive pages~~ — _shipped in v2.24.0 (in flight)_
 
-**Effort: M**
-
-Several past conferences likely have YouTube recordings (the EISS
-channel has a playlist). Embed the playlist or specific videos on
-each `/202x.html` archive page — single `<iframe>` per page, sized
-responsively. Plays through privacy-enhanced `youtube-nocookie.com`
-embeds to avoid third-party cookie chatter.
-
-Concrete change:
-
-- New include `src/_includes/youtube-embed.njk` taking a video or
-  playlist ID
-- Drop into `/2025.html`, `/2024.html`, `/2023.html` where recordings
-  exist
-- Update `/policy.html` §5 with a note on the YouTube embed
-
-Privacy posture: only loads the player when the user clicks the
-poster image (lazy-load via `loading="lazy"` and ideally
-[`lite-youtube-embed`](https://github.com/paulirish/lite-youtube-embed)
-or its lighter-weight ~3 KB equivalent).
+`src/_includes/youtube-embed.njk` lazy-mounts a `youtube-nocookie.com`
+iframe on click only (poster from `i.ytimg.com` before that). Live on
+`/2019`, `/2023`, and `/2024` with real playlist IDs. `/2025` gated
+pending that year's playlist. `/policy` §5 documents the two-stage
+privacy posture in EN / FR / DE. CodeQL `js/xss-through-dom` hardened:
+the partial emits only `data-youtube-id`; JS constructs the URL from a
+hard-coded prefix with a strict allowlist regex.
 
 ### LinkedIn cross-posting workflow (manual, gentle)
 
@@ -342,22 +340,13 @@ the consistency more than the traffic.
 EISS hosts the Chair. Currently the EISS site links to it from a few
 places (homepage announcement card, programmes index, footer).
 
-### Co-branding strip on shared events
+### ~~Co-branding strip on shared events~~ — _shipped in v2.24.0 (in flight)_
 
-**Effort: M**
-
-When an event involves both EISS and NetSec (which all 2026+
-conferences will, given the COST Action), show a small "Jointly
-organised with" strip on the relevant page. Currently this is in the
-page prose; making it a structured component would:
-
-- Standardise the visual treatment
-- Allow easy iteration ("Jointly organised with NetSec + Stockholm
-  University")
-- Let it appear in the homepage hero too
-
-New include `src/_includes/joint-orgs.njk` taking a list. Style as a
-horizontal row of small institutional logos.
+`src/_includes/joint-orgs.njk` renders a horizontal row of co-organising
+institutions with name + URL + optional logo. Live on `/2026` (EN + FR + DE)
+with EISS mark, NetSec primary lockup, and Stockholm University landscape
+wordmark at 56 px height. Dark-mode pure-white tile keeps the navy SU mark
+and grey NetSec mark legible on dark backgrounds.
 
 ### Cross-link news
 
@@ -427,18 +416,17 @@ publication cycle saves work every year.
 
 ## P2 — Quality-of-life features
 
-### Site search
+### Site search — tracked in [#209](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/209)
 
 **Effort: M**
 
-Currently no search. For a ~50-page site with mostly static content,
-a client-side search index (e.g. [Pagefind](https://pagefind.app/))
-would add a search box at very low cost — no backend, no service fee.
-Built at deploy time into `_site/pagefind/`, ~200 KB of JS pulled
-in only when the user opens the search modal.
-
-Worth considering when content volume grows; right now you can
-honestly find any page from the nav or sitemap.
+[Pagefind](https://pagefind.app/) at deploy time, wired into the 404 page
+as the first step (netsec PR #280 is the reference implementation). Three
+pieces: `npx pagefind --site _site` added to `deploy.yml`; Pagefind UI
+lazy-loaded on `404.njk` with an `onerror` fallback; `data-pagefind-ignore`
+on the 404 mount so the error page itself isn't indexed. Nav Cmd-K search
+trigger is a follow-up once the 404 integration proves the pipeline. Tracked
+in [#209](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/209).
 
 ### ~~Print stylesheet for conference programmes~~ — _shipped in v2.17.0_
 
