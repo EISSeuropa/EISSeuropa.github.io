@@ -179,6 +179,7 @@ html {
 
 body {
   margin: 0;
+  padding-top: var(--whats-new-h, 0px);
   font-family: var(--font-sans);
   font-size: var(--fs-base);
   line-height: var(--lh-normal);
@@ -365,6 +366,90 @@ h4 { font-size: var(--fs-lg); }
   }
 }
 
+/* ---------- What's New banner ---------- */
+/* Sparingly-used site-wide announcement, driven by
+   src/_data/whats-new.json (CLAUDE.md §12). Rendered by JS into
+   a fixed bar above everything else. Body padding-top and
+   .sticky-chrome top both compose against --whats-new-h (set by JS
+   from the banner's measured height) so the ribbon + nav stack
+   naturally below it. Mirrors the pattern on the NetSec sister site. */
+.whats-new-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 11px 22px 11px 18px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2, var(--accent)) 100%);
+  color: #fff;
+  font-size: .92rem;
+  line-height: 1.35;
+  border-bottom: 1px solid rgba(0, 0, 0, .12);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  animation: whatsNewIn .35s var(--ease, cubic-bezier(.2, .7, .2, 1));
+}
+
+@keyframes whatsNewIn {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+
+.whats-new-banner--closing {
+  animation: whatsNewOut .22s var(--ease, cubic-bezier(.2, .7, .2, 1)) forwards;
+}
+
+@keyframes whatsNewOut {
+  from { transform: translateY(0);     opacity: 1; }
+  to   { transform: translateY(-100%); opacity: 0; }
+}
+
+.whats-new-sparkle { font-size: 1.05rem; opacity: .95; flex-shrink: 0; }
+.whats-new-text    { flex: 1; min-width: 200px; font-weight: 500; }
+
+.whats-new-cta {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: rgba(255, 255, 255, .7);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.whats-new-cta:hover { text-decoration-color: #fff; opacity: 1; }
+
+.whats-new-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(255, 255, 255, .12);
+  color: #fff;
+  cursor: pointer;
+  margin-left: auto;
+  flex-shrink: 0;
+  transition: background .15s var(--ease, cubic-bezier(.2, .7, .2, 1));
+}
+
+.whats-new-close:hover        { background: rgba(255, 255, 255, .22); }
+.whats-new-close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.whats-new-close svg          { width: 14px; height: 14px; }
+
+@media (max-width: 560px) {
+  .whats-new-banner { padding: 10px 14px; font-size: .86rem; gap: 8px; }
+  .whats-new-text   { min-width: 120px; }
+}
+
+@media print {
+  .whats-new-banner { display: none; }
+}
+
 /* ---------- beta-translation ribbon ---------- */
 /* Rendered by src/_includes/beta-ribbon.njk when page front-matter
    sets status: "beta". Sits above the nav so it's the first thing
@@ -522,7 +607,7 @@ h4 { font-size: var(--fs-lg); }
    scroll-shrink animation below still target it directly. */
 .sticky-chrome {
   position: sticky;
-  top: 0;
+  top: var(--whats-new-h, 0px);
   z-index: 50;
 }
 
