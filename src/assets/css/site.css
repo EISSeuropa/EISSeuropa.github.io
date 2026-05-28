@@ -4007,21 +4007,26 @@ h4 { font-size: var(--fs-lg); }
 }
 
 /* ---------- joint-organisers strip (#198) ------------------------------
-   Reusable horizontal row of co-organising institutions. Renders
-   above the hero on per-conference and joint-event pages so the
-   collaboration footprint reads structurally rather than buried in
-   prose. Wraps on narrow viewports. Renders text-only when no logo
+   Reusable horizontal row of co-organising institutions. Renders above
+   the hero on per-conference and joint-event pages so the collaboration
+   footprint reads as a structured component rather than prose. Each
+   institution sits in a clean card with the logo dropped on a white
+   tile for visual consistency across native aspect ratios (EISS lockup,
+   NetSec square + wordmark, SU landscape wordmark — all read uniformly).
+   The card treatment is present in both light and dark modes; only the
+   surrounding panel changes contrast. Renders text-only when no logo
    image is provided per partner (fallback path). */
 .joint-orgs {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-3) var(--space-4);
-  padding: var(--space-3) var(--space-4);
+  gap: var(--space-4) var(--space-5);
+  padding: var(--space-4) var(--space-5);
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   background: var(--bg-elev);
   font-size: var(--fs-sm);
+  box-shadow: 0 1px 2px hsl(0 0% 0% / 0.03);
 }
 
 .joint-orgs-label {
@@ -4029,8 +4034,24 @@ h4 { font-size: var(--fs-lg); }
   font-weight: 600;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   font-size: var(--fs-xs);
+  position: relative;
+}
+@media (min-width: 760px) {
+  .joint-orgs-label {
+    padding-right: var(--space-5);
+  }
+  .joint-orgs-label::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 2rem;
+    background: var(--border);
+  }
 }
 
 .joint-orgs-list {
@@ -4039,52 +4060,75 @@ h4 { font-size: var(--fs-lg); }
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-3) var(--space-5);
+  align-items: stretch;
+  gap: var(--space-3);
 }
 
 .joint-orgs-list li {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2);
+  background: hsl(0 0% 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: transform 0.2s var(--ease-out, ease),
+              box-shadow 0.2s var(--ease-out, ease),
+              border-color 0.2s var(--ease-out, ease);
+}
+
+.joint-orgs-list li:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px hsl(0 0% 0% / 0.08);
+  border-color: hsl(0 0% 0% / 0.15);
 }
 
 .joint-orgs-list a,
 .joint-orgs-list .joint-orgs-name {
-  color: var(--text);
+  color: hsl(0 0% 12%);
   font-weight: 500;
   text-decoration: none;
+  line-height: 1.3;
 }
 .joint-orgs-list a:hover { color: var(--accent); }
 
 .joint-orgs-logo {
-  height: 56px;
+  height: 48px;
   width: auto;
+  max-width: 180px;
   display: block;
   flex: none;
-  border-radius: 4px;
-  transition: background-color 0.2s ease, padding 0.2s ease;
+  object-fit: contain;
+  /* Inner white tile so logos sit on the same background regardless of
+     the page theme. The li card already provides this — keeping the
+     logo background transparent so the tile read is unified. */
+  background: transparent;
+  padding: 4px 6px;
 }
 
-/* Dark-mode tile behind partner logos. Most institutional brand
-   assets are designed for a light background (e.g. Stockholm
-   University's navy #002F5F wordmark, NetSec's dark-blue mark),
-   so we give each logo a soft off-white tile + a touch of padding
-   when the page is in dark mode so they stay legible against the
-   dark --bg-elev panel. The EISS network mark (bright #73caff) sits
-   happily on the same tile in dark mode too.
+/* Dark-mode polish: the white card stays white (institutional marks
+   are designed for light backgrounds — Stockholm University's navy
+   #002F5F wordmark, NetSec's grey marks all need a light substrate),
+   the border becomes transparent so cards float cleanly against the
+   dark --bg-elev panel. Text inside the card reads dark on white as
+   intended.
 
-   Explicit toggle takes precedence: [data-theme="dark"] always
-   applies the tile, [data-theme="light"] never does. The OS-pref
-   media query only applies when the user hasn't pinned a theme. */
-[data-theme="dark"] .joint-orgs-logo {
-  background: hsl(0 0% 100%);
-  padding: 6px 10px;
+   Explicit theme toggle takes precedence: [data-theme="dark"] always
+   applies; the OS-pref media query only fires when no theme is pinned. */
+[data-theme="dark"] .joint-orgs-list li {
+  border-color: transparent;
+}
+[data-theme="dark"] .joint-orgs-list li:hover {
+  box-shadow: 0 6px 18px hsl(0 0% 0% / 0.35);
+  border-color: transparent;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .joint-orgs-logo {
-    background: hsl(0 0% 100%);
-    padding: 6px 10px;
+  :root:not([data-theme="light"]) .joint-orgs-list li {
+    border-color: transparent;
+  }
+  :root:not([data-theme="light"]) .joint-orgs-list li:hover {
+    box-shadow: 0 6px 18px hsl(0 0% 0% / 0.35);
+    border-color: transparent;
   }
 }
 

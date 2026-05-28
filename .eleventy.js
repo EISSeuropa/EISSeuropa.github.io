@@ -67,6 +67,12 @@ module.exports = function (eleventyConfig) {
   });
 
   eleventyConfig.addPassthroughCopy("src/assets");
+  // Runtime-fetched data files live under src/data/ (NOT src/_data/,
+  // which is Eleventy's build-time data cascade and never lands in
+  // the build output). The What's New banner JS in theme.js fetches
+  // /data/whats-new.json at page load, so the file needs to be copied
+  // verbatim to _site/data/.
+  eleventyConfig.addPassthroughCopy({ "src/data": "data" });
   eleventyConfig.addPassthroughCopy({ "src/.well-known": "/.well-known" });
   eleventyConfig.addPassthroughCopy({ "src/CNAME": "CNAME" });
   eleventyConfig.addPassthroughCopy({ "src/robots.txt": "robots.txt" });
