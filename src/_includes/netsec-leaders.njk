@@ -1,0 +1,33 @@
+{# EISS people who also hold a NetSec leadership role. The role titles
+   come from src/_data/netsec.js (English, shared); boardSorted.js joins
+   each to its board headshot + EISS affiliation kind. Labels localise
+   via the i18n `netsec` block. Rendered on /initiative (+ fr / de).
+   `boardSorted`, `i18n`, and `lang` are in scope from the page. #}
+{%- set _lang = lang or "en" -%}
+{%- set t = i18n[_lang] -%}
+{%- set _boardHref = "/board.html" if _lang == "en" else "/board." + _lang + ".html" -%}
+{%- if boardSorted.netsecLeaders.length %}
+<div style="margin-top: var(--space-5);">
+  <p class="eyebrow" style="margin-bottom: var(--space-2);">{{ t.netsec.leadEyebrow }}</p>
+  <p class="muted" style="font-size: var(--fs-sm); margin: 0 0 var(--space-3); max-width: 46rem;">
+    {{ t.netsec.leadIntro }}
+  </p>
+  <ul class="leadership-strip" aria-label="{{ t.netsec.leadEyebrow }}">
+    {%- for person in boardSorted.netsecLeaders %}
+    {%- set dual = "" -%}
+    {%- if person.eissKind == "support" %}{%- set dual = t.netsec.dualSupport -%}
+    {%- elif person.eissKind == "officer" %}{%- set dual = t.netsec.officerRoles[person.eissRole] or t.netsec.dualBoard -%}
+    {%- elif person.eissKind == "board" %}{%- set dual = t.netsec.dualBoard -%}{%- endif -%}
+    <li>
+      <a href="{{ _boardHref }}{% if person.slug %}#{{ person.slug }}{% endif %}">
+        {%- if person.photo %}<img src="{{ person.photo }}" alt="{{ person.name }}" loading="lazy">
+        {%- else %}<span class="leadership-strip-initials" aria-hidden="true">{{ person.initials }}</span>{%- endif %}
+        <span class="leadership-strip-role">{{ person.netsecRole }}</span>
+        <span class="leadership-strip-name">{{ person.name }}</span>
+        {%- if dual %}<span class="leadership-strip-dual">{{ dual }}</span>{%- endif %}
+      </a>
+    </li>
+    {%- endfor %}
+  </ul>
+</div>
+{%- endif %}

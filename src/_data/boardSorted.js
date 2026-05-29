@@ -23,6 +23,7 @@
 
 const board = require("./board.json");
 const indico = require("./indico.json");
+const netsec = require("./netsec.js");
 const boardSource = require("../../scripts/board-source.json");
 
 // Reduce a name to a "first-token + last-token" identity key.
@@ -218,6 +219,43 @@ module.exports = function () {
       return bySurname(a, b);
     });
 
+  // NetSec leadership held by EISS people. Joins the role list in
+  // netsec.js to board/support entries (for the photo + EISS role) by an
+  // accent- and apostrophe-folded first+last identity key, so the
+  // /initiative NetSec section can show each person's NetSec role next to
+  // their EISS affiliation. Order follows netsec.leadership.
+  const foldName = (n) =>
+    identityKey(
+      String(n || "")
+        .normalize("NFD")
+        .replace(/[̀-ͯ]/g, "")
+        .replace(/[‘’']/g, "")
+    );
+  const peopleByFold = {};
+  for (const p of [...allMembersAnnotated, ...allSupportAnnotated]) {
+    peopleByFold[foldName(p.name)] = p;
+  }
+  // `eissKind` lets the template pick a localized dual-affiliation label
+  // ("EISS board" / "EISS support team" / the officer's EISS title).
+  // `eissRole` carries the raw officer role (Secretary-General / Treasurer)
+  // for the officer case.
+  const netsecLeaders = (netsec.leadership || []).map((l) => {
+    const m = peopleByFold[foldName(l.name)] || {};
+    let eissKind = null;
+    if (m.role === "Support Staff") eissKind = "support";
+    else if (m.tier != null && m.tier < 100) eissKind = "officer";
+    else if (m.role) eissKind = "board";
+    return {
+      name: m.name || l.name,
+      netsecRole: l.netsecRole,
+      eissKind,
+      eissRole: m.role || null,
+      photo: m.photoOverride || m.photo || null,
+      slug: m.slug || null,
+      initials: m.initials || computeInitials(l.name),
+    };
+  });
+
   // Exposed for the page footer link ("Update your bio"). Sourced
   // from scripts/board-source.json so the URL stays in sync with the
   // Form configuration the sync workflow uses.
@@ -258,6 +296,7 @@ module.exports = function () {
     boardMembers,
     support,
     pastMembers,
+    netsecLeaders,
     formUrl,
     countries,
     counts,

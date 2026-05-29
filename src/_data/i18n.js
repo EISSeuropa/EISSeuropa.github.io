@@ -146,6 +146,22 @@ const locales = {
       noEventsBody: "When EISS, NetSec, or partner institutions publish events through indico.eiss-europa.com, they'll appear here automatically.",
     },
 
+    netsec: {
+      // Labels for the "EISS people leading NetSec" strip on /initiative.
+      // The role titles themselves live in src/_data/netsec.js (English,
+      // shared across locales). These keys localise the framing + the
+      // dual-affiliation tag under each person.
+      leadEyebrow: "EISS people leading NetSec",
+      leadIntro: "The two organisations share more than a founding link. Almost everyone steering NetSec also sits on the EISS board, holding a role in each.",
+      dualBoard: "EISS board",
+      dualSupport: "EISS support team",
+      officerRoles: {
+        "Secretary-General": "EISS Secretary-General",
+        "Treasurer": "EISS Treasurer",
+        "Founding Director": "EISS Founding Director",
+      },
+    },
+
     programme: {
       // Live programme grid on /YYYY pages. Pulled from Indico's
       // timetable every day and rendered alongside the polished PDF
@@ -352,6 +368,18 @@ const locales = {
       noEventsBody: "Lorsque EISS, NetSec ou nos institutions partenaires publient des événements via indico.eiss-europa.com, ils apparaîtront ici automatiquement.",
     },
 
+    netsec: {
+      leadEyebrow: "Des membres d'EISS à la direction de NetSec",
+      leadIntro: "Les deux organisations partagent bien plus qu'un lien fondateur. Presque toutes les personnes qui pilotent NetSec siègent aussi au bureau d'EISS, avec une fonction dans chacune.",
+      dualBoard: "Bureau d'EISS",
+      dualSupport: "Équipe de soutien d'EISS",
+      officerRoles: {
+        "Secretary-General": "Secrétaire général d'EISS",
+        "Treasurer": "Trésorière d'EISS",
+        "Founding Director": "Directeur fondateur d'EISS",
+      },
+    },
+
     programme: {
       eyebrow: "En direct depuis Indico",
       heading: "Programme",
@@ -525,6 +553,18 @@ const locales = {
       lastSynced: "Zuletzt aktualisiert",
       noEventsTitle: "Noch keine kommenden Veranstaltungen auf Indico",
       noEventsBody: "Wenn EISS, NetSec oder Partnerinstitutionen Veranstaltungen über indico.eiss-europa.com veröffentlichen, erscheinen sie hier automatisch.",
+    },
+
+    netsec: {
+      leadEyebrow: "EISS-Mitglieder in der NetSec-Leitung",
+      leadIntro: "Die beiden Organisationen verbindet mehr als die gemeinsame Gründung. Fast alle, die NetSec leiten, sitzen auch im EISS-Vorstand und üben in beiden eine Funktion aus.",
+      dualBoard: "EISS-Vorstand",
+      dualSupport: "EISS-Unterstützungsteam",
+      officerRoles: {
+        "Secretary-General": "EISS-Generalsekretär",
+        "Treasurer": "EISS-Schatzmeisterin",
+        "Founding Director": "EISS-Gründungsdirektor",
+      },
     },
 
     programme: {
