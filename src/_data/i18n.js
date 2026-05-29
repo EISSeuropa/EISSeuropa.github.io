@@ -146,19 +146,35 @@ const locales = {
       noEventsBody: "When EISS, NetSec, or partner institutions publish events through indico.eiss-europa.com, they'll appear here automatically.",
     },
 
+    netsec: {
+      // Labels for the "EISS people leading NetSec" strip on /initiative.
+      // The role titles themselves live in src/_data/netsec.js (English,
+      // shared across locales). These keys localise the framing + the
+      // dual-affiliation tag under each person.
+      leadEyebrow: "EISS people leading NetSec",
+      leadIntro: "The two organisations share more than a founding link. Almost everyone steering NetSec also sits on the EISS board, holding a role in each.",
+      dualBoard: "EISS board",
+      dualSupport: "EISS support team",
+      officerRoles: {
+        "Secretary-General": "EISS Secretary-General",
+        "Treasurer": "EISS Treasurer",
+        "Founding Director": "EISS Founding Director",
+      },
+    },
+
     programme: {
       // Live programme grid on /YYYY pages. Pulled from Indico's
       // timetable every day and rendered alongside the polished PDF
       // (see docs/indico-programme-integration.md for the rationale).
       eyebrow: "Live from Indico",
       heading: "Programme",
-      lead: "Pulled directly from Indico. Updates daily, so changes in the run-up to the conference appear here within ~24 hours of being made.",
+      lead: "This programme is synchronised on a daily basis from Indico. Changes may appear with a slight delay.",
       daysNav: "Jump to a day",
       chairedBy: "Chair",
       discussants: "Discussants",
       showContributions: "View papers",
       readFullAbstract: "Read full abstract",
-      sourceNote: "Source of truth for the programme is Indico — this grid is a daily snapshot.",
+      sourceNote: "Indico holds the authoritative programme. This grid is a daily snapshot.",
       viewOnIndico: "View the event on Indico",
       // Static PDF block — surfaces the polished designer-made
       // programme when the operator has uploaded one (see
@@ -352,16 +368,28 @@ const locales = {
       noEventsBody: "Lorsque EISS, NetSec ou nos institutions partenaires publient des événements via indico.eiss-europa.com, ils apparaîtront ici automatiquement.",
     },
 
+    netsec: {
+      leadEyebrow: "Des membres d'EISS à la direction de NetSec",
+      leadIntro: "Les deux organisations partagent bien plus qu'un lien fondateur. Presque toutes les personnes qui pilotent NetSec siègent aussi au bureau d'EISS, avec une fonction dans chacune.",
+      dualBoard: "Bureau d'EISS",
+      dualSupport: "Équipe de soutien d'EISS",
+      officerRoles: {
+        "Secretary-General": "Secrétaire général d'EISS",
+        "Treasurer": "Trésorière d'EISS",
+        "Founding Director": "Directeur fondateur d'EISS",
+      },
+    },
+
     programme: {
       eyebrow: "En direct depuis Indico",
       heading: "Programme",
-      lead: "Tiré directement d'Indico. Mis à jour quotidiennement — les modifications à l'approche de la conférence apparaissent ici dans les 24 heures.",
+      lead: "Ce programme est synchronisé quotidiennement depuis Indico. Les modifications peuvent apparaître avec un léger délai.",
       daysNav: "Aller à une journée",
       chairedBy: "Présidence",
       discussants: "Intervenants",
       showContributions: "Voir les communications",
       readFullAbstract: "Lire le résumé complet",
-      sourceNote: "Indico fait foi pour le programme — cette grille est un instantané quotidien.",
+      sourceNote: "Indico fait foi pour le programme. Cette grille en est un instantané quotidien.",
       viewOnIndico: "Voir l'événement sur Indico",
       pdfHeading: "Programme final — PDF imprimable",
       pdfHeadingDraft: "Programme provisoire — PDF imprimable (susceptible de changer)",
@@ -527,16 +555,28 @@ const locales = {
       noEventsBody: "Wenn EISS, NetSec oder Partnerinstitutionen Veranstaltungen über indico.eiss-europa.com veröffentlichen, erscheinen sie hier automatisch.",
     },
 
+    netsec: {
+      leadEyebrow: "EISS-Mitglieder in der NetSec-Leitung",
+      leadIntro: "Die beiden Organisationen verbindet mehr als die gemeinsame Gründung. Fast alle, die NetSec leiten, sitzen auch im EISS-Vorstand und üben in beiden eine Funktion aus.",
+      dualBoard: "EISS-Vorstand",
+      dualSupport: "EISS-Unterstützungsteam",
+      officerRoles: {
+        "Secretary-General": "EISS-Generalsekretär",
+        "Treasurer": "EISS-Schatzmeisterin",
+        "Founding Director": "EISS-Gründungsdirektor",
+      },
+    },
+
     programme: {
       eyebrow: "Live von Indico",
       heading: "Programm",
-      lead: "Direkt aus Indico bezogen. Tägliche Aktualisierung — Änderungen im Vorfeld der Konferenz erscheinen hier innerhalb von ~24 Stunden.",
+      lead: "Dieses Programm wird täglich aus Indico synchronisiert. Änderungen können mit leichter Verzögerung erscheinen.",
       daysNav: "Zu einem Tag springen",
       chairedBy: "Vorsitz",
       discussants: "Diskutant:innen",
       showContributions: "Beiträge anzeigen",
       readFullAbstract: "Vollständiges Abstract lesen",
-      sourceNote: "Indico ist die maßgebliche Quelle für das Programm — dieses Raster ist ein tägliches Abbild.",
+      sourceNote: "Indico ist die maßgebliche Quelle für das Programm. Dieses Raster ist ein tägliches Abbild.",
       viewOnIndico: "Veranstaltung auf Indico ansehen",
       pdfHeading: "Endgültiges Programm — druckbares PDF",
       pdfHeadingDraft: "Arbeitsversion des Programms — druckbares PDF (Änderungen vorbehalten)",
