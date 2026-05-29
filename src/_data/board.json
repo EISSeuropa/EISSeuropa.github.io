@@ -225,6 +225,38 @@
       "country": "United Kingdom",
       "position": "Professor of International History and Security",
       "institution": "Lancaster University"
+    },
+    {
+      "name": "Flavia Gasbarri",
+      "role": "Board Member",
+      "alt": "Flavia Gasbarri",
+      "country": "United Kingdom",
+      "institution": "King's College London",
+      "formerMember": true
+    },
+    {
+      "name": "Mauro Gilli",
+      "role": "Board Member",
+      "alt": "Mauro Gilli",
+      "country": "Switzerland",
+      "institution": "ETH Zurich",
+      "formerMember": true
+    },
+    {
+      "name": "Stephanie Hofmann",
+      "role": "Board Member",
+      "alt": "Stephanie Hofmann",
+      "country": "Italy",
+      "institution": "European University Institute",
+      "formerMember": true
+    },
+    {
+      "name": "Avinash Paliwal",
+      "role": "Board Member",
+      "alt": "Avinash Paliwal",
+      "country": "United Kingdom",
+      "institution": "SOAS University of London",
+      "formerMember": true
     }
   ],
   "support": [
