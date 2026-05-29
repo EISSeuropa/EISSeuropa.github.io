@@ -433,22 +433,7 @@ alternates:
         arbeiten — keine Mitgliedschaft erforderlich.
       </p>
 
-      {%- if boardSorted.leadership.length %}
-      <div style="margin-top: var(--space-5);">
-        <p class="eyebrow" style="margin-bottom: var(--space-3);">EISS-Leitung</p>
-        <ul class="leadership-strip" aria-label="EISS-Leitung">
-          {%- for person in boardSorted.leadership %}
-          <li>
-            <a href="/board.de.html{% if person.slug %}#{{ person.slug }}{% endif %}">
-              <img src="{{ person.photoOverride or person.photo }}" alt="{{ person.alt or person.name }}" loading="lazy">
-              <span class="leadership-strip-role">{{ person.role }}</span>
-              <span class="leadership-strip-name">{{ person.name }}</span>
-            </a>
-          </li>
-          {%- endfor %}
-        </ul>
-      </div>
-      {%- endif %}
+      {% include "netsec-leaders.njk" %}
 
       <div class="btn-row" style="margin-top: var(--space-5);">
         <a class="btn btn-primary btn-sm" href="https://netsec-cost.eu/" target="_blank" rel="noopener">
