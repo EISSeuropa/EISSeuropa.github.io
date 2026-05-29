@@ -118,7 +118,7 @@ const locales = {
     },
 
     betaRibbon: {
-      text: "Beta translation — the English version is authoritative.",
+      text: "Beta translation. The English version is authoritative.",
       goToEnglish: "View in English",
       // English never shows the ribbon, but the strings still need to
       // exist for symmetry with fr/de.
@@ -128,7 +128,7 @@ const locales = {
       // Shown when the user lands on /something.fr.html for a page that
       // doesn't actually have a French translation yet — they get
       // redirected to the language homepage instead, with this banner.
-      text: "This page is not yet available in {{language}}. You're seeing the {{language}} home page; the original page is available in English.",
+      text: "This page is not yet available in {{language}}. You're seeing the {{language}} home page. The original page is available in English.",
       backToOriginal: "View the original page in English",
     },
 
@@ -139,7 +139,7 @@ const locales = {
       // whole section is hidden when the list is empty.
       sectionEyebrow: "Upcoming events",
       sectionHeading: "Events on Indico",
-      sectionLead: "Network roundtables, summer schools, and policy workshops. Free and open to all — registration and full details on Indico.",
+      sectionLead: "Network roundtables, summer schools, and policy workshops. Free and open to all. Registration and full details on Indico.",
       viewAll: "View all events on Indico",
       lastSynced: "Last refreshed",
       noEventsTitle: "No upcoming events on Indico yet",
@@ -180,10 +180,10 @@ const locales = {
       // programme when the operator has uploaded one (see
       // conferences.js `programmePdf` field). The grid above is
       // always live; this block is the archival / printable artefact.
-      pdfHeading: "Final programme — printable PDF",
-      pdfHeadingDraft: "Working programme — printable PDF (subject to change)",
+      pdfHeading: "Final programme (printable PDF)",
+      pdfHeadingDraft: "Working programme (printable PDF, subject to change)",
       pdfDescription: "A polished, print-friendly version of the programme.",
-      pdfDescriptionDraft: "A working version of the programme — the live grid above reflects the latest changes.",
+      pdfDescriptionDraft: "A working version of the programme. The live grid above reflects the latest changes.",
       pdfOpen: "Open in new tab",
       pdfDownload: "Download",
     },
@@ -197,7 +197,7 @@ const locales = {
       // has no livestreamed sessions.
       sectionEyebrow: "Live from Indico",
       sectionHeading: "Livestreamed sessions",
-      sectionLead: "The plenary spine of the conference — introduction, roundtables, keynote and closing — streamed online. Join-online links appear here as soon as they're published in Indico.",
+      sectionLead: "The plenary spine of the conference (introduction, roundtables, keynote, and closing), streamed online. Join-online links appear here as soon as they're published in Indico.",
       onlineRoomTba: "Online room TBA",
       joinOnline: "Join online",
       viewSession: "View on Indico",
