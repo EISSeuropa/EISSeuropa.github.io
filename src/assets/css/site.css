@@ -2936,6 +2936,25 @@ h4 { font-size: var(--fs-lg); }
   line-height: var(--lh-relaxed);
 }
 
+/* Author list on a contribution. Co-authors stay in the muted body
+   colour; the presenter(s) are picked out in the text colour with a
+   small microphone, so a reader can tell who actually speaks. */
+.programme-author--speaker {
+  color: var(--text);
+  font-weight: 600;
+}
+.programme-author-mic {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: -0.12em;
+  margin-right: 0.15em;
+  color: var(--accent);
+}
+.programme-author-mic svg {
+  width: 0.85em;
+  height: 0.85em;
+}
+
 .programme-contrib-abstract {
   color: var(--text-muted);
 }

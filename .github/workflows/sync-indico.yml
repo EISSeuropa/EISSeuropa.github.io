@@ -1,39 +1,42 @@
 # Daily sync of src/_data/indico.json from the EISS Indico instance.
 #
-# Why direct commit, not auto-PR
-# ------------------------------
-# Unlike scripts/sync-board.py (which produces board member edits that
-# warrant maintainer review), this sync is fully read-only against
-# public Indico data. The information is already visible on
-# indico.eiss-europa.com; surfacing the same titles + dates on the
-# static site doesn't introduce new privacy or accuracy risk.
+# Two outcomes per run
+# --------------------
+# The script always rewrites indico.json (the `syncedAt` timestamp moves
+# every run) and tells the workflow whether the change is *substantive*
+# (a real programme difference) or merely the timestamp.
 #
-# So this workflow commits directly to master when indico.json
-# changes. The deploy workflow then picks up the new data on its
-# next build (or on the next daily scheduled-rebuild).
+#   - Substantive change  → open a reviewable PR on `indico-sync/auto`
+#     whose body lists exactly what differs: sessions, papers, speakers,
+#     co-authors, times, rooms, and abstracts added / removed / changed.
+#     The maintainer sees precisely what a sync will alter before it goes
+#     live, and merges with one click.
+#   - Timestamp only      → direct-commit the refreshed `syncedAt` to
+#     master so the "Last refreshed" line on the site stays current,
+#     without opening a noisy empty PR.
+#
+# (Earlier this workflow always direct-committed. The PR path was added
+# so programme changes in the run-up to a conference are visible and
+# reviewable rather than landing silently.)
 #
 # Failure handling
 # ----------------
 # If Indico is unreachable, sync-indico.py exits 1 and the workflow
-# fails. The existing indico.json snapshot in the repo is not
-# touched — the site keeps working with the last good data. The
-# only signal is a red badge on the Actions tab.
+# fails. The existing indico.json snapshot in the repo is not touched,
+# so the site keeps working with the last good data. The only signal is
+# a red badge on the Actions tab.
 
 name: Sync events from Indico
 
 on:
   schedule:
-    # 03:45 UTC daily — 30 minutes BEFORE scheduled-rebuild (04:15 UTC).
-    # That way the rebuild picks up any fresh Indico data the same morning
-    # rather than waiting another full day. If sync-indico commits a
-    # change, it also triggers deploy.yml directly via the push → so
-    # the rebuild at 04:15 is often a no-op but stays useful for the
-    # conferences.js cut-off advance even on quiet weeks.
+    # 03:45 UTC daily, 30 minutes BEFORE scheduled-rebuild (04:15 UTC).
     - cron: "45 3 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: indico-sync
@@ -56,26 +59,45 @@ jobs:
         run: pip install -r scripts/requirements.txt
 
       - name: Run sync script
+        id: sync
         env:
-          # Optional Indico API token (read-only, on a dedicated
-          # service account). Unlocks endpoints that aren't anonymously
-          # accessible — registration form state, auth-gated video
-          # links, etc. If the secret is absent, the script falls back
-          # to anonymous mode and the sync still works for public
-          # endpoints. To set: repo Settings → Secrets and variables →
-          # Actions → New secret named `INDICO_API_TOKEN`.
+          # Optional Indico API token (read-only, on a dedicated service
+          # account). Unlocks endpoints that aren't anonymously accessible,
+          # including the co-author lists behind each contribution. Without
+          # it the sync still works for public endpoints. To set: repo
+          # Settings → Secrets and variables → Actions → new secret named
+          # `INDICO_API_TOKEN`.
           INDICO_API_TOKEN: ${{ secrets.INDICO_API_TOKEN }}
+          # The script writes the "what changed" Markdown body here for the
+          # PR step to consume.
+          SYNC_INDICO_BODY_FILE: /tmp/indico-pr-body.md
         run: python3 scripts/sync-indico.py
 
-      - name: Commit + push if changed
+      - name: Direct-commit timestamp-only refresh
+        if: steps.sync.outputs.substantive != 'true'
         run: |
           if [[ -n "$(git status --porcelain src/_data/indico.json)" ]]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add src/_data/indico.json
-            git commit -m "data: sync events from Indico ($(date -u +%Y-%m-%d))"
+            git commit -m "data: sync events from Indico ($(date -u +%Y-%m-%d)) [timestamp refresh]"
             git push
-            echo "Pushed indico.json update to master."
+            echo "Pushed timestamp-only indico.json refresh to master."
           else
             echo "No change — indico.json already up to date."
           fi
+
+      - name: Open detailed PR for substantive changes
+        if: steps.sync.outputs.substantive == 'true'
+        uses: peter-evans/create-pull-request@v8
+        with:
+          branch: indico-sync/auto
+          base: master
+          delete-branch: true
+          add-paths: src/_data/indico.json
+          commit-message: "${{ steps.sync.outputs.title || 'data: sync events from Indico' }}"
+          title: "${{ steps.sync.outputs.title || 'data: sync events from Indico' }}"
+          body-path: /tmp/indico-pr-body.md
+          labels: |
+            automated
+            data-sync
