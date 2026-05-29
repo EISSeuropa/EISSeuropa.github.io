@@ -407,13 +407,63 @@ def _absolutize_indico_url(url: str) -> str:
     return f"{INDICO_BASE}{url}" if url.startswith("/") else f"{INDICO_BASE}/{url}"
 
 
+def _person_key(p: dict) -> str:
+    """Identity for de-duplicating a person across Indico's overlapping
+    author lists (the same individual often appears in both
+    `primaryauthors` and `speakers`). Name, lowercased + trimmed."""
+    return (p.get("name") or p.get("fullName") or "").strip().lower()
+
+
 def _normalise_contribution(c: dict) -> dict:
     """Turn an Indico contribution (a single paper / talk) into a
-    compact dict for the grid. Authors include both `presenters` (who
-    actually talks) and `primaryauthors` if no presenters are listed."""
+    compact dict for the grid.
+
+    Indico distinguishes who *presents* (`speakers` / `presenters`) from
+    the fuller author list (`primaryauthors` + `coauthors`). The printed
+    programme lists every author, marking the one who speaks; the website
+    used to show only the speakers, which is why co-authors were missing.
+
+    We now emit:
+      - `authors`: the full author list in academic order (primary authors,
+        then co-authors), each carrying `isSpeaker` so the grid can mark
+        presenters with a microphone. Falls back to the presenter list when
+        Indico carries no separate author lists.
+      - `speakers`: the presenters only. Kept for backward compatibility
+        (boardSorted.js matches ESSC-active board members against it) and
+        as a display fallback.
+    """
     start = c.get("startDate") or {}
     end = c.get("endDate") or {}
-    speakers_src = c.get("presenters") or c.get("speakers") or c.get("primaryauthors") or []
+    presenters = c.get("presenters") or c.get("speakers") or []
+    primary = c.get("primaryauthors") or []
+    coauthors = c.get("coauthors") or []
+
+    # Full author list, academic order. Fall back to presenters (and then
+    # primaryauthors) so single-author talks with no explicit author list
+    # still show someone.
+    ordered = (primary + coauthors) or presenters or c.get("primaryauthors") or []
+    presenter_keys = {_person_key(p) for p in presenters if _person_key(p)}
+    authors: list[dict] = []
+    seen: set[str] = set()
+    for p in ordered:
+        k = _person_key(p)
+        if not k or k in seen:
+            continue
+        seen.add(k)
+        np = _normalise_person(p)
+        np["isSpeaker"] = k in presenter_keys
+        authors.append(np)
+    # A presenter who somehow isn't in the author list (rare) still belongs
+    # on the card, marked as a speaker.
+    for p in presenters:
+        k = _person_key(p)
+        if k and k not in seen:
+            seen.add(k)
+            np = _normalise_person(p)
+            np["isSpeaker"] = True
+            authors.append(np)
+
+    speakers_src = presenters or c.get("primaryauthors") or []
     abstract = _strip_html(c.get("description") or "")
     teaser = abstract[:ABSTRACT_TEASER_CHARS]
     if len(abstract) > ABSTRACT_TEASER_CHARS:
@@ -426,6 +476,7 @@ def _normalise_contribution(c: dict) -> dict:
         "startTime": (start.get("time") or "")[:5],
         "endTime": (end.get("time") or "")[:5],
         "speakers": [_normalise_person(p) for p in speakers_src],
+        "authors": authors,
         "abstract": teaser,
         "hasFullAbstract": len(abstract) > len(teaser),
         "url": _absolutize_indico_url(c.get("url") or ""),
@@ -696,6 +747,146 @@ def fetch_events() -> list[dict]:
     return payload.get("results", []) or []
 
 
+def emit_github_output(key: str, value: str) -> None:
+    """Write `key=value` to $GITHUB_OUTPUT so the workflow can branch on
+    it (substantive change → open a PR, timestamp-only → direct commit).
+    No-op outside CI. Multi-line values are not used here."""
+    path = os.environ.get("GITHUB_OUTPUT")
+    if not path:
+        return
+    with open(path, "a", encoding="utf-8") as f:
+        f.write(f"{key}={value}\n")
+
+
+def _slot_label(s: dict) -> str:
+    return s.get("slotTitle") or s.get("title") or "(untitled session)"
+
+
+def _index_slots(conf: dict) -> dict:
+    """Flatten a conference's programme to a dict of session-slots keyed
+    by Indico id (falling back to title), across all days."""
+    out: dict = {}
+    for day in ((conf.get("programme") or {}).get("days") or []):
+        for row in day.get("rows", []):
+            for it in row.get("items", []):
+                out[it.get("id") or _slot_label(it)] = it
+    return out
+
+
+def _names(lst) -> list:
+    return [p.get("name", "") for p in (lst or [])]
+
+
+def _speaker_names(authors) -> list:
+    return [a.get("name", "") for a in (authors or []) if a.get("isSpeaker")]
+
+
+def summarise_changes(old: dict, new: dict) -> tuple[bool, str, str]:
+    """Compare the previous indico.json against the freshly-built data and
+    produce a human-readable Markdown summary of what actually changed,
+    ignoring the always-moving `syncedAt` timestamp. Returns
+    (substantive, pr_title, markdown_body). `substantive` is False when the
+    only difference is the timestamp, so the workflow can skip the PR.
+
+    The summary is intentionally specific: which sessions, papers, speakers,
+    co-authors, times, rooms, and abstracts changed, so the maintainer can
+    see precisely what a sync is about to alter before it goes live."""
+    sections: list[str] = []
+    counter = 0
+
+    # Upcoming members' events.
+    def ev_index(d):
+        return {e.get("id") or e.get("title"): e for e in d.get("upcoming", [])}
+    oe, ne = ev_index(old), ev_index(new)
+    ev: list[str] = []
+    for k in ne.keys() - oe.keys():
+        e = ne[k]
+        ev.append(f"- **Added** {e.get('title')} ({e.get('startDateOnly') or (e.get('start') or '')[:10]})")
+    for k in oe.keys() - ne.keys():
+        ev.append(f"- **Removed** {oe[k].get('title')}")
+    for k in oe.keys() & ne.keys():
+        changed = [f for f in ("title", "start", "end", "url") if oe[k].get(f) != ne[k].get(f)]
+        if changed:
+            ev.append(f"- **Changed** {ne[k].get('title')}: {', '.join(changed)}")
+    if ev:
+        counter += len(ev)
+        sections.append("### Upcoming events\n" + "\n".join(ev))
+
+    # Annual conferences (the ESSC programme grids).
+    oac, nac = old.get("annualConferences", {}), new.get("annualConferences", {})
+    for year in sorted(nac.keys()):
+        o, n = oac.get(year, {}), nac[year]
+        sec: list[str] = []
+        for f, label in (("registrationStatus", "registration status"),
+                         ("startDateOnly", "start date"),
+                         ("endDateOnly", "end date"),
+                         ("location", "venue")):
+            if o.get(f) != n.get(f):
+                sec.append(f"- {label}: `{o.get(f)}` → `{n.get(f)}`")
+
+        old_ls = {k.get("title"): k for k in o.get("livestreamed", [])}
+        for k in n.get("livestreamed", []):
+            ok = old_ls.get(k.get("title"))
+            if ok is not None and (ok.get("videoUrl") or "") != (k.get("videoUrl") or ""):
+                sec.append(f"- join-online link for *{k.get('title')}* {'added' if k.get('videoUrl') else 'removed'}")
+
+        os_, ns_ = _index_slots(o), _index_slots(n)
+        for sid in ns_.keys() - os_.keys():
+            s = ns_[sid]
+            sec.append(f"- **+ session** {_slot_label(s)} ({s.get('startTime', '')}–{s.get('endTime', '')}, {s.get('room', '')})")
+        for sid in os_.keys() - ns_.keys():
+            sec.append(f"- **− session** {_slot_label(os_[sid])}")
+        for sid in os_.keys() & ns_.keys():
+            a, b = os_[sid], ns_[sid]
+            chg: list[str] = []
+            if (a.get("startTime"), a.get("endTime")) != (b.get("startTime"), b.get("endTime")):
+                chg.append(f"time {a.get('startTime')}–{a.get('endTime')} → {b.get('startTime')}–{b.get('endTime')}")
+            if a.get("room") != b.get("room"):
+                chg.append(f"room `{a.get('room')}` → `{b.get('room')}`")
+            if _names(a.get("conveners")) != _names(b.get("conveners")):
+                chg.append("chair(s) changed")
+            if _names(a.get("discussants")) != _names(b.get("discussants")):
+                chg.append("discussant(s) changed")
+            oc = {(c.get("url") or c.get("title")): c for c in a.get("contributions", [])}
+            ncs = {(c.get("url") or c.get("title")): c for c in b.get("contributions", [])}
+            for ck in ncs.keys() - oc.keys():
+                chg.append(f"+ paper “{(ncs[ck].get('title') or '')[:60]}”")
+            for ck in oc.keys() - ncs.keys():
+                chg.append(f"− paper “{(oc[ck].get('title') or '')[:60]}”")
+            for ck in oc.keys() & ncs.keys():
+                co, cn = oc[ck], ncs[ck]
+                cc: list[str] = []
+                if _names(co.get("authors")) != _names(cn.get("authors")):
+                    cc.append("authors")
+                if _speaker_names(co.get("authors")) != _speaker_names(cn.get("authors")):
+                    cc.append("presenter(s)")
+                if (co.get("startTime"), co.get("endTime")) != (cn.get("startTime"), cn.get("endTime")):
+                    cc.append("time")
+                if co.get("abstract") != cn.get("abstract"):
+                    cc.append("abstract")
+                if cc:
+                    chg.append(f"“{(cn.get('title') or '')[:50]}”: {', '.join(cc)}")
+            if chg:
+                sec.append(f"- **{_slot_label(b)}** — " + " · ".join(chg))
+        if sec:
+            counter += len(sec)
+            sections.append(f"### ESSC {year}\n" + "\n".join(sec))
+
+    substantive = bool(sections)
+    if substantive:
+        body = (
+            "Automated sync of `src/_data/indico.json` from "
+            f"{INDICO_BASE}. The changes below are everything that differs "
+            "from the committed snapshot (the `syncedAt` timestamp aside).\n\n"
+            + "\n\n".join(sections)
+        )
+        title = f"data: sync events from Indico ({counter} change{'' if counter == 1 else 's'})"
+    else:
+        body = "No substantive changes. Timestamp refresh only."
+        title = "data: sync events from Indico (timestamp refresh)"
+    return substantive, title, body
+
+
 def main() -> None:
     # Log whether we're authenticated — without ever printing the token.
     # Useful to confirm in CI that the secret is wired correctly.
@@ -782,11 +973,22 @@ def main() -> None:
 
     serialised = json.dumps(output, indent=2, ensure_ascii=False) + "\n"
 
-    # Only write if changed — avoids touching mtime on quiet days and
-    # avoids the workflow opening a "no changes" commit.
-    if OUT.exists() and OUT.read_text(encoding="utf-8") == serialised:
-        print("No change — indico.json already up to date.", file=sys.stderr)
-        return
+    # Only write if the bytes changed at all. The `syncedAt` timestamp moves
+    # every run, so this almost always proceeds; the substantive-vs-timestamp
+    # distinction below decides whether the change warrants a reviewable PR.
+    old_data: dict = {}
+    if OUT.exists():
+        existing = OUT.read_text(encoding="utf-8")
+        if existing == serialised:
+            print("No change — indico.json already up to date.", file=sys.stderr)
+            emit_github_output("substantive", "false")
+            return
+        try:
+            old_data = json.loads(existing)
+        except json.JSONDecodeError:
+            old_data = {}
+
+    substantive, title, body = summarise_changes(old_data, output)
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(serialised, encoding="utf-8")
@@ -795,6 +997,21 @@ def main() -> None:
         f"{len(upcoming)} upcoming members' event(s); "
         f"{len(annual_by_year)} Annual Conference page(s) by year: "
         f"{sorted(annual_by_year.keys())}",
+        file=sys.stderr,
+    )
+
+    # Hand the workflow a substantive flag, a PR title, and a Markdown body
+    # describing exactly what changed. The workflow opens a detailed PR when
+    # `substantive` is true and direct-commits a quiet timestamp refresh
+    # otherwise (see .github/workflows/sync-indico.yml).
+    emit_github_output("substantive", "true" if substantive else "false")
+    emit_github_output("title", title)
+    body_file = os.environ.get("SYNC_INDICO_BODY_FILE")
+    if body_file:
+        with open(body_file, "w", encoding="utf-8") as f:
+            f.write(body + "\n")
+    print(
+        f"Change summary ({'substantive' if substantive else 'timestamp only'}):\n{body}",
         file=sys.stderr,
     )
 
