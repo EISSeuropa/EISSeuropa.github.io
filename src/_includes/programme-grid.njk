@@ -126,7 +126,15 @@
                         {{ c.title }}
                         {%- endif -%}
                       </p>
-                      {%- if c.speakers and c.speakers.length %}
+                      {%- if c.authors and c.authors.length %}
+                      <p class="programme-contrib-speakers muted">
+                        {%- for a in c.authors -%}
+                          <span class="programme-author{% if a.isSpeaker %} programme-author--speaker{% endif %}">
+                            {%- if a.isSpeaker %}<span class="programme-author-mic" title="{{ t.programme.presenter }}">{{ icon("mic") }}</span><span class="sr-only">{{ t.programme.presenter }}: </span>{% endif -%}
+                            {{ a.name }}{% if a.affiliation %} <em>({{ a.affiliation }})</em>{% endif %}</span>{% if not loop.last %} · {% endif %}
+                        {%- endfor -%}
+                      </p>
+                      {%- elif c.speakers and c.speakers.length %}
                       <p class="programme-contrib-speakers muted">
                         {%- for sp in c.speakers -%}
                           {{ sp.name }}{% if sp.affiliation %} <em>({{ sp.affiliation }})</em>{% endif %}{% if not loop.last %} · {% endif %}
