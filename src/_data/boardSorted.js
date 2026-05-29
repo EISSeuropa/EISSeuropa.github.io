@@ -115,7 +115,14 @@ const BIO_LONG_THRESHOLD = 180;
 // active team.
 const GRACE_PERIOD_DAYS = 7;
 function isExpired(person, todayMs) {
-  if (!person || !person.roleEndDate) return false;
+  if (!person) return false;
+  // Explicit former-member flag: a person who has left but whose exact
+  // departure date isn't recorded (e.g. former board members migrated
+  // from an older roster). They move to the community section without a
+  // "· YYYY" suffix, since boardSorted only derives `activeYear` from a
+  // real `roleEndDate`.
+  if (person.formerMember === true) return true;
+  if (!person.roleEndDate) return false;
   // Treat the end-date as end-of-day UTC so a same-day check returns
   // false (the person is still active on their last day).
   const endMs = Date.parse(person.roleEndDate + "T23:59:59Z");
