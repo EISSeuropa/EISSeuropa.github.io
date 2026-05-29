@@ -3488,27 +3488,29 @@ h4 { font-size: var(--fs-lg); }
 /* ---------- Archive programme list -------------------------------------
    Reconstructed session programmes on past-conference pages (e.g. /2021).
    A time column on the left, session bodies on the right. Parallel panels
-   sit side by side via .programme-parallel. Used where a structured recap
-   reads better than a screenshot of the original PDF. */
-.programme-archive {
+   sit side by side via .archive-programme-parallel. Namespaced under
+   `archive-programme-*` so it never collides with the live `.programme-*`
+   grid on /YYYY (which owns the bare `programme-` namespace — a `.programme-slot`
+   clash here previously broke the /2026 grid layout). */
+.archive-programme {
   display: grid;
   gap: var(--space-7);
 }
 
-.programme-day-label {
+.archive-programme-day-label {
   font-size: var(--fs-lg);
   margin: 0 0 var(--space-4);
   padding-bottom: var(--space-2);
   border-bottom: 2px solid var(--accent);
 }
 
-.programme-sessions {
+.archive-programme-sessions {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.programme-slot {
+.archive-programme-slot {
   display: grid;
   grid-template-columns: 4.5rem 1fr;
   gap: var(--space-4);
@@ -3517,39 +3519,39 @@ h4 { font-size: var(--fs-lg); }
   border-top: 1px solid var(--border);
 }
 
-.programme-time {
+.archive-programme-time {
   font-variant-numeric: tabular-nums;
   font-weight: 600;
   color: var(--accent);
   font-size: var(--fs-sm);
 }
 
-.programme-parallel {
+.archive-programme-parallel {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
   gap: var(--space-4);
 }
 
-.programme-session-title {
+.archive-programme-session-title {
   margin: 0;
   font-weight: 600;
   line-height: 1.35;
 }
 
-.programme-session-meta {
+.archive-programme-session-meta {
   margin: var(--space-1) 0 0;
   font-size: var(--fs-sm);
   color: var(--text-subtle);
   line-height: 1.4;
 }
 
-.programme-break .programme-session-title {
+.archive-programme-break .archive-programme-session-title {
   font-weight: 500;
   color: var(--text-subtle);
 }
 
 @media (max-width: 36rem) {
-  .programme-slot {
+  .archive-programme-slot {
     grid-template-columns: 1fr;
     gap: var(--space-1);
   }
