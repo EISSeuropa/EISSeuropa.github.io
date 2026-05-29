@@ -14,7 +14,7 @@ This drives the "Next conference" card on the homepage and the archive
 list on `/past`. The featured-card UI on the homepage swaps automatically
 once `startDate` is in the future relative to today.
 
-Prepend a new object to the `conferences` array — newest first:
+Prepend a new object to the `conferences` array, newest first:
 
 ```js
 {
@@ -54,7 +54,7 @@ Prepend a new object to the `conferences` array — newest first:
 ```
 
 After this lands, the homepage featured card and `/past` archive list
-update on the next build — no template edits needed.
+update on the next build. No template edits needed.
 
 ## 2. Create the per-year page
 
@@ -64,7 +64,7 @@ Copy `src/2026.njk` to `src/2027.njk` (and its FR/DE siblings) and:
 - Replace the neighbourhoods tile grid with the new city's neighbourhoods
   (or the equivalent travel guidance)
 - Update the programme PDF reference (or leave the path empty until
-  the programme is finalised — the `<object>` embed degrades gracefully)
+  the programme is finalised, the `<object>` embed degrades gracefully)
 - Update the front-matter `metaImage` reference to a new share card
   (see step 3)
 

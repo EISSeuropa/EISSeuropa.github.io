@@ -4,12 +4,12 @@ This guide walks through creating a **read-only** Indico API credential
 that the GitHub Actions sync workflow uses to enrich
 `src/_data/indico.json`. **One-time setup, ~10 minutes.**
 
-The website works without this — the sync falls back to anonymous mode
+The website works without this. The sync falls back to anonymous mode
 and still surfaces public timetable + event data. What the token
 unlocks is anything anonymous access can't see, which over time will
 likely include:
 
-- Registration form state (open/closed) — so we can drop the manual
+- Registration form state (open/closed), so we can drop the manual
   `registrationStatus` override in `src/_data/conferences.js`
 - Auth-gated video-conference URLs (some Indico Zoom integrations
   require auth)
@@ -20,12 +20,12 @@ likely include:
 Don't tie the credential to your personal Indico account:
 
 - API calls are logged under whoever owns the token. With a personal
-  account, every sync run looks like *you* doing it — and revoking it
+  account, every sync run looks like *you* doing it, and revoking it
   if something goes wrong locks you out of your own admin.
 - A dedicated bot user can be granted just the categories the website
   reads from, not the operator's full admin reach.
 - If the EISS repo's CI is ever compromised (malicious PR,
-  dependency takeover), you revoke the bot token — your personal
+  dependency takeover), you revoke the bot token. Your personal
   account is untouched.
 
 ## Step 1 — Create the service-account user
@@ -43,9 +43,9 @@ Confirm the account by following the email link.
 
 Decide which categories the bot should read. For the current site that's:
 
-- **Annual Conferences** (categoryId 1) — drives `/2026` and the
+- **Annual Conferences** (categoryId 1), drives `/2026` and the
   registration status badge
-- **Root category** (categoryId 0) — implicit; the bot can read public
+- **Root category** (categoryId 0), implicit. The bot can read public
   category listings without explicit grants
 
 In Indico:
@@ -61,11 +61,11 @@ Repeat for any other category the website needs to read in future.
 Log in as the bot user. Then:
 
 1. **User preferences** → **API Tokens** → **Add new token**.
-2. Name: `eiss-site-sync` (or similar — appears in the Indico audit log,
+2. Name: `eiss-site-sync` (or similar, it appears in the Indico audit log,
    so make it self-explanatory).
 3. Scopes: pick the *read* scopes you need. At minimum:
-   - `read:legacy_api` — covers the `/export/*` endpoints the sync uses.
-   - `read:user` — sometimes required for type-field on session detail.
+   - `read:legacy_api`, covers the `/export/*` endpoints the sync uses.
+   - `read:user`, sometimes required for type-field on session detail.
 4. **Do not** grant write scopes (`registrants`, `everything`, etc.) for
    this token. Writes deserve a separate, deliberately-issued token.
 5. Save. Indico shows the token **once**. Copy it now.
@@ -76,7 +76,7 @@ In `github.com/EISSeuropa/EISSeuropa.github.io`:
 
 1. **Settings** → **Secrets and variables** → **Actions** → **New
    repository secret**.
-2. Name: `INDICO_API_TOKEN` (exact spelling — that's what the workflow
+2. Name: `INDICO_API_TOKEN` (exact spelling, that's what the workflow
    reads).
 3. Value: paste the token.
 4. **Add secret**.
@@ -100,12 +100,12 @@ Trigger the sync workflow manually to confirm the credential works:
 
 ## Rotation + audit
 
-- **Calendar a rotation** every 12 months — and any time something
+- **Calendar a rotation** every 12 months, and any time something
   concerning happens (suspicious commit, contributor offboarding,
   security advisory affecting Indico).
 - To rotate: issue a new token under a new name (e.g.
   `eiss-site-sync-2027`), update the GitHub secret, then **delete the
-  old token in Indico** — not just remove it from the secret.
+  old token in Indico**, not just remove it from the secret.
 - **Check Indico's API access log periodically.** If you see calls you
   don't recognise, revoke the token immediately and tell Claude.
 
@@ -128,7 +128,7 @@ trigger the **Probe Indico API (manual)** workflow:
 2. Read the log. The summary table shows status codes + content-type
    for each candidate endpoint. **Bodies are never printed**, so even
    if registration data is exposed, it doesn't leak into Actions logs.
-3. If anything returned 2xx, share the table with Claude — they'll
+3. If anything returned 2xx, share the table with Claude, who will
    wire the winning endpoint into the next sync release.
 
 The probe is read-only (GET only), doesn't commit, and uses the same
@@ -139,7 +139,7 @@ token as the daily sync.
 - The token is `${{ secrets.INDICO_API_TOKEN }}` in the workflow and
   `os.environ.get("INDICO_API_TOKEN")` in `scripts/sync-indico.py`.
 - The `_get` helper in `scripts/sync-indico.py` adds the
-  `Authorization: Bearer …` header when the token is set; the rest of
+  `Authorization: Bearer …` header when the token is set. The rest of
   the script is agnostic.
 - **Never** print, log, or echo the token value — even in error paths.
   The script logs only the mode banner (`authenticated` / `anonymous`).
