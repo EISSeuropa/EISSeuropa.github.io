@@ -3485,6 +3485,55 @@ h4 { font-size: var(--fs-lg); }
   line-height: 1.3;
 }
 
+/* Open-panel examples: three small cards under the permanent-sections
+   pills, illustrating the participant-proposed panels that vary year to
+   year. Each card carries an accent year label above the verbatim
+   conference panel title. */
+.open-panels-intro {
+  margin-top: var(--space-5);
+}
+
+.open-panels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin: var(--space-3) 0 0;
+}
+
+@media (max-width: 48rem) {
+  .open-panels {
+    grid-template-columns: 1fr;
+  }
+}
+
+.open-panels > .open-panel {
+  margin: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.open-panel-year {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.open-panel-title {
+  font-size: var(--fs-sm);
+  line-height: 1.35;
+  color: var(--text);
+}
+
 .origin-layout {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr);

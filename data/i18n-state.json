@@ -18,14 +18,14 @@
     "src/initiative.njk": {
       "fr": {
         "file": "src/initiative.fr.njk",
-        "source_sha1": "ac7843b2d3cfac1b74f6ea5eae178b5b813f275c",
-        "translated_on": "2026-05-26",
+        "source_sha1": "6ce30432f99e94e8839e1c9ec2063f0b2101f812",
+        "translated_on": "2026-05-29",
         "status": "beta"
       },
       "de": {
         "file": "src/initiative.de.njk",
-        "source_sha1": "ac7843b2d3cfac1b74f6ea5eae178b5b813f275c",
-        "translated_on": "2026-05-26",
+        "source_sha1": "6ce30432f99e94e8839e1c9ec2063f0b2101f812",
+        "translated_on": "2026-05-29",
         "status": "beta"
       }
     },
@@ -46,14 +46,14 @@
     "src/board.njk": {
       "fr": {
         "file": "src/board.fr.njk",
-        "source_sha1": "74a0099e1e25492b68f56dba0dffb33913e8c94a",
-        "translated_on": "2026-05-26",
+        "source_sha1": "0b6ca0fb04a61119062bc391d9623746ac8f54f7",
+        "translated_on": "2026-05-29",
         "status": "beta"
       },
       "de": {
         "file": "src/board.de.njk",
-        "source_sha1": "74a0099e1e25492b68f56dba0dffb33913e8c94a",
-        "translated_on": "2026-05-26",
+        "source_sha1": "0b6ca0fb04a61119062bc391d9623746ac8f54f7",
+        "translated_on": "2026-05-29",
         "status": "beta"
       }
     },
