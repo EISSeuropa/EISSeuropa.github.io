@@ -29,10 +29,10 @@ navKey: ""
       {% for panel in panels2022 %}
       <li style="counter-increment: panel;" class="card" data-panel-number="{{ loop.index }}">
         <div style="display: flex; gap: var(--space-4); align-items: baseline;">
-          <span aria-hidden="true" style="font-family: var(--font-display); font-size: var(--fs-2xl); font-weight: 800; color: var(--accent); letter-spacing: var(--tracking-display); min-width: 2.5rem;">{{ loop.index | string | replace(r/^(\d)$/, "0$1") if false else loop.index }}</span>
+          <span aria-hidden="true" style="font-family: var(--font-display); font-size: var(--fs-2xl); font-weight: 800; color: var(--accent); letter-spacing: var(--tracking-display); min-width: 2.5rem;">{{ "0" ~ loop.index if loop.index < 10 else loop.index }}</span>
           <div style="flex: 1;">
             <h2 style="font-size: clamp(1.25rem, 1rem + 0.8vw, var(--fs-xl)); margin-bottom: var(--space-2);">{{ panel.title }}</h2>
-            <p class="text-subtle" style="font-size: var(--fs-sm); margin-bottom: var(--space-4); font-style: italic;">{{ panel.chair }}</p>
+            <p class="text-subtle" style="font-size: var(--fs-sm); margin-bottom: var(--space-4); font-style: italic;">{{ panel.chair | replace(r/\s*\([^)]*\)/g, "") }}</p>
             <p class="muted" style="margin: 0;">{{ panel.description }}</p>
           </div>
         </div>
