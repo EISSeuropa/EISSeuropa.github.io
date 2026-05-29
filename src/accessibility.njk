@@ -37,7 +37,7 @@ alternates:
       </p>
       <p>
         As of <strong>22 May 2026</strong>, every URL on the site is served by the modernised
-        Eleventy templates — the last five Mobirise / AMP ticket-flow pages have been retired
+        Eleventy templates. The last five Mobirise / AMP ticket-flow pages have been retired
         and now redirect to the current conference. The site achieves <strong>partial
         compliance</strong>: most success criteria are met, with a small number of documented
         limitations (see <a href="#known-limitations">§3 Known limitations</a>).
@@ -54,7 +54,7 @@ alternates:
         <li><strong>0&nbsp;violations</strong></li>
         <li><strong>568&nbsp;passes</strong></li>
         <li>
-          <strong>22&nbsp;items needing manual review</strong> — predominantly
+          <strong>22&nbsp;items needing manual review</strong>, predominantly
           <code>color-contrast</code> on translucent “glass” surfaces, where axe cannot reliably
           compute the effective background through a <code>backdrop-filter</code>. We have
           verified these compliant in both light and dark themes.
@@ -79,7 +79,7 @@ alternates:
           presented inline via an <code>&lt;object&gt;</code> embed.
           <em>Mitigation:</em> each embed is paired with a visible <strong>Download</strong>
           button and an in-line fallback link inside the <code>&lt;object&gt;</code> for
-          browsers that cannot render PDF; the document content itself is only as accessible
+          browsers that cannot render PDF. The document content itself is only as accessible
           as the source PDF.
         </li>
         <li>
@@ -93,7 +93,7 @@ alternates:
         <li>
           <strong>Archive conference photos.</strong> Some images in the 2019–2024 archive
           pages carry generic alt text inherited from the original publication.
-          <em>Mitigation:</em> we tighten alt text on each archive page as we revisit it; meaningful
+          <em>Mitigation:</em> we tighten alt text on each archive page as we revisit it. Meaningful
           captions and surrounding context provide the same information for screen reader users.
         </li>
       </ol>
@@ -104,10 +104,10 @@ alternates:
         <li>Visible focus indicators via <code>:focus-visible</code> on every interactive control</li>
         <li>Light and dark colour schemes both meeting WCAG&nbsp;AA contrast ratios for body text, links, and UI</li>
         <li>Automatic dark mode via <code>prefers-color-scheme</code>, with a manual override that persists in <code>localStorage</code></li>
-        <li>All animations gated on <code>prefers-reduced-motion</code> — when the user opts out, transitions and reveal animations are disabled</li>
+        <li>All animations gated on <code>prefers-reduced-motion</code>: when the user opts out, transitions and reveal animations are disabled</li>
         <li>Resizable text reflowing cleanly at 200 % zoom and at viewports down to 320&nbsp;px</li>
         <li>Alt text on every meaningful image; decorative images carry <code>alt=""</code> to be skipped by assistive technologies</li>
-        <li>Descriptive link text — every link indicates its destination without relying on surrounding context (no bare “Learn more”)</li>
+        <li>Descriptive link text: every link indicates its destination without relying on surrounding context (no bare “Learn more”)</li>
         <li>Links in body text underlined, so colour is not the only distinguishing cue (WCAG&nbsp;1.4.1)</li>
         <li>Native <code>&lt;details&gt;</code> for FAQ accordions (e.g. NetSec Summer School, Euro-SWAMOS) — keyboard-accessible without JavaScript</li>
         <li>Mobile navigation drawer with opaque background, <code>aria-expanded</code> on the toggle, focus management on close</li>
@@ -128,8 +128,8 @@ alternates:
 
       <h2>6. Feedback &amp; review</h2>
       <p>
-        If you encounter any accessibility barrier on this site — a confusing layout, a missing
-        label, a contrast issue, a focus you can’t see, anything at all — please tell us. We
+        If you encounter any accessibility barrier on this site (a confusing layout, a missing
+        label, a contrast issue, a focus you can’t see, anything at all), please tell us. We
         treat accessibility issues as bugs and fix them as soon as we can.
       </p>
       <p>
@@ -152,7 +152,7 @@ alternates:
       <h2 id="conformance">7. Conformance status</h2>
       <p>
         <strong>Partial conformance</strong> with WCAG&nbsp;2.1 Level&nbsp;AA, aligned with
-        EN&nbsp;301&nbsp;549. All templates of the site meet the standard; the residual
+        EN&nbsp;301&nbsp;549. All templates of the site meet the standard. The residual
         partial-compliance label reflects the documented limitations in §3 (embedded PDFs,
         translucent surfaces, generic alt text on some archive photos). Automated audits
         currently report zero violations and the items in “manual review” have been
