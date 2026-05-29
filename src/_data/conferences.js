@@ -92,9 +92,9 @@ const conferences = [
     //   don't have a PDF.
     programmePdf: {
       url: "/assets/files/EISS-2026-programme.pdf",
-      sizeKb: 107,
-      pages: 2,
-      status: "draft",
+      sizeKb: 279,
+      pages: 9,
+      status: "final",
     },
     // Manual override for the registration-status badge on /YYYY pages.
     //   "open"   — show the "Registration open" pill regardless of dates
