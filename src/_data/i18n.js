@@ -197,11 +197,10 @@ const locales = {
     // "Speaking or chairing?" card shown just before the programme on
     // /YYYY pages, pointing speakers/chairs to Indico + a one-click print.
     speakerCard: {
-      eyebrow: "Speakers & chairs",
       heading: "Speaking or chairing?",
-      body: "Correct your details, request an invitation or visa letter, and find practical answers on the conference's Indico page. You can also print this programme for offline use.",
-      ctaIndico: "Manage your session on Indico",
-      ctaPrint: "Print the programme",
+      body: "Update your details or request an invitation or visa letter:",
+      ctaIndico: "manage your session on Indico",
+      ctaPdf: "download the programme (PDF)",
     },
 
     livestream: {
@@ -420,11 +419,10 @@ const locales = {
     },
 
     speakerCard: {
-      eyebrow: "Intervenant·es et présidence",
       heading: "Vous intervenez ou présidez ?",
-      body: "Corrigez vos informations, demandez une lettre d'invitation ou de visa, et retrouvez les réponses pratiques sur la page Indico de la conférence. Vous pouvez aussi imprimer ce programme pour une consultation hors ligne.",
-      ctaIndico: "Gérer votre session sur Indico",
-      ctaPrint: "Imprimer le programme",
+      body: "Modifiez vos informations ou demandez une lettre d'invitation ou de visa :",
+      ctaIndico: "gérer votre session sur Indico",
+      ctaPdf: "télécharger le programme (PDF)",
     },
 
     livestream: {
@@ -619,11 +617,10 @@ const locales = {
     },
 
     speakerCard: {
-      eyebrow: "Vortragende & Vorsitz",
       heading: "Vortragen oder Vorsitz führen?",
-      body: "Korrigieren Sie Ihre Angaben, fordern Sie ein Einladungs- oder Visumschreiben an und finden Sie praktische Antworten auf der Indico-Seite der Konferenz. Sie können dieses Programm auch für die Offline-Nutzung ausdrucken.",
+      body: "Aktualisieren Sie Ihre Angaben oder fordern Sie ein Einladungs- oder Visumschreiben an:",
       ctaIndico: "Ihre Sitzung auf Indico verwalten",
-      ctaPrint: "Programm drucken",
+      ctaPdf: "Programm herunterladen (PDF)",
     },
 
     livestream: {

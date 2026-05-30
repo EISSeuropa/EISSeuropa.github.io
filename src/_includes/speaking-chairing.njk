@@ -1,26 +1,24 @@
-{# "Speaking or chairing?" info card for /YYYY conference pages.
-   Points speakers and chairs to the Indico event (manage their
-   contribution, request an invitation / visa letter) and offers a
-   one-click print of the programme. Sits just before the live grid.
-   `indico`, `i18n`, `lang`, `year` are in scope from the page. #}
+{# Discreet "Speaking or chairing?" note for /YYYY conference pages.
+   A single compact line just before the programme: points speakers and
+   chairs to the Indico event (manage their contribution, request an
+   invitation / visa letter) and to the official printable PDF. Kept
+   deliberately small so it doesn't compete with the programme.
+   `indico`, `conferences`, `i18n`, `lang`, `year` are in scope. #}
 {% from "icons.njk" import icon %}
 {%- set _lang = lang or "en" -%}
 {%- set t = i18n[_lang] -%}
 {%- set _indico = indico.annualConferences[year] -%}
-<section class="section-tight" aria-labelledby="speakers-title">
+{%- set _conf = conferences.byYear[year] -%}
+{%- set _pdf = _conf.programmePdf if _conf else null -%}
+{%- if _indico or _pdf %}
+<section class="section-tight" aria-label="{{ t.speakerCard.heading }}">
   <div class="container">
-    <article class="card speaker-card">
-      <div class="speaker-card-body">
-        <div class="featured-eyebrow">{{ t.speakerCard.eyebrow }}</div>
-        <h2 id="speakers-title">{{ t.speakerCard.heading }}</h2>
-        <p class="muted" style="margin: 0;">{{ t.speakerCard.body }}</p>
-      </div>
-      <div class="speaker-card-actions">
-        {%- if _indico %}
-        <a class="btn btn-secondary btn-sm" href="{{ _indico.url }}" target="_blank" rel="noopener">{{ t.speakerCard.ctaIndico }} {{ icon("external-link") }}</a>
-        {%- endif %}
-        <button type="button" class="btn btn-secondary btn-sm" data-print-programme>{{ icon("file-text") }} {{ t.speakerCard.ctaPrint }}</button>
-      </div>
-    </article>
+    <p class="speaker-note">
+      <strong>{{ t.speakerCard.heading }}</strong> {{ t.speakerCard.body }}
+      {%- if _indico %} <a href="{{ _indico.url }}" target="_blank" rel="noopener">{{ t.speakerCard.ctaIndico }} {{ icon("external-link") }}</a>{% endif %}
+      {%- if _indico and _pdf %} <span class="speaker-note-sep" aria-hidden="true">·</span>{% endif %}
+      {%- if _pdf %} <a href="{{ _pdf.url }}" target="_blank" rel="noopener">{{ t.speakerCard.ctaPdf }} {{ icon("download") }}</a>{% endif %}
+    </p>
   </div>
 </section>
+{%- endif %}

@@ -292,12 +292,3 @@
     } catch (e) {}
   }
 })();
-
-/* Print button on the "Speaking or chairing?" card. Progressive: the
-   button only does anything with JS, and the card is hidden in print
-   anyway, so there's no broken control if JS is unavailable. */
-(function () {
-  document.querySelectorAll("[data-print-programme]").forEach(function (btn) {
-    btn.addEventListener("click", function () { window.print(); });
-  });
-})();
