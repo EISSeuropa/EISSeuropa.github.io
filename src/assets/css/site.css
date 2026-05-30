@@ -2832,15 +2832,37 @@ h4 { font-size: var(--fs-lg); }
   margin: 0 0 var(--space-5);
 }
 
-/* Discreet "Speaking or chairing?" note before the programme: one compact
-   muted line with inline links, deliberately not a card so it doesn't
-   compete with the programme. */
+/* "Speaking or chairing?" note before the programme: a discreet but
+   polished soft banner (subtle fill, rounded, mic icon), in the spirit of
+   the NetSec sister page. Stays a single compact line on wide viewports,
+   wraps gracefully on narrow ones, never grows into a full card. */
 .speaker-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
   font-size: var(--fs-sm);
   color: var(--text-muted);
-  line-height: 1.6;
+  line-height: 1.55;
   margin: 0;
-  max-width: 48rem;
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.speaker-note-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  color: var(--accent);
+  margin-top: 0.05em;
+}
+.speaker-note-icon svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+.speaker-note-text {
+  flex: 1 1 auto;
 }
 .speaker-note strong {
   color: var(--text);
@@ -2850,7 +2872,7 @@ h4 { font-size: var(--fs-lg); }
 }
 .speaker-note-sep {
   color: var(--text-subtle);
-  margin: 0 0.15em;
+  margin: 0 0.2em;
 }
 
 /* Six-hue palette. Each variant defines a foreground colour and a
