@@ -66,6 +66,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+_Nothing yet._
+
+## [2.24.0] · 2026-05-30 — Live programme depth and a print overhaul
+
 > ESSC 2026 opens in Stockholm on 11–12 June, and this release is built around the conference pages that carry it. The live programme on `/2026` now shows the full panel line-ups with every co-author and marks who is presenting, and printing it produces a clean handout rather than a stack of near-empty pages. Around it the archive fills out, the People page reflects who has moved on, and the English copy gets a consistent voice.
 
 ### The live ESSC 2026 programme
@@ -913,7 +917,8 @@ Preview MCP screenshots of `/index.fr.html`, `/index.de.html`, `/initiative.de.h
 
 *Originally tagged as **v2.0.0**; renumbered to **v2.0.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
 
-[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.23.1...HEAD
+[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.24.0...HEAD
+[2.24.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.23.1...v2.24.0
 [2.23.1]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.23.0...v2.23.1
 [2.23.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.22.0...v2.23.0
 [2.22.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.13.0r...v2.22.0
