@@ -4432,7 +4432,9 @@ a.joint-orgs-card:hover .joint-orgs-name {
   .map-embed,                    /* venue map — paper is map-unfriendly */
   .programme-footnote,           /* "source of truth is Indico" line */
   .programme-days,               /* day-jump chips — no point on paper */
-  .programme-contribs > summary {/* "View papers" toggle */
+  .programme-contribs > summary, /* "View papers" toggle */
+  section:has(.joint-orgs),      /* co-organisers logo strip (full page, not useful on paper) */
+  #programme ~ * {               /* everything after the grid: PDF-download card, venue, travel, funding */
     display: none !important;
   }
 
@@ -4481,21 +4483,39 @@ a.joint-orgs-card:hover .joint-orgs-name {
   .programme-rows {
     gap: 0.4cm !important;
   }
-  .programme-row,
-  .programme-row--parallel .programme-row-items {
+  /* The time label stacks above its session(s). */
+  .programme-row {
     grid-template-columns: 1fr !important;
+    gap: 0.15cm !important;
   }
+  /* Concurrent panels print side by side, as they do on screen, so the
+     printed timetable stays compact and it reads clearly that the two
+     panels run at the same time. */
+  .programme-row--parallel .programme-row-items {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.4cm !important;
+  }
+  /* Let the programme flow continuously rather than forcing each day onto
+     a fresh page (which stranded the intro on a near-empty first page and
+     bloated the page count). The day heading is an <h3>, which already
+     avoids a break after it, so each day still reads as a clear block. */
   .programme-day {
-    page-break-before: always;
+    break-before: auto;
   }
-  .programme-day:first-of-type {
-    page-break-before: avoid;
+  .programme-day + .programme-day {
+    margin-top: 0.6cm;
   }
   .programme-slot {
     background: white !important;
     border: 1px solid hsl(0 0% 80%) !important;
     padding: 0.3cm 0.4cm !important;
-    page-break-inside: avoid;
+  }
+  /* Let panels (and the papers inside them) flow across a page boundary so
+     each column fills to the bottom of the page rather than breaking early
+     to keep a paper atomic — which left the shorter of two side-by-side
+     panels half-empty. Only the short break cards stay unbroken. */
+  .programme-slot--break {
+    break-inside: avoid;
   }
   .programme-slot--break {
     border-style: dashed !important;
