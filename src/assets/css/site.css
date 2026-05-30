@@ -4436,7 +4436,11 @@ a.joint-orgs-card:hover .joint-orgs-name {
     display: none !important;
   }
 
-  /* Force the contributions list open on paper — readers can't toggle. */
+  /* The contributions <details> ("View papers") are opened for print by
+     theme.js on beforeprint, so they render natively on paper. Readers
+     can't toggle, so we flatten the toggle chrome here. (A CSS-only
+     `display` override can't reveal closed-<details> content in engines
+     that hide it via content-visibility, hence the JS.) */
   .programme-contribs {
     border-top: 0 !important;
     padding-top: 0 !important;
@@ -4444,12 +4448,13 @@ a.joint-orgs-card:hover .joint-orgs-name {
   .programme-contribs > .programme-contrib-list {
     display: grid !important;
   }
-  .programme-contribs[open] > summary {
+  .programme-contribs > summary {
     display: none !important;
   }
-  details {
-    /* `details` doesn't natively support open-via-CSS, but the contribs
-       list rule above already forces its grid layout to render. */
+  /* Panel compositions print in full (paper title, presenter, co-authors),
+     but abstracts are dropped to keep the printed programme compact. */
+  .programme-contrib-abstract {
+    display: none !important;
   }
 
   /* Tighten everything for paper. */

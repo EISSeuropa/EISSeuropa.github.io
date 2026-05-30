@@ -252,3 +252,43 @@
     }
   }
 })();
+
+/* Print prep for the live programme grid.
+
+   Each session's papers (titles + presenter + co-authors) live inside a
+   collapsed <details class="programme-contribs"> ("View papers"). Modern
+   browsers hide closed-<details> content at the content-visibility layer,
+   which the print stylesheet cannot override with `display`. The result:
+   panels printed with only their chair, while roundtables (whose
+   discussants render inline) printed in full — the inconsistency the
+   maintainer flagged.
+
+   Open every contributions <details> just before the browser paints the
+   print/PDF output so the full panel composition appears, then restore the
+   on-screen state afterwards. Covers both Chrome/Firefox (`beforeprint` /
+   `afterprint`) and Safari (the `print` media-query change event). */
+(function () {
+  var SEL = "details.programme-contribs";
+  function openForPrint() {
+    document.querySelectorAll(SEL).forEach(function (d) {
+      if (d.dataset.printPrev === undefined) d.dataset.printPrev = d.open ? "1" : "0";
+      d.open = true;
+    });
+  }
+  function restoreAfterPrint() {
+    document.querySelectorAll(SEL).forEach(function (d) {
+      if (d.dataset.printPrev === "0") d.open = false;
+      delete d.dataset.printPrev;
+    });
+  }
+  window.addEventListener("beforeprint", openForPrint);
+  window.addEventListener("afterprint", restoreAfterPrint);
+  if (window.matchMedia) {
+    try {
+      var mq = window.matchMedia("print");
+      var onChange = function (e) { (e.matches ? openForPrint : restoreAfterPrint)(); };
+      if (mq.addEventListener) mq.addEventListener("change", onChange);
+      else if (mq.addListener) mq.addListener(onChange);
+    } catch (e) {}
+  }
+})();
