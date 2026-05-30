@@ -5,7 +5,7 @@ think through what's worth doing next, in what order, and at what
 effort. **Last update: 28 May 2026, after v2.23.1.**
 
 <!-- AUTOSTAMP:BEGIN -->
-> _Auto-tracked: `[Unreleased]` is empty since **v2.23.1**. Last refresh by `scripts/sync-roadmap.py`: 30 May 2026._
+> _Auto-tracked: `[Unreleased]` is empty since **v2.24.0**. Last refresh by `scripts/sync-roadmap.py`: 30 May 2026._
 <!-- AUTOSTAMP:END -->
 
 > **Sync convention.** This file is the source of truth. The block
