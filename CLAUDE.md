@@ -106,11 +106,12 @@ Specific enough that a future maintainer can pick it up without
 re-deriving the analysis. Code paths, file names, line numbers.
 
 ## Milestone
-One of the thematic milestones (rule §10). Never leave it blank.
+The target release, e.g. `v2.25.0`, or `Backlog — Under watch` when
+there's no committed release (rule §10). Never leave it blank.
 ```
 
 **Set the GitHub milestone at creation time** (rule §10):
-`gh issue create --milestone "<milestone>" ...`. The body's milestone
+`gh issue create --milestone v2.25.0 ...`. The body's milestone
 line is human-readable context; the milestone is the queryable
 commitment.
 
@@ -189,14 +190,20 @@ release change what this surface documents?"* If yes, edit in the
 same release. If yes but too big to fit, open a tracking issue
 (rule §3) and reference it from the surface itself.
 
-### 1. Roadmap (`docs/roadmap-2026.md`)
+### 1. Roadmap (`/roadmap.html` + FR + DE + `docs/roadmap-2026.md`)
 
-- Is the next planned release on the timeline still accurate?
-- Anything in the deferred-items section ready to promote to a
-  dated entry?
-- The autostamp on the document (when wired in, see rule §11) keeps
-  the `[Unreleased]` bullet count fresh automatically. The prose
-  timeline rows stay maintainer-edited.
+- Is the next planned release on the *At a glance* timeline still
+  accurate? Do the version milestones and their due dates match it?
+- On the public `/roadmap.html` (+ FR + DE), flip the card for the
+  release just cut from *Planned* / *In progress* to *Shipped*: set
+  its date, add the release-notes link, and drop the `data-milestone`
+  attribute so it no longer renders a progress bar. The next planned
+  card is auto-promoted to *In progress* by `roadmap-progress.js`.
+- Anything in the *Under watch* section ready to promote to a dated
+  release row (and its own milestone)?
+- The autostamp on `docs/roadmap-2026.md` (rule §11) keeps the
+  `[Unreleased]` bullet count fresh automatically. The prose timeline
+  rows and the public cards stay maintainer-edited.
 
 ### 2. Sitemap (`src/sitemap.xml.njk` + `src/sitemap.njk` + FR + DE)
 
@@ -318,37 +325,48 @@ is being edited anyway.
 
 Every open issue belongs to exactly one milestone. The milestone is
 the bridge between the *Milestone* line in the issue template (rule
-§3) and the planned work on the roadmap; without it, the backlog
+§3) and the planned releases on the roadmap; without it, the backlog
 drifts.
 
-### The milestone set (thematic, not version-tied)
+### The milestone set (version-tied, SemVer)
 
-EISS uses **thematic milestones** rather than per-release version
-milestones (NetSec's convention is different). The current set:
+EISS uses **version-numbered milestones** matching the planned
+releases on the roadmap, plus a single catch-all for uncommitted
+work. This mirrors the sister NetSec site. EISS switched from
+thematic milestones to this scheme after v2.24.0, so the milestone
+now answers "which release is this for?" rather than "what kind of
+work is this?". The set:
 
-- **NetSec & shared infra**: anything touching the NetSec relationship
-  or shared scripts / tokens / data sources between the two sister sites.
-- **Indico integration deepening**: sync-indico work, live programme
-  grids, Indico API probing.
-- **ESSC 2026 ops**: anything specific to the current annual
-  conference cycle.
-- **i18n native-speaker review**: FR / DE translation refreshes,
-  native-reviewer feedback.
-- **Maintenance & reliability**: CI, build hygiene, dependency
-  bumps, accessibility fixes, security hardening.
+- **One milestone per planned release** (`v2.25.0`, `v2.26.0`,
+  `v2.27.0`, …), created from the version-tagged rows of the roadmap
+  (the *At a glance* timeline in [`docs/roadmap-2026.md`](docs/roadmap-2026.md),
+  surfaced publicly on `/roadmap.html`). A patch milestone
+  (`v2.24.1`) exists only when a reactive patch is anticipated, such
+  as the post-conference cut.
+- **`Backlog — Under watch`**: items waiting on an external trigger
+  (Indico write-API access, NetSec coordination, source research) or
+  with no committed release. Mirrors the *Under watch* section of the
+  roadmap.
 
-When the active work no longer fits any of these, propose a new
-milestone in a PR (or to the maintainer directly), don't silently
-spawn one.
+Due dates on the version milestones come from the roadmap timeline.
+When the roadmap shifts a planned release, **bump the milestone's due
+date in the same commit that updates the roadmap row**: they are two
+views of one schedule.
+
+Create a new version milestone when the roadmap gains a release row.
+Don't pre-create far-future majors.
 
 ### When to set the milestone
 
 - **At issue creation.** Whenever rule §3 fires, set the milestone
-  alongside the title and body.
-- **When an issue moves between themes.** Update the milestone in
-  the same edit that records the reframe.
+  alongside the title and body. `gh issue create --milestone v2.25.0 ...`
+  keeps it inline.
+- **When an issue slips to a later release.** Update the milestone in
+  the same edit that records the reslip, with a one-line reason in
+  the thread.
 - **Never leave an open issue without one.** A milestone-less open
-  issue is invisible to roadmap planning.
+  issue is invisible to roadmap planning. If it has no committed
+  release, it belongs in `Backlog — Under watch`.
 
 ## 11. Documentation currency
 

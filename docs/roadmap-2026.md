@@ -1,54 +1,289 @@
-# EISS website: Rest-of-2026 roadmap
+# EISS website: 2026 roadmap
 
-A planning document written to help the maintainer
-think through what's worth doing next, in what order, and at what
-effort. **Last update: 28 May 2026, after v2.23.1.**
+A planning document to help the maintainer think through what's worth
+doing next, in what order, and at what effort. Organised by **release
+version** (SemVer), the same axis as the GitHub milestones and the
+public [`/roadmap.html`](https://eiss-europa.com/roadmap.html).
+**Last update: 31 May 2026, after v2.24.0.**
 
 <!-- AUTOSTAMP:BEGIN -->
-> _Auto-tracked: `[Unreleased]` is empty since **v2.24.0**. Last refresh by `scripts/sync-roadmap.py`: 30 May 2026._
+> _Auto-tracked: `[Unreleased]` is empty since **v2.24.0**. Last refresh by `scripts/sync-roadmap.py`: 31 May 2026._
 <!-- AUTOSTAMP:END -->
 
-> **Sync convention.** This file is the source of truth. The block
-> above between `<!-- AUTOSTAMP:BEGIN -->` markers is machine-managed
-> by `scripts/sync-roadmap.py` (fires from
+> **Sync convention.** This file is the authoritative planning source.
+> The block above between `<!-- AUTOSTAMP:BEGIN -->` markers is
+> machine-managed by `scripts/sync-roadmap.py` (fires from
 > `.github/workflows/sync-roadmap.yml` on every push that touches
 > `CHANGELOG.md`, plus a weekly Monday 06:00 UTC belt-and-braces run).
-> The count surfaces staleness, the maintainer decides when the
-> prose timeline below needs a refresh (release-time §5 cross-check
-> per `CLAUDE.md`).
+> The count surfaces staleness, the maintainer decides when the prose
+> timeline below needs a refresh (release-time §5 cross-check per
+> `CLAUDE.md`). The public `/roadmap.html` cards are a curated mirror
+> of the *At a glance* table and version sections here.
+
+Status notation:
+
+- **Shipped** — released and live.
+- **In progress** — actively being built for the next cut.
+- **Planned** — committed to a dated release, not yet started.
+- **Under watch** — no committed release, waiting on a trigger.
 
 Effort notation:
 
-- **S** — under 2 hours of focused work (one short Claude session)
-- **M** — half-day to one day (one longer Claude session)
+- **S** — under 2 hours of focused work (one short session).
+- **M** — half-day to one day (one longer session).
 - **L** — multi-day or requires external input (translators, design,
-  Indico API access, etc.)
+  Indico API access, etc.).
 
-Priority notation:
+Dependencies on people or external systems are flagged in line.
 
-- **P0** — should happen next, activation of work already built
-- **P1** — high value, no blocker, would land in next 1–2 months
-- **P2** — nice to have, would land in late 2026
-- **P3** — explicitly deferred to 2027+
+---
 
-Dependencies on people / external systems are flagged in line.
+## At a glance
+
+The version-tagged timeline. Each planned row has a matching GitHub
+[milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestones)
+(same title, due date from the *Target* column) and a card on
+`/roadmap.html`. Milestones are created from this table, not the
+other way round, so this is where a new release first appears.
+
+| Release | Target | Status | Headline |
+| --- | --- | --- | --- |
+| v2.24.0 | 30 May 2026 | **Shipped** | Live programme depth and a print overhaul |
+| v2.24.1 | mid Jun 2026 | Planned | Post-ESSC reactive patch |
+| v2.25.0 | Jul 2026 | Planned | Post-ESSC activation |
+| v2.26.0 | Oct 2026 | Planned | Public content surfaces |
+| v2.27.0 | Dec 2026 | Planned | Search, polish, ESSC 2027 prep |
+
+**Versioning rules**: see the *Versioning* section of
+[`README.md`](../README.md) for the canonical definition of MAJOR /
+MINOR / PATCH (the feature test, not size). `scripts/release.sh`
+enforces the process. `CHANGELOG.md` accumulates entries between
+releases. One PR is *not* one release: PRs add to `[Unreleased]`, and
+releases get cut at milestones.
+
+---
+
+## Planned work
+
+### v2.24.1 — Post-ESSC reactive patch · target mid June 2026
+
+The reactive cut once ESSC 2026 wraps in Stockholm (11–12 June).
+On-the-ground fixes and content polish surfaced during conference
+week: programme corrections, a short recap on the homepage, a photo
+or two. Scope is confirmed in the week of the conference and the
+milestone may ship empty if nothing reactive surfaces. Patch tier, so
+the index-only release-notes shape applies (no lede or themes).
+
+### v2.25.0 — Post-ESSC activation · target July 2026
+
+Turns built-but-idle Indico capability into visible value and clears
+reliability debt.
+
+- **Live programme grid on past conferences** — apply the `/2026`
+  grid to `/2025`, `/2024`, `/2023` from their Indico timetables.
+  [#59](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/59), M.
+- **Indico calendar subscription links on `/YYYY`** — surface the
+  per-event `.ics` / webcal links so attendees can add sessions to
+  their calendar.
+  [#60](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/60), S.
+- **Language-switcher discoverability** — make the FR / DE switch
+  easier to find in the header.
+  [#98](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/98), S.
+- **Workflow failure notifications** — alert when a scheduled Actions
+  run fails, rather than discovering it on the next manual check.
+  [#56](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/56), S.
+- **Pin GitHub Actions to Node-24-compatible versions** — hard
+  deadline 16 Sep 2026; lands here with margin.
+  [#76](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/76), S.
+- **i18n drift checker covers the chrome catalog** — extend
+  `scripts/check-i18n-drift.py` to track `src/_data/i18n.js` so a
+  changed English chrome string flags its FR / DE siblings.
+  [#82](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/82), M.
+
+**Native-speaker FR / DE review** (L, depends on volunteers) runs as
+an opportunistic track alongside these releases rather than a single
+milestone. All 24 translated pages carry `status: "beta"` and a
+yellow ribbon. A native reader reviews a page, the edits are applied,
+`status` flips to `"reviewed"` in `data/i18n-state.json`, the ribbon
+drops. Sequence: legal pages first (highest accuracy bar), then
+`/index` + `/initiative` + `/membership` (highest traffic), then the
+rest. Per [`docs/i18n.md`](i18n.md). Each reviewed page can ship in
+any patch.
+
+### v2.26.0 — Public content surfaces · target October 2026
+
+New public pages and homepage surfaces, the post-conference
+information-architecture pass with the brand identity in place.
+
+- **News / Latest on the homepage** — a surface for Action news and
+  cross-links to NetSec items relevant to EISS members.
+  [#96](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/96), M.
+- **Outputs / Publications page** — list the network's outputs (book
+  series, the Prix Bastien Irondelle, deliverables) on a dedicated
+  page.
+  [#97](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/97), M.
+- **Working Groups page** — render each group's objective and people;
+  the NetSec sister site ships its own, this mirrors it for EISS.
+  [#94](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/94), M.
+- **NetSec co-branding strip in the header** — a discreet sister-site
+  signpost in the site chrome.
+  [#95](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/95), S.
+- **Auto-populate the organising committee on `/YYYY` from Indico** —
+  read the committee off the Indico event instead of hand-listing it.
+  [#58](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/58), M.
+- **OG-card iconmark overlay** — keep the EISS mark on every social
+  share card, the brand follow-up deferred from the v2.23.0 rollout.
+  [#157](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/157), S.
+
+### v2.27.0 — Search, polish, ESSC 2027 prep · target December 2026
+
+- **Pagefind site search** — a deploy-time index wired into the 404
+  page first (the NetSec PR #280 integration is the reference), with
+  a Cmd-K nav trigger as a follow-up once the pipeline proves out.
+  [#209](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/209), M.
+- **CSS class-collision guard** — a build check so an archive
+  component can never again override the live grid (the regression
+  fixed in v2.24.0).
+  [#241](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/241), S.
+- **Expand the open-panel examples on `/initiative`** — more recent
+  open-panel titles from the conference programmes.
+  [#249](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/249), S.
+- **ESSC 2027 announcement** — drop one entry into
+  `src/_data/conferences.js` per [`docs/new-conference.md`](new-conference.md)
+  once the date and venue firm up. S.
+
+Candidates without committed scope yet, pulled in if a release has
+room: a conference countdown widget, View Transitions API page
+crossfades, an acknowledgments / contributors page, a newsletter
+archive page, `rel="me"` verification if EISS gets a Mastodon or
+Bluesky account.
+
+---
+
+## Under watch
+
+No committed release. Waiting on an external trigger or further
+research. Tracked under the **Backlog — Under watch** milestone and
+mirrored in the *Under watch* section of `/roadmap.html`.
+
+- **Auto-detect registration state from Indico**
+  ([#55](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/55)) —
+  blocked. This Indico build doesn't expose form state on the
+  anonymous or the authenticated `/export/` API, so the
+  `registrationStatus` override in `conferences.js` stays manual.
+- **Bearer-auth spike on `/export/`**
+  ([#74](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/74))
+  and **refresh `docs/indico-api-token.md`**
+  ([#75](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/75)) —
+  wait on the fine-grained-PAT era of the Indico instance.
+- **Indico write API (`/api/v1` POST)**
+  ([#64](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/64)) —
+  future automation, no near-term need.
+- **Generalise `sync-indico.py` for NetSec reuse**
+  ([#57](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/57)) —
+  depends on coordination with the NetSec maintainers.
+- **Archive date / narrative contradictions**
+  ([#230](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/230)) —
+  needs source research before any contested fact is edited.
+- **Google Forms file-upload edit lock**
+  ([#102](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/102)) —
+  upstream Google limitation, no fix path; a documented known issue.
+
+**Deferred to 2027+** (won't schedule without a specific trigger):
+custom-domain board emails, a self-hosted newsletter replacing
+Mailchimp, a multi-author CMS, analytics (the privacy notice's
+no-analytics stance is a deliberate positioning choice), a multi-page
+member directory (the full membership list lives in Stripe / Indico
+and isn't appropriate to publish), conference-proceedings hosting
+(those go to Zenodo, the site links out), and a reverse-proxy custom
+domain for `indico.eiss-europa.com` (already at the right subdomain).
+The reasoning for each is in this file's git history.
+
+---
+
+## Status as of v2.24.0
+
+Where the site stands today, so the plan above makes sense:
+
+- **Stack**: Eleventy 3 + Nunjucks. GH Actions builds + deploys. No
+  client-side framework. A small amount of hand-written JS for theme,
+  mobile menu, lazy YouTube, and print preparation.
+- **Pages**: 72 `.njk` templates including the FR / DE locales. All
+  URLs preserved from the original Mobirise export. `src/legacy/`
+  fully retired in v1.0.
+- **Brand identity**: real EISS lockup (constellation + EiSS wordmark)
+  across header, footer, favicon, Apple touch icon, Android adaptive
+  icon, PWA manifest, joint-organisers strip. Schema.org
+  `Organization.logo` points at the high-res brand PNG. OG-card
+  iconmark overlay still outstanding ([#157](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/157)).
+- **Design**: Apple-style glass, auto + manual dark mode, Inter font,
+  reveal animations gated on `prefers-reduced-motion`. Brand-blue
+  (`#007bc6`) is the canonical accent.
+- **Accessibility**: WCAG 2.1 AA, axe-core clean across light + dark.
+- **SEO**: full OG + Twitter Card meta, JSON-LD Organization with
+  `ImageObject` logo + `foundingDate: "2017"`, per-page bespoke share
+  cards in all three languages, favicon stack, webmanifest,
+  robots.txt + sitemap.xml.
+- **i18n**: EN / FR / DE. Chrome strings in `src/_data/i18n.js`. 12+
+  fully translated pages × 3 langs. Beta ribbon on FR / DE pages until
+  native-speaker review. Drift detection in CI on every HTML-touching
+  PR. A `localizedHref` filter falls cross-locale links back to the
+  English page when the target locale doesn't exist.
+- **Conference cycle**: driven by `src/_data/conferences.js`. The
+  homepage "next conference" card and the `/past` archive both read
+  from this single data source; the cut-off advances automatically
+  once a conference's end-date passes (daily-rebuild workflow). The
+  live ESSC programme grid on `/2026` pulls the full programme from
+  Indico daily, now with co-authors, a presenter microphone, a
+  livestream pill, and a clean print path.
+- **Board page**: driven by `src/_data/board.json`, Google-Form
+  populated. Three sections (Leadership · Board Members · Support
+  Staff) plus an *EISS community* footer for former members and past
+  interns (auto-expiring via `roleEndDate` + 7-day grace).
+- **Indico events sync**: `scripts/sync-indico.py` runs daily, writes
+  upcoming events to `src/_data/indico.json`; homepage and `/events`
+  show them automatically (ESSC filtered out, already in
+  `conferences.js`).
+- **Operator + CI conventions** (imported from `netsec.github.io`):
+  `CLAUDE.md` operator playbook, full `SECURITY.md`, hybrid CHANGELOG
+  format, roadmap autostamp via `sync-roadmap.py`, link checker on
+  every PR + Monday cron. Dependabot watches GitHub Actions and Python
+  deps weekly. Version-numbered milestones drive release planning
+  (switched from thematic after v2.24.0). Cross-repo GitHub Project
+  ([#1](https://github.com/users/EISSeuropa/projects/1)) spans open
+  enhancement issues across EISS + NetSec.
+- **What's New banner**: `src/data/whats-new.json`-driven dismissible
+  site-wide announcement, currently pointing visitors at the live
+  ESSC 2026 programme. CLAUDE.md §12 governs the discipline.
 
 ---
 
 ## Release history
 
 Each tagged release at a glance: what landed, when, and the GitHub
-Release link. Convention borrowed from the NetSec website's roadmap.
-Each entry is one short paragraph framing the release, followed by
-bullets only when there are several distinct pieces. Patch releases
-get a single line.
+Release link. Each entry is one short paragraph framing the release,
+with bullets only when there are several distinct pieces. Patch
+releases get a single line.
 
-**Versioning rules**: see the *Versioning* section of
-[`README.md`](../README.md) for the canonical definition of what
-counts as MAJOR / MINOR / PATCH. `scripts/release.sh` enforces the
-process. `CHANGELOG.md` accumulates the entries between releases. One
-PR is *not* one release. PRs add to `[Unreleased]`, and releases get
-cut at milestones.
+### v2.24.0 · 30 May 2026 — *Live programme depth and a print overhaul*
+
+The ESSC 2026 programme grid on `/2026` now shows the full panel
+line-ups with every co-author, the presenter marked first with a
+microphone, and a *Livestream* pill on each plenary and roundtable
+that goes out online. Printing the programme includes every panel's
+composition (abstracts dropped, concurrent panels side by side,
+post-programme sections omitted), down from roughly 20 pages to 13. A
+discreet *"Speaking or chairing?"* banner before the grid points
+contributors to the shared NetSec conference FAQ and the official
+programme PDF, and a joint-organisers strip below the hero carries the
+EISS / NetSec / Stockholm University logos. The archive fills out: a
+2025 Thessaloniki gallery, lazy YouTube embeds on `/2019`, `/2023`,
+`/2024`, and reconnected imagery across `/2021`, `/2022`, `/2024`,
+`/GlobalRisks`, `/panels`. Four former board members join the EISS
+community, `/initiative` names the yearly open panels, a 404
+illustration shows a piece of the Union drifting away, and a voice
+pass removed 140 em-dashes and 50 prose semicolons across the English
+pages and docs. [Release notes →](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.24.0)
 
 ### v2.23.1 · 27 May 2026 — *Archive banner and post-release polish*
 
@@ -66,9 +301,9 @@ The Google Form board pipeline goes live (identity-key dedup, `photoOverride` ha
 
 Post-launch polish on the v2.10.0r grid. ESSC concurrent panels now render side-by-side under a shared time gutter on wide viewports. Roundtable cards drop the misleading *View papers* expander and promote discussants to a top-level meta line. Contribution URLs were absolutised, PDF subtitle separator spacing was fixed, and Indico's idiosyncratic break classification was tamed. [Release notes →](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.10.1)
 
-### v2.10.0r · 22 May 2026 — *Live programme grid (Indico as source of truth)* <small>(originally v2.14.0)</small>
+### v2.10.0r · 22 May 2026 — *Live programme grid (Indico as authoritative source)* <small>(originally v2.14.0)</small>
 
-Headline of the day. The conference programme on `/2026` is now two views over a single source of truth: a live grid pulled daily from Indico (sessions, contributions, speakers, abstracts) and an optional polished PDF the designer publishes alongside it. Design rationale documented at `docs/indico-programme-integration.md`, written to be transferable to the NetSec site when we wire the same pattern there. [Release notes →](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.10.0r)
+Headline of the day. The conference programme on `/2026` is now two views over a single authoritative source: a live grid pulled daily from Indico (sessions, contributions, speakers, abstracts) and an optional polished PDF the designer publishes alongside it. Design rationale documented at `docs/indico-programme-integration.md`, written to be transferable to the NetSec site when we wire the same pattern there. [Release notes →](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.10.0r)
 
 ### v2.9.1 · 22 May 2026 — *Indico API probe round 2* <small>(originally v2.13.0)</small>
 
@@ -110,505 +345,5 @@ Earlier releases (v1.0 → v2.4.0r, all `r`-suffixed for the renumber) covered t
 
 ---
 
-## Status as of v2.23.0
-
-Where the site stands today, so the roadmap below makes sense:
-
-- **Stack**: Eleventy 3 + Nunjucks. GH Actions builds + deploys. No
-  client-side framework. ~30 lines of hand-written JS for theme +
-  mobile menu.
-- **Pages**: 72 `.njk` templates including the FR / DE locales. All
-  URLs preserved from the original Mobirise export. `src/legacy/`
-  fully retired in v1.0.
-- **Brand identity**: real EISS lockup (constellation + EiSS wordmark)
-  deployed across header, footer, favicon, Apple touch icon, Android
-  adaptive icon, PWA manifest, OG card watermark target. Schema.org
-  `Organization.logo` points at the high-res brand PNG. Shipped in
-  v2.23.0.
-- **Design**: Apple-style glass, auto + manual dark mode, Inter font,
-  reveal animations gated on `prefers-reduced-motion`. Brand-blue
-  (`#007bc6`) is the canonical accent.
-- **Accessibility**: WCAG 2.1 AA, axe-core clean across light + dark.
-- **SEO**: full OG + Twitter Card meta, JSON-LD Organization with
-  `ImageObject` logo + `foundingDate: "2017"`, per-page bespoke
-  share cards (in all three languages), favicon stack, webmanifest,
-  robots.txt + sitemap.xml.
-- **Icons**: Lucide via `src/_includes/icons.njk` macro. Semantic
-  vocabulary across the site (globe = international, map-pin =
-  location, and so on).
-- **i18n**: EN / FR / DE. Chrome strings in `src/_data/i18n.js`. 12+
-  fully translated pages × 3 langs. Beta ribbon on FR/DE pages until
-  native-speaker review. Drift detection in CI. A `localizedHref`
-  filter on the Eleventy config falls cross-locale links back to the
-  English page when the target locale doesn't exist (added in #168).
-- **Board page**: driven by `src/_data/board.json`, Form-pipeline
-  populated. Three sections (Leadership · Board Members · Support
-  Staff) plus an *EISS community* footer for former members and past
-  interns (auto-expiring via `roleEndDate` + 7-day grace).
-- **Conference cycle**: driven by `src/_data/conferences.js`. The
-  homepage "next conference" card and the `/past` archive list both
-  read from this single data source. The cut-off between `next` and
-  `past` advances automatically once a conference's end-date passes
-  (daily-rebuild workflow keeps quiet weeks from getting stale).
-- **Archive pages**: past-conference and past-workshop `.njk` pages
-  carry `status: archive` in frontmatter, which renders a sticky
-  grey banner above the nav. Sets expectations that the content
-  won't be as polished as live pages.
-- **Google Form board pipeline**: live. Weekly + on-demand sync via
-  `scripts/sync-board.py`, opens auto-PR with rich descriptive body.
-  Maintainer auto-assigned for notification.
-- **Indico events sync**: `scripts/sync-indico.py` runs daily,
-  writes upcoming-events to `src/_data/indico.json`. Homepage and
-  `/events` show those events automatically. ESSC events filtered
-  out (already in `conferences.js`). Live programme grid on `/2026`
-  pulls the full ESSC programme.
-- **Operator + CI conventions** (imported from `netsec.github.io`):
-  `CLAUDE.md` operator playbook (§§1–13), full `SECURITY.md`, hybrid
-  CHANGELOG format, roadmap autostamp via `sync-roadmap.py`, link
-  checker on every PR + Monday cron. Dependabot watches GitHub
-  Actions and Python deps weekly. Cross-repo GitHub Project
-  ([#1](https://github.com/users/EISSeuropa/projects/1)) spans
-  open enhancement issues across EISS + NetSec.
-- **What's New banner**: `src/_data/whats-new.json`-driven dismissible
-  site-wide announcement. Currently active, pointing visitors to the
-  live ESSC 2026 programme. Off-switch: flip `active: false` after
-  the conference. CLAUDE.md §12 governs the activation discipline.
-
----
-
-## P0 — activate what's already built
-
-These are the things sitting idle. Doing them turns existing code into
-visible value.
-
-### ~~Google Form for board bios — finally activate~~ — _done in v2.22.0_
-
-The Google Form pipeline went live in v2.22.0. `scripts/sync-board.py`
-+ `.github/workflows/sync-board.yml` now read the live Google Sheet,
-diff against `src/_data/board.json`, and open a rich auto-PR with a
-*What changed* summary. Identity-key dedup, `photoOverride` hatch for
-the Forms file-upload edit limitation, multi-submission workflow,
-maintainer auto-assigned on the PR for notification (#165). Operator
-walkthrough in [`docs/board-bios-setup.md`](board-bios-setup.md).
-
-### Native-speaker review pass on the 24 beta FR/DE pages
-
-**Effort: L (per language, calendar time, not your hours)**
-**Depends on: a native French speaker + a native German speaker.**
-
-All 24 translated pages currently carry `status: "beta"` and a yellow
-ribbon noting that the English version is authoritative. The legal
-pages (`/policy`, `/terms`, `/accessibility`) carry a second inline
-disclaimer for the same reason.
-
-A volunteer from the board / membership who reads French (or German)
-natively reviews one page, suggests edits, you apply them, flip
-`status: "beta"` → `"reviewed"` in `data/i18n-state.json`, drop the
-ribbon. Per [`docs/i18n.md`](i18n.md).
-
-**Sequencing suggestion**: legal pages first (highest accuracy
-requirement), then `/index` + `/initiative` + `/membership` (highest
-traffic), then the rest.
-
----
-
-## P1 — Socials integration
-
-### ~~YouTube embeds on conference archive pages~~ — _shipped in v2.24.0 (in flight)_
-
-`src/_includes/youtube-embed.njk` lazy-mounts a `youtube-nocookie.com`
-iframe on click only (poster from `i.ytimg.com` before that). Live on
-`/2019`, `/2023`, and `/2024` with real playlist IDs. `/2025` gated
-pending that year's playlist. `/policy` §5 documents the two-stage
-privacy posture in EN / FR / DE. CodeQL `js/xss-through-dom` hardened:
-the partial emits only `data-youtube-id`, and JS constructs the URL from a
-hard-coded prefix with a strict allowlist regex.
-
-### LinkedIn cross-posting workflow (manual, gentle)
-
-**Effort: S**
-
-Not auto-post. But every release tag could include a suggested
-LinkedIn post in the GitHub release notes, copy-pasteable. Or a
-`docs/announcements.md` with a template:
-
-```
-{conf name}, {date}, {city} ·
-Final programme published at https://eiss-europa.com/{slug}.html ·
-{eyebrow line}.
-```
-
-This is more of a habit than a feature. Adds zero infra. Could be a
-small enhancement to the release-creation script (if we add one).
-
-### Rel=me / Mastodon + Bluesky verification
-
-**Effort: S**
-
-Mastodon and Bluesky both support cross-verification via `rel="me"`
-links. If EISS gets a Mastodon or Bluesky account, adding
-`<a rel="me" href="https://mastodon.social/@EISSnetwork">` to the
-footer lets that platform display a green checkmark next to the
-EISS profile, proving the link is bidirectional.
-
-Trivially small change. Add when (if) those accounts exist.
-
-### Newsletter archive page
-
-**Effort: M**
-
-Currently the only newsletter touchpoint is the Mailchimp signup link.
-A `/newsletter.html` page that lists past newsletter editions
-(linking to the Mailchimp campaign archive) would let prospective
-subscribers browse before signing up. Mailchimp publishes the archive
-as a public URL, so just iframe it or link out.
-
----
-
-## ✅ Indico integration (basic) — shipped in v2.4.0
-
-`indico.eiss-europa.com` runs the EISS event-management system. v2.4.0
-adds a one-way read-only sync that surfaces Indico events on the static
-site without changing the source of truth (events are still managed in
-Indico, and the website just signposts them).
-
-**What landed:**
-
-- **`scripts/sync-indico.py`** — fetches the public-export API
-  (`/export/categ/0.json?from=today&to=<today+18mo>`), filters out
-  Annual Conferences (already driven by `src/_data/conferences.js`),
-  writes the rest to `src/_data/indico.json`. Anonymous access, no
-  API token needed.
-- **`.github/workflows/sync-indico.yml`** — daily cron at 03:45 UTC
-  + `workflow_dispatch`. Uses direct-to-master commits (unlike
-  `sync-board.yml`'s PR pattern) because the data is already
-  fully public on Indico. Human review adds nothing.
-- **`src/_includes/indico-events-list.njk`** — shared partial. Renders
-  the upcoming-events list as styled rows. Hides the entire section
-  when `indico.upcoming` is empty.
-- **Surfaces on the site:** homepage shows up to 5 upcoming events
-  beneath the featured-conference card. `/events.html` shows the full
-  list above the existing format tiles. Both pages in EN / FR / DE.
-- **i18n catalog:** new `indicoEvents.*` keys in all three languages.
-
-**Current real-world state:** Indico has 1 upcoming event (ESSC 2026)
-which is filtered out as an Annual Conference. Once Members' Events
-get published to Indico, they'll appear within ~24h.
-
-### ✅ Conference registration status indicator — shipped in v2.5.0
-
-On `/2026.html` (and any future `/YYYY.html`), a glassy pill in the
-hero now shows one of three states based on today's date vs. the
-conference dates in `src/_data/conferences.js`:
-
-- **Registration open** — green dot + "Register on Indico" CTA
-- **Happening now** — pulsing red dot + "View on Indico"
-- **Past edition** — neutral pill (no link unless Indico still has the page)
-
-Implementation:
-- `scripts/sync-indico.py` v2.5 now routes Annual Conference events
-  (categoryId 1) into a separate `annualConferences = {year: event}`
-  bucket in `src/_data/indico.json`, instead of dropping them.
-- `src/_data/conferences.js` exposes a new `byYear` lookup.
-- The badge logic lives in `src/_includes/registration-badge.njk`.
-  Year pages pass `{% set year = "2026" %}` and include the partial.
-- i18n strings under `registrationBadge.*` in `src/_data/i18n.js`.
-- CSS in `src/assets/css/site.css` under `/* registration-status badge */`.
-
-The attendee count was dropped from the initial spec. Indico's
-anonymous export doesn't expose registration counts without auth, and
-the CTA pill already communicates the actionable status. If we ever
-add an authenticated sync, attendee counts can be appended trivially.
-
-### Board member → Indico profile links
-
-**Effort: M**
-
-If board members have Indico profiles, link the photo card on
-`/board.html` to their profile URL. Requires adding an `indicoId`
-field to each entry in `board.json` (or the Google Form). Then
-`board.njk` wraps the photo in `<a href="https://indico.eiss-europa.com/user/{id}">`.
-
-Low priority, since most users won't follow these links. Worth it for
-the consistency more than the traffic.
-
----
-
-## P1 — NetSec integration & signposting
-
-[NetSec](https://netsec-cost.eu/) is the sister COST Action where
-EISS hosts the Chair. Currently the EISS site links to it from a few
-places (homepage announcement card, programmes index, footer).
-
-### ~~Co-branding strip on shared events~~ — _shipped in v2.24.0 (in flight)_
-
-`src/_includes/joint-orgs.njk` renders a horizontal row of co-organising
-institutions with name + URL + optional logo. Live on `/2026` (EN + FR + DE)
-with EISS mark, NetSec primary lockup, and Stockholm University landscape
-wordmark at 56 px height. Dark-mode pure-white tile keeps the navy SU mark
-and grey NetSec mark legible on dark backgrounds.
-
-### Cross-link news
-
-**Effort: S**
-
-When the netsec-cost.eu site publishes a news item relevant to EISS
-members (e.g. a Working Group call), cross-link from the EISS
-homepage announcement card. Currently the announcement is hardcoded
-in `src/index.njk`.
-
-A small enhancement: move the announcement to a data file
-(`src/_data/announcement.js`) so changes are a one-line edit. Could
-later be Indico-driven or hand-edited.
-
-### Shared design tokens (long-term)
-
-**Effort: L**
-**Depends on: agreement with NetSec.**
-
-If both sites use the same EISS blue + Inter font + glass design,
-publishing a tiny shared CSS bundle (or copy-pasting the design
-tokens) would keep them visually coherent. Not urgent. Worth
-mentioning to NetSec maintainers next time you sync.
-
----
-
-## ✅ Conference-cycle automation — shipped in v2.3.0
-
-The annual conference is the highest-touch artifact. Automating its
-publication cycle saves work every year.
-
-**Shipped:**
-
-- **`src/_data/conferences.js`** — central data source for all
-  conferences (2019 onward, structured entries with EN/FR/DE strings
-  for venue, dates, organisers, archive meta line). Exposes
-  `conferences.next` (the closest upcoming or in-progress) and
-  `conferences.past` (everything whose end-date is past today).
-- **Homepage + `/past` refactor** — the "Next conference" featured
-  card on `/index.{en,fr,de}.html` and the archive list on
-  `/past.{en,fr,de}.html` both iterate over the data file. Two
-  hardcoded conference blocks in three languages each (twelve
-  blocks total) collapsed into one data file plus two short
-  templates.
-- **Auto cut-off** — entries move from `next` → `past` automatically
-  on the first build after their `endDate`. No manual edit needed
-  when a conference ends.
-- **Daily scheduled rebuild** — `.github/workflows/scheduled-rebuild.yml`
-  fires every day at 04:15 UTC and dispatches the deploy workflow.
-  Conferences transition within ~24 hours of their end date even on
-  quiet weeks with no commits.
-- **`docs/new-conference.md`** — playbook for the next conference year.
-  Adding `/2027.html` is now: add one object to `conferences.js`, copy
-  `2026.njk` for the content, add one entry to `make-share-cards.py`,
-  run the drift-mark-fresh command. ~30 minutes total, no template
-  spelunking.
-
-**Out of scope** (still hand-managed, by design):
-
-- The unique content of each `/<year>.html` page (programme, venue
-  description, neighbourhood tile grid, partner logos, funding
-  attribution). Too much per-conference variation to template.
-- 2017 and 2018, kept in the historical-image section at the bottom
-  of `/past.html` because they predate the standalone-page convention.
-
----
-
-## P2 — Quality-of-life features
-
-### Site search — tracked in [#209](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/209)
-
-**Effort: M**
-
-[Pagefind](https://pagefind.app/) at deploy time, wired into the 404 page
-as the first step (netsec PR #280 is the reference implementation). Three
-pieces: `npx pagefind --site _site` added to `deploy.yml`, Pagefind UI
-lazy-loaded on `404.njk` with an `onerror` fallback, and `data-pagefind-ignore`
-on the 404 mount so the error page itself isn't indexed. Nav Cmd-K search
-trigger is a follow-up once the 404 integration proves the pipeline. Tracked
-in [#209](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/209).
-
-### ~~Print stylesheet for conference programmes~~ — _shipped in v2.17.0_
-
-Print CSS for `/YYYY` pages went in as the v2.17.0 release. Cmd+P
-on the conference page now drops nav, footer, beta ribbon, archive
-ribbon, livestream block, and social buttons. Expands the programme
-grid into a paper-friendly single-column flow with sensible page
-breaks. Page 1 carries a full cover masthead, pages 2+ get a thin
-running header and a bottom-right page counter (locale-aware).
-
-### Conference countdown widget
-
-**Effort: S**
-
-Small pure-CSS-or-1-line-JS widget on `/index.html` and `/2026.html`:
-"73 days until ESSC 2026". Could appear in the hero or as a quiet
-note near the date. Updates automatically without any data feed.
-
-### Page transitions via View Transitions API
-
-**Effort: S**
-
-The View Transitions API is now stable in Chromium-based browsers
-and shipping in Safari/Firefox. A handful of lines in `base.njk`
-would give smooth crossfades between pages, Apple-style polish.
-Progressive enhancement, with older browsers seeing today's behaviour.
-
-### Acknowledgments / contributors page
-
-**Effort: S**
-
-A `/acknowledgments.html` listing institutional partners, funders,
-and contributors (with photo/logo permissions clarified). Currently
-some of this is in the footer fineprint. Surfacing it dedicated
-helps with sponsorship outreach and recognition.
-
----
-
-## P2 — Cleanups
-
-### ~~Stale README~~ — _swept_
-
-The stale `src/legacy/` references were removed, the repo-layout
-diagram refreshed, the §Versioning "next bump" line updated to
-reflect v2.23.0 having shipped, and pointers added to the new
-root-level docs (`CLAUDE.md`, `SECURITY.md`, `docs/`).
-
-### macOS Finder duplicate files in the repo root
-
-**Effort: S**
-
-`README 2.md`, `.eleventy 2.js`, `package 2.json`, `.gitignore 2`,
-`board 2.html`, etc. These are gitignored, but they exist on your local
-checkout. Add `* 2.*` and `* 3.*` to `.gitignore` and rm the existing
-ones. One-shot cleanup. Won't affect the site or CI, just tidies
-your local view.
-
-### Unused assets in `src/assets/images/`
-
-**Effort: S**
-
-A few images are no longer referenced from any `.njk`. A quick
-`grep -r "image-name"` pass identifies them. Removing them shrinks
-the deployed `_site/` modestly and the repo more substantially.
-Don't delete photos with potential historical/sentimental value
-(conference group shots, etc.) without checking.
-
-### ~~Consolidate `scripts/`~~ — _done_
-
-`extract_legacy.py` and `extract_prose.py`, two Mobirise-era
-utility scripts, were retired in
-[#170](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/170)
-after CodeQL flagged their `<script>` / `<style>` regex patterns
-as vulnerable to the classic bad-tag-filter bypass. Both scripts
-targeted `src/legacy/`, which itself was retired in v1.0. Nothing
-referenced them. `a11y_lint.py` stays as the useful survivor.
-
-### Accessibility statement: tighten the audit date
-
-**Effort: S**
-
-The accessibility page says "axe-core was run on 14 May 2026". After
-each significant template change, that audit should be re-run and
-the date refreshed (or the text revised to "axe-core runs as a
-pre-commit lint, last full report 14 May 2026").
-
-### a11y_lint.py: catch more issues
-
-**Effort: M**
-
-Current lint catches basic alt-text / heading-structure issues. Could
-extend to:
-- Form-label associations
-- Skip-link presence
-- Lang attribute on `<html>`
-- Open Graph required fields
-- hreflang correctness (matches `i18n-state.json`)
-
----
-
-## P3 — explicitly deferred to 2027+
-
-These came up while thinking through the roadmap but I'd hold off:
-
-### Custom domain emails (e.g. board-individual@eiss-europa.com)
-
-Out of scope for the website. Goes through your email provider
-(Google Workspace / Fastmail / etc.), not GitHub Pages.
-
-### Replacing Mailchimp with self-hosted newsletter
-
-Mailchimp's free tier is fine, GDPR-compliant, and removes from your
-shoulders. Self-hosting (Listmonk, etc.) would save €0 and add
-infrastructure. Don't.
-
-### Multi-author CMS / admin UI
-
-You and 2-3 maintainers can edit JSON / Markdown in GitHub directly
-via the web editor. Adding a Netlify CMS or similar adds complexity
-without removing meaningful friction.
-
-### Analytics integration
-
-The privacy policy explicitly states "no analytics" and that's a
-strong positioning choice for an academic security network. Don't
-revisit unless there's a specific question only analytics can
-answer (and even then, prefer the GitHub Pages access logs aggregated
-by GitHub itself).
-
-### Multi-page member directory (like NetSec's /people.html)
-
-EISS has ~22 board members in a static page. The full membership
-list is in Stripe / Indico, not appropriate to publish. NetSec's
-member directory makes sense because the COST Action grant
-specifically asks for visibility of researchers. EISS doesn't have
-that pressure.
-
-### Conference paper repository / proceedings hosting
-
-If the COST Action publishes proceedings, they go on Zenodo
-(EU-hosted, OAI-compliant). The EISS site links out, it doesn't host.
-
-### Reverse-proxy custom domain for indico.eiss-europa.com
-
-The Indico instance is already at the right subdomain. Don't fuss.
-
----
-
-## Suggested ordering
-
-A rough calendar, but skip/swap as needed:
-
-**Now → June 2026** (mostly activating what's built)
-
-- ~~P0: Google Form for board bios~~ — **done** in v2.22.0
-- Cleanups: ~~stale README~~ (swept), macOS duplicate files, unused assets
-- ~~P1: NetSec announcement card → data-driven~~ — **done** in v2.5.0
-- ~~P2: print stylesheet on /2026.html~~ — **done** in v2.17.0
-
-**June → August 2026** (post-ESSC 2026)
-
-- P0: Native-speaker review pass — start with legal pages
-- P1: YouTube embeds on archive pages (2025, 2024, 2023 first)
-- ~~P1: Conference cycle automation~~ — **done** in v2.3.0
-- P2: Conference countdown widget
-
-**September → November 2026**
-
-- ~~P1: Indico API integration~~ — **done** in v2.4.0 (basic sync) + v2.5.0 (registration-status badge)
-- P1: NetSec co-branding strip standardised
-- P2: View Transitions API
-- P2: a11y_lint.py extensions
-
-**December 2026 → January 2027** (ESSC 2027 prep)
-
-- P1: ESSC 2027 announcement — drop one entry into
-  `src/_data/conferences.js`, follow `docs/new-conference.md`. Now
-  a ~30-minute job rather than a multi-page hand-edit.
-- P0: refresh accessibility audit + update date
-- P1: Newsletter archive page if Mailchimp still hosting
-
----
-
 _This document lives in the repo. Treat it as a living plan: revise
-freely as priorities shift. The git history will track changes._
+freely as priorities shift. The git history tracks changes._
