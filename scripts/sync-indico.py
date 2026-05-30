@@ -638,6 +638,11 @@ def extract_programme(timetable_results: dict, event_id: str) -> dict:
                     "subtype": subtype,
                     "slotTitle": slot.get("slotTitle") or "",
                     "sessionCode": code,
+                    # `livestreamed` is set authoritatively in main() by
+                    # matching against the Type-aware extract_livestreamed()
+                    # result, so the grid pill and the (data-only) livestream
+                    # list never disagree.
+                    "livestreamed": False,
                     "conveners": [_normalise_person(c) for c in slot.get("conveners") or []],
                     "discussants": discussants,
                     "contributions": contribs,
@@ -946,6 +951,16 @@ def main() -> None:
         # on /YYYY pages. Same timetable, different shape: every slot,
         # not just livestreamed ones.
         event["programme"] = extract_programme(tt, event["id"])
+        # Flag the programme slots that are livestreamed by matching titles
+        # against the Type-aware livestreamed list, so the grid's "Livestream"
+        # pill stays consistent with that classification (it catches the
+        # roundtables whose sessionCode isn't a plain "RT").
+        _ls_titles = {(k.get("title") or "").strip() for k in livestreamed if k.get("title")}
+        for _day in event["programme"].get("days", []):
+            for _row in _day.get("rows", []):
+                for _slot in _row.get("items", []):
+                    if _slot.get("kind") == "session" and (_slot.get("title") or "").strip() in _ls_titles:
+                        _slot["livestreamed"] = True
         with_video = sum(1 for k in livestreamed if k.get("videoUrl"))
         by_type: dict[str, int] = {}
         for k in livestreamed:

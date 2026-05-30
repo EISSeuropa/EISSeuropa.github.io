@@ -80,12 +80,12 @@ alternates:
   </div>
 </section>
 
-{# Livestreamed sessions, pulled from the Indico timetable —
-   introduction, roundtables, keynote, and closing. Hidden when no
-   sessions match the INTRO / RT / KEY / CONC sessionCodes (or the
-   "Roundtable:" title-prefix fallback) in Indico. #}
+{# "Speaking or chairing?" card for speakers and chairs, just before the
+   programme. The old standalone "Livestreamed sessions" block was removed
+   so it doesn't distract from the programme: the grid now signposts the
+   livestreamed sessions inline and tags each with a "Livestream" pill. #}
 {% set year = "2026" %}
-{% include "livestream-list.njk" %}
+{% include "speaking-chairing.njk" %}
 
 {# Live programme grid pulled from the Indico timetable, refreshed
    daily. See docs/indico-programme-integration.md for the

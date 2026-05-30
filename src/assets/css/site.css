@@ -2791,6 +2791,69 @@ h4 { font-size: var(--fs-lg); }
   flex: 0 0 auto;
 }
 
+/* Livestream marker: the per-session pill in the grid and the matching tag
+   in the signpost note above it. A broadcast red, distinct from the room
+   colour pills. */
+.programme-slot-live,
+.programme-live-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  width: fit-content;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: hsl(350 74% 42%);
+  background: hsl(350 74% 50% / 0.10);
+  border: 1px solid hsl(350 74% 50% / 0.28);
+  border-radius: 999px;
+  padding: 0.18rem 0.6rem;
+}
+.programme-slot-live svg,
+.programme-live-tag svg {
+  flex: 0 0 auto;
+  width: 0.95em;
+  height: 0.95em;
+}
+[data-theme="dark"] .programme-slot-live,
+[data-theme="dark"] .programme-live-tag {
+  color: hsl(350 90% 72%);
+  background: hsl(350 80% 60% / 0.16);
+  border-color: hsl(350 80% 60% / 0.35);
+}
+
+/* Livestream signpost above the grid (replaces the old standalone block). */
+.programme-livestream-note {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin: 0 0 var(--space-5);
+}
+
+/* "Speaking or chairing?" card: prose on the left, actions on the right,
+   stacking on narrow viewports. */
+.speaker-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4) var(--space-6);
+  padding: clamp(var(--space-5), 1.5vw + 1rem, var(--space-6));
+}
+.speaker-card-body {
+  flex: 1 1 24rem;
+}
+.speaker-card-body h2 {
+  margin: var(--space-1) 0 var(--space-2);
+}
+.speaker-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
 /* Six-hue palette. Each variant defines a foreground colour and a
    matching low-alpha background + border. The light-mode tones come
    first; dark-mode lifts the saturations + lightnesses inside the
@@ -4433,6 +4496,8 @@ a.joint-orgs-card:hover .joint-orgs-name {
   .programme-footnote,           /* "source of truth is Indico" line */
   .programme-days,               /* day-jump chips — no point on paper */
   .programme-contribs > summary, /* "View papers" toggle */
+  .programme-livestream-note,    /* online-join signpost — not actionable on paper */
+  section:has(.speaker-card),    /* "Speaking or chairing?" card — interactive, online-only */
   section:has(.joint-orgs),      /* co-organisers logo strip (full page, not useful on paper) */
   #programme ~ * {               /* everything after the grid: PDF-download card, venue, travel, funding */
     display: none !important;
