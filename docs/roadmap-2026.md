@@ -5,7 +5,7 @@ think through what's worth doing next, in what order, and at what
 effort. **Last update: 28 May 2026, after v2.23.1.**
 
 <!-- AUTOSTAMP:BEGIN -->
-> _Auto-tracked: **29 entries** in [`[Unreleased]`](../CHANGELOG.md#unreleased) since **v2.23.1** (12 Added, 9 Changed, 7 Fixed, 1 Security). Last refresh by `scripts/sync-roadmap.py`: 30 May 2026. Prose in the timeline below may lag; the maintainer resynthesises on release-time §5 sweep._
+> _Auto-tracked: **32 entries** in [`[Unreleased]`](../CHANGELOG.md#unreleased) since **v2.23.1** (13 Added, 11 Changed, 7 Fixed, 1 Security). Last refresh by `scripts/sync-roadmap.py`: 30 May 2026. Prose in the timeline below may lag; the maintainer resynthesises on release-time §5 sweep._
 <!-- AUTOSTAMP:END -->
 
 > **Sync convention.** This file is the source of truth. The block
