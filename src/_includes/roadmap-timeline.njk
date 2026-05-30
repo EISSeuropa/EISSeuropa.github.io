@@ -1,0 +1,90 @@
+{# Public roadmap timeline. Renders from src/_data/roadmap.js in the
+   active `lang`. Chrome strings come from t.roadmap.* (i18n.js).
+
+   In-flight cards carry data-milestone="vX.Y.Z"; assets/js/roadmap-progress.js
+   reads /data/roadmap-progress.json (closed / total issues on the
+   matching GitHub milestone) and injects a progress bar, and promotes
+   the first still-planned version card to "In progress". No JS = the
+   cards still render, just without bars. #}
+{% from "icons.njk" import icon %}
+{%- set _lang = lang or "en" -%}
+{%- set t = i18n[_lang] -%}
+{%- set pill = {
+  "shipped": t.roadmap.status.shipped,
+  "in-progress": t.roadmap.status.inProgress,
+  "planned": t.roadmap.status.planned,
+  "deferred": t.roadmap.status.deferred
+} -%}
+
+<section class="section rm-section" aria-labelledby="rm-title"
+  data-roadmap-progress="/data/roadmap-progress.json"
+  data-progress-tpl="{{ t.roadmap.progressLabel }}"
+  data-inprogress-label="{{ t.roadmap.status.inProgress }}">
+  <div class="container">
+
+    <div class="rm-legend" aria-label="{{ t.roadmap.statusKey }}">
+      <span class="rm-legend-label">{{ t.roadmap.statusKey }}</span>
+      <span class="rm-pill shipped"><span class="rm-dot" aria-hidden="true"></span>{{ t.roadmap.status.shipped }}</span>
+      <span class="rm-pill in-progress"><span class="rm-dot" aria-hidden="true"></span>{{ t.roadmap.status.inProgress }}</span>
+      <span class="rm-pill planned"><span class="rm-dot" aria-hidden="true"></span>{{ t.roadmap.status.planned }}</span>
+      <span class="rm-pill deferred"><span class="rm-dot" aria-hidden="true"></span>{{ t.roadmap.status.deferred }}</span>
+    </div>
+
+    {%- for q in roadmap.quarters %}
+    <div class="rm-quarter">
+      <h2>{{ q.label[_lang] }}</h2>
+      <span class="rm-quarter-sub">{{ q.sub[_lang] }}</span>
+    </div>
+
+    <ol class="rm-timeline" role="list">
+      {%- for e in q.entries %}
+      <li class="rm-entry {{ e.status }}{% if e.event %} rm-milestone{% endif %}">
+        <article class="rm-card"{% if e.milestone %} data-milestone="{{ e.milestone }}"{% endif %}>
+          <div class="rm-head">
+            <span class="rm-pill {{ e.status }}"><span class="rm-dot" aria-hidden="true"></span>{{ pill[e.status] }}</span>
+            <span class="rm-when">{{ e.when[_lang] }}</span>
+          </div>
+          <h3 class="rm-card-title">{{ e.title[_lang] }}</h3>
+          <p class="rm-desc">{{ e.desc[_lang] }}</p>
+          {%- if e.notesUrl %}
+          <a class="rm-notes" href="{{ e.notesUrl }}" target="_blank" rel="noopener">{{ t.roadmap.releaseNotes }} {{ icon("external-link") }}</a>
+          {%- endif %}
+        </article>
+      </li>
+      {%- endfor %}
+    </ol>
+    {%- endfor %}
+
+    <div class="rm-quarter">
+      <h2 id="under-watch">{{ t.roadmap.underWatch }}</h2>
+      <span class="rm-quarter-sub">{{ t.roadmap.underWatchSub }}</span>
+    </div>
+
+    <ul class="rm-watch" role="list">
+      {%- for e in roadmap.underWatch %}
+      <li>
+        <article class="rm-card rm-card--watch">
+          <div class="rm-head">
+            <span class="rm-pill deferred"><span class="rm-dot" aria-hidden="true"></span>{{ t.roadmap.status.deferred }}</span>
+            <span class="rm-when">{{ e.when[_lang] }}</span>
+          </div>
+          <h3 class="rm-card-title">{{ e.title[_lang] }}</h3>
+          <p class="rm-desc">{{ e.desc[_lang] }}</p>
+        </article>
+      </li>
+      {%- endfor %}
+    </ul>
+
+    <div class="rm-cta">
+      <p>{{ t.roadmap.ctaLead }}</p>
+      <div class="rm-cta-links">
+        <a class="btn btn-secondary" href="{{ roadmap.issuesUrl }}" target="_blank" rel="noopener">{{ icon("lightbulb") }} {{ t.roadmap.ctaIssue }}</a>
+        <a class="btn btn-ghost" href="{{ roadmap.milestonesUrl }}" target="_blank" rel="noopener">{{ t.roadmap.ctaMilestones }} {{ icon("external-link") }}</a>
+        <a class="btn btn-ghost" href="{{ roadmap.releasesUrl }}" target="_blank" rel="noopener">{{ t.roadmap.ctaReleases }} {{ icon("external-link") }}</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script src="/assets/js/roadmap-progress.js" defer></script>

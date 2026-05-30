@@ -67,6 +67,28 @@ const locales = {
       deTitle: "Deutsch (Beta)",
     },
 
+    roadmap: {
+      eyebrow: "Where we're headed",
+      heading: "Roadmap",
+      lead: "What's shipped, what's in progress, and what's planned for this website. Each version below maps to a release on GitHub; the in-flight ones show live progress from their issue milestones.",
+      updatedLabel: "Last updated",
+      statusKey: "Status",
+      status: {
+        shipped: "Shipped",
+        inProgress: "In progress",
+        planned: "Planned",
+        deferred: "Under watch",
+      },
+      releaseNotes: "Release notes",
+      progressLabel: "{closed} of {total} issues closed",
+      underWatch: "Under watch",
+      underWatchSub: "No committed release, waiting on a trigger",
+      ctaLead: "Spotted something missing, or have an idea? The roadmap is public and so is the backlog.",
+      ctaIssue: "Suggest or report",
+      ctaMilestones: "Browse milestones",
+      ctaReleases: "All releases",
+    },
+
     footer: {
       tagline: "The largest and most diverse European gathering of scholars and practitioners on security issues.",
       conferencesHeading: "Conferences",
@@ -105,6 +127,7 @@ const locales = {
         privacy: "Privacy Policy",
         accessibility: "Accessibility",
         sitemap: "Site map",
+        roadmap: "Roadmap",
       },
       // Authorship credit shown on the very last line of the footer, next
       // to the legal-links row. The name itself links to the author's
@@ -317,6 +340,28 @@ const locales = {
       deTitle: "Deutsch (Beta)",
     },
 
+    roadmap: {
+      eyebrow: "Où nous allons",
+      heading: "Feuille de route",
+      lead: "Ce qui est publié, en cours et prévu pour ce site. Chaque version ci-dessous correspond à une publication sur GitHub ; celles en cours affichent l’avancement en direct de leurs jalons.",
+      updatedLabel: "Dernière mise à jour",
+      statusKey: "Statut",
+      status: {
+        shipped: "Publié",
+        inProgress: "En cours",
+        planned: "Prévu",
+        deferred: "À surveiller",
+      },
+      releaseNotes: "Notes de version",
+      progressLabel: "{closed} sur {total} tâches terminées",
+      underWatch: "À surveiller",
+      underWatchSub: "Aucune version engagée, en attente d’un déclencheur",
+      ctaLead: "Vous avez remarqué un oubli ou vous avez une idée ? La feuille de route est publique, tout comme la liste des tâches.",
+      ctaIssue: "Proposer ou signaler",
+      ctaMilestones: "Voir les jalons",
+      ctaReleases: "Toutes les versions",
+    },
+
     footer: {
       tagline: "Le plus grand et le plus divers rassemblement européen de chercheurs et praticiens sur les questions de sécurité.",
       conferencesHeading: "Conférences",
@@ -355,6 +400,7 @@ const locales = {
         privacy: "Politique de confidentialité",
         accessibility: "Accessibilité",
         sitemap: "Plan du site",
+        roadmap: "Feuille de route",
       },
       authorship: {
         prefix: "Site conçu et développé par",
@@ -515,6 +561,28 @@ const locales = {
       deTitle: "Deutsch (Beta)",
     },
 
+    roadmap: {
+      eyebrow: "Wohin es geht",
+      heading: "Roadmap",
+      lead: "Was veröffentlicht ist, in Arbeit ist und für diese Website geplant ist. Jede Version unten entspricht einer Veröffentlichung auf GitHub; die laufenden zeigen den Live-Fortschritt ihrer Meilensteine.",
+      updatedLabel: "Zuletzt aktualisiert",
+      statusKey: "Status",
+      status: {
+        shipped: "Veröffentlicht",
+        inProgress: "In Arbeit",
+        planned: "Geplant",
+        deferred: "Unter Beobachtung",
+      },
+      releaseNotes: "Versionshinweise",
+      progressLabel: "{closed} von {total} Aufgaben erledigt",
+      underWatch: "Unter Beobachtung",
+      underWatchSub: "Keine zugesagte Version, wartet auf einen Auslöser",
+      ctaLead: "Fehlt etwas, oder haben Sie eine Idee? Die Roadmap ist öffentlich, ebenso der Aufgabenbestand.",
+      ctaIssue: "Vorschlagen oder melden",
+      ctaMilestones: "Meilensteine ansehen",
+      ctaReleases: "Alle Versionen",
+    },
+
     footer: {
       tagline: "Die größte und vielfältigste europäische Versammlung von Wissenschaftlern und Praktikern zu Sicherheitsfragen.",
       conferencesHeading: "Konferenzen",
@@ -553,6 +621,7 @@ const locales = {
         privacy: "Datenschutzerklärung",
         accessibility: "Barrierefreiheit",
         sitemap: "Sitemap",
+        roadmap: "Roadmap",
       },
       authorship: {
         prefix: "Website konzipiert und entwickelt von",

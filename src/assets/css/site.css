@@ -4665,3 +4665,89 @@ a.joint-orgs-card:hover .joint-orgs-name {
     margin: 1.5cm;
   }
 }
+
+/* ============================================================
+   Public roadmap (/roadmap.html + FR + DE) — status timeline,
+   pills, and JS-injected milestone progress bars. Mirrors the
+   NetSec sister-site roadmap, adapted to EISS design tokens.
+   ============================================================ */
+.rm-updated { font-size: var(--fs-sm); margin-top: var(--space-2); }
+
+.rm-legend {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: var(--space-2) var(--space-3); margin-bottom: var(--space-7);
+}
+.rm-legend-label {
+  font-size: var(--fs-sm); font-weight: 600; color: var(--text-muted);
+  margin-right: var(--space-1);
+}
+
+/* Status pill — colour driven by per-status custom properties so the
+   token-based statuses flip in dark mode for free; only the two
+   hardcoded hues (shipped, deferred) get explicit dark overrides. */
+.rm-pill {
+  display: inline-flex; align-items: center; gap: 0.4em;
+  font-size: var(--fs-xs); font-weight: 600; line-height: 1; white-space: nowrap;
+  padding: 0.34em 0.72em; border-radius: var(--radius-full);
+  color: var(--rm-c, var(--text-muted));
+  background: var(--rm-bg, var(--surface));
+  border: 1px solid var(--rm-bd, var(--border));
+}
+.rm-dot { width: 0.5em; height: 0.5em; border-radius: 50%; background: currentColor; flex: 0 0 auto; }
+.rm-pill.shipped { --rm-c: hsl(140 50% 30%); --rm-bg: hsl(140 50% 45% / 0.12); --rm-bd: hsl(140 50% 45% / 0.28); }
+.rm-pill.in-progress { --rm-c: var(--accent); --rm-bg: var(--accent-soft); --rm-bd: hsl(216 88% 50% / 0.3); }
+.rm-pill.planned { --rm-c: var(--text-subtle); --rm-bg: var(--surface); --rm-bd: var(--border); }
+.rm-pill.deferred { --rm-c: hsl(33 78% 38%); --rm-bg: hsl(36 95% 50% / 0.12); --rm-bd: hsl(36 90% 50% / 0.3); }
+
+.rm-quarter {
+  display: flex; align-items: baseline; gap: var(--space-3); flex-wrap: wrap;
+  margin: var(--space-8) 0 var(--space-5); padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border);
+}
+.rm-quarter:first-of-type { margin-top: var(--space-4); }
+.rm-quarter h2 { margin: 0; font-size: var(--fs-xl); }
+.rm-quarter-sub { color: var(--text-subtle); font-size: var(--fs-sm); }
+
+.rm-timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); }
+.rm-entry { position: relative; }
+
+.rm-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: var(--space-5); box-shadow: var(--shadow-1);
+}
+.rm-entry.shipped .rm-card { opacity: 0.93; }
+.rm-entry.in-progress .rm-card { border-color: hsl(216 88% 50% / 0.4); box-shadow: var(--shadow-2); }
+.rm-milestone .rm-card { background: var(--bg-tinted); border-style: dashed; }
+
+.rm-head { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-3); }
+.rm-when { font-size: var(--fs-sm); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.rm-card-title { margin: 0 0 var(--space-2); font-size: var(--fs-lg); }
+.rm-desc { margin: 0; color: var(--text-muted); line-height: 1.6; }
+.rm-notes { display: inline-flex; align-items: center; gap: 0.35em; margin-top: var(--space-3); font-size: var(--fs-sm); font-weight: 600; }
+
+/* Progress bar (injected by roadmap-progress.js on in-flight cards). */
+.rm-progress { margin-top: var(--space-4); }
+.rm-progress-track { height: 7px; border-radius: var(--radius-full); background: var(--accent-soft); overflow: hidden; }
+.rm-progress-fill { height: 100%; border-radius: inherit; background: var(--accent); transition: width 0.6s ease; }
+.rm-progress-label { display: block; margin-top: var(--space-2); font-size: var(--fs-xs); color: var(--text-subtle); }
+
+.rm-watch {
+  list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+}
+.rm-card--watch { height: 100%; }
+
+.rm-cta { margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--border); }
+.rm-cta p { color: var(--text-muted); margin: 0 0 var(--space-4); }
+.rm-cta-links { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .rm-pill.shipped { --rm-c: hsl(140 55% 68%); --rm-bg: hsl(140 55% 55% / 0.18); --rm-bd: hsl(140 55% 55% / 0.32); }
+  :root:not([data-theme="light"]) .rm-pill.deferred { --rm-c: hsl(40 90% 66%); --rm-bg: hsl(40 90% 55% / 0.16); --rm-bd: hsl(40 90% 55% / 0.32); }
+}
+[data-theme="dark"] .rm-pill.shipped { --rm-c: hsl(140 55% 68%); --rm-bg: hsl(140 55% 55% / 0.18); --rm-bd: hsl(140 55% 55% / 0.32); }
+[data-theme="dark"] .rm-pill.deferred { --rm-c: hsl(40 90% 66%); --rm-bg: hsl(40 90% 55% / 0.16); --rm-bd: hsl(40 90% 55% / 0.32); }
+
+@media (prefers-reduced-motion: reduce) {
+  .rm-progress-fill { transition: none; }
+}
