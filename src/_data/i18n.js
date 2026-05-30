@@ -198,8 +198,8 @@ const locales = {
     // /YYYY pages, pointing speakers/chairs to Indico + a one-click print.
     speakerCard: {
       heading: "Speaking or chairing?",
-      body: "Update your details or request an invitation or visa letter:",
-      ctaIndico: "manage your session on Indico",
+      body: "Edit your session or contributions and request a visa letter in the",
+      ctaFaq: "conference FAQ",
       ctaPdf: "download the programme (PDF)",
     },
 
@@ -420,8 +420,8 @@ const locales = {
 
     speakerCard: {
       heading: "Vous intervenez ou présidez ?",
-      body: "Modifiez vos informations ou demandez une lettre d'invitation ou de visa :",
-      ctaIndico: "gérer votre session sur Indico",
+      body: "Modifiez votre session ou vos communications et demandez une lettre de visa dans la",
+      ctaFaq: "FAQ de la conférence",
       ctaPdf: "télécharger le programme (PDF)",
     },
 
@@ -618,8 +618,8 @@ const locales = {
 
     speakerCard: {
       heading: "Vortragen oder Vorsitz führen?",
-      body: "Aktualisieren Sie Ihre Angaben oder fordern Sie ein Einladungs- oder Visumschreiben an:",
-      ctaIndico: "Ihre Sitzung auf Indico verwalten",
+      body: "Bearbeiten Sie Ihre Sitzung oder Beiträge und fordern Sie ein Visumschreiben an, in der",
+      ctaFaq: "Konferenz-FAQ",
       ctaPdf: "Programm herunterladen (PDF)",
     },
 
