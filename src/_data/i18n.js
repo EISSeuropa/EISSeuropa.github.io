@@ -177,6 +177,11 @@ const locales = {
       readFullAbstract: "Read full abstract",
       sourceNote: "Indico holds the authoritative programme. This grid is a daily snapshot.",
       viewOnIndico: "View the event on Indico",
+      // Livestream signpost + per-session pill (replaces the old standalone
+      // "Livestreamed sessions" block).
+      livestreamPill: "Livestream",
+      livestreamNote: "The plenary sessions are livestreamed, tagged below.",
+      livestreamNoteCta: "Join online on Indico",
       // Static PDF block — surfaces the polished designer-made
       // programme when the operator has uploaded one (see
       // conferences.js `programmePdf` field). The grid above is
@@ -187,6 +192,16 @@ const locales = {
       pdfDescriptionDraft: "A working version of the programme. The live grid above reflects the latest changes.",
       pdfOpen: "Open in new tab",
       pdfDownload: "Download",
+    },
+
+    // "Speaking or chairing?" card shown just before the programme on
+    // /YYYY pages, pointing speakers/chairs to Indico + a one-click print.
+    speakerCard: {
+      eyebrow: "Speakers & chairs",
+      heading: "Speaking or chairing?",
+      body: "Correct your details, request an invitation or visa letter, and find practical answers on the conference's Indico page. You can also print this programme for offline use.",
+      ctaIndico: "Manage your session on Indico",
+      ctaPrint: "Print the programme",
     },
 
     livestream: {
@@ -393,12 +408,23 @@ const locales = {
       readFullAbstract: "Lire le résumé complet",
       sourceNote: "Indico fait foi pour le programme. Cette grille en est un instantané quotidien.",
       viewOnIndico: "Voir l'événement sur Indico",
+      livestreamPill: "En direct",
+      livestreamNote: "Les sessions plénières sont diffusées en direct, signalées ci-dessous.",
+      livestreamNoteCta: "Suivre en ligne sur Indico",
       pdfHeading: "Programme final — PDF imprimable",
       pdfHeadingDraft: "Programme provisoire — PDF imprimable (susceptible de changer)",
       pdfDescription: "Une version mise en page et imprimable du programme.",
       pdfDescriptionDraft: "Une version provisoire du programme — la grille en direct ci-dessus reflète les dernières modifications.",
       pdfOpen: "Ouvrir dans un nouvel onglet",
       pdfDownload: "Télécharger",
+    },
+
+    speakerCard: {
+      eyebrow: "Intervenant·es et présidence",
+      heading: "Vous intervenez ou présidez ?",
+      body: "Corrigez vos informations, demandez une lettre d'invitation ou de visa, et retrouvez les réponses pratiques sur la page Indico de la conférence. Vous pouvez aussi imprimer ce programme pour une consultation hors ligne.",
+      ctaIndico: "Gérer votre session sur Indico",
+      ctaPrint: "Imprimer le programme",
     },
 
     livestream: {
@@ -581,12 +607,23 @@ const locales = {
       readFullAbstract: "Vollständiges Abstract lesen",
       sourceNote: "Indico ist die maßgebliche Quelle für das Programm. Dieses Raster ist ein tägliches Abbild.",
       viewOnIndico: "Veranstaltung auf Indico ansehen",
+      livestreamPill: "Livestream",
+      livestreamNote: "Die Plenarsitzungen werden live übertragen, unten gekennzeichnet.",
+      livestreamNoteCta: "Online auf Indico teilnehmen",
       pdfHeading: "Endgültiges Programm — druckbares PDF",
       pdfHeadingDraft: "Arbeitsversion des Programms — druckbares PDF (Änderungen vorbehalten)",
       pdfDescription: "Eine gestaltete und druckfreundliche Version des Programms.",
       pdfDescriptionDraft: "Eine Arbeitsversion des Programms — das Live-Raster oben zeigt den aktuellen Stand.",
       pdfOpen: "In neuem Tab öffnen",
       pdfDownload: "Herunterladen",
+    },
+
+    speakerCard: {
+      eyebrow: "Vortragende & Vorsitz",
+      heading: "Vortragen oder Vorsitz führen?",
+      body: "Korrigieren Sie Ihre Angaben, fordern Sie ein Einladungs- oder Visumschreiben an und finden Sie praktische Antworten auf der Indico-Seite der Konferenz. Sie können dieses Programm auch für die Offline-Nutzung ausdrucken.",
+      ctaIndico: "Ihre Sitzung auf Indico verwalten",
+      ctaPrint: "Programm drucken",
     },
 
     livestream: {

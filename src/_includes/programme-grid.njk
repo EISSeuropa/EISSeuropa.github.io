@@ -36,9 +36,20 @@
   <div class="container">
     <div class="featured-eyebrow">{{ t.programme.eyebrow }}</div>
     <h2 id="programme-title">{{ t.programme.heading }}</h2>
-    <p class="muted" style="max-width: 44rem; margin-bottom: var(--space-5);">
+    <p class="muted" style="max-width: 44rem; margin-bottom: var(--space-4);">
       {{ t.programme.lead }}
     </p>
+
+    {# Early signpost to the livestreamed sessions, in place of the old
+       dedicated "Livestreamed sessions" block. Shown only when the year
+       has sessions tagged for livestream. #}
+    {%- if _conf.livestreamed and _conf.livestreamed.length %}
+    <p class="programme-livestream-note">
+      <span class="programme-live-tag">{{ icon("video") }} {{ t.programme.livestreamPill }}</span>
+      {{ t.programme.livestreamNote }}
+      {%- if _conf.url %} <a href="{{ _conf.url }}" target="_blank" rel="noopener">{{ t.programme.livestreamNoteCta }} {{ icon("external-link") }}</a>{% endif %}
+    </p>
+    {%- endif %}
 
     {%- if _programme.days.length > 1 %}
     <nav class="programme-days" aria-label="{{ t.programme.daysNav }}">
@@ -88,6 +99,9 @@
               <p class="programme-slot-meta programme-slot-room programme-slot-room--c{{ slot.roomColorIndex if slot.roomColorIndex is not none else 'x' }}">
                 {{ icon("map-pin") }} {{ slot.room }}
               </p>
+              {%- endif %}
+              {%- if slot.livestreamed %}
+              <p class="programme-slot-meta programme-slot-live">{{ icon("video") }} {{ t.programme.livestreamPill }}</p>
               {%- endif %}
               {%- if slot.conveners and slot.conveners.length %}
               <p class="programme-slot-meta">
