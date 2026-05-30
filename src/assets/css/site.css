@@ -4510,11 +4510,10 @@ a.joint-orgs-card:hover .joint-orgs-name {
     border: 1px solid hsl(0 0% 80%) !important;
     padding: 0.3cm 0.4cm !important;
   }
-  /* Keep an individual paper (title + presenter + co-authors) and short
-     breaks intact, but let whole panels flow across a page boundary so
-     pages fill instead of stranding a tall parallel row on the next page
-     and leaving most of the previous page blank. */
-  .programme-contrib,
+  /* Let panels (and the papers inside them) flow across a page boundary so
+     each column fills to the bottom of the page rather than breaking early
+     to keep a paper atomic — which left the shorter of two side-by-side
+     panels half-empty. Only the short break cards stay unbroken. */
   .programme-slot--break {
     break-inside: avoid;
   }
