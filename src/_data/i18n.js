@@ -197,11 +197,10 @@ const locales = {
     // "Speaking or chairing?" card shown just before the programme on
     // /YYYY pages, pointing speakers/chairs to Indico + a one-click print.
     speakerCard: {
-      eyebrow: "Speakers & chairs",
       heading: "Speaking or chairing?",
-      body: "Correct your details, request an invitation or visa letter, and find practical answers on the conference's Indico page. You can also print this programme for offline use.",
-      ctaIndico: "Manage your session on Indico",
-      ctaPrint: "Print the programme",
+      body: "Edit your session or contributions and request a visa letter in the",
+      ctaFaq: "conference FAQ",
+      ctaPdf: "download the programme (PDF)",
     },
 
     livestream: {
@@ -420,11 +419,10 @@ const locales = {
     },
 
     speakerCard: {
-      eyebrow: "Intervenant·es et présidence",
       heading: "Vous intervenez ou présidez ?",
-      body: "Corrigez vos informations, demandez une lettre d'invitation ou de visa, et retrouvez les réponses pratiques sur la page Indico de la conférence. Vous pouvez aussi imprimer ce programme pour une consultation hors ligne.",
-      ctaIndico: "Gérer votre session sur Indico",
-      ctaPrint: "Imprimer le programme",
+      body: "Modifiez votre session ou vos communications et demandez une lettre de visa dans la",
+      ctaFaq: "FAQ de la conférence",
+      ctaPdf: "télécharger le programme (PDF)",
     },
 
     livestream: {
@@ -619,11 +617,10 @@ const locales = {
     },
 
     speakerCard: {
-      eyebrow: "Vortragende & Vorsitz",
       heading: "Vortragen oder Vorsitz führen?",
-      body: "Korrigieren Sie Ihre Angaben, fordern Sie ein Einladungs- oder Visumschreiben an und finden Sie praktische Antworten auf der Indico-Seite der Konferenz. Sie können dieses Programm auch für die Offline-Nutzung ausdrucken.",
-      ctaIndico: "Ihre Sitzung auf Indico verwalten",
-      ctaPrint: "Programm drucken",
+      body: "Bearbeiten Sie Ihre Sitzung oder Beiträge und fordern Sie ein Visumschreiben an, in der",
+      ctaFaq: "Konferenz-FAQ",
+      ctaPdf: "Programm herunterladen (PDF)",
     },
 
     livestream: {

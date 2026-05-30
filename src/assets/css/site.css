@@ -2832,26 +2832,25 @@ h4 { font-size: var(--fs-lg); }
   margin: 0 0 var(--space-5);
 }
 
-/* "Speaking or chairing?" card: prose on the left, actions on the right,
-   stacking on narrow viewports. */
-.speaker-card {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4) var(--space-6);
-  padding: clamp(var(--space-5), 1.5vw + 1rem, var(--space-6));
+/* Discreet "Speaking or chairing?" note before the programme: one compact
+   muted line with inline links, deliberately not a card so it doesn't
+   compete with the programme. */
+.speaker-note {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 48rem;
 }
-.speaker-card-body {
-  flex: 1 1 24rem;
+.speaker-note strong {
+  color: var(--text);
 }
-.speaker-card-body h2 {
-  margin: var(--space-1) 0 var(--space-2);
+.speaker-note a {
+  white-space: nowrap;
 }
-.speaker-card-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
+.speaker-note-sep {
+  color: var(--text-subtle);
+  margin: 0 0.15em;
 }
 
 /* Six-hue palette. Each variant defines a foreground colour and a
@@ -4497,7 +4496,7 @@ a.joint-orgs-card:hover .joint-orgs-name {
   .programme-days,               /* day-jump chips — no point on paper */
   .programme-contribs > summary, /* "View papers" toggle */
   .programme-livestream-note,    /* online-join signpost — not actionable on paper */
-  section:has(.speaker-card),    /* "Speaking or chairing?" card — interactive, online-only */
+  section:has(.speaker-note),    /* "Speaking or chairing?" note — online-only links */
   section:has(.joint-orgs),      /* co-organisers logo strip (full page, not useful on paper) */
   #programme ~ * {               /* everything after the grid: PDF-download card, venue, travel, funding */
     display: none !important;
