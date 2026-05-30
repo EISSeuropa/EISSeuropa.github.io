@@ -1,0 +1,24 @@
+---
+layout: base.njk
+permalink: /roadmap.de.html
+title: Roadmap
+description: "Was veröffentlicht ist, was in Arbeit ist und was bis Ende 2026 für die EISS-Website geplant ist, gespiegelt von den Versions-Meilensteinen auf GitHub."
+navKey: ""
+lang: de
+status: beta
+alternates:
+  en: /roadmap.html
+  fr: /roadmap.fr.html
+  de: /roadmap.de.html
+---
+{%- set t = i18n[lang or "en"] -%}
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">{{ t.roadmap.eyebrow }}</span>
+    <h1 id="rm-title">{{ t.roadmap.heading }}</h1>
+    <p class="page-lead">{{ t.roadmap.lead }}</p>
+    <p class="rm-updated muted">{{ t.roadmap.updatedLabel }} {{ roadmap.updated[lang] }}</p>
+  </div>
+</header>
+
+{% include "roadmap-timeline.njk" %}

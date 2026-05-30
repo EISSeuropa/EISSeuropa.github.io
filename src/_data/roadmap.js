@@ -1,0 +1,272 @@
+/**
+ * Public roadmap content for /roadmap.html (+ FR + DE).
+ *
+ * This is the curated, public mirror of docs/roadmap-2026.md and the
+ * GitHub milestones. The internal doc is the authoritative planning
+ * source; this file is what visitors see. Keep them in step at the
+ * §5 release cross-check.
+ *
+ * Each entry's localised strings (`when`, `title`, `desc`) are
+ * hand-translated per CLAUDE.md §1 (no machine translation). FR / DE
+ * roadmap pages carry the `status: beta` ribbon accordingly.
+ *
+ * Card statuses: "shipped" | "in-progress" | "planned" | "deferred".
+ * - `version`  — the SemVer tag; drives the GitHub release-notes link
+ *                on shipped cards.
+ * - `milestone`— set on planned / in-progress cards so the in-flight
+ *                progress bar (assets/js/roadmap-progress.js, reading
+ *                src/data/roadmap-progress.json) can attach to the
+ *                matching GitHub milestone. Dropped on shipped cards.
+ * - `event: true` — a non-version calendar marker (e.g. the conference
+ *                itself); renders without a version or progress bar.
+ *
+ * roadmap-progress.js auto-promotes the first still-planned version
+ * card to "In progress", so we leave the next release as "planned"
+ * here rather than hard-coding the in-progress state.
+ */
+
+const REPO = "https://github.com/EISSeuropa/EISSeuropa.github.io";
+const notes = (v) => `${REPO}/releases/tag/${v}`;
+
+module.exports = {
+  repo: REPO,
+  issuesUrl: `${REPO}/issues/new/choose`,
+  milestonesUrl: `${REPO}/milestones`,
+  releasesUrl: `${REPO}/releases`,
+  updated: { en: "31 May 2026", fr: "31 mai 2026", de: "31. Mai 2026" },
+
+  quarters: [
+    {
+      label: { en: "Q2 2026", fr: "T2 2026", de: "Q2 2026" },
+      sub: {
+        en: "April · May · June",
+        fr: "avril · mai · juin",
+        de: "April · Mai · Juni",
+      },
+      entries: [
+        {
+          status: "shipped",
+          version: "v2.22.0",
+          notesUrl: notes("v2.22.0"),
+          when: { en: "24 May 2026 · v2.22.0", fr: "24 mai 2026 · v2.22.0", de: "24. Mai 2026 · v2.22.0" },
+          title: {
+            en: "Live board pipeline and Initiative refresh",
+            fr: "Pipeline du conseil en direct et refonte de l’Initiative",
+            de: "Live-Vorstandspipeline und überarbeitete Initiative-Seite",
+          },
+          desc: {
+            en: "The Google Form board pipeline went live, and the People and Initiative pages were rebuilt around their data.",
+            fr: "Le pipeline du conseil via formulaire Google est entré en service, et les pages Équipe et Initiative ont été reconstruites autour de leurs données.",
+            de: "Die Vorstandspipeline über das Google-Formular ging in Betrieb, und die Seiten Team und Initiative wurden um ihre Daten herum neu aufgebaut.",
+          },
+        },
+        {
+          status: "shipped",
+          version: "v2.23.0",
+          notesUrl: notes("v2.23.0"),
+          when: { en: "26 May 2026 · v2.23.0", fr: "26 mai 2026 · v2.23.0", de: "26. Mai 2026 · v2.23.0" },
+          title: {
+            en: "Brand identity and Initiative depth",
+            fr: "Identité de marque et approfondissement de l’Initiative",
+            de: "Markenidentität und vertiefte Initiative-Seite",
+          },
+          desc: {
+            en: "The EISS brand identity replaced the placeholder mark across the site, and the Initiative page grew into a full founding story.",
+            fr: "L’identité de marque de l’EISS a remplacé le logo provisoire sur tout le site, et la page Initiative est devenue un récit fondateur complet.",
+            de: "Die EISS-Markenidentität ersetzte das Platzhalterlogo auf der gesamten Website, und die Initiative-Seite wurde zu einer vollständigen Gründungsgeschichte.",
+          },
+        },
+        {
+          status: "shipped",
+          version: "v2.23.1",
+          notesUrl: notes("v2.23.1"),
+          when: { en: "27 May 2026 · v2.23.1", fr: "27 mai 2026 · v2.23.1", de: "27. Mai 2026 · v2.23.1" },
+          title: {
+            en: "Archive banner and post-release polish",
+            fr: "Bandeau d’archive et finitions post-publication",
+            de: "Archiv-Hinweis und Feinschliff nach der Veröffentlichung",
+          },
+          desc: {
+            en: "An archive disclaimer ribbon on past-event pages, a translation-ribbon fix, and post-release housekeeping.",
+            fr: "Un bandeau d’avertissement sur les pages d’événements passés, une correction du bandeau de traduction, et divers ajustements.",
+            de: "Ein Archiv-Hinweisband auf Seiten vergangener Veranstaltungen, eine Korrektur am Übersetzungsband und Aufräumarbeiten nach der Veröffentlichung.",
+          },
+        },
+        {
+          status: "shipped",
+          version: "v2.24.0",
+          notesUrl: notes("v2.24.0"),
+          when: { en: "30 May 2026 · v2.24.0", fr: "30 mai 2026 · v2.24.0", de: "30. Mai 2026 · v2.24.0" },
+          title: {
+            en: "Live programme depth and a print overhaul",
+            fr: "Programme en direct enrichi et impression repensée",
+            de: "Erweitertes Live-Programm und überarbeiteter Druck",
+          },
+          desc: {
+            en: "The ESSC 2026 programme grid gained co-authors and livestream pills, the printed programme was overhauled, and the conference archive filled out.",
+            fr: "La grille du programme de l’ESSC 2026 affiche désormais les co-auteurs et des pastilles de diffusion en direct, l’impression a été repensée, et les archives des conférences ont été étoffées.",
+            de: "Das Programmraster der ESSC 2026 zeigt nun Koautoren und Livestream-Plaketten, der Druck wurde überarbeitet, und das Konferenzarchiv wurde ergänzt.",
+          },
+        },
+        {
+          status: "planned",
+          version: "v2.24.1",
+          milestone: "v2.24.1",
+          when: { en: "Mid June 2026 · v2.24.1", fr: "Mi-juin 2026 · v2.24.1", de: "Mitte Juni 2026 · v2.24.1" },
+          title: {
+            en: "Post-ESSC reactive patch",
+            fr: "Correctif réactif post-ESSC",
+            de: "Reaktiver Patch nach der ESSC",
+          },
+          desc: {
+            en: "The reactive cut after ESSC 2026 in Stockholm: on-the-ground fixes and a short conference recap. Ships only if something surfaces during conference week.",
+            fr: "La version réactive après l’ESSC 2026 à Stockholm : corrections de terrain et bref compte rendu de la conférence. Ne paraît que si quelque chose émerge pendant la semaine de la conférence.",
+            de: "Die reaktive Version nach der ESSC 2026 in Stockholm: Korrekturen vor Ort und ein kurzer Konferenzrückblick. Erscheint nur, wenn während der Konferenzwoche etwas auftaucht.",
+          },
+        },
+        {
+          status: "planned",
+          event: true,
+          when: { en: "11–12 June 2026 · Stockholm", fr: "11–12 juin 2026 · Stockholm", de: "11.–12. Juni 2026 · Stockholm" },
+          title: {
+            en: "ESSC 2026 — Stockholm",
+            fr: "ESSC 2026 — Stockholm",
+            de: "ESSC 2026 — Stockholm",
+          },
+          desc: {
+            en: "The 9th Annual European Security Studies Conference at Stockholm University. The flagship gathering of the year; the website is the canonical entry point for new arrivals.",
+            fr: "La 9e Conférence annuelle d’études de sécurité européenne à l’Université de Stockholm. Le grand rendez-vous de l’année ; le site web en est le point d’entrée de référence.",
+            de: "Die 9. Jährliche Konferenz für Europäische Sicherheitsstudien an der Universität Stockholm. Das wichtigste Treffen des Jahres; die Website ist der zentrale Einstiegspunkt für Neuankömmlinge.",
+          },
+        },
+      ],
+    },
+    {
+      label: { en: "Q3 2026", fr: "T3 2026", de: "Q3 2026" },
+      sub: {
+        en: "July · August · September",
+        fr: "juillet · août · septembre",
+        de: "Juli · August · September",
+      },
+      entries: [
+        {
+          status: "planned",
+          version: "v2.25.0",
+          milestone: "v2.25.0",
+          when: { en: "July 2026 · v2.25.0", fr: "juillet 2026 · v2.25.0", de: "Juli 2026 · v2.25.0" },
+          title: {
+            en: "Post-ESSC activation",
+            fr: "Activation post-ESSC",
+            de: "Aktivierung nach der ESSC",
+          },
+          desc: {
+            en: "Turns built-but-idle Indico capability into visible value: the live programme grid on past conferences and calendar subscription links, alongside reliability work (workflow failure alerts, the Node-24 Actions pin, a wider i18n drift check).",
+            fr: "Transforme des fonctions Indico déjà construites mais inactives en valeur visible : la grille du programme en direct sur les conférences passées et des liens d’abonnement au calendrier, ainsi qu’un travail de fiabilité (alertes d’échec des workflows, épinglage des Actions sur Node 24, contrôle de dérive i18n élargi).",
+            de: "Macht bereits gebaute, aber brachliegende Indico-Funktionen sichtbar nutzbar: das Live-Programmraster auf vergangenen Konferenzen und Kalender-Abolinks, dazu Zuverlässigkeitsarbeiten (Fehlermeldungen für Workflows, Node-24-Pinning der Actions, erweiterter i18n-Abgleich).",
+          },
+        },
+      ],
+    },
+    {
+      label: { en: "Q4 2026", fr: "T4 2026", de: "Q4 2026" },
+      sub: {
+        en: "October · November · December",
+        fr: "octobre · novembre · décembre",
+        de: "Oktober · November · Dezember",
+      },
+      entries: [
+        {
+          status: "planned",
+          version: "v2.26.0",
+          milestone: "v2.26.0",
+          when: { en: "October 2026 · v2.26.0", fr: "octobre 2026 · v2.26.0", de: "Oktober 2026 · v2.26.0" },
+          title: {
+            en: "Public content surfaces",
+            fr: "Nouvelles pages de contenu public",
+            de: "Öffentliche Inhaltsseiten",
+          },
+          desc: {
+            en: "New public surfaces with the brand identity in place: a News surface on the homepage, an Outputs / Publications page, a Working Groups page, a NetSec co-branding strip in the header, and an auto-populated organising committee.",
+            fr: "De nouvelles pages publiques, l’identité de marque désormais en place : un espace Actualités sur la page d’accueil, une page Publications, une page Groupes de travail, un bandeau de co-marquage NetSec dans l’en-tête, et un comité d’organisation alimenté automatiquement.",
+            de: "Neue öffentliche Seiten mit etablierter Markenidentität: ein Aktuelles-Bereich auf der Startseite, eine Publikationen-Seite, eine Arbeitsgruppen-Seite, ein NetSec-Co-Branding-Streifen im Kopfbereich und ein automatisch befülltes Organisationskomitee.",
+          },
+        },
+        {
+          status: "planned",
+          version: "v2.27.0",
+          milestone: "v2.27.0",
+          when: { en: "December 2026 · v2.27.0", fr: "décembre 2026 · v2.27.0", de: "Dezember 2026 · v2.27.0" },
+          title: {
+            en: "Search, polish, ESSC 2027 prep",
+            fr: "Recherche, finitions, préparation de l’ESSC 2027",
+            de: "Suche, Feinschliff, Vorbereitung der ESSC 2027",
+          },
+          desc: {
+            en: "Site-wide search (Pagefind, wired into the 404 page first), a build-time guard against CSS class collisions, expanded open-panel examples, and the ESSC 2027 announcement rollover.",
+            fr: "Une recherche sur tout le site (Pagefind, d’abord intégrée à la page 404), une protection à la compilation contre les collisions de classes CSS, des exemples de panels ouverts enrichis, et l’annonce de l’ESSC 2027.",
+            de: "Eine websiteweite Suche (Pagefind, zunächst in die 404-Seite eingebunden), ein Build-Schutz gegen CSS-Klassenkollisionen, erweiterte Beispiele offener Panels und die Ankündigung der ESSC 2027.",
+          },
+        },
+      ],
+    },
+  ],
+
+  underWatch: [
+    {
+      status: "deferred",
+      when: { en: "Trigger · Indico exposes form state", fr: "Déclencheur · Indico expose l’état du formulaire", de: "Auslöser · Indico gibt den Formularstatus preis" },
+      title: {
+        en: "Auto-detect registration state from Indico",
+        fr: "Détection automatique de l’état des inscriptions depuis Indico",
+        de: "Automatische Erkennung des Anmeldestatus aus Indico",
+      },
+      desc: {
+        en: "Blocked: this Indico build doesn't expose registration-form state on the public or authenticated API, so the status pill stays a manual override.",
+        fr: "Bloqué : cette instance Indico n’expose pas l’état du formulaire d’inscription via l’API publique ou authentifiée ; la pastille de statut reste donc réglée à la main.",
+        de: "Blockiert: Diese Indico-Instanz gibt den Status des Anmeldeformulars weder über die öffentliche noch über die authentifizierte API preis, daher bleibt die Status-Plakette eine manuelle Einstellung.",
+      },
+    },
+    {
+      status: "deferred",
+      when: { en: "Trigger · NetSec coordination", fr: "Déclencheur · coordination avec NetSec", de: "Auslöser · Abstimmung mit NetSec" },
+      title: {
+        en: "Generalise the Indico sync for NetSec",
+        fr: "Généraliser la synchronisation Indico pour NetSec",
+        de: "Indico-Synchronisierung für NetSec verallgemeinern",
+      },
+      desc: {
+        en: "Reusing the live programme sync on the sister NetSec site. Waiting on coordination with the NetSec maintainers.",
+        fr: "Réutiliser la synchronisation du programme en direct sur le site jumeau NetSec. En attente d’une coordination avec les responsables de NetSec.",
+        de: "Die Live-Programmsynchronisierung auf der Schwesterseite NetSec wiederverwenden. Wartet auf Abstimmung mit den NetSec-Betreuern.",
+      },
+    },
+    {
+      status: "deferred",
+      when: { en: "Trigger · source research", fr: "Déclencheur · recherche de sources", de: "Auslöser · Quellenrecherche" },
+      title: {
+        en: "Reconcile archive dates and narratives",
+        fr: "Harmoniser les dates et récits des archives",
+        de: "Archivdaten und -texte abgleichen",
+      },
+      desc: {
+        en: "A few contradictory dates and narratives across the older archive pages. Needs source research before any contested fact is edited.",
+        fr: "Quelques dates et récits contradictoires sur les anciennes pages d’archive. Nécessite une recherche de sources avant toute modification d’un fait contesté.",
+        de: "Einige widersprüchliche Daten und Texte auf den älteren Archivseiten. Erfordert Quellenrecherche, bevor ein strittiger Fakt geändert wird.",
+      },
+    },
+    {
+      status: "deferred",
+      when: { en: "Trigger · a concrete need", fr: "Déclencheur · un besoin concret", de: "Auslöser · ein konkreter Bedarf" },
+      title: {
+        en: "Parked until there's a reason",
+        fr: "En attente d’une raison de les construire",
+        de: "Zurückgestellt bis es einen Grund gibt",
+      },
+      desc: {
+        en: "Ideas held back without a trigger: custom-domain board emails, a self-hosted newsletter, a multi-author CMS, analytics (the no-analytics stance is deliberate), and a multi-page member directory.",
+        fr: "Des idées mises de côté faute de déclencheur : des adresses e-mail sur le domaine pour le conseil, une lettre d’information auto-hébergée, un CMS multi-auteurs, des statistiques de fréquentation (l’absence de suivi est un choix assumé), et un annuaire des membres.",
+        de: "Ohne Auslöser zurückgestellte Ideen: E-Mail-Adressen auf der eigenen Domain für den Vorstand, ein selbst gehosteter Newsletter, ein Mehrautoren-CMS, Web-Analyse (der Verzicht darauf ist bewusst gewählt) und ein Mitgliederverzeichnis.",
+      },
+    },
+  ],
+};
