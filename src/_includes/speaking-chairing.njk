@@ -1,22 +1,23 @@
 {# Discreet "Speaking or chairing?" note for /YYYY conference pages.
    A single compact line just before the programme: points speakers and
-   chairs to the Indico event (manage their contribution, request an
-   invitation / visa letter) and to the official printable PDF. Kept
-   deliberately small so it doesn't compete with the programme.
-   `indico`, `conferences`, `i18n`, `lang`, `year` are in scope. #}
+   chairs to the shared conference FAQ (which carries the per-role links,
+   edit My Session for chairs / My Contributions for speakers, plus
+   visa-letter guidance) and to the official printable programme PDF.
+   Kept deliberately small so it doesn't compete with the programme.
+   `conferences`, `i18n`, `lang`, `year` are in scope from the page. #}
 {% from "icons.njk" import icon %}
 {%- set _lang = lang or "en" -%}
 {%- set t = i18n[_lang] -%}
-{%- set _indico = indico.annualConferences[year] -%}
 {%- set _conf = conferences.byYear[year] -%}
+{%- set _faq = _conf.faqUrl if _conf else null -%}
 {%- set _pdf = _conf.programmePdf if _conf else null -%}
-{%- if _indico or _pdf %}
+{%- if _faq or _pdf %}
 <section class="section-tight" aria-label="{{ t.speakerCard.heading }}">
   <div class="container">
     <p class="speaker-note">
       <strong>{{ t.speakerCard.heading }}</strong> {{ t.speakerCard.body }}
-      {%- if _indico %} <a href="{{ _indico.url }}" target="_blank" rel="noopener">{{ t.speakerCard.ctaIndico }} {{ icon("external-link") }}</a>{% endif %}
-      {%- if _indico and _pdf %} <span class="speaker-note-sep" aria-hidden="true">·</span>{% endif %}
+      {%- if _faq %} <a href="{{ _faq }}" target="_blank" rel="noopener">{{ t.speakerCard.ctaFaq }} {{ icon("external-link") }}</a>{% endif %}
+      {%- if _faq and _pdf %} <span class="speaker-note-sep" aria-hidden="true">·</span>{% endif %}
       {%- if _pdf %} <a href="{{ _pdf.url }}" target="_blank" rel="noopener">{{ t.speakerCard.ctaPdf }} {{ icon("download") }}</a>{% endif %}
     </p>
   </div>

@@ -121,6 +121,12 @@ const conferences = [
         de: "Universitetsvägen 10D, 114 18 Stockholm, Schweden",
       },
     },
+    // Conference FAQ on the NetSec sister site. The shared ESSC FAQ holds
+    // the per-role links chairs and speakers need (edit My Session / My
+    // Contributions) plus visa-letter guidance, so the "Speaking or
+    // chairing?" note on /YYYY points here. Per-year because a future
+    // edition may host its FAQ elsewhere.
+    faqUrl: "https://netsec-cost.eu/faq.html#conference",
     hasOwnPage: true,
   },
   {
