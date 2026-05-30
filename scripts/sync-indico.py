@@ -384,12 +384,24 @@ def _strip_html(s: str) -> str:
     return re.sub(r"\s+", " ", no_tags).strip()
 
 
+def _person_name(p: dict) -> str:
+    """Best full name for a person across Indico's inconsistent shapes.
+    The timetable export gives `firstName` / `familyName`; the category
+    and contribution exports give `name` or `fullName`."""
+    n = (p.get("name") or p.get("fullName") or "").strip()
+    if n:
+        return n
+    first = p.get("firstName") or p.get("first_name") or ""
+    last = p.get("familyName") or p.get("lastName") or p.get("last_name") or ""
+    return " ".join(s for s in (first, last) if s).strip()
+
+
 def _normalise_person(p: dict) -> dict:
     """Strip Indico-internal fields from a person dict (presenter,
     convener, author). Notably drops `emailHash`, which is a tracking
     surface we don't need on the site."""
     return {
-        "name": p.get("name") or p.get("fullName") or "",
+        "name": _person_name(p),
         "affiliation": p.get("affiliation") or "",
     }
 
@@ -409,25 +421,25 @@ def _absolutize_indico_url(url: str) -> str:
 
 def _person_key(p: dict) -> str:
     """Identity for de-duplicating a person across Indico's overlapping
-    author lists (the same individual often appears in both
-    `primaryauthors` and `speakers`). Name, lowercased + trimmed."""
-    return (p.get("name") or p.get("fullName") or "").strip().lower()
+    person lists (the same individual usually appears in both the
+    `authors` list and the `presenters` subset). Name, lowercased."""
+    return _person_name(p).strip().lower()
 
 
 def _normalise_contribution(c: dict) -> dict:
     """Turn an Indico contribution (a single paper / talk) into a
     compact dict for the grid.
 
-    Indico distinguishes who *presents* (`speakers` / `presenters`) from
-    the fuller author list (`primaryauthors` + `coauthors`). The printed
-    programme lists every author, marking the one who speaks; the website
-    used to show only the speakers, which is why co-authors were missing.
+    Indico distinguishes who *presents* (`presenters` / `speakers`) from
+    the full author list. The timetable export carries a single combined
+    `authors` array plus the `presenters` subset; other endpoints split the
+    authors into `primaryauthors` + `coauthors`. We support both. The site
+    used to show only the presenters, which is why co-authors were missing.
 
-    We now emit:
-      - `authors`: the full author list in academic order (primary authors,
-        then co-authors), each carrying `isSpeaker` so the grid can mark
-        presenters with a microphone. Falls back to the presenter list when
-        Indico carries no separate author lists.
+    We emit:
+      - `authors`: presenter(s) FIRST (each flagged `isSpeaker` so the grid
+        marks them with a microphone), then the remaining non-presenting
+        authors and co-authors. De-duplicated by name.
       - `speakers`: the presenters only. Kept for backward compatibility
         (boardSorted.js matches ESSC-active board members against it) and
         as a display fallback.
@@ -435,17 +447,26 @@ def _normalise_contribution(c: dict) -> dict:
     start = c.get("startDate") or {}
     end = c.get("endDate") or {}
     presenters = c.get("presenters") or c.get("speakers") or []
-    primary = c.get("primaryauthors") or []
-    coauthors = c.get("coauthors") or []
+    # Timetable shape: combined `authors`. Contribution-export shape:
+    # `primaryauthors` + `coauthors`. Either yields the full author list.
+    all_authors = c.get("authors") or (
+        (c.get("primaryauthors") or []) + (c.get("coauthors") or [])
+    )
 
-    # Full author list, academic order. Fall back to presenters (and then
-    # primaryauthors) so single-author talks with no explicit author list
-    # still show someone.
-    ordered = (primary + coauthors) or presenters or c.get("primaryauthors") or []
     presenter_keys = {_person_key(p) for p in presenters if _person_key(p)}
     authors: list[dict] = []
     seen: set[str] = set()
-    for p in ordered:
+    # Presenter(s) first — these get the microphone in the grid.
+    for p in presenters:
+        k = _person_key(p)
+        if not k or k in seen:
+            continue
+        seen.add(k)
+        np = _normalise_person(p)
+        np["isSpeaker"] = True
+        authors.append(np)
+    # Then the remaining authors and co-authors, in their listed order.
+    for p in all_authors:
         k = _person_key(p)
         if not k or k in seen:
             continue
@@ -453,17 +474,8 @@ def _normalise_contribution(c: dict) -> dict:
         np = _normalise_person(p)
         np["isSpeaker"] = k in presenter_keys
         authors.append(np)
-    # A presenter who somehow isn't in the author list (rare) still belongs
-    # on the card, marked as a speaker.
-    for p in presenters:
-        k = _person_key(p)
-        if k and k not in seen:
-            seen.add(k)
-            np = _normalise_person(p)
-            np["isSpeaker"] = True
-            authors.append(np)
 
-    speakers_src = presenters or c.get("primaryauthors") or []
+    speakers_src = presenters or all_authors
     abstract = _strip_html(c.get("description") or "")
     teaser = abstract[:ABSTRACT_TEASER_CHARS]
     if len(abstract) > ABSTRACT_TEASER_CHARS:
