@@ -15,10 +15,13 @@
 <section class="section-tight" aria-label="{{ t.speakerCard.heading }}">
   <div class="container">
     <p class="speaker-note">
-      <strong>{{ t.speakerCard.heading }}</strong> {{ t.speakerCard.body }}
-      {%- if _faq %} <a href="{{ _faq }}" target="_blank" rel="noopener">{{ t.speakerCard.ctaFaq }} {{ icon("external-link") }}</a>{% endif %}
-      {%- if _faq and _pdf %} <span class="speaker-note-sep" aria-hidden="true">·</span>{% endif %}
-      {%- if _pdf %} <a href="{{ _pdf.url }}" target="_blank" rel="noopener">{{ t.speakerCard.ctaPdf }} {{ icon("download") }}</a>{% endif %}
+      <span class="speaker-note-icon" aria-hidden="true">{{ icon("mic") }}</span>
+      <span class="speaker-note-text">
+        <strong>{{ t.speakerCard.heading }}</strong> {{ t.speakerCard.body }}
+        {%- if _faq %} <a href="{{ _faq }}" target="_blank" rel="noopener">{{ t.speakerCard.ctaFaq }} {{ icon("external-link") }}</a>{% endif %}
+        {%- if _faq and _pdf %} <span class="speaker-note-sep" aria-hidden="true">·</span>{% endif %}
+        {%- if _pdf %} <a href="{{ _pdf.url }}" target="_blank" rel="noopener">{{ t.speakerCard.ctaPdf }} {{ icon("download") }}</a>{% endif %}
+      </span>
     </p>
   </div>
 </section>
