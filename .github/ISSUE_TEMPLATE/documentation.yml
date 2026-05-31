@@ -1,0 +1,52 @@
+name: Documentation
+description: Something in the public copy or the repo docs is wrong, missing, or stale.
+title: "docs: "
+labels:
+  - documentation
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for flagging a documentation gap. The three sections below mirror
+        the issue shape the maintainer keeps for this repository
+        (What's happening / Why it matters / Fix path), so a filled-in form
+        lands ready to triage.
+  - type: textarea
+    id: whats-happening
+    attributes:
+      label: What's happening
+      description: >-
+        One paragraph, plus a pointer to the page or doc (a URL, or a file under
+        docs/).
+    validations:
+      required: true
+  - type: textarea
+    id: why-it-matters
+    attributes:
+      label: Why it matters
+      description: One paragraph. Reader impact, audit-trail context, or compliance angle.
+    validations:
+      required: true
+  - type: textarea
+    id: fix-path
+    attributes:
+      label: Fix path (or fix options)
+      description: >-
+        Specific enough that a maintainer can pick it up without re-deriving the
+        analysis. File names, sections, line numbers where you can.
+    validations:
+      required: false
+  - type: dropdown
+    id: milestone
+    attributes:
+      label: Milestone
+      description: >-
+        The target release. Pick "Backlog — Under watch" when there is no
+        committed release. Never leave it blank.
+      options:
+        - v2.25.0
+        - v2.26.0
+        - v2.27.0
+        - "Backlog — Under watch"
+    validations:
+      required: true
