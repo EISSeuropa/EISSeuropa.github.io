@@ -166,7 +166,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
-  <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="stylesheet" href="{{ '/assets/css/site.css' | bust }}">
 </head>
 <body>
   <a class="skip-link" href="#main">{{ t.skipLink }}</a>
@@ -196,8 +196,8 @@
   {% include "search-modal.njk" %}
   <span data-search-strings='{"noResults":"{{ t.search.noResults }}","unavailable":"{{ t.search.unavailable }}","searching":"{{ t.search.searching }}"}' hidden></span>
 
-  <script src="/assets/js/theme.js" defer></script>
-  <script src="/assets/js/search.js" defer></script>
+  <script src="{{ '/assets/js/theme.js' | bust }}" defer></script>
+  <script src="{{ '/assets/js/search.js' | bust }}" defer></script>
   <script>
     // Save the user's chosen language whenever they click any link
     // that carries an `hreflang` attribute. The two sources on the
