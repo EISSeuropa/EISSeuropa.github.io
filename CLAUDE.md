@@ -57,6 +57,11 @@ authoritative for EISS.
   Don't push more commits to a branch whose PR is already open,
   even if "the merge hasn't happened yet" — by the time `git push`
   returns, it often has.
+- **SHA-pin GitHub Actions.** Every `uses:` in `.github/workflows/`
+  is pinned to a full 40-character commit SHA with a trailing
+  `# vN` comment (e.g. `uses: actions/checkout@de0fac2… # v6`).
+  Dependabot's `github-actions` block keeps the pins current and the
+  comment human-readable. New workflows pin by default.
 
 ## 3. Open a GitHub issue for every deferred item
 
