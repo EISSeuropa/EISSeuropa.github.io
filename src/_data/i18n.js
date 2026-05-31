@@ -57,6 +57,19 @@ const locales = {
       switchToLight: "Switch to light mode",
     },
 
+    search: {
+      buttonLabel: "Search the site",
+      title: "Search",
+      placeholder: "Search conferences, people, programmes…",
+      inputLabel: "Search the site",
+      resultsLabel: "Search results",
+      close: "Close search",
+      hint: "Press Esc to close",
+      noResults: "No results found. Try a different search.",
+      unavailable: "Search is available on the published site.",
+      searching: "Searching…",
+    },
+
     langSwitcher: {
       label: "Language",
       en: "EN",
@@ -369,6 +382,19 @@ const locales = {
       switchToLight: "Passer au mode clair",
     },
 
+    search: {
+      buttonLabel: "Rechercher sur le site",
+      title: "Recherche",
+      placeholder: "Rechercher conférences, personnes, activités…",
+      inputLabel: "Rechercher sur le site",
+      resultsLabel: "Résultats de recherche",
+      close: "Fermer la recherche",
+      hint: "Appuyez sur Échap pour fermer",
+      noResults: "Aucun résultat. Essayez une autre recherche.",
+      unavailable: "La recherche est disponible sur le site publié.",
+      searching: "Recherche en cours…",
+    },
+
     langSwitcher: {
       label: "Langue",
       en: "EN",
@@ -627,6 +653,19 @@ const locales = {
     themeToggle: {
       switchToDark: "Zum dunklen Modus wechseln",
       switchToLight: "Zum hellen Modus wechseln",
+    },
+
+    search: {
+      buttonLabel: "Website durchsuchen",
+      title: "Suche",
+      placeholder: "Konferenzen, Personen, Aktivitäten suchen…",
+      inputLabel: "Website durchsuchen",
+      resultsLabel: "Suchergebnisse",
+      close: "Suche schließen",
+      hint: "Esc zum Schließen drücken",
+      noResults: "Keine Ergebnisse. Versuchen Sie eine andere Suche.",
+      unavailable: "Die Suche ist auf der veröffentlichten Website verfügbar.",
+      searching: "Suche läuft…",
     },
 
     langSwitcher: {

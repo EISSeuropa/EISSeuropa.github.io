@@ -46,6 +46,15 @@ jobs:
 
       - run: npm run build
 
+      # Build the static search index. Pagefind crawls the rendered
+      # _site/ HTML and writes wasm + index shards to _site/pagefind/,
+      # which the lazy import in assets/js/search.js loads at runtime.
+      # Runs after Eleventy so it sees the final HTML. The index is built
+      # here only, never committed (_site is gitignored), so local dev
+      # has no index and the search modal degrades gracefully.
+      - name: Build search index (Pagefind)
+        run: npx -y pagefind --site _site
+
       - name: List build output
         run: |
           echo "=== _site root ==="

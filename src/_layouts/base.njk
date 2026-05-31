@@ -176,7 +176,7 @@
      scrolling. Previously only the nav stuck; the archive / beta
      ribbon scrolled out of view, which lost the disclaimer once the
      page got long. #}
-  <div class="sticky-chrome">
+  <div class="sticky-chrome" data-pagefind-ignore="all">
     {% if status == "beta" %}{% include "beta-ribbon.njk" %}{% endif %}
     {% if status == "archive" %}{% include "archive-ribbon.njk" %}{% endif %}
     {% include "nav.njk" %}
@@ -188,7 +188,16 @@
 
   {% include "footer.njk" %}
 
+  {# Site search. The modal is chrome (data-pagefind-ignore inside its own
+     markup); search.js lazy-loads the deploy-time Pagefind index and
+     degrades to an "unavailable" notice on local dev. The locale UI
+     strings ride on a data-attribute so the no-framework JS can read them
+     without a second i18n round-trip. #}
+  {% include "search-modal.njk" %}
+  <span data-search-strings='{"noResults":"{{ t.search.noResults }}","unavailable":"{{ t.search.unavailable }}","searching":"{{ t.search.searching }}"}' hidden></span>
+
   <script src="/assets/js/theme.js" defer></script>
+  <script src="/assets/js/search.js" defer></script>
   <script>
     // Save the user's chosen language whenever they click any link
     // that carries an `hreflang` attribute. The two sources on the

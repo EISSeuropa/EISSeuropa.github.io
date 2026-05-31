@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "eleventy",
+    "build:search": "pagefind --site _site",
     "serve": "eleventy --serve --quiet",
     "clean": "rm -rf _site"
   },

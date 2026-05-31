@@ -1,0 +1,45 @@
+{# Site-search modal. Consumes the active-locale catalog `t` from base.njk.
+   The dialog is inert until search.js wires it up. search.js lazy-imports
+   /pagefind/pagefind.js on first open; that bundle only exists on the
+   deployed site (the deploy workflow runs `pagefind --site _site`), so on
+   local dev the modal renders the "unavailable" notice instead of erroring.
+   data-pagefind-ignore keeps the modal chrome out of the index. #}
+<div class="search-overlay" data-search-overlay hidden data-pagefind-ignore="all">
+  <div class="search-dialog"
+       role="dialog"
+       aria-modal="true"
+       aria-labelledby="search-dialog-title"
+       data-search-dialog>
+    <h2 class="sr-only" id="search-dialog-title">{{ t.search.title }}</h2>
+    <div class="search-bar">
+      <span class="search-bar-icon" aria-hidden="true">
+        {% from "icons.njk" import icon %}{{ icon("search") }}
+      </span>
+      <input class="search-input"
+             type="search"
+             data-search-input
+             autocomplete="off"
+             autocapitalize="off"
+             spellcheck="false"
+             aria-label="{{ t.search.inputLabel }}"
+             aria-controls="search-results"
+             placeholder="{{ t.search.placeholder }}">
+      <button class="icon-btn search-close"
+              type="button"
+              data-search-close
+              aria-label="{{ t.search.close }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="6" y1="6" x2="18" y2="18"/>
+          <line x1="6" y1="18" x2="18" y2="6"/>
+        </svg>
+      </button>
+    </div>
+    <div class="search-status" data-search-status role="status" aria-live="polite"></div>
+    <ul class="search-results"
+        id="search-results"
+        role="listbox"
+        aria-label="{{ t.search.resultsLabel }}"
+        data-search-results></ul>
+    <p class="search-hint" aria-hidden="true">{{ t.search.hint }}</p>
+  </div>
+</div>
