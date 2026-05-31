@@ -36,15 +36,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: "20"
 
       - run: npm install --no-audit --no-fund
 
       - run: npm run build
+
+      # Build the static search index. Pagefind crawls the rendered
+      # _site/ HTML and writes wasm + index shards to _site/pagefind/,
+      # which the lazy import in assets/js/search.js loads at runtime.
+      # Runs after Eleventy so it sees the final HTML. The index is built
+      # here only, never committed (_site is gitignored), so local dev
+      # has no index and the search modal degrades gracefully.
+      - name: Build search index (Pagefind)
+        run: npx -y pagefind --site _site
 
       - name: List build output
         run: |
@@ -61,7 +70,7 @@ jobs:
 
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request'
-        uses: actions/upload-pages-artifact@v5
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:
           path: _site
 
@@ -75,4 +84,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5
