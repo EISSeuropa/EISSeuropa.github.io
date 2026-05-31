@@ -28,6 +28,17 @@ navKey: ""
     <h1 id="notfound-title">{{ t.notFound.heading }}</h1>
     <p class="lead notfound-body">{{ t.notFound.body }}</p>
 
+    {# Search is the primary self-service recovery affordance: a visitor on
+       a stale URL that doesn't fit the six quick-links below can search the
+       whole site. The button opens the shared search modal (base.njk). On
+       local dev where the Pagefind index is absent the modal shows its
+       "unavailable" notice, so the quick links remain the fallback. #}
+    <p class="notfound-search">
+      <button class="btn btn-primary" type="button" data-search-trigger>
+        {{ icon("search") }} {{ t.search.buttonLabel }}
+      </button>
+    </p>
+
     <h2 class="notfound-section-title">{{ t.notFound.tryInstead }}</h2>
     <ul class="notfound-links" role="list">
       <li>

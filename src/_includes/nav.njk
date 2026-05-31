@@ -60,6 +60,18 @@
         {% endfor %}
       </div>
 
+      {# Search trigger. Opens the site-search modal (search-modal.njk).
+         Icon-only, so the accessible name comes from aria-label. The
+         button is always rendered; on local dev where the Pagefind index
+         is absent it opens the modal and shows the "unavailable" notice
+         rather than erroring. #}
+      <button class="icon-btn nav-search-toggle"
+              type="button"
+              data-search-trigger
+              aria-label="{{ t.search.buttonLabel }}">
+        {% from "icons.njk" import icon %}{{ icon("search") }}
+      </button>
+
       {% include "theme-toggle.njk" %}
       <button class="icon-btn nav-menu-toggle"
               type="button"

@@ -4751,3 +4751,153 @@ a.joint-orgs-card:hover .joint-orgs-name {
 @media (prefers-reduced-motion: reduce) {
   .rm-progress-fill { transition: none; }
 }
+
+/* ============================================================
+   Site search (Pagefind)
+   ------------------------------------------------------------
+   A modal overlay opened by the header search button, the 404
+   search affordance, or the Cmd/Ctrl-K and "/" shortcuts. The
+   markup lives in src/_includes/search-modal.njk and the
+   behaviour in src/assets/js/search.js. Reuses design tokens so
+   light/dark flips come for free.
+   ============================================================ */
+
+.nav-search-toggle svg { width: 18px; height: 18px; }
+
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: var(--space-7) var(--space-4) var(--space-4);
+  background: hsl(222 28% 7% / 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  overflow-y: auto;
+}
+
+.search-overlay[hidden] { display: none; }
+
+body.search-open { overflow: hidden; }
+
+.search-dialog {
+  width: 100%;
+  max-width: 640px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-3);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg);
+}
+
+.search-bar:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.search-bar-icon {
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+}
+
+.search-bar-icon svg { width: 18px; height: 18px; }
+
+.search-input {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: var(--fs-base);
+  font-family: inherit;
+  padding: var(--space-1) 0;
+}
+
+.search-input:focus { outline: none; }
+
+.search-input::placeholder { color: var(--text-muted); }
+
+.search-close { flex: 0 0 auto; }
+
+.search-status {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  margin: 0;
+}
+
+.search-status:empty { display: none; }
+
+.search-results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.search-result { margin: 0; }
+
+.search-result-link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--text);
+  transition: background var(--motion-fast) var(--ease-out);
+}
+
+.search-result-link:hover,
+.search-result-link:focus-visible {
+  background: var(--accent-soft);
+}
+
+.search-result-title {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.search-result-excerpt {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.search-result-excerpt mark {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: var(--radius-xs);
+  padding: 0 2px;
+}
+
+.search-hint {
+  margin: 0;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.notfound-search { margin: var(--space-5) 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .search-result-link { transition: none; }
+}
