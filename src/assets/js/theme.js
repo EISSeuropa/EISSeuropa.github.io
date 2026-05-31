@@ -319,3 +319,28 @@
     } catch (e) {}
   }
 })();
+
+/* Conference countdown. Recomputes the day count live from the target
+   date in [data-countdown] so the server-rendered fallback (built daily)
+   never drifts, and hides itself once the conference has started. Locale
+   strings ride on data-* attributes, so this stays language-agnostic. */
+(function () {
+  "use strict";
+  var els = document.querySelectorAll(".countdown[data-countdown]");
+  if (!els.length) return;
+  var now = new Date();
+  var todayUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+  Array.prototype.forEach.call(els, function (el) {
+    var p = String(el.getAttribute("data-countdown")).split("-");
+    if (p.length !== 3) return;
+    var targetUTC = Date.UTC(+p[0], +p[1] - 1, +p[2]);
+    var days = Math.round((targetUTC - todayUTC) / 86400000);
+    if (days < 0) { el.hidden = true; el.style.display = "none"; return; }
+    var year = el.getAttribute("data-cd-year");
+    var tpl = days > 1 ? el.getAttribute("data-cd-days")
+            : days === 1 ? el.getAttribute("data-cd-one")
+            : el.getAttribute("data-cd-today");
+    var textEl = el.querySelector(".countdown__text") || el;
+    if (tpl) textEl.textContent = tpl.replace("{n}", days).replace("{year}", year);
+  });
+})();

@@ -1,26 +1,32 @@
-{# Google Maps embed for the conference venue.
+{# Venue location for the conference page.
+
+   Privacy-respecting replacement for the former Google Maps iframe:
+   nothing loads from a third party on page view. We show the venue
+   name and address and link out to OpenStreetMap, which only opens
+   when the visitor clicks (user-initiated, no on-load tracking, no
+   cookies). This is why Google Maps was dropped from /policy §5.
 
    Usage (from any /YYYY.njk):
-     {% set conf = conferences.byYear[year] %}
-     {% if conf.mapEmbed %}
+     {% set year = "2026" %}
+     {% if conferences.byYear[year].mapEmbed %}
        {% include "map-embed.njk" %}
      {% endif %}
-
-   The iframe loads on page view; Google Maps is therefore listed
-   under /policy §5 as a third-party service present on conference
-   pages. The strict no-social-widgets stance in §3 is preserved
-   (Maps isn't a social-media widget). #}
-
+#}
+{% from "icons.njk" import icon %}
 {%- set lang = lang or "en" -%}
 {%- set t = i18n[lang] -%}
-{%- set mapEmbed = conferences.byYear[year].mapEmbed -%}
+{%- set _conf = conferences.byYear[year] -%}
+{%- set mapEmbed = _conf.mapEmbed -%}
 {%- set addr = mapEmbed.address[lang] or mapEmbed.address.en -%}
+{%- set venue = _conf.venue[lang] or _conf.venue.en -%}
 
-<div class="map-embed">
-  <iframe
-    src="{{ mapEmbed.src }}"
-    title="{{ t.mapEmbed.iframeTitle | replace('{{address}}', addr) }}"
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade"
-    allowfullscreen></iframe>
+<div class="venue-map">
+  <span class="venue-map__pin" aria-hidden="true">{{ icon("map-pin") }}</span>
+  <div class="venue-map__body">
+    <p class="venue-map__venue">{{ venue }}</p>
+    <p class="venue-map__addr">{{ addr }}</p>
+    <a class="venue-map__link" href="https://www.openstreetmap.org/search?query={{ addr | urlencode }}" target="_blank" rel="noopener">
+      {{ t.mapEmbed.viewOnMap }} {{ icon("external-link") }}
+    </a>
+  </div>
 </div>

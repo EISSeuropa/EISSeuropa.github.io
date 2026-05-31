@@ -373,7 +373,13 @@ const locales = {
       // Google Maps embed on /YYYY venue sections. Only the iframe
       // title is i18n'd; the embed loads on page view, and is disclosed
       // under /policy §5. See src/_includes/map-embed.njk.
-      iframeTitle: "Google Maps preview for {{address}}",
+      viewOnMap: "View on OpenStreetMap",
+    },
+
+    countdown: {
+      daysToGo: "{n} days until ESSC {year}",
+      oneDay: "ESSC {year} starts tomorrow",
+      today: "ESSC {year} starts today",
     },
   },
 
@@ -664,7 +670,13 @@ const locales = {
     },
 
     mapEmbed: {
-      iframeTitle: "Aperçu Google Maps pour {{address}}",
+      viewOnMap: "Voir sur OpenStreetMap",
+    },
+
+    countdown: {
+      daysToGo: "{n} jours avant l'ESSC {year}",
+      oneDay: "L'ESSC {year} commence demain",
+      today: "L'ESSC {year} commence aujourd'hui",
     },
   },
 
@@ -955,7 +967,13 @@ const locales = {
     },
 
     mapEmbed: {
-      iframeTitle: "Google-Maps-Vorschau für {{address}}",
+      viewOnMap: "Auf OpenStreetMap ansehen",
+    },
+
+    countdown: {
+      daysToGo: "Noch {n} Tage bis zur ESSC {year}",
+      oneDay: "Die ESSC {year} beginnt morgen",
+      today: "Die ESSC {year} beginnt heute",
     },
   },
 };

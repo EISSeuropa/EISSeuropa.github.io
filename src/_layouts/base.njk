@@ -163,9 +163,10 @@
     })();
   </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  {# Inter is self-hosted (see @font-face in site.css). Preload the Latin
+     subset so first paint isn't delayed waiting on the stylesheet to
+     discover the font. No Google Fonts request, so no third-party IP leak. #}
+  <link rel="preload" href="/assets/fonts/inter/latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{ '/assets/css/site.css' | bust }}">
 </head>
 <body>
