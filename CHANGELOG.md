@@ -70,6 +70,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 - **Public roadmap page at `/roadmap.html` (EN + FR + DE).** A visitor-facing view of what's shipped, in progress, and planned, mirroring the sister NetSec site. Quarterly sections (Q2 / Q3 / Q4 2026) carry version cards with a status pill (Shipped / In progress / Planned / Under watch), the release date and SemVer tag, a short description, and a *Release notes* link on shipped releases. In-flight cards carry `data-milestone="vX.Y.Z"`; `assets/js/roadmap-progress.js` reads `/data/roadmap-progress.json` (closed / total issues on the matching GitHub milestone) to draw a live progress bar and promote the next release to *In progress*. An *Under watch* section lists items waiting on an external trigger, and a CTA row links the issue tracker, the milestones, and the releases. Content lives in `src/_data/roadmap.js` (hand-translated per locale); linked from the footer and the visual sitemap. Mirrors the version-tied milestones adopted in v2.24.0's follow-up.
 
+### Fixed
+
+- **In-page anchors no longer land under the sticky chrome.** The chrome's height is variable (the What's New banner adds height, and FR/DE pages add the beta ribbon), so the old static scroll offset left clicked anchors hidden behind the chrome in those states. `theme.js` now measures the chrome's real rendered height and publishes it as `scroll-padding-top` on `<html>`, recomputed on load, on resize, and whenever the banner mounts or is dismissed. A static fallback covers the pre-hydration and no-JS case (closes [#278](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/278)).
+
 ## [2.24.0] · 2026-05-30 — Live programme depth and a print overhaul
 
 > ESSC 2026 opens in Stockholm on 11–12 June, and this release is built around the conference pages that carry it. The live programme on `/2026` now shows the full panel line-ups with every co-author and marks who is presenting, and printing it produces a clean handout rather than a stack of near-empty pages. Around it the archive fills out, the People page reflects who has moved on, and the English copy gets a consistent voice.

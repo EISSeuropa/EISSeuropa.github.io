@@ -226,12 +226,18 @@ button:focus-visible,
   box-shadow: 0 0 0 6px var(--accent-soft);
 }
 
-/* Anchor targets shouldn't be hidden behind the sticky nav header.
-   ~6rem matches the nav's effective height + a small visual margin.
-   Applies anywhere an in-page anchor (`#programme`, `#venue`,
-   `#arthur-laudrain`, …) is the scroll target. */
-:where([id]) {
-  scroll-margin-top: 6rem;
+/* Anchor targets shouldn't be hidden behind the sticky chrome.
+   The chrome height is variable (What's New banner sets --whats-new-h,
+   FR/DE pages add the beta ribbon), so the live offset is published as
+   scroll-padding-top on <html> by theme.js (window.eissSyncScrollPadding),
+   recomputed on load, resize, and banner mount/dismiss. This ~6rem rule is
+   the no-JS / pre-hydration fallback: it covers the nav's effective height
+   plus a small margin until the script measures the real chrome bottom.
+   Once the script runs it sets a 0px scroll-padding-top when no chrome is
+   present, and the measured value otherwise, so the two don't double up in
+   the common case (the script's scroll-padding-top wins on <html>). */
+:root {
+  scroll-padding-top: 6rem;
 }
 
 /* `:target` highlight pulse. When a visitor lands on a deep link
