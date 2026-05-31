@@ -5,8 +5,8 @@
   "milestones": {
     "v2.24.1": {
       "closed": 0,
-      "total": 0,
-      "percent": null,
+      "total": 1,
+      "percent": 0,
       "state": "open",
       "due": "2026-06-20"
     },
