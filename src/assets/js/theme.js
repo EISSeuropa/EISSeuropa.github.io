@@ -241,6 +241,7 @@
       if (h > 0) {
         document.documentElement.style.setProperty("--whats-new-h", h + "px");
       }
+      if (window.eissSyncScrollPadding) window.eissSyncScrollPadding();
     };
     syncH();
     if (document.readyState !== "complete") {
@@ -251,6 +252,32 @@
       try { new ResizeObserver(syncH).observe(banner); } catch (e) {}
     }
   }
+})();
+
+/* Sticky-chrome scroll offset — keep anchored headings clear of the chrome.
+   ─────────────────────────────────────────────────────────────────────────
+   The sticky chrome (.sticky-chrome) is variable height: the What's New
+   banner shifts it down via --whats-new-h, and FR/DE pages add the beta
+   ribbon. A static scroll-margin-top can't track that, so in-page anchors
+   used to land under the chrome on those states. Measure the chrome's real
+   rendered bottom and publish it as scroll-padding-top on <html>, recomputed
+   on load, resize, and whenever the banner mounts or is dismissed (the
+   banner's syncH calls window.eissSyncScrollPadding). */
+(function () {
+  var GAP = 12; /* px of breathing room below the chrome */
+  function sync() {
+    var chrome = document.querySelector(".sticky-chrome");
+    var h = chrome ? chrome.getBoundingClientRect().height : 0;
+    document.documentElement.style.scrollPaddingTop = (h > 0 ? h + GAP : 0) + "px";
+  }
+  window.eissSyncScrollPadding = sync;
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", sync);
+  } else {
+    sync();
+  }
+  window.addEventListener("load", sync);
+  window.addEventListener("resize", sync, { passive: true });
 })();
 
 /* Print prep for the live programme grid.
