@@ -42,7 +42,7 @@
     <ul class="indico-events-list" role="list">
       {%- for ev in indico.upcoming -%}
         {%- if not limit or loop.index <= limit %}
-      <li>
+      <li class="indico-event-row">
         <a class="indico-event" href="{{ ev.url }}" target="_blank" rel="noopener">
           <span class="indico-event-date" aria-hidden="true">{{ icon("calendar") }} {{ ev.startDateOnly }}</span>
           <span class="indico-event-body">
@@ -57,6 +57,13 @@
           </span>
           <span class="indico-event-arrow" aria-hidden="true">{{ icon("external-link") }}</span>
         </a>
+        {%- if ev.id %}
+        <a class="indico-event-ics" href="https://indico.eiss-europa.com/export/event/{{ ev.id }}.ics" download
+           title="{{ t.indicoEvents.addToCalendar }} ({{ ev.title }})">
+          {{ icon("calendar") }}
+          <span>{{ t.indicoEvents.addToCalendar }}</span>
+        </a>
+        {%- endif %}
       </li>
         {%- endif -%}
       {%- endfor %}

@@ -4751,3 +4751,45 @@ a.joint-orgs-card:hover .joint-orgs-name {
 @media (prefers-reduced-motion: reduce) {
   .rm-progress-fill { transition: none; }
 }
+
+/* "Add to calendar" link on each Indico event row (issue #60). The row
+   now holds two sibling anchors: the event link (grows to fill) and a
+   small .ics download link. The download points at the per-event
+   iCalendar export Indico serves at /export/event/<id>.ics, derived
+   from the event's `id`. */
+.indico-event-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: var(--space-2);
+}
+
+.indico-event-row .indico-event {
+  flex: 1 1 18rem;
+}
+
+.indico-event-ics {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: border-color var(--motion-base) var(--ease-out),
+              color var(--motion-base) var(--ease-out),
+              box-shadow var(--motion-base) var(--ease-out);
+}
+
+.indico-event-ics:hover,
+.indico-event-ics:focus-visible {
+  border-color: var(--border-strong);
+  color: var(--accent-hover);
+  box-shadow: var(--shadow-1);
+  text-decoration: none;
+}
