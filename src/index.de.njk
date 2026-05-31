@@ -49,6 +49,8 @@ alternates:
       <div>
         <div class="featured-eyebrow">Nächste Konferenz</div>
         <h2 id="featured-title">European Security Conference {{ conf.year }}</h2>
+        {% set year = conf.year %}
+        {% include "countdown.njk" %}
         <p class="featured-orgs">
           {{ conf.organisers.de }}
         </p>

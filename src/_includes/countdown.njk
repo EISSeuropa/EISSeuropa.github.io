@@ -1,0 +1,27 @@
+{# Conference countdown. Renders "{n} days until ESSC {year}" while the
+   conference is still upcoming, and nothing once it starts. The number
+   is rendered server-side (daysUntil filter, build wall clock) as a
+   no-JS fallback; assets/js/theme.js recomputes it live on load so it
+   stays correct between daily rebuilds and hides itself once the date
+   passes. The localised templates ride on data-* attributes so the JS
+   stays locale-agnostic.
+
+   Usage:  {% set year = "2026" %}{% include "countdown.njk" %}
+   On /index for the next conference:  {% set year = conf.year %} #}
+{% from "icons.njk" import icon %}
+{%- set _lang = lang or "en" -%}
+{%- set t = i18n[_lang] -%}
+{%- set _conf = conferences.byYear[year] -%}
+{%- if _conf and conferences.today < _conf.startDate -%}
+{%- set _days = _conf.startDate | daysUntil -%}
+{%- set _tpl = t.countdown.daysToGo if _days > 1 else (t.countdown.oneDay if _days == 1 else t.countdown.today) -%}
+<p class="countdown" role="timer"
+   data-countdown="{{ _conf.startDate }}"
+   data-cd-year="{{ _conf.year }}"
+   data-cd-days="{{ t.countdown.daysToGo }}"
+   data-cd-one="{{ t.countdown.oneDay }}"
+   data-cd-today="{{ t.countdown.today }}">
+  <span class="countdown__icon" aria-hidden="true">{{ icon("calendar") }}</span>
+  <span class="countdown__text">{{ _tpl | replace("{n}", _days) | replace("{year}", _conf.year) }}</span>
+</p>
+{%- endif -%}

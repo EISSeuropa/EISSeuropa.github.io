@@ -15,6 +15,16 @@ module.exports = function (eleventyConfig) {
   // stale: change the file, the hash changes, the URL changes. No
   // stamping script or CI gate needed (unlike a no-build site). A
   // missing file falls back to the bare URL rather than breaking.
+  // {{ '2026-06-11' | daysUntil }} -> whole days from today (build wall
+  // clock, UTC) to the given ISO date. Used by the conference countdown
+  // for its no-JS / pre-hydration fallback; the client script recomputes
+  // live so the number stays correct between daily rebuilds.
+  eleventyConfig.addFilter("daysUntil", (iso) => {
+    const today = new Date(new Date().toISOString().slice(0, 10) + "T00:00:00Z");
+    const target = new Date(String(iso) + "T00:00:00Z");
+    return Math.round((target - today) / 86400000);
+  });
+
   eleventyConfig.addFilter("bust", (url) => {
     try {
       const rel = String(url).replace(/^\//, "").split("?")[0];
