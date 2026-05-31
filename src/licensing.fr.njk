@@ -1,0 +1,81 @@
+---
+layout: base.njk
+permalink: /licensing.fr.html
+title: Licences et réutilisation
+description: Comment réutiliser le site de l'EISS — le code sous licence MIT, le contenu sous CC BY 4.0, l'exception pour les photos des membres, la mention d'attribution et les ressources tierces intégrées.
+navKey: ""
+lang: fr
+status: beta
+alternates:
+  en: /licensing.html
+  fr: /licensing.fr.html
+  de: /licensing.de.html
+---
+{%- set t = i18n[lang or "en"] -%}
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">{{ t.licensing.eyebrow }}</span>
+    <h1>{{ t.licensing.heading }}</h1>
+    <p class="page-lead">{{ t.licensing.lead }}</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <article class="prose">
+
+      <h2>{{ t.licensing.codeHeading }}</h2>
+      <p>
+        Le code source de ce site (les gabarits Eleventy, les scripts de
+        construction, la configuration et les feuilles de style) est publié
+        sous
+        <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener">licence MIT</a>.
+        Vous pouvez le réutiliser librement, y compris dans un cadre
+        commercial, à condition de conserver la mention de droit d'auteur. Le
+        texte complet figure dans le fichier
+        <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/LICENSE" target="_blank" rel="noopener">LICENSE</a>
+        à la racine du dépôt.
+      </p>
+
+      <h2>{{ t.licensing.contentHeading }}</h2>
+      <p>
+        Le contenu éditorial du site (les textes, la mise en page et les images
+        originales que nous produisons) est publié sous
+        <a href="https://creativecommons.org/licenses/by/4.0/deed.fr" target="_blank" rel="noopener">licence Creative Commons Attribution 4.0 International</a>
+        (CC&nbsp;BY&nbsp;4.0). Vous êtes libre de le partager et de l'adapter
+        pour tout usage, y compris commercial, à condition de créditer la
+        source. Le texte complet figure dans le fichier
+        <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/LICENSE-CONTENT" target="_blank" rel="noopener">LICENSE-CONTENT</a>.
+      </p>
+      <p>{{ t.licensing.attributionLabel }}</p>
+      <blockquote>
+        <p>European Initiative for Security Studies — eiss-europa.com</p>
+      </blockquote>
+
+      <h2>{{ t.licensing.carveoutHeading }}</h2>
+      <p>{{ t.licensing.carveoutBody }}</p>
+
+      <h2>{{ t.licensing.thirdPartyHeading }}</h2>
+      <p>{{ t.licensing.thirdPartyLead }}</p>
+      <ul>
+        <li>
+          <strong>Icônes Lucide</strong> — licence ISC —
+          <a href="https://lucide.dev" target="_blank" rel="noopener">lucide.dev</a>
+        </li>
+        <li>
+          <strong>Police Inter</strong> — SIL Open Font License 1.1 —
+          <a href="https://rsms.me/inter/" target="_blank" rel="noopener">rsms.me/inter</a>
+        </li>
+      </ul>
+      <p>{{ t.licensing.thirdPartyImages }}</p>
+
+      <h2>{{ t.licensing.questionsHeading }}</h2>
+      <p>
+        {{ t.licensing.questionsBody }}
+        <a href="mailto:{{ site.contactEmail }}">{{ site.contactEmail }}</a>.
+      </p>
+
+    </article>
+  </div>
+</section>

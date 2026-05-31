@@ -168,6 +168,20 @@
         "translated_on": "2026-05-29",
         "status": "beta"
       }
+    },
+    "src/licensing.njk": {
+      "fr": {
+        "file": "src/licensing.fr.njk",
+        "source_sha1": "8e753f33f6d44f73c0988b482150f2608d9f06d8",
+        "translated_on": "2026-05-31",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/licensing.de.njk",
+        "source_sha1": "8e753f33f6d44f73c0988b482150f2608d9f06d8",
+        "translated_on": "2026-05-31",
+        "status": "beta"
+      }
     }
   }
 }
