@@ -1,0 +1,116 @@
+---
+layout: base.njk
+permalink: /press-kit.de.html
+title: Pressekit
+description: "Logos, Farben, Typografie und Regeln zur Wiederverwendung der EISS-Marke, mit der offiziellen Namensnennung für Journalistinnen, Journalisten und Partnereinrichtungen."
+navKey: ""
+lang: de
+status: beta
+alternates:
+  en: /press-kit.html
+  fr: /press-kit.fr.html
+  de: /press-kit.de.html
+---
+{%- set t = i18n[lang or "en"] -%}
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">{{ t.pressKit.eyebrow }}</span>
+    <h1>{{ t.pressKit.heading }}</h1>
+    <p class="page-lead">{{ t.pressKit.lead }}</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <h2>{{ t.pressKit.logosHeading }}</h2>
+    <p class="lead">{{ t.pressKit.logosLead }}</p>
+    <ul class="press-logo-grid">
+      <li class="press-logo-card">
+        <div class="press-logo-preview">{% inlineSvg "assets/images/brand/logo-mark.svg" %}</div>
+        <h3>{{ t.pressKit.logoMarkName }}</h3>
+        <p>{{ t.pressKit.logoMarkDesc }}</p>
+        <a class="btn btn-secondary" href="/assets/images/brand/logo-mark.svg" download>{{ t.pressKit.downloadLabel }} SVG</a>
+      </li>
+      <li class="press-logo-card">
+        <div class="press-logo-preview">{% inlineSvg "assets/images/brand/logo-lockup.svg" %}</div>
+        <h3>{{ t.pressKit.logoLockupName }}</h3>
+        <p>{{ t.pressKit.logoLockupDesc }}</p>
+        <a class="btn btn-secondary" href="/assets/images/brand/logo-lockup.svg" download>{{ t.pressKit.downloadLabel }} SVG</a>
+      </li>
+      <li class="press-logo-card">
+        <div class="press-logo-preview">{% inlineSvg "assets/images/brand/logo-full.svg" %}</div>
+        <h3>{{ t.pressKit.logoFullName }}</h3>
+        <p>{{ t.pressKit.logoFullDesc }}</p>
+        <a class="btn btn-secondary" href="/assets/images/brand/logo-full.svg" download>{{ t.pressKit.downloadLabel }} SVG</a>
+      </li>
+      <li class="press-logo-card">
+        <div class="press-logo-preview"><img src="/assets/images/brand/logo-full-1024.png" alt="" width="320" height="320" loading="lazy"></div>
+        <h3>{{ t.pressKit.logoFullPngName }}</h3>
+        <p>{{ t.pressKit.logoFullPngDesc }}</p>
+        <a class="btn btn-secondary" href="/assets/images/brand/logo-full-1024.png" download>{{ t.pressKit.downloadLabel }} PNG</a>
+      </li>
+    </ul>
+
+    <h2>{{ t.pressKit.coloursHeading }}</h2>
+    <p class="lead">{{ t.pressKit.coloursLead }}</p>
+    <ul class="press-swatch-grid">
+      <li class="press-swatch">
+        <span class="press-swatch-chip" style="background: #73caff;" aria-hidden="true"></span>
+        <h3>{{ t.pressKit.colourNetworkName }}</h3>
+        <code>#73CAFF</code>
+        <p>{{ t.pressKit.colourNetworkUse }}</p>
+      </li>
+      <li class="press-swatch">
+        <span class="press-swatch-chip" style="background: #007bc6;" aria-hidden="true"></span>
+        <h3>{{ t.pressKit.colourBrandName }}</h3>
+        <code>#007BC6</code>
+        <p>{{ t.pressKit.colourBrandUse }}</p>
+      </li>
+    </ul>
+
+    <h2>{{ t.pressKit.typographyHeading }}</h2>
+    <p class="lead">{{ t.pressKit.typographyLead }}</p>
+    <p class="press-type-sample" aria-hidden="true">Inter</p>
+
+    <h2>{{ t.pressKit.doDontHeading }}</h2>
+    <div class="press-dodont">
+      <div class="press-do">
+        <h3>{{ t.pressKit.doHeading }}</h3>
+        <ul>
+          <li>{{ t.pressKit.do1 }}</li>
+          <li>{{ t.pressKit.do2 }}</li>
+          <li>{{ t.pressKit.do3 }}</li>
+        </ul>
+      </div>
+      <div class="press-dont">
+        <h3>{{ t.pressKit.dontHeading }}</h3>
+        <ul>
+          <li>{{ t.pressKit.dont1 }}</li>
+          <li>{{ t.pressKit.dont2 }}</li>
+          <li>{{ t.pressKit.dont3 }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>{{ t.pressKit.attributionHeading }}</h2>
+    <p class="lead">{{ t.pressKit.attributionLead }}</p>
+    <p class="press-attribution"><code id="press-attribution">{{ t.pressKit.attributionString }}</code>
+      <button type="button" class="btn btn-secondary press-copy" data-copy-target="press-attribution" data-copy-label="{{ t.pressKit.copyLabel }}" data-copied-label="{{ t.pressKit.copiedLabel }}">{{ t.pressKit.copyLabel }}</button>
+    </p>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var btn = document.querySelector(".press-copy");
+    if (!btn || !navigator.clipboard) return;
+    btn.addEventListener("click", function () {
+      var el = document.getElementById(btn.dataset.copyTarget);
+      if (!el) return;
+      navigator.clipboard.writeText(el.textContent.trim()).then(function () {
+        btn.textContent = btn.dataset.copiedLabel;
+        setTimeout(function () { btn.textContent = btn.dataset.copyLabel; }, 2000);
+      });
+    });
+  })();
+</script>

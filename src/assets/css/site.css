@@ -4751,3 +4751,170 @@ a.joint-orgs-card:hover .joint-orgs-name {
 @media (prefers-reduced-motion: reduce) {
   .rm-progress-fill { transition: none; }
 }
+
+/* ---------------------------------------------------------------------------
+   Press kit (/press-kit.html + FR + DE)
+   Logo download cards, colour swatches, type sample, do/don't, attribution.
+   Brand hues (#73caff network blue, #007bc6 brand blue) are hardcoded in the
+   swatch markup; the surrounding chrome reuses design tokens that auto-flip.
+--------------------------------------------------------------------------- */
+.press-logo-grid {
+  list-style: none;
+  margin: var(--space-5) 0 var(--space-8);
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-5);
+}
+
+.press-logo-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.press-logo-card h3 {
+  margin: 0;
+  font-size: var(--fs-lg);
+}
+
+.press-logo-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  flex: 1 1 auto;
+}
+
+.press-logo-card .btn {
+  align-self: flex-start;
+}
+
+.press-logo-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  padding: var(--space-4);
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #007bc6;
+}
+
+.press-logo-preview svg,
+.press-logo-preview img {
+  max-width: 100%;
+  max-height: 96px;
+  height: auto;
+  width: auto;
+}
+
+.press-swatch-grid {
+  list-style: none;
+  margin: var(--space-5) 0 var(--space-8);
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-5);
+}
+
+.press-swatch {
+  padding: var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.press-swatch-chip {
+  display: block;
+  height: 88px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  margin-bottom: var(--space-4);
+}
+
+.press-swatch h3 {
+  margin: 0 0 var(--space-1);
+  font-size: var(--fs-lg);
+}
+
+.press-swatch code {
+  font-size: var(--fs-sm);
+  letter-spacing: 0.04em;
+}
+
+.press-swatch p {
+  margin: var(--space-2) 0 0;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.press-type-sample {
+  margin: var(--space-4) 0 var(--space-8);
+  font-size: var(--fs-4xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.press-dodont {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-5);
+  margin: var(--space-5) 0 var(--space-8);
+}
+
+.press-do,
+.press-dont {
+  padding: var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.press-do {
+  border-left: 4px solid hsl(150 60% 42%);
+}
+
+.press-dont {
+  border-left: 4px solid hsl(0 70% 55%);
+}
+
+.press-do h3,
+.press-dont h3 {
+  margin: 0 0 var(--space-3);
+  font-size: var(--fs-lg);
+}
+
+.press-do ul,
+.press-dont ul {
+  margin: 0;
+  padding-left: var(--space-5);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.press-do li,
+.press-dont li {
+  margin-bottom: var(--space-2);
+}
+
+.press-attribution {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.press-attribution code {
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+}
