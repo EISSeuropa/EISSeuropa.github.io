@@ -1,10 +1,30 @@
 const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.setQuietMode(true);
 
   eleventyConfig.addFilter("year", () => new Date().getUTCFullYear());
+
+  // {{ '/assets/css/site.css' | bust }} -> '/assets/css/site.css?v=ab12cd34'
+  // Cache-busts CSS/JS by appending the first 8 hex of the file's
+  // SHA-256, so a returning visitor never renders new HTML against a
+  // stale cached asset (GitHub Pages serves assets with max-age=600).
+  // Computed from the src/ source at build time, so it can never go
+  // stale: change the file, the hash changes, the URL changes. No
+  // stamping script or CI gate needed (unlike a no-build site). A
+  // missing file falls back to the bare URL rather than breaking.
+  eleventyConfig.addFilter("bust", (url) => {
+    try {
+      const rel = String(url).replace(/^\//, "").split("?")[0];
+      const buf = fs.readFileSync(path.join(__dirname, "src", rel));
+      const hash = crypto.createHash("sha256").update(buf).digest("hex").slice(0, 8);
+      return `${url}?v=${hash}`;
+    } catch (_) {
+      return url;
+    }
+  });
 
   // {% inlineSvg "assets/images/brand/logo-lockup.svg" %} — reads a
   // file from src/ at build time and dumps the bytes verbatim into

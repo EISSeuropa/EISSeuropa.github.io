@@ -77,8 +77,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 ### Fixed
 
 - **In-page anchors no longer land under the sticky chrome.** The chrome's height is variable (the What's New banner adds height, and FR/DE pages add the beta ribbon), so the old static scroll offset left clicked anchors hidden behind the chrome in those states. `theme.js` now measures the chrome's real rendered height and publishes it as `scroll-padding-top` on `<html>`, recomputed on load, on resize, and whenever the banner mounts or is dismissed. A static fallback covers the pre-hydration and no-JS case (closes [#278](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/278)).
-
-## [2.24.0] · 2026-05-30 — Live programme depth and a print overhaul
+- **CSS and JS no longer load stale from cache after a deploy.** The stylesheet and the scripts were linked with bare URLs, so a returning visitor could fetch new HTML while the browser served the old `site.css` from cache (GitHub Pages caches assets for ten minutes), briefly rendering new markup against old styles. A build-time `bust` filter now appends the first eight hex of each asset's SHA-256 (`site.css?v=…`), recomputed every build, so the URL changes only when the file does. No stamping script or CI gate is needed, the hash is derived at build time rather than written into the source.
 
 > ESSC 2026 opens in Stockholm on 11–12 June, and this release is built around the conference pages that carry it. The live programme on `/2026` now shows the full panel line-ups with every co-author and marks who is presenting, and printing it produces a clean handout rather than a stack of near-empty pages. Around it the archive fills out, the People page reflects who has moved on, and the English copy gets a consistent voice.
 
