@@ -141,6 +141,22 @@ const locales = {
       copiedLabel: "Copied",
     },
 
+    licensing: {
+      eyebrow: "Licensing & reuse",
+      heading: "Licensing & reuse",
+      lead: "How you may reuse what's on this site. The code is open source, the content is yours to share with credit, and a few things are kept aside.",
+      codeHeading: "The code: MIT",
+      contentHeading: "The content: CC BY 4.0",
+      attributionLabel: "When you reuse the content, please credit it as:",
+      carveoutHeading: "Member photos and biographies",
+      carveoutBody: "The Creative Commons licence above does not cover the photographs and biographies of our board, community, and contributing members. Those entries belong to the people they depict, who have shared them with their consent for use on this site. Please do not reuse a member's photo or biography without that person's agreement.",
+      thirdPartyHeading: "Bundled third-party assets",
+      thirdPartyLead: "Some assets we ship with the site are the work of others and keep their own licences:",
+      thirdPartyImages: "Conference and programme photographs credited in the site footer remain the property of their respective owners and are not covered by CC BY 4.0.",
+      questionsHeading: "Questions",
+      questionsBody: "If you would like to reuse something and you are not sure which terms apply, write to us at",
+    },
+
     footer: {
       tagline: "The largest and most diverse European gathering of scholars and practitioners on security issues.",
       conferencesHeading: "Conferences",
@@ -180,6 +196,7 @@ const locales = {
         accessibility: "Accessibility",
         sitemap: "Site map",
         roadmap: "Roadmap",
+        licensing: "Licensing",
       },
       // Authorship credit shown on the very last line of the footer, next
       // to the legal-links row. The name itself links to the author's
@@ -467,6 +484,22 @@ const locales = {
       copiedLabel: "Copié",
     },
 
+    licensing: {
+      eyebrow: "Licences et réutilisation",
+      heading: "Licences et réutilisation",
+      lead: "Comment réutiliser ce qui se trouve sur ce site. Le code est libre, le contenu est à partager avec mention de la source, et quelques éléments sont réservés.",
+      codeHeading: "Le code : MIT",
+      contentHeading: "Le contenu : CC BY 4.0",
+      attributionLabel: "Lorsque vous réutilisez le contenu, merci de le créditer ainsi :",
+      carveoutHeading: "Photos et biographies des membres",
+      carveoutBody: "La licence Creative Commons ci-dessus ne couvre pas les photographies ni les biographies de notre conseil, de notre communauté et de nos membres contributeurs. Ces éléments appartiennent aux personnes qu'ils représentent, qui les ont partagés avec leur consentement pour une utilisation sur ce site. Merci de ne pas réutiliser la photo ou la biographie d'un membre sans son accord.",
+      thirdPartyHeading: "Ressources tierces intégrées",
+      thirdPartyLead: "Certaines ressources que nous intégrons au site sont l'œuvre d'autres personnes et conservent leur propre licence :",
+      thirdPartyImages: "Les photographies de conférences et de programmes créditées dans le pied de page restent la propriété de leurs détenteurs respectifs et ne sont pas couvertes par la licence CC BY 4.0.",
+      questionsHeading: "Questions",
+      questionsBody: "Si vous souhaitez réutiliser un élément et que vous ne savez pas quelles conditions s'appliquent, écrivez-nous à",
+    },
+
     footer: {
       tagline: "Le plus grand et le plus divers rassemblement européen de chercheurs et praticiens sur les questions de sécurité.",
       conferencesHeading: "Conférences",
@@ -506,6 +539,7 @@ const locales = {
         accessibility: "Accessibilité",
         sitemap: "Plan du site",
         roadmap: "Feuille de route",
+        licensing: "Licences",
       },
       authorship: {
         prefix: "Site conçu et développé par",
@@ -741,6 +775,22 @@ const locales = {
       copiedLabel: "Kopiert",
     },
 
+    licensing: {
+      eyebrow: "Lizenzen & Weiterverwendung",
+      heading: "Lizenzen & Weiterverwendung",
+      lead: "Wie Sie weiterverwenden dürfen, was auf dieser Website steht. Der Code ist quelloffen, die Inhalte dürfen Sie mit Quellenangabe teilen, und einige Dinge bleiben vorbehalten.",
+      codeHeading: "Der Code: MIT",
+      contentHeading: "Die Inhalte: CC BY 4.0",
+      attributionLabel: "Wenn Sie die Inhalte weiterverwenden, nennen Sie bitte die Quelle so:",
+      carveoutHeading: "Mitgliederfotos und Biografien",
+      carveoutBody: "Die obige Creative-Commons-Lizenz gilt nicht für die Fotografien und Biografien unseres Vorstands, unserer Gemeinschaft und unserer beitragenden Mitglieder. Diese Einträge gehören den dargestellten Personen, die sie mit ihrer Zustimmung zur Nutzung auf dieser Website geteilt haben. Bitte verwenden Sie das Foto oder die Biografie eines Mitglieds nicht ohne dessen Einverständnis weiter.",
+      thirdPartyHeading: "Eingebundene Ressourcen Dritter",
+      thirdPartyLead: "Einige Ressourcen, die wir mit der Website ausliefern, stammen von anderen und behalten ihre eigene Lizenz:",
+      thirdPartyImages: "Die im Seitenfuß genannten Konferenz- und Programmfotografien bleiben Eigentum ihrer jeweiligen Inhaber und fallen nicht unter die Lizenz CC BY 4.0.",
+      questionsHeading: "Fragen",
+      questionsBody: "Wenn Sie etwas weiterverwenden möchten und nicht sicher sind, welche Bedingungen gelten, schreiben Sie uns an",
+    },
+
     footer: {
       tagline: "Die größte und vielfältigste europäische Versammlung von Wissenschaftlern und Praktikern zu Sicherheitsfragen.",
       conferencesHeading: "Konferenzen",
@@ -780,6 +830,7 @@ const locales = {
         accessibility: "Barrierefreiheit",
         sitemap: "Sitemap",
         roadmap: "Roadmap",
+        licensing: "Lizenzen",
       },
       authorship: {
         prefix: "Website konzipiert und entwickelt von",
