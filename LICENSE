@@ -19,13 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-This MIT licence covers the source code of this repository (the Eleventy
-templates, configuration, build scripts, and stylesheets). The editorial
-content of the website is licensed separately under Creative Commons
-Attribution 4.0 International. See LICENSE-CONTENT.
-
-Bundled third-party assets keep their own licences. See LICENSE-CONTENT for
-the list.
