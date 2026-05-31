@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security issue
+    url: https://github.com/EISSeuropa/EISSeuropa.github.io/security/advisories/new
+    about: Found a vulnerability? Report it privately through a GitHub security advisory rather than a public issue.
+  - name: General questions
+    url: mailto:contact@eiss-europa.com
+    about: Questions about EISS, the events, or the site that are not a bug, feature, or docs issue.
