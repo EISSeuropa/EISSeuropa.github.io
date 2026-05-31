@@ -102,13 +102,13 @@
     "src/sitemap.njk": {
       "fr": {
         "file": "src/sitemap.fr.njk",
-        "source_sha1": "478a7bef788e845b03cf53b29562ecfb5ffeeebc",
+        "source_sha1": "4717606244c833ea181cb9e599182231b8821627",
         "translated_on": "2026-05-31",
         "status": "beta"
       },
       "de": {
         "file": "src/sitemap.de.njk",
-        "source_sha1": "478a7bef788e845b03cf53b29562ecfb5ffeeebc",
+        "source_sha1": "4717606244c833ea181cb9e599182231b8821627",
         "translated_on": "2026-05-31",
         "status": "beta"
       }
@@ -166,6 +166,20 @@
         "file": "src/policy.de.njk",
         "source_sha1": "4b2861c7e79c69315da79095474d94f7bff157a5",
         "translated_on": "2026-05-29",
+        "status": "beta"
+      }
+    },
+    "src/licensing.njk": {
+      "fr": {
+        "file": "src/licensing.fr.njk",
+        "source_sha1": "1f3d521e0c5932493a561efcc9cd00b47f2e5592",
+        "translated_on": "2026-05-31",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/licensing.de.njk",
+        "source_sha1": "1f3d521e0c5932493a561efcc9cd00b47f2e5592",
+        "translated_on": "2026-05-31",
         "status": "beta"
       }
     }
