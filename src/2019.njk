@@ -28,9 +28,47 @@ status: archive
   </div>
 </section>
 
+<section class="section">
+  <div class="container">
+    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div class="featured-eyebrow">Programme highlights</div>
+      <h2>Keynote &amp; introductory remarks</h2>
+      <p><strong>Introductory remarks:</strong> Hugo Meijer and Alain Dieckhoff, Sciences Po CERI.</p>
+      <p><strong>Keynote:</strong> Stephen Brooks (Dartmouth College) and Barry Posen (Massachusetts Institute of Technology).</p>
+      <p style="margin-top: var(--space-5); margin-bottom: 0;">
+        <a class="btn btn-secondary btn-sm"
+           href="/assets/files/Programme2019.pdf"
+           target="_blank" rel="noopener">
+          Download full programme (PDF)
+        </a>
+      </p>
+    </article>
+  </div>
+</section>
+
+{# Final programme, rendered in the SAME grid UI as the live ESSC 2026
+   programme (archive-programme.njk + archiveProgrammes.js). #}
+{% set archiveSlug = "2019" %}
+{% include "archive-programme.njk" %}
+
+<section class="section-tight" aria-labelledby="recordings-2019-title">
+  <div class="container">
+    <h2 id="recordings-2019-title" style="margin-bottom: var(--space-5);">Session recordings</h2>
+    <p class="muted" style="max-width: 44rem; margin-bottom: var(--space-5);">
+      Selected sessions from EISS 2019 are available on the EISS YouTube channel
+      (<a href="https://www.youtube.com/@eiss-europe/" target="_blank" rel="noopener">@eiss-europe</a>).
+      Clicking play loads the YouTube iframe; before that, no YouTube cookies are set.
+    </p>
+    {%- set youtubeId = "PLkI2R8FsFqV4_TVOCV5qfPFAmZn1KbWGv" -%}
+    {%- set youtubeIsList = true -%}
+    {%- set youtubeTitle = "EISS 2019 — Paris, session recordings" -%}
+    {% include "youtube-embed.njk" %}
+  </div>
+</section>
+
 <section class="section-tight">
   <div class="container">
-    <h2 style="margin-bottom: var(--space-5);">Photos from the conference</h2>
+    <h2 style="margin-bottom: var(--space-5);">Conference gallery</h2>
     <div class="photo-gallery">
       <figure>
         <img src="/assets/images/dsc-263-900x596.jpg" alt="EISS 2019 conference scene." loading="lazy">
@@ -65,63 +103,6 @@ status: archive
     </div>
   </div>
 </section>
-
-<section class="section">
-  <div class="container">
-    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <div class="featured-eyebrow">Programme highlights</div>
-      <h2>Keynote &amp; introductory remarks</h2>
-      <p><strong>Introductory remarks:</strong> Hugo Meijer and Alain Dieckhoff, Sciences Po CERI.</p>
-      <p><strong>Keynote:</strong> Stephen Brooks (Dartmouth College) and Barry Posen (Massachusetts Institute of Technology).</p>
-      <p style="margin-top: var(--space-5); margin-bottom: 0;">
-        <a class="btn btn-secondary btn-sm"
-           href="/assets/files/Programme2019.pdf"
-           target="_blank" rel="noopener">
-          Download full programme (PDF)
-        </a>
-      </p>
-    </article>
-  </div>
-</section>
-
-<section class="section-tight" aria-labelledby="recordings-2019-title">
-  <div class="container">
-    <h2 id="recordings-2019-title" style="margin-bottom: var(--space-5);">Session recordings</h2>
-    <p class="muted" style="max-width: 44rem; margin-bottom: var(--space-5);">
-      Selected sessions from EISS 2019 are available on the EISS YouTube channel
-      (<a href="https://www.youtube.com/@eiss-europe/" target="_blank" rel="noopener">@eiss-europe</a>).
-      Clicking play loads the YouTube iframe; before that, no YouTube cookies are set.
-    </p>
-    {%- set youtubeId = "PLkI2R8FsFqV4_TVOCV5qfPFAmZn1KbWGv" -%}
-    {%- set youtubeIsList = true -%}
-    {%- set youtubeTitle = "EISS 2019 — Paris, session recordings" -%}
-    {% include "youtube-embed.njk" %}
-  </div>
-</section>
-
-<section class="section-tight">
-  <div class="container">
-    <article class="prose">
-      <h2>Open and closed panels</h2>
-      <p>The EISS Conference features both "closed" and "open" panels.</p>
-      <p>
-        <strong>"Closed" panels</strong> focus on themes decided by the EISS. Each panel includes
-        four papers and the chair serves as discussant.
-      </p>
-      <p>
-        <strong>"Open" panels:</strong> participants propose a panel's title, a chair, and four
-        speakers. The chair serves as discussant. The "open" panels are meant to broaden the range
-        of existing themes in the EISS and to provide greater latitude to the participants to
-        contribute to the definition of the conference content.
-      </p>
-    </article>
-  </div>
-</section>
-
-{# Final programme, rendered in the SAME grid UI as the live ESSC 2026
-   programme (archive-programme.njk + archiveProgrammes.js). #}
-{% set archiveSlug = "2019" %}
-{% include "archive-programme.njk" %}
 
 <section class="section">
   <div class="container">

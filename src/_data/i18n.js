@@ -106,6 +106,7 @@ const locales = {
       tapForSound: "Tap for sound",
       toggleSound: "Toggle sound",
       watchOnYouTube: "Watch on YouTube",
+      play: "Play the film",
     },
 
     pressKit: {
@@ -203,6 +204,7 @@ const locales = {
         sitemap: "Site map",
         roadmap: "Roadmap",
         licensing: "Licensing",
+        pressKit: "Press kit",
       },
       // Authorship credit shown on the very last line of the footer, next
       // to the legal-links row. The name itself links to the author's
@@ -468,6 +470,7 @@ const locales = {
       tapForSound: "Touchez pour le son",
       toggleSound: "Activer ou couper le son",
       watchOnYouTube: "Voir sur YouTube",
+      play: "Lire le film",
     },
 
     pressKit: {
@@ -565,6 +568,7 @@ const locales = {
         sitemap: "Plan du site",
         roadmap: "Feuille de route",
         licensing: "Licences",
+        pressKit: "Kit presse",
       },
       authorship: {
         prefix: "Site conçu et développé par",
@@ -778,6 +782,7 @@ const locales = {
       tapForSound: "Für Ton tippen",
       toggleSound: "Ton ein- oder ausschalten",
       watchOnYouTube: "Auf YouTube ansehen",
+      play: "Film abspielen",
     },
 
     pressKit: {
@@ -875,6 +880,7 @@ const locales = {
         sitemap: "Sitemap",
         roadmap: "Roadmap",
         licensing: "Lizenzen",
+        pressKit: "Pressekit",
       },
       authorship: {
         prefix: "Website konzipiert und entwickelt von",

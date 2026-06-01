@@ -358,39 +358,69 @@
     if (!v) return;
     var btn = fig.querySelector("[data-film-sound]");
     var hint = fig.querySelector("[data-film-hint]");
+    var playBtn = fig.querySelector("[data-film-play]");
     var loaded = false;
-    function load() { if (loaded) return; loaded = true; v.src = v.getAttribute("data-film"); }
-    function tryPlay() { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+    // iOS only honours muted inline autoplay if `muted` is set as a
+    // property (not just the attribute) and the source is (re)loaded
+    // before play(). Setting src on a preload="none" element without a
+    // load() leaves Safari with nothing to play.
+    function load() {
+      if (loaded) return;
+      loaded = true;
+      v.muted = true;
+      v.setAttribute("muted", "");
+      v.src = v.getAttribute("data-film");
+      v.load();
+    }
+    function showPlay(on) { if (playBtn) playBtn.hidden = !on; }
+    function tryPlay() {
+      load();
+      var p = v.play();
+      // If the browser blocks muted autoplay (iOS Low Power Mode, Safari
+      // policy), surface the centre play button so a tap can start it.
+      if (p && p.then) { p.then(function () { showPlay(false); }, function () { showPlay(true); }); }
+    }
     function dropHint() { if (hint) hint.hidden = true; }
+    function toggle() { if (v.paused) { tryPlay(); } else { v.pause(); } dropHint(); }
 
     if (reduce) {
       load();
       v.controls = true;
       if (btn) btn.hidden = true;
+      showPlay(false);
       dropHint();
-    } else {
-      if ("IntersectionObserver" in window) {
-        new IntersectionObserver(function (entries) {
-          entries.forEach(function (e) {
-            if (e.isIntersecting) { load(); tryPlay(); }
-            else if (!v.paused) { v.pause(); }
-          });
-        }, { threshold: 0.4 }).observe(v);
-      } else {
-        load();
-        tryPlay();
-      }
-      v.addEventListener("click", function () { v.paused ? tryPlay() : v.pause(); dropHint(); });
-      if (btn) {
-        btn.addEventListener("click", function () {
-          v.muted = !v.muted;
-          if (!v.muted) tryPlay();
-          btn.setAttribute("aria-pressed", String(!v.muted));
-          dropHint();
-        });
-      }
-      // Fade the hint after a few seconds even without interaction.
-      if (hint) setTimeout(dropHint, 6000);
+      return;
     }
+
+    // Keep the overlay in sync with the real play state.
+    v.addEventListener("play", function () { showPlay(false); });
+    v.addEventListener("pause", function () { showPlay(true); });
+
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { tryPlay(); }
+          else if (!v.paused) { v.pause(); }
+        });
+      }, { threshold: 0.4 }).observe(v);
+    } else {
+      tryPlay();
+    }
+
+    v.addEventListener("click", toggle);
+    if (playBtn) {
+      playBtn.addEventListener("click", function (e) { e.stopPropagation(); toggle(); });
+    }
+    if (btn) {
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        v.muted = !v.muted;
+        if (!v.muted) tryPlay();
+        btn.setAttribute("aria-pressed", String(!v.muted));
+        dropHint();
+      });
+    }
+    // Fade the hint after a few seconds even without interaction.
+    if (hint) setTimeout(dropHint, 6000);
   });
 })();

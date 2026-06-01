@@ -16,10 +16,13 @@
 {%- set t = i18n[_lang] -%}
 <figure class="film">
   <div class="film-frame">
-    <video class="film-video" playsinline muted loop preload="none"
+    <video class="film-video" playsinline webkit-playsinline muted loop preload="none"
            poster="{{ filmPoster | bust }}"
            data-film="{{ filmSrc }}"
            {% if filmCaption %}aria-label="{{ filmCaption }}"{% endif %}></video>
+    <button class="film-play" type="button" data-film-play hidden aria-label="{{ t.film.play }}">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+    </button>
     <span class="film-hint" data-film-hint>{{ icon("volume-2") }} {{ t.film.tapForSound }}</span>
     <button class="film-sound" type="button" data-film-sound aria-pressed="false" aria-label="{{ t.film.toggleSound }}">
       <span class="film-sound-muted" aria-hidden="true">{{ icon("volume-x") }}</span>
