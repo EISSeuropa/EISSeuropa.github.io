@@ -18,24 +18,10 @@ status: archive
   </div>
 </header>
 
-<section class="section">
-  <div class="container">
-    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <div class="featured-eyebrow">Programme</div>
-      <h2>Final Programme</h2>
-      <p>
-        The Annual Conference is structured around two categories of panels. <strong>"Closed
-        panels"</strong> are recurring year-over-year and are pre-established by the EISS.
-        <strong>"Open panels"</strong> are proposed by participants. 2024 also introduced
-        poster sessions.
-      </p>
-      <figure style="margin: var(--space-5) 0 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden;">
-        <img src="/assets/images/screenshot-2023-12-13-at-10.47.23-1529x317.png"
-             alt="2024 EISS Annual Conference programme overview." loading="lazy">
-      </figure>
-    </article>
-  </div>
-</section>
+{# Final programme, rendered in the SAME grid UI as the live ESSC 2026
+   programme (archive-programme.njk + archiveProgrammes.js). #}
+{% set archiveSlug = "2024" %}
+{% include "archive-programme.njk" %}
 
 <section class="section-tight" aria-labelledby="recordings-2024-title">
   <div class="container">
