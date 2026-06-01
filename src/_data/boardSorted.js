@@ -101,6 +101,17 @@ function buildTierMap() {
 // build-time signal to decide whether to render the toggle button
 // at all, so short bios don't get a pointless "Read more" they
 // can't expand into anything new.
+// Name → URL slug for #anchors and Pagefind bio stubs. Deterministic;
+// keep identical to the copy in src/_data/searchBios.js.
+function slugify(s) {
+  return (s || "")
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 const BIO_LONG_THRESHOLD = 180;
 
 // Time-bound roles (interns, visiting fellows, fixed-term contracts)
@@ -161,6 +172,10 @@ module.exports = function () {
     const bio = (person.bio || "").trim();
     return {
       ...person,
+      // Slug for the per-card #anchor (person-card.njk renders id="{{ slug }}")
+      // and for the Pagefind bio-search stubs (src/_data/searchBios.js).
+      // Keep this slugify in sync with searchBios.js.
+      slug: person.slug || slugify(person.name),
       tier: tierByRole[person.role] ?? 999,
       isEsscActive: esscNames.has(identityKey(person.name)),
       bioIsLong: bio.length > BIO_LONG_THRESHOLD,

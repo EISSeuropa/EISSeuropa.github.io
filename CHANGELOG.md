@@ -32,6 +32,8 @@ The themed sections above are the story; the index below is the
 audit trail. Same content, terser.
 
 #### Added
+
+- **Board members are individually searchable.** Site search indexed `/board` as one page, so a name query returned the whole board rather than the person. Now `src/_data/searchBios.js` + `src/search-bios.njk` emit a lightweight Pagefind index stub per person per locale at `/search/bios/<lang>/<slug>.html` (noindex; redirects a click to the canonical `/board[.lang].html#<slug>` anchor). Every board / support card gains a stable `#<slug>` anchor (deep-linkable), rendered by `person-card.njk` from a slug derived in `boardSorted.js`. The stubs are excluded from the sitemap. NetSec parity ([#353](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/353)); search architecture documented in `docs/search.md`, including the post-deploy verification ([#359](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/359)).
 - (one-line pointer bullets, what not why)
 
 #### Changed
