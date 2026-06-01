@@ -1,7 +1,10 @@
 {# Self-hosted portrait conference film in a phone-style frame.
 
    Set before including:
-     filmSrc     — MP4 URL (a GitHub Release asset; no third party)
+     filmSrc     — MP4 URL, served same-origin from /assets/video/ so the
+                   host sends Content-Type: video/mp4 and inline plays on
+                   iOS (GitHub Release assets are application/octet-stream
+                   + attachment, which iOS refuses to play inline)
      filmPoster  — poster image path
      filmYoutube — link to the full Short (optional)
      filmCaption — already-localised caption line (optional)
