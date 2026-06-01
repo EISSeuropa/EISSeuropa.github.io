@@ -87,9 +87,11 @@
       const meta = d.meta || {};
 
       // People results (bio stubs) carry a headshot + role as Pagefind
-      // metadata; render a thumbnail and a role pill. Other pages have
-      // neither and render as before.
-      if (meta.image) {
+      // metadata; render a thumbnail and a role pill. Only person results
+      // get a thumbnail — regular pages otherwise show whatever image
+      // Pagefind auto-extracts first (a board member's face on /board, a
+      // speaker on /YYYY, a logo elsewhere), which reads as wrong.
+      if (meta.image && meta.kind === "person") {
         const img = document.createElement("img");
         img.className = "search-result-thumb";
         img.src = meta.image;
