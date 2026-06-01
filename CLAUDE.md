@@ -190,6 +190,21 @@ cross-check the `[Unreleased]` bullet count against
 bullet was lost. Use `git log -G '<headline phrase>' -- CHANGELOG.md`
 to trace where, then restore in the release-prep commit.
 
+**Mechanical backstop (`.gitattributes`).** A rule cannot stop a
+merge-time race, so the repo now pins `CHANGELOG.md merge=union` in
+`.gitattributes`. On a conflicting hunk Git keeps **both** sides
+instead of discarding one, so concurrent bullet additions concatenate
+rather than vanish. This is the primary defence. The cross-check
+recipe above is now the secondary net for the residual cases union
+does not catch (identical-line edits, or a host that bypasses the
+merge driver). Trade-off: union can land bullets slightly out of order
+or leave a stray duplicate. Both are visible and cheap to tidy in the
+release-prep review, unlike a silent loss. The NetSec sister repo
+should carry the same `.gitattributes` line (mirror it there too). If the drop ever
+recurs despite union, escalate to per-PR changelog fragments
+(`changelog.d/`, one file per PR, collated by `release.sh`), which
+removes the shared-file conflict entirely.
+
 ## 5. Release-time four-point cross-check (minor / major only)
 
 Every **minor (`X.Y.0` where `Y > prev`) or major (`X.0.0`)
