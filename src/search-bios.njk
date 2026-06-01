@@ -29,6 +29,7 @@ eleventyExcludeFromCollections: true
     {# Pagefind metadata for richer search results: headshot + role pill,
        rendered by search.js. Hidden spans so they don't pollute the
        indexed body text / excerpt. #}
+    <span hidden data-pagefind-meta="kind:person"></span>
     {%- if bio.photo %}<span hidden data-pagefind-meta="image:{{ bio.photo }}"></span>{% endif %}
     {%- if bio.role %}<span hidden data-pagefind-meta="role:{{ bio.role }}"></span>{% endif %}
     {%- if bio.functionalResponsibility %}<span hidden data-pagefind-meta="responsibility:{{ bio.functionalResponsibility }}"></span>{% endif %}
