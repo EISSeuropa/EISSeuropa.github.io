@@ -1781,6 +1781,19 @@ h4 { font-size: var(--fs-lg); }
   object-position: center;
 }
 
+/* Programme cover banner — the title band cropped from the designer
+   programme PDF's cover page (gs render + ffmpeg crop, ~2.4:1). Sits at
+   the top of the /YYYY page header. The .programme-download button
+   surfaces the print-ready PDF that complements the dynamic grid. */
+.programme-banner { margin: var(--space-5) 0 var(--space-2); }
+.programme-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+}
+.programme-download { margin: 0; }
+
 .tile {
   padding: var(--space-5);
   background: var(--bg-elev);
@@ -3047,6 +3060,13 @@ h4 { font-size: var(--fs-lg); }
   display: grid;
   grid-template-columns: 3.25rem 1fr;
   gap: var(--space-3);
+}
+/* Archive programmes reuse this markup but omit the per-paper time
+   gutter (.programme-contrib-when) — past papers have no individual
+   start time. Without that col-1 element the body fell into the 3.25rem
+   column and titles wrapped one word per line. Single column here. */
+.programme--archive .programme-contrib {
+  grid-template-columns: 1fr;
 }
 
 .programme-contrib-when {

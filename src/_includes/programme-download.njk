@@ -1,0 +1,19 @@
+{# Download button for the print-ready programme PDF (the designer-made
+   final), complementing the dynamic on-page grid. Reads the per-year
+   filename from conferences.js (programmePdf), served same-origin from
+   /assets/files/. Renders nothing when the year has no PDF, so it's safe
+   to include unconditionally. Set `year` before including. EN-only, like
+   the archive pages. #}
+{% from "icons.njk" import icon %}
+{%- set _pa = conferences.byYear[year] -%}
+{%- if _pa and _pa.programmePdf %}
+<section class="section-tight" aria-label="Programme download">
+  <div class="container">
+    <p class="programme-download">
+      <a class="btn btn-secondary" href="/assets/files/{{ _pa.programmePdf }}" download>
+        {{ icon("file-text") }} Download the programme (PDF)
+      </a>
+    </p>
+  </div>
+</section>
+{%- endif %}

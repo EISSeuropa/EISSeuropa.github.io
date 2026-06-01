@@ -20,16 +20,6 @@ status: archive
 
 <section class="section">
   <div class="container">
-    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8)); text-align: center;">
-      <div class="featured-eyebrow">Wrap-up</div>
-      <h2>Thank you!</h2>
-      <p class="lead muted">For making #EISS2019 the largest and best edition so far.</p>
-    </article>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
     <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
       <div class="featured-eyebrow">Programme highlights</div>
       <h2>Keynote &amp; introductory remarks</h2>
@@ -45,15 +35,6 @@ status: archive
     </article>
   </div>
 </section>
-
-{# Final programme, rendered in the SAME grid UI as the live ESSC 2026
-   programme (archive-programme.njk + archiveProgrammes.js). #}
-{% set archiveSlug = "2019" %}
-{% include "archive-programme.njk" %}
-
-{# Session recordings — shared, data-driven block (playlist in conferences.js). #}
-{% set mediaYear = "2019" %}
-{% include "conference-media.njk" %}
 
 <section class="section-tight">
   <div class="container">
@@ -92,6 +73,15 @@ status: archive
     </div>
   </div>
 </section>
+
+{# Final programme, rendered in the SAME grid UI as the live ESSC 2026
+   programme (archive-programme.njk + archiveProgrammes.js). #}
+{% set archiveSlug = "2019" %}
+{% include "archive-programme.njk" %}
+
+{# Session recordings — shared, data-driven block (playlist in conferences.js). #}
+{% set mediaYear = "2019" %}
+{% include "conference-media.njk" %}
 
 <section class="section">
   <div class="container">
