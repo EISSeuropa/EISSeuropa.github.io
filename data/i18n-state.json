@@ -60,14 +60,14 @@
     "src/events.njk": {
       "fr": {
         "file": "src/events.fr.njk",
-        "source_sha1": "a0bd24651c372f126ada81540914a87bc1a77e98",
-        "translated_on": "2026-05-29",
+        "source_sha1": "9925cf9a351ad5c93aac4c3237bed47a81612815",
+        "translated_on": "2026-06-01",
         "status": "beta"
       },
       "de": {
         "file": "src/events.de.njk",
-        "source_sha1": "a0bd24651c372f126ada81540914a87bc1a77e98",
-        "translated_on": "2026-05-29",
+        "source_sha1": "9925cf9a351ad5c93aac4c3237bed47a81612815",
+        "translated_on": "2026-06-01",
         "status": "beta"
       }
     },

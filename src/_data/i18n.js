@@ -247,6 +247,16 @@ const locales = {
       noEventsBody: "When EISS, NetSec, or partner institutions publish events through indico.eiss-europa.com, they'll appear here automatically.",
     },
 
+    pastEvents: {
+      // The "Past events" section on /events: a hand-maintained record of
+      // past members' events (src/_data/pastEvents.js). These are
+      // members-only on Indico, so they are not linked there. Automating
+      // the refresh is tracked in issue #401.
+      sectionEyebrow: "Past events",
+      sectionHeading: "Members' events",
+      sectionLead: "A record of recent members' events, the seminars and book talks proposed and hosted by the EISS community.",
+    },
+
     netsec: {
       // Labels for the "EISS people leading NetSec" strip on /initiative.
       // The role titles themselves live in src/_data/netsec.js (English,
@@ -598,6 +608,12 @@ const locales = {
       noEventsBody: "Lorsque EISS, NetSec ou nos institutions partenaires publient des événements via indico.eiss-europa.com, ils apparaîtront ici automatiquement.",
     },
 
+    pastEvents: {
+      sectionEyebrow: "Événements passés",
+      sectionHeading: "Événements des membres",
+      sectionLead: "Un aperçu des événements récents des membres, séminaires et présentations d'ouvrages proposés et organisés par la communauté EISS.",
+    },
+
     netsec: {
       leadEyebrow: "Des membres d'EISS à la direction de NetSec",
       leadIntro: "Les deux organisations partagent bien plus qu'un lien fondateur. Presque toutes les personnes qui pilotent NetSec siègent aussi au bureau d'EISS, avec une fonction dans chacune.",
@@ -908,6 +924,12 @@ const locales = {
       lastSynced: "Zuletzt aktualisiert",
       noEventsTitle: "Noch keine kommenden Veranstaltungen auf Indico",
       noEventsBody: "Wenn EISS, NetSec oder Partnerinstitutionen Veranstaltungen über indico.eiss-europa.com veröffentlichen, erscheinen sie hier automatisch.",
+    },
+
+    pastEvents: {
+      sectionEyebrow: "Vergangene Veranstaltungen",
+      sectionHeading: "Veranstaltungen der Mitglieder",
+      sectionLead: "Ein Rückblick auf die jüngsten Veranstaltungen der Mitglieder, Seminare und Buchvorstellungen, die von der EISS-Gemeinschaft vorgeschlagen und ausgerichtet wurden.",
     },
 
     netsec: {

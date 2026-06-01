@@ -31,6 +31,10 @@ alternates:
 {% set showEmptyState = true %}
 {% include "indico-events-list.njk" %}
 
+{# Past members' events, below the upcoming list (hand-maintained data in
+   src/_data/pastEvents.js; automation tracked in issue #401). #}
+{% include "past-events-list.njk" %}
+
 <section class="section">
   <div class="container">
     <h2 style="margin-bottom: var(--space-5);">Event formats</h2>

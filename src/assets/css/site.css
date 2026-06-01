@@ -2516,6 +2516,20 @@ h4 { font-size: var(--fs-lg); }
   text-decoration: none;
 }
 
+/* Non-linked event rows (past members' events that are members-only on
+   Indico, so they carry no public link). Same card, but no hover lift /
+   pointer affordance since there's nowhere to click. */
+.indico-event--static {
+  cursor: default;
+}
+
+.indico-event--static:hover,
+.indico-event--static:focus-visible {
+  border-color: var(--border);
+  box-shadow: none;
+  transform: none;
+}
+
 .indico-event-date {
   display: inline-flex;
   align-items: center;
