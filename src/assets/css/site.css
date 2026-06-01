@@ -3381,11 +3381,19 @@ h4 { font-size: var(--fs-lg); }
 
 /* Film beside a text column on desktop (portrait video reads better
    half-width than full); stacks on mobile, where it fills the column. */
-.film-feature { display: grid; gap: var(--space-6); align-items: center; }
+/* align-items: start so the film's top lines up with the heading. With
+   center alignment the tall portrait film poked ~200px above the
+   heading, so on scroll its top slid under the sticky header well before
+   the rest of the section — read as the video "disappearing behind the
+   menu". */
+.film-feature { display: grid; gap: var(--space-6); align-items: start; }
 .film-feature-body > :first-child { margin-top: 0; }
 @media (min-width: 48rem) {
   .film-feature { grid-template-columns: 1fr minmax(280px, 340px); }
-  .film-feature .film { margin: 0; }
+  /* margin-left: auto pushes the film to the right edge of its column so
+     its right edge aligns with the container (and the full-width cards
+     below), instead of leaving a ~20px gap. */
+  .film-feature .film { margin: 0 0 0 auto; }
   .film-feature .film-caption { text-align: left; }
 }
 
