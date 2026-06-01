@@ -4,16 +4,16 @@
   "source": "https://github.com/EISSeuropa/EISSeuropa.github.io/milestones",
   "milestones": {
     "v2.24.1": {
-      "closed": 26,
+      "closed": 27,
       "total": 27,
-      "percent": 96,
+      "percent": 100,
       "state": "open",
       "due": "2026-06-20"
     },
     "v2.25.0": {
       "closed": 20,
-      "total": 24,
-      "percent": 83,
+      "total": 26,
+      "percent": 77,
       "state": "open",
       "due": "2026-07-31"
     },
