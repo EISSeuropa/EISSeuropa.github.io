@@ -1,0 +1,36 @@
+---
+# Pagefind index stubs: one minimal HTML page per board/support person
+# per locale. Pagefind (built at deploy) indexes each stub's body, so a
+# search for a person's name / institution / themes returns that person
+# rather than the whole /board page. The stub is noindex for search
+# engines and redirects a human click to the canonical board anchor.
+# Excluded from collections so it never appears in sitemap.xml or the
+# visual sitemap. See docs/search.md and issues #353 / #359.
+pagination:
+  data: searchBios
+  size: 1
+  alias: bio
+permalink: "/search/bios/{{ bio.lang }}/{{ bio.slug }}.html"
+eleventyExcludeFromCollections: true
+---
+<!doctype html>
+<html lang="{{ bio.lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, follow">
+  <meta http-equiv="refresh" content="0; url={{ bio.canonical }}">
+  <link rel="canonical" href="{{ bio.canonical }}">
+  <title>{{ bio.name }} — EISS</title>
+</head>
+<body data-pagefind-body>
+  <main>
+    <h1 data-pagefind-meta="title">{{ bio.name }}</h1>
+    <p>{{ bio.role }}{% if bio.position %} — {{ bio.position }}{% endif %}{% if bio.institution %}, {{ bio.institution }}{% endif %}{% if bio.country %} ({{ bio.country }}){% endif %}</p>
+    {%- if bio.themes %}
+    <p>{{ bio.themes }}</p>
+    {%- endif %}
+    <p><a href="{{ bio.canonical }}">View on the EISS board page</a></p>
+  </main>
+</body>
+</html>
