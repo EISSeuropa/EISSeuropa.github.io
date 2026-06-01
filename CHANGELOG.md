@@ -32,11 +32,14 @@ The themed sections above are the story; the index below is the
 audit trail. Same content, terser.
 
 #### Added
+
+- **Board members are individually searchable.** Site search indexed `/board` as one page, so a name query returned the whole board rather than the person. Now `src/_data/searchBios.js` + `src/search-bios.njk` emit a lightweight Pagefind index stub per person per locale at `/search/bios/<lang>/<slug>.html` (noindex; redirects a click to the canonical `/board[.lang].html#<slug>` anchor). Every board / support card gains a stable `#<slug>` anchor (deep-linkable), rendered by `person-card.njk` from a slug derived in `boardSorted.js`. The stubs are excluded from the sitemap. NetSec parity ([#353](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/353)); search architecture documented in `docs/search.md`, including the post-deploy verification ([#359](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/359)).
 - (one-line pointer bullets, what not why)
 
 #### Changed
 
 - **The homepage now shows the next conference’s registration status, and `/2026` no longer dead-ends when registration closes.** The featured card on the homepage surfaces the registration badge (date + venue + status, so a quick check, especially on mobile, needs no click). On `/2026`, when registration is closed a short note under the hero reframes it (“you can still follow along: the programme below marks the livestreamed sessions”) instead of leaving “Registration closed” as a terminus. Hand-translated (EN/FR/DE). Acts on the UX audit ([#356](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/356)).
+- **The archive-page ribbon is shorter.** Trimmed to "This page documents a past EISS event. It may not be as complete as current pages." so it takes less vertical space on mobile.
 - (…)
 
 #### Fixed
@@ -98,7 +101,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 - **The site-search modal and the press kit now actually render.** Both features had shipped with complete markup, JavaScript, and translated strings, but none of the classes they referenced were defined in `site.css`, so the search overlay opened as an unstyled block and the press-kit logos and swatches spilled full-width. The search dialog is now a centred, scrollable panel (a full-screen sheet on phones) with styled results and highlighted excerpts, and the press kit lays out as proper logo, swatch, and do/don't grids with contained images.
 - **The press kit is now reachable from the footer** (legal-links row, EN + FR + DE), not just from the visual sitemap.
-- **The 2025 conference film now plays on iOS.** Muted inline autoplay is started with the `muted` property set and the source `load()`-ed (Safari needs both), and when a browser still blocks autoplay (iOS Low Power Mode) a centre play button appears so a tap can start it. The `webkit-playsinline` attribute is set for older iOS.
+- **The 2025 conference film now plays on iOS.** The real blocker was hosting: GitHub Release assets are served as `application/octet-stream` with `Content-Disposition: attachment` and `nosniff`, which iOS Safari refuses to play inline (desktop browsers sniff the type and play it anyway, which is why it worked there). The film is now served same-origin from `/assets/video/`, so the host sends `Content-Type: video/mp4` and it plays. The player keeps the iOS autoplay hardening too: the `muted` property is set and the source `load()`-ed before `play()`, a centre play button appears if autoplay is still blocked (Low Power Mode), and `webkit-playsinline` is set for older iOS. The file is a faststart H.264 High / AAC-LC MP4 (720×1280).
 - **The 2025 film's *Watch on YouTube* link now works.** It pointed at a Shorts URL that did not resolve; it now links the standard watch URL with the conference playlist.
 - **`/2019` was mislabelled the "2nd" Annual Conference.** It was the **3rd** (2017 inaugural, 2018 second, 2019 third), confirmed by the final programme and the 2019 call for papers, and consistent with the canonical ordinals in `conferences.js`. Corrected the page eyebrow and meta description.
 - **Removed personal chair email addresses from the 2022 panels data.** `src/_data/panels2022.js` carried `[at]`-obfuscated personal emails in the chair fields. They were already stripped from the rendered page, but sat in the committed source; they are now gone from the repository entirely (chair lines read "Chair: Name, Institution").
