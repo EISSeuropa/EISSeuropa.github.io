@@ -381,6 +381,13 @@ const locales = {
       oneDay: "ESSC {year} starts tomorrow",
       today: "ESSC {year} starts today",
     },
+
+    archiveProgramme: {
+      eyebrow: "From the archive",
+      heading: "Conference programme",
+      lead: "The full programme of panels, roundtables and papers, as it ran. Open a session to see its papers and speakers.",
+      reconstructedNote: "Reconstructed from the conference's final printed programme.",
+    },
   },
 
   fr: {
@@ -678,6 +685,13 @@ const locales = {
       oneDay: "L'ESSC {year} commence demain",
       today: "L'ESSC {year} commence aujourd'hui",
     },
+
+    archiveProgramme: {
+      eyebrow: "Depuis les archives",
+      heading: "Programme de la conférence",
+      lead: "Le programme complet des panels, tables rondes et communications, tel qu'il s'est déroulé. Ouvrez une session pour voir ses communications et intervenants.",
+      reconstructedNote: "Reconstitué à partir du programme final imprimé de la conférence.",
+    },
   },
 
   de: {
@@ -974,6 +988,13 @@ const locales = {
       daysToGo: "Noch {n} Tage bis zur ESSC {year}",
       oneDay: "Die ESSC {year} beginnt morgen",
       today: "Die ESSC {year} beginnt heute",
+    },
+
+    archiveProgramme: {
+      eyebrow: "Aus dem Archiv",
+      heading: "Konferenzprogramm",
+      lead: "Das vollständige Programm aus Panels, Roundtables und Vorträgen, wie es stattfand. Öffnen Sie eine Sitzung, um ihre Beiträge und Vortragenden zu sehen.",
+      reconstructedNote: "Rekonstruiert aus dem finalen gedruckten Programm der Konferenz.",
     },
   },
 };
