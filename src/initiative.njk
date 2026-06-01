@@ -16,7 +16,7 @@ alternates:
 {#- Conference count: data-driven (conferences.js) + the 2 historical
     editions (2017 + 2018) that pre-date the standalone-page convention.
     Bump the "+ 2" if more historical editions are added to past.njk. -#}
-{%- set confCount = (conferences.past | length) + (1 if conferences.next else 0) + 2 -%}
+{%- set confCount = conferences.editionCount -%}
 
 <header class="page-header">
   <div class="container">
@@ -140,6 +140,14 @@ alternates:
         proceedings: build the European academic network in security studies, and create a forum for joint
         research projects across institutions.
       </p>
+      <p>
+        EISS began in 2017 within the AEGES association and became a standalone non-profit under the French
+        <em>loi 1901</em> in 2021, with its registered office at CERI, Sciences Po. The 2017 founding remains
+        the reference date.
+        <span class="muted" style="display: block; font-size: var(--fs-sm); margin-top: var(--space-2);">
+          Declared to the Préfecture de Paris on 29 November 2021 (<em>Journal officiel</em>, 7 December 2021, no.&nbsp;W751263001).
+        </span>
+      </p>
 
       <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); margin-top: var(--space-5);">
         <article class="tile">
@@ -248,8 +256,8 @@ alternates:
         with accented dots at each host city's lat/long, projected into a
         1000×700 viewBox via lat[35–71] / lon[−12–32]. Paris carries the
         2017–2019 cluster as a single dot per the design decision.
-        The 2020 online (COVID) edition is not on the map and is
-        acknowledged in the figcaption. -#}
+        The 2020 edition was deferred to 2021 (COVID-19) and is
+        represented by the Lisbon (2021) dot. -#}
     <figure class="essc-map-figure card" style="padding: var(--space-5); margin-top: var(--space-5);">
       {#- viewBox 1000 × 980 (≈ 1.02 W/H, essentially square) matches
           the visual aspect most reference Europe maps use for this
@@ -316,8 +324,8 @@ alternates:
         </g>
       </svg>
       <figcaption class="essc-map-caption">
-        Host cities since the 2017 inaugural conference. The 2020 edition was held online during the
-        COVID-19 pandemic and is omitted from the map. Click a dot to open the per-edition page.
+        Host cities since the 2017 inaugural conference. The 2020 edition was deferred to 2021 due to the
+        COVID-19 pandemic and held in Lisbon (shown as the 2021 dot). Click a dot to open the per-edition page.
         Outline data:
         <a href="https://github.com/nvkelso/natural-earth-vector" target="_blank" rel="noopener">Natural Earth</a>
         (public domain).
@@ -380,13 +388,13 @@ alternates:
         <a class="conf-tour-link" href="/2021.html">Recap &rarr;</a>
       </li>
       <li class="conf-tour-card conf-tour-online">
-        <div class="conf-tour-year">2020 <span class="conf-tour-ordinal">3rd</span></div>
-        <div class="conf-tour-city">{{ icon("globe") }} Online edition</div>
-        <div class="conf-tour-host">Held online (COVID-19)</div>
-        <a class="conf-tour-link" href="/2020.html">Recap &rarr;</a>
+        <div class="conf-tour-year">2020 <span class="conf-tour-ordinal">Deferred</span></div>
+        <div class="conf-tour-city">{{ icon("calendar") }} Deferred to 2021</div>
+        <div class="conf-tour-host">Postponed (COVID-19); held in Lisbon in 2021</div>
+        <a class="conf-tour-link" href="/2020.html">Details &rarr;</a>
       </li>
       <li class="conf-tour-card">
-        <div class="conf-tour-year">2019 <span class="conf-tour-ordinal">2nd</span></div>
+        <div class="conf-tour-year">2019 <span class="conf-tour-ordinal">3rd</span></div>
         <div class="conf-tour-city">
           <img src="/assets/images/flags/fr.svg" alt="France" title="France" width="22" height="22" loading="lazy">
           Paris
@@ -395,12 +403,13 @@ alternates:
         <a class="conf-tour-link" href="/2019.html">Recap &rarr;</a>
       </li>
       <li class="conf-tour-card">
-        <div class="conf-tour-year">2018 <span class="conf-tour-ordinal">2nd ed.</span></div>
+        <div class="conf-tour-year">2018 <span class="conf-tour-ordinal">2nd</span></div>
         <div class="conf-tour-city">
           <img src="/assets/images/flags/fr.svg" alt="France" title="France" width="22" height="22" loading="lazy">
           Paris
         </div>
         <div class="conf-tour-host">Université Panthéon-Assas</div>
+        <a class="conf-tour-link" href="/2018.html">Recap &rarr;</a>
       </li>
       <li class="conf-tour-card conf-tour-inaugural">
         <div class="conf-tour-year">2017 <span class="conf-tour-ordinal">Inaugural</span></div>
@@ -409,6 +418,7 @@ alternates:
           Paris
         </div>
         <div class="conf-tour-host">Université Panthéon-Assas</div>
+        <a class="conf-tour-link" href="/2017.html">Recap &rarr;</a>
       </li>
     </ul>
 
