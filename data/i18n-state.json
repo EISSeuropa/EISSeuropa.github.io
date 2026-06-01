@@ -182,6 +182,20 @@
         "translated_on": "2026-05-31",
         "status": "beta"
       }
+    },
+    "src/roadmap.njk": {
+      "fr": {
+        "file": "src/roadmap.fr.njk",
+        "source_sha1": "b319614a5e888efb66b201f5e359b7f48b0a2c67",
+        "translated_on": "2026-06-01",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/roadmap.de.njk",
+        "source_sha1": "b319614a5e888efb66b201f5e359b7f48b0a2c67",
+        "translated_on": "2026-06-01",
+        "status": "beta"
+      }
     }
   }
 }
