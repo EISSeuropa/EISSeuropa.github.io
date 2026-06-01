@@ -127,6 +127,7 @@ const conferences = [
     // chairing?" note on /YYYY points here. Per-year because a future
     // edition may host its FAQ elsewhere.
     faqUrl: "https://netsec-cost.eu/faq.html#conference",
+    programmePdf: "EISS-2026-programme.pdf",
     hasOwnPage: true,
   },
   {
@@ -148,6 +149,7 @@ const conferences = [
       de: "8. Jahreskonferenz · 26. — 27. Juni 2025 · Universität Mazedonien, Thessaloniki",
     },
     displayCity: { en: "Thessaloniki", fr: "Thessalonique", de: "Thessaloniki" },
+    programmePdf: "EISS-2025-programme.pdf",
     hasOwnPage: true,
   },
   {
@@ -170,6 +172,7 @@ const conferences = [
     },
     displayCity: { en: "Prague", fr: "Prague", de: "Prag" },
     youtubePlaylist: "PLkI2R8FsFqV6bNS0LmU-TxWNY7-fBXDOa",
+    programmePdf: "EISS-2024-programme.pdf",
     hasOwnPage: true,
   },
   {
@@ -193,6 +196,7 @@ const conferences = [
     },
     displayCity: { en: "Barcelona", fr: "Barcelone", de: "Barcelona" },
     youtubePlaylist: "PLkI2R8FsFqV4zwz12-ZFd_dV_ENX14--6",
+    programmePdf: "EISS-2023-programme.pdf",
     hasOwnPage: true,
   },
   {
@@ -214,6 +218,7 @@ const conferences = [
       de: "5. Jahreskonferenz · Hertie School, Berlin",
     },
     displayCity: { en: "Berlin", fr: "Berlin", de: "Berlin" },
+    programmePdf: "EISS-2022-programme.pdf",
     hasOwnPage: true,
   },
   {
@@ -289,6 +294,7 @@ const conferences = [
     },
     displayCity: { en: "Paris", fr: "Paris", de: "Paris" },
     youtubePlaylist: "PLkI2R8FsFqV4_TVOCV5qfPFAmZn1KbWGv",
+    programmePdf: "Programme2019.pdf",
     hasOwnPage: true,
   },
   // The 2017 and 2018 conferences are kept in the historical-image

@@ -10,6 +10,9 @@ status: archive
 
 <header class="page-header">
   <div class="container">
+    <figure class="programme-banner">
+      <img src="/assets/images/banners/essc-2024-banner.jpg" alt="ESSC 2024 programme cover — The European Initiative for Security Studies" width="1568" height="653" loading="eager" fetchpriority="high">
+    </figure>
     <span class="eyebrow">Archive · 7th Annual Conference</span>
     <h1>2024 — Prague</h1>
     <p class="page-lead">
@@ -22,6 +25,9 @@ status: archive
    programme (archive-programme.njk + archiveProgrammes.js). #}
 {% set archiveSlug = "2024" %}
 {% include "archive-programme.njk" %}
+
+{% set year = "2024" %}
+{% include "programme-download.njk" %}
 
 {# Session recordings — shared, data-driven block (playlist in conferences.js). #}
 {% set mediaYear = "2024" %}
