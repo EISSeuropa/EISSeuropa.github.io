@@ -14,7 +14,7 @@ alternates:
 ---
 {% from "icons.njk" import icon %}
 
-{%- set confCount = (conferences.past | length) + (1 if conferences.next else 0) + 2 -%}
+{%- set confCount = conferences.editionCount -%}
 
 <header class="page-header">
   <div class="container">
@@ -136,6 +136,14 @@ alternates:
         Die Initiative wurde 2017 mit zwei Gründungszielen ins Leben gerufen, beide explizit in den
         Akten der Eröffnungskonferenz: ein europäisches akademisches Netzwerk für Sicherheitsstudien
         aufzubauen, und ein Forum für gemeinsame Forschungsprojekte zwischen Institutionen zu schaffen.
+      </p>
+      <p>
+        EISS entstand 2017 innerhalb des Vereins AEGES und wurde 2021 ein eigenständiger Verein nach dem
+        französischen Vereinsrecht (<em>loi 1901</em>), mit Sitz am CERI, Sciences Po. Das Gründungsjahr
+        2017 bleibt das Bezugsdatum.
+        <span class="muted" style="display: block; font-size: var(--fs-sm); margin-top: var(--space-2);">
+          Bei der Präfektur Paris angemeldet am 29. November 2021 (<em>Journal officiel</em> vom 7. Dezember 2021, Nr.&nbsp;W751263001).
+        </span>
       </p>
 
       <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); margin-top: var(--space-5);">
@@ -305,8 +313,8 @@ alternates:
         </g>
       </svg>
       <figcaption class="essc-map-caption">
-        Gastgeberstädte seit der Eröffnungskonferenz 2017. Die Ausgabe 2020 fand wegen der
-        COVID-19-Pandemie online statt und erscheint nicht auf der Karte. Klicken Sie auf einen Punkt,
+        Gastgeberstädte seit der Eröffnungskonferenz 2017. Die Ausgabe 2020 wurde wegen der
+        COVID-19-Pandemie auf 2021 verschoben und in Lissabon abgehalten (Punkt 2021). Klicken Sie auf einen Punkt,
         um die Seite der jeweiligen Ausgabe zu öffnen. Geodaten:
         <a href="https://github.com/nvkelso/natural-earth-vector" target="_blank" rel="noopener">Natural Earth</a>
         (gemeinfrei).
@@ -369,13 +377,13 @@ alternates:
         <a class="conf-tour-link" href="{{ '/2021.html' | localizedHref(lang) }}">Rückblick &rarr;</a>
       </li>
       <li class="conf-tour-card conf-tour-online">
-        <div class="conf-tour-year">2020 <span class="conf-tour-ordinal">3.</span></div>
-        <div class="conf-tour-city">{{ icon("globe") }} Online-Ausgabe</div>
-        <div class="conf-tour-host">Online abgehalten (COVID-19)</div>
-        <a class="conf-tour-link" href="{{ '/2020.html' | localizedHref(lang) }}">Rückblick &rarr;</a>
+        <div class="conf-tour-year">2020 <span class="conf-tour-ordinal">Verschoben</span></div>
+        <div class="conf-tour-city">{{ icon("calendar") }} Auf 2021 verschoben</div>
+        <div class="conf-tour-host">Verschoben (COVID-19), 2021 in Lissabon abgehalten</div>
+        <a class="conf-tour-link" href="{{ '/2020.html' | localizedHref(lang) }}">Details &rarr;</a>
       </li>
       <li class="conf-tour-card">
-        <div class="conf-tour-year">2019 <span class="conf-tour-ordinal">2.</span></div>
+        <div class="conf-tour-year">2019 <span class="conf-tour-ordinal">3.</span></div>
         <div class="conf-tour-city">
           <img src="/assets/images/flags/fr.svg" alt="Frankreich" title="Frankreich" width="22" height="22" loading="lazy">
           Paris
@@ -384,12 +392,13 @@ alternates:
         <a class="conf-tour-link" href="{{ '/2019.html' | localizedHref(lang) }}">Rückblick &rarr;</a>
       </li>
       <li class="conf-tour-card">
-        <div class="conf-tour-year">2018 <span class="conf-tour-ordinal">2. Ausg.</span></div>
+        <div class="conf-tour-year">2018 <span class="conf-tour-ordinal">2.</span></div>
         <div class="conf-tour-city">
           <img src="/assets/images/flags/fr.svg" alt="Frankreich" title="Frankreich" width="22" height="22" loading="lazy">
           Paris
         </div>
         <div class="conf-tour-host">Université Panthéon-Assas</div>
+        <a class="conf-tour-link" href="{{ '/2018.html' | localizedHref(lang) }}">Rückblick &rarr;</a>
       </li>
       <li class="conf-tour-card conf-tour-inaugural">
         <div class="conf-tour-year">2017 <span class="conf-tour-ordinal">Eröffnung</span></div>
@@ -398,6 +407,7 @@ alternates:
           Paris
         </div>
         <div class="conf-tour-host">Université Panthéon-Assas</div>
+        <a class="conf-tour-link" href="{{ '/2017.html' | localizedHref(lang) }}">Rückblick &rarr;</a>
       </li>
     </ul>
 
