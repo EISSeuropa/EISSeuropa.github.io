@@ -1,9 +1,3 @@
-# Append-only logs: on a merge or squash conflict, keep BOTH sides
-# instead of letting Git silently pick one. This is the mechanical
-# backstop for the recurring dropped-CHANGELOG-bullet problem documented
-# in CLAUDE.md §4: when two PRs each add a bullet to the same
-# [Unreleased] sub-section, the `union` driver concatenates both rather
-# than discarding the older one. Bullets may land slightly out of order
-# and are tidied at release time; a stray duplicate is obvious in the
-# release-prep review. Far better than a silent loss.
+# Union-merge the changelog so parallel PRs appending under [Unreleased]
+# don't conflict. Re-tidy any duplicate headers / ordering at release time.
 CHANGELOG.md merge=union
