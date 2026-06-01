@@ -169,6 +169,7 @@ const conferences = [
       de: "7. Jahreskonferenz · 27. — 28. Juni 2024 · Karls-Universität, Prag",
     },
     displayCity: { en: "Prague", fr: "Prague", de: "Prag" },
+    youtubePlaylist: "PLkI2R8FsFqV6bNS0LmU-TxWNY7-fBXDOa",
     hasOwnPage: true,
   },
   {
@@ -191,6 +192,7 @@ const conferences = [
       de: "6. Jahreskonferenz · Barcelona, Spanien",
     },
     displayCity: { en: "Barcelona", fr: "Barcelone", de: "Barcelona" },
+    youtubePlaylist: "PLkI2R8FsFqV4zwz12-ZFd_dV_ENX14--6",
     hasOwnPage: true,
   },
   {
@@ -281,6 +283,7 @@ const conferences = [
       de: "2. Jahreskonferenz · Sciences Po CERI, Paris",
     },
     displayCity: { en: "Paris", fr: "Paris", de: "Paris" },
+    youtubePlaylist: "PLkI2R8FsFqV4_TVOCV5qfPFAmZn1KbWGv",
     hasOwnPage: true,
   },
   // The 2017 and 2018 conferences are kept in the historical-image
