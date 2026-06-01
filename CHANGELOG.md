@@ -35,6 +35,8 @@ audit trail. Same content, terser.
 - (one-line pointer bullets, what not why)
 
 #### Changed
+
+- **`/initiative` now links straight to the board.** A "Meet the people behind EISS" button joins the closing call-to-action strip (EN/FR/DE), so a visitor reading about the organisation can reach `/board` without returning to the menu. Acts on the UX audit ([#357](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/357)).
 - (…)
 
 #### Fixed
