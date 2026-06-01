@@ -3267,6 +3267,74 @@ h4 { font-size: var(--fs-lg); }
 }
 .conf-status-row > * { margin-block: 0; }
 
+/* Conference film: self-hosted portrait video in a phone-style frame.
+   Muted autoplay-loop (started on scroll by theme.js); a single sound
+   toggle is the only chrome. */
+.film { max-width: 320px; margin: 0 auto; }
+.film-frame {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #000;
+  box-shadow: var(--shadow-3);
+}
+.film-video { width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; }
+.film-sound {
+  position: absolute;
+  bottom: var(--space-3);
+  right: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-full);
+  border: 1px solid hsl(0 0% 100% / 0.3);
+  background: hsl(0 0% 0% / 0.5);
+  color: #fff;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.film-sound svg { width: 1.15rem; height: 1.15rem; }
+.film-sound-on { display: none; }
+.film-sound[aria-pressed="true"] .film-sound-muted { display: none; }
+.film-sound[aria-pressed="true"] .film-sound-on { display: inline-flex; }
+.film-caption { margin-top: var(--space-3); text-align: center; font-size: var(--fs-sm); }
+
+/* Subtle "tap for sound" hint, bottom-left so it never collides with the
+   sound button (bottom-right). Dismissed on first interaction (theme.js). */
+.film-hint {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.3em 0.7em;
+  border-radius: var(--radius-full);
+  background: hsl(0 0% 0% / 0.55);
+  color: #fff;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  pointer-events: none;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.film-hint svg { width: 0.9rem; height: 0.9rem; }
+.film-hint[hidden] { display: none; }
+
+/* Film beside a text column on desktop (portrait video reads better
+   half-width than full); stacks on mobile, where it fills the column. */
+.film-feature { display: grid; gap: var(--space-6); align-items: center; }
+.film-feature-body > :first-child { margin-top: 0; }
+@media (min-width: 48rem) {
+  .film-feature { grid-template-columns: 1fr minmax(280px, 340px); }
+  .film-feature .film { margin: 0; }
+  .film-feature .film-caption { text-align: left; }
+}
+
 /* ---------- utilities ---------- */
 .sr-only {
   position: absolute;
@@ -4587,6 +4655,7 @@ a.joint-orgs-card:hover .joint-orgs-name {
   .hero,
   .hero-bg,
   .countdown,                    /* time-relative, meaningless on paper */
+  .film,                         /* video has no place on paper */
   .programme-footnote,           /* "source of truth is Indico" line */
   .programme-days,               /* day-jump chips — no point on paper */
   .programme-contribs > summary, /* "View papers" toggle */

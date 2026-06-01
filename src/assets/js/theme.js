@@ -344,3 +344,53 @@
     if (tpl) textEl.textContent = tpl.replace("{n}", days).replace("{year}", year);
   });
 })();
+
+/* Conference film: lazy, self-hosted portrait video. The src is only set
+   (and muted-autoplay started) when the video scrolls into view, so the
+   ~20 MB file never downloads for visitors who don't reach it; it pauses
+   off-screen. prefers-reduced-motion: no autoplay, native controls instead.
+   A tap toggles play/pause; the sound button toggles mute. */
+(function () {
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  Array.prototype.forEach.call(document.querySelectorAll(".film"), function (fig) {
+    var v = fig.querySelector(".film-video[data-film]");
+    if (!v) return;
+    var btn = fig.querySelector("[data-film-sound]");
+    var hint = fig.querySelector("[data-film-hint]");
+    var loaded = false;
+    function load() { if (loaded) return; loaded = true; v.src = v.getAttribute("data-film"); }
+    function tryPlay() { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+    function dropHint() { if (hint) hint.hidden = true; }
+
+    if (reduce) {
+      load();
+      v.controls = true;
+      if (btn) btn.hidden = true;
+      dropHint();
+    } else {
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { load(); tryPlay(); }
+            else if (!v.paused) { v.pause(); }
+          });
+        }, { threshold: 0.4 }).observe(v);
+      } else {
+        load();
+        tryPlay();
+      }
+      v.addEventListener("click", function () { v.paused ? tryPlay() : v.pause(); dropHint(); });
+      if (btn) {
+        btn.addEventListener("click", function () {
+          v.muted = !v.muted;
+          if (!v.muted) tryPlay();
+          btn.setAttribute("aria-pressed", String(!v.muted));
+          dropHint();
+        });
+      }
+      // Fade the hint after a few seconds even without interaction.
+      if (hint) setTimeout(dropHint, 6000);
+    }
+  });
+})();

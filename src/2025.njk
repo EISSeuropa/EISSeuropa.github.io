@@ -7,6 +7,7 @@ metaImage: /assets/images/2025-meta.jpg
 navKey: conferences
 status: archive
 ---
+{% from "icons.njk" import icon %}
 
 <header class="page-header">
   <div class="container">
@@ -36,31 +37,36 @@ status: archive
   </div>
 </section>
 
-{# Session recordings on YouTube. The youtube-embed partial does a
-   click-to-mount load so no YouTube JS or cookies run until the
-   visitor opts in (see /policy.html §5).
-
-   PLACEHOLDER: fill `youtubeId` with the actual playlist ID from the
-   EISS YouTube channel (https://www.youtube.com/channel/UCfdVczE8X2iDPsIaadtP57Q)
-   when known. Set `youtubeIsList = true` for playlists, drop it
-   (or set false) for a single-video embed. Wrap in `{% if false %}`
-   below was used to gate the section while the ID is unknown — flip
-   to `{% if true %}` (or remove the guard) once the real ID is in. #}
-{% if false %}
-<section class="section-tight" aria-labelledby="recordings-2025-title">
+{# Conference film. Self-hosted MP4 (GitHub Release asset, so no
+   third-party request — consistent with /policy) rendered as a portrait
+   showpiece. theme.js sets the src and muted-autoplays it ONLY when it
+   scrolls into view, so nothing downloads for visitors who never reach
+   it; it pauses off-screen. prefers-reduced-motion gets native controls
+   and no autoplay. A tap toggles play/pause; the button toggles sound. #}
+<section class="section-tight" aria-labelledby="film-2025-title">
   <div class="container">
-    <h2 id="recordings-2025-title" style="margin-bottom: var(--space-5);">Session recordings</h2>
-    <p class="muted" style="max-width: 44rem; margin-bottom: var(--space-5);">
-      Selected sessions were recorded and are available on the EISS YouTube channel.
-      Clicking play loads the YouTube iframe; before that, no YouTube cookies are set.
-    </p>
-    {%- set youtubeId = "PLACEHOLDER_PLAYLIST_ID_HERE" -%}
-    {%- set youtubeIsList = true -%}
-    {%- set youtubeTitle = "ESSC 2025 — Thessaloniki, session recordings" -%}
-    {% include "youtube-embed.njk" %}
+    <div class="film-feature">
+      <div class="film-feature-body">
+        <div class="featured-eyebrow">In motion</div>
+        <h2 id="film-2025-title">Conference film</h2>
+        <p>
+          Two days of panels, roundtables and the EISS community at the 8th Annual
+          Conference, University of Macedonia, Thessaloniki. A short film captures the
+          atmosphere across the venue.
+        </p>
+        <p class="muted">
+          Filmed and edited on site. Tap the video for sound, or watch the full cut on
+          our YouTube channel.
+        </p>
+      </div>
+      {%- set filmSrc = "https://github.com/EISSeuropa/EISSeuropa.github.io/releases/download/media-assets/essc-2025.mp4" -%}
+      {%- set filmPoster = "/assets/images/2025/essc-2025-film-poster.jpg" -%}
+      {%- set filmYoutube = "https://youtube.com/shorts/CFtUrpwgYXY" -%}
+      {%- set filmCaption = "ESSC 2025, Thessaloniki." -%}
+      {% include "film-embed.njk" %}
+    </div>
   </div>
 </section>
-{% endif %}
 
 <section class="section-tight">
   <div class="container">
