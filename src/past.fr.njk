@@ -64,6 +64,7 @@ alternates:
 <section class="section-tight" aria-labelledby="archive-title">
   <div class="container">
     <h2 id="archive-title" style="margin-bottom: var(--space-5);">Archive</h2>
+    <div class="archive-layout">
     <div class="conference-list">
       {%- for c in conferences.past %}
       {%- if c.hasOwnPage %}
@@ -77,6 +78,14 @@ alternates:
       </a>
       {%- endif %}
       {%- endfor %}
+    </div>
+    <div class="archive-film">
+      {%- set filmSrc = "https://github.com/EISSeuropa/EISSeuropa.github.io/releases/download/media-assets/essc-2025.mp4" -%}
+      {%- set filmPoster = "/assets/images/2025/essc-2025-film-poster.jpg" -%}
+      {%- set filmYoutube = "https://youtube.com/shorts/CFtUrpwgYXY" -%}
+      {%- set filmCaption = "ESSC 2025 · Thessaloniki" -%}
+      {% include "film-embed.njk" %}
+    </div>
     </div>
     <p class="muted" style="font-size: var(--fs-sm); margin-top: var(--space-4);">
       <em>Les pages d'archive individuelles ne sont disponibles qu'en anglais.</em>

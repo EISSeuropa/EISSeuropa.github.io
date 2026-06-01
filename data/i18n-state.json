@@ -88,14 +88,14 @@
     "src/past.njk": {
       "fr": {
         "file": "src/past.fr.njk",
-        "source_sha1": "801fb8991f86cb23a92cdefac53c41b814e584f9",
-        "translated_on": "2026-05-29",
+        "source_sha1": "bb9ac797479550899f3cc0a2cecd2f9903747478",
+        "translated_on": "2026-06-01",
         "status": "beta"
       },
       "de": {
         "file": "src/past.de.njk",
-        "source_sha1": "801fb8991f86cb23a92cdefac53c41b814e584f9",
-        "translated_on": "2026-05-29",
+        "source_sha1": "bb9ac797479550899f3cc0a2cecd2f9903747478",
+        "translated_on": "2026-06-01",
         "status": "beta"
       }
     },

@@ -3335,6 +3335,17 @@ h4 { font-size: var(--fs-lg); }
   .film-feature .film-caption { text-align: left; }
 }
 
+/* Archive list beside the conference film. The cards take the fluid
+   column; the film holds a fixed portrait column and stays in view as
+   the list scrolls. Single column on mobile (film below the cards). */
+.archive-layout { display: grid; gap: var(--space-6); align-items: start; }
+@media (min-width: 56rem) {
+  .archive-layout { grid-template-columns: 1fr minmax(280px, 340px); }
+  .archive-film { position: sticky; top: 6rem; }
+  .archive-film .film { margin: 0; }
+  .archive-film .film-caption { text-align: left; }
+}
+
 /* ---------- utilities ---------- */
 .sr-only {
   position: absolute;

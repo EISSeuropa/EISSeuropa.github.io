@@ -81,6 +81,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 - **The Inter typeface is now self-hosted instead of loaded from Google Fonts.** The font is served from the site's own origin (vendored under `src/assets/fonts/`, variable weight, Latin + Latin-Extended), so no visitor IP is sent to Google on first paint. This matches the site's no-tracking stance, removes a render-blocking cross-origin request, and drops the corresponding entries from the privacy notice.
 - **The conference venue map no longer embeds Google Maps.** The `/YYYY` venue block was a Google Maps iframe that loaded on page view, sending every visitor's IP to Google. It is replaced by a plain address card with a link to OpenStreetMap that opens only when clicked. No third party is contacted on page load. The Google Maps entry is removed from the privacy notice accordingly.
+- **The 2025 conference film now also runs on the `/past` conferences page.** The same `film-embed.njk` player sits in a portrait column beside the year-by-year archive cards on desktop, staying in view as the list scrolls, and stacks below the cards on mobile. It reuses the self-hosted GitHub Release asset and the scroll-into-view muted autoplay already used on `/2025`, so nothing downloads until it enters the viewport. Part of [#330](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/330).
 
 ### Fixed
 
