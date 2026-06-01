@@ -3441,9 +3441,15 @@ h4 { font-size: var(--fs-lg); }
 .archive-film { order: -1; }
 @media (min-width: 56rem) {
   .archive-layout { grid-template-columns: minmax(280px, 340px) 1fr; }
-  .archive-film { position: sticky; top: 6rem; }
+  /* top: 8rem clears the full (un-shrunk) sticky header (~117px); at
+     6rem the film tucked behind the header during the scroll-shrink. */
+  .archive-film { position: sticky; top: 8rem; }
   .archive-film .film { margin: 0; }
   .archive-film .film-caption { text-align: left; }
+  /* The conference list carries a standalone margin-top; zero it inside
+     the two-column layout so its first card's top lines up with the
+     film's top (align-items: start can't reconcile the margin). */
+  .archive-layout .conference-list { margin-top: 0; }
 }
 
 /* ---------- site search modal ----------
