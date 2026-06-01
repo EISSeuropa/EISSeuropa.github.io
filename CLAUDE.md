@@ -46,17 +46,26 @@ authoritative for EISS.
   harder to undo than a merge.
 - **Squash, not merge commits.** Every PR ends as a single commit on
   `master`. The release-cutter then writes the release commit on top.
-- **Once a PR is opened, treat its branch as frozen.** Auto-merge
-  plus a fast-merging maintainer means any commit pushed after PR
-  creation can be left orphaned: the squash fires off the commits
-  GitHub saw at merge time, and anything pushed afterwards never
-  reaches `master`. The pattern bit three times in one session
-  (PR #199 → #201, #202 → #204, also lost commits in #199
-  pre-merge). Default for any post-creation fix-up: **new branch
-  off current master, cherry-pick the fix-up commit, fresh PR**.
-  Don't push more commits to a branch whose PR is already open,
-  even if "the merge hasn't happened yet" — by the time `git push`
-  returns, it often has.
+- **Once a PR is opened, treat its branch as frozen.** Any commit
+  pushed after PR creation can be orphaned: a squash merge ships only
+  the commits GitHub saw at merge time, so anything pushed afterwards
+  never reaches `master`. **This is not only an auto-merge problem,
+  and that framing is the trap.** A maintainer (or you) can merge
+  manually at any moment, so none of these are safe windows:
+  "auto-merge isn't armed", "CI is still red", "it still has
+  conflicts", "I only opened it a second ago". By the time `git push`
+  returns, the PR has often already merged underneath you. It has bit
+  repeatedly, both ways: orphaned fix-ups under auto-merge (PR #199 →
+  #201, #202 → #204) **and** a maintainer manually merging a visual PR
+  while a refinement was mid-push (#314, the contrast fix stranded and
+  re-landed as #317). So the default for **any** post-creation change,
+  whether a CI fix, a review tweak, or a design refinement, is: **new
+  branch off current `master`, cherry-pick the commit, fresh PR.** Do
+  not push to the open PR's branch to "save a PR". The one unavoidable
+  exception is resolving merge conflicts on a PR that is *blocked* from
+  merging (GitHub shows it dirty, or a required check is failing):
+  there, rebase and force-push that branch, because it cannot merge
+  underneath you until the block clears. When in doubt, fresh branch.
 - **SHA-pin GitHub Actions.** Every `uses:` in `.github/workflows/`
   is pinned to a full 40-character commit SHA with a trailing
   `# vN` comment (e.g. `uses: actions/checkout@de0fac2… # v6`).
