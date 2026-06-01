@@ -352,6 +352,11 @@ is being edited anyway.
   scripts get swept into a commit by `git add -A` / `git add -u`. Remove
   them (or keep them outside the repo) and eyeball `git status` before
   every commit, rather than trusting `.gitignore` to catch each one.
+  **Mechanical backstop:** `.gitignore` pins `* [0-9].*` to drop the
+  Finder/iCloud duplicate class (`name 2.ext`), which twice got committed
+  by `git add -A` this way (a 20 MB `essc-2025 2.mp4`, a stray
+  `conference-media 2.njk`). The `git status` eyeball stays the primary
+  habit; the glob is the net for that one recurring class.
 
 ## 9. Accessibility & i18n cadence
 

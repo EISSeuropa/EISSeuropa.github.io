@@ -7,3 +7,11 @@ npm-debug.log*
 .claude/
 __pycache__/
 *.pyc
+
+# Finder/iCloud-style duplicate files ("name 2.ext", "name 3.ext", …).
+# These get created on the maintainer's Mac and were twice swept into
+# commits by `git add -A` (the 20 MB essc-2025 2.mp4 and a stray
+# conference-media 2.njk). Ignore the whole class as a mechanical guard
+# — no legitimate repo file uses a " <digit>.ext" suffix. (Still eyeball
+# `git status` before committing, per CLAUDE.md §8.)
+* [0-9].*
