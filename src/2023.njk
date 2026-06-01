@@ -19,30 +19,10 @@ status: archive
   </div>
 </header>
 
-<section class="section">
-  <div class="container">
-    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <div class="featured-eyebrow">Programme</div>
-      <h2>Final Programme</h2>
-      <p>
-        The Annual Conference is structured around two categories of panels. <strong>"Closed
-        panels"</strong> are recurring year-over-year and are pre-established by the EISS.
-        <strong>"Open panels"</strong> are proposed by participants.
-      </p>
-    </article>
-
-    <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(28rem, 100%), 1fr)); margin-block: var(--space-5);">
-      <figure style="margin: 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-1);">
-        <img src="/assets/images/screenshot-2023-06-26-at-16.53.34-1230x1746.png"
-             alt="Day 1 of the 2023 EISS Annual Conference programme." loading="lazy">
-      </figure>
-      <figure style="margin: 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-1);">
-        <img src="/assets/images/screenshot-2023-06-26-at-16.54.01-1240x1714.png"
-             alt="Day 2 of the 2023 EISS Annual Conference programme." loading="lazy">
-      </figure>
-    </div>
-  </div>
-</section>
+{# Final programme, rendered in the SAME grid UI as the live ESSC 2026
+   programme (archive-programme.njk + archiveProgrammes.js). #}
+{% set archiveSlug = "2023" %}
+{% include "archive-programme.njk" %}
 
 <section class="section-tight" aria-labelledby="recordings-2023-title">
   <div class="container">
@@ -81,44 +61,6 @@ status: archive
            href="https://www.google.com/maps/search/?api=1&query=C%2F+de+Ramon+Trias+Fargas+25,+08005+Barcelona"
            target="_blank" rel="noopener">Open in Google Maps</a>
       </p>
-      <p class="muted" style="font-size: var(--fs-sm); margin-top: var(--space-4);">
-        <strong>Transport note (June 2023):</strong> Metro L4 (yellow) and Tram T4 were closed from
-        Verdaguer to Bogatell from 26 June to 31 July. Alternatives: Metro L1 (red) Marina,
-        and buses H16, V27, V21, 36, 92.
-      </p>
     </article>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <h2>Hotel recommendations</h2>
-    <dl class="definition-list">
-      <div>
-        <dt>H10 Marina</dt>
-        <dd>
-          Av. Bogatell, 64–68, 08005 Barcelona · +34 93 309 79 17 ·
-          <a href="mailto:h10.marina.barcelona@h10hotels.com">h10.marina.barcelona@h10hotels.com</a>
-        </dd>
-      </div>
-      <div>
-        <dt>SB Icària</dt>
-        <dd>
-          Av. d'Icària, 195, 08005 Barcelona · +34 93 221 82 00 ·
-          <a href="mailto:reservations.icaria@sbhotels.es">reservations.icaria@sbhotels.es</a>
-        </dd>
-      </div>
-      <div>
-        <dt>Hotel Motel One Barcelona Ciutadella</dt>
-        <dd>
-          Passeig de Pujades 11–13, 08018 Barcelona · +34 93 626 19 00 ·
-          <a href="mailto:barcelona-ciutadella@motel-one.com">barcelona-ciutadella@motel-one.com</a>
-        </dd>
-      </div>
-      <div>
-        <dt>Residència Universitària Ciutadella</dt>
-        <dd>Passeig Pujades, 33–37, 08018 Barcelona · +34 93 394 32 00</dd>
-      </div>
-    </dl>
   </div>
 </section>

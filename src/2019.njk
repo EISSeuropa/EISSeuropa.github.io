@@ -31,35 +31,35 @@ status: archive
 <section class="section-tight">
   <div class="container">
     <h2 style="margin-bottom: var(--space-5);">Photos from the conference</h2>
-    <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));">
-      <figure style="margin: 0; border-radius: var(--radius-md); overflow: hidden;">
+    <div class="photo-gallery">
+      <figure>
         <img src="/assets/images/dsc-263-900x596.jpg" alt="EISS 2019 conference scene." loading="lazy">
       </figure>
-      <figure style="margin: 0; border-radius: var(--radius-md); overflow: hidden;">
+      <figure>
         <img src="/assets/images/dsc-111-900x596.jpg" alt="EISS 2019 conference scene." loading="lazy">
       </figure>
-      <figure style="margin: 0; border-radius: var(--radius-md); overflow: hidden;">
+      <figure>
         <img src="/assets/images/dsc-249-900x596.jpg" alt="EISS 2019 conference scene." loading="lazy">
       </figure>
-      <figure style="margin: 0; border-radius: var(--radius-md); overflow: hidden;">
+      <figure>
         <img src="/assets/images/dsc-28-900x596.jpg" alt="EISS 2019 conference scene." loading="lazy">
       </figure>
-      <figure style="margin: 0; border-radius: var(--radius-md); overflow: hidden;">
+      <figure>
         <img src="/assets/images/dsc-231-900x596.jpg" alt="EISS 2019 conference scene." loading="lazy">
       </figure>
-      <figure style="margin: 0; border-radius: var(--radius-md); overflow: hidden;">
+      <figure>
         <img src="/assets/images/dsc-15-900x596.jpg" alt="EISS 2019 conference scene." loading="lazy">
       </figure>
-      <figure style="margin: 0; border-radius: var(--radius-md); overflow: hidden;">
+      <figure>
         <img src="/assets/images/dsc-61-900x596.jpg" alt="EISS 2019 conference scene." loading="lazy">
       </figure>
-      <figure style="margin: 0; border-radius: var(--radius-md); overflow: hidden;">
+      <figure>
         <img src="/assets/images/dsc-54-900x596.jpg" alt="EISS 2019 conference scene." loading="lazy">
       </figure>
-      <figure style="margin: 0; border-radius: var(--radius-md); overflow: hidden;">
+      <figure>
         <img src="/assets/images/dsc-80-900x596.jpg" alt="EISS 2019 conference scene." loading="lazy">
       </figure>
-      <figure style="margin: 0; border-radius: var(--radius-md); overflow: hidden;">
+      <figure>
         <img src="/assets/images/dsc-94-900x596.jpg" alt="EISS 2019 conference scene." loading="lazy">
       </figure>
     </div>
@@ -118,25 +118,10 @@ status: archive
   </div>
 </section>
 
-<section class="section-tight">
-  <div class="container">
-    <h2>Panel details</h2>
-    <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(24rem, 100%), 1fr));">
-      <figure style="margin: 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden;">
-        <img src="/assets/images/screenshot-2019-06-24-at-18.23.56-1062x1531.png" alt="2019 panel details, page 1." loading="lazy">
-      </figure>
-      <figure style="margin: 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden;">
-        <img src="/assets/images/screenshot-2019-06-24-at-18.24.01-1062x1447.png" alt="2019 panel details, page 2." loading="lazy">
-      </figure>
-      <figure style="margin: 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden;">
-        <img src="/assets/images/screenshot-2019-06-24-at-18.24.07-1062x1564.png" alt="2019 panel details, page 3." loading="lazy">
-      </figure>
-      <figure style="margin: 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden;">
-        <img src="/assets/images/screenshot-2019-06-24-at-18.24.12-1062x1619.png" alt="2019 panel details, page 4." loading="lazy">
-      </figure>
-    </div>
-  </div>
-</section>
+{# Final programme, rendered in the SAME grid UI as the live ESSC 2026
+   programme (archive-programme.njk + archiveProgrammes.js). #}
+{% set archiveSlug = "2019" %}
+{% include "archive-programme.njk" %}
 
 <section class="section">
   <div class="container">

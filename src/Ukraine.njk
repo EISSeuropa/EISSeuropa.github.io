@@ -36,10 +36,6 @@ status: archive
         Department of Intelligence and Security Studies to bring together scholars and experts
         from the United States, Canada, and Europe, in a truly transatlantic endeavour.
       </p>
-      <figure style="margin: var(--space-5) 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden;">
-        <img src="/assets/images/screenshot-2023-05-12-at-14.11.44-1646x798.png"
-             alt="Joint Conference on the War in Ukraine — programme overview." loading="lazy">
-      </figure>
     </article>
   </div>
 </section>
@@ -68,6 +64,11 @@ status: archive
     </div>
   </div>
 </section>
+
+{# Final programme, rendered in the SAME grid UI as the live ESSC 2026
+   programme (archive-programme.njk + archiveProgrammes.js). #}
+{% set archiveSlug = "Ukraine" %}
+{% include "archive-programme.njk" %}
 
 <section class="section">
   <div class="container">

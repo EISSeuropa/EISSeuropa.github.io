@@ -19,44 +19,27 @@ status: archive
   </div>
 </header>
 
-<section class="section">
-  <div class="container">
-    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <div class="featured-eyebrow">Programme</div>
-      <h2>Final Programme</h2>
-      <p>
-        The Annual Conference is structured around two categories of panels, in addition to poster
-        sessions. <strong>"Closed panels"</strong> are recurring year-over-year and are pre-established
-        by the EISS. <strong>"Open panels"</strong> are proposed by participants.
-      </p>
-      <figure style="margin: var(--space-5) 0 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden;">
-        <img src="/assets/images/screenshot-2025-06-05-at-14.20.19.png-1-1529x450.png"
-             alt="2025 EISS Annual Conference final programme overview." loading="lazy">
-      </figure>
-    </article>
-  </div>
-</section>
-
-{# Conference film. Self-hosted MP4 (GitHub Release asset, so no
-   third-party request — consistent with /policy) rendered as a portrait
-   showpiece. theme.js sets the src and muted-autoplays it ONLY when it
-   scrolls into view, so nothing downloads for visitors who never reach
-   it; it pauses off-screen. prefers-reduced-motion gets native controls
-   and no autoplay. A tap toggles play/pause; the button toggles sound. #}
-<section class="section-tight" aria-labelledby="film-2025-title">
+{# Intro + conference film. The portrait film is a self-hosted MP4 (a
+   GitHub Release asset, so no third-party request, consistent with
+   /policy) sitting beside a short review of the conference. theme.js
+   sets the src and muted-autoplays it ONLY when it scrolls into view, so
+   nothing downloads for visitors who never reach it; it pauses
+   off-screen. prefers-reduced-motion gets native controls and no
+   autoplay. A tap toggles play/pause; the button toggles sound. #}
+<section class="section" aria-labelledby="intro-2025-title">
   <div class="container">
     <div class="film-feature">
       <div class="film-feature-body">
-        <div class="featured-eyebrow">In motion</div>
-        <h2 id="film-2025-title">Conference film</h2>
+        <div class="featured-eyebrow">In review</div>
+        <h2 id="intro-2025-title">Two days in Thessaloniki</h2>
         <p>
-          Two days of panels, roundtables and the EISS community at the 8th Annual
-          Conference, University of Macedonia, Thessaloniki. A short film captures the
-          atmosphere across the venue.
+          The 8th EISS Annual Conference brought the community to the University of
+          Macedonia for two days of panels and roundtables, opened by a keynote from
+          Loukas Tsoukalis.
         </p>
         <p class="muted">
-          Filmed and edited on site. Tap the video for sound, or watch the full cut on
-          our YouTube channel.
+          A short film, shot and edited on site, captures the atmosphere across the
+          venue. Tap it for sound, or watch the full cut on YouTube.
         </p>
       </div>
       {%- set filmSrc = "https://github.com/EISSeuropa/EISSeuropa.github.io/releases/download/media-assets/essc-2025.mp4" -%}
@@ -118,35 +101,40 @@ status: archive
   </div>
 </section>
 
+{# Final programme, rendered in the SAME grid UI as the live ESSC 2026
+   programme (archive-programme.njk + archiveProgrammes.js). #}
+{% set archiveSlug = "2025" %}
+{% include "archive-programme.njk" %}
+
 <section class="section-tight" aria-labelledby="gallery-2025-title">
   <div class="container">
     <h2 id="gallery-2025-title" style="margin-bottom: var(--space-5);">Conference gallery</h2>
-    <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr)); gap: var(--space-4);">
-      <figure style="margin: 0; border-radius: var(--radius-md); overflow: hidden;">
+    <div class="photo-gallery">
+      <figure>
         <img src="/assets/images/2025/eiss2025-P1064942.jpg" alt="A full lecture hall during the 2025 EISS Conference at the University of Macedonia." loading="lazy">
       </figure>
-      <figure style="margin: 0; border-radius: var(--radius-md); overflow: hidden;">
+      <figure>
         <img src="/assets/images/2025/eiss2025-P1075099.jpg" alt="An open panel in session, with the EISS banner at the front of the room." loading="lazy">
       </figure>
-      <figure style="margin: 0; border-radius: var(--radius-md); overflow: hidden;">
+      <figure>
         <img src="/assets/images/2025/eiss2025-P1064831.jpg" alt="A speaker addressing the conference from the lectern." loading="lazy">
       </figure>
-      <figure style="margin: 0; border-radius: var(--radius-md); overflow: hidden;">
+      <figure>
         <img src="/assets/images/2025/eiss2025-P1075262.jpg" alt="A panel of speakers during a session." loading="lazy">
       </figure>
-      <figure style="margin: 0; border-radius: var(--radius-md); overflow: hidden;">
+      <figure>
         <img src="/assets/images/2025/eiss2025-P1075566.jpg" alt="A panellist speaking during a session." loading="lazy">
       </figure>
-      <figure style="margin: 0; border-radius: var(--radius-md); overflow: hidden;">
+      <figure>
         <img src="/assets/images/2025/eiss2025-P1075376.jpg" alt="A participant presenting at the microphone during a panel." loading="lazy">
       </figure>
-      <figure style="margin: 0; border-radius: var(--radius-md); overflow: hidden;">
+      <figure>
         <img src="/assets/images/2025/eiss2025-P1064899.jpg" alt="Delegates listening during a session." loading="lazy">
       </figure>
-      <figure style="margin: 0; border-radius: var(--radius-md); overflow: hidden;">
+      <figure>
         <img src="/assets/images/2025/eiss2025-P1064720.jpg" alt="Delegates in conversation during a break." loading="lazy">
       </figure>
-      <figure style="margin: 0; border-radius: var(--radius-md); overflow: hidden;">
+      <figure>
         <img src="/assets/images/2025/eiss2025-P1075668.jpg" alt="Two participants during the conference reception." loading="lazy">
       </figure>
     </div>

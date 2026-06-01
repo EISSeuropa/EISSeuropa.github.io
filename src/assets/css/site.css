@@ -1751,6 +1751,32 @@ h4 { font-size: var(--fs-lg); }
   margin-block: var(--space-6);
 }
 
+/* Conference photo gallery. Source photos come in mixed dimensions
+   (landscape and the odd portrait), so each tile holds a uniform 3:2
+   landscape box and the image fills it with object-fit: cover, centred.
+   This replaces the ragged, oddly-cropped look of letting each photo
+   set its own height. */
+.photo-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+  gap: var(--space-4);
+  margin-block: var(--space-6);
+}
+.photo-gallery figure {
+  margin: 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-tinted);
+}
+.photo-gallery img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  object-position: center;
+}
+
 .tile {
   padding: var(--space-5);
   background: var(--bg-elev);
