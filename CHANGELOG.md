@@ -82,6 +82,9 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- **`/2019` was mislabelled the "2nd" Annual Conference.** It was the **3rd** (2017 inaugural, 2018 second, 2019 third), confirmed by the final programme and the 2019 call for papers, and consistent with the canonical ordinals in `conferences.js`. Corrected the page eyebrow and meta description.
+- **Removed personal chair email addresses from the 2022 panels data.** `src/_data/panels2022.js` carried `[at]`-obfuscated personal emails in the chair fields. They were already stripped from the rendered page, but sat in the committed source; they are now gone from the repository entirely (chair lines read "Chair: Name, Institution").
+
 - **In-page anchors no longer land under the sticky chrome.** The chrome's height is variable (the What's New banner adds height, and FR/DE pages add the beta ribbon), so the old static scroll offset left clicked anchors hidden behind the chrome in those states. `theme.js` now measures the chrome's real rendered height and publishes it as `scroll-padding-top` on `<html>`, recomputed on load, on resize, and whenever the banner mounts or is dismissed. A static fallback covers the pre-hydration and no-JS case (closes [#278](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/278)).
 - **CSS and JS no longer load stale from cache after a deploy.** The stylesheet and the scripts were linked with bare URLs, so a returning visitor could fetch new HTML while the browser served the old `site.css` from cache (GitHub Pages caches assets for ten minutes), briefly rendering new markup against old styles. A build-time `bust` filter now appends the first eight hex of each asset's SHA-256 (`site.css?v=…`), recomputed every build, so the URL changes only when the file does. No stamping script or CI gate is needed, the hash is derived at build time rather than written into the source.
 
