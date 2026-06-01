@@ -1781,6 +1781,19 @@ h4 { font-size: var(--fs-lg); }
   object-position: center;
 }
 
+/* Programme cover banner — the title band cropped from the designer
+   programme PDF's cover page (gs render + ffmpeg crop, ~2.4:1). Sits at
+   the top of the /YYYY page header. The .programme-download button
+   surfaces the print-ready PDF that complements the dynamic grid. */
+.programme-banner { margin: var(--space-5) 0 var(--space-2); }
+.programme-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+}
+.programme-download { margin: 0; }
+
 .tile {
   padding: var(--space-5);
   background: var(--bg-elev);
