@@ -102,6 +102,12 @@ const locales = {
       ctaReleases: "All releases",
     },
 
+    film: {
+      tapForSound: "Tap for sound",
+      toggleSound: "Toggle sound",
+      watchOnYouTube: "Watch on YouTube",
+    },
+
     pressKit: {
       eyebrow: "Brand and media",
       heading: "Press kit",
@@ -451,6 +457,12 @@ const locales = {
       ctaReleases: "Toutes les versions",
     },
 
+    film: {
+      tapForSound: "Touchez pour le son",
+      toggleSound: "Activer ou couper le son",
+      watchOnYouTube: "Voir sur YouTube",
+    },
+
     pressKit: {
       eyebrow: "Marque et médias",
       heading: "Kit presse",
@@ -746,6 +758,12 @@ const locales = {
       ctaIssue: "Vorschlagen oder melden",
       ctaMilestones: "Meilensteine ansehen",
       ctaReleases: "Alle Versionen",
+    },
+
+    film: {
+      tapForSound: "Für Ton tippen",
+      toggleSound: "Ton ein- oder ausschalten",
+      watchOnYouTube: "Auf YouTube ansehen",
     },
 
     pressKit: {

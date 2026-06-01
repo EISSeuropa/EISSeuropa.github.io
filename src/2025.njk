@@ -45,25 +45,26 @@ status: archive
    and no autoplay. A tap toggles play/pause; the button toggles sound. #}
 <section class="section-tight" aria-labelledby="film-2025-title">
   <div class="container">
-    <h2 id="film-2025-title" style="margin-bottom: var(--space-3);">Conference film</h2>
-    <p class="muted" style="max-width: 44rem; margin-bottom: var(--space-5);">
-      A short film from the 8th Annual Conference at the University of Macedonia, Thessaloniki.
-    </p>
-    <figure class="film">
-      <div class="film-frame">
-        <video class="film-video" playsinline muted loop preload="none"
-               poster="{{ '/assets/images/2025/essc-2025-film-poster.jpg' | bust }}"
-               data-film="https://github.com/EISSeuropa/EISSeuropa.github.io/releases/download/media-assets/essc-2025.mp4"
-               aria-label="ESSC 2025 conference film, Thessaloniki"></video>
-        <button class="film-sound" type="button" data-film-sound aria-pressed="false" aria-label="Unmute">
-          <span class="film-sound-muted" aria-hidden="true">{{ icon("volume-x") }}</span>
-          <span class="film-sound-on" aria-hidden="true">{{ icon("volume-2") }}</span>
-        </button>
+    <div class="film-feature">
+      <div class="film-feature-body">
+        <div class="featured-eyebrow">In motion</div>
+        <h2 id="film-2025-title">Conference film</h2>
+        <p>
+          Two days of panels, roundtables and the EISS community at the 8th Annual
+          Conference, University of Macedonia, Thessaloniki. A short film captures the
+          atmosphere across the venue.
+        </p>
+        <p class="muted">
+          Filmed and edited on site. Tap the video for sound, or watch the full cut on
+          our YouTube channel.
+        </p>
       </div>
-      <figcaption class="film-caption muted">
-        ESSC 2025, Thessaloniki. <a href="https://youtube.com/shorts/CFtUrpwgYXY" target="_blank" rel="noopener">Watch on YouTube {{ icon("external-link") }}</a>
-      </figcaption>
-    </figure>
+      {%- set filmSrc = "https://github.com/EISSeuropa/EISSeuropa.github.io/releases/download/media-assets/essc-2025.mp4" -%}
+      {%- set filmPoster = "/assets/images/2025/essc-2025-film-poster.jpg" -%}
+      {%- set filmYoutube = "https://youtube.com/shorts/CFtUrpwgYXY" -%}
+      {%- set filmCaption = "ESSC 2025, Thessaloniki." -%}
+      {% include "film-embed.njk" %}
+    </div>
   </div>
 </section>
 

@@ -3303,6 +3303,38 @@ h4 { font-size: var(--fs-lg); }
 .film-sound[aria-pressed="true"] .film-sound-on { display: inline-flex; }
 .film-caption { margin-top: var(--space-3); text-align: center; font-size: var(--fs-sm); }
 
+/* Subtle "tap for sound" hint, bottom-left so it never collides with the
+   sound button (bottom-right). Dismissed on first interaction (theme.js). */
+.film-hint {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.3em 0.7em;
+  border-radius: var(--radius-full);
+  background: hsl(0 0% 0% / 0.55);
+  color: #fff;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  pointer-events: none;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.film-hint svg { width: 0.9rem; height: 0.9rem; }
+.film-hint[hidden] { display: none; }
+
+/* Film beside a text column on desktop (portrait video reads better
+   half-width than full); stacks on mobile, where it fills the column. */
+.film-feature { display: grid; gap: var(--space-6); align-items: center; }
+.film-feature-body > :first-child { margin-top: 0; }
+@media (min-width: 48rem) {
+  .film-feature { grid-template-columns: 1fr minmax(280px, 340px); }
+  .film-feature .film { margin: 0; }
+  .film-feature .film-caption { text-align: left; }
+}
+
 /* ---------- utilities ---------- */
 .sr-only {
   position: absolute;
