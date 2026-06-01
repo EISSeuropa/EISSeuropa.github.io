@@ -340,6 +340,11 @@ is being edited anyway.
   substantively changed their entry. If you see the workflow trip an
   apparently-empty PR, that's a regression. Open an issue and
   investigate before silencing.
+- **Delete scratch / probe files before staging.** One-off probe pages
+  (`jprobe.html`, `rmm.html`, `swatch.html`, and the like) and throwaway
+  scripts get swept into a commit by `git add -A` / `git add -u`. Remove
+  them (or keep them outside the repo) and eyeball `git status` before
+  every commit, rather than trusting `.gitignore` to catch each one.
 
 ## 9. Accessibility & i18n cadence
 
@@ -547,6 +552,40 @@ Before calling any UI work done:
 
 The lesson generalises: verification must target the user-visible
 behaviour the change promises, on the surface the user actually uses.
+
+### Standing verification habits
+
+Carried over from the NetSec sister repo, where the same gotchas were
+re-derived more than once. These are **default behaviour, not
+on-request**:
+
+- **Grep for the bug's siblings before closing.** When you fix a bug,
+  search the codebase for the same pattern and fix every instance in the
+  same pass. Don't wait to be asked "check elsewhere too". This has
+  recurred: the deep-link-scroll and sticky-chrome scroll-padding fixes
+  both had siblings, as did the dead YouTube-Shorts URL and the
+  GitHub-Release `octet-stream` video content-type (both needed fixing
+  on `/2025` *and* `/past` ×3).
+- **A sitewide change ripples into the CI gates, so trace it first.** A
+  change touching every page (a chrome include, a shared CSS class, the
+  `bust` filter's `?v=` cache-buster) flows into the i18n drift checker
+  and the link checker. The `?v=` cache-buster once silently tripped the
+  drift checker until it was normalised. Before pushing anything
+  sitewide, run `check-i18n-drift.py` and the build locally and reason
+  about which gates it touches.
+- **Trust the Preview MCP's computed reads, not its screenshots.**
+  `preview_screenshot` can return blank or dark (e.g. when the page is
+  `visibilityState: hidden`, or before first paint) and doesn't reliably
+  scroll-to-fragment or settle layout. `preview_eval` reads —
+  `getComputedStyle`, `getBoundingClientRect`, element / attribute
+  checks — are reliable, and are how the search modal, press-kit grids,
+  iOS film playback, gallery crop, and `/past` ordering were all
+  verified. Prefer them; treat a screenshot as a loose sanity check, not
+  proof. (NetSec hit the raw-headless-Chrome equivalents:
+  `--screenshot` / `--dump-dom` don't fire `requestAnimationFrame` or
+  scroll to a fragment, and backgrounded stdout doesn't flush — read the
+  dumped DOM file instead; `--force-prefers-reduced-motion=reduce` and
+  computed-style reads are the dependable parts.)
 
 ---
 
