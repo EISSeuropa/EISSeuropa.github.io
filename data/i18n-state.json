@@ -74,14 +74,14 @@
     "src/programmes.njk": {
       "fr": {
         "file": "src/programmes.fr.njk",
-        "source_sha1": "355aa5018d90f4e5468402c391946e6556b12150",
-        "translated_on": "2026-05-29",
+        "source_sha1": "73baf472fd0aedb39d527698639c3351820f41f7",
+        "translated_on": "2026-06-01",
         "status": "beta"
       },
       "de": {
         "file": "src/programmes.de.njk",
-        "source_sha1": "355aa5018d90f4e5468402c391946e6556b12150",
-        "translated_on": "2026-05-29",
+        "source_sha1": "73baf472fd0aedb39d527698639c3351820f41f7",
+        "translated_on": "2026-06-01",
         "status": "beta"
       }
     },
