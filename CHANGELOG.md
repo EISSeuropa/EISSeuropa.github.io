@@ -33,6 +33,8 @@ audit trail. Same content, terser.
 
 #### Added
 
+- **CI now guards i18n chrome-string key parity.** A new `scripts/check-i18n-keys.js` (wired into the i18n-drift workflow) asserts the EN / FR / DE chrome catalogs in `i18n.js` (nav, footer, search, ribbons, the registration badge, …) carry the same set of keys. The page-level drift checker never saw these shared strings, so a new EN key could ship without its translations and nothing flagged it — the gap `pressKit` and `film.play` nearly slipped through. Closes [#82](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/82).
+
 - **Board members are individually searchable.** Site search indexed `/board` as one page, so a name query returned the whole board rather than the person. Now `src/_data/searchBios.js` + `src/search-bios.njk` emit a lightweight Pagefind index stub per person per locale at `/search/bios/<lang>/<slug>.html` (noindex; redirects a click to the canonical `/board[.lang].html#<slug>` anchor). Every board / support card gains a stable `#<slug>` anchor (deep-linkable), rendered by `person-card.njk` from a slug derived in `boardSorted.js`. The stubs are excluded from the sitemap. NetSec parity ([#353](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/353)); search architecture documented in `docs/search.md`, including the post-deploy verification ([#359](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/359)).
 - (one-line pointer bullets, what not why)
 

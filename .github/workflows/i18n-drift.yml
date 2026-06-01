@@ -33,5 +33,12 @@ jobs:
         with:
           python-version: "3.12"
 
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: "20"
+
       - name: Run drift checker
         run: python3 scripts/check-i18n-drift.py
+
+      - name: Check chrome-string key parity (en / fr / de)
+        run: node scripts/check-i18n-keys.js
