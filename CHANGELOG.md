@@ -38,6 +38,8 @@ audit trail. Same content, terser.
 
 #### Changed
 
+- **Archive-page session recordings are a shared, data-driven block.** The near-identical hand-wired "Session recordings" sections on `/2019`, `/2023` and `/2024` are replaced by one `conference-media.njk` partial that reads the YouTube playlist + city from `conferences.js` (`youtubePlaylist` per year). Future archive pages only set the playlist in the data and include the partial — no per-page recordings markup to drift out of sync. Closes [#358](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/358).
+
 - **`/initiative` now links straight to the board.** A "Meet the people behind EISS" button joins the closing call-to-action strip (EN/FR/DE), so a visitor reading about the organisation can reach `/board` without returning to the menu. Acts on the UX audit ([#357](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/357)).
 - **The homepage now shows the next conference’s registration status, and `/2026` no longer dead-ends when registration closes.** The featured card on the homepage surfaces the registration badge (date + venue + status, so a quick check, especially on mobile, needs no click). On `/2026`, when registration is closed a short note under the hero reframes it (“you can still follow along: the programme below marks the livestreamed sessions”) instead of leaving “Registration closed” as a terminus. Hand-translated (EN/FR/DE). Acts on the UX audit ([#356](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/356)).
 - **The archive-page ribbon is shorter.** Trimmed to "This page documents a past EISS event. It may not be as complete as current pages." so it takes less vertical space on mobile.

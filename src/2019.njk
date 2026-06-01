@@ -51,20 +51,9 @@ status: archive
 {% set archiveSlug = "2019" %}
 {% include "archive-programme.njk" %}
 
-<section class="section-tight" aria-labelledby="recordings-2019-title">
-  <div class="container">
-    <h2 id="recordings-2019-title" style="margin-bottom: var(--space-5);">Session recordings</h2>
-    <p class="muted" style="max-width: 44rem; margin-bottom: var(--space-5);">
-      Selected sessions from EISS 2019 are available on the EISS YouTube channel
-      (<a href="https://www.youtube.com/@eiss-europe/" target="_blank" rel="noopener">@eiss-europe</a>).
-      Clicking play loads the YouTube iframe; before that, no YouTube cookies are set.
-    </p>
-    {%- set youtubeId = "PLkI2R8FsFqV4_TVOCV5qfPFAmZn1KbWGv" -%}
-    {%- set youtubeIsList = true -%}
-    {%- set youtubeTitle = "EISS 2019 — Paris, session recordings" -%}
-    {% include "youtube-embed.njk" %}
-  </div>
-</section>
+{# Session recordings — shared, data-driven block (playlist in conferences.js). #}
+{% set mediaYear = "2019" %}
+{% include "conference-media.njk" %}
 
 <section class="section-tight">
   <div class="container">
