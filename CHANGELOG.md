@@ -35,6 +35,8 @@ audit trail. Same content, terser.
 - (one-line pointer bullets, what not why)
 
 #### Changed
+
+- **The archive-page ribbon is shorter.** Trimmed to "This page documents a past EISS event. It may not be as complete as current pages." so it takes less vertical space on mobile.
 - (…)
 
 #### Fixed
