@@ -85,6 +85,8 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 - **`/2025` now opens with the conference, not the programme.** The page leads with a short review of the Thessaloniki edition sitting beside the conference film (the film is no longer a standalone "Conference film" section lower down), then the keynote and round tables, then the full programme in the grid UI, then the photo gallery. The programme used to be the first thing on the page as a flat screenshot.
 - **Conference photo galleries crop to a consistent shape.** The `/2025`, `/2021` and `/2019` galleries (and the Joint Policy Workshop photos) now use a shared `.photo-gallery` grid where every tile holds a uniform 3:2 landscape box with `object-fit: cover`, instead of letting each photo set its own height. This fixes the ragged, oddly-cropped look from mixed source dimensions.
 - **The 2025 conference film now also runs on the `/past` conferences page.** The same `film-embed.njk` player sits in a portrait column beside the year-by-year archive cards on desktop, staying in view as the list scrolls, and stacks below the cards on mobile. It reuses the self-hosted GitHub Release asset and the scroll-into-view muted autoplay already used on `/2025`, so nothing downloads until it enters the viewport. Part of [#330](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/330).
+- **On `/past`, the conference film now comes before the list of past conferences.** It stacks on top on mobile and sits as the left column on desktop, rather than trailing after the list.
+- **`/2025` opens with the conference film folded into a short intro** instead of a separate "Conference film" section lower down, and the archive pages now follow a consistent section order. The `/2021` page drops an off-template "Read more about the EISS Board" signpost, and `/2019` drops a redundant open-and-closed-panels explainer (now covered on `/initiative`) with its gallery moved below the programme.
 
 ### Removed
 
@@ -92,6 +94,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- **The site-search modal and the press kit now actually render.** Both features had shipped with complete markup, JavaScript, and translated strings, but none of the classes they referenced were defined in `site.css`, so the search overlay opened as an unstyled block and the press-kit logos and swatches spilled full-width. The search dialog is now a centred, scrollable panel (a full-screen sheet on phones) with styled results and highlighted excerpts, and the press kit lays out as proper logo, swatch, and do/don't grids with contained images.
+- **The press kit is now reachable from the footer** (legal-links row, EN + FR + DE), not just from the visual sitemap.
+- **The 2025 conference film now plays on iOS.** Muted inline autoplay is started with the `muted` property set and the source `load()`-ed (Safari needs both), and when a browser still blocks autoplay (iOS Low Power Mode) a centre play button appears so a tap can start it. The `webkit-playsinline` attribute is set for older iOS.
+- **The 2025 film's *Watch on YouTube* link now works.** It pointed at a Shorts URL that did not resolve; it now links the standard watch URL with the conference playlist.
 - **`/2019` was mislabelled the "2nd" Annual Conference.** It was the **3rd** (2017 inaugural, 2018 second, 2019 third), confirmed by the final programme and the 2019 call for papers, and consistent with the canonical ordinals in `conferences.js`. Corrected the page eyebrow and meta description.
 - **Removed personal chair email addresses from the 2022 panels data.** `src/_data/panels2022.js` carried `[at]`-obfuscated personal emails in the chair fields. They were already stripped from the rendered page, but sat in the committed source; they are now gone from the repository entirely (chair lines read "Chair: Name, Institution").
 

@@ -517,6 +517,37 @@ the CLI does not expose this. Issues are added manually via
 If more than ~20% of items in any view are `Done`, or new entries stop
 getting Effort tags, archive the Project rather than letting it drift.
 
+## 14. Ship-completeness: a green build is not "it works"
+
+`npx @11ty/eleventy` succeeding proves the templates *compile*, not that
+the feature *renders*. A whole feature can ship with complete markup,
+JS, and i18n strings and still be invisible or broken in the browser.
+The QA pass that added this rule found two such cases live on the site:
+the **press kit** and the **site-search modal** had every class name in
+their markup but **not one of those classes was defined in
+`site.css`**, so the search overlay rendered as an unstyled block and
+the press-kit logos spilled full-width. Both had passed CI and shipped
+"done" (this is the same failure mode the NetSec sister repo hit with
+its undefined `.grid-2`).
+
+Before calling any UI work done:
+
+- **Grep that every new class the markup references is actually defined**
+  in `site.css`. New `.foo` in a `.njk` with zero hits in the stylesheet
+  is the tell. A cheap CI lint could assert this (tracked separately).
+- **Render it.** Build, serve, and check the component in the preview at
+  desktop *and* a phone width. For JS-driven UI (modals, video, menus),
+  exercise the interaction, don't just confirm the element exists.
+- **Test the actual device class the user reported**, not a proxy.
+  iOS Safari/Chrome autoplay, tap targets, and the collapsed mobile nav
+  behave differently from a desktop window resized narrow.
+- When a feature is built by a parallel/worktree workflow, treat its CSS
+  and its render state as the first things to verify on merge: a fan-out
+  agent that wrote the markup may never have written the styles.
+
+The lesson generalises: verification must target the user-visible
+behaviour the change promises, on the surface the user actually uses.
+
 ---
 
 *This file is short on purpose. If you need to add a rule, add it
