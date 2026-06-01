@@ -42,6 +42,8 @@ audit trail. Same content, terser.
 
 #### Changed
 
+- **Search results for people now show a headshot and a role pill.** The bio stubs expose the photo, role, and functional responsibility as Pagefind metadata; `search.js` renders a thumbnail and a role pill (e.g. "Board Member · Technology Coordinator") beside the name and excerpt. Non-person results are unchanged.
+
 - **Archive-page session recordings are a shared, data-driven block.** The near-identical hand-wired "Session recordings" sections on `/2019`, `/2023` and `/2024` are replaced by one `conference-media.njk` partial that reads the YouTube playlist + city from `conferences.js` (`youtubePlaylist` per year). Future archive pages only set the playlist in the data and include the partial — no per-page recordings markup to drift out of sync. Closes [#358](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/358).
 
 - **`/initiative` now links straight to the board.** A "Meet the people behind EISS" button joins the closing call-to-action strip (EN/FR/DE), so a visitor reading about the organisation can reach `/board` without returning to the menu. Acts on the UX audit ([#357](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/357)).
@@ -50,6 +52,8 @@ audit trail. Same content, terser.
 - (…)
 
 #### Fixed
+
+- **Site search indexed only the bio stubs, not the real pages.** Adding `data-pagefind-body` to the bio stubs (#366) silently triggered Pagefind's rule that *once any page declares `data-pagefind-body`, pages without it are dropped from the index* — so `/board`, `/initiative` and every real page fell out, and a query like "People" returned nothing. Declared `data-pagefind-body` on the layout `<main>` so every page is indexed again (scoped to content; the chrome stays `data-pagefind-ignore`).
 - (…)
 ```
 

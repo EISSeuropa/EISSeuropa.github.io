@@ -40,6 +40,8 @@ module.exports = function () {
         slug,
         name: p.name,
         role: p.role || "",
+        functionalResponsibility: p.functionalResponsibility || "",
+        photo: p.photoOverride || p.photo || "",
         position: p.position || "",
         institution: p.institution || "",
         country: p.country || "",

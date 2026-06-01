@@ -3472,7 +3472,9 @@ body.search-open { overflow: hidden; }
 .search-results:empty { padding: 0; }
 .search-result { margin: 0; }
 .search-result-link {
-  display: block;
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-md);
   text-decoration: none;
@@ -3483,11 +3485,30 @@ body.search-open { overflow: hidden; }
   background: var(--bg-tinted);
   outline: none;
 }
+.search-result-thumb {
+  flex: none;
+  width: 2.5rem;
+  height: 3.125rem; /* 4:5, matching the board cards */
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  background: var(--bg-tinted);
+}
+.search-result-body { min-width: 0; }
 .search-result-title {
   display: block;
   font-weight: 600;
   color: var(--text);
   margin-bottom: 2px;
+}
+.search-result-role {
+  display: inline-block;
+  margin-bottom: 2px;
+  padding: 1px var(--space-2);
+  border-radius: var(--radius-full);
+  background: var(--bg-tinted);
+  border: 1px solid var(--border);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
 }
 .search-result-excerpt {
   display: block;

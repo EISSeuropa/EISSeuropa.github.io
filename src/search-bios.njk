@@ -26,6 +26,12 @@ eleventyExcludeFromCollections: true
 <body data-pagefind-body>
   <main>
     <h1 data-pagefind-meta="title">{{ bio.name }}</h1>
+    {# Pagefind metadata for richer search results: headshot + role pill,
+       rendered by search.js. Hidden spans so they don't pollute the
+       indexed body text / excerpt. #}
+    {%- if bio.photo %}<span hidden data-pagefind-meta="image:{{ bio.photo }}"></span>{% endif %}
+    {%- if bio.role %}<span hidden data-pagefind-meta="role:{{ bio.role }}"></span>{% endif %}
+    {%- if bio.functionalResponsibility %}<span hidden data-pagefind-meta="responsibility:{{ bio.functionalResponsibility }}"></span>{% endif %}
     <p>{{ bio.role }}{% if bio.position %} — {{ bio.position }}{% endif %}{% if bio.institution %}, {{ bio.institution }}{% endif %}{% if bio.country %} ({{ bio.country }}){% endif %}</p>
     {%- if bio.themes %}
     <p>{{ bio.themes }}</p>
