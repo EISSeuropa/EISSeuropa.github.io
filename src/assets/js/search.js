@@ -84,17 +84,42 @@
       a.className = "search-result-link";
       a.href = d.url;
 
+      const meta = d.meta || {};
+
+      // People results (bio stubs) carry a headshot + role as Pagefind
+      // metadata; render a thumbnail and a role pill. Other pages have
+      // neither and render as before.
+      if (meta.image) {
+        const img = document.createElement("img");
+        img.className = "search-result-thumb";
+        img.src = meta.image;
+        img.alt = "";
+        img.loading = "lazy";
+        a.appendChild(img);
+      }
+
+      const body = document.createElement("span");
+      body.className = "search-result-body";
+
       const title = document.createElement("span");
       title.className = "search-result-title";
-      title.textContent = d.meta && d.meta.title ? d.meta.title : d.url;
+      title.textContent = meta.title ? meta.title : d.url;
+      body.appendChild(title);
+
+      if (meta.role) {
+        const role = document.createElement("span");
+        role.className = "search-result-role";
+        role.textContent = meta.responsibility ? `${meta.role} · ${meta.responsibility}` : meta.role;
+        body.appendChild(role);
+      }
 
       const excerpt = document.createElement("span");
       excerpt.className = "search-result-excerpt";
       // Pagefind returns excerpt HTML with <mark> around the hit terms.
       excerpt.innerHTML = d.excerpt;
+      body.appendChild(excerpt);
 
-      a.appendChild(title);
-      a.appendChild(excerpt);
+      a.appendChild(body);
       li.appendChild(a);
       frag.appendChild(li);
     });

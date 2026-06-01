@@ -183,7 +183,13 @@
     {% include "nav.njk" %}
   </div>
 
-  <main id="main" role="main">
+  {# data-pagefind-body scopes the Pagefind index to page content (the
+     chrome above/below is data-pagefind-ignore). REQUIRED: the bio-search
+     stubs (search-bios.njk) carry data-pagefind-body, and Pagefind's rule
+     is that once *any* page has it, pages *without* it are dropped from
+     the index — so every real page must declare it here too, or only the
+     stubs get indexed. See docs/search.md. #}
+  <main id="main" role="main" data-pagefind-body>
     {{ content | safe }}
   </main>
 
