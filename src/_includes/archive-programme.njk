@@ -1,0 +1,122 @@
+{# Archived conference programme, rendered in the SAME markup + CSS as the
+   live Indico grid (src/_includes/programme-grid.njk) so past conferences
+   look identical to /2026. Reads a static programme from
+   src/_data/archiveProgrammes.js keyed by `archiveSlug`, which the page
+   sets before including:
+
+     {% set archiveSlug = "2022" %}
+     {% include "archive-programme.njk" %}
+
+   Renders nothing when the slug has no data. The inner session / break /
+   contribution markup is kept byte-for-byte in step with the live grid;
+   the only differences are the data source, an archive-appropriate
+   header (no "Live from Indico" / livestream / Indico-link chrome), and
+   day titles that use the transcribed label as-is. #}
+{% from "icons.njk" import icon %}
+{%- set _lang = lang or "en" -%}
+{%- set t = i18n[_lang] -%}
+{%- set _prog = archiveProgrammes[archiveSlug] -%}
+
+{% if _prog and _prog.days and _prog.days.length %}
+<section class="section programme" id="programme" aria-labelledby="archive-programme-title">
+  <div class="container">
+    <div class="featured-eyebrow">{{ t.archiveProgramme.eyebrow }}</div>
+    <h2 id="archive-programme-title">{{ t.archiveProgramme.heading }}</h2>
+    <p class="muted" style="max-width: 44rem; margin-bottom: var(--space-4);">
+      {{ t.archiveProgramme.lead }}
+    </p>
+
+    {%- if _prog.days.length > 1 %}
+    <nav class="programme-days" aria-label="{{ t.programme.daysNav }}">
+      {%- for day in _prog.days %}
+      <a class="programme-day-chip" href="#day-{{ loop.index }}">{{ day.label }}</a>
+      {%- endfor %}
+    </nav>
+    {%- endif %}
+
+    {%- for day in _prog.days %}
+    <div class="programme-day" id="day-{{ loop.index }}">
+      <h3 class="programme-day-title">{{ day.label }}</h3>
+
+      <ol class="programme-rows" role="list">
+        {%- for row in day.rows %}
+        <li class="programme-row{% if row.parallel %} programme-row--parallel{% endif %}">
+          <div class="programme-when" aria-hidden="true">
+            {%- if row.startTime %}<span class="programme-when-time">{{ row.startTime }}{% if row.endTime %}–{{ row.endTime }}{% endif %}</span>{% endif %}
+          </div>
+
+          <div class="programme-row-items">
+            {%- for slot in row.items %}
+            <article class="programme-slot programme-slot--{{ slot.kind }}{% if slot.subtype %} programme-slot--{{ slot.subtype }}{% endif %}">
+
+              {%- if slot.kind == "break" %}
+              <p class="programme-break-title">{{ slot.title }}</p>
+              {%- if slot.room %}
+              <p class="programme-slot-meta programme-slot-room programme-slot-room--cx">{{ icon("map-pin") }} {{ slot.room }}</p>
+              {%- endif %}
+
+              {%- else %}
+              <p class="programme-slot-title">{{ slot.title }}</p>
+              {%- if slot.room %}
+              <p class="programme-slot-meta programme-slot-room programme-slot-room--cx">{{ icon("map-pin") }} {{ slot.room }}</p>
+              {%- endif %}
+              {%- if slot.conveners and slot.conveners.length %}
+              <p class="programme-slot-meta">
+                <strong>{{ t.programme.chairedBy }}:</strong>
+                {%- for c in slot.conveners -%}
+                  {{ c.name }}{% if c.affiliation %} <span class="muted">({{ c.affiliation }})</span>{% endif %}{% if not loop.last %}, {% endif %}
+                {%- endfor -%}
+              </p>
+              {%- endif %}
+
+              {%- if slot.discussants and slot.discussants.length %}
+              <p class="programme-slot-meta">
+                <strong>{{ t.programme.discussants }}:</strong>
+                {%- for p in slot.discussants -%}
+                  {{ p.name }}{% if p.affiliation %} <span class="muted">({{ p.affiliation }})</span>{% endif %}{% if not loop.last %}, {% endif %}
+                {%- endfor -%}
+              </p>
+              {%- endif %}
+
+              {%- if slot.contributions and slot.contributions.length %}
+              <details class="programme-contribs">
+                <summary>{{ t.programme.showContributions }} <span class="muted">({{ slot.contributions.length }})</span></summary>
+                <ol class="programme-contrib-list" role="list">
+                  {%- for c in slot.contributions %}
+                  <li class="programme-contrib">
+                    <div class="programme-contrib-body">
+                      <p class="programme-contrib-title">{{ c.title }}</p>
+                      {%- if c.authors and c.authors.length %}
+                      <p class="programme-contrib-speakers muted">
+                        {%- for a in c.authors -%}
+                          <span class="programme-author{% if a.isSpeaker %} programme-author--speaker{% endif %}">
+                            {%- if a.isSpeaker %}<span class="programme-author-mic" title="{{ t.programme.presenter }}">{{ icon("mic") }}</span><span class="sr-only">{{ t.programme.presenter }}: </span>{% endif -%}
+                            {{ a.name }}{% if a.affiliation %} <em>({{ a.affiliation }})</em>{% endif %}</span>{% if not loop.last %} · {% endif %}
+                        {%- endfor -%}
+                      </p>
+                      {%- endif %}
+                    </div>
+                  </li>
+                  {%- endfor %}
+                </ol>
+              </details>
+              {%- endif %}
+              {%- endif %}
+
+            </article>
+            {%- endfor %}
+          </div>
+        </li>
+        {%- endfor %}
+      </ol>
+    </div>
+    {%- endfor %}
+
+    {%- if _prog.sourceNote %}
+    <p class="muted programme-footnote" style="margin-top: var(--space-6); font-size: var(--fs-sm);">
+      {{ t.archiveProgramme.reconstructedNote }}
+    </p>
+    {%- endif %}
+  </div>
+</section>
+{% endif %}
