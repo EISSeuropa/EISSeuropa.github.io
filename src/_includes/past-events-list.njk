@@ -17,6 +17,25 @@
 {%- set _lang = lang or "en" -%}
 {%- set t = i18n[_lang] -%}
 
+{# Date chip + title + meta (conveners with affiliations, then category
+   tag). Event titles are English on every locale, so marked lang="en". #}
+{%- macro eventBody(ev) -%}
+  {%- set _hasPeople = ev.presenters and ev.presenters.length -%}
+  <span class="indico-event-date" aria-hidden="true">{{ icon("calendar") }} {{ ev.date }}</span>
+  <span class="indico-event-body">
+    <strong lang="en">{{ ev.title }}</strong>
+    {%- if _hasPeople or ev.tag %}
+    <span class="indico-event-meta">
+      {%- for p in ev.presenters -%}
+        <span lang="en">{{ p.name }}{% if p.affiliation %} ({{ p.affiliation }}){% endif %}</span>{% if not loop.last %}, {% endif %}
+      {%- endfor -%}
+      {%- if _hasPeople and ev.tag %} · {% endif -%}
+      {%- if ev.tag %}{{ ev.tag }}{% endif -%}
+    </span>
+    {%- endif %}
+  </span>
+{%- endmacro -%}
+
 {% if pastEvents and pastEvents.length %}
 <section class="section-tight indico-events" aria-labelledby="past-events-title">
   <div class="container">
@@ -29,27 +48,14 @@
     <ul class="indico-events-list" role="list">
       {%- for ev in pastEvents %}
       <li class="indico-event-row">
-        {%- set _meta -%}
-          {%- if ev.presenters and ev.presenters.length %}{{ ev.presenters | join(", ") }}{% endif -%}
-          {%- if ev.presenters and ev.presenters.length and ev.tag %} · {% endif -%}
-          {%- if ev.tag %}{{ ev.tag }}{% endif -%}
-        {%- endset -%}
         {%- if ev.href %}
         <a class="indico-event" href="{{ ev.href }}">
-          <span class="indico-event-date" aria-hidden="true">{{ icon("calendar") }} {{ ev.date }}</span>
-          <span class="indico-event-body">
-            <strong lang="en">{{ ev.title }}</strong>
-            {%- if _meta | trim %}<span class="indico-event-meta">{{ _meta | trim }}</span>{% endif %}
-          </span>
+          {{ eventBody(ev) }}
           <span class="indico-event-arrow" aria-hidden="true">{{ icon("arrow-right") }}</span>
         </a>
         {%- else %}
         <div class="indico-event indico-event--static">
-          <span class="indico-event-date" aria-hidden="true">{{ icon("calendar") }} {{ ev.date }}</span>
-          <span class="indico-event-body">
-            <strong lang="en">{{ ev.title }}</strong>
-            {%- if _meta | trim %}<span class="indico-event-meta">{{ _meta | trim }}</span>{% endif %}
-          </span>
+          {{ eventBody(ev) }}
         </div>
         {%- endif %}
       </li>
