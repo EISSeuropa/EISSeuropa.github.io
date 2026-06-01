@@ -104,14 +104,6 @@ status: archive
   </div>
 </section>
 
-{# Final programme, rendered in the SAME grid UI as the live ESSC 2026
-   programme (archive-programme.njk + archiveProgrammes.js). #}
-{% set archiveSlug = "2025" %}
-{% include "archive-programme.njk" %}
-
-{% set year = "2025" %}
-{% include "programme-download.njk" %}
-
 <section class="section-tight" aria-labelledby="gallery-2025-title">
   <div class="container">
     <h2 id="gallery-2025-title" style="margin-bottom: var(--space-5);">Conference gallery</h2>
@@ -146,6 +138,14 @@ status: archive
     </div>
   </div>
 </section>
+
+{# Final programme, rendered in the SAME grid UI as the live ESSC 2026
+   programme (archive-programme.njk + archiveProgrammes.js). #}
+{% set archiveSlug = "2025" %}
+{% include "archive-programme.njk" %}
+
+{% set year = "2025" %}
+{% include "programme-download.njk" %}
 
 <section class="section">
   <div class="container">

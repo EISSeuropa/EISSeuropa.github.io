@@ -18,7 +18,7 @@
 {%- set _prog = archiveProgrammes[archiveSlug] -%}
 
 {% if _prog and _prog.days and _prog.days.length %}
-<section class="section programme" id="programme" aria-labelledby="archive-programme-title">
+<section class="section programme programme--archive" id="programme" aria-labelledby="archive-programme-title">
   <div class="container">
     <div class="featured-eyebrow">{{ t.archiveProgramme.eyebrow }}</div>
     <h2 id="archive-programme-title">{{ t.archiveProgramme.heading }}</h2>

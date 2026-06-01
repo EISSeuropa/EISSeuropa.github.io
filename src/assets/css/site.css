@@ -3061,6 +3061,13 @@ h4 { font-size: var(--fs-lg); }
   grid-template-columns: 3.25rem 1fr;
   gap: var(--space-3);
 }
+/* Archive programmes reuse this markup but omit the per-paper time
+   gutter (.programme-contrib-when) — past papers have no individual
+   start time. Without that col-1 element the body fell into the 3.25rem
+   column and titles wrapped one word per line. Single column here. */
+.programme--archive .programme-contrib {
+  grid-template-columns: 1fr;
+}
 
 .programme-contrib-when {
   font-size: var(--fs-sm);
