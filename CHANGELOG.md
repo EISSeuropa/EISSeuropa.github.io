@@ -81,6 +81,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 - **The Inter typeface is now self-hosted instead of loaded from Google Fonts.** The font is served from the site's own origin (vendored under `src/assets/fonts/`, variable weight, Latin + Latin-Extended), so no visitor IP is sent to Google on first paint. This matches the site's no-tracking stance, removes a render-blocking cross-origin request, and drops the corresponding entries from the privacy notice.
 - **The conference venue map no longer embeds Google Maps.** The `/YYYY` venue block was a Google Maps iframe that loaded on page view, sending every visitor's IP to Google. It is replaced by a plain address card with a link to OpenStreetMap that opens only when clicked. No third party is contacted on page load. The Google Maps entry is removed from the privacy notice accordingly.
+- **The open-panel examples on `/initiative` now show the breadth of past ESSCs.** The short list of recent open panels is recurated from the conference archive to span 2018 to 2026 and to sit clearly apart from the nine permanent thematic sections: non-state actors and domestic politics (2018), climate change and security actors (2019), European security read through India (2021), organised crime in Latin America (2023), knowledge production on war (2024), and cyber and digital sovereignty (2026). Titles stay in English (their conference form) and are marked `lang="en"` on the FR and DE pages.
 
 ### Fixed
 
