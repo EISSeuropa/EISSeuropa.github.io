@@ -53,6 +53,8 @@ audit trail. Same content, terser.
 
 #### Fixed
 
+- **Reconciled the archive conference record in `conferences.js` (the contradictions in #230).** 2020 is now recorded as **deferred to 2021** (held at ISCTE-IUL, Lisbon) rather than "3rd Annual Conference held online" — matching the `/2020` and `/2021` pages and the organisation's actual history; it carries a `deferred` flag and no ordinal. 2019 is corrected from the 2nd to the **3rd** Annual Conference (2017 inaugural, 2018 second, 2019 third). Placeholder sort-dates are replaced with the real ones: **2021 → 3–4 September 2021**, **2022 → 30 June – 1 July 2022**. A new `editionCount` export (9: 2017, 2018, 2019, 2021–2026; the deferred 2020 excluded) gives display counts a single source of truth. EN/FR/DE archive metadata updated in lockstep. Closes [#230](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/230).
+
 - **Site search indexed only the bio stubs, not the real pages.** Adding `data-pagefind-body` to the bio stubs (#366) silently triggered Pagefind's rule that *once any page declares `data-pagefind-body`, pages without it are dropped from the index* — so `/board`, `/initiative` and every real page fell out, and a query like "People" returned nothing. Declared `data-pagefind-body` on the layout `<main>` so every page is indexed again (scoped to content; the chrome stays `data-pagefind-ignore`).
 - (…)
 ```
