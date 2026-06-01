@@ -7,6 +7,7 @@ metaImage: /assets/images/2025-meta.jpg
 navKey: conferences
 status: archive
 ---
+{% from "icons.njk" import icon %}
 
 <header class="page-header">
   <div class="container">
@@ -36,31 +37,35 @@ status: archive
   </div>
 </section>
 
-{# Session recordings on YouTube. The youtube-embed partial does a
-   click-to-mount load so no YouTube JS or cookies run until the
-   visitor opts in (see /policy.html §5).
-
-   PLACEHOLDER: fill `youtubeId` with the actual playlist ID from the
-   EISS YouTube channel (https://www.youtube.com/channel/UCfdVczE8X2iDPsIaadtP57Q)
-   when known. Set `youtubeIsList = true` for playlists, drop it
-   (or set false) for a single-video embed. Wrap in `{% if false %}`
-   below was used to gate the section while the ID is unknown — flip
-   to `{% if true %}` (or remove the guard) once the real ID is in. #}
-{% if false %}
-<section class="section-tight" aria-labelledby="recordings-2025-title">
+{# Conference film. Self-hosted MP4 (GitHub Release asset, so no
+   third-party request — consistent with /policy) rendered as a portrait
+   showpiece. theme.js sets the src and muted-autoplays it ONLY when it
+   scrolls into view, so nothing downloads for visitors who never reach
+   it; it pauses off-screen. prefers-reduced-motion gets native controls
+   and no autoplay. A tap toggles play/pause; the button toggles sound. #}
+<section class="section-tight" aria-labelledby="film-2025-title">
   <div class="container">
-    <h2 id="recordings-2025-title" style="margin-bottom: var(--space-5);">Session recordings</h2>
+    <h2 id="film-2025-title" style="margin-bottom: var(--space-3);">Conference film</h2>
     <p class="muted" style="max-width: 44rem; margin-bottom: var(--space-5);">
-      Selected sessions were recorded and are available on the EISS YouTube channel.
-      Clicking play loads the YouTube iframe; before that, no YouTube cookies are set.
+      A short film from the 8th Annual Conference at the University of Macedonia, Thessaloniki.
     </p>
-    {%- set youtubeId = "PLACEHOLDER_PLAYLIST_ID_HERE" -%}
-    {%- set youtubeIsList = true -%}
-    {%- set youtubeTitle = "ESSC 2025 — Thessaloniki, session recordings" -%}
-    {% include "youtube-embed.njk" %}
+    <figure class="film">
+      <div class="film-frame">
+        <video class="film-video" playsinline muted loop preload="none"
+               poster="{{ '/assets/images/2025/essc-2025-film-poster.jpg' | bust }}"
+               data-film="https://github.com/EISSeuropa/EISSeuropa.github.io/releases/download/media-assets/essc-2025.mp4"
+               aria-label="ESSC 2025 conference film, Thessaloniki"></video>
+        <button class="film-sound" type="button" data-film-sound aria-pressed="false" aria-label="Unmute">
+          <span class="film-sound-muted" aria-hidden="true">{{ icon("volume-x") }}</span>
+          <span class="film-sound-on" aria-hidden="true">{{ icon("volume-2") }}</span>
+        </button>
+      </div>
+      <figcaption class="film-caption muted">
+        ESSC 2025, Thessaloniki. <a href="https://youtube.com/shorts/CFtUrpwgYXY" target="_blank" rel="noopener">Watch on YouTube {{ icon("external-link") }}</a>
+      </figcaption>
+    </figure>
   </div>
 </section>
-{% endif %}
 
 <section class="section-tight">
   <div class="container">

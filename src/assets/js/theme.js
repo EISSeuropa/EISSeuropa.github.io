@@ -344,3 +344,45 @@
     if (tpl) textEl.textContent = tpl.replace("{n}", days).replace("{year}", year);
   });
 })();
+
+/* Conference film: lazy, self-hosted portrait video. The src is only set
+   (and muted-autoplay started) when the video scrolls into view, so the
+   ~20 MB file never downloads for visitors who don't reach it; it pauses
+   off-screen. prefers-reduced-motion: no autoplay, native controls instead.
+   A tap toggles play/pause; the sound button toggles mute. */
+(function () {
+  "use strict";
+  var v = document.querySelector(".film-video[data-film]");
+  if (!v) return;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var loaded = false;
+  function load() { if (loaded) return; loaded = true; v.src = v.getAttribute("data-film"); }
+  function tryPlay() { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+
+  if (reduce) {
+    load();
+    v.controls = true;
+  } else if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { load(); tryPlay(); }
+        else if (!v.paused) { v.pause(); }
+      });
+    }, { threshold: 0.4 }).observe(v);
+    v.addEventListener("click", function () { v.paused ? tryPlay() : v.pause(); });
+  } else {
+    load();
+    tryPlay();
+  }
+
+  var btn = document.querySelector("[data-film-sound]");
+  if (btn) {
+    if (reduce) { btn.hidden = true; return; }
+    btn.addEventListener("click", function () {
+      v.muted = !v.muted;
+      if (!v.muted) tryPlay();
+      btn.setAttribute("aria-pressed", String(!v.muted));
+      btn.setAttribute("aria-label", v.muted ? "Unmute" : "Mute");
+    });
+  }
+})();
