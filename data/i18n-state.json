@@ -102,14 +102,14 @@
     "src/sitemap.njk": {
       "fr": {
         "file": "src/sitemap.fr.njk",
-        "source_sha1": "4717606244c833ea181cb9e599182231b8821627",
-        "translated_on": "2026-05-31",
+        "source_sha1": "36c9782ff4e53aa6796c666aa3de05f7fdaf4526",
+        "translated_on": "2026-06-01",
         "status": "beta"
       },
       "de": {
         "file": "src/sitemap.de.njk",
-        "source_sha1": "4717606244c833ea181cb9e599182231b8821627",
-        "translated_on": "2026-05-31",
+        "source_sha1": "36c9782ff4e53aa6796c666aa3de05f7fdaf4526",
+        "translated_on": "2026-06-01",
         "status": "beta"
       }
     },

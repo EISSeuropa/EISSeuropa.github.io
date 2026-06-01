@@ -1,0 +1,53 @@
+---
+layout: base.njk
+permalink: /2018.html
+title: 2018 Conference — Paris
+description: 2nd EISS Annual Conference, 21 — 22 June 2018 at University Panthéon-Assas, Paris. Keynote by Beatrice Heuser.
+metaImage: /assets/images/index-meta.jpg
+navKey: conferences
+status: archive
+---
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">Archive · 2nd Annual Conference</span>
+    <h1>2018 — Paris</h1>
+    <p class="page-lead">
+      <strong>21 — 22 June 2018</strong> · University Panthéon-Assas (Paris 2), Paris, France.
+    </p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div class="featured-eyebrow">Programme highlights</div>
+      <h2>Keynote</h2>
+      <p>
+        <strong>Beatrice Heuser</strong> (University of Glasgow) — <em>“Security Studies in Europe:
+        An Agenda”</em>. The second EISS conference expanded the thematic sections established at the
+        2017 inaugural edition.
+      </p>
+    </article>
+  </div>
+</section>
+
+{# Final programme, rendered in the SAME grid UI as the live ESSC 2026
+   programme (archive-programme.njk + archiveProgrammes.js). #}
+{% set archiveSlug = "2018" %}
+{% include "archive-programme.njk" %}
+
+<section class="section">
+  <div class="container">
+    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div class="featured-eyebrow">Host &amp; venue</div>
+      <h2>University Panthéon-Assas (Paris 2)</h2>
+      <p>92 rue d’Assas, 75006 Paris, France.</p>
+      <p>
+        <a class="btn btn-secondary btn-sm"
+           href="https://www.google.com/maps/search/?api=1&query=92+rue+d%27Assas,+75006+Paris"
+           target="_blank" rel="noopener">Open in Google Maps</a>
+      </p>
+    </article>
+  </div>
+</section>
