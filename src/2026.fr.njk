@@ -47,6 +47,12 @@ alternates:
       {% include "registration-badge.njk" %}
       {% include "countdown.njk" %}
     </div>
+    {%- set _reg2026 = conferences.byYear["2026"] -%}
+    {%- if _reg2026 and _reg2026.registrationStatus == "closed" -%}
+    <p class="reveal reveal-delay-3" style="margin-top: var(--space-4); font-size: var(--fs-sm); color: hsl(0 0% 100% / 0.9); max-width: 42rem;">
+      Les inscriptions sont closes. Vous pouvez toujours suivre la conférence : le <a href="#programme" style="color:#fff;text-decoration:underline;">programme</a> ci-dessous signale les sessions diffusées en direct.
+    </p>
+    {%- endif -%}
   </div>
 </section>
 

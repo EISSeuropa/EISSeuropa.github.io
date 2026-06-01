@@ -38,6 +38,7 @@ audit trail. Same content, terser.
 
 #### Changed
 
+- **The homepage now shows the next conference’s registration status, and `/2026` no longer dead-ends when registration closes.** The featured card on the homepage surfaces the registration badge (date + venue + status, so a quick check, especially on mobile, needs no click). On `/2026`, when registration is closed a short note under the hero reframes it (“you can still follow along: the programme below marks the livestreamed sessions”) instead of leaving “Registration closed” as a terminus. Hand-translated (EN/FR/DE). Acts on the UX audit ([#356](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/356)).
 - **The archive-page ribbon is shorter.** Trimmed to "This page documents a past EISS event. It may not be as complete as current pages." so it takes less vertical space on mobile.
 - (…)
 
