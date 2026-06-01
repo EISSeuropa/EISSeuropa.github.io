@@ -191,19 +191,26 @@ bullet was lost. Use `git log -G '<headline phrase>' -- CHANGELOG.md`
 to trace where, then restore in the release-prep commit.
 
 **Mechanical backstop (`.gitattributes`).** A rule cannot stop a
-merge-time race, so the repo now pins `CHANGELOG.md merge=union` in
-`.gitattributes`. On a conflicting hunk Git keeps **both** sides
-instead of discarding one, so concurrent bullet additions concatenate
-rather than vanish. This is the primary defence. The cross-check
-recipe above is now the secondary net for the residual cases union
-does not catch (identical-line edits, or a host that bypasses the
-merge driver). Trade-off: union can land bullets slightly out of order
-or leave a stray duplicate. Both are visible and cheap to tidy in the
-release-prep review, unlike a silent loss. The NetSec sister repo
-should carry the same `.gitattributes` line (mirror it there too). If the drop ever
-recurs despite union, escalate to per-PR changelog fragments
-(`changelog.d/`, one file per PR, collated by `release.sh`), which
-removes the shared-file conflict entirely.
+merge-time race, so the repo pins `CHANGELOG.md merge=union` in
+`.gitattributes`. On a conflicting hunk Git's `union` driver keeps
+**both** sides instead of discarding one, so concurrent bullet
+additions concatenate rather than vanish. **Confirmed in practice
+(PRs #364 / #365): GitHub's server-side squash does *not* apply the
+driver** — it just reports the PR as conflicted. `union` only runs in a
+*local* Git. So the working recipe when two open PRs both added
+`[Unreleased]` bullets and the second now shows conflicts: on that
+branch, `git merge origin/master` locally (the driver concatenates both
+bullet sets, usually with zero manual editing), push, then squash-merge.
+Either path avoids a *silent* loss: GitHub surfaces a conflict to
+resolve rather than quietly keeping one side, and the local union
+resolves it cleanly. The cross-check recipe above stays the net for the
+residual cases the driver can't help (identical-line edits). Trade-off:
+union can land bullets slightly out of order or leave a stray duplicate,
+both visible and cheap to tidy at release. The NetSec sister repo should
+carry the same `.gitattributes` line. If drops ever recur despite this,
+escalate to per-PR changelog fragments (`changelog.d/`, one file per PR,
+collated by `release.sh`), which removes the shared-file conflict
+entirely.
 
 ## 5. Release-time four-point cross-check (minor / major only)
 
