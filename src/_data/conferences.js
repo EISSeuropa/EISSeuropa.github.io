@@ -199,8 +199,8 @@ const conferences = [
     slug: "2022",
     year: 2022,
     ordinal: 5,
-    startDate: "2022-06-23",
-    endDate: "2022-06-24",
+    startDate: "2022-06-30",
+    endDate: "2022-07-01",
     city: "Berlin",
     country: "Germany",
     venue: {
@@ -220,8 +220,8 @@ const conferences = [
     slug: "2021",
     year: 2021,
     ordinal: 4,
-    startDate: "2021-06-24",
-    endDate: "2021-06-25",
+    startDate: "2021-09-03",
+    endDate: "2021-09-04",
     city: "Lisbon",
     country: "Portugal",
     venue: {
@@ -240,34 +240,39 @@ const conferences = [
   {
     slug: "2020",
     year: 2020,
-    ordinal: 3,
-    startDate: "2020-06-25",
-    endDate: "2020-06-26",
-    // Online edition due to COVID — keep city blank, use displayCity to
-    // surface the "Online edition" label in the archive heading slot.
+    // The 2020 conference was DEFERRED to 2021 due to COVID-19 — it is
+    // not a separate numbered edition. The deferred conference was held
+    // at ISCTE-IUL, Lisbon on 3–4 September 2021 and counts as the 4th
+    // (see the 2021 entry). `deferred: true` excludes it from the
+    // edition count (see `editionCount` below). No `ordinal`.
+    deferred: true,
+    // startDate kept in 2020 only so /past sorts this entry between 2019
+    // and 2021; the conference was actually held in September 2021.
+    startDate: "2020-09-03",
+    endDate: "2020-09-04",
     city: "",
-    country: "",
+    country: "Portugal",
     venue: {
-      en: "Online — held online due to the COVID-19 pandemic",
-      fr: "En ligne — tenue en ligne en raison de la pandémie de COVID-19",
-      de: "Online — aufgrund der COVID-19-Pandemie online abgehalten",
+      en: "Deferred to 2021 — held at ISCTE-IUL, Lisbon",
+      fr: "Reportée à 2021 — tenue à l'ISCTE-IUL, Lisbonne",
+      de: "Auf 2021 verschoben — abgehalten an der ISCTE-IUL, Lissabon",
     },
     archiveMeta: {
-      en: "3rd Annual Conference — held online due to the COVID-19 pandemic",
-      fr: "3e conférence annuelle — tenue en ligne en raison de la pandémie de COVID-19",
-      de: "3. Jahreskonferenz — aufgrund der COVID-19-Pandemie online abgehalten",
+      en: "Deferred to 2021 due to the COVID-19 pandemic · held at ISCTE-IUL, Lisbon",
+      fr: "Reportée à 2021 en raison de la pandémie de COVID-19 · tenue à l'ISCTE-IUL, Lisbonne",
+      de: "Wegen der COVID-19-Pandemie auf 2021 verschoben · abgehalten an der ISCTE-IUL, Lissabon",
     },
     displayCity: {
-      en: "Online edition",
-      fr: "Édition en ligne",
-      de: "Online-Ausgabe",
+      en: "Deferred to 2021",
+      fr: "Reportée à 2021",
+      de: "Auf 2021 verschoben",
     },
     hasOwnPage: true,
   },
   {
     slug: "2019",
     year: 2019,
-    ordinal: 2,
+    ordinal: 3,
     startDate: "2019-06-13",
     endDate: "2019-06-14",
     city: "Paris",
@@ -278,9 +283,9 @@ const conferences = [
       de: "Sciences Po CERI, Paris",
     },
     archiveMeta: {
-      en: "2nd Annual Conference · Sciences Po CERI, Paris",
-      fr: "2e conférence annuelle · Sciences Po CERI, Paris",
-      de: "2. Jahreskonferenz · Sciences Po CERI, Paris",
+      en: "3rd Annual Conference · Sciences Po CERI, Paris",
+      fr: "3e conférence annuelle · Sciences Po CERI, Paris",
+      de: "3. Jahreskonferenz · Sciences Po CERI, Paris",
     },
     displayCity: { en: "Paris", fr: "Paris", de: "Paris" },
     youtubePlaylist: "PLkI2R8FsFqV4_TVOCV5qfPFAmZn1KbWGv",
@@ -309,11 +314,19 @@ const past = conferences
 // src/_includes/registration-badge.njk pulls `conferences.byYear[year]`.
 const byYear = Object.fromEntries(conferences.map((c) => [String(c.year), c]));
 
+// Distinct numbered editions, for display counts like /initiative's
+// "N annual conferences" stat. Excludes the deferred 2020 (folded into
+// the 2021 edition, `deferred: true`) and adds the two founding-era
+// editions (2017, 2018) that have their own pages but predate this
+// array. Today: 2017, 2018, 2019, 2021, 2022, 2023, 2024, 2025, 2026 = 9.
+const editionCount = conferences.filter((c) => !c.deferred).length + 2;
+
 module.exports = {
   all: conferences,
   byYear,
   next: upcomingOrCurrent[0] || null,   // closest upcoming (or in-progress)
   upcoming: upcomingOrCurrent,
   past,
+  editionCount,
   today,
 };
