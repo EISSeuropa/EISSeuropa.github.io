@@ -5286,3 +5286,8 @@ a.joint-orgs-card:hover .joint-orgs-name {
   box-shadow: var(--shadow-1);
   text-decoration: none;
 }
+
+@media print {
+  /* Photo galleries are decorative; don't waste pages or colour ink on them. */
+  .photo-gallery { display: none; }
+}
