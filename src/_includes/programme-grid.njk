@@ -77,7 +77,7 @@
             <article class="programme-slot programme-slot--{{ slot.kind }}{% if slot.subtype %} programme-slot--{{ slot.subtype }}{% endif %}">
 
               {%- if slot.kind == "break" %}
-              <p class="programme-break-title">{{ slot.title }}</p>
+              <p class="programme-break-title" lang="en">{{ slot.title }}</p>
               {%- if slot.room %}
               <p class="programme-slot-meta programme-slot-room programme-slot-room--c{{ slot.roomColorIndex if slot.roomColorIndex is not none else 'x' }}">
                 {{ icon("map-pin") }} {{ slot.room }}
@@ -85,7 +85,7 @@
               {%- endif %}
 
               {%- elif slot.kind == "session" %}
-              <p class="programme-slot-title">
+              <p class="programme-slot-title" lang="en">
                 {%- if slot.url -%}
                 <a href="{{ slot.url }}" target="_blank" rel="noopener">{{ slot.title }}</a>
                 {%- else -%}
@@ -93,7 +93,7 @@
                 {%- endif -%}
               </p>
               {%- if slot.slotTitle and slot.slotTitle != slot.title %}
-              <p class="programme-slot-subtitle muted">{{ slot.slotTitle }}</p>
+              <p class="programme-slot-subtitle muted" lang="en">{{ slot.slotTitle }}</p>
               {%- endif %}
               {%- if slot.room %}
               <p class="programme-slot-meta programme-slot-room programme-slot-room--c{{ slot.roomColorIndex if slot.roomColorIndex is not none else 'x' }}">
@@ -106,9 +106,10 @@
               {%- if slot.conveners and slot.conveners.length %}
               <p class="programme-slot-meta">
                 <strong>{{ t.programme.chairedBy }}:</strong>
+<span lang="en">
                 {%- for c in slot.conveners -%}
                   {{ c.name }}{% if c.affiliation %} <span class="muted">({{ c.affiliation }})</span>{% endif %}{% if not loop.last %}, {% endif %}
-                {%- endfor -%}
+                {%- endfor -%}</span>
               </p>
               {%- endif %}
 
@@ -117,9 +118,10 @@
                  because there are no papers to reveal. #}
               <p class="programme-slot-meta">
                 <strong>{{ t.programme.discussants }}:</strong>
+<span lang="en">
                 {%- for p in slot.discussants -%}
                   {{ p.name }}{% if p.affiliation %} <span class="muted">({{ p.affiliation }})</span>{% endif %}{% if not loop.last %}, {% endif %}
-                {%- endfor -%}
+                {%- endfor -%}</span>
               </p>
               {%- endif %}
 
@@ -133,7 +135,7 @@
                       {{ c.startTime }}
                     </div>
                     <div class="programme-contrib-body">
-                      <p class="programme-contrib-title">
+                      <p class="programme-contrib-title" lang="en">
                         {%- if c.url -%}
                         <a href="{{ c.url }}" target="_blank" rel="noopener">{{ c.title }}</a>
                         {%- else -%}
@@ -145,14 +147,15 @@
                         {%- for a in c.authors -%}
                           <span class="programme-author{% if a.isSpeaker %} programme-author--speaker{% endif %}">
                             {%- if a.isSpeaker %}<span class="programme-author-mic" title="{{ t.programme.presenter }}">{{ icon("mic") }}</span><span class="sr-only">{{ t.programme.presenter }}: </span>{% endif -%}
-                            {{ a.name }}{% if a.affiliation %} <em>({{ a.affiliation }})</em>{% endif %}</span>{% if not loop.last %} · {% endif %}
+                            <span lang="en">{{ a.name }}{% if a.affiliation %} <em>({{ a.affiliation }})</em>{% endif %}</span></span>{% if not loop.last %} · {% endif %}
                         {%- endfor -%}
                       </p>
                       {%- elif c.speakers and c.speakers.length %}
                       <p class="programme-contrib-speakers muted">
+<span lang="en">
                         {%- for sp in c.speakers -%}
                           {{ sp.name }}{% if sp.affiliation %} <em>({{ sp.affiliation }})</em>{% endif %}{% if not loop.last %} · {% endif %}
-                        {%- endfor -%}
+                        {%- endfor -%}</span>
                       </p>
                       {%- endif %}
                       {%- if c.abstract %}
@@ -170,7 +173,7 @@
               {%- endif %}
 
               {%- elif slot.kind == "contribution" %}
-              <p class="programme-slot-title">
+              <p class="programme-slot-title" lang="en">
                 {%- if slot.url -%}
                 <a href="{{ slot.url }}" target="_blank" rel="noopener">{{ slot.title }}</a>
                 {%- else -%}
@@ -179,9 +182,10 @@
               </p>
               {%- if slot.speakers and slot.speakers.length %}
               <p class="programme-slot-meta">
+<span lang="en">
                 {%- for sp in slot.speakers -%}
                   {{ sp.name }}{% if sp.affiliation %} <span class="muted">({{ sp.affiliation }})</span>{% endif %}{% if not loop.last %} · {% endif %}
-                {%- endfor -%}
+                {%- endfor -%}</span>
               </p>
               {%- endif %}
               {%- if slot.abstract %}
