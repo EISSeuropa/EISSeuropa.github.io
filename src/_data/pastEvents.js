@@ -2,13 +2,12 @@
  * Past members' events, for the "Past events" section on /events.
  *
  * Sourced from the Indico "Members' Events" category
- * (https://indico.eiss-europa.com/category/2/), which is members-only and
- * so is NOT reachable from the public export API the rest of the Indico
- * pipeline uses. The titles, dates, conveners and affiliations below were
- * read from the authenticated category export and transcribed here by
- * hand. The "Call for Abstracts: Members' Events" container (event id 3)
- * is excluded. Automating this refresh from the authenticated API is
- * tracked in issue #401; until then this list is maintained by hand.
+ * (https://indico.eiss-europa.com/category/2/). The titles, dates,
+ * conveners and affiliations below were read from the authenticated
+ * category export and transcribed here by hand. The "Call for Abstracts:
+ * Members' Events" container (event id 3) is excluded. Automating this
+ * refresh from the authenticated API is tracked in issue #401; until then
+ * this list is maintained by hand.
  *
  * NOTE: the raw Indico descriptions carry members-only logistics (a Zoom
  * link + passcode, members-only recording links). Those are deliberately
@@ -16,21 +15,21 @@
  *
  * Newest first. Each entry:
  *   { date: "YYYY-MM-DD", title, eventId, presenters?: [{name, affiliation}],
- *     tag?, href? }
+ *     tag?, href }
  *
- * `eventId` is the Indico event id, kept for the future automated sync
- * (#401); it is NOT rendered as a public link, because these events are
- * members-only on Indico (a public visitor would hit a login wall).
- * `href` is set only when a public destination exists (the joint
- * Sciences Po–EISS conference has its own archive page). Titles are the
- * event names as they appear on Indico (English); the template marks
- * them lang="en" on the FR / DE pages.
+ * Each row links to its Indico event page. These events live in the
+ * members-only space, so a non-member following the link meets the Indico
+ * sign-in (the intended gate); members reach the event directly. Titles
+ * are the event names as they appear on Indico (English); the template
+ * marks them lang="en" on the FR / DE pages.
  */
 module.exports = [
   {
     date: "2025-11-19",
     title: "Joint Seminar on Election Interference and Disinformation",
     eventId: 23,
+    presenters: [{ name: "Arthur Laudrain", affiliation: "Stanford CISAC" }],
+    href: "https://indico.eiss-europa.com/event/23/",
   },
   {
     date: "2024-11-19",
@@ -38,6 +37,7 @@ module.exports = [
     eventId: 20,
     presenters: [{ name: "Nicolas Blarel", affiliation: "Leiden University" }],
     tag: "Coercive Statecraft Programme",
+    href: "https://indico.eiss-europa.com/event/20/",
   },
   {
     date: "2024-06-25",
@@ -48,7 +48,7 @@ module.exports = [
       { name: "Christian Lequesne", affiliation: "Sciences Po CERI" },
       { name: "Hugo Meijer", affiliation: "Sciences Po CERI" },
     ],
-    href: "/joint-2024.html",
+    href: "https://indico.eiss-europa.com/event/19/",
   },
   {
     date: "2024-02-18",
@@ -58,6 +58,7 @@ module.exports = [
       { name: "Stephen G. Brooks", affiliation: "Dartmouth College" },
       { name: "William C. Wohlforth", affiliation: "Dartmouth College" },
     ],
+    href: "https://indico.eiss-europa.com/event/18/",
   },
   {
     date: "2023-06-20",
@@ -70,5 +71,6 @@ module.exports = [
       { name: "Xiaoyu Pu", affiliation: "University of Nevada" },
     ],
     tag: "Early-Career Seminar",
+    href: "https://indico.eiss-europa.com/event/11/",
   },
 ];
