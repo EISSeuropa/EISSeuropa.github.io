@@ -76,6 +76,18 @@ alternates:
         bei jedem Build ausgeführt und meldet derzeit
         <strong>0&nbsp;Seiten mit Problemen</strong> über alle Vorlagen hinweg.
       </p>
+      <p>
+        Im <strong>Juni&nbsp;2026</strong> haben wir eine umfassendere, websiteweite Überprüfung
+        durchgeführt: eine mehrstufige Bewertung jeder Seite (auf Englisch, Französisch und Deutsch)
+        über sieben Dimensionen hinweg, einschließlich der Barrierefreiheit nach
+        <strong>WCAG&nbsp;2.2&nbsp;Stufe&nbsp;AA</strong>, wobei jeder Befund unabhängig erneut
+        geprüft wurde, bevor er angenommen wurde. Sie ergab <strong>keine kritischen oder
+        schwerwiegenden Barrieren</strong>. Die Befunde zur Barrierefreiheit und wie jeder behoben
+        wurde oder nachverfolgt wird, sind im öffentlichen
+        <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues" target="_blank" rel="noopener">Issue-Tracker</a>
+        festgehalten; die daraus resultierenden Verbesserungen sind in §4 und die verbleibenden
+        Punkte in §3 wiedergegeben.
+      </p>
 
       <h2 id="known-limitations">3. Bekannte Einschränkungen</h2>
       <ol>
@@ -102,6 +114,21 @@ alternates:
           aussagekräftige Bildunterschriften und der umgebende Kontext liefern dieselben Informationen
           für Nutzer von Bildschirmlesern.
         </li>
+        <li>
+          <strong>Steuerung des Konferenzfilms.</strong> Der kurze Konferenzfilm auf der Seite 2025
+          lässt sich per Tippen oder Klick abspielen und pausieren, ist aber noch nicht über die
+          Tastatur bedienbar, wenn Bewegung erlaubt ist. <em>Abhilfe:</em> Personen, die reduzierte
+          Bewegung bevorzugen, erhalten die nativen, vollständig per Tastatur bedienbaren
+          Videosteuerungen des Browsers, und der Film ist dekorativ (keine Information wird allein
+          durch ihn vermittelt). Eine Tastatursteuerung für den Standardmodus wird nachverfolgt.
+        </li>
+        <li>
+          <strong>Schließen des Mobil-Menüs.</strong> Auf schmalen Bildschirmen wird das
+          Navigationsmenü durch erneutes Drücken des Umschalters oder durch Auswahl eines Links
+          geschlossen, aber noch nicht mit der Escape-Taste. <em>Abhilfe:</em> der Umschalter ist
+          das erste fokussierbare Bedienelement, ist klar beschriftet und trägt
+          <code>aria-expanded</code>. Ein Escape-zum-Schließen-Handler wird nachverfolgt.
+        </li>
       </ol>
 
       <h2>4. Implementierte Barrierefreiheitsfunktionen</h2>
@@ -117,6 +144,8 @@ alternates:
         <li>Links im Fließtext sind unterstrichen, sodass Farbe nicht das einzige Unterscheidungsmerkmal ist (WCAG&nbsp;1.4.1)</li>
         <li>Native <code>&lt;details&gt;</code>-Elemente für FAQ-Akkordeons (z. B. NetSec-Sommerschule, Euro-SWAMOS) — tastaturzugänglich ohne JavaScript</li>
         <li>Mobiler Navigationsdrawer mit undurchsichtigem Hintergrund, <code>aria-expanded</code> auf dem Umschalter, Fokusverwaltung beim Schließen</li>
+        <li>Die Website-Suche öffnet sich als modaler Dialog, der den Tastaturfokus hält (der Rest der Seite wird auf <code>inert</code> gesetzt, solange sie geöffnet ist, sodass der Tabulator nicht hinter die Überlagerung gelangen kann) und verhält sich wie eine ARIA-Combobox: die Ergebnisse bilden eine Listbox, die mit den Pfeiltasten durchlaufen wird, Enter folgt dem hervorgehobenen Ergebnis, Escape schließt</li>
+        <li>Englischer Text innerhalb der französischen und deutschen Seiten (das Live-Konferenzprogramm und die Angaben zu den Vorstandsmitgliedern, die aus externen Quellen auf Englisch stammen) ist mit <code>lang="en"</code> ausgezeichnet, damit Bildschirmleser ihn mit der richtigen Aussprache wiedergeben</li>
         <li>Theme-Umschalter als echte <code>&lt;button&gt;</code> mit einem <code>aria-label</code>, das sich mit dem Zustand aktualisiert</li>
         <li>Echter <code>mailto:</code>-Kontaktlink mit vorausgefülltem Betreff für Barrierefreiheits-Feedback</li>
       </ul>
@@ -160,9 +189,10 @@ alternates:
         <strong>Teilweise Konformität</strong> mit WCAG&nbsp;2.1 Stufe&nbsp;AA, ausgerichtet auf
         EN&nbsp;301&nbsp;549. Alle Vorlagen der Website erfüllen den Standard; das Label
         „teilweise Konformität" spiegelt die in §3 dokumentierten Einschränkungen wider (eingebettete
-        PDFs, transluzente Flächen, generischer Alt-Text auf einigen Archivfotos). Automatisierte
-        Audits melden derzeit keine Verstöße, und die Elemente in „manueller Überprüfung" wurden
-        einzeln als konform verifiziert.
+        PDFs, transluzente Flächen, generischer Alt-Text auf einigen Archivfotos sowie zwei kleinere
+        Tastaturlücken). Automatisierte Audits melden derzeit keine Verstöße, die Überprüfung vom
+        Juni&nbsp;2026 fand keine kritischen oder schwerwiegenden Barrieren, und die Elemente in
+        „manueller Überprüfung" wurden einzeln als konform verifiziert.
       </p>
       <p>
         <a class="wcag-badge"
@@ -177,7 +207,7 @@ alternates:
         </a>
       </p>
       <p class="meta">
-        Erklärung erstellt: 14. Mai 2026 · Zuletzt überprüft: 22. Mai 2026 · Nächste geplante
+        Erklärung erstellt: 14. Mai 2026 · Zuletzt überprüft: 2. Juni 2026 · Nächste geplante
         Überprüfung: 14. Mai 2027 oder bei einer größeren Designänderung.
       </p>
     </article>

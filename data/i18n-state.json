@@ -144,14 +144,14 @@
     "src/accessibility.njk": {
       "fr": {
         "file": "src/accessibility.fr.njk",
-        "source_sha1": "871723244f1d5a4056f044c955e119e91a7e71fd",
-        "translated_on": "2026-05-29",
+        "source_sha1": "0dcce39bdffed547387356e02d3bc8b43a57396f",
+        "translated_on": "2026-06-02",
         "status": "beta"
       },
       "de": {
         "file": "src/accessibility.de.njk",
-        "source_sha1": "871723244f1d5a4056f044c955e119e91a7e71fd",
-        "translated_on": "2026-05-29",
+        "source_sha1": "0dcce39bdffed547387356e02d3bc8b43a57396f",
+        "translated_on": "2026-06-02",
         "status": "beta"
       }
     },
