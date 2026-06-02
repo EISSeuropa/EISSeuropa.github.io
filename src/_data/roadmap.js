@@ -112,16 +112,16 @@ module.exports = {
           status: "planned",
           version: "v2.24.1",
           milestone: "v2.24.1",
-          when: { en: "Mid June 2026 · v2.24.1", fr: "Mi-juin 2026 · v2.24.1", de: "Mitte Juni 2026 · v2.24.1" },
+          when: { en: "9 June 2026 · v2.24.1", fr: "9 juin 2026 · v2.24.1", de: "9. Juni 2026 · v2.24.1" },
           title: {
-            en: "Post-ESSC reactive patch",
-            fr: "Correctif réactif post-ESSC",
-            de: "Reaktiver Patch nach der ESSC",
+            en: "Pre-ESSC polishing patch",
+            fr: "Correctif de finition avant l’ESSC",
+            de: "Feinschliff-Patch vor der ESSC",
           },
           desc: {
-            en: "The reactive cut after ESSC 2026 in Stockholm: on-the-ground fixes and a short conference recap. Ships only if something surfaces during conference week.",
-            fr: "La version réactive après l’ESSC 2026 à Stockholm : corrections de terrain et bref compte rendu de la conférence. Ne paraît que si quelque chose émerge pendant la semaine de la conférence.",
-            de: "Die reaktive Version nach der ESSC 2026 in Stockholm: Korrekturen vor Ort und ein kurzer Konferenzrückblick. Erscheint nur, wenn während der Konferenzwoche etwas auftaucht.",
+            en: "The last quality pass before ESSC 2026 opens in Stockholm: quality-of-life and UX polish, a QA and accessibility sweep, and refreshed FR and DE translations.",
+            fr: "La dernière passe de qualité avant l’ouverture de l’ESSC 2026 à Stockholm : améliorations du confort d’usage et de l’UX, revue QA et accessibilité, et traductions FR et DE rafraîchies.",
+            de: "Der letzte Qualitätsdurchgang vor der Eröffnung der ESSC 2026 in Stockholm: Verbesserungen bei Bedienkomfort und UX, eine QA- und Barrierefreiheitsprüfung sowie aufgefrischte FR- und DE-Übersetzungen.",
           },
         },
         {
