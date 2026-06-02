@@ -42,6 +42,7 @@ audit trail. Same content, terser.
 
 #### Changed
 
+- **The 2025 conference film now sits in the `/initiative` “What we do” section.** It plays beside the four activity cards (film to the right on desktop, the cards in a 2×2 block aligned to its top; stacked below the cards on mobile), reusing the silent muted-autoplay player. EN + FR + DE.
 - **The conference film is now silent, and the 2025 intro leads with the keynote.** The 2025 film (on `/2025` and `/past`) drops the sound toggle, the “tap for sound” hint and the “Watch on YouTube” link. It plays muted, with a tap or the keyboard (Space / Enter) to play or pause. The `/2025` intro beside the film now opens with Loukas Tsoukalis's keynote, *“Will Putin and Trump finally force Europe to behave as a political adult?”*, and the European-strategic-autonomy context it set.
 - **Search results for people now show a headshot and a role pill.** The bio stubs expose the photo, role, and functional responsibility as Pagefind metadata; `search.js` renders a thumbnail and a role pill (e.g. "Board Member · Technology Coordinator") beside the name and excerpt. Non-person results are unchanged.
 

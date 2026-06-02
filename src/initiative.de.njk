@@ -63,7 +63,9 @@ alternates:
       Kalender von Netzwerk-Veranstaltungen.
     </p>
 
-    <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); margin-top: var(--space-5);">
+    <div class="film-feature" style="margin-top: var(--space-5);">
+      <div class="film-feature-body">
+        <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));">
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("users") }}</div>
         <h3>Jahreskonferenz (ESSC)</h3>
@@ -112,6 +114,14 @@ alternates:
           <a class="link-arrow" href="/events.de.html">Netzwerk-Veranstaltungen {{ icon("arrow-right") }}</a>
         </p>
       </article>
+        </div>
+      </div>
+      {# 2025 conference film, beside the activity cards (silent, muted-autoplay
+         when it scrolls into view; shared partial + theme.js handler). #}
+      {%- set filmSrc = "/assets/video/essc-2025.mp4" -%}
+      {%- set filmPoster = "/assets/images/2025/essc-2025-film-poster.jpg" -%}
+      {%- set filmCaption = "ESSC 2025 · Thessaloniki" -%}
+      {% include "film-embed.njk" %}
     </div>
   </div>
 </section>
