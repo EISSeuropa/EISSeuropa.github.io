@@ -1795,6 +1795,7 @@ h4 { font-size: var(--fs-lg); }
 .programme-download { margin: 0; }
 
 .tile {
+  position: relative; /* anchor for a .stretched-link whole-card overlay */
   padding: var(--space-5);
   background: var(--bg-elev);
   border: 1px solid var(--border);
@@ -1809,6 +1810,26 @@ h4 { font-size: var(--fs-lg); }
   transform: translateY(-2px);
   box-shadow: var(--shadow-2);
   border-color: var(--border-strong);
+}
+
+/* Card lifts when its stretched link is keyboard-focused, matching :hover. */
+.tile:focus-within {
+  box-shadow: var(--shadow-2);
+  border-color: var(--border-strong);
+}
+
+/* Whole-card link: a single primary link inside a positioned card whose
+   click target is stretched to cover the entire card (the visible button
+   stays as the affordance). Keeps exactly one link per card for assistive
+   tech. Use only on cards with a single navigational link — NOT on cards
+   with several links, no link, or a payment/commitment action (where a
+   stray click should not trigger it). Any other link in the same card
+   needs `position: relative` to sit above the overlay. */
+.stretched-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
 .tile-icon {

@@ -18,13 +18,13 @@
     "src/initiative.njk": {
       "fr": {
         "file": "src/initiative.fr.njk",
-        "source_sha1": "4484fa30f58748f7cb2ce1a3a66af3eee5258b2a",
+        "source_sha1": "874fc6315aa004ab6ef071b7e10387b005da684d",
         "translated_on": "2026-06-02",
         "status": "beta"
       },
       "de": {
         "file": "src/initiative.de.njk",
-        "source_sha1": "4484fa30f58748f7cb2ce1a3a66af3eee5258b2a",
+        "source_sha1": "874fc6315aa004ab6ef071b7e10387b005da684d",
         "translated_on": "2026-06-02",
         "status": "beta"
       }
@@ -74,14 +74,14 @@
     "src/programmes.njk": {
       "fr": {
         "file": "src/programmes.fr.njk",
-        "source_sha1": "73baf472fd0aedb39d527698639c3351820f41f7",
-        "translated_on": "2026-06-01",
+        "source_sha1": "72149450501dc1ceebdf346943b8aaf14e959135",
+        "translated_on": "2026-06-02",
         "status": "beta"
       },
       "de": {
         "file": "src/programmes.de.njk",
-        "source_sha1": "73baf472fd0aedb39d527698639c3351820f41f7",
-        "translated_on": "2026-06-01",
+        "source_sha1": "72149450501dc1ceebdf346943b8aaf14e959135",
+        "translated_on": "2026-06-02",
         "status": "beta"
       }
     },
