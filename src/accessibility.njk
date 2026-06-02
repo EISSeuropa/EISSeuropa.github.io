@@ -71,6 +71,16 @@ alternates:
         is run on each build and currently reports
         <strong>0&nbsp;pages with issues</strong> across all templates.
       </p>
+      <p>
+        In <strong>June&nbsp;2026</strong> we ran a broader site-wide review: a multi-pass
+        assessment of every page (in English, French, and German) across seven dimensions,
+        including <strong>WCAG&nbsp;2.2&nbsp;Level&nbsp;AA</strong> accessibility, with each
+        finding independently re-checked before it was accepted. It surfaced <strong>no critical
+        or serious barriers</strong>. The accessibility findings, and how each was resolved or is
+        being tracked, are recorded in the public
+        <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues" target="_blank" rel="noopener">issue&nbsp;tracker</a>;
+        the resulting improvements are reflected in §4 and the remaining items in §3.
+      </p>
 
       <h2 id="known-limitations">3. Known limitations</h2>
       <ol>
@@ -96,6 +106,20 @@ alternates:
           <em>Mitigation:</em> we tighten alt text on each archive page as we revisit it. Meaningful
           captions and surrounding context provide the same information for screen reader users.
         </li>
+        <li>
+          <strong>Conference film controls.</strong> The short conference film on the 2025 page
+          plays and pauses on tap or click but is not yet operable from the keyboard when motion
+          is allowed. <em>Mitigation:</em> visitors who prefer reduced motion are given the
+          browser’s native, fully keyboard-operable video controls, and the film is decorative
+          (no information is conveyed through it alone). A keyboard control for the default mode
+          is tracked.
+        </li>
+        <li>
+          <strong>Mobile menu dismissal.</strong> On narrow screens the navigation menu is closed
+          by pressing its toggle again or by selecting a link, but not yet with the Escape key.
+          <em>Mitigation:</em> the toggle is the first focusable control, is clearly labelled, and
+          carries <code>aria-expanded</code>. An Escape-to-close handler is tracked.
+        </li>
       </ol>
 
       <h2>4. Accessibility features implemented</h2>
@@ -111,6 +135,8 @@ alternates:
         <li>Links in body text underlined, so colour is not the only distinguishing cue (WCAG&nbsp;1.4.1)</li>
         <li>Native <code>&lt;details&gt;</code> for FAQ accordions (e.g. NetSec Summer School, Euro-SWAMOS) — keyboard-accessible without JavaScript</li>
         <li>Mobile navigation drawer with opaque background, <code>aria-expanded</code> on the toggle, focus management on close</li>
+        <li>Site search opens as a modal dialog that holds keyboard focus (the rest of the page is set <code>inert</code> while it is open, so Tab cannot drift behind the overlay) and behaves as an ARIA combobox: results form a listbox moved through with the arrow keys, Enter follows the highlighted result, Escape closes</li>
+        <li>English text shown inside the French and German pages (the live conference programme and board-member details, which come from external sources in English) is marked <code>lang="en"</code> so screen readers pronounce it with the right phonetics</li>
         <li>Theme toggle as a real <code>&lt;button&gt;</code> with <code>aria-label</code> that updates with state</li>
         <li>Real <code>mailto:</code> contact link with pre-filled subject for accessibility feedback</li>
       </ul>
@@ -154,8 +180,9 @@ alternates:
         <strong>Partial conformance</strong> with WCAG&nbsp;2.1 Level&nbsp;AA, aligned with
         EN&nbsp;301&nbsp;549. All templates of the site meet the standard. The residual
         partial-compliance label reflects the documented limitations in §3 (embedded PDFs,
-        translucent surfaces, generic alt text on some archive photos). Automated audits
-        currently report zero violations and the items in “manual review” have been
+        translucent surfaces, generic alt text on some archive photos, and two minor keyboard
+        gaps). Automated audits currently report zero violations, the June&nbsp;2026 review
+        found no critical or serious barriers, and the items in “manual review” have been
         individually verified compliant.
       </p>
       <p>
@@ -171,7 +198,7 @@ alternates:
         </a>
       </p>
       <p class="meta">
-        Statement prepared: 14 May 2026 · Last reviewed: 22 May 2026 · Next scheduled review:
+        Statement prepared: 14 May 2026 · Last reviewed: 2 June 2026 · Next scheduled review:
         14 May 2027 or upon major design change.
       </p>
     </article>

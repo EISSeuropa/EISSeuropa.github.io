@@ -75,6 +75,16 @@ alternates:
         est exécuté à chaque build et signale actuellement
         <strong>0&nbsp;page avec des problèmes</strong> sur tous les modèles.
       </p>
+      <p>
+        En <strong>juin&nbsp;2026</strong>, nous avons mené une revue plus large de l'ensemble du
+        site : une évaluation en plusieurs passes de chaque page (en anglais, français et allemand)
+        sur sept dimensions, dont l'accessibilité <strong>WCAG&nbsp;2.2&nbsp;niveau&nbsp;AA</strong>,
+        chaque constat étant revérifié de façon indépendante avant d'être retenu. Elle n'a révélé
+        <strong>aucun obstacle critique ou grave</strong>. Les constats d'accessibilité, et la
+        manière dont chacun a été résolu ou est suivi, sont consignés dans le
+        <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues" target="_blank" rel="noopener">suivi&nbsp;public&nbsp;des&nbsp;tickets</a> ;
+        les améliorations qui en découlent figurent au §4 et les points restants au §3.
+      </p>
 
       <h2 id="known-limitations">3. Limites connues</h2>
       <ol>
@@ -101,6 +111,21 @@ alternates:
           révisions ; des légendes significatives et le contexte environnant fournissent la même
           information aux utilisateurs de lecteurs d'écran.
         </li>
+        <li>
+          <strong>Commandes du film de conférence.</strong> Le court film de conférence de la page
+          2025 se lit et se met en pause par appui ou clic, mais n'est pas encore pilotable au
+          clavier lorsque le mouvement est autorisé. <em>Atténuation :</em> les personnes préférant
+          un mouvement réduit reçoivent les commandes vidéo natives du navigateur, entièrement
+          utilisables au clavier, et le film est décoratif (aucune information n'est transmise par
+          lui seul). Une commande clavier pour le mode par défaut est suivie.
+        </li>
+        <li>
+          <strong>Fermeture du menu mobile.</strong> Sur petit écran, le menu de navigation se ferme
+          en appuyant à nouveau sur son bouton ou en sélectionnant un lien, mais pas encore avec la
+          touche Échap. <em>Atténuation :</em> le bouton est la première commande focusable, est
+          clairement étiqueté et porte <code>aria-expanded</code>. Un gestionnaire de fermeture par
+          Échap est suivi.
+        </li>
       </ol>
 
       <h2>4. Fonctionnalités d'accessibilité mises en œuvre</h2>
@@ -116,6 +141,8 @@ alternates:
         <li>Liens dans le corps du texte soulignés, pour que la couleur ne soit pas le seul indice distinctif (WCAG&nbsp;1.4.1)</li>
         <li>Balises natives <code>&lt;details&gt;</code> pour les accordéons FAQ (par exemple école d'été NetSec, Euro-SWAMOS) — accessibles au clavier sans JavaScript</li>
         <li>Tiroir de navigation mobile avec arrière-plan opaque, <code>aria-expanded</code> sur la bascule, gestion du focus à la fermeture</li>
+        <li>La recherche du site s'ouvre comme une boîte de dialogue modale qui retient le focus clavier (le reste de la page est mis en <code>inert</code> tant qu'elle est ouverte, de sorte que la tabulation ne peut pas passer derrière la surcouche) et se comporte comme une combobox ARIA : les résultats forment une liste (listbox) parcourue avec les touches fléchées, Entrée suit le résultat surligné, Échap ferme</li>
+        <li>Le texte anglais affiché à l'intérieur des pages françaises et allemandes (le programme de conférence en direct et les informations sur les membres du bureau, qui proviennent de sources externes en anglais) est marqué <code>lang="en"</code> afin que les lecteurs d'écran le prononcent avec la bonne phonétique</li>
         <li>Bascule de thème en tant que véritable <code>&lt;button&gt;</code> avec un <code>aria-label</code> qui se met à jour selon l'état</li>
         <li>Lien <code>mailto:</code> réel pour le contact avec sujet pré-rempli pour les retours d'accessibilité</li>
       </ul>
@@ -162,9 +189,10 @@ alternates:
         <strong>Conformité partielle</strong> avec WCAG&nbsp;2.1 Niveau&nbsp;AA, alignée avec
         EN&nbsp;301&nbsp;549. Tous les modèles du site respectent la norme ; le label de conformité
         partielle résiduelle reflète les limites documentées au §3 (PDF intégrés, surfaces translucides,
-        texte alt générique sur certaines photos d'archive). Les audits automatisés ne signalent
-        actuellement aucune violation et les éléments en « revue manuelle » ont été individuellement
-        vérifiés conformes.
+        texte alt générique sur certaines photos d'archive, et deux légers manques au clavier). Les
+        audits automatisés ne signalent actuellement aucune violation, la revue de juin&nbsp;2026 n'a
+        trouvé aucun obstacle critique ou grave, et les éléments en « revue manuelle » ont été
+        individuellement vérifiés conformes.
       </p>
       <p>
         <a class="wcag-badge"
@@ -179,7 +207,7 @@ alternates:
         </a>
       </p>
       <p class="meta">
-        Déclaration préparée : 14 mai 2026 · Dernière revue : 22 mai 2026 · Prochaine revue prévue :
+        Déclaration préparée : 14 mai 2026 · Dernière revue : 2 juin 2026 · Prochaine revue prévue :
         14 mai 2027 ou lors d'un changement majeur de conception.
       </p>
     </article>
