@@ -135,6 +135,8 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 - **Search result thumbnails only show for people.** Bio-stub results carry a `kind: person` marker; other results (the board page, `/YYYY` pages) no longer show whatever image Pagefind auto-extracts first (a board member's face on `/board`, a speaker headshot, a logo), which read as wrong.
 - **Pinned Pagefind to 1.5.2 at deploy.** The unpinned `npx pagefind` could fetch a different version per deploy, and the index format / content-hashed shard names differ between versions, so back-to-back deploys could leave the CDN serving a mix of shards from two versions — surfacing as some queries (e.g. "board", "netsec") returning no results. Pinning keeps every build's index identical.
 
+- **`/refund.html` no longer duplicates `/terms.html`.** The two pages shipped byte-identical and both indexable. `/refund.html` now redirects to `/terms.html` (rel=canonical + meta-refresh), and the footer's *Terms* link points straight at `/terms` — which, unlike `/refund`, has FR/DE variants, so the link is now localised. Resolves the duplicate-content finding from the June 2026 QA audit (seo-01, part of [#416](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/416)).
+
 > ESSC 2026 opens in Stockholm on 11–12 June, and this release is built around the conference pages that carry it. The live programme on `/2026` now shows the full panel line-ups with every co-author and marks who is presenting, and printing it produces a clean handout rather than a stack of near-empty pages. Around it the archive fills out, the People page reflects who has moved on, and the English copy gets a consistent voice.
 
 ### The live ESSC 2026 programme
