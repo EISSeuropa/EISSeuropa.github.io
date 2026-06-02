@@ -61,17 +61,23 @@
     const menuBtn = document.querySelector("[data-menu-toggle]");
     const menu = document.querySelector("[data-nav-menu]");
     if (menuBtn && menu) {
+      const closeMenu = () => {
+        menu.setAttribute("data-open", "false");
+        menuBtn.setAttribute("aria-expanded", "false");
+      };
       menuBtn.addEventListener("click", () => {
         const open = menu.getAttribute("data-open") === "true";
         menu.setAttribute("data-open", String(!open));
         menuBtn.setAttribute("aria-expanded", String(!open));
       });
-      menu.querySelectorAll("a").forEach((a) =>
-        a.addEventListener("click", () => {
-          menu.setAttribute("data-open", "false");
-          menuBtn.setAttribute("aria-expanded", "false");
-        })
-      );
+      menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeMenu));
+      // Escape closes the open menu and returns focus to the toggle.
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && menu.getAttribute("data-open") === "true") {
+          closeMenu();
+          menuBtn.focus();
+        }
+      });
     }
   };
 
@@ -407,7 +413,16 @@
       tryPlay();
     }
 
+    // Tap or click toggles play/pause; make the same toggle reachable from
+    // the keyboard (reduced-motion users get native <video controls> above).
+    v.tabIndex = 0;
     v.addEventListener("click", toggle);
+    v.addEventListener("keydown", function (e) {
+      if (e.key === " " || e.key === "Spacebar" || e.key === "Enter") {
+        e.preventDefault();
+        toggle();
+      }
+    });
     if (playBtn) {
       playBtn.addEventListener("click", function (e) { e.stopPropagation(); toggle(); });
     }
