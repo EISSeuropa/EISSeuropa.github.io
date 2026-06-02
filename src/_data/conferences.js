@@ -106,15 +106,12 @@ const conferences = [
     // expose registration-form state. Flip it by hand when the form
     // opens or closes; the daily rebuild picks up the change.
     registrationStatus: "closed",
-    // Embedded Google Maps preview for the venue. Click-to-load so the
-    // page doesn't ping Google's servers before the visitor opts in
-    // (cf. /policy §3: no third-party widgets that load before you
-    // click them). `src` is the standard Google Maps embed URL; copy it
-    // from the "Share → Embed a map" panel on maps.google.com. `address`
-    // is the human-readable label shown next to the map-pin in the
-    // placeholder card.
+    // Venue location for the map-pin card. No third-party widget loads on
+    // page view (cf. /policy §3): the `map-embed.njk` partial shows the
+    // venue name and `address` and links out to OpenStreetMap, which only
+    // opens when the visitor clicks. `address` is the human-readable label
+    // shown next to the map-pin and is also the OpenStreetMap search query.
     mapEmbed: {
-      src: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2274.1344933006794!2d18.057771781723034!3d59.36268050463061!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f9d0ff22ee405%3A0x99d65521c5c27afe!2sUniversitetsv%C3%A4gen%2010D%2C%20114%2018%20Stockholm%2C%20Sweden!5e1!3m2!1sen!2sse!4v1779536831179!5m2!1sen!2sse",
       address: {
         en: "Universitetsvägen 10D, 114 18 Stockholm, Sweden",
         fr: "Universitetsvägen 10D, 114 18 Stockholm, Suède",
