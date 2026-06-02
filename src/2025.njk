@@ -28,7 +28,8 @@ status: archive
    sets the src and muted-autoplays it ONLY when it scrolls into view, so
    nothing downloads for visitors who never reach it; it pauses
    off-screen. prefers-reduced-motion gets native controls and no
-   autoplay. A tap toggles play/pause; the button toggles sound. #}
+   autoplay. The film is silent (muted, no sound control). A tap or the
+   keyboard (Space / Enter) toggles play and pause. #}
 <section class="section" aria-labelledby="intro-2025-title">
   <div class="container">
     <div class="film-feature">
@@ -37,17 +38,21 @@ status: archive
         <h2 id="intro-2025-title">Two days in Thessaloniki</h2>
         <p>
           The 8th EISS Annual Conference brought the community to the University of
-          Macedonia for two days of panels and roundtables, opened by a keynote from
-          Loukas Tsoukalis.
+          Macedonia for two days of panels and roundtables.
+        </p>
+        <p>
+          It opened with a keynote from <strong>Loukas Tsoukalis</strong>, President of the
+          Hellenic Foundation for European and Foreign Policy (ELIAMEP) and a professor at
+          Sciences Po, who asked <em>“Will Putin and Trump finally force Europe to behave as
+          a political adult?”</em>. His provocation on European strategic autonomy set the
+          tone for the two days that followed.
         </p>
         <p class="muted">
-          A short film, shot and edited on site, captures the atmosphere across the
-          venue. Tap it for sound, or watch the full cut on YouTube.
+          A short film, shot and edited on site, captures the atmosphere across the venue.
         </p>
       </div>
       {%- set filmSrc = "/assets/video/essc-2025.mp4" -%}
       {%- set filmPoster = "/assets/images/2025/essc-2025-film-poster.jpg" -%}
-      {%- set filmYoutube = "https://www.youtube.com/watch?v=CFtUrpwgYXY&list=PLkI2R8FsFqV5cFsuE4s-A_0RHQMo2yq0_" -%}
       {%- set filmCaption = "ESSC 2025, Thessaloniki." -%}
       {% include "film-embed.njk" %}
     </div>

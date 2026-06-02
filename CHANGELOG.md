@@ -42,6 +42,7 @@ audit trail. Same content, terser.
 
 #### Changed
 
+- **The conference film is now silent, and the 2025 intro leads with the keynote.** The 2025 film (on `/2025` and `/past`) drops the sound toggle, the “tap for sound” hint and the “Watch on YouTube” link. It plays muted, with a tap or the keyboard (Space / Enter) to play or pause. The `/2025` intro beside the film now opens with Loukas Tsoukalis's keynote, *“Will Putin and Trump finally force Europe to behave as a political adult?”*, and the European-strategic-autonomy context it set.
 - **Search results for people now show a headshot and a role pill.** The bio stubs expose the photo, role, and functional responsibility as Pagefind metadata; `search.js` renders a thumbnail and a role pill (e.g. "Board Member · Technology Coordinator") beside the name and excerpt. Non-person results are unchanged.
 
 - **Archive-page session recordings are a shared, data-driven block.** The near-identical hand-wired "Session recordings" sections on `/2019`, `/2023` and `/2024` are replaced by one `conference-media.njk` partial that reads the YouTube playlist + city from `conferences.js` (`youtubePlaylist` per year). Future archive pages only set the playlist in the data and include the partial — no per-page recordings markup to drift out of sync. Closes [#358](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/358).

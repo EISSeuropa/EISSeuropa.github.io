@@ -355,15 +355,14 @@
    (and muted-autoplay started) when the video scrolls into view, so the
    ~20 MB file never downloads for visitors who don't reach it; it pauses
    off-screen. prefers-reduced-motion: no autoplay, native controls instead.
-   A tap toggles play/pause; the sound button toggles mute. */
+   The film is muted (no sound control). A tap or the keyboard (Space /
+   Enter) toggles play/pause. */
 (function () {
   "use strict";
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   Array.prototype.forEach.call(document.querySelectorAll(".film"), function (fig) {
     var v = fig.querySelector(".film-video[data-film]");
     if (!v) return;
-    var btn = fig.querySelector("[data-film-sound]");
-    var hint = fig.querySelector("[data-film-hint]");
     var playBtn = fig.querySelector("[data-film-play]");
     var loaded = false;
     // iOS only honours muted inline autoplay if `muted` is set as a
@@ -386,15 +385,12 @@
       // policy), surface the centre play button so a tap can start it.
       if (p && p.then) { p.then(function () { showPlay(false); }, function () { showPlay(true); }); }
     }
-    function dropHint() { if (hint) hint.hidden = true; }
-    function toggle() { if (v.paused) { tryPlay(); } else { v.pause(); } dropHint(); }
+    function toggle() { if (v.paused) { tryPlay(); } else { v.pause(); } }
 
     if (reduce) {
       load();
       v.controls = true;
-      if (btn) btn.hidden = true;
       showPlay(false);
-      dropHint();
       return;
     }
 
@@ -426,16 +422,5 @@
     if (playBtn) {
       playBtn.addEventListener("click", function (e) { e.stopPropagation(); toggle(); });
     }
-    if (btn) {
-      btn.addEventListener("click", function (e) {
-        e.stopPropagation();
-        v.muted = !v.muted;
-        if (!v.muted) tryPlay();
-        btn.setAttribute("aria-pressed", String(!v.muted));
-        dropHint();
-      });
-    }
-    // Fade the hint after a few seconds even without interaction.
-    if (hint) setTimeout(dropHint, 6000);
   });
 })();

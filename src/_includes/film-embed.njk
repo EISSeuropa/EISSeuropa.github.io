@@ -6,13 +6,12 @@
                    iOS (GitHub Release assets are application/octet-stream
                    + attachment, which iOS refuses to play inline)
      filmPoster  — poster image path
-     filmYoutube — link to the full Short (optional)
      filmCaption — already-localised caption line (optional)
 
    theme.js sets the src and muted-autoplay-loops it only when it scrolls
-   into view (nothing downloads otherwise; pauses off-screen). A tap
-   toggles play/pause; the button toggles sound; a subtle "tap for sound"
-   hint shows while muted and is dismissed on first interaction.
+   into view (nothing downloads otherwise; pauses off-screen). The film is
+   silent — muted, no sound control. A tap or the keyboard (Space / Enter)
+   toggles play/pause; a centre play button appears if autoplay is blocked.
    prefers-reduced-motion: native controls, no autoplay. #}
 {% from "icons.njk" import icon %}
 {%- set _lang = lang or "en" -%}
@@ -26,15 +25,8 @@
     <button class="film-play" type="button" data-film-play hidden aria-label="{{ t.film.play }}">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
     </button>
-    <span class="film-hint" data-film-hint>{{ icon("volume-2") }} {{ t.film.tapForSound }}</span>
-    <button class="film-sound" type="button" data-film-sound aria-pressed="false" aria-label="{{ t.film.toggleSound }}">
-      <span class="film-sound-muted" aria-hidden="true">{{ icon("volume-x") }}</span>
-      <span class="film-sound-on" aria-hidden="true">{{ icon("volume-2") }}</span>
-    </button>
   </div>
-  {%- if filmCaption or filmYoutube %}
-  <figcaption class="film-caption muted">
-    {{ filmCaption }}{% if filmYoutube %} <a href="{{ filmYoutube }}" target="_blank" rel="noopener">{{ t.film.watchOnYouTube }} {{ icon("external-link") }}</a>{% endif %}
-  </figcaption>
+  {%- if filmCaption %}
+  <figcaption class="film-caption muted">{{ filmCaption }}</figcaption>
   {%- endif %}
 </figure>
