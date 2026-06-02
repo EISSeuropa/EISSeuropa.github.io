@@ -22,7 +22,7 @@
     <video class="film-video" playsinline webkit-playsinline muted loop preload="none"
            poster="{{ filmPoster | bust }}"
            data-film="{{ filmSrc }}"
-           {% if filmCaption %}aria-label="{{ filmCaption }}"{% endif %}></video>
+           aria-label="{{ filmCaption or t.film.play }}"></video>
     <button class="film-play" type="button" data-film-play hidden aria-label="{{ t.film.play }}">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
     </button>
