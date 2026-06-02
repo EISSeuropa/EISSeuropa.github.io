@@ -129,9 +129,14 @@
     var startAt = wrap.getAttribute("data-youtube-start");
     var title = wrap.getAttribute("data-title") || "YouTube video";
     if (!id || !YT_ID_RE.test(id)) return;
+    // Minimal YouTube chrome for a seamless in-page feel: play on click
+    // (autoplay), related videos limited to the same channel (rel=0),
+    // reduced logo (modestbranding), no annotation cards (iv_load_policy=3),
+    // inline playback on mobile (playsinline), neutral progress colour.
+    var params = "autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&color=white";
     var url = isList
-      ? YT_BASE + "videoseries?list=" + id + "&autoplay=1&rel=0"
-      : YT_BASE + id + "?autoplay=1&rel=0";
+      ? YT_BASE + "videoseries?list=" + id + "&" + params
+      : YT_BASE + id + "?" + params;
     if (!isList && startAt && /^[0-9]+$/.test(startAt)) {
       url += "&start=" + startAt;
     }
