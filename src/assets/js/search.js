@@ -7,6 +7,13 @@
 // keyboard shortcuts (Cmd/Ctrl-K, "/") still open the modal locally so the
 // chrome can be checked, they just can't return results without the index.
 //
+// Accessibility: the dialog is a real modal (background set `inert` while
+// open, Tab trapped between the input and the close button) and the input
+// is a WAI-ARIA combobox driving the results listbox via
+// aria-activedescendant — Arrow/Home/End move a virtual selection, Enter
+// follows the active result, and the options carry no nested focusable
+// elements (the row itself is the option).
+//
 // Locale-aware UI strings ride on data-* attributes the layout writes from
 // the i18n catalog (see the data block injected in base.njk).
 (() => {
@@ -40,6 +47,12 @@
   let lastFocused = null;
   let debounce = null;
 
+  // Listbox state: the rendered option <li>s and the index of the active
+  // one (-1 = none). The input owns DOM focus throughout; the active option
+  // is communicated to assistive tech via aria-activedescendant.
+  let options = [];
+  let activeIndex = -1;
+
   const loadPagefind = async () => {
     if (pagefind || pagefindFailed) return pagefind;
     try {
@@ -58,11 +71,31 @@
 
   const clearResults = () => {
     resultsEl.replaceChildren();
+    options = [];
+    activeIndex = -1;
+    input.setAttribute("aria-expanded", "false");
+    input.removeAttribute("aria-activedescendant");
   };
 
   const setStatus = (message) => {
     statusEl.textContent = message || "";
   };
+
+  // Move the virtual selection. Wraps at both ends. Keeps the active option
+  // scrolled into view and mirrors the selection into aria-activedescendant
+  // (the input keeps real focus, per the combobox + listbox pattern).
+  const setActive = (idx) => {
+    if (!options.length) return;
+    if (idx < 0) idx = options.length - 1;
+    else if (idx >= options.length) idx = 0;
+    options.forEach((li, i) => li.setAttribute("aria-selected", i === idx ? "true" : "false"));
+    activeIndex = idx;
+    const el = options[idx];
+    input.setAttribute("aria-activedescendant", el.id);
+    el.scrollIntoView({ block: "nearest" });
+  };
+
+  const go = (url) => { if (url) window.location.assign(url); };
 
   const renderResults = async (results) => {
     clearResults();
@@ -75,14 +108,16 @@
     const top = results.slice(0, 8);
     const data = await Promise.all(top.map((r) => r.data()));
     const frag = document.createDocumentFragment();
-    data.forEach((d) => {
+    data.forEach((d, i) => {
+      // The option IS the row — no nested <a>. ARIA forbids focusable
+      // descendants inside role="option"; activation happens via Enter on
+      // the active option or a click on the row.
       const li = document.createElement("li");
       li.className = "search-result";
+      li.id = `search-result-${i}`;
       li.setAttribute("role", "option");
-
-      const a = document.createElement("a");
-      a.className = "search-result-link";
-      a.href = d.url;
+      li.setAttribute("aria-selected", "false");
+      li.dataset.url = d.url;
 
       const meta = d.meta || {};
 
@@ -97,7 +132,7 @@
         img.src = meta.image;
         img.alt = "";
         img.loading = "lazy";
-        a.appendChild(img);
+        li.appendChild(img);
       }
 
       const body = document.createElement("span");
@@ -121,11 +156,15 @@
       excerpt.innerHTML = d.excerpt;
       body.appendChild(excerpt);
 
-      a.appendChild(body);
-      li.appendChild(a);
+      li.appendChild(body);
+      li.addEventListener("click", () => go(d.url));
       frag.appendChild(li);
+      options.push(li);
     });
     resultsEl.appendChild(frag);
+    activeIndex = -1;
+    input.removeAttribute("aria-activedescendant");
+    input.setAttribute("aria-expanded", "true");
   };
 
   const runQuery = async (term) => {
@@ -147,11 +186,30 @@
     await renderResults(search.results);
   };
 
+  // Focusable elements inside the dialog. Results are NOT here — they are
+  // reached with the arrow keys via aria-activedescendant, not Tab.
+  const focusables = () => [input, closeBtn].filter((el) => el && !el.disabled);
+
+  // Seal the rest of the page off while the dialog is open: `inert` removes
+  // it from the tab order and the accessibility tree, so aria-modal is
+  // truthful and Tab can only land on the dialog's own controls.
+  const setBackgroundInert = (on) => {
+    Array.prototype.forEach.call(document.body.children, (el) => {
+      if (el === overlay) return;
+      const tag = el.tagName;
+      if (tag === "SCRIPT" || tag === "TEMPLATE" || tag === "NOSCRIPT") return;
+      if (on) el.setAttribute("inert", "");
+      else el.removeAttribute("inert");
+    });
+  };
+
   const open = () => {
     if (!overlay.hidden) return;
     lastFocused = document.activeElement;
     overlay.hidden = false;
     document.body.classList.add("search-open");
+    setBackgroundInert(true);
+    input.setAttribute("aria-expanded", "false");
     // Warm the index as soon as the modal opens, before the first keystroke.
     loadPagefind();
     requestAnimationFrame(() => input.focus());
@@ -161,6 +219,7 @@
     if (overlay.hidden) return;
     overlay.hidden = true;
     document.body.classList.remove("search-open");
+    setBackgroundInert(false);
     input.value = "";
     clearResults();
     setStatus("");
@@ -181,6 +240,42 @@
     window.clearTimeout(debounce);
     const value = input.value;
     debounce = window.setTimeout(() => runQuery(value), 180);
+  });
+
+  // Combobox key handling on the input: move / follow the listbox selection.
+  input.addEventListener("keydown", (e) => {
+    if (!options.length) return;
+    switch (e.key) {
+      case "ArrowDown": e.preventDefault(); setActive(activeIndex + 1); break;
+      case "ArrowUp": e.preventDefault(); setActive(activeIndex - 1); break;
+      case "Home": e.preventDefault(); setActive(0); break;
+      case "End": e.preventDefault(); setActive(options.length - 1); break;
+      case "Enter":
+        if (activeIndex >= 0 && options[activeIndex]) {
+          e.preventDefault();
+          go(options[activeIndex].dataset.url);
+        }
+        break;
+      default: break;
+    }
+  });
+
+  // Focus trap: keep Tab within the dialog. `inert` on the background
+  // already does this in modern browsers; this is the explicit belt-and-
+  // braces for the wrap-around at each end.
+  overlay.addEventListener("keydown", (e) => {
+    if (e.key !== "Tab") return;
+    const f = focusables();
+    if (!f.length) return;
+    const first = f[0];
+    const last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   });
 
   document.addEventListener("keydown", (e) => {

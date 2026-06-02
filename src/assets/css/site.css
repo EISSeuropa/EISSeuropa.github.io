@@ -3518,20 +3518,23 @@ body.search-open { overflow: hidden; }
   overflow-y: auto;
 }
 .search-results:empty { padding: 0; }
-.search-result { margin: 0; }
-.search-result-link {
+/* The result row IS the listbox option (no nested anchor — ARIA forbids
+   focusable descendants in role="option"). The combobox input keeps focus;
+   [aria-selected] marks the keyboard-active option, :hover the pointer one. */
+.search-result {
   display: flex;
   gap: var(--space-3);
   align-items: flex-start;
+  margin: 0;
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-md);
-  text-decoration: none;
   color: inherit;
+  cursor: pointer;
+  scroll-margin: var(--space-2);
 }
-.search-result-link:hover,
-.search-result-link:focus-visible {
+.search-result[aria-selected="true"],
+.search-result:hover {
   background: var(--bg-tinted);
-  outline: none;
 }
 .search-result-thumb {
   flex: none;
@@ -5285,4 +5288,9 @@ a.joint-orgs-card:hover .joint-orgs-name {
   color: var(--accent-hover);
   box-shadow: var(--shadow-1);
   text-decoration: none;
+}
+
+@media print {
+  /* Photo galleries are decorative; don't waste pages or colour ink on them. */
+  .photo-gallery { display: none; }
 }
