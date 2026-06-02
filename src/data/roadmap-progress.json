@@ -5,15 +5,15 @@
   "milestones": {
     "v2.24.1": {
       "closed": 40,
-      "total": 41,
-      "percent": 98,
+      "total": 40,
+      "percent": 100,
       "state": "open",
       "due": "2026-06-20"
     },
     "v2.25.0": {
-      "closed": 24,
-      "total": 30,
-      "percent": 80,
+      "closed": 25,
+      "total": 31,
+      "percent": 81,
       "state": "open",
       "due": "2026-07-31"
     },
