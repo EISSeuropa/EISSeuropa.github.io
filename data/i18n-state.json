@@ -116,13 +116,13 @@
     "src/2026.njk": {
       "fr": {
         "file": "src/2026.fr.njk",
-        "source_sha1": "8e52763ac59fa0130e10853f47fd75fe3de1546d",
+        "source_sha1": "770914fcb2bc003ab5e4934946af3ea349157aa8",
         "translated_on": "2026-06-02",
         "status": "beta"
       },
       "de": {
         "file": "src/2026.de.njk",
-        "source_sha1": "8e52763ac59fa0130e10853f47fd75fe3de1546d",
+        "source_sha1": "770914fcb2bc003ab5e4934946af3ea349157aa8",
         "translated_on": "2026-06-02",
         "status": "beta"
       }
