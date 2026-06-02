@@ -85,21 +85,21 @@
 
     {%- if person.position or person.institution %}
       {%- if person.position %}
-      <p class="person-position">{{ person.position | safe }}</p>
+      <p class="person-position" lang="en">{{ person.position | safe }}</p>
       {%- endif %}
       {%- if person.institution %}
-      <p class="person-institution">{{ person.institution | safe }}{%- if iso or person.country %}&nbsp;{{ flag_inline(iso, person.country, icon) }}{%- endif %}</p>
+      <p class="person-institution" lang="en">{{ person.institution | safe }}{%- if iso or person.country %}&nbsp;{{ flag_inline(iso, person.country, icon) }}{%- endif %}</p>
       {%- elif person.country %}
       {# Position-only entry (rare): country goes on its own line. #}
       <p class="person-country">{{ flag_inline(iso, person.country, icon) }}</p>
       {%- endif %}
     {%- elif person.affiliation %}
-      <p class="person-affiliation">{{ person.affiliation | safe }}{%- if iso or person.country %}&nbsp;{{ flag_inline(iso, person.country, icon) }}{%- endif %}</p>
+      <p class="person-affiliation" lang="en">{{ person.affiliation | safe }}{%- if iso or person.country %}&nbsp;{{ flag_inline(iso, person.country, icon) }}{%- endif %}</p>
     {%- endif %}
 
     {%- if person.bio %}
     <div class="person-bio-wrap"{% if person.bioIsLong %} data-collapsible="true"{% endif %}>
-      <p class="person-bio">{{ person.bio | safe }}</p>
+      <p class="person-bio" lang="en">{{ person.bio | safe }}</p>
       {%- if person.bioIsLong %}
       <button type="button"
               class="person-bio-toggle"
@@ -114,7 +114,7 @@
 
     {%- if person.themes %}
     <p class="person-themes muted">
-      <strong>{{ t.boardPage.researchThemes }}:</strong> {{ person.themes | safe }}
+      <strong>{{ t.boardPage.researchThemes }}:</strong> <span lang="en">{{ person.themes | safe }}</span>
     </p>
     {%- endif %}
 
