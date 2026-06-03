@@ -124,7 +124,6 @@ const conferences = [
     // chairing?" note on /YYYY points here. Per-year because a future
     // edition may host its FAQ elsewhere.
     faqUrl: "https://netsec-cost.eu/faq.html#conference",
-    programmePdf: "EISS-2026-programme.pdf",
     hasOwnPage: true,
   },
   {
