@@ -68,8 +68,8 @@
       <ol class="programme-rows" role="list">
         {%- for row in day.rows %}
         <li class="programme-row{% if row.parallel %} programme-row--parallel{% endif %}">
-          <div class="programme-when" aria-hidden="true">
-            <span class="programme-when-time">{{ row.startTime }}–{{ row.endTime }}</span>
+          <div class="programme-when">
+            <span class="programme-when-time">{{ row.startTime }}<span aria-hidden="true">–</span><span class="sr-only"> to </span>{{ row.endTime }}</span>
           </div>
 
           <div class="programme-row-items">
