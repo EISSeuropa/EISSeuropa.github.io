@@ -4,7 +4,7 @@ A planning document to help the maintainer think through what's worth
 doing next, in what order, and at what effort. Organised by **release
 version** (SemVer), the same axis as the GitHub milestones and the
 public [`/roadmap.html`](https://eiss-europa.com/roadmap.html).
-**Last update: 31 May 2026, after v2.24.0.**
+**Last update: 3 June 2026 (v2.24.1 milestone resync).**
 
 <!-- AUTOSTAMP:BEGIN -->
 > _Auto-tracked: **46 entries** in [`[Unreleased]`](../CHANGELOG.md#unreleased) since **v2.24.0** (12 Added, 16 Changed, 1 Removed, 17 Fixed). Last refresh by `scripts/sync-roadmap.py`: 2 Jun 2026. Prose in the timeline below may lag; the maintainer resynthesises on release-time §5 sweep._
@@ -49,7 +49,7 @@ other way round, so this is where a new release first appears.
 | Release | Target | Status | Headline |
 | --- | --- | --- | --- |
 | v2.24.0 | 30 May 2026 | **Shipped** | Live programme depth and a print overhaul |
-| v2.24.1 | mid Jun 2026 | Planned | Post-ESSC reactive patch |
+| v2.24.1 | 9 Jun 2026 | Planned | Pre-ESSC polishing patch |
 | v2.25.0 | Jul 2026 | Planned | Post-ESSC activation |
 | v2.26.0 | Oct 2026 | Planned | Public content surfaces |
 | v2.27.0 | Dec 2026 | Planned | Search, polish, ESSC 2027 prep |
@@ -65,14 +65,13 @@ releases get cut at milestones.
 
 ## Planned work
 
-### v2.24.1 — Post-ESSC reactive patch · target mid June 2026
+### v2.24.1 — Pre-ESSC polishing patch · target 9 June 2026
 
-The reactive cut once ESSC 2026 wraps in Stockholm (11–12 June).
-On-the-ground fixes and content polish surfaced during conference
-week: programme corrections, a short recap on the homepage, a photo
-or two. Scope is confirmed in the week of the conference and the
-milestone may ship empty if nothing reactive surfaces. Patch tier, so
-the index-only release-notes shape applies (no lede or themes).
+The last quality pass before ESSC 2026 opens in Stockholm (11–12
+June). Quality-of-life and UX polish, a QA and accessibility sweep,
+and refreshed FR / DE translations, so the site is in its best shape
+when conference-week visitors arrive. Patch tier, so the index-only
+release-notes shape applies (no lede or themes).
 
 ### v2.25.0 — Post-ESSC activation · target July 2026
 
