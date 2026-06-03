@@ -155,6 +155,8 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 - **`/refund.html` no longer duplicates `/terms.html`.** The two pages shipped byte-identical and both indexable. `/refund.html` now redirects to `/terms.html` (rel=canonical + meta-refresh), and the footer's *Terms* link points straight at `/terms` — which, unlike `/refund`, has FR/DE variants, so the link is now localised. Resolves the duplicate-content finding from the June 2026 QA audit (seo-01, part of [#416](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/416)).
 
+## [2.24.0] · 2026-05-30 — Live programme depth and a print overhaul
+
 > ESSC 2026 opens in Stockholm on 11–12 June, and this release is built around the conference pages that carry it. The live programme on `/2026` now shows the full panel line-ups with every co-author and marks who is presenting, and printing it produces a clean handout rather than a stack of near-empty pages. Around it the archive fills out, the People page reflects who has moved on, and the English copy gets a consistent voice.
 
 ### The live ESSC 2026 programme
