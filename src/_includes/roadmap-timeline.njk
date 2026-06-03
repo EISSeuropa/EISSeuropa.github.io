@@ -39,6 +39,29 @@
     <ol class="rm-timeline" role="list">
       {%- for e in q.entries %}
       <li class="rm-entry {{ e.status }}{% if e.event %} rm-milestone{% endif %}">
+        {%- if e.status == "shipped" %}
+        {# Shipped releases collapse by default; the most recent stays open.
+           Native <details> so it works without JS and is keyboard-operable. #}
+        <details class="rm-card rm-card--release"{% if e.version == roadmap.lastShipped %} open{% endif %}>
+          <summary class="rm-card-summary">
+            <span class="rm-head">
+              <span class="rm-pill {{ e.status }}"><span class="rm-dot" aria-hidden="true"></span>{{ pill[e.status] }}</span>
+              <span class="rm-when">{{ e.when[_lang] }}</span>
+            </span>
+            <h3 class="rm-card-title">{{ e.title[_lang] }}</h3>
+            <span class="rm-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="rm-card-body">
+            <p class="rm-desc">{{ e.desc[_lang] }}</p>
+            {%- if e.notesUrl %}
+            <p class="rm-release-meta">
+              <a class="rm-notes" href="{{ e.notesUrl }}" target="_blank" rel="noopener">{{ t.roadmap.releaseNotes }} {{ icon("external-link") }}</a>
+              {%- if e.changes %}<span class="rm-changes">{{ e.changes }} {{ t.roadmap.changesNoun }}</span>{% endif %}
+            </p>
+            {%- endif %}
+          </div>
+        </details>
+        {%- else %}
         <article class="rm-card"{% if e.milestone %} data-milestone="{{ e.milestone }}"{% endif %}>
           <div class="rm-head">
             <span class="rm-pill {{ e.status }}"><span class="rm-dot" aria-hidden="true"></span>{{ pill[e.status] }}</span>
@@ -50,6 +73,7 @@
           <a class="rm-notes" href="{{ e.notesUrl }}" target="_blank" rel="noopener">{{ t.roadmap.releaseNotes }} {{ icon("external-link") }}</a>
           {%- endif %}
         </article>
+        {%- endif %}
       </li>
       {%- endfor %}
     </ol>
