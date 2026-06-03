@@ -200,14 +200,14 @@
     "src/press-kit.njk": {
       "fr": {
         "file": "src/press-kit.fr.njk",
-        "source_sha1": "f64a7f501daec2a6e5af2e1d410e2c360bcf03cd",
-        "translated_on": "2026-06-02",
+        "source_sha1": "566dd6d08550a1917537cf0dbf9591732ff367b1",
+        "translated_on": "2026-06-03",
         "status": "beta"
       },
       "de": {
         "file": "src/press-kit.de.njk",
-        "source_sha1": "f64a7f501daec2a6e5af2e1d410e2c360bcf03cd",
-        "translated_on": "2026-06-02",
+        "source_sha1": "566dd6d08550a1917537cf0dbf9591732ff367b1",
+        "translated_on": "2026-06-03",
         "status": "beta"
       }
     }

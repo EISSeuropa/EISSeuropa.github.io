@@ -149,6 +149,10 @@
     iframe.referrerPolicy = "strict-origin-when-cross-origin";
     wrap.innerHTML = "";
     wrap.appendChild(iframe);
+    // The activated facade button is gone, so move focus onto the player
+    // rather than letting it fall back to <body> (keeps keyboard users oriented).
+    iframe.tabIndex = -1;
+    iframe.focus();
     wrap.dataset.mounted = "true";
   }
   function bindYouTube(wrap) {
@@ -400,8 +404,8 @@
     }
 
     // Keep the overlay in sync with the real play state.
-    v.addEventListener("play", function () { showPlay(false); });
-    v.addEventListener("pause", function () { showPlay(true); });
+    v.addEventListener("play", function () { showPlay(false); v.setAttribute("aria-pressed", "true"); });
+    v.addEventListener("pause", function () { showPlay(true); v.setAttribute("aria-pressed", "false"); });
 
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (entries) {
@@ -416,7 +420,11 @@
 
     // Tap or click toggles play/pause; make the same toggle reachable from
     // the keyboard (reduced-motion users get native <video controls> above).
+    // Expose it to assistive tech as a toggle button (the reduced-motion path
+    // returned above, so native-controls videos never get this role).
     v.tabIndex = 0;
+    v.setAttribute("role", "button");
+    v.setAttribute("aria-pressed", v.paused ? "false" : "true");
     v.addEventListener("click", toggle);
     v.addEventListener("keydown", function (e) {
       if (e.key === " " || e.key === "Spacebar" || e.key === "Enter") {
