@@ -28,7 +28,7 @@
 const REPO = "https://github.com/EISSeuropa/EISSeuropa.github.io";
 const notes = (v) => `${REPO}/releases/tag/${v}`;
 
-module.exports = {
+const roadmap = {
   repo: REPO,
   issuesUrl: `${REPO}/issues/new/choose`,
   milestonesUrl: `${REPO}/milestones`,
@@ -48,6 +48,7 @@ module.exports = {
           status: "shipped",
           version: "v2.22.0",
           notesUrl: notes("v2.22.0"),
+          changes: 29,
           when: { en: "24 May 2026 · v2.22.0", fr: "24 mai 2026 · v2.22.0", de: "24. Mai 2026 · v2.22.0" },
           title: {
             en: "Live board pipeline and Initiative refresh",
@@ -64,6 +65,7 @@ module.exports = {
           status: "shipped",
           version: "v2.23.0",
           notesUrl: notes("v2.23.0"),
+          changes: 48,
           when: { en: "26 May 2026 · v2.23.0", fr: "26 mai 2026 · v2.23.0", de: "26. Mai 2026 · v2.23.0" },
           title: {
             en: "Brand identity and Initiative depth",
@@ -80,6 +82,7 @@ module.exports = {
           status: "shipped",
           version: "v2.23.1",
           notesUrl: notes("v2.23.1"),
+          changes: 14,
           when: { en: "27 May 2026 · v2.23.1", fr: "27 mai 2026 · v2.23.1", de: "27. Mai 2026 · v2.23.1" },
           title: {
             en: "Archive banner and post-release polish",
@@ -96,6 +99,7 @@ module.exports = {
           status: "shipped",
           version: "v2.24.0",
           notesUrl: notes("v2.24.0"),
+          changes: 32,
           when: { en: "30 May 2026 · v2.24.0", fr: "30 mai 2026 · v2.24.0", de: "30. Mai 2026 · v2.24.0" },
           title: {
             en: "Live programme depth and a print overhaul",
@@ -270,3 +274,14 @@ module.exports = {
     },
   ],
 };
+
+// The most recent shipped release (last shipped entry in timeline order).
+// The timeline renders every other shipped release collapsed by default and
+// leaves this one expanded.
+roadmap.lastShipped = roadmap.quarters
+  .flatMap((q) => q.entries)
+  .filter((e) => e.status === "shipped" && e.version)
+  .map((e) => e.version)
+  .pop() || null;
+
+module.exports = roadmap;

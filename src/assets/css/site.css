@@ -5245,6 +5245,32 @@ a.joint-orgs-card:hover .joint-orgs-name {
 .rm-desc { margin: 0; color: var(--text-muted); line-height: 1.6; }
 .rm-notes { display: inline-flex; align-items: center; gap: 0.35em; margin-top: var(--space-3); font-size: var(--fs-sm); font-weight: 600; }
 
+/* Shipped-release cards are <details>: collapsed by default, most recent open.
+   The summary carries the pill + date + title; the body holds the description,
+   the release-notes link and the changes count. */
+.rm-card--release { padding: 0; }
+.rm-card-summary {
+  list-style: none; cursor: pointer; position: relative;
+  padding: var(--space-5); padding-inline-end: calc(var(--space-5) + 1.25rem);
+}
+.rm-card-summary::-webkit-details-marker { display: none; }
+.rm-card--release .rm-head { margin-bottom: var(--space-2); }
+.rm-card--release .rm-card-title { margin: 0; }
+.rm-card-summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: var(--radius-md); }
+.rm-toggle {
+  position: absolute; top: calc(var(--space-5) + 0.4rem); inset-inline-end: var(--space-5);
+  width: 0.55rem; height: 0.55rem; transform: rotate(45deg); transform-origin: 60% 60%;
+  border-right: 2px solid var(--text-subtle); border-bottom: 2px solid var(--text-subtle);
+  transition: transform 0.2s var(--ease-out);
+}
+.rm-card--release[open] .rm-toggle { transform: rotate(-135deg); }
+.rm-card-body { padding: 0 var(--space-5) var(--space-5); }
+.rm-release-meta { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-3) 0 0; }
+.rm-release-meta .rm-notes { margin-top: 0; }
+.rm-changes { font-size: var(--fs-sm); color: var(--text-subtle); }
+.rm-changes::before { content: "·"; margin-inline-end: var(--space-2); color: var(--border-strong); }
+@media (prefers-reduced-motion: reduce) { .rm-toggle { transition: none; } }
+
 /* Progress bar (injected by roadmap-progress.js on in-flight cards). */
 .rm-progress { margin-top: var(--space-4); }
 .rm-progress-track { height: 7px; border-radius: var(--radius-full); background: var(--accent-soft); overflow: hidden; }
