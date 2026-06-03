@@ -3308,6 +3308,9 @@ h4 { font-size: var(--fs-lg); }
 .venue-map__pin svg { width: 1.25rem; height: 1.25rem; }
 .venue-map__venue { margin: 0; font-weight: 600; color: var(--text); }
 .venue-map__addr { margin: 0.15rem 0 0; color: var(--text-muted); font-size: var(--fs-sm); }
+/* Text column beside the map-pin. Lets the address text take the remaining
+   width and wrap/truncate cleanly inside the flex row (§14: no undefined class). */
+.venue-map__body { flex: 1 1 auto; min-width: 0; }
 .venue-map__link {
   display: inline-flex;
   align-items: center;

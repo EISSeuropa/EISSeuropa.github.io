@@ -29,7 +29,7 @@ module.exports = {
     "keynotes": [
       {
         "speaker": "Professor Sir Hew Strachan",
-        "affiliation": "University of St. Andrews"
+        "affiliation": "University of St Andrews"
       }
     ],
     "days": [
@@ -58,7 +58,7 @@ module.exports = {
                     "authors": [
                       {
                         "name": "Professor Sir Hew Strachan",
-                        "affiliation": "University of St. Andrews",
+                        "affiliation": "University of St Andrews",
                         "isSpeaker": true
                       }
                     ]
@@ -1738,7 +1738,7 @@ module.exports = {
                     "authors": [
                       {
                         "name": "Marc R. DeVore",
-                        "affiliation": "University of St. Andrews, United Kingdom",
+                        "affiliation": "University of St Andrews, United Kingdom",
                         "isSpeaker": true
                       }
                     ]
@@ -5394,7 +5394,7 @@ module.exports = {
                     "authors": [
                       {
                         "name": "Marc DeVore",
-                        "affiliation": "University of St. Andrews",
+                        "affiliation": "University of St Andrews",
                         "isSpeaker": true
                       },
                       {
@@ -5403,7 +5403,7 @@ module.exports = {
                       },
                       {
                         "name": "Kristen Harkness",
-                        "affiliation": "University of St. Andrews"
+                        "affiliation": "University of St Andrews"
                       },
                       {
                         "name": "Michael Hunzeker",
@@ -5708,7 +5708,7 @@ module.exports = {
                 "conveners": [
                   {
                     "name": "Marcel Plichta",
-                    "affiliation": "University of St. Andrews"
+                    "affiliation": "University of St Andrews"
                   }
                 ],
                 "contributions": [
@@ -6673,12 +6673,12 @@ module.exports = {
                     "authors": [
                       {
                         "name": "Kristen Harkness",
-                        "affiliation": "University of St. Andrews",
+                        "affiliation": "University of St Andrews",
                         "isSpeaker": true
                       },
                       {
                         "name": "Marc DeVore",
-                        "affiliation": "University of St. Andrews"
+                        "affiliation": "University of St Andrews"
                       }
                     ]
                   }
@@ -8969,7 +8969,7 @@ module.exports = {
                     "authors": [
                       {
                         "name": "Marc De Vore",
-                        "affiliation": "University of St. Andrews",
+                        "affiliation": "University of St Andrews",
                         "isSpeaker": true
                       }
                     ]
