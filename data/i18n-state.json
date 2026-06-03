@@ -200,13 +200,13 @@
     "src/press-kit.njk": {
       "fr": {
         "file": "src/press-kit.fr.njk",
-        "source_sha1": "566dd6d08550a1917537cf0dbf9591732ff367b1",
+        "source_sha1": "e6f6280c56f5aebb0d1a6e30de75648b115badcf",
         "translated_on": "2026-06-03",
         "status": "beta"
       },
       "de": {
         "file": "src/press-kit.de.njk",
-        "source_sha1": "566dd6d08550a1917537cf0dbf9591732ff367b1",
+        "source_sha1": "e6f6280c56f5aebb0d1a6e30de75648b115badcf",
         "translated_on": "2026-06-03",
         "status": "beta"
       }
