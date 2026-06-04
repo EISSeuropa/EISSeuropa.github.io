@@ -1,0 +1,56 @@
+# Build-sanity guard.
+#
+# Runs scripts/check-build-sanity.mjs, which fails the build on:
+#   - duplicate keys in an object literal in src/_data/*.js (JS silently
+#     keeps the last, dropping a value — this broke /2026's programme-PDF
+#     buttons, issue #479)
+#   - empty or junk href="" / src="" (and literal undefined / null /
+#     [object Object]) in the built _site/ (looks interactive but does
+#     nothing, or a template read a missing/wrong-typed value — issue #478)
+#
+# These slip past Eleventy (builds duplicate-key objects without error)
+# and the link checker (an empty href is a no-op, not a broken link).
+#
+# Status: gating. The script exits non-zero on any finding. It passes
+# clean on the current tree, so it only ever fires on a real regression.
+#
+# Mirrors the build + Node setup of link-check.yml. SHA-pinned actions
+# per CLAUDE.md §2.
+name: Build sanity
+
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'scripts/check-build-sanity.mjs'
+      - '.github/workflows/sanity-check.yml'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.eleventy.js'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sanity:
+    name: Duplicate data keys + empty href/src
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: Set up Node
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Build site
+        run: npm run build
+
+      - name: Run build-sanity check
+        run: node scripts/check-build-sanity.mjs
