@@ -2009,7 +2009,6 @@ h4 { font-size: var(--fs-lg); }
   color: hsl(36 90% 50%);
   text-transform: none;
   letter-spacing: 0;
-  margin-inline-start: auto;  /* push to end of role row when room */
   cursor: help;
 }
 .person-essc-speaker svg {
