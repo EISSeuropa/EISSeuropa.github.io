@@ -131,7 +131,7 @@ const roadmap = {
         {
           status: "planned",
           event: true,
-          when: { en: "11–12 June 2026 · Stockholm", fr: "11–12 juin 2026 · Stockholm", de: "11.–12. Juni 2026 · Stockholm" },
+          when: { en: "11 - 12 June 2026 · Stockholm", fr: "11 - 12 juin 2026 · Stockholm", de: "11. - 12. Juni 2026 · Stockholm" },
           title: {
             en: "ESSC 2026 — Stockholm",
             fr: "ESSC 2026 — Stockholm",
