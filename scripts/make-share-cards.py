@@ -30,6 +30,8 @@ Usage
 """
 from __future__ import annotations
 
+import base64
+import re
 import shutil
 import subprocess
 import sys
@@ -39,6 +41,23 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = ROOT / "src" / "assets" / "images"
+BRAND_DIR = ROOT / "src" / "assets" / "images" / "brand"
+
+
+def brand_svg_inner(name: str) -> tuple[str, str]:
+    """Read a brand SVG (logo-lockup.svg / logo-mark.svg) and return its
+    (viewBox, inner_markup) with the <svg> wrapper and the <title>/<desc>
+    accessibility nodes stripped, so the paths can be dropped into a
+    nested <svg> on the card. Reading the canonical brand files at
+    generation time keeps the card logo in lockstep with the brand kit:
+    re-run derive-logo-variants.py + this script and the cards inherit
+    any logo change, rather than carrying a hand-copied approximation."""
+    raw = (BRAND_DIR / name).read_text(encoding="utf-8")
+    view_box = re.search(r'viewBox="([^"]+)"', raw).group(1)
+    inner = re.sub(r"<svg\b[^>]*>", "", raw, count=1).replace("</svg>", "")
+    inner = re.sub(r"<title\b[^>]*>.*?</title>", "", inner, flags=re.S)
+    inner = re.sub(r"<desc\b[^>]*>.*?</desc>", "", inner, flags=re.S)
+    return view_box, inner.strip()
 
 # Each card produces:
 #   src/assets/images/<slug>-meta.jpg          — English (always)
@@ -63,22 +82,13 @@ CARDS = [
         "de": {"eyebrow": "EISS", "title": "Europäische Initiative für Sicherheitsstudien",
                "subtitle": "Europas größte Versammlung zu Sicherheitsfragen"},
     }},
-    {"slug": "2026", "i18n": {
-        "en": {"eyebrow": "Annual conference", "title": "ESSC 2026 — Stockholm",
-               "subtitle": "11–12 June 2026 · Stockholm University"},
-        "fr": {"eyebrow": "Conférence annuelle", "title": "ESSC 2026 — Stockholm",
-               "subtitle": "11–12 juin 2026 · Université de Stockholm"},
-        "de": {"eyebrow": "Jahreskonferenz", "title": "ESSC 2026 — Stockholm",
-               "subtitle": "11.–12. Juni 2026 · Universität Stockholm"},
-    }},
-    {"slug": "2025", "i18n": {
-        "en": {"eyebrow": "Annual conference", "title": "ESSC 2025 — Thessaloniki",
-               "subtitle": "University of Macedonia"},
-    }},
-    {"slug": "2024", "i18n": {
-        "en": {"eyebrow": "Annual conference", "title": "ESSC 2024 — Prague",
-               "subtitle": "Charles University"},
-    }},
+    # NB: the per-year conference pages (/2026, /2025, /2024) and the
+    # archive index (/past) all share ONE share card — `past-meta.*` —
+    # since the conference-card unification (#485). So there are no per-year
+    # cards here; generating them would only produce orphans (which is what
+    # #516 cleaned up). Whether the upcoming flagship edition deserves its
+    # own card again (rather than the "Past conferences" shared one) is
+    # tracked separately.
     {"slug": "board", "i18n": {
         "en": {"eyebrow": "About", "title": "The People",
                "subtitle": "The EISS board and support team"},
@@ -181,126 +191,191 @@ CARDS = [
 #     billboard-shaped on Twitter than 2:1, but the image is rendered
 #     at full resolution everywhere.
 #
-# Design rationale:
-#   - Deep navy gradient background — readable against both light and
-#     dark social feeds.
-#   - Light EISS network motif top-right (the dots from the brand) for
-#     instant recognition.
-#   - Eyebrow + Title + Subtitle stack center-left, like the page heros.
-#   - Title font-size auto-shrinks for long strings (see render()).
+# Design rationale (landscape 1200×630, the canonical Open Graph /
+# summary_large_image ratio — 1.91:1):
+#   - Deep brand-navy gradient on hue 203 (the #007bc6 brand-blue hue),
+#     readable against both light and dark social feeds.
+#   - The REAL EISS lockup (constellation mark + EiSS wordmark) top-left,
+#     embedded from src/assets/images/brand/logo-lockup.svg — not a
+#     hand-drawn approximation. Constellation in network blue #73caff,
+#     wordmark in white via currentColor.
+#   - A large, faint constellation motif (the real network mark) bleeding
+#     off the top-right, for brand texture.
+#   - Eyebrow + Title + (optional) Subtitle stack lower-left, like the
+#     page heros. Title font-size auto-shrinks for long strings.
 #   - eiss-europa.com tagline bottom-left for context.
+# The card is authored as a full-bleed 1200×1200 square (qlmanage renders
+# SVGs onto a square thumbnail canvas), with all content laid out inside
+# the vertically-centred band y∈[285, 915]. rasterize() then centre-crops
+# to the 1200×630 landscape OG / summary_large_image ratio (1.91:1). The
+# gradient fills the whole square so the crop never reveals padding.
+CROP_TOP = 285  # (1200 - 630) / 2
+
 TEMPLATE = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200">
   <defs>
+    <style>{font_face}</style>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="hsl(216, 88%, 22%)"/>
-      <stop offset="60%" stop-color="hsl(216, 88%, 14%)"/>
-      <stop offset="100%" stop-color="hsl(216, 60%, 8%)"/>
+      <stop offset="0%" stop-color="hsl(205, 70%, 16%)"/>
+      <stop offset="55%" stop-color="hsl(209, 66%, 10%)"/>
+      <stop offset="100%" stop-color="hsl(214, 56%, 6%)"/>
     </linearGradient>
-    <radialGradient id="logoBg" cx="30%" cy="30%" r="80%">
-      <stop offset="0%" stop-color="hsl(216, 95%, 65%)"/>
-      <stop offset="60%" stop-color="hsl(216, 88%, 40%)"/>
-      <stop offset="100%" stop-color="hsl(216, 88%, 28%)"/>
-    </radialGradient>
   </defs>
 
   <rect width="1200" height="1200" fill="url(#bg)"/>
 
-  <!-- EISS network motif (light dots + connecting lines) top-right. -->
-  <g opacity="0.4" stroke="hsl(196, 90%, 70%)" stroke-width="3" fill="hsl(196, 90%, 70%)">
-    <line x1="760" y1="160" x2="940"  y2="120"/>
-    <line x1="940" y1="120" x2="1100" y2="180"/>
-    <line x1="940" y1="120" x2="1020" y2="260"/>
-    <line x1="1020" y1="260" x2="1100" y2="180"/>
-    <line x1="1020" y1="260" x2="1140" y2="340"/>
-    <line x1="760"  y1="160" x2="880"  y2="280"/>
-    <line x1="880"  y1="280" x2="1020" y2="260"/>
-    <circle cx="760"  cy="160" r="11"/>
-    <circle cx="940"  cy="120" r="17"/>
-    <circle cx="1100" cy="180" r="13"/>
-    <circle cx="1020" cy="260" r="15"/>
-    <circle cx="880"  cy="280" r="10"/>
-    <circle cx="1140" cy="340" r="13"/>
-  </g>
+  <!-- Faint constellation motif (the real network mark) bleeding off the
+       top-right of the visible band. -->
+  <g opacity="0.16">{motif}</g>
 
-  <!-- EISS brand mark top-left -->
-  <g transform="translate(120, 140)">
-    <rect width="100" height="100" rx="20" fill="url(#logoBg)"/>
-    <rect x="2" y="2" width="96" height="3" rx="1.5" fill="hsl(0 0% 100% / 0.25)"/>
-    <path d="M 31 28 L 69 28 L 69 38 L 41 38 L 41 46 L 67 46 L 67 56 L 41 56 L 41 64 L 69 64 L 69 74 L 31 74 Z" fill="white"/>
-  </g>
+  <!-- The EISS lockup (constellation + EiSS wordmark), top-left. -->
+  {lockup}
 
-  <!-- Eyebrow / title / subtitle stack, centred vertically in the design -->
-  <g font-family="-apple-system, system-ui, 'Inter', sans-serif" fill="white">
-    <text x="120" y="560" font-size="32" font-weight="700" letter-spacing="3" fill="hsl(196, 90%, 80%)">{eyebrow}</text>
-    <text x="120" y="680" font-size="{title_size}" font-weight="800" letter-spacing="-2">{title}</text>
+  <!-- Eyebrow / title / subtitle stack, lower-left -->
+  <g font-family="'Inter', -apple-system, system-ui, sans-serif" fill="#ffffff">
+    <text x="80" y="600" font-size="30" font-weight="700" letter-spacing="3" fill="hsl(203, 100%, 76%)">{eyebrow}</text>
+    {title_block}
     {subtitle_block}
   </g>
 
   <!-- Footer tagline bottom-left -->
-  <text x="120" y="1080" font-family="-apple-system, system-ui, 'Inter', sans-serif"
-        font-size="28" font-weight="500" fill="hsl(196, 60%, 75%)" letter-spacing="1">
+  <text x="80" y="866" font-family="'Inter', -apple-system, system-ui, sans-serif"
+        font-size="26" font-weight="500" fill="hsl(203, 70%, 72%)" letter-spacing="1">
     eiss-europa.com
   </text>
 </svg>
 """
 
-SUBTITLE_TEMPLATE = (
-    '<text x="120" y="770" font-size="{subtitle_size}" font-weight="500" '
-    'fill="hsl(216, 30%, 85%)" letter-spacing="0">{subtitle}</text>'
-)
+# Approximate width of a bold character as a fraction of font-size, used to
+# decide title line-breaks + sizing. Deliberately generous so titles never
+# clip even under the wider system fallback when Inter is unavailable.
+_CHAR_W = 0.60
+_TITLE_RUNWAY = 1040  # px of horizontal room at x=80
+
+
+def inter_face() -> str:
+    """Embed Inter (the brand typeface) as a base64 @font-face so the card
+    text renders in Inter rather than qlmanage's system fallback. The Latin
+    subset covers the French/German accents in the titles. font-display
+    block forces the renderer to wait for the (already-local) font."""
+    woff2 = (ROOT / "src" / "assets" / "fonts" / "inter" / "latin-wght-normal.woff2").read_bytes()
+    b64 = base64.b64encode(woff2).decode("ascii")
+    return (
+        "@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;"
+        f"font-display:block;src:url(data:font/woff2;base64,{b64}) format('woff2');}}"
+    )
 
 
 def fit_subtitle_size(subtitle: str) -> int:
-    """Same idea as fit_title_size but for the subtitle line. Subtitles
-    are denser (smaller font) so the breakpoints are different — French
-    and German subtitles often run 50–65 chars where English would be
-    closer to 40."""
+    """Subtitle font size for ~1040px of runway at x=80."""
     chars = len(subtitle)
-    if chars <= 40:
-        return 38
-    if chars <= 50:
-        return 32
-    if chars <= 60:
-        return 28
-    if chars <= 72:
-        return 24
-    return 22
-
-
-def fit_title_size(title: str) -> int:
-    """Heuristic font size for the title so long strings don't clip the
-    right edge of the 1200px canvas. Tuned empirically against
-    qlmanage's font rendering (which falls back to a system serif when
-    Inter isn't installed — sufficient for this use). Designed assuming
-    the title sits at x=120 with ~1080px of horizontal runway."""
-    chars = len(title)
-    if chars <= 14:
-        return 120  # "Membership", "Programmes"
-    if chars <= 22:
-        return 96   # "Past conferences"
-    if chars <= 30:
-        return 76   # "ESSC 2026 — Stockholm"
-    if chars <= 38:
-        return 60
+    if chars <= 36:
+        return 34
     if chars <= 48:
-        return 52
-    return 44
+        return 30
+    if chars <= 60:
+        return 26
+    if chars <= 74:
+        return 23
+    return 21
 
 
-def render(strings: dict) -> Path:
-    """Write the template SVG with the given language's strings, return
-    the temp-file path. `strings` is a dict with `eyebrow`, `title`,
-    and optional `subtitle`."""
+def layout_title(title: str) -> tuple[int, list[str]]:
+    """Pick a font size and wrap the title to at most two lines so it never
+    clips the canvas. Short titles render large on one line; longer ones
+    break at the most balanced word boundary and step the size down. Sizing
+    is conservative (assumes the wide system fallback) so it holds whether
+    or not the embedded Inter loads."""
+
+    def fits(text: str, size: int) -> bool:
+        return len(text) * _CHAR_W * size <= _TITLE_RUNWAY
+
+    # One line, as large as fits within a sensible cap by length.
+    for size in (96, 84, 74):
+        if fits(title, size):
+            return size, [title]
+
+    # Two lines: split at the word boundary that most evenly balances them.
+    words = title.split()
+    if len(words) > 1:
+        best = None
+        for i in range(1, len(words)):
+            a, b = " ".join(words[:i]), " ".join(words[i:])
+            score = abs(len(a) - len(b))
+            if best is None or score < best[0]:
+                best = (score, a, b)
+        _, line_a, line_b = best
+        longest = max(len(line_a), len(line_b))
+        for size in (66, 58, 50, 44):
+            if longest * _CHAR_W * size <= _TITLE_RUNWAY:
+                return size, [line_a, line_b]
+        return 40, [line_a, line_b]
+
+    # Single very long word: shrink until it fits.
+    for size in (66, 58, 50, 44, 38):
+        if fits(title, size):
+            return size, [title]
+    return 34, [title]
+
+
+def build_lockup() -> str:
+    """The EISS lockup (constellation + EiSS wordmark) as a nested <svg>
+    at the top-left of the visible band. `color:#ffffff` resolves the
+    wordmark's currentColor to white; the constellation keeps its #73caff."""
+    view_box, inner = brand_svg_inner("logo-lockup.svg")
+    return (
+        f'<svg x="80" y="350" width="300" height="135" viewBox="{view_box}" '
+        f'preserveAspectRatio="xMidYMid meet" style="color:#ffffff">{inner}</svg>'
+    )
+
+
+def build_motif() -> str:
+    """The constellation mark, large and bleeding off the top-right of the
+    visible band, used at low opacity as a background texture."""
+    view_box, inner = brand_svg_inner("logo-mark.svg")
+    return (
+        f'<svg x="610" y="150" width="760" height="341" viewBox="{view_box}" '
+        f'preserveAspectRatio="xMidYMid meet">{inner}</svg>'
+    )
+
+
+TITLE_TOP = 700  # baseline of the title's first line (within the band)
+
+
+def build_title_block(title: str) -> tuple[str, int]:
+    """Return (svg_text_markup, last_baseline_y) for the title, wrapped to
+    one or two lines via layout_title()."""
+    size, lines = layout_title(title)
+    spacing = round(size * 1.12)
+    tspans = "".join(
+        f'<tspan x="80" dy="{0 if i == 0 else spacing}">{escape(line)}</tspan>'
+        for i, line in enumerate(lines)
+    )
+    markup = (
+        f'<text x="80" y="{TITLE_TOP}" font-size="{size}" font-weight="800" '
+        f'letter-spacing="-1.5">{tspans}</text>'
+    )
+    return markup, TITLE_TOP + (len(lines) - 1) * spacing
+
+
+def render(strings: dict, lockup: str, motif: str, font_face: str) -> Path:
+    """Write the template SVG with the given language's strings, return the
+    temp-file path. `strings` has `eyebrow`, `title`, and optional
+    `subtitle`. `lockup`/`motif`/`font_face` are built once in main()."""
+    title_block, title_bottom = build_title_block(strings["title"])
     subtitle_block = ""
     if strings.get("subtitle"):
-        subtitle_block = SUBTITLE_TEMPLATE.format(
-            subtitle=escape(strings["subtitle"]),
-            subtitle_size=fit_subtitle_size(strings["subtitle"]),
+        sub_size = fit_subtitle_size(strings["subtitle"])
+        sub_y = title_bottom + sub_size + 28
+        subtitle_block = (
+            f'<text x="80" y="{sub_y}" font-size="{sub_size}" font-weight="500" '
+            f'fill="hsl(210, 32%, 84%)">{escape(strings["subtitle"])}</text>'
         )
     svg = TEMPLATE.format(
+        font_face=font_face,
+        lockup=lockup,
+        motif=motif,
         eyebrow=escape(strings["eyebrow"]).upper(),
-        title=escape(strings["title"]),
-        title_size=fit_title_size(strings["title"]),
+        title_block=title_block,
         subtitle_block=subtitle_block,
     )
     tmp = Path(tempfile.mkstemp(suffix=".svg", prefix="meta-")[1])
@@ -309,9 +384,11 @@ def render(strings: dict) -> Path:
 
 
 def rasterize(svg_path: Path, dest_name: str) -> Path:
-    """Render the SVG to a 1200-wide PNG via qlmanage, then re-encode as
-    JPG. `dest_name` is the filename (without directory), e.g.
-    `index-meta.jpg` or `board-meta.fr.jpg`."""
+    """Render the SVG to a 1200×1200 PNG via qlmanage, centre-crop it to the
+    1200×630 landscape OG ratio with sips, then re-encode as JPG. qlmanage
+    renders onto a square thumbnail canvas, so the template fills the whole
+    square and lays its content out in the centred band that the crop keeps.
+    `dest_name` is the filename, e.g. `index-meta.jpg` / `board-meta.fr.jpg`."""
     work = Path(tempfile.mkdtemp(prefix="meta-out-"))
     subprocess.run(
         ["qlmanage", "-t", "-s", "1200", "-o", str(work), str(svg_path)],
@@ -321,11 +398,12 @@ def rasterize(svg_path: Path, dest_name: str) -> Path:
     if not png_path.exists():
         sys.exit(f"qlmanage didn't produce expected output at {png_path}")
 
-    # sips converts PNG → JPG with quality control and keeps original alpha
-    # collapsed against a black background, which matches the navy template.
+    # Centre-crop the square render to the 1200×630 landscape band, then
+    # encode JPG. sips `-c H W` crops to height×width anchored on centre.
     jpg_dest = OUT_DIR / dest_name
     subprocess.run(
-        ["sips", "-s", "format", "jpeg", "-s", "formatOptions", "85",
+        ["sips", "-c", "630", "1200",
+         "-s", "format", "jpeg", "-s", "formatOptions", "88",
          str(png_path), "--out", str(jpg_dest)],
         check=True, capture_output=True,
     )
@@ -341,9 +419,12 @@ def dest_filename(slug: str, lang: str) -> str:
 
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    lockup = build_lockup()
+    motif = build_motif()
+    font_face = inter_face()
     for card in CARDS:
         for lang, strings in card["i18n"].items():
-            svg = render(strings)
+            svg = render(strings, lockup, motif, font_face)
             try:
                 out = rasterize(svg, dest_filename(card["slug"], lang))
                 size_kb = out.stat().st_size // 1024
