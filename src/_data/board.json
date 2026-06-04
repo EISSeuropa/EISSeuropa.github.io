@@ -12,6 +12,24 @@
       "institution": "Sciences Po, Center for International Studies (CERI)"
     },
     {
+      "name": "Dr Moritz Weiss",
+      "role": "Co-Director",
+      "alt": "Prof. Moritz Weiss",
+      "photo": "/assets/images/board/moritz-weiss.jpg",
+      "position": "Senior lecturer",
+      "institution": "LMU Munich",
+      "country": "Germany",
+      "bio": "Moritz Weiss (he) is Senior Lecturer of International Relations and European Studies at LMU Munich. He is Action Chair of 'NetSec'; and also Principal Co-Investigator of the projects ‘The Making of National Security’ (funded by the Fritz Thyssen Stiftung) and 'Big Tech and Regulatory Capture' (funded by the Mercator Foundation Switzerland). His research focuses on the governance of European and international security as well as the political economy of digital technologies. He was a visiting professor of international politics at the Leibniz University Hannover and the LMU Munich as well as a Jean-Monnet-Fellow at the EUI in Florence. His research was published in Security Studies, Contemporary Security Policy, Journal of Global Security Studies, Governance, Review of International Political Economy, International Studies Review, Journal of Common Market Studies, West European Politics and Journal of European Public Policy.",
+      "themes": "International security, governance of new technologies, political economy of defense industries, cybersecurity, platform power",
+      "links": {
+        "publicEmail": "moritz.weiss@gsi.lmu.de",
+        "website": "https://www.en.gsi.uni-muenchen.de/people/academic/moritz-weiss/index.html",
+        "orcid": "0000-0001-9311-6480",
+        "linkedin": "https://www.linkedin.com/in/moritz-weiss-1aa70b27b/"
+      },
+      "workingGroups": "WG1"
+    },
+    {
       "name": "Dr Marie Robin",
       "role": "Treasurer",
       "photo": "/assets/images/screenshot-2024-03-25-at-18.29.49-348x391.png",
@@ -20,16 +38,6 @@
       "country": "Netherlands",
       "position": "Assistant Professor of War Studies",
       "institution": "Leiden University"
-    },
-    {
-      "name": "Prof. Moritz Weiss",
-      "role": "Secretary-General",
-      "photo": "/assets/images/moritzweiss-eiss2024-348x305.jpg",
-      "alt": "Prof. Moritz Weiss",
-      "themes": "International Relations, Theorizing (informal) institutions, European integration, Governance of international security.",
-      "country": "Germany",
-      "position": "Senior Lecturer and Principal Investigator",
-      "institution": "Ludwig Maximilian University of Munich"
     },
     {
       "name": "Prof. Nicolas Blarel",
@@ -82,6 +90,15 @@
       "institution": "Faculty of Political Science, University of Belgrade"
     },
     {
+      "name": "Flavia Gasbarri",
+      "role": "Board Member",
+      "alt": "Flavia Gasbarri",
+      "country": "United Kingdom",
+      "institution": "King's College London",
+      "photoOverride": "/assets/images/gasbarri-4-307x462.jpg",
+      "formerMember": true
+    },
+    {
       "name": "Dr Eliza Gheorghe",
       "role": "Board Member",
       "photo": "/assets/images/eliza-gheorghe.jpg",
@@ -90,6 +107,15 @@
       "country": "Turkey",
       "position": "Assistant Professor",
       "institution": "Department of International Relations, Bilkent University"
+    },
+    {
+      "name": "Mauro Gilli",
+      "role": "Board Member",
+      "alt": "Mauro Gilli",
+      "country": "Switzerland",
+      "institution": "ETH Zurich",
+      "photoOverride": "/assets/images/gilli-2-302x434.jpg",
+      "formerMember": true
     },
     {
       "name": "Dr John N.T. Helferich",
@@ -103,7 +129,7 @@
       "bio": "John Helferich is a Lecturer in Politics at Hertford College and a researcher with the Oxford Global Security Programme. His research focuses on European security and transformations in international order. He holds a Doctor of Philosophy (DPhil) in International Relations from the University of Oxford and a Master’s degree in International Security (summa cum laude) from Sciences Po. His dissertation on EU defence integration won the PSA Best Dissertation Prize in International Relations. He chairs the Working Group on Transfer of Knowledge within the COST Action Networking European Security Knowledge and serves as a board member of the European Initiative for Security Studies (EISS).",
       "themes": "Foreign Policy Analysis, European Security, Political Psychology, Research Methods",
       "links": {
-        "website": "https://johnhelferich.com"
+        "website": "johnhelferich.com"
       },
       "workingGroups": "WG1, WG2"
     },
@@ -116,6 +142,15 @@
       "country": "Germany",
       "position": "Professor of International Relations and Director of the Centre for International Security",
       "institution": "Hertie School"
+    },
+    {
+      "name": "Stephanie Hofmann",
+      "role": "Board Member",
+      "alt": "Stephanie Hofmann",
+      "country": "Italy",
+      "institution": "European University Institute",
+      "photoOverride": "/assets/images/stephanie-hofmann-profile-picture.x5a19d7a3.jpg",
+      "formerMember": true
     },
     {
       "name": "Alisa Kerschbaum",
@@ -165,6 +200,14 @@
       "country": "United Kingdom",
       "position": "Lecturer in Strategic Studies",
       "institution": "King’s College London"
+    },
+    {
+      "name": "Avinash Paliwal",
+      "role": "Board Member",
+      "alt": "Avinash Paliwal",
+      "country": "United Kingdom",
+      "institution": "SOAS University of London",
+      "formerMember": true
     },
     {
       "name": "Prof. Revecca Pedi",
@@ -225,41 +268,6 @@
       "country": "United Kingdom",
       "position": "Professor of International History and Security",
       "institution": "Lancaster University"
-    },
-    {
-      "name": "Flavia Gasbarri",
-      "role": "Board Member",
-      "alt": "Flavia Gasbarri",
-      "country": "United Kingdom",
-      "institution": "King's College London",
-      "photoOverride": "/assets/images/gasbarri-4-307x462.jpg",
-      "formerMember": true
-    },
-    {
-      "name": "Mauro Gilli",
-      "role": "Board Member",
-      "alt": "Mauro Gilli",
-      "country": "Switzerland",
-      "institution": "ETH Zurich",
-      "photoOverride": "/assets/images/gilli-2-302x434.jpg",
-      "formerMember": true
-    },
-    {
-      "name": "Stephanie Hofmann",
-      "role": "Board Member",
-      "alt": "Stephanie Hofmann",
-      "country": "Italy",
-      "institution": "European University Institute",
-      "photoOverride": "/assets/images/stephanie-hofmann-profile-picture.x5a19d7a3.jpg",
-      "formerMember": true
-    },
-    {
-      "name": "Avinash Paliwal",
-      "role": "Board Member",
-      "alt": "Avinash Paliwal",
-      "country": "United Kingdom",
-      "institution": "SOAS University of London",
-      "formerMember": true
     }
   ],
   "support": [
