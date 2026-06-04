@@ -43,6 +43,8 @@ checks continue to gate the normal merge path.
 
 ## What's deferred to Phase 3, and why
 
+_Tracked in [#501](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/501)._
+
 **Required status checks are intentionally *not* enforced yet.** On this
 repo they would strand the daily automation:
 
