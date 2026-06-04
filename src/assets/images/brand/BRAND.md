@@ -12,7 +12,7 @@ from the source PDF if the brand kit changes (the script needs only
 
 | File | Use | Size |
 |---|---|---|
-| `logo-mark.svg` | Constellation only — mobile header, favicon source, Schema.org `logo` URL fallback | ~2 KB |
+| `logo-mark.svg` | Constellation only — mobile header, favicon source | ~2 KB |
 | `logo-lockup.svg` | Constellation + EiSS wordmark, no tagline — desktop site header | ~4 KB |
 | `logo-full.svg` | Constellation + EiSS + tagline — `/initiative` page hero, press kit, OG card watermark | ~19 KB |
 | `logo-full-1024.png` | High-res raster — Schema.org `logo` URL (Google Knowledge Panel), OG card overlays | ~63 KB |
@@ -25,10 +25,19 @@ Sampled from the source PDF:
 - **`#73caff`** — network blue (the constellation dots + connecting lines)
 - **`#007bc6`** — brand blue (EiSS wordmark + tagline)
 
-The site's `--accent` design token is currently `hsl(216 88% 40%)`
-≈ `#0c70cf` — close to but not identical to the brand `#007bc6`.
-PR B (chrome swap) should align the token to the canonical brand
-colour so logo + UI accents read as one system.
+The site's `--accent` design token is currently `hsl(216 88% 50%)`
+(≈ `#1f7ce8`, hue 216): a more indigo blue that does **not** match the
+brand blue `#007bc6` (hue ~203), so the logo and the UI accents read as
+two slightly different blues. Aligning `--accent` to the canonical brand
+blue is tracked in [#512](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/512)
+(a deliberate, site-wide accent change).
+
+**Semantic / status colours** sit outside this two-blue identity palette
+on purpose: amber warnings and the "deferred" / "under watch" pill, a
+broadcast-red "live" dot, a "shipped" green, the categorical room-pill
+hues on the programme grid, and the EU-flag gold (`#f5b800`) in the 404
+illustration. These are functional signal colours, not brand colours,
+and are expected to differ from `#007bc6` / `#73caff`.
 
 ## Recolouring via CSS
 
@@ -43,7 +52,9 @@ asset:
 /* default — brand blue on light backgrounds */
 .brand-logo { color: var(--brand-blue, #007bc6); }
 
-/* footer — invert against the dark background */
+/* footer — illustrative only. The current footer sits on a light
+   surface and keeps the default brand blue. If the footer ever moves to
+   a dark background, invert like this: */
 .site-footer .brand-logo { color: white; }
 .site-footer .brand-logo .logo-network { fill: rgba(255, 255, 255, 0.7); }
 ```
@@ -51,6 +62,16 @@ asset:
 `currentColor` is universally supported (every SVG renderer; doesn't
 require CSS-variable-in-attribute support, which some image
 optimisers strip).
+
+## Typography
+
+**Inter** is the sole brand typeface, self-hosted from
+`src/assets/fonts/inter/` (variable `woff2`, Latin + Latin-Extended).
+It is applied through the `--font-sans` / `--font-display` and `--fs-*`
+CSS tokens, with the system sans-serif stack as the fallback. No other
+display or body font is used, and no web font is loaded from a third
+party. The public press kit (`/press-kit`) names Inter as a brand
+element, so the two stay in step.
 
 ## Accessibility
 
@@ -64,8 +85,9 @@ announcement (the convention used by the existing `nav.njk` markup).
 
 - The original AI / PDF / TIF source files (large, off-repo)
 - Favicon / PWA icons (live at `src/assets/{favicon,apple-touch-icon,
-  android-chrome-*,manifest.webmanifest}` — regenerated in PR B from
-  `logo-mark.svg`)
+  android-chrome-*,manifest.webmanifest}`) — a purpose-built, hand-
+  maintained small-size simplification of the constellation, not
+  auto-derived from `logo-mark.svg`
 - The grey / black / negative-white print variants (CMYK / single-ink
   versions for partner kits; live in the source bundle, not needed
   for web)
