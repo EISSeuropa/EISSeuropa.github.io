@@ -54,16 +54,16 @@ const conferences = [
       de: "Universität Stockholm",
     },
     dates: {
-      en: "11 — 12 June 2026",
-      fr: "11 — 12 juin 2026",
-      de: "11. — 12. Juni 2026",
+      en: "11 - 12 June 2026",
+      fr: "11 - 12 juin 2026",
+      de: "11. - 12. Juni 2026",
     },
     // Compact line used in archive lists (past.html). Includes ordinal +
     // dates + venue.
     archiveMeta: {
-      en: "9th Annual Conference · 11 — 12 June 2026 · Stockholm University, Stockholm",
-      fr: "9e conférence annuelle · 11 — 12 juin 2026 · Université de Stockholm, Stockholm",
-      de: "9. Jahreskonferenz · 11. — 12. Juni 2026 · Universität Stockholm, Stockholm",
+      en: "9th Annual Conference · 11 - 12 June 2026 · Stockholm University, Stockholm",
+      fr: "9e conférence annuelle · 11 - 12 juin 2026 · Université de Stockholm, Stockholm",
+      de: "9. Jahreskonferenz · 11. - 12. Juni 2026 · Universität Stockholm, Stockholm",
     },
     // The "Jointly organised by ..." line on the featured card.
     organisers: {
@@ -76,7 +76,7 @@ const conferences = [
       fr: "Juin",
       de: "Juni",
     },
-    dayRange: "11–12",     // for the featured-card .day block
+    dayRange: "11 - 12",     // for the featured-card .day block
     yearLine: "2026 · Stockholm",
     // Optional polished programme PDF. The live grid on /YYYY is the
     // primary programme display (pulled daily from Indico); the PDF is
@@ -140,9 +140,9 @@ const conferences = [
       de: "Universität Mazedonien",
     },
     archiveMeta: {
-      en: "8th Annual Conference · 26 — 27 June 2025 · University of Macedonia, Thessaloniki",
-      fr: "8e conférence annuelle · 26 — 27 juin 2025 · Université de Macédoine, Thessalonique",
-      de: "8. Jahreskonferenz · 26. — 27. Juni 2025 · Universität Mazedonien, Thessaloniki",
+      en: "8th Annual Conference · 26 - 27 June 2025 · University of Macedonia, Thessaloniki",
+      fr: "8e conférence annuelle · 26 - 27 juin 2025 · Université de Macédoine, Thessalonique",
+      de: "8. Jahreskonferenz · 26. - 27. Juni 2025 · Universität Mazedonien, Thessaloniki",
     },
     displayCity: { en: "Thessaloniki", fr: "Thessalonique", de: "Thessaloniki" },
     programmePdf: "EISS-2025-programme.pdf",
@@ -162,9 +162,9 @@ const conferences = [
       de: "Karls-Universität",
     },
     archiveMeta: {
-      en: "7th Annual Conference · 27 — 28 June 2024 · Charles University, Prague",
-      fr: "7e conférence annuelle · 27 — 28 juin 2024 · Université Charles, Prague",
-      de: "7. Jahreskonferenz · 27. — 28. Juni 2024 · Karls-Universität, Prag",
+      en: "7th Annual Conference · 27 - 28 June 2024 · Charles University, Prague",
+      fr: "7e conférence annuelle · 27 - 28 juin 2024 · Université Charles, Prague",
+      de: "7. Jahreskonferenz · 27. - 28. Juni 2024 · Karls-Universität, Prag",
     },
     displayCity: { en: "Prague", fr: "Prague", de: "Prag" },
     youtubePlaylist: "PLkI2R8FsFqV6bNS0LmU-TxWNY7-fBXDOa",
@@ -243,7 +243,7 @@ const conferences = [
     year: 2020,
     // The 2020 conference was DEFERRED to 2021 due to COVID-19 — it is
     // not a separate numbered edition. The deferred conference was held
-    // at ISCTE-IUL, Lisbon on 3–4 September 2021 and counts as the 4th
+    // at ISCTE-IUL, Lisbon on 3 - 4 September 2021 and counts as the 4th
     // (see the 2021 entry). `deferred: true` excludes it from the
     // edition count (see `editionCount` below). No `ordinal`.
     deferred: true,

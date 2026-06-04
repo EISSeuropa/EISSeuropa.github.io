@@ -23,7 +23,7 @@ module.exports = {
     "venue": "University Panthéon-Assas (Paris 2), 12 place du Panthéon, 75005 Paris",
     "city": "Paris",
     "country": "France",
-    "dates": "13–14 January 2017",
+    "dates": "13 - 14 January 2017",
     "startDate": "2017-01-13",
     "endDate": "2017-01-14",
     "keynotes": [
@@ -701,7 +701,7 @@ module.exports = {
     "venue": "University Panthéon-Assas (Paris 2), 92 rue d’Assas, 75006 Paris",
     "city": "Paris",
     "country": "France",
-    "dates": "21–22 June 2018",
+    "dates": "21 - 22 June 2018",
     "startDate": "2018-06-21",
     "endDate": "2018-06-22",
     "keynotes": [
@@ -1952,7 +1952,7 @@ module.exports = {
     "venue": "Sciences Po, 28 Rue des Saints-Pères, 75007 Paris",
     "city": "Paris",
     "country": "France",
-    "dates": "27–28 June 2019",
+    "dates": "27 - 28 June 2019",
     "startDate": "2019-06-27",
     "endDate": "2019-06-28",
     "keynotes": [
@@ -3051,7 +3051,7 @@ module.exports = {
     "venue": "ISCTE / University Institute of Lisbon (ISCTE-IUL)",
     "city": "Lisbon",
     "country": "Portugal",
-    "dates": "22–23 June 2020",
+    "dates": "22 - 23 June 2020",
     "startDate": "2020-06-22",
     "endDate": "2020-06-23",
     "keynotes": [],
@@ -3285,7 +3285,7 @@ module.exports = {
     "venue": "Iscte - University Institute of Lisbon, Avenida das Forças Armadas, 1649-026 Lisboa (Building II, 2nd floor)",
     "city": "Lisbon",
     "country": "Portugal",
-    "dates": "3–4 September 2021",
+    "dates": "3 - 4 September 2021",
     "startDate": "2021-09-03",
     "endDate": "2021-09-04",
     "keynotes": [
@@ -7358,7 +7358,7 @@ module.exports = {
     "venue": "University of Macedonia, Egnatia 156, Thessaloniki 546 36",
     "city": "Thessaloniki",
     "country": "Greece",
-    "dates": "26–27 June 2025",
+    "dates": "26 - 27 June 2025",
     "startDate": "2025-06-26",
     "endDate": "2025-06-27",
     "keynotes": [
