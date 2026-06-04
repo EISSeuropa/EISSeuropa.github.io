@@ -16,6 +16,7 @@ Maintainer-facing docs for [eiss-europa.com](https://eiss-europa.com)
 | [indico-api-token.md](indico-api-token.md) | Indico API token setup for the authenticated sync. |
 | [new-conference.md](new-conference.md) | Per-year-page rollover procedure for a new ESSC. |
 | [roadmap-2026.md](roadmap-2026.md) | The internal roadmap (autostamped from the CHANGELOG). |
+| [branch-protection.md](branch-protection.md) | The `master` rulesets (force-push/deletion/linear + PR gate), the bypass design, and the deferred required-checks plan. |
 
 Project-wide conventions (British English, the PR / merge workflow,
 release format, milestone tagging, verification habits) live in the
