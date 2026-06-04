@@ -25,12 +25,16 @@ Sampled from the source PDF:
 - **`#73caff`** — network blue (the constellation dots + connecting lines)
 - **`#007bc6`** — brand blue (EiSS wordmark + tagline)
 
-The site's `--accent` design token is currently `hsl(216 88% 50%)`
-(≈ `#1f7ce8`, hue 216): a more indigo blue that does **not** match the
-brand blue `#007bc6` (hue ~203), so the logo and the UI accents read as
-two slightly different blues. Aligning `--accent` to the canonical brand
-blue is tracked in [#512](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/512)
-(a deliberate, site-wide accent change).
+The site's `--accent` design token is the brand blue: light mode is
+`hsl(203 100% 39%)` (= `#007bc6`, hue 203), so the logo and the UI
+accents read as one blue. Dark mode lifts the lightness to
+`hsl(203 100% 66%)` for contrast on the dark canvas, and the print
+stylesheet darkens it to `hsl(203 100% 38%)` for ink, both keeping the
+brand hue. The whole blue family in `site.css` sits on hue 203; the
+non-accent blue-greys (borders, tinted surfaces) share the hue at lower
+saturation. This alignment landed via
+[#512](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/512);
+the earlier indigo `hsl(216 88% 50%)` is gone.
 
 **Semantic / status colours** sit outside this two-blue identity palette
 on purpose: amber warnings and the "deferred" / "under watch" pill, a
