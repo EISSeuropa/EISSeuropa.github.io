@@ -103,6 +103,11 @@ SKIP_HOSTS = {
                                 # unrecognised User-Agent strings.
                                 # The transit-info page works for
                                 # visitors heading to ESSC 2022.
+    "eur-lex.europa.eu",        # EU's official law portal returns 403
+                                # to automated HEAD/GET regardless of
+                                # UA. The GDPR citation in the privacy
+                                # notice (all three locales) opens fine
+                                # in a browser.
 }
 
 internal_links = {}  # (file, target) for de-dupe display
