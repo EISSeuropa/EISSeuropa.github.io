@@ -96,16 +96,16 @@
   --text: hsl(222 28% 12%);
   --text-muted: hsl(222 16% 34%);
   --text-subtle: hsl(222 13% 40%);
-  --accent: hsl(216 88% 50%);
-  --accent-hover: hsl(216 88% 44%);
-  --accent-soft: hsl(216 88% 50% / 0.1);
+  --accent: hsl(203 100% 39%);
+  --accent-hover: hsl(203 100% 33%);
+  --accent-soft: hsl(203 100% 39% / 0.1);
   --accent-text: hsl(0 0% 100%);
   --warning: hsl(36 95% 50%);
   --hero-overlay: linear-gradient(180deg, hsl(220 50% 8% / 0.32) 0%, hsl(220 50% 8% / 0.7) 100%);
 
-  --gradient-mesh-1: radial-gradient(800px circle at 12% 8%, hsl(216 88% 70% / 0.22), transparent 55%);
+  --gradient-mesh-1: radial-gradient(800px circle at 12% 8%, hsl(203 88% 70% / 0.22), transparent 55%);
   --gradient-mesh-2: radial-gradient(700px circle at 92% 4%, hsl(190 80% 65% / 0.18), transparent 55%);
-  --gradient-mesh-3: radial-gradient(900px circle at 50% 100%, hsl(250 80% 70% / 0.12), transparent 60%);
+  --gradient-mesh-3: radial-gradient(900px circle at 50% 100%, hsl(203 80% 70% / 0.12), transparent 60%);
 }
 
 [data-theme="dark"],
@@ -131,9 +131,9 @@
        its punch on a dark canvas. Lightness left at 65/72% — pushing
        it higher washes the accent out. Borrowed from NetSec's
        dark-mode tuning. */
-    --accent: hsl(216 100% 66%);
-    --accent-hover: hsl(216 100% 72%);
-    --accent-soft: hsl(216 100% 66% / 0.18);
+    --accent: hsl(203 100% 66%);
+    --accent-hover: hsl(203 100% 72%);
+    --accent-soft: hsl(203 100% 66% / 0.18);
     --accent-text: hsl(222 30% 8%);
     --warning: hsl(36 95% 60%);
     --hero-overlay: linear-gradient(180deg, hsl(220 50% 4% / 0.45) 0%, hsl(220 50% 4% / 0.75) 100%);
@@ -142,8 +142,8 @@
     --shadow-2: 0 4px 10px hsl(0 0% 0% / 0.45), 0 2px 4px hsl(0 0% 0% / 0.3);
     --shadow-3: 0 18px 40px -12px hsl(0 0% 0% / 0.6), 0 8px 16px -8px hsl(0 0% 0% / 0.4);
 
-    --gradient-mesh-1: radial-gradient(800px circle at 12% 8%, hsl(216 88% 50% / 0.22), transparent 55%);
-    --gradient-mesh-2: radial-gradient(700px circle at 92% 4%, hsl(280 70% 50% / 0.18), transparent 55%);
+    --gradient-mesh-1: radial-gradient(800px circle at 12% 8%, hsl(203 88% 50% / 0.22), transparent 55%);
+    --gradient-mesh-2: radial-gradient(700px circle at 92% 4%, hsl(203 70% 50% / 0.18), transparent 55%);
     --gradient-mesh-3: radial-gradient(900px circle at 50% 100%, hsl(190 80% 50% / 0.14), transparent 60%);
   }
 }
@@ -161,9 +161,9 @@
   --text: hsl(210 24% 95%);
   --text-muted: hsl(220 14% 70%);
   --text-subtle: hsl(220 10% 58%);
-  --accent: hsl(216 100% 66%);
-  --accent-hover: hsl(216 100% 72%);
-  --accent-soft: hsl(216 100% 66% / 0.18);
+  --accent: hsl(203 100% 66%);
+  --accent-hover: hsl(203 100% 72%);
+  --accent-soft: hsl(203 100% 66% / 0.18);
   --accent-text: hsl(222 30% 8%);
   --warning: hsl(36 95% 60%);
   --hero-overlay: linear-gradient(180deg, hsl(220 50% 4% / 0.45) 0%, hsl(220 50% 4% / 0.75) 100%);
@@ -172,8 +172,8 @@
   --shadow-2: 0 4px 10px hsl(0 0% 0% / 0.45), 0 2px 4px hsl(0 0% 0% / 0.3);
   --shadow-3: 0 18px 40px -12px hsl(0 0% 0% / 0.6), 0 8px 16px -8px hsl(0 0% 0% / 0.4);
 
-  --gradient-mesh-1: radial-gradient(800px circle at 12% 8%, hsl(216 88% 50% / 0.22), transparent 55%);
-  --gradient-mesh-2: radial-gradient(700px circle at 92% 4%, hsl(280 70% 50% / 0.18), transparent 55%);
+  --gradient-mesh-1: radial-gradient(800px circle at 12% 8%, hsl(203 88% 50% / 0.22), transparent 55%);
+  --gradient-mesh-2: radial-gradient(700px circle at 92% 4%, hsl(203 70% 50% / 0.18), transparent 55%);
   --gradient-mesh-3: radial-gradient(900px circle at 50% 100%, hsl(190 80% 50% / 0.14), transparent 60%);
 }
 
@@ -277,7 +277,7 @@ button:focus-visible,
 @keyframes targetHighlight {
   0%   { box-shadow: 0 0 0 0 var(--accent-soft), 0 0 0 0 var(--accent-soft); }
   40%  { box-shadow: 0 0 0 8px var(--accent-soft), 0 0 24px 4px var(--accent-soft); }
-  100% { box-shadow: 0 0 0 0 hsl(216 88% 50% / 0), 0 0 0 0 hsl(216 88% 50% / 0); }
+  100% { box-shadow: 0 0 0 0 hsl(203 100% 39% / 0), 0 0 0 0 hsl(203 100% 39% / 0); }
 }
 
 /* View Transitions API: smooth cross-fade on theme toggle.
@@ -1921,8 +1921,8 @@ h4 { font-size: var(--fs-lg); }
   display: grid;
   place-items: center;
   background:
-    linear-gradient(135deg, hsl(216 40% 90%) 0%, hsl(216 50% 82%) 100%);
-  color: hsl(216 60% 28%);
+    linear-gradient(135deg, hsl(203 40% 90%) 0%, hsl(203 50% 82%) 100%);
+  color: hsl(203 60% 28%);
   font-weight: 700;
   font-size: clamp(2.5rem, 6vw + 0.5rem, 4rem);
   letter-spacing: -0.02em;
@@ -1934,15 +1934,15 @@ h4 { font-size: var(--fs-lg); }
    winning when both apply). */
 [data-theme="dark"] .person-photo-placeholder {
   background:
-    linear-gradient(135deg, hsl(216 28% 22%) 0%, hsl(216 32% 28%) 100%);
-  color: hsl(216 65% 78%);
+    linear-gradient(135deg, hsl(203 28% 22%) 0%, hsl(203 32% 28%) 100%);
+  color: hsl(203 65% 78%);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .person-photo-placeholder {
     background:
-      linear-gradient(135deg, hsl(216 28% 22%) 0%, hsl(216 32% 28%) 100%);
-    color: hsl(216 65% 78%);
+      linear-gradient(135deg, hsl(203 28% 22%) 0%, hsl(203 32% 28%) 100%);
+    color: hsl(203 65% 78%);
   }
 }
 
@@ -2308,7 +2308,7 @@ h4 { font-size: var(--fs-lg); }
 .person-links a:focus-visible {
   color: var(--accent);
   background: var(--accent-soft);
-  border-color: hsl(216 88% 50% / 0.22);
+  border-color: hsl(203 100% 39% / 0.22);
 }
 .person-links a svg {
   width: 1rem;
@@ -2988,9 +2988,9 @@ h4 { font-size: var(--fs-lg); }
    first; dark-mode lifts the saturations + lightnesses inside the
    `[data-theme="dark"]` block below so the pills stay legible. */
 .programme-slot-room--c0 {
-  color: hsl(216 88% 42%);
-  background: hsl(216 88% 50% / 0.10);
-  border-color: hsl(216 88% 50% / 0.20);
+  color: hsl(203 88% 42%);
+  background: hsl(203 100% 39% / 0.10);
+  border-color: hsl(203 100% 39% / 0.20);
 }
 .programme-slot-room--c1 {
   color: hsl(268 60% 48%);
@@ -3025,9 +3025,9 @@ h4 { font-size: var(--fs-lg); }
 }
 
 [data-theme="dark"] .programme-slot-room--c0 {
-  color: hsl(216 100% 75%);
-  background: hsl(216 100% 70% / 0.16);
-  border-color: hsl(216 100% 70% / 0.30);
+  color: hsl(203 100% 75%);
+  background: hsl(203 100% 70% / 0.16);
+  border-color: hsl(203 100% 70% / 0.30);
 }
 [data-theme="dark"] .programme-slot-room--c1 {
   color: hsl(268 85% 80%);
@@ -4540,8 +4540,8 @@ body.search-open { overflow: hidden; }
      with the dark text on top — bumped lightness up and saturation
      down so countries register as "pale background" rather than
      "pale-blue tint", which the eye reads as part of the text. */
-  fill: hsl(216 30% 94%);
-  stroke: hsl(216 15% 78%);
+  fill: hsl(203 30% 94%);
+  stroke: hsl(203 15% 78%);
   stroke-width: 1;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
@@ -4556,13 +4556,13 @@ body.search-open { overflow: hidden; }
    went light). Mirrors the pattern used by the design-token block
    at the top of the file. */
 [data-theme="dark"] .essc-map-outline path {
-  fill: hsl(216 30% 22%);
+  fill: hsl(203 30% 22%);
   stroke: hsl(222 14% 32%);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .essc-map-outline path {
-    fill: hsl(216 30% 22%);
+    fill: hsl(203 30% 22%);
     stroke: hsl(222 14% 32%);
   }
 }
@@ -4584,7 +4584,7 @@ body.search-open { overflow: hidden; }
 .essc-map-link:focus-visible .essc-map-dot {
   r: 16;
   fill: var(--accent);
-  filter: drop-shadow(0 2px 6px hsl(216 88% 50% / 0.4));
+  filter: drop-shadow(0 2px 6px hsl(203 100% 39% / 0.4));
 }
 
 .essc-map-dot--inaugural {
@@ -4986,9 +4986,9 @@ a.joint-orgs-card:hover .joint-orgs-name {
     --text: hsl(0 0% 10%);
     --text-muted: hsl(0 0% 30%);
     --text-subtle: hsl(0 0% 45%);
-    --accent: hsl(216 88% 38%);
-    --accent-hover: hsl(216 88% 32%);
-    --accent-soft: hsl(216 88% 38% / 0.08);
+    --accent: hsl(203 100% 38%);
+    --accent-hover: hsl(203 100% 32%);
+    --accent-soft: hsl(203 100% 38% / 0.08);
     --border: hsl(0 0% 75%);
     --border-strong: hsl(0 0% 55%);
     --border-glass: hsl(0 0% 80%);
@@ -5149,7 +5149,7 @@ a.joint-orgs-card:hover .joint-orgs-name {
      for now; revisit if attendees request paper-with-URLs. */
 
   a {
-    color: hsl(216 88% 35%) !important;
+    color: hsl(203 100% 35%) !important;
     text-decoration: underline !important;
   }
 
@@ -5157,7 +5157,7 @@ a.joint-orgs-card:hover .joint-orgs-name {
      halo become noise on paper — flatten them. */
   .tile-icon {
     background: white !important;
-    color: hsl(216 88% 35%) !important;
+    color: hsl(203 100% 35%) !important;
     border: 1px solid hsl(0 0% 75%) !important;
   }
   .card,
@@ -5215,7 +5215,7 @@ a.joint-orgs-card:hover .joint-orgs-name {
 }
 .rm-dot { width: 0.5em; height: 0.5em; border-radius: 50%; background: currentColor; flex: 0 0 auto; }
 .rm-pill.shipped { --rm-c: hsl(140 50% 30%); --rm-bg: hsl(140 50% 45% / 0.12); --rm-bd: hsl(140 50% 45% / 0.28); }
-.rm-pill.in-progress { --rm-c: var(--accent); --rm-bg: var(--accent-soft); --rm-bd: hsl(216 88% 50% / 0.3); }
+.rm-pill.in-progress { --rm-c: var(--accent); --rm-bg: var(--accent-soft); --rm-bd: hsl(203 100% 39% / 0.3); }
 .rm-pill.planned { --rm-c: var(--text-subtle); --rm-bg: var(--surface); --rm-bd: var(--border); }
 .rm-pill.deferred { --rm-c: hsl(33 78% 38%); --rm-bg: hsl(36 95% 50% / 0.12); --rm-bd: hsl(36 90% 50% / 0.3); }
 
@@ -5236,7 +5236,7 @@ a.joint-orgs-card:hover .joint-orgs-name {
   border-radius: var(--radius-md); padding: var(--space-5); box-shadow: var(--shadow-1);
 }
 .rm-entry.shipped .rm-card { opacity: 0.93; }
-.rm-entry.in-progress .rm-card { border-color: hsl(216 88% 50% / 0.4); box-shadow: var(--shadow-2); }
+.rm-entry.in-progress .rm-card { border-color: hsl(203 100% 39% / 0.4); box-shadow: var(--shadow-2); }
 .rm-milestone .rm-card { background: var(--bg-tinted); border-style: dashed; }
 
 .rm-head { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-3); }
