@@ -4,14 +4,14 @@
     "src/index.njk": {
       "fr": {
         "file": "src/index.fr.njk",
-        "source_sha1": "b52e92e9f2697c089de8a658467b80cc8091da26",
-        "translated_on": "2026-06-02",
+        "source_sha1": "2560ab90f24fe8adf0dcbade63abfd12bb33bfa6",
+        "translated_on": "2026-06-04",
         "status": "beta"
       },
       "de": {
         "file": "src/index.de.njk",
-        "source_sha1": "b52e92e9f2697c089de8a658467b80cc8091da26",
-        "translated_on": "2026-06-02",
+        "source_sha1": "2560ab90f24fe8adf0dcbade63abfd12bb33bfa6",
+        "translated_on": "2026-06-04",
         "status": "beta"
       }
     },
