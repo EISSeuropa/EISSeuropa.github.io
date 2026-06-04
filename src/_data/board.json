@@ -24,7 +24,7 @@
       "links": {
         "publicEmail": "moritz.weiss@gsi.lmu.de",
         "website": "https://www.en.gsi.uni-muenchen.de/people/academic/moritz-weiss/index.html",
-        "orcid": "0000-0001-9311-6480",
+        "orcid": "https://orcid.org/0000-0001-9311-6480",
         "linkedin": "https://www.linkedin.com/in/moritz-weiss-1aa70b27b/"
       },
       "workingGroups": "WG1"
@@ -129,7 +129,7 @@
       "bio": "John Helferich is a Lecturer in Politics at Hertford College and a researcher with the Oxford Global Security Programme. His research focuses on European security and transformations in international order. He holds a Doctor of Philosophy (DPhil) in International Relations from the University of Oxford and a Master’s degree in International Security (summa cum laude) from Sciences Po. His dissertation on EU defence integration won the PSA Best Dissertation Prize in International Relations. He chairs the Working Group on Transfer of Knowledge within the COST Action Networking European Security Knowledge and serves as a board member of the European Initiative for Security Studies (EISS).",
       "themes": "Foreign Policy Analysis, European Security, Political Psychology, Research Methods",
       "links": {
-        "website": "johnhelferich.com"
+        "website": "https://johnhelferich.com"
       },
       "workingGroups": "WG1, WG2"
     },
