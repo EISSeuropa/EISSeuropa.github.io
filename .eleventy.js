@@ -96,6 +96,33 @@ module.exports = function (eleventyConfig) {
     return href; // localised version doesn't exist; fall back to EN
   });
 
+  // {{ links.website | extLink }} -> a guaranteed-absolute external URL.
+  // Profile links on the board cards render straight into `href`, so a
+  // value stored without a scheme (a bare domain like "example.com", or
+  // a bare ORCID iD like "0000-0001-9311-6480") would resolve as a path
+  // on eiss-europa.com and 404. This filter normalises:
+  //   - already-absolute (http://, https://, //) -> unchanged
+  //   - bare ORCID iD (NNNN-NNNN-NNNN-NNNC)        -> https://orcid.org/<id>
+  //   - anything else                              -> "https://" + value
+  // It is a defensive backstop: sync-board.py normalises the same way at
+  // the source, and check-build-sanity.mjs fails the build on a
+  // scheme-less links value, so in practice this only ever fires on a
+  // hand-edit to board.json that slipped past both. Idempotent.
+  const ORCID_ID_RE = /^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/;
+  eleventyConfig.addFilter("extLink", (value) => {
+    if (!value || typeof value !== "string") return value;
+    const v = value.trim();
+    if (
+      v.startsWith("http://") ||
+      v.startsWith("https://") ||
+      v.startsWith("//")
+    ) {
+      return v;
+    }
+    if (ORCID_ID_RE.test(v)) return `https://orcid.org/${v}`;
+    return `https://${v}`;
+  });
+
   eleventyConfig.addPassthroughCopy("src/assets");
   // Runtime-fetched data files live under src/data/ (NOT src/_data/,
   // which is Eleventy's build-time data cascade and never lands in

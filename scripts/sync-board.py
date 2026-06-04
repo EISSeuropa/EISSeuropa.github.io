@@ -344,6 +344,34 @@ LINK_FIELDS = {
     "mastodon": "mastodon",
 }
 
+# ORCID iDs are 16 characters in NNNN-NNNN-NNNN-NNNC form (the final
+# character is a checksum digit, occasionally "X").
+_ORCID_ID_RE = re.compile(r"^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$")
+
+
+def _normalize_link(out_key: str, value: str) -> str:
+    """Normalise a profile-link value to an absolute URL.
+
+    The board card template (`src/_includes/person-card.njk`) drops
+    `links.*` straight into `href`, so a value without a scheme (a bare
+    domain like "example.com", or a bare ORCID iD like
+    "0000-0001-9311-6480") would resolve as a path on eiss-europa.com and
+    404. A respondent typing either into the Form is the likely source.
+    Mirror of the `extLink` Nunjucks filter in .eleventy.js, applied here
+    so board.json is stored clean at the source rather than relying on
+    the render-time backstop.
+
+    `publicEmail` is left untouched (the template renders it as mailto:).
+    Idempotent: an already-absolute URL is returned unchanged."""
+    v = (value or "").strip()
+    if not v or out_key == "publicEmail":
+        return v
+    if v.startswith(("http://", "https://", "//")):
+        return v
+    if out_key == "orcid" and _ORCID_ID_RE.match(v):
+        return f"https://orcid.org/{v}"
+    return f"https://{v}"
+
 
 def build_from_row(row: dict, cols: dict, role_info: dict, prior: dict | None) -> dict:
     """Build a board.json entry from one form submission, falling back
@@ -431,7 +459,7 @@ def build_from_row(row: dict, cols: dict, role_info: dict, prior: dict | None) -
     for out_key, col_key in LINK_FIELDS.items():
         v = _cell(row, cols, col_key) or prior_links.get(out_key, "")
         if v:
-            links[out_key] = v
+            links[out_key] = _normalize_link(out_key, v)
     if links:
         person["links"] = links
 

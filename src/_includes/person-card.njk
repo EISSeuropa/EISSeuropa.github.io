@@ -126,22 +126,22 @@
       <li><a href="mailto:{{ links.publicEmail }}" aria-label="Email {{ person.name }}">{{ icon("mail") }}</a></li>
       {%- endif %}
       {%- if links.website %}
-      <li><a href="{{ links.website }}" target="_blank" rel="noopener" aria-label="{{ person.name }}'s website">{{ icon("globe") }}</a></li>
+      <li><a href="{{ links.website | extLink }}" target="_blank" rel="noopener" aria-label="{{ person.name }}'s website">{{ icon("globe") }}</a></li>
       {%- endif %}
       {%- if links.orcid %}
-      <li><a href="{{ links.orcid }}" target="_blank" rel="noopener" aria-label="{{ person.name }}'s ORCID iD">{{ icon("orcid") }}</a></li>
+      <li><a href="{{ links.orcid | extLink }}" target="_blank" rel="noopener" aria-label="{{ person.name }}'s ORCID iD">{{ icon("orcid") }}</a></li>
       {%- endif %}
       {%- if links.linkedin %}
-      <li><a href="{{ links.linkedin }}" target="_blank" rel="noopener" aria-label="{{ person.name }} on LinkedIn">{{ icon("linkedin") }}</a></li>
+      <li><a href="{{ links.linkedin | extLink }}" target="_blank" rel="noopener" aria-label="{{ person.name }} on LinkedIn">{{ icon("linkedin") }}</a></li>
       {%- endif %}
       {%- if links.twitter %}
-      <li><a href="{{ links.twitter }}" target="_blank" rel="noopener" aria-label="{{ person.name }} on X / Twitter">{{ icon("twitter") }}</a></li>
+      <li><a href="{{ links.twitter | extLink }}" target="_blank" rel="noopener" aria-label="{{ person.name }} on X / Twitter">{{ icon("twitter") }}</a></li>
       {%- endif %}
       {%- if links.bluesky %}
-      <li><a href="{{ links.bluesky }}" target="_blank" rel="noopener" aria-label="{{ person.name }} on Bluesky">{{ icon("bluesky") }}</a></li>
+      <li><a href="{{ links.bluesky | extLink }}" target="_blank" rel="noopener" aria-label="{{ person.name }} on Bluesky">{{ icon("bluesky") }}</a></li>
       {%- endif %}
       {%- if links.mastodon %}
-      <li><a href="{{ links.mastodon }}" target="_blank" rel="noopener" aria-label="{{ person.name }} on Mastodon">{{ icon("mastodon") }}</a></li>
+      <li><a href="{{ links.mastodon | extLink }}" target="_blank" rel="noopener" aria-label="{{ person.name }} on Mastodon">{{ icon("mastodon") }}</a></li>
       {%- endif %}
     </ul>
     {%- endif %}
