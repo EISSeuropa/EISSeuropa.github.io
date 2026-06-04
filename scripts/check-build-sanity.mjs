@@ -16,8 +16,17 @@
  *      value. The link checker treats an empty href as a no-op, not a
  *      broken link, so it slips through.
  *
+ *   3. Scheme-less profile links in src/_data/board.json. The board card
+ *      template renders `links.*` straight into href, so a value without
+ *      a URL scheme (a bare domain, or a bare ORCID iD) resolves as a
+ *      path on eiss-europa.com and 404s (#522). The .eleventy.js
+ *      `extLink` filter and sync-board.py both normalise these, but this
+ *      asserts the stored data is already clean so a hand-edit can't
+ *      lean silently on the render-time backstop.
+ *
  * Exit 0 when clean, 1 (with a report) on any finding. Run after the
- * build so _site/ exists; the data-key check works without a build.
+ * build so _site/ exists; the data-key + board-link checks work without
+ * a build.
  *
  * Usage: node scripts/check-build-sanity.mjs
  */
@@ -102,7 +111,38 @@ function checkBuiltHtml() {
   }
 }
 
+// ── 3. Scheme-less profile links in src/_data/board.json ────────────────
+function checkBoardLinks() {
+  const file = "src/_data/board.json";
+  if (!existsSync(file)) return;
+  let data;
+  try {
+    data = JSON.parse(readFileSync(file, "utf8"));
+  } catch (e) {
+    problems.push(`${file}: could not parse (${e.message})`);
+    return;
+  }
+  const entries = [...(data.members ?? []), ...(data.support ?? [])];
+  for (const p of entries) {
+    const links = p.links;
+    if (!links || typeof links !== "object") continue;
+    for (const [key, value] of Object.entries(links)) {
+      // publicEmail is rendered as mailto: — not a URL with a scheme.
+      if (key === "publicEmail") continue;
+      if (typeof value !== "string" || !value) continue;
+      if (!/^(https?:)?\/\//.test(value)) {
+        problems.push(
+          `${file}: ${p.name ?? "?"} → links.${key} = "${value}" is missing a ` +
+            `URL scheme; it would render as a relative path and 404 ` +
+            `(use https://… , or for orcid the full https://orcid.org/<id>)`
+        );
+      }
+    }
+  }
+}
+
 checkDataKeys();
+checkBoardLinks();
 checkBuiltHtml();
 
 if (problems.length) {
@@ -111,4 +151,4 @@ if (problems.length) {
   console.error("");
   process.exit(1);
 }
-console.log("✓ build-sanity check passed (no duplicate data keys, no empty/junk href/src).");
+console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src).");
