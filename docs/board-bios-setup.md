@@ -70,6 +70,7 @@ just don't merge.
 
 - *(None — leave blank)* → falls through to *Board Member* (tier 100)
 - Founding Director
+- Co-Director
 - Treasurer
 - Secretary-General
 - Support Staff
@@ -296,7 +297,7 @@ new role (e.g. "Liaison Officer"):
    { "label": "Liaison Officer", "kind": "board", "tier": 50 }
    ```
    `tier` controls where on the page the new role appears (lower =
-   higher up). Tiers 1–3 are the existing leadership tiers, 100 is the
+   higher up). Tiers 1–4 are the existing leadership tiers, 100 is the
    default for Board Member.
 3. Commit, merge, run the workflow.
 
