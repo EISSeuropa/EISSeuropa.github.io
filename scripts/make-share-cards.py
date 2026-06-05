@@ -82,13 +82,24 @@ CARDS = [
         "de": {"eyebrow": "EISS", "title": "Europäische Initiative für Sicherheitsstudien",
                "subtitle": "Europas größte Versammlung zu Sicherheitsfragen"},
     }},
-    # NB: the per-year conference pages (/2026, /2025, /2024) and the
-    # archive index (/past) all share ONE share card — `past-meta.*` —
-    # since the conference-card unification (#485). So there are no per-year
-    # cards here; generating them would only produce orphans (which is what
-    # #516 cleaned up). Whether the upcoming flagship edition deserves its
-    # own card again (rather than the "Past conferences" shared one) is
-    # tracked separately.
+    # Conference cards split two ways (see #536):
+    #   - The upcoming / live edition gets its OWN card, titled with the
+    #     full conference name ("European Security Studies Conference"),
+    #     below as the `2026` slug; /2026 (+ .fr/.de) point their metaImage
+    #     at 2026-meta.*.
+    #   - The archived years (/2025, /2024) and the /past index share the
+    #     `past` card, titled "EISS Annual Conference".
+    # Rollover: when this edition becomes past, repoint /2026 to past-meta
+    # and add the next edition here under its own slug. See
+    # docs/new-conference.md.
+    {"slug": "2026", "i18n": {
+        "en": {"eyebrow": "ESSC 2026", "title": "European Security Studies Conference",
+               "subtitle": "11–12 June 2026 · Stockholm University"},
+        "fr": {"eyebrow": "ESSC 2026", "title": "Conférence européenne d'études de sécurité",
+               "subtitle": "11–12 juin 2026 · Université de Stockholm"},
+        "de": {"eyebrow": "ESSC 2026", "title": "Europäische Konferenz für Sicherheitsstudien",
+               "subtitle": "11.–12. Juni 2026 · Universität Stockholm"},
+    }},
     {"slug": "board", "i18n": {
         "en": {"eyebrow": "About", "title": "The People",
                "subtitle": "The EISS board and support team"},
@@ -98,12 +109,12 @@ CARDS = [
                "subtitle": "Der EISS-Vorstand und das Unterstützungsteam"},
     }},
     {"slug": "past", "i18n": {
-        "en": {"eyebrow": "Conferences", "title": "Past conferences",
-               "subtitle": "Annual conferences 2017 → today"},
-        "fr": {"eyebrow": "Conférences", "title": "Conférences passées",
-               "subtitle": "Conférences annuelles 2017 → aujourd'hui"},
-        "de": {"eyebrow": "Konferenzen", "title": "Vergangene Konferenzen",
-               "subtitle": "Jahreskonferenzen 2017 → heute"},
+        "en": {"eyebrow": "Conferences", "title": "EISS Annual Conference",
+               "subtitle": "Every edition since 2017"},
+        "fr": {"eyebrow": "Conférences", "title": "Conférence annuelle de l'EISS",
+               "subtitle": "Toutes les éditions depuis 2017"},
+        "de": {"eyebrow": "Konferenzen", "title": "EISS-Jahreskonferenz",
+               "subtitle": "Alle Ausgaben seit 2017"},
     }},
     {"slug": "programmes", "i18n": {
         "en": {"eyebrow": "Research programmes", "title": "Programmes",

@@ -70,15 +70,21 @@ Copy `src/2026.njk` to `src/2027.njk` (and its FR/DE siblings) and:
 
 ## 3. Generate the share card
 
+The upcoming / live edition gets its own card, titled with the full
+conference name. The eyebrow (`ESSC <year>`) and subtitle (dates + venue)
+identify the edition; the title stays constant year to year. The archived
+years and `/past` keep the shared `past` card ("EISS Annual Conference"),
+so you don't touch those.
+
 Add a new entry to `scripts/make-share-cards.py` → `CARDS`:
 
 ```python
 {"slug": "2027", "i18n": {
-    "en": {"eyebrow": "Annual conference", "title": "ESSC 2027 — Amsterdam",
+    "en": {"eyebrow": "ESSC 2027", "title": "European Security Studies Conference",
            "subtitle": "23–24 June 2027 · University of Amsterdam"},
-    "fr": {"eyebrow": "Conférence annuelle", "title": "ESSC 2027 — Amsterdam",
+    "fr": {"eyebrow": "ESSC 2027", "title": "Conférence européenne d'études de sécurité",
            "subtitle": "23–24 juin 2027 · Université d'Amsterdam"},
-    "de": {"eyebrow": "Jahreskonferenz", "title": "ESSC 2027 — Amsterdam",
+    "de": {"eyebrow": "ESSC 2027", "title": "Europäische Konferenz für Sicherheitsstudien",
            "subtitle": "23.–24. Juni 2027 · Universität Amsterdam"},
 }},
 ```
@@ -90,7 +96,8 @@ python3 scripts/make-share-cards.py
 ```
 
 The script writes `2027-meta.jpg`, `2027-meta.fr.jpg`, `2027-meta.de.jpg`
-to `src/assets/images/`. Reference these in the new page's front-matter.
+to `src/assets/images/`. Point the new page's front-matter `metaImage`
+(EN + FR + DE) at `/assets/images/2027-meta.jpg`.
 
 ## 4. Update the i18n drift state
 
@@ -127,12 +134,27 @@ check the featured card and archive list. Commit, push, merge.
 
 ## When the conference is over
 
-Nothing to do. The `endDate` field in `conferences.js` tells the data
-file to move the entry from `next`/`upcoming` to `past` automatically
-on the next build. The daily-rebuild workflow
+The page placement is automatic: the `endDate` field in `conferences.js`
+moves the entry from `next`/`upcoming` to `past` on the next build, and
+the daily-rebuild workflow
 ([`.github/workflows/scheduled-rebuild.yml`](../.github/workflows/scheduled-rebuild.yml))
-ensures the cut-off advances within ~24 hours of the end date without
-any manual action.
+advances the cut-off within ~24 hours of the end date without any manual
+action.
+
+One manual step for the **share card**: retire the just-past edition's
+bespoke card so the archive reads with the shared "EISS Annual
+Conference" card.
+
+- Point that year's page front-matter `metaImage` (EN + FR + DE) back at
+  `/assets/images/past-meta.jpg`.
+- Remove the year's entry from `CARDS` in `scripts/make-share-cards.py`
+  and delete its `<year>-meta.*` files (otherwise the generator keeps
+  producing an unreferenced per-year card — a `check-build-sanity` /
+  orphan check will flag it).
+
+This is the same swap, in reverse, that step 3 does for the new edition,
+so at any time exactly one edition (the upcoming / live one) carries the
+full-name card and everything else shares the archive card.
 
 If you want to keep the just-past year visible in the homepage hero
 for a few days after, edit `src/_data/conferences.js` and bump that
