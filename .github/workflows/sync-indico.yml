@@ -11,13 +11,17 @@
 #     co-authors, times, rooms, and abstracts added / removed / changed.
 #     The maintainer sees precisely what a sync will alter before it goes
 #     live, and merges with one click.
-#   - Timestamp only      → direct-commit the refreshed `syncedAt` to
-#     master so the "Last refreshed" line on the site stays current,
-#     without opening a noisy empty PR.
+#   - Timestamp only      → nothing to commit. `syncedAt` is internal
+#     metadata that nothing on the site renders, so a daily timestamp
+#     bump isn't worth a commit. If a "Last refreshed" line is ever
+#     surfaced, derive it from the daily scheduled-rebuild's build time
+#     rather than committing a timestamp every day.
 #
-# (Earlier this workflow always direct-committed. The PR path was added
-# so programme changes in the run-up to a conference are visible and
-# reviewable rather than landing silently.)
+# (History: this path used to direct-commit the timestamp to master, and
+# earlier still the whole workflow direct-committed. The PR path was added
+# so programme changes near a conference are reviewable; the timestamp
+# direct-commit was then dropped when branch protection began requiring
+# PRs for every change to master — a daily no-op push only failed the job.)
 #
 # Failure handling
 # ----------------
@@ -73,19 +77,14 @@ jobs:
           SYNC_INDICO_BODY_FILE: /tmp/indico-pr-body.md
         run: python3 scripts/sync-indico.py
 
-      - name: Direct-commit timestamp-only refresh
+      - name: Timestamp-only change — nothing to commit
         if: steps.sync.outputs.substantive != 'true'
         run: |
-          if [[ -n "$(git status --porcelain src/_data/indico.json)" ]]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add src/_data/indico.json
-            git commit -m "data: sync events from Indico ($(date -u +%Y-%m-%d)) [timestamp refresh]"
-            git push
-            echo "Pushed timestamp-only indico.json refresh to master."
-          else
-            echo "No change — indico.json already up to date."
-          fi
+          echo "No substantive programme change; only the syncedAt timestamp moved."
+          echo "syncedAt is internal metadata that nothing on the site renders, so a"
+          echo "daily timestamp bump is not worth a commit — and master is protected"
+          echo "(direct pushes are rejected; real changes go through the PR path"
+          echo "above). Leaving master untouched."
 
       - name: Open detailed PR for substantive changes
         if: steps.sync.outputs.substantive == 'true'
