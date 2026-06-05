@@ -390,10 +390,17 @@ h4 { font-size: var(--fs-lg); }
        (the nav-actions container has its own gap). */
     margin-right: 0;
     padding: 2px;
+    gap: 4px;
   }
   .lang-chip {
-    padding: 3px 7px;
-    font-size: 10px;
+    /* Give the locale chips a 44px touch surface (June 2026 mobile-UX
+       audit) without shrinking the type below the readable floor: keep
+       11px rather than dropping to 10px. */
+    min-height: 44px;
+    padding: 0 9px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
   }
 }
 
@@ -844,14 +851,25 @@ h4 { font-size: var(--fs-lg); }
     transform: translateY(-12px);
     opacity: 0;
     pointer-events: none;
+    /* visibility:hidden (not just opacity:0) so the collapsed drawer's
+       links leave the focus order + accessibility tree — otherwise
+       keyboard/VoiceOver users tab through invisible nav items while the
+       menu is "closed" (June 2026 mobile-UX audit). Delayed in the
+       transition so the close fade still plays before it hides. */
+    visibility: hidden;
     transition: transform var(--motion-base) var(--ease-out),
-                opacity var(--motion-base) var(--ease-out);
+                opacity var(--motion-base) var(--ease-out),
+                visibility 0s linear var(--motion-base);
   }
 
   .nav-links[data-open="true"] {
     transform: translateY(0);
     opacity: 1;
     pointer-events: auto;
+    visibility: visible;
+    transition: transform var(--motion-base) var(--ease-out),
+                opacity var(--motion-base) var(--ease-out),
+                visibility 0s;
   }
 
   .nav-link {
@@ -913,7 +931,12 @@ h4 { font-size: var(--fs-lg); }
 
 .hero h1 {
   color: white;
-  font-size: clamp(2.5rem, 2rem + 3.6vw, 4.5rem);
+  /* Lower the clamp floor so the phone size matches the calmer /2026
+     hero (June 2026 mobile-UX audit): at 375px the old 2.5rem min
+     resolved to ~45.5px and wrapped to 4+ lines, eating the first
+     viewport. text-wrap:balance evens the ragged wrap. */
+  font-size: clamp(2.1rem, 1.6rem + 3vw, 4.5rem);
+  text-wrap: balance;
   letter-spacing: var(--tracking-display);
   margin-bottom: var(--space-5);
 }
@@ -1976,7 +1999,9 @@ h4 { font-size: var(--fs-lg); }
   background: var(--surface-strong);
   border: 1px solid var(--border);
   color: var(--text);
-  font-size: 0.92em;
+  /* Match the 13px parent rather than 0.92em (~12px) — the pill carries
+     real reading words like "Events Coordinator" (June 2026 audit). */
+  font-size: 1em;
   font-weight: 500;
   text-transform: none;
   letter-spacing: 0;
@@ -5343,4 +5368,24 @@ a.joint-orgs-card:hover .joint-orgs-name {
 @media print {
   /* Photo galleries are decorative; don't waste pages or colour ink on them. */
   .photo-gallery { display: none; }
+}
+
+/* ---------- Mobile tap-target + layout floors ----------
+   From the June 2026 mobile-UX audit (live-verified at 375/320px). Lift
+   standalone touch controls to the 44px comfort target and clear two
+   narrow-viewport overflows. Scoped to <=480px so desktop density is
+   unchanged. Inline links stay exempt (WCAG 2.5.8); these are all
+   standalone controls. .person-links already flex-wraps, so 44px icons
+   wrap rather than overflow a multi-link card. The .tile-grid rule needs
+   !important to beat the inline `repeat(auto-fit, minmax(20rem, 1fr))` on
+   the programmes / events / initiative tile grids, whose 20rem (320px)
+   column floor otherwise overflows a 320px viewport. */
+@media (max-width: 480px) {
+  .icon-btn { inline-size: 44px; block-size: 44px; }
+  .btn { min-height: 44px; }
+  .person-links { gap: var(--space-3); }
+  .person-links a { width: 44px; height: 44px; }
+  .person-bio-toggle { min-height: 44px; }
+  .footer-authorship { white-space: normal; }
+  .tile-grid { grid-template-columns: 1fr !important; }
 }
