@@ -102,7 +102,27 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh pr merge \
-            "${{ steps.create-pr.outputs.pull-request-number }}" \
-            --squash --auto \
-            --repo "${{ github.repository }}"
+          # Arm auto-merge, retrying transient GitHub API hiccups (e.g. a
+          # 504 Gateway Timeout on the enable-auto-merge call, which has
+          # failed the job and left a dangling un-merged auto-PR). Treat
+          # "already merged" / "auto-merge already enabled" as success so a
+          # partial first attempt doesn't then fail the retry.
+          pr="${{ steps.create-pr.outputs.pull-request-number }}"
+          repo="${{ github.repository }}"
+          for attempt in 1 2 3 4 5; do
+            if gh pr merge "$pr" --squash --auto --repo "$repo"; then
+              echo "Auto-merge armed (attempt $attempt)."
+              exit 0
+            fi
+            state=$(gh pr view "$pr" --repo "$repo" \
+              --json state,autoMergeRequest \
+              -q '.state + " auto=" + ((.autoMergeRequest != null) | tostring)' || true)
+            echo "Attempt $attempt failed; PR state: $state"
+            case "$state" in
+              MERGED*)    echo "Already merged."; exit 0 ;;
+              *auto=true) echo "Auto-merge already enabled."; exit 0 ;;
+            esac
+            sleep 15
+          done
+          echo "::error::Could not arm auto-merge after 5 attempts."
+          exit 1
