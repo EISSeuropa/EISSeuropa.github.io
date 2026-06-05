@@ -76,11 +76,13 @@ GET_HOSTS = {
     "docs.google.com", "forms.google.com",
 }
 
-# Hosts we deliberately skip. Two categories collapse here. (a)
+# Hosts we deliberately skip. Three categories collapse here. (a)
 # Auth-gated services that require login (the form/page works for
 # real visitors but returns 4xx to anonymous HEAD/GET). (b) Anti-bot
 # filters that block automated requests regardless of method, the
-# destination still works fine for human visitors.
+# destination still works fine for human visitors. (c) Hosts that the
+# GitHub Actions runners cannot reach on a persistent network route
+# (the URL is valid and resolves for visitors; CI just can't connect).
 SKIP_HOSTS = {
     "docs.google.com",          # Google Forms require user auth. The
                                 # form works for real visitors but
@@ -108,6 +110,15 @@ SKIP_HOSTS = {
                                 # UA. The GDPR citation in the privacy
                                 # notice (all three locales) opens fine
                                 # in a browser.
+    "www.su.se",                # Stockholm University (the ESSC 2026
+                                # venue, linked from /2026). Persistently
+                                # "Network is unreachable" from GitHub's
+                                # runners — a CI-side routing/firewall
+                                # issue, not a 4xx; the URL is valid and
+                                # loads for visitors. Skipping trades away
+                                # CI verification of this one link to stop
+                                # the recurring false-red; re-check the
+                                # link by hand if the venue URL changes.
 }
 
 internal_links = {}  # (file, target) for de-dupe display
