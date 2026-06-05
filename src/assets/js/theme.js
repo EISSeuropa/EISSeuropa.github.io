@@ -61,14 +61,17 @@
     const menuBtn = document.querySelector("[data-menu-toggle]");
     const menu = document.querySelector("[data-nav-menu]");
     if (menuBtn && menu) {
-      const closeMenu = () => {
-        menu.setAttribute("data-open", "false");
-        menuBtn.setAttribute("aria-expanded", "false");
+      const setOpen = (open) => {
+        menu.setAttribute("data-open", String(open));
+        menuBtn.setAttribute("aria-expanded", String(open));
+        // Lock body scroll while the drawer is open so a swipe outside it
+        // doesn't scroll the page behind the menu (mirrors body.search-open
+        // for the search modal). June 2026 mobile-UX audit.
+        document.body.classList.toggle("nav-open", open);
       };
+      const closeMenu = () => setOpen(false);
       menuBtn.addEventListener("click", () => {
-        const open = menu.getAttribute("data-open") === "true";
-        menu.setAttribute("data-open", String(!open));
-        menuBtn.setAttribute("aria-expanded", String(!open));
+        setOpen(menu.getAttribute("data-open") !== "true");
       });
       menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeMenu));
       // Escape closes the open menu and returns focus to the toggle.
