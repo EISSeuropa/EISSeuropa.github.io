@@ -3522,6 +3522,12 @@ h4 { font-size: var(--fs-lg); }
 }
 .search-overlay[hidden] { display: none; }
 body.search-open { overflow: hidden; }
+/* Lock body scroll while the mobile nav drawer is open (<=880px, the
+   breakpoint where .nav-links becomes a drawer) so the page doesn't
+   scroll behind it. June 2026 mobile-UX audit. */
+@media (max-width: 880px) {
+  body.nav-open { overflow: hidden; }
+}
 .search-dialog {
   width: 100%;
   max-width: 40rem;
