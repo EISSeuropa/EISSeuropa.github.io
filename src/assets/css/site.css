@@ -393,10 +393,12 @@ h4 { font-size: var(--fs-lg); }
     gap: 4px;
   }
   .lang-chip {
-    /* Give the locale chips a 44px touch surface (June 2026 mobile-UX
-       audit) without shrinking the type below the readable floor: keep
-       11px rather than dropping to 10px. */
-    min-height: 44px;
+    /* Comfortable touch target without the chunky pill that a full 44px
+       chip produced (it made the switcher taller than the 44px icon
+       buttons beside it). 38px keeps a 42px pill — a touch slimmer than
+       the icon circles — well above the old ~16px and the 24px AA floor.
+       Type held at 11px, not the previous 10px. */
+    min-height: 38px;
     padding: 0 9px;
     display: inline-flex;
     align-items: center;
