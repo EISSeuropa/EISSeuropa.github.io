@@ -93,7 +93,9 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
-_Nothing yet._
+### Changed
+
+- **The roadmap progress bars now say "so far".** The in-progress card's bar read "{closed} of {total} issues closed", which looked like a finished release whenever the count hit its total. But the total is only the work milestoned to that release so far, and it grows through the cycle. The label (EN + FR + DE, and the matching `aria-label`) now reads "{closed} of {total} issues closed so far", so the bar reads as a running tally rather than a completeness claim.
 
 ## [2.25.0] · 2026-06-09 — Ready for Stockholm
 
