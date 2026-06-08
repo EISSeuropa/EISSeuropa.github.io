@@ -832,7 +832,17 @@ h4 { font-size: var(--fs-lg); }
 @media (max-width: 880px) {
   .nav-links {
     position: fixed;
-    inset-block-start: var(--nav-height, 64px);
+    /* The drawer is `position: fixed`, but its containing block is
+       `.site-header`, not the viewport: `.site-header` carries a
+       `backdrop-filter` (the frosted nav), and backdrop-filter
+       establishes a containing block for fixed descendants. So insets
+       resolve against the header, not the screen. `100%` therefore
+       lands the drawer flush at the header's own bottom edge, tracking
+       the variable chrome (beta ribbon, What's New banner, scroll-shrink)
+       for free with no measured `--nav-height`. The old hard-coded 64px
+       was a viewport guess that double-counted the chrome and overlapped
+       it on FR/DE pages (#555). */
+    inset-block-start: 100%;
     inset-inline-end: 0;
     inset-inline-start: 0;
     flex-direction: column;
@@ -847,7 +857,12 @@ h4 { font-size: var(--fs-lg); }
     background: var(--bg-elev);
     border-block-end: 1px solid var(--border);
     box-shadow: var(--shadow-3);
-    max-block-size: calc(100dvh - var(--nav-height, 64px));
+    /* `100%` is the header height (the containing block, see above), so
+       this caps the drawer at viewport-minus-header and keeps its own
+       `overflow-y` scroll if the menu ever outgrows the screen. The
+       site's six links never reach this, so the drawer is auto-height
+       and sits fully within the viewport in practice. */
+    max-block-size: calc(100dvh - 100%);
     overflow-y: auto;
     overscroll-behavior: contain;
     transform: translateY(-12px);
