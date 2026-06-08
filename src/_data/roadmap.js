@@ -33,7 +33,7 @@ const roadmap = {
   issuesUrl: `${REPO}/issues/new/choose`,
   milestonesUrl: `${REPO}/milestones`,
   releasesUrl: `${REPO}/releases`,
-  updated: { en: "31 May 2026", fr: "31 mai 2026", de: "31. Mai 2026" },
+  updated: { en: "9 June 2026", fr: "9 juin 2026", de: "9. Juni 2026" },
 
   quarters: [
     {
@@ -114,18 +114,18 @@ const roadmap = {
         },
         {
           status: "planned",
-          version: "v2.24.1",
-          milestone: "v2.24.1",
-          when: { en: "9 June 2026 · v2.24.1", fr: "9 juin 2026 · v2.24.1", de: "9. Juni 2026 · v2.24.1" },
+          version: "v2.25.0",
+          milestone: "v2.25.0",
+          when: { en: "9 June 2026 · v2.25.0", fr: "9 juin 2026 · v2.25.0", de: "9. Juni 2026 · v2.25.0" },
           title: {
-            en: "Pre-ESSC polishing patch",
-            fr: "Correctif de finition avant l’ESSC",
-            de: "Feinschliff-Patch vor der ESSC",
+            en: "Ready for Stockholm",
+            fr: "Prêt pour Stockholm",
+            de: "Bereit für Stockholm",
           },
           desc: {
-            en: "The last quality pass before ESSC 2026 opens in Stockholm: quality-of-life and UX polish, a QA and accessibility sweep, and refreshed FR and DE translations.",
-            fr: "La dernière passe de qualité avant l’ouverture de l’ESSC 2026 à Stockholm : améliorations du confort d’usage et de l’UX, revue QA et accessibilité, et traductions FR et DE rafraîchies.",
-            de: "Der letzte Qualitätsdurchgang vor der Eröffnung der ESSC 2026 in Stockholm: Verbesserungen bei Bedienkomfort und UX, eine QA- und Barrierefreiheitsprüfung sowie aufgefrischte FR- und DE-Übersetzungen.",
+            en: "The pre-conference release: site-wide search, a public roadmap and a press kit, the whole interface pulled onto one brand blue with redesigned share cards, a markedly better mobile experience, and the ESSC 2026 run-up (countdown, downloadable programmes, add-to-calendar links).",
+            fr: "La version d’avant-conférence : recherche sur tout le site, feuille de route publique et kit de presse, interface entièrement alignée sur le bleu de la marque avec des cartes de partage repensées, expérience mobile nettement améliorée, et la préparation de l’ESSC 2026 (compte à rebours, programmes téléchargeables, liens d’ajout au calendrier).",
+            de: "Die Version vor der Konferenz: websiteweite Suche, eine öffentliche Roadmap und ein Pressekit, die gesamte Oberfläche auf das Markenblau ausgerichtet mit überarbeiteten Sharing-Karten, eine deutlich bessere mobile Nutzung und der Vorlauf zur ESSC 2026 (Countdown, herunterladbare Programme, Kalenderlinks).",
           },
         },
         {
@@ -155,18 +155,18 @@ const roadmap = {
       entries: [
         {
           status: "planned",
-          version: "v2.25.0",
-          milestone: "v2.25.0",
-          when: { en: "July 2026 · v2.25.0", fr: "juillet 2026 · v2.25.0", de: "Juli 2026 · v2.25.0" },
+          version: "v2.26.0",
+          milestone: "v2.26.0",
+          when: { en: "September 2026 · v2.26.0", fr: "septembre 2026 · v2.26.0", de: "September 2026 · v2.26.0" },
           title: {
-            en: "Post-ESSC activation",
-            fr: "Activation post-ESSC",
-            de: "Aktivierung nach der ESSC",
+            en: "Post-conference: activation, content and feedback",
+            fr: "Après la conférence : activation, contenus et retours",
+            de: "Nach der Konferenz: Aktivierung, Inhalte und Feedback",
           },
           desc: {
-            en: "Turns built-but-idle Indico capability into visible value: the live programme grid on past conferences and calendar subscription links, alongside reliability work (workflow failure alerts, the Node-24 Actions pin, a wider i18n drift check).",
-            fr: "Transforme des fonctions Indico déjà construites mais inactives en valeur visible : la grille du programme en direct sur les conférences passées et des liens d’abonnement au calendrier, ainsi qu’un travail de fiabilité (alertes d’échec des workflows, épinglage des Actions sur Node 24, contrôle de dérive i18n élargi).",
-            de: "Macht bereits gebaute, aber brachliegende Indico-Funktionen sichtbar nutzbar: das Live-Programmraster auf vergangenen Konferenzen und Kalender-Abolinks, dazu Zuverlässigkeitsarbeiten (Fehlermeldungen für Workflows, Node-24-Pinning der Actions, erweiterter i18n-Abgleich).",
+            en: "The first release after ESSC 2026, folding in feedback from the conference: new public surfaces (a News surface, an Outputs / Publications page, a Working Groups page, a NetSec co-branding strip), the live programme grid on past conferences with calendar links, and the reliability and accessibility follow-ups carried over from the pre-conference push.",
+            fr: "La première version après l’ESSC 2026, intégrant les retours de la conférence : de nouvelles pages publiques (un espace Actualités, une page Publications, une page Groupes de travail, un bandeau de co-marquage NetSec), la grille du programme en direct sur les conférences passées avec liens calendrier, et les suites de fiabilité et d’accessibilité reportées depuis la préparation d’avant-conférence.",
+            de: "Die erste Version nach der ESSC 2026, die das Feedback der Konferenz aufnimmt: neue öffentliche Seiten (ein Aktuelles-Bereich, eine Publikationen-Seite, eine Arbeitsgruppen-Seite, ein NetSec-Co-Branding-Streifen), das Live-Programmraster auf vergangenen Konferenzen mit Kalenderlinks sowie die Zuverlässigkeits- und Barrierefreiheits-Folgearbeiten aus der Vorbereitung vor der Konferenz.",
           },
         },
       ],
@@ -181,34 +181,18 @@ const roadmap = {
       entries: [
         {
           status: "planned",
-          version: "v2.26.0",
-          milestone: "v2.26.0",
-          when: { en: "October 2026 · v2.26.0", fr: "octobre 2026 · v2.26.0", de: "Oktober 2026 · v2.26.0" },
-          title: {
-            en: "Public content surfaces",
-            fr: "Nouvelles pages de contenu public",
-            de: "Öffentliche Inhaltsseiten",
-          },
-          desc: {
-            en: "New public surfaces with the brand identity in place: a News surface on the homepage, an Outputs / Publications page, a Working Groups page, a NetSec co-branding strip in the header, and an auto-populated organising committee.",
-            fr: "De nouvelles pages publiques, l’identité de marque désormais en place : un espace Actualités sur la page d’accueil, une page Publications, une page Groupes de travail, un bandeau de co-marquage NetSec dans l’en-tête, et un comité d’organisation alimenté automatiquement.",
-            de: "Neue öffentliche Seiten mit etablierter Markenidentität: ein Aktuelles-Bereich auf der Startseite, eine Publikationen-Seite, eine Arbeitsgruppen-Seite, ein NetSec-Co-Branding-Streifen im Kopfbereich und ein automatisch befülltes Organisationskomitee.",
-          },
-        },
-        {
-          status: "planned",
           version: "v2.27.0",
           milestone: "v2.27.0",
           when: { en: "December 2026 · v2.27.0", fr: "décembre 2026 · v2.27.0", de: "Dezember 2026 · v2.27.0" },
           title: {
-            en: "Search, polish, ESSC 2027 prep",
-            fr: "Recherche, finitions, préparation de l’ESSC 2027",
-            de: "Suche, Feinschliff, Vorbereitung der ESSC 2027",
+            en: "Polish and ESSC 2027 prep",
+            fr: "Finitions et préparation de l’ESSC 2027",
+            de: "Feinschliff und Vorbereitung der ESSC 2027",
           },
           desc: {
-            en: "Site-wide search (Pagefind, wired into the 404 page first), a build-time guard against CSS class collisions, expanded open-panel examples, and the ESSC 2027 announcement rollover.",
-            fr: "Une recherche sur tout le site (Pagefind, d’abord intégrée à la page 404), une protection à la compilation contre les collisions de classes CSS, des exemples de panels ouverts enrichis, et l’annonce de l’ESSC 2027.",
-            de: "Eine websiteweite Suche (Pagefind, zunächst in die 404-Seite eingebunden), ein Build-Schutz gegen CSS-Klassenkollisionen, erweiterte Beispiele offener Panels und die Ankündigung der ESSC 2027.",
+            en: "A build-time guard against CSS class collisions, the mobile nav-drawer alignment refinement, expanded open-panel examples, and the ESSC 2027 announcement rollover. (Site-wide search shipped early, in v2.25.0.)",
+            fr: "Une protection à la compilation contre les collisions de classes CSS, l’ajustement de l’alignement du tiroir de navigation mobile, des exemples de panels ouverts enrichis, et l’annonce de l’ESSC 2027. (La recherche sur tout le site est arrivée plus tôt, dans la v2.25.0.)",
+            de: "Ein Build-Schutz gegen CSS-Klassenkollisionen, die Feinjustierung der mobilen Navigationsschublade, erweiterte Beispiele offener Panels und die Ankündigung der ESSC 2027. (Die websiteweite Suche kam früher, in v2.25.0.)",
           },
         },
       ],
