@@ -96,6 +96,10 @@ SKIP_HOSTS = {
                                 # profile URLs (board cards) work for
                                 # any logged-out visitor with a
                                 # browser.
+    "twitter.com",              # X/Twitter 403s unauthenticated bots
+                                # (same class as LinkedIn). The EISS
+                                # profile link in the footer resolves
+                                # fine for visitors.
     "shs.cairn.info",           # Cairn (academic publisher hosting
                                 # the Champs de Mars article in /
                                 # initiative) returns 403 to anonymous
@@ -119,6 +123,14 @@ SKIP_HOSTS = {
                                 # CI verification of this one link to stop
                                 # the recurring false-red; re-check the
                                 # link by hand if the venue URL changes.
+    "europeangovernanceandpolitics.eui.eu",
+                                # EUI's European Governance and Politics
+                                # programme (the Global Risks report,
+                                # linked from /GlobalRisks). Repeatedly
+                                # times out from GitHub's runners (same
+                                # CI-side reachability class as su.se, a
+                                # timeout not a 4xx). Loads for visitors;
+                                # skipping stops the recurring false-red.
 }
 
 internal_links = {}  # (file, target) for de-dupe display
