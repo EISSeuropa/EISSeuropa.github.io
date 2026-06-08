@@ -93,6 +93,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+_Nothing yet._
+
+## [2.25.0] · 2026-06-09 — Ready for Stockholm
+
 > ESSC 2026 opens in Stockholm on 11 - 12 June, and this release gets the site ready for it. Site-wide search, a public roadmap, a licensing page and a press kit make the site easier to navigate and to reuse. The whole interface is pulled onto one brand blue, with redesigned landscape share cards. The phone experience is markedly better and kinder to assistive tech. And the conference itself is everywhere you look: a countdown on the homepage, downloadable programmes for every recent edition, add-to-calendar links on synced events, and the 2025 conference film now playing.
 
 ### Find your way around
@@ -1051,7 +1055,8 @@ Preview MCP screenshots of `/index.fr.html`, `/index.de.html`, `/initiative.de.h
 
 *Originally tagged as **v2.0.0**; renumbered to **v2.0.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
 
-[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.24.0...HEAD
+[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.25.0...HEAD
+[2.25.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.24.0...v2.25.0
 [2.24.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.23.1...v2.24.0
 [2.23.1]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.23.0...v2.23.1
 [2.23.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.22.0...v2.23.0
