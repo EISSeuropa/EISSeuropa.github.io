@@ -113,9 +113,10 @@ const roadmap = {
           },
         },
         {
-          status: "planned",
+          status: "shipped",
           version: "v2.25.0",
-          milestone: "v2.25.0",
+          notesUrl: notes("v2.25.0"),
+          changes: 74,
           when: { en: "9 June 2026 · v2.25.0", fr: "9 juin 2026 · v2.25.0", de: "9. Juni 2026 · v2.25.0" },
           title: {
             en: "Ready for Stockholm",

@@ -49,7 +49,7 @@ other way round, so this is where a new release first appears.
 | Release | Target | Status | Headline |
 | --- | --- | --- | --- |
 | v2.24.0 | 30 May 2026 | **Shipped** | Live programme depth and a print overhaul |
-| v2.25.0 | 9 Jun 2026 | In progress | Ready for Stockholm (pre-conference release) |
+| v2.25.0 | 9 Jun 2026 | **Shipped** | Ready for Stockholm (pre-conference release) |
 | v2.26.0 | Sep 2026 | Planned | Post-conference: activation, content & feedback |
 | v2.27.0 | Dec 2026 | Planned | Polish and ESSC 2027 prep |
 
