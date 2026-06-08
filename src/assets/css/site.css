@@ -5424,3 +5424,63 @@ a.joint-orgs-card:hover .joint-orgs-name {
   .footer-authorship { white-space: normal; }
   .tile-grid { grid-template-columns: 1fr !important; }
 }
+
+/* ---------- People hovercards ----------
+   A subtle inline link on any known People-page person's name (wired up by
+   src/assets/js/people-hovercards.js) plus the profile card it reveals on
+   hover / keyboard focus. */
+.person-ref {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted var(--accent);
+  cursor: help;
+}
+.person-ref:hover,
+.person-ref:focus-visible {
+  color: var(--accent);
+  border-bottom-color: currentColor;
+}
+
+.person-hovercard {
+  position: absolute;
+  /* Above the sticky chrome (z 200) so a card opening near the top of the
+     page isn't clipped by the header / banner. */
+  z-index: 210;
+  inline-size: min(21rem, calc(100vw - 16px));
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-3);
+  opacity: 0;
+  transform: translateY(4px);
+  pointer-events: none;
+  transition: opacity var(--motion-fast) var(--ease-out),
+              transform var(--motion-fast) var(--ease-out);
+}
+.person-hovercard.is-visible { opacity: 1; transform: none; pointer-events: auto; }
+.person-hovercard-media {
+  flex: 0 0 auto;
+  inline-size: 56px;
+  block-size: 56px;
+  border-radius: var(--radius-full);
+  background-size: cover;
+  background-position: center;
+  background-color: var(--surface-strong);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+.person-hovercard-body { min-inline-size: 0; }
+.person-hovercard-name { margin: 0; font-weight: 700; line-height: 1.25; }
+.person-hovercard-role { margin: 2px 0 0; color: var(--accent); font-size: var(--fs-sm); }
+.person-hovercard-aff  { margin: 2px 0 0; color: var(--text-muted); font-size: var(--fs-sm); }
+.person-hovercard-link { display: inline-block; margin-top: var(--space-2); font-size: var(--fs-sm); font-weight: 600; }
+
+@media print {
+  .person-ref { border-bottom: 0; color: inherit; }
+  .person-hovercard { display: none !important; }
+}
