@@ -7,7 +7,7 @@
       "closed": 73,
       "total": 73,
       "percent": 100,
-      "state": "open",
+      "state": "closed",
       "due": "2026-06-09"
     },
     "v2.25.0": {
@@ -15,14 +15,14 @@
       "total": 31,
       "percent": 100,
       "state": "open",
-      "due": "2026-07-31"
+      "due": "2026-06-09"
     },
     "v2.26.0": {
       "closed": 15,
       "total": 33,
       "percent": 45,
       "state": "open",
-      "due": "2026-10-31"
+      "due": "2026-09-30"
     },
     "v2.27.0": {
       "closed": 2,
