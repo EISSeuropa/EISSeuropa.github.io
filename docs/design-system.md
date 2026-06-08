@@ -100,3 +100,26 @@ countdown live recompute · film lazy-load + autoplay/pause + sound +
 play-overlay · What's-New banner · mobile menu toggle. Search is in its
 own `search.js`. Verify interactions with `preview_eval` computed reads,
 not screenshots (CLAUDE.md §14).
+
+## People hovercards
+
+Any known People-page person's name, wherever it appears in body prose, is
+turned into a subtle link to their profile that reveals a small profile card
+(photo, role, affiliation, "View profile") on hover or keyboard focus.
+
+- **Source of truth:** `src/_data/peopleIndex.js` builds the index from
+  `boardSorted` (i.e. `board.json`), emitted to `/data/people-index.json` by
+  `src/people-index.njk`. Add or edit a person on the People page and they are
+  covered everywhere automatically — no per-page markup.
+- **Enhancer:** `src/assets/js/people-hovercards.js` (loaded globally from
+  `base.njk`) fetches the index, scans the page for exact, case-sensitive
+  "First Last" names (middle initials dropped at index time) on whole-word
+  boundaries, and wraps each match in `a.person-ref`. The shared
+  `.person-hovercard` is shown on hover/focus and dismissed on blur/Escape.
+- **Not scanned:** existing links, the page `h1`, `nav`/header/footer, `code`,
+  the People cards themselves (`.person`), and any subtree marked
+  `data-no-hovercard`. Names shared by two people, or single-token names, are
+  dropped from the index so matching stays unambiguous.
+- **Systematic check:** because detection is client-side against the generated
+  index, this is the mechanism that keeps the behaviour current as new pages
+  are authored. No author action is needed when a known person is named.
