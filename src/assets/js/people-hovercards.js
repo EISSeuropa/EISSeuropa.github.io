@@ -170,9 +170,9 @@
         a.href = profileUrl(person);
         a.textContent = m[1];
         a._person = person;
-        a.addEventListener("mouseenter", function () { show(a); });
+        a.addEventListener("mouseenter", function () { show(this); });
         a.addEventListener("mouseleave", scheduleHide);
-        a.addEventListener("focus", function () { show(a); });
+        a.addEventListener("focus", function () { show(this); });
         a.addEventListener("blur", scheduleHide);
         frag.appendChild(a);
         last = m.index + m[1].length;
