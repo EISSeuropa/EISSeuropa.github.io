@@ -49,10 +49,11 @@ other way round, so this is where a new release first appears.
 | Release | Target | Status | Headline |
 | --- | --- | --- | --- |
 | v2.24.0 | 30 May 2026 | **Shipped** | Live programme depth and a print overhaul |
-| v2.24.1 | 9 Jun 2026 | Planned | Pre-ESSC polishing patch |
-| v2.25.0 | Jul 2026 | Planned | Post-ESSC activation |
-| v2.26.0 | Oct 2026 | Planned | Public content surfaces |
-| v2.27.0 | Dec 2026 | Planned | Search, polish, ESSC 2027 prep |
+| v2.25.0 | 9 Jun 2026 | In progress | Ready for Stockholm (pre-conference release) |
+| v2.26.0 | Sep 2026 | Planned | Post-conference: activation, content & feedback |
+| v2.27.0 | Dec 2026 | Planned | Polish and ESSC 2027 prep |
+
+(`v2.24.1` was planned as a pre-ESSC patch but the work grew into a feature-rich minor, so it shipped as the **v2.25.0** *Ready for Stockholm* release instead; the `v2.24.1` milestone is closed as superseded.)
 
 **Versioning rules**: see the *Versioning* section of
 [`README.md`](../README.md) for the canonical definition of MAJOR /
@@ -65,39 +66,17 @@ releases get cut at milestones.
 
 ## Planned work
 
-### v2.24.1 — Pre-ESSC polishing patch · target 9 June 2026
+### v2.25.0 — Ready for Stockholm · shipped 9 June 2026
 
-The last quality pass before ESSC 2026 opens in Stockholm (11–12
-June). Quality-of-life and UX polish, a QA and accessibility sweep,
-and refreshed FR / DE translations, so the site is in its best shape
-when conference-week visitors arrive. Patch tier, so the index-only
-release-notes shape applies (no lede or themes).
-
-### v2.25.0 — Post-ESSC activation · target July 2026
-
-Turns built-but-idle Indico capability into visible value and clears
-reliability debt.
-
-- **Live programme grid on past conferences** — apply the `/2026`
-  grid to `/2025`, `/2024`, `/2023` from their Indico timetables.
-  [#59](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/59), M.
-- **Indico calendar subscription links on `/YYYY`** — surface the
-  per-event `.ics` / webcal links so attendees can add sessions to
-  their calendar.
-  [#60](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/60), S.
-- **Language-switcher discoverability** — make the FR / DE switch
-  easier to find in the header.
-  [#98](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/98), S.
-- **Workflow failure notifications** — alert when a scheduled Actions
-  run fails, rather than discovering it on the next manual check.
-  [#56](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/56), S.
-- **Pin GitHub Actions to Node-24-compatible versions** — hard
-  deadline 16 Sep 2026; lands here with margin.
-  [#76](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/76), S.
-- **i18n drift checker covers the chrome catalog** — extend
-  `scripts/check-i18n-drift.py` to track `src/_data/i18n.js` so a
-  changed English chrome string flags its FR / DE siblings.
-  [#82](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/82), M.
+The pre-conference release. Planned originally as the v2.24.1 patch,
+but the brand alignment, the new site search and the new public pages
+together cleared the feature bar for a minor. What shipped: site-wide
+Pagefind search, a public roadmap, a licensing page and a press kit,
+the interface pulled onto the brand blue with redesigned landscape
+share cards, profile hovercards, fully clickable cards, a mobile-UX
+pass, and the ESSC 2026 run-up (countdown, downloadable programmes,
+add-to-calendar links). Full notes in the `[2.25.0]` section of
+[`CHANGELOG.md`](../CHANGELOG.md).
 
 **Native-speaker FR / DE review** (L, depends on volunteers) runs as
 an opportunistic track alongside these releases rather than a single
@@ -109,11 +88,29 @@ drops. Sequence: legal pages first (highest accuracy bar), then
 rest. Per [`docs/i18n.md`](i18n.md). Each reviewed page can ship in
 any patch.
 
-### v2.26.0 — Public content surfaces · target October 2026
+### v2.26.0 — Post-conference: activation, content and feedback · target September 2026
 
-New public pages and homepage surfaces, the post-conference
-information-architecture pass with the brand identity in place.
+The first release after ESSC 2026. It folds in what the old v2.25.0
+plan held (turning built-but-idle Indico capability into visible
+value, clearing reliability debt), the public-content surfaces, and
+whatever conference-week feedback surfaces. The full, current list
+lives on the
+[v2.26.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/9);
+the headline items:
 
+- **Indico calendar subscription links on `/YYYY`** — surface the
+  per-event `.ics` / webcal links so attendees can add sessions to
+  their calendar.
+  [#60](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/60), S.
+- **Language-switcher discoverability** — make the FR / DE switch
+  easier to find in the header.
+  [#98](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/98), S.
+- **Workflow failure notifications** — alert when a scheduled Actions
+  run fails, rather than discovering it on the next manual check.
+  [#56](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/56), S.
+- **Pin GitHub Actions to Node-24-compatible versions** — hard
+  deadline 16 Sep 2026.
+  [#76](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/76), S.
 - **News / Latest on the homepage** — a surface for Action news and
   cross-links to NetSec items relevant to EISS members.
   [#96](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/96), M.
@@ -133,13 +130,15 @@ information-architecture pass with the brand identity in place.
 - **OG-card iconmark overlay** — keep the EISS mark on every social
   share card, the brand follow-up deferred from the v2.23.0 rollout.
   [#157](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/157), S.
+- **Branch-protection Phase 3** — enforce required status checks on
+  `master`.
+  [#501](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/501), S.
+- **Responsive images** — ship `srcset` / `sizes` variants so phones
+  stop downloading full-resolution JPGs.
+  [#554](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/554), M.
 
-### v2.27.0 — Search, polish, ESSC 2027 prep · target December 2026
+### v2.27.0 — Polish and ESSC 2027 prep · target December 2026
 
-- **Pagefind site search** — a deploy-time index wired into the 404
-  page first (the NetSec PR #280 integration is the reference), with
-  a Cmd-K nav trigger as a follow-up once the pipeline proves out.
-  [#209](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/209), M.
 - **CSS class-collision guard** — a build check so an archive
   component can never again override the live grid (the regression
   fixed in v2.24.0).
