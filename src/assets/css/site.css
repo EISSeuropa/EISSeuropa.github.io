@@ -1822,6 +1822,8 @@ h4 { font-size: var(--fs-lg); }
 
 .tile {
   position: relative; /* anchor for a .stretched-link whole-card overlay */
+  display: flex;
+  flex-direction: column;
   padding: var(--space-5);
   background: var(--bg-elev);
   border: 1px solid var(--border);
@@ -1856,6 +1858,31 @@ h4 { font-size: var(--fs-lg); }
   position: absolute;
   inset: 0;
   z-index: 1;
+}
+
+/* Whole-card click fix. The CTA button's press-scale (.btn:active
+   { transform: scale(.97) }) turns the button into the containing block
+   for its OWN stretched ::after, so on mousedown the overlay collapses
+   from covering the whole card down to just the pill — and a release
+   anywhere but the pill is lost. The card still showed a link cursor and
+   hover-lift, so it read as broken (clicking "did nothing"). Hold the
+   transform off the stretched link so the overlay stays anchored to the
+   card through the press. */
+.btn.stretched-link:active { transform: none; }
+
+/* Pin a tile's CTA pill to the bottom-right so the "learn more …" links
+   sit consistently across cards of unequal text length. The tile grid
+   stretches cards to equal height per row, so margin-top:auto drops the
+   pill to the bottom and the pills line up across the row. */
+.tile > p:last-child:has(.btn) {
+  /* !important to beat the inline `margin-top: var(--space-4)` the
+     templates put on the CTA paragraph — without it the pill keeps its
+     fixed 16px top margin and only lands at the bottom when the card's
+     text happens to fill the height. */
+  margin-top: auto !important;
+  margin-bottom: 0;
+  padding-top: var(--space-4);
+  text-align: right;
 }
 
 .tile-icon {
