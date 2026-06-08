@@ -170,9 +170,13 @@
         a.href = profileUrl(person);
         a.textContent = m[1];
         a._person = person;
-        a.addEventListener("mouseenter", function () { show(a); });
+        // Resolve the trigger from the event target (`this`), NOT a captured
+        // `a` — several names can share one text node, and a `var a` closure
+        // would point every handler at the LAST link created here (so every
+        // name in a paragraph showed the last person's card).
+        a.addEventListener("mouseenter", function () { show(this); });
         a.addEventListener("mouseleave", scheduleHide);
-        a.addEventListener("focus", function () { show(a); });
+        a.addEventListener("focus", function () { show(this); });
         a.addEventListener("blur", scheduleHide);
         frag.appendChild(a);
         last = m.index + m[1].length;
