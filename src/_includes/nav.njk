@@ -1,6 +1,7 @@
 {# Nav consumes `t` (the active-locale chrome catalog) and `lang` from base.njk.
    Nav-item href / key / external flag stay in src/_data/site.js;
    only the visible text label is looked up from `t.nav.<key>`. #}
+{% from "icons.njk" import icon %}
 <header class="site-header">
   <nav class="container nav" aria-label="Primary">
     {# Brand link. The `<a>` carries the accessible name; SVGs inside
@@ -50,6 +51,7 @@
          pages the FR/DE chip falls back to the language homepage
          (the `alternates` lookup handles the difference). #}
       <div class="lang-switcher" role="group" aria-label="{{ t.langSwitcher.label }}">
+        <span class="lang-switcher-globe" aria-hidden="true">{{ icon("globe") }}</span>
         {% for L in i18n._order %}
           {%- set href = alternates[L] if alternates and alternates[L] else ('/' if L == 'en' else '/index.' + L + '.html') -%}
           <a class="lang-chip"
