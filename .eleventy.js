@@ -44,9 +44,28 @@ module.exports = function (eleventyConfig) {
   // Path is relative to src/. Errors are intentionally thrown — a
   // missing brand asset should fail the build loudly, not silently
   // emit empty markup that ships to production.
-  eleventyConfig.addShortcode("inlineSvg", (relPath) =>
-    fs.readFileSync(path.join("src", relPath), "utf-8")
-  );
+  //
+  // The id rewrite: the brand SVGs carry internal ids (<title id="t-…">
+  // referenced by aria-labelledby), and the same file is inlined more
+  // than once per page (nav + footer + page content), so verbatim bytes
+  // produce duplicate ids in the DOM (flagged by scripts/a11y_lint.py).
+  // Each inclusion gets a unique "-iN" suffix on every id and on the
+  // same-file references to it (aria-labelledby tokens, #fragment hrefs,
+  // url(#…) paint refs).
+  let inlineSvgCount = 0;
+  eleventyConfig.addShortcode("inlineSvg", (relPath) => {
+    let svg = fs.readFileSync(path.join("src", relPath), "utf-8");
+    const n = ++inlineSvgCount;
+    const ids = [...svg.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]);
+    for (const id of new Set(ids)) {
+      const esc = id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      svg = svg.replace(
+        new RegExp(`(?<=["#\\s(])${esc}(?=["\\s)])`, "g"),
+        `${id}-i${n}`
+      );
+    }
+    return svg;
+  });
 
   // {{ "/2025.html" | localizedHref(lang) }} — given an internal
   // page href + a target locale, return the localised URL if a
