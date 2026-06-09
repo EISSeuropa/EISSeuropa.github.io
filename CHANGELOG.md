@@ -103,6 +103,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- **The "manage your membership" link no longer reads "here".** On `/membership` (EN + FR + DE) the link to the Stripe billing portal was the bare word "here" / "ici" / "hier", which carries no meaning out of its sentence (it is the text a screen reader announces when listing the page's links). It now reads "Stripe billing portal" / "portail de facturation Stripe" / "Stripe-Abrechnungsportal". Closes [#472](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/472).
 - **Inlined brand logos no longer produce duplicate element ids.** The brand SVGs carry internal ids (the `<title>`/`<desc>` pair referenced by `aria-labelledby`), and the same file is inlined more than once per page (the nav, the footer, and page content such as the press-kit previews), so `/initiative` and `/press-kit` shipped duplicate ids in the DOM. The `inlineSvg` shortcode now gives each inclusion a unique suffix on its ids and on the references to them, so every logo keeps its accessible name and every id on the page is unique. Caught by `scripts/a11y_lint.py`, which now runs as a gating CI check on every HTML-touching PR ([#602](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/602)).
 
 ## [2.25.0] · 2026-06-09 — Ready for Stockholm
