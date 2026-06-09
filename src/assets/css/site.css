@@ -1156,7 +1156,13 @@ h4 { font-size: var(--fs-lg); }
 
 /* Registration-status badge surfaced on the homepage featured card, so a
    visitor reads date + venue + status without clicking through. */
-.featured-registration { margin-bottom: var(--space-5); }
+.featured-registration {
+  margin-bottom: var(--space-5);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
 
 .featured-meta strong {
   color: var(--text);
