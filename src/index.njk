@@ -68,6 +68,9 @@ alternates:
         </div>
         <div class="featured-registration">
           {% include "registration-badge.njk" %}
+          {%- if conf.livestreamUrl and conf.endDate >= conferences.today %}
+          <a class="programme-live-tag" href="{{ conf.livestreamUrl }}" target="_blank" rel="noopener">{{ icon("video") }} Livestream {{ icon("external-link") }}</a>
+          {%- endif %}
         </div>
         <div>
           <a class="btn btn-primary" href="/{{ conf.slug }}.html">Learn more about ESSC&nbsp;{{ conf.year }} {{ icon("arrow-right") }}</a>
