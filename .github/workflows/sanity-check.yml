@@ -23,6 +23,7 @@ on:
     paths:
       - 'src/**'
       - 'scripts/check-build-sanity.mjs'
+      - 'scripts/a11y_lint.py'
       - '.github/workflows/sanity-check.yml'
       - 'package.json'
       - 'package-lock.json'
@@ -54,3 +55,10 @@ jobs:
 
       - name: Run build-sanity check
         run: node scripts/check-build-sanity.mjs
+
+      # Static a11y lint over the built site (duplicate ids, missing
+      # alt/labels/landmarks, heading gaps — see scripts/a11y_lint.py).
+      # Stdlib-only Python, no pip install needed. Gating: the script
+      # exits non-zero on any finding (issue #602).
+      - name: Run accessibility lint
+        run: python3 scripts/a11y_lint.py

@@ -101,6 +101,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 - **The roadmap progress bars now say "so far".** The in-progress card's bar read "{closed} of {total} issues closed", which looked like a finished release whenever the count hit its total. But the total is only the work milestoned to that release so far, and it grows through the cycle. The label (EN + FR + DE, and the matching `aria-label`) now reads "{closed} of {total} issues closed so far", so the bar reads as a running tally rather than a completeness claim.
 
+### Fixed
+
+- **Inlined brand logos no longer produce duplicate element ids.** The brand SVGs carry internal ids (the `<title>`/`<desc>` pair referenced by `aria-labelledby`), and the same file is inlined more than once per page (the nav, the footer, and page content such as the press-kit previews), so `/initiative` and `/press-kit` shipped duplicate ids in the DOM. The `inlineSvg` shortcode now gives each inclusion a unique suffix on its ids and on the references to them, so every logo keeps its accessible name and every id on the page is unique. Caught by `scripts/a11y_lint.py`, which now runs as a gating CI check on every HTML-touching PR ([#602](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/602)).
+
 ## [2.25.0] · 2026-06-09 — Ready for Stockholm
 
 > ESSC 2026 opens in Stockholm on 11 - 12 June, and this release gets the site ready for it. Site-wide search, a public roadmap, a licensing page and a press kit make the site easier to navigate and to reuse. The whole interface is pulled onto one brand blue, with redesigned landscape share cards. The phone experience is markedly better and kinder to assistive tech. And the conference itself is everywhere you look: a countdown on the homepage, downloadable programmes for every recent edition, add-to-calendar links on synced events, and the 2025 conference film now playing.

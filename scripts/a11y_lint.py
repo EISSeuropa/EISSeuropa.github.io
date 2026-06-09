@@ -260,6 +260,11 @@ def main():
         for f in bucketed["legacy_skipped"]:
             print(f"  - {f}")
 
+    # Gate: non-zero exit when any page has findings, so CI can fail
+    # the PR. Local runs see the same behaviour (there is no warn-only
+    # mode; a finding is a finding).
+    return 1 if pages_with_issues else 0
+
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
