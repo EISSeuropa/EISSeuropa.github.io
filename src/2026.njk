@@ -13,6 +13,11 @@ alternates:
 ---
 {% from "icons.njk" import icon %}
 
+{# schema.org Event structured data for this edition (built from
+   conferences.js). Renders into the body, which is valid for JSON-LD. #}
+{% set year = "2026" %}
+{% include "event-jsonld.njk" %}
+
 <section class="hero" aria-labelledby="hero-title-2026">
   <div class="hero-bg" aria-hidden="true">
     <img src="/assets/images/8e43301e-7945-4a0c-aac2-04719ac702a8-1600x900.jpg"

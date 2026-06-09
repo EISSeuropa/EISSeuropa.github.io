@@ -1,0 +1,53 @@
+{# schema.org Event JSON-LD for a conference page.
+
+   Emits a <script type="application/ld+json"> Event block built from
+   conferences.byYear[year], so search engines can render event rich
+   results (dates, place, virtual location for the livestream). Valid
+   anywhere in the document; the conference pages include it near the
+   top of their body.
+
+   Requires `year` (string) in scope. Renders nothing when the year has
+   no conference entry, so it is safe to include unconditionally.
+
+   The conference name and description stay in English on all locales
+   (the event's canonical name, matching the site convention), while
+   `inLanguage` reflects the page. `url` points at the canonical English
+   page on every locale so the three pages describe one event, not three.
+
+   Currently wired on /2026 (the upcoming edition, where event rich
+   results have pre-conference value). Generalising to the archive years
+   is tracked in #603. #}
+{%- set _c = conferences.byYear[year] -%}
+{%- if _c -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "European Security Studies Conference {{ _c.year }}",
+  "description": "The {{ _c.ordinal }}th European Security Studies Conference, hosted at {{ _c.venue.en }} in {{ _c.city }}, {{ _c.country }}.",
+  "startDate": "{{ _c.startDate }}",
+  "endDate": "{{ _c.endDate }}",
+  "inLanguage": "{{ lang or 'en' }}",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/{{ 'MixedEventAttendanceMode' if _c.livestreamUrl else 'OfflineEventAttendanceMode' }}",
+  "location": [
+    {
+      "@type": "Place",
+      "name": "{{ _c.venue.en }}",
+      "address": "{{ _c.mapEmbed.address.en if (_c.mapEmbed and _c.mapEmbed.address) else (_c.city ~ ', ' ~ _c.country) }}"
+    }{%- if _c.livestreamUrl %},
+    {
+      "@type": "VirtualLocation",
+      "url": "{{ _c.livestreamUrl }}"
+    }{%- endif %}
+  ],
+  "organizer": {
+    "@type": "Organization",
+    "name": "{{ site.fullName }}",
+    "url": "{{ site.url }}/"
+  },
+  "image": "{{ site.url }}/assets/images/{{ _c.slug }}-meta.jpg",
+  "url": "{{ site.url }}/{{ _c.slug }}.html"
+}
+</script>
+{%- endif -%}
