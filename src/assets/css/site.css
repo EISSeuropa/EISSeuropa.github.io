@@ -2997,6 +2997,29 @@ h4 { font-size: var(--fs-lg); }
   background: hsl(350 80% 60% / 0.16);
   border-color: hsl(350 80% 60% / 0.35);
 }
+/* When a livestream URL is available, the pills render as links to it
+   (in the signpost and on each streamed session). Keep the pill look,
+   drop the default link underline, add a hover / focus cue. */
+a.programme-slot-live,
+a.programme-live-tag {
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+a.programme-slot-live:hover,
+a.programme-slot-live:focus-visible,
+a.programme-live-tag:hover,
+a.programme-live-tag:focus-visible {
+  background: hsl(350 74% 50% / 0.2);
+  border-color: hsl(350 74% 50% / 0.55);
+}
+[data-theme="dark"] a.programme-slot-live:hover,
+[data-theme="dark"] a.programme-slot-live:focus-visible,
+[data-theme="dark"] a.programme-live-tag:hover,
+[data-theme="dark"] a.programme-live-tag:focus-visible {
+  background: hsl(350 80% 60% / 0.28);
+  border-color: hsl(350 80% 60% / 0.55);
+}
 
 /* Livestream signpost above the grid (replaces the old standalone block). */
 .programme-livestream-note {

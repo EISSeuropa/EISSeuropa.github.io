@@ -30,6 +30,13 @@
 {%- set t = i18n[_lang] -%}
 {%- set _conf = indico.annualConferences[year] -%}
 {%- set _programme = _conf.programme if _conf else null -%}
+{# Conference-level livestream link (one Zoom webinar reused for every
+   session), from conferences.js. Gated to the current edition
+   (endDate >= today) so it disappears once the conference is over.
+   Every "Livestream" pill below, in the signpost and on each streamed
+   session, becomes a link to it. #}
+{%- set _confMeta = conferences.byYear[year] -%}
+{%- set _liveUrl = _confMeta.livestreamUrl if (_confMeta and _confMeta.livestreamUrl and _confMeta.endDate >= conferences.today) else null -%}
 
 {% if _programme and _programme.days and _programme.days.length %}
 <section class="section programme" id="programme" aria-labelledby="programme-title">
@@ -44,13 +51,14 @@
        dedicated "Livestreamed sessions" block. Shown only when the year
        has sessions tagged for livestream. #}
     {%- if _conf.livestreamed and _conf.livestreamed.length %}
-    {%- set _confMeta = conferences.byYear[year] -%}
-    {%- set _liveUrl = _confMeta.livestreamUrl if (_confMeta and _confMeta.livestreamUrl and _confMeta.endDate >= conferences.today) else null -%}
+    {%- set _signpostUrl = _liveUrl or _conf.url -%}
     <p class="programme-livestream-note">
+      {%- if _signpostUrl %}
+      <a class="programme-live-tag" href="{{ _signpostUrl }}" target="_blank" rel="noopener">{{ icon("video") }} {{ t.programme.livestreamPill }} {{ icon("external-link") }}</a>
+      {%- else %}
       <span class="programme-live-tag">{{ icon("video") }} {{ t.programme.livestreamPill }}</span>
+      {%- endif %}
       {{ t.programme.livestreamNote }}
-      {%- if _liveUrl %} <a href="{{ _liveUrl }}" target="_blank" rel="noopener">{{ t.programme.watchLivestreamCta }} {{ icon("external-link") }}</a>
-      {%- elif _conf.url %} <a href="{{ _conf.url }}" target="_blank" rel="noopener">{{ t.programme.livestreamNoteCta }} {{ icon("external-link") }}</a>{% endif %}
     </p>
     {%- endif %}
 
@@ -104,7 +112,11 @@
               </p>
               {%- endif %}
               {%- if slot.livestreamed %}
+              {%- if _liveUrl %}
+              <a class="programme-slot-meta programme-slot-live" href="{{ _liveUrl }}" target="_blank" rel="noopener">{{ icon("video") }} {{ t.programme.livestreamPill }} {{ icon("external-link") }}</a>
+              {%- else %}
               <p class="programme-slot-meta programme-slot-live">{{ icon("video") }} {{ t.programme.livestreamPill }}</p>
+              {%- endif %}
               {%- endif %}
               {%- if slot.conveners and slot.conveners.length %}
               <p class="programme-slot-meta">
