@@ -131,6 +131,15 @@ SKIP_HOSTS = {
                                 # CI-side reachability class as su.se, a
                                 # timeout not a 4xx). Loads for visitors;
                                 # skipping stops the recurring false-red.
+    "stockholmuniversity.zoom.us",
+                                # The ESSC 2026 livestream (Zoom webinar,
+                                # linked from /2026 while the conference
+                                # is live). Zoom join links 403 anonymous
+                                # bots (anti-bot, same class as Twitter);
+                                # the link opens the webinar fine for
+                                # visitors. The link auto-hides once the
+                                # edition is past, so this skip is moot
+                                # after the conference.
 }
 
 internal_links = {}  # (file, target) for de-dupe display

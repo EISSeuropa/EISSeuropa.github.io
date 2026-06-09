@@ -116,14 +116,14 @@
     "src/2026.njk": {
       "fr": {
         "file": "src/2026.fr.njk",
-        "source_sha1": "775e5e99b37c755983f70829d1e603d88d3d03e8",
-        "translated_on": "2026-06-05",
+        "source_sha1": "4600c0a02f3e4d4a24c2353953b6e6b110c439dd",
+        "translated_on": "2026-06-09",
         "status": "beta"
       },
       "de": {
         "file": "src/2026.de.njk",
-        "source_sha1": "775e5e99b37c755983f70829d1e603d88d3d03e8",
-        "translated_on": "2026-06-05",
+        "source_sha1": "4600c0a02f3e4d4a24c2353953b6e6b110c439dd",
+        "translated_on": "2026-06-09",
         "status": "beta"
       }
     },
@@ -158,14 +158,14 @@
     "src/policy.njk": {
       "fr": {
         "file": "src/policy.fr.njk",
-        "source_sha1": "cf7f1922a6639349e5dddfc8988199ace4516fce",
-        "translated_on": "2026-06-01",
+        "source_sha1": "e20965126f5071c2ad58c9f52e2dd985b94d4007",
+        "translated_on": "2026-06-09",
         "status": "beta"
       },
       "de": {
         "file": "src/policy.de.njk",
-        "source_sha1": "cf7f1922a6639349e5dddfc8988199ace4516fce",
-        "translated_on": "2026-06-01",
+        "source_sha1": "e20965126f5071c2ad58c9f52e2dd985b94d4007",
+        "translated_on": "2026-06-09",
         "status": "beta"
       }
     },
