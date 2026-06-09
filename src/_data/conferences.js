@@ -124,6 +124,14 @@ const conferences = [
     // chairing?" note on /YYYY points here. Per-year because a future
     // edition may host its FAQ elsewhere.
     faqUrl: "https://netsec-cost.eu/faq.html#conference",
+    // Public livestream for the conference. ONE Zoom webinar link, reused
+    // for every plenary session (a webinar, so it's view-only: remote
+    // attendees can watch but can't interrupt the room). Surfaced on
+    // /2026 as a plain outbound link, never embedded (no Zoom JS or IP
+    // leak on page load, cf. /policy §5). The link is shown only while
+    // the edition is current (endDate >= today) and auto-hides once the
+    // conference is over; the recordings take over after that.
+    livestreamUrl: "https://stockholmuniversity.zoom.us/j/62445444403",
     hasOwnPage: true,
   },
   {

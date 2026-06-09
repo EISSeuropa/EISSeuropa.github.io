@@ -44,10 +44,13 @@
        dedicated "Livestreamed sessions" block. Shown only when the year
        has sessions tagged for livestream. #}
     {%- if _conf.livestreamed and _conf.livestreamed.length %}
+    {%- set _confMeta = conferences.byYear[year] -%}
+    {%- set _liveUrl = _confMeta.livestreamUrl if (_confMeta and _confMeta.livestreamUrl and _confMeta.endDate >= conferences.today) else null -%}
     <p class="programme-livestream-note">
       <span class="programme-live-tag">{{ icon("video") }} {{ t.programme.livestreamPill }}</span>
       {{ t.programme.livestreamNote }}
-      {%- if _conf.url %} <a href="{{ _conf.url }}" target="_blank" rel="noopener">{{ t.programme.livestreamNoteCta }} {{ icon("external-link") }}</a>{% endif %}
+      {%- if _liveUrl %} <a href="{{ _liveUrl }}" target="_blank" rel="noopener">{{ t.programme.watchLivestreamCta }} {{ icon("external-link") }}</a>
+      {%- elif _conf.url %} <a href="{{ _conf.url }}" target="_blank" rel="noopener">{{ t.programme.livestreamNoteCta }} {{ icon("external-link") }}</a>{% endif %}
     </p>
     {%- endif %}
 

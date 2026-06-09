@@ -294,6 +294,7 @@ const locales = {
       livestreamPill: "Livestream",
       livestreamNote: "The plenary sessions are livestreamed, tagged below.",
       livestreamNoteCta: "Join online on Indico",
+      watchLivestreamCta: "Watch the livestream",
       // Static PDF block — surfaces the polished designer-made
       // programme when the operator has uploaded one (see
       // conferences.js `programmePdf` field). The grid above is
@@ -643,6 +644,7 @@ const locales = {
       livestreamPill: "En direct",
       livestreamNote: "Les sessions plénières sont diffusées en direct, signalées ci-dessous.",
       livestreamNoteCta: "Suivre en ligne sur Indico",
+      watchLivestreamCta: "Regarder la diffusion en direct",
       pdfHeading: "Programme final — PDF imprimable",
       pdfHeadingDraft: "Programme provisoire — PDF imprimable (susceptible de changer)",
       pdfDescription: "Une version mise en page et imprimable du programme.",
@@ -962,6 +964,7 @@ const locales = {
       livestreamPill: "Livestream",
       livestreamNote: "Die Plenarsitzungen werden live übertragen, unten gekennzeichnet.",
       livestreamNoteCta: "Online auf Indico teilnehmen",
+      watchLivestreamCta: "Den Livestream ansehen",
       pdfHeading: "Endgültiges Programm — druckbares PDF",
       pdfHeadingDraft: "Arbeitsversion des Programms — druckbares PDF (Änderungen vorbehalten)",
       pdfDescription: "Eine gestaltete und druckfreundliche Version des Programms.",

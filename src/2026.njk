@@ -32,8 +32,15 @@ alternates:
       Jointly organised by the COST Action NetSec, the European Initiative for Security Studies (EISS),
       and Stockholm University.
     </p>
+    {%- set _live2026 = conferences.byYear["2026"] -%}
+    {%- set _liveShown = _live2026 and _live2026.livestreamUrl and _live2026.endDate >= conferences.today -%}
     <div class="hero-actions reveal reveal-delay-3">
-      <a class="btn btn-primary" href="#programme">{{ icon("file-text") }} View programme</a>
+      {%- if _liveShown %}
+      <a class="btn btn-primary hero-watch-live" href="{{ _live2026.livestreamUrl }}" target="_blank" rel="noopener">
+        <span class="hero-watch-live__dot" aria-hidden="true"></span>{{ icon("video") }} Watch the livestream
+      </a>
+      {%- endif %}
+      <a class="btn {{ 'btn-ghost' if _liveShown else 'btn-primary' }}" href="#programme">{{ icon("file-text") }} View programme</a>
       <a class="btn btn-ghost" href="#venue">{{ icon("map-pin") }} Host &amp; venue</a>
     </div>
     <p class="reveal reveal-delay-3" style="margin-top: var(--space-6); font-size: var(--fs-sm); color: hsl(0 0% 100% / 0.9);">

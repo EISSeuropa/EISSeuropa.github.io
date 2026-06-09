@@ -93,6 +93,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+### Added
+
+- **The ESSC 2026 livestream link is live on `/2026`.** A single Zoom webinar (view-only, so remote viewers can watch the plenary spine without interrupting the room) is surfaced two ways while the conference is current: a "Watch the livestream" button in the hero, which becomes the primary call to action and carries a pulsing live dot, and the signpost above the programme grid, where the existing "Join online" link now points at the stream instead of the Indico event. The programme grid already tags each streamed session with a "Livestream" pill. The link is a plain outbound link (no Zoom embed, nothing loads from Zoom until you click, cf. `/policy` §5) and is gated to the current edition, so it disappears on its own once the conference is over, with the hero's "View programme" button returning to primary. EN + FR + DE. The address lives in a new `livestreamUrl` field on the conference in `conferences.js`.
+
 ### Changed
 
 - **The roadmap progress bars now say "so far".** The in-progress card's bar read "{closed} of {total} issues closed", which looked like a finished release whenever the count hit its total. But the total is only the work milestoned to that release so far, and it grows through the cycle. The label (EN + FR + DE, and the matching `aria-label`) now reads "{closed} of {total} issues closed so far", so the bar reads as a running tally rather than a completeness claim.

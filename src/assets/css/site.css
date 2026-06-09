@@ -3301,6 +3301,22 @@ h4 { font-size: var(--fs-lg); }
   100% { box-shadow: 0 0 0 0 hsl(0 100% 68% / 0); }
 }
 
+/* Hero "Watch the livestream" CTA on /YYYY: a live-red pulsing dot
+   before the label, marking it as the live action while the conference
+   is current (the button itself only renders in that window). Reuses
+   the registration-badge pulse keyframe; the global prefers-reduced-
+   motion rule stills it for visitors who ask. */
+.hero-watch-live__dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-inline-end: 0.1rem;
+  border-radius: 50%;
+  background: #ff5b5b;
+  box-shadow: 0 0 0 0 hsl(0 100% 68% / 0.7);
+  animation: registrationBadgePulse 1.6s infinite;
+}
+
 .registration-badge--upcoming .registration-badge__dot {
   background: #5bff8a;
 }
