@@ -141,9 +141,85 @@ function checkBoardLinks() {
   }
 }
 
+// ── 4. Classes referenced in built markup but defined nowhere in CSS ────
+// The §14 failure mode: a whole feature ships with complete markup and
+// not one of its classes in site.css (the unstyled search modal and
+// press-kit, plus the NetSec .grid-2). Scans the modernised built pages
+// (legacy passthroughs keep their own bundled styles) and asserts every
+// class token has a `.class` selector in src/assets/css/site.css.
+// Scanning _site/ rather than the .njk sources means Nunjucks-composed
+// names (e.g. programme-slot-room--c3) arrive fully resolved.
+function checkUndefinedClasses() {
+  const cssFile = "src/assets/css/site.css";
+  if (!existsSync(cssFile)) return;
+  const files = htmlFiles("_site");
+  if (!files.length) return; // checkBuiltHtml already warned
+
+  const css = readFileSync(cssFile, "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+  const defined = new Set();
+  for (const m of css.matchAll(/\.([A-Za-z_][\w-]*)/g)) defined.add(m[1]);
+
+  // Classes referenced from the site JS (querySelector hooks, classList
+  // toggles, composed names). A class the JS knows about is intentional
+  // even when no selector styles it directly.
+  let jsBlob = "";
+  const jsDir = "src/assets/js";
+  if (existsSync(jsDir)) {
+    for (const f of readdirSync(jsDir).filter((n) => n.endsWith(".js"))) {
+      jsBlob += readFileSync(join(jsDir, f), "utf8");
+    }
+  }
+
+  // Classes that legitimately appear in markup with no selector of their
+  // own. Keep this list short; a new entry needs a one-line justification.
+  const allow = new Set([
+    "pagefind-ignore", // consumed by the Pagefind indexer, not CSS
+    "hero-watch-live", // semantic marker on a .btn; only its __dot child is styled
+    "press-copy", // wrapper around the styled .press-copy-* children
+    "person-role-primary", // sync-pipeline semantic marker inside .person-role
+    "notfound-search", // wrapper around the styled .search-* form on /404
+  ]);
+
+  const isKnown = (cls) => {
+    if (defined.has(cls) || allow.has(cls)) return true;
+    if (jsBlob.includes(cls)) return true; // JS hook
+    // An unstyled variant or element of a styled BEM-ish family
+    // (programme-slot--plenary, countdown__text): fine when the family
+    // base carries the styles.
+    const base = cls.split(/--|__/)[0];
+    if (base !== cls && defined.has(base)) return true;
+    // A bare namespace token whose family is styled (class="section
+    // programme" where .programme-grid etc. carry the styles): treat a
+    // token as known when site.css defines any `.token-` descendant.
+    if (css.includes(`.${cls}-`)) return true;
+    return false;
+  };
+
+  const seen = new Map(); // class -> first "file:line"
+  for (const file of files) {
+    let txt = readFileSync(file, "utf8");
+    if (!txt.includes('class="site-header"')) continue; // legacy passthrough
+    const rel = file.replace(/^_site\//, "");
+    // Inline SVG internals style themselves (presentation attributes,
+    // currentColor); their classes are not site.css's job.
+    txt = txt.replace(/<svg[\s\S]*?<\/svg>/g, "");
+    for (const m of txt.matchAll(/\sclass="([^"]*)"/g)) {
+      for (const cls of m[1].split(/\s+/)) {
+        if (!cls || !/^[A-Za-z_][\w-]*$/.test(cls)) continue;
+        if (isKnown(cls) || seen.has(cls)) continue;
+        seen.set(cls, `${rel}:${lineOf(txt, m.index)}`);
+      }
+    }
+  }
+  for (const [cls, where] of [...seen].sort()) {
+    problems.push(`${where}: class "${cls}" is not defined in site.css (markup shipped without styles? — §14 / #241)`);
+  }
+}
+
 checkDataKeys();
 checkBoardLinks();
 checkBuiltHtml();
+checkUndefinedClasses();
 
 if (problems.length) {
   console.error(`\n✗ build-sanity check failed (${problems.length} problem${problems.length > 1 ? "s" : ""}):\n`);
@@ -151,4 +227,4 @@ if (problems.length) {
   console.error("");
   process.exit(1);
 }
-console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src).");
+console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes).");
