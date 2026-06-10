@@ -90,52 +90,41 @@ any patch.
 
 ### v2.26.0 — Post-conference: activation, content and feedback · target September 2026
 
-The first release after ESSC 2026. It folds in what the old v2.25.0
-plan held (turning built-but-idle Indico capability into visible
-value, clearing reliability debt), the public-content surfaces, and
-whatever conference-week feedback surfaces. The full, current list
+The first release after ESSC 2026. It turns conference-week feedback
+into fixes and builds out the public-content surfaces (a news feed, an
+outputs list, the working groups), plus the one hard-dated infra item.
+The polish and brand-card work that the old v2.25.0 plan held moved to
+v2.27.0, and the Indico-data and NetSec-coordination items moved to
+*Under watch*, so this release stays focused. The full, current list
 lives on the
 [v2.26.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/9);
 the headline items:
 
-- **Indico calendar subscription links on `/YYYY`** — surface the
-  per-event `.ics` / webcal links so attendees can add sessions to
-  their calendar.
-  [#60](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/60), S.
-- **Language-switcher discoverability** — make the FR / DE switch
-  easier to find in the header.
-  [#98](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/98), S.
-- **Workflow failure notifications** — alert when a scheduled Actions
-  run fails, rather than discovering it on the next manual check.
-  [#56](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/56), S.
+- **Conference-week QA pass** — work the ESSC 2026 feedback checklist
+  on production and fix what it surfaces.
+  [#655](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/655), M.
 - **Pin GitHub Actions to Node-24-compatible versions** — hard
   deadline 16 Sep 2026.
   [#76](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/76), S.
 - **News / Latest on the homepage** — a surface for Action news and
   cross-links to NetSec items relevant to EISS members.
   [#96](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/96), M.
+- **Atom / RSS feed** — a machine-readable feed alongside the News
+  surface.
+  [#605](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/605), S.
+- **Issue-driven news publishing** — label an issue and have it
+  auto-PR a news post, so an update doesn't need a hand-built page.
+  [#634](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/634), M.
 - **Outputs / Publications page** — list the network's outputs (book
   series, the Prix Bastien Irondelle, deliverables) on a dedicated
   page.
   [#97](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/97), M.
-- **Working Groups page** — render each group's objective and people;
-  the NetSec sister site ships its own, this mirrors it for EISS.
+- **Working Groups page** — render each group's objective and people.
+  The NetSec sister site ships its own, this mirrors it for EISS.
   [#94](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/94), M.
-- **NetSec co-branding strip in the header** — a discreet sister-site
-  signpost in the site chrome.
-  [#95](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/95), S.
-- **Auto-populate the organising committee on `/YYYY` from Indico** —
-  read the committee off the Indico event instead of hand-listing it.
-  [#58](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/58), M.
-- **OG-card iconmark overlay** — keep the EISS mark on every social
-  share card, the brand follow-up deferred from the v2.23.0 rollout.
-  [#157](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/157), S.
-- **Branch-protection Phase 3** — enforce required status checks on
-  `master`.
-  [#501](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/501), S.
-- **Responsive images** — ship `srcset` / `sizes` variants so phones
-  stop downloading full-resolution JPGs.
-  [#554](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/554), M.
+- **`/initiative` founding nuance** — reconcile the founding story,
+  the conference numbering and the deferred-2020 edition.
+  [#329](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/329), M.
 
 ### v2.27.0 — Polish and ESSC 2027 prep · target December 2026
 
@@ -149,6 +138,25 @@ the headline items:
 - **ESSC 2027 announcement** — drop one entry into
   `src/_data/conferences.js` per [`docs/new-conference.md`](new-conference.md)
   once the date and venue firm up. S.
+- **Social-card polish** — keep the EISS iconmark on every OG card
+  ([#157](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/157)),
+  and add bespoke cards for `/roadmap`
+  ([#272](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/272))
+  and the `/2017`, `/2018`, `/joint-2024` archive pages
+  ([#474](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/474)). S each.
+- **Responsive images** — finish the `srcset` / `sizes` rollout so
+  phones stop downloading full-resolution JPGs (the hero slice shipped
+  in the v2.26.0 run-up).
+  [#554](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/554), M.
+- **Brand-palette polish** — re-tune the off-palette hero gradient
+  blobs onto the brand blue.
+  [#519](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/519), S.
+- **Branch-protection Phase 3** — enforce required status checks on
+  `master`.
+  [#501](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/501), S.
+- **Legacy Mobirise alias pages to true redirects** — finish the
+  migration so old URLs 301 instead of serving alias pages.
+  [#607](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/607), M.
 
 Candidates without committed scope yet, pulled in if a release has
 room: a conference countdown widget, View Transitions API page
