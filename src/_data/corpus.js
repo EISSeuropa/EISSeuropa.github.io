@@ -58,6 +58,57 @@ function canonicalKey(name) {
   return ALIASES[k] || k;
 }
 
+// ── Surname parsing (for a by-lastname index) ───────────────────────────
+const HONORIFIC_DISP = /^(Prof(?:essor)?\.?|Dr\.?|Sir|Dame|Mr\.?|Mrs\.?|Ms\.?|Mx\.?)\s+/;
+const PARTICLES = new Set([
+  "van", "von", "de", "der", "den", "del", "della", "di", "da", "dos",
+  "das", "du", "la", "le", "el", "al", "ten", "ter", "bin", "ibn",
+]);
+const stripDiacritics = (s) =>
+  String(s).normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+function cleanDisplay(name) {
+  let s = String(name).trim();
+  let prev;
+  do {
+    prev = s;
+    s = s.replace(HONORIFIC_DISP, "");
+  } while (s !== prev);
+  return s.trim();
+}
+
+// Split a "Given … Surname" string into given + surname, folding a
+// trailing particle run into the surname ("Paul van Hooft" → given "Paul",
+// surname "van Hooft"). Single-token names are treated as the surname.
+function splitName(full) {
+  const tokens = cleanDisplay(full).split(/\s+/).filter(Boolean);
+  if (tokens.length <= 1) return { given: "", surname: tokens[0] || "" };
+  let i = tokens.length - 1;
+  const surname = [tokens[i]];
+  while (i - 1 >= 1 && PARTICLES.has(tokens[i - 1].toLowerCase().replace(/\.$/, ""))) {
+    i--;
+    surname.unshift(tokens[i]);
+  }
+  return { given: tokens.slice(0, i).join(" "), surname: surname.join(" ") };
+}
+
+// Sort/group key: the first non-particle surname word governs the letter
+// ("van Hooft" files under H), then the rest of the surname, then given.
+function nameSort(name) {
+  const { given, surname } = splitName(name);
+  const words = surname.split(/\s+/);
+  const lead = words.find((w) => !PARTICLES.has(w.toLowerCase())) || words[0] || "";
+  const norm = (s) => stripDiacritics(s).toLowerCase().replace(/[^a-z ]/g, "").trim();
+  const letterChar = norm(lead).charAt(0).toUpperCase();
+  return {
+    given,
+    surname,
+    display: given ? `${surname}, ${given}` : surname,
+    letter: /[A-Z]/.test(letterChar) ? letterChar : "#",
+    sortKey: `${norm(lead)} ${norm(surname)} ${norm(given)}`.trim(),
+  };
+}
+
 // ── Conference labelling ────────────────────────────────────────────────
 const SPECIAL = {
   "joint-2024": { label: "Joint Sciences Po–EISS Conference", year: 2024 },
@@ -149,7 +200,6 @@ for (const paper of papers) {
         key,
         name: a.name,
         nameVariants: {},
-        affiliations: new Set(),
         profileUrl: profileByKey[key] || null,
         papers: [],
       };
@@ -157,10 +207,10 @@ for (const paper of papers) {
     }
     // track display-name variants to pick the most common spelling
     s.nameVariants[a.name] = (s.nameVariants[a.name] || 0) + 1;
-    if (a.affiliation) s.affiliations.add(a.affiliation);
     s.papers.push({
       title: paper.title,
       year: paper.year,
+      affiliation: a.affiliation || null,
       conferenceLabel: paper.conferenceLabel,
       conferenceUrl: paper.conferenceUrl,
       isSpeaker: a.isSpeaker,
@@ -171,17 +221,23 @@ for (const paper of papers) {
 const speakers = [...speakerMap.values()]
   .map((s) => {
     // display name = most frequent original spelling (tie → longest)
-    const name = Object.entries(s.nameVariants).sort(
+    const rawName = Object.entries(s.nameVariants).sort(
       (a, b) => b[1] - a[1] || b[0].length - a[0].length
     )[0][0];
     const papersByYear = s.papers.sort((a, b) => (b.year || 0) - (a.year || 0));
     const years = papersByYear.map((p) => p.year).filter(Boolean);
-    const first = name.normalize("NFD").replace(/[̀-ͯ]/g, "").charAt(0).toUpperCase();
+    // Most-recent affiliation: the one from the latest paper that carries
+    // one (not a cumulative list — a person's affiliation changes over the
+    // years, and the current one is what's useful).
+    const affiliation = (papersByYear.find((p) => p.affiliation) || {}).affiliation || null;
+    const n = nameSort(rawName);
     return {
-      name,
-      sortKey: s.key,
-      letter: /[A-Z]/.test(first) ? first : "#",
-      affiliations: [...s.affiliations],
+      name: cleanDisplay(rawName), // honorific-stripped natural name
+      display: n.display, // "Surname, Given" for the by-lastname list
+      surname: n.surname,
+      sortKey: n.sortKey,
+      letter: n.letter,
+      affiliation,
       profileUrl: s.profileUrl,
       papers: papersByYear,
       count: papersByYear.length,
@@ -189,9 +245,8 @@ const speakers = [...speakerMap.values()]
       lastYear: years.length ? Math.max(...years) : null,
     };
   })
-  // alphabetical by family-name-ish key (the normalised key starts with given name;
-  // good enough for a first cut — A–Z grouping is done in the template)
-  .sort((a, b) => a.name.localeCompare(b.name));
+  // alphabetical by surname (then given name), via the normalised sort key
+  .sort((a, b) => a.sortKey.localeCompare(b.sortKey));
 
 const letters = [...new Set(speakers.map((s) => s.letter))].sort();
 

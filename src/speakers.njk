@@ -18,7 +18,8 @@ alternates:
       Everyone who has presented at a European Security Studies Conference, drawn
       from the programmes of every edition. {{ corpus.stats.speakerCount }}
       speakers across {{ corpus.stats.editions }} conferences, {{ corpus.stats.paperCount }}
-      papers in all. Use the site search to find a name or a topic.
+      papers in all. Listed by surname; the affiliation shown is the most
+      recent on record. Use the site search to find a specific name.
     </p>
   </div>
 </header>
@@ -42,12 +43,12 @@ alternates:
       {%- endif %}
       <li class="speaker-entry">
         <p class="speaker-name" lang="en">
-          {%- if s.profileUrl %}<a href="{{ s.profileUrl }}">{{ s.name }}</a>
-          {%- else %}{{ s.name }}{% endif %}
+          {%- if s.profileUrl %}<a href="{{ s.profileUrl }}">{{ s.display }}</a>
+          {%- else %}{{ s.display }}{% endif %}
           {%- if s.profileUrl %} <span class="speaker-badge">EISS member</span>{% endif %}
         </p>
-        {%- if s.affiliations.length %}
-        <p class="speaker-aff muted" lang="en">{{ s.affiliations | join(" · ") }}</p>
+        {%- if s.affiliation %}
+        <p class="speaker-aff muted" lang="en">{{ s.affiliation }}</p>
         {%- endif %}
         <details class="speaker-papers">
           <summary>{{ s.count }} contribution{% if s.count != 1 %}s{% endif %}{% if s.firstYear %} · {{ s.firstYear }}{% if s.lastYear != s.firstYear %}–{{ s.lastYear }}{% endif %}{% endif %}</summary>
