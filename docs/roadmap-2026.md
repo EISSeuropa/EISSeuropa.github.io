@@ -92,10 +92,11 @@ any patch.
 
 The first release after ESSC 2026. It turns conference-week feedback
 into fixes and builds out the public-content surfaces (a news feed, an
-outputs list, the working groups), plus the one hard-dated infra item.
-The polish and brand-card work that the old v2.25.0 plan held moved to
-v2.27.0, and the Indico-data and NetSec-coordination items moved to
-*Under watch*, so this release stays focused. The full, current list
+outputs list, the working groups). The polish and brand-card work that
+the old v2.25.0 plan held moved to v2.27.0, and the Indico-data and
+NetSec-coordination items moved to *Under watch*, so this release stays
+focused. (The Node-24 Actions pin the plan once tracked was resolved
+early by Dependabot, closing #76.) The full, current list
 lives on the
 [v2.26.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/9);
 the headline items:
@@ -103,9 +104,6 @@ the headline items:
 - **Conference-week QA pass** — work the ESSC 2026 feedback checklist
   on production and fix what it surfaces.
   [#655](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/655), M.
-- **Pin GitHub Actions to Node-24-compatible versions** — hard
-  deadline 16 Sep 2026.
-  [#76](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/76), S.
 - **News / Latest on the homepage** — a surface for Action news and
   cross-links to NetSec items relevant to EISS members.
   [#96](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/96), M.
