@@ -48,10 +48,22 @@ function keyOf(name) {
 }
 
 // Manual same-person merges. Key: a normalised variant; value: the
-// normalised canonical to fold it into. Empty until a real collision is
-// spotted — add entries as the index surfaces split duplicates.
+// normalised canonical to fold it into. Add entries as the index
+// surfaces split duplicates.
 //   e.g. "jon smith": "jonathan smith"
-const ALIASES = {};
+// keyOf normalises case, diacritics and honorifics, but not apostrophe
+// style or intra-surname spacing, so those variants stay split until
+// listed here. Surfaced by the June 2026 speaker-index QA pass (#655):
+// affiliations confirmed each pair is one person.
+const ALIASES = {
+  "marc r. devore": "marc devore",     // "Marc R. DeVore" (St Andrews)
+  "marc de vore": "marc devore",       // "Marc De Vore" spacing variant
+  "marc r. de vore": "marc devore",    // both variants at once
+  "silvia d’amato": "silvia d'amato",  // curly apostrophe → straight
+  "rupal n. mehta": "rupal mehta",     // middle initial on one year only
+  "tristan a. volpe": "tristan volpe", // middle initial on one year only
+  "ilaria paris": "ilaria parisi",     // "Paris" truncates "Parisi" (ENS)
+};
 
 function canonicalKey(name) {
   const k = keyOf(name);
