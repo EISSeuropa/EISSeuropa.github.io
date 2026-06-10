@@ -1,0 +1,73 @@
+---
+layout: base.njk
+permalink: /speakers.html
+title: Speakers
+description: Everyone who has presented at a European Security Studies Conference, across every edition since 2017, with the papers they gave each year.
+navKey: ""
+lang: en
+alternates:
+  en: /speakers.html
+---
+{%- set t = i18n[lang or "en"] -%}
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">The ESSC corpus</span>
+    <h1>Speakers</h1>
+    <p class="page-lead">
+      Everyone who has presented at a European Security Studies Conference, drawn
+      from the programmes of every edition. {{ corpus.stats.speakerCount }}
+      speakers across {{ corpus.stats.editions }} conferences, {{ corpus.stats.paperCount }}
+      papers in all. Use the site search to find a name or a topic.
+    </p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+
+    <nav class="speaker-az" aria-label="Jump to letter">
+      {%- for L in corpus.letters %}
+      <a href="#ltr-{{ L }}">{{ L }}</a>
+      {%- endfor %}
+    </nav>
+
+    <ol class="speaker-index" role="list">
+      {%- for s in corpus.speakers %}
+      {%- set prevLetter = corpus.speakers[loop.index0 - 1].letter if not loop.first else "" %}
+      {%- if s.letter != prevLetter %}
+      <li class="speaker-letter" role="presentation">
+        <h2 id="ltr-{{ s.letter }}" class="speaker-letter-h">{{ s.letter }}</h2>
+      </li>
+      {%- endif %}
+      <li class="speaker-entry">
+        <p class="speaker-name" lang="en">
+          {%- if s.profileUrl %}<a href="{{ s.profileUrl }}">{{ s.name }}</a>
+          {%- else %}{{ s.name }}{% endif %}
+          {%- if s.profileUrl %} <span class="speaker-badge">EISS member</span>{% endif %}
+        </p>
+        {%- if s.affiliations.length %}
+        <p class="speaker-aff muted" lang="en">{{ s.affiliations | join(" · ") }}</p>
+        {%- endif %}
+        <details class="speaker-papers">
+          <summary>{{ s.count }} contribution{% if s.count != 1 %}s{% endif %}{% if s.firstYear %} · {{ s.firstYear }}{% if s.lastYear != s.firstYear %}–{{ s.lastYear }}{% endif %}{% endif %}</summary>
+          <ul role="list">
+            {%- for p in s.papers %}
+            <li>
+              <span class="speaker-paper-conf"><a href="{{ p.conferenceUrl }}">{{ p.conferenceLabel }}{% if p.year %} {{ p.year }}{% endif %}</a></span>
+              <span class="speaker-paper-title" lang="en">{{ p.title }}</span>
+            </li>
+            {%- endfor %}
+          </ul>
+        </details>
+      </li>
+      {%- endfor %}
+    </ol>
+
+    <p class="muted" style="margin-top: var(--space-6); font-size: var(--fs-sm); max-width: 44rem;">
+      Assembled from the published conference programmes. Names are matched
+      conservatively, so a person who appears under noticeably different
+      spellings across years may show more than once.
+    </p>
+  </div>
+</section>
