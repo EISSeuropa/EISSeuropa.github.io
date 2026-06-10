@@ -16,8 +16,10 @@ know what exists and where to look before building something new.
 
 - **`nav.njk`** — primary nav. Items come from `site.js` `nav[]`; labels
   resolve from `t.nav[key]`. Collapses behind `.menu-toggle` (hamburger)
-  on mobile. Carries the theme toggle, language switcher, and search
-  trigger (`[data-search-trigger]`).
+  on mobile. Carries the theme toggle, the language switcher (EN/FR/DE
+  `.lang-chip`s led by a decorative `.lang-switcher-globe` so the group
+  reads as a language control), and the search trigger
+  (`[data-search-trigger]`).
 - **`footer.njk`** — co-branding, funding-style credit, legal-links row
   (terms / privacy / accessibility / sitemap / licensing / roadmap /
   press kit), socials. `data-pagefind-ignore`.
@@ -49,6 +51,19 @@ know what exists and where to look before building something new.
   `youtube-embed.njk`. Renders nothing without a playlist.
 - **`joint-orgs.njk`**, **`speaking-chairing.njk`**, **`livestream-list.njk`**,
   **`programme-pdf.njk`** — the `/2026` supporting strips.
+- **Livestream link** — when the upcoming conference has a `livestreamUrl`
+  in `conferences.js` and is still current (`endDate >= today`), the
+  "Livestream" pills become links to it (the `.programme-live-tag`
+  signpost and each streamed session's `.programme-slot-live`, each with
+  an external-link icon), the hero gains a `.hero-watch-live` button
+  (pulsing live dot), and the homepage featured card shows the pill.
+  Plain outbound link, no embed; reverts to plain markers once the
+  edition is past.
+- **`event-jsonld.njk`** — schema.org `Event` structured data built from
+  `conferences.byYear[year]` (dates, `Place`, a `VirtualLocation` for the
+  livestream, organiser). Currently on `/2026`; included in the page body
+  (valid for JSON-LD). The event name stays English on every locale with
+  `inLanguage` per page.
 
 ## People
 
@@ -72,6 +87,11 @@ know what exists and where to look before building something new.
   conference photos (fixes ragged mixed-dimension crops).
 - **`map-embed.njk`** — address card + OpenStreetMap link (no Google
   Maps iframe, for privacy).
+- **Hero image** — the full-bleed `/index` + `/2026` hero (the LCP,
+  `loading="eager"` + `fetchpriority="high"`) carries a `srcset` with an
+  800w variant + `sizes="100vw"` so phones fetch ~half the bytes. The
+  width variants are pre-generated (`sips`) and committed as static
+  assets — there is no build-time image pipeline yet (#554).
 
 ## Search
 
