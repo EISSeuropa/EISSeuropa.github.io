@@ -3240,8 +3240,7 @@ a.programme-live-tag:focus-visible {
   border-bottom-color: var(--accent);
 }
 
-.programme-contrib-speakers,
-.programme-contrib-abstract {
+.programme-contrib-speakers {
   margin: 0 0 var(--space-2);
   font-size: var(--fs-sm);
   line-height: var(--lh-relaxed);
@@ -3267,6 +3266,9 @@ a.programme-live-tag:focus-visible {
 }
 
 .programme-contrib-abstract {
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
   color: var(--text-muted);
 }
 
