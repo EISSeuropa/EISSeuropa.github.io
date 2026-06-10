@@ -28,6 +28,9 @@ alternates:
   <div class="container">
 
     <div class="speaker-toolbar">
+      <span class="speaker-find">
+        <input type="search" data-speaker-find placeholder="Find by name…" autocomplete="off" aria-label="Find a speaker by name">
+      </span>
       <label class="speaker-filter">
         <span>Theme</span>
         <select data-speaker-theme>
@@ -37,6 +40,7 @@ alternates:
           {%- endfor %}
         </select>
       </label>
+      <button type="button" class="btn btn-ghost btn-sm" data-speaker-clear hidden>Clear</button>
       <nav class="speaker-az" aria-label="Jump to letter">
         {%- for L in corpus.letters %}
         <a href="#ltr-{{ L }}">{{ L }}</a>
@@ -44,7 +48,9 @@ alternates:
       </nav>
     </div>
 
-    <p class="speaker-noresult" data-speaker-noresult hidden>No speakers match that theme.</p>
+    {# Filter status, announced to assistive tech (role=status → polite live
+       region). Empty when nothing is filtered. #}
+    <p class="speaker-status" role="status" aria-live="polite" data-speaker-status hidden></p>
 
     <ol class="speaker-index" role="list" data-speaker-list>
       {%- for s in corpus.speakers %}
@@ -54,7 +60,7 @@ alternates:
         <h2 id="ltr-{{ s.letter }}" class="speaker-letter-h">{{ s.letter }}</h2>
       </li>
       {%- endif %}
-      <li class="speaker-entry" data-speaker-entry data-themes="{{ s.themes | join('|') }}">
+      <li class="speaker-entry" data-speaker-entry data-name="{{ s.display }}" data-themes="{{ s.themes | join('|') }}">
         <p class="speaker-name" lang="en">
           {%- if s.profileUrl %}<a href="{{ s.profileUrl }}">{{ s.display }}</a>
           {%- else %}{{ s.display }}{% endif %}

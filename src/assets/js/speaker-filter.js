@@ -1,50 +1,112 @@
-/* /speakers theme filter.
+/* /speakers — theme + name filtering.
  *
  * Progressive enhancement: with JS off the page shows every speaker (the
- * <select> simply does nothing). With JS on, choosing a theme hides the
- * speaker entries that don't carry it, hides any letter heading left with
- * no visible entries, and shows a "no match" note if nothing remains.
+ * controls simply do nothing). With JS on:
+ *   - a theme <select> narrows to speakers carrying that theme;
+ *   - a name search box narrows by surname/given (diacritic-insensitive);
+ *   - the two combine (AND);
+ *   - empty letter headings are hidden, and a role=status region announces
+ *     the new count to assistive tech (no focus move);
+ *   - a Clear button resets both;
+ *   - the theme is mirrored in the URL (?theme=…) so a filtered view is
+ *     shareable and survives Back. The served page's <link rel=canonical>
+ *     stays the clean /speakers.html (the param is added client-side only),
+ *     so this introduces no duplicate-content URL for crawlers.
  *
- * Entries carry data-themes="Theme A|Theme B"; letter rows carry
- * data-speaker-letter. Filtering is by exact theme membership (the same
- * canonical labels emitted by corpus.js).
+ * Entries carry data-name and data-themes="A|B"; letter rows carry
+ * data-speaker-letter.
  */
 (function () {
   "use strict";
-  var select = document.querySelector("[data-speaker-theme]");
   var list = document.querySelector("[data-speaker-list]");
-  if (!select || !list) return;
+  var themeSel = document.querySelector("[data-speaker-theme]");
+  if (!list || !themeSel) return;
 
-  var noResult = document.querySelector("[data-speaker-noresult]");
-  var entries = Array.prototype.slice.call(list.querySelectorAll("[data-speaker-entry]"));
-  var letters = Array.prototype.slice.call(list.querySelectorAll("[data-speaker-letter]"));
+  var findEl = document.querySelector("[data-speaker-find]");
+  var clearEl = document.querySelector("[data-speaker-clear]");
+  var statusEl = document.querySelector("[data-speaker-status]");
+  var entries = [].slice.call(list.querySelectorAll("[data-speaker-entry]"));
+  var letters = [].slice.call(list.querySelectorAll("[data-speaker-letter]"));
 
-  function apply(theme) {
-    var anyVisible = false;
+  var norm = function (s) {
+    return String(s || "")
+      .normalize("NFD")
+      .replace(/[̀-ͯ]/g, "")
+      .toLowerCase()
+      .trim();
+  };
+
+  function apply() {
+    var theme = themeSel.value;
+    var q = norm(findEl && findEl.value);
+    var visible = 0;
     entries.forEach(function (el) {
-      var themes = (el.getAttribute("data-themes") || "").split("|");
-      var show = !theme || themes.indexOf(theme) !== -1;
+      var okTheme = !theme || (el.getAttribute("data-themes") || "").split("|").indexOf(theme) !== -1;
+      var okName = !q || norm(el.getAttribute("data-name")).indexOf(q) !== -1;
+      var show = okTheme && okName;
       el.hidden = !show;
-      if (show) anyVisible = true;
+      if (show) visible++;
     });
-    // Hide a letter heading when every entry under it (up to the next
-    // heading) is hidden.
+    // Hide a letter heading when no entry under it (to the next heading) shows.
     letters.forEach(function (letterEl) {
-      var visible = false;
+      var any = false;
       var node = letterEl.nextElementSibling;
       while (node && !node.hasAttribute("data-speaker-letter")) {
-        if (node.hasAttribute("data-speaker-entry") && !node.hidden) {
-          visible = true;
-          break;
-        }
+        if (node.hasAttribute("data-speaker-entry") && !node.hidden) { any = true; break; }
         node = node.nextElementSibling;
       }
-      letterEl.hidden = !visible;
+      letterEl.hidden = !any;
     });
-    if (noResult) noResult.hidden = anyVisible;
+
+    var filtering = !!(theme || q);
+    if (clearEl) clearEl.hidden = !filtering;
+    if (statusEl) {
+      if (!filtering) {
+        statusEl.hidden = true;
+        statusEl.textContent = "";
+      } else {
+        statusEl.hidden = false;
+        if (visible === 0) {
+          statusEl.textContent = "No speakers match.";
+        } else {
+          var bits = [];
+          if (theme) bits.push(theme);
+          if (q) bits.push('matching "' + (findEl.value || "").trim() + '"');
+          statusEl.textContent =
+            visible + " speaker" + (visible === 1 ? "" : "s") +
+            (bits.length ? " · " + bits.join(" · ") : "");
+        }
+      }
+    }
   }
 
-  select.addEventListener("change", function () {
-    apply(select.value);
-  });
+  // Mirror the theme in the URL (shareable / Back-restorable). Name search
+  // stays out of the URL — it's an ephemeral accelerator, not a view.
+  function syncUrl() {
+    if (!window.history || !history.replaceState) return;
+    var url = new URL(window.location.href);
+    if (themeSel.value) url.searchParams.set("theme", themeSel.value);
+    else url.searchParams.delete("theme");
+    history.replaceState(null, "", url.pathname + url.search + url.hash);
+  }
+
+  themeSel.addEventListener("change", function () { syncUrl(); apply(); });
+  if (findEl) findEl.addEventListener("input", apply);
+  if (clearEl) {
+    clearEl.addEventListener("click", function () {
+      themeSel.value = "";
+      if (findEl) findEl.value = "";
+      syncUrl();
+      apply();
+      themeSel.focus();
+    });
+  }
+
+  // Restore theme from the URL on load (deep link / Back).
+  var initial = new URL(window.location.href).searchParams.get("theme");
+  if (initial) {
+    var match = [].some.call(themeSel.options, function (o) { return o.value === initial; });
+    if (match) themeSel.value = initial;
+  }
+  apply();
 })();
