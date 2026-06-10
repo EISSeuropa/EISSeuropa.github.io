@@ -3368,6 +3368,55 @@ a.programme-live-tag:focus-visible {
 .speaker-paper-title {
   color: var(--text);
 }
+
+/* Toolbar: theme filter + A–Z jump nav above the list. */
+.speaker-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+  margin-bottom: var(--space-5);
+}
+.speaker-toolbar .speaker-az {
+  margin-bottom: 0;
+}
+.speaker-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+.speaker-filter select {
+  font: inherit;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elev);
+  color: var(--text);
+  max-width: 22rem;
+}
+.speaker-noresult {
+  color: var(--text-muted);
+  margin: var(--space-4) 0;
+}
+
+/* Per-speaker theme chips (also the text Pagefind indexes for theme search). */
+.speaker-themes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0.35rem 0 0;
+}
+.speaker-theme-chip {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  background: var(--bg-tinted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.05rem 0.5rem;
+  line-height: 1.5;
+}
 @media (max-width: 600px) {
   .speaker-paper-conf { display: block; min-width: 0; margin-bottom: 0.1rem; }
 }

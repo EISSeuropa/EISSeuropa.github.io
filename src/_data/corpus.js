@@ -123,6 +123,43 @@ function confMeta(slug) {
   return { label: "ESSC", year: Number(slug), url: `/${slug}.html` };
 }
 
+// ── Themes (#658) ───────────────────────────────────────────────────────
+// The nine permanent EISS panel sections (the spine) plus recurring themes
+// derived from the open-panel remainder. A paper is tagged by keyword-
+// matching its session/panel title — it inherits its panel's theme(s) and
+// may carry more than one. Confidence over coverage: a session that matches
+// nothing stays UNTAGGED rather than be force-fit into a bucket. The rule
+// map is the curation lever — refine a pattern to fix a mis-tag.
+const THEME_RULES = [
+  // The nine permanent sections (from /initiative)
+  ["Transformations of warfare and conflict", /transformation|future war|conduct of.*war|character of war|military innovation|military technolog|military strateg|change and continuity in war|art of war|warfare/i],
+  ["Emerging domains: cyber and technology", /cyber|digital|\bAI\b|artificial intelligence|information operation|outer space|\bspace\b|autonom|drone|disruptive machine|hybrid (threat|war|domain)/i],
+  ["Arms acquisition and transfer", /arms (procurement|production|transfer|acquisition|trade)|defen[cs]e (industry|procurement)|weapons? (procurement|transfer|production)/i],
+  ["Private military actors", /private (actor|militar|security)|mercenar|\bpmc\b|non-?state.*(armed|actor)|beyond the state/i],
+  ["Defence cooperation and military assistance", /defen[cs]e cooperation|military assistance|security assistance|\balliance|burden.?sharing|\bnato\b|interoperab|coalition|realignment|\balignment/i],
+  ["Military interventions", /military intervention|peace.?building|peace.?keeping|operations abroad|stabili[sz]ation|use of force|multilateral operation|conflict intervention|external sponsorship/i],
+  ["Non-proliferation and arms control", /non-?proliferation|arms control|\bWMD\b|weapons of mass destruction|disarmament/i],
+  ["Terrorism and counter-terrorism", /terroris|counter-?terroris|insurgenc|radicali[sz]|violent extremis/i],
+  ["Theoretical developments in security studies", /theor|conceptuali[sz]|knowledge production|epistem|ontolog|methodolog|origins of war|peace.?violence/i],
+  // Derived recurring themes (open-panel remainder)
+  ["Deterrence", /deterrence|deterrent/i],
+  ["Intelligence", /\bintelligence\b/i],
+  ["European and transatlantic security", /european (security|defen[cs]e|grand strategy)|transatlantic|geopolitical power europe|military issues in europe|european deterrent/i],
+  ["Regional security and area studies", /east asia|indo-?pacific|\basia\b|\bindia\b|balkans|latin america|maritime security|regional security|eastern neighbo/i],
+  ["Civil–military relations and the armed forces", /civil-?military|military professional|military recruit|armed forces|psychology and emotions/i],
+  ["Climate and security", /climate/i],
+  ["Gender and security", /gender/i],
+  ["Political economy of security", /political economy/i],
+];
+const THEME_ORDER = THEME_RULES.map(([n]) => n);
+const themeRank = new Map(THEME_ORDER.map((n, i) => [n, i]));
+
+function themesOf(sessionTitle) {
+  const t = String(sessionTitle || "");
+  if (!t) return [];
+  return THEME_RULES.filter(([, re]) => re.test(t)).map(([n]) => n);
+}
+
 // ── Flatten both sources into one paper list ────────────────────────────
 function* iterContributions() {
   // archive editions
@@ -159,6 +196,7 @@ for (const { slug, slot, c } of iterContributions()) {
   const authors = (c.authors && c.authors.length ? c.authors : c.speakers || []).map(
     (a) => ({ name: a.name, affiliation: a.affiliation || null, isSpeaker: !!a.isSpeaker })
   );
+  const sessionTitle = slot.title || slot.slotTitle || null;
   papers.push({
     title: c.title,
     authors,
@@ -167,7 +205,8 @@ for (const { slug, slot, c } of iterContributions()) {
     conferenceSlug: conf.slug || slug,
     conferenceLabel: conf.label,
     conferenceUrl: conf.url,
-    sessionTitle: slot.title || slot.slotTitle || null,
+    sessionTitle,
+    themes: themesOf(sessionTitle),
   });
 }
 
@@ -201,12 +240,14 @@ for (const paper of papers) {
         name: a.name,
         nameVariants: {},
         profileUrl: profileByKey[key] || null,
+        themes: new Set(),
         papers: [],
       };
       speakerMap.set(key, s);
     }
     // track display-name variants to pick the most common spelling
     s.nameVariants[a.name] = (s.nameVariants[a.name] || 0) + 1;
+    for (const th of paper.themes) s.themes.add(th);
     s.papers.push({
       title: paper.title,
       year: paper.year,
@@ -231,6 +272,7 @@ const speakers = [...speakerMap.values()]
     // years, and the current one is what's useful).
     const affiliation = (papersByYear.find((p) => p.affiliation) || {}).affiliation || null;
     const n = nameSort(rawName);
+    const themes = [...s.themes].sort((a, b) => themeRank.get(a) - themeRank.get(b));
     return {
       name: cleanDisplay(rawName), // honorific-stripped natural name
       display: n.display, // "Surname, Given" for the by-lastname list
@@ -238,6 +280,7 @@ const speakers = [...speakerMap.values()]
       sortKey: n.sortKey,
       letter: n.letter,
       affiliation,
+      themes, // permanent + derived themes, in canonical order
       profileUrl: s.profileUrl,
       papers: papersByYear,
       count: papersByYear.length,
@@ -250,13 +293,22 @@ const speakers = [...speakerMap.values()]
 
 const letters = [...new Set(speakers.map((s) => s.letter))].sort();
 
+// Theme list for the filter UI: each theme that actually tags at least one
+// speaker, in canonical order, with its speaker count.
+const themes = THEME_ORDER.map((name) => ({
+  name,
+  count: speakers.filter((s) => s.themes.includes(name)).length,
+})).filter((t) => t.count > 0);
+
 module.exports = {
   papers,
   speakers,
   letters,
+  themes,
   stats: {
     paperCount: papers.length,
     speakerCount: speakers.length,
     editions: [...new Set(papers.map((p) => p.conferenceLabel))].length,
+    taggedSpeakers: speakers.filter((s) => s.themes.length).length,
   },
 };
