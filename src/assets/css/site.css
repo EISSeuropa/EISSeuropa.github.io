@@ -357,20 +357,6 @@ h4 { font-size: var(--fs-lg); }
   margin-right: var(--space-3);
 }
 
-/* Globe cue at the head of the switcher: signals "change language" so
-   the EN/FR/DE chips don't read as bare abbreviations (#98). Decorative
-   (the group already has an aria-label); sits just inside the pill. */
-.lang-switcher-globe {
-  display: inline-flex;
-  align-items: center;
-  margin-inline: 4px 1px;
-  color: var(--text-muted);
-}
-.lang-switcher-globe svg {
-  width: 14px;
-  height: 14px;
-}
-
 .lang-chip {
   padding: 4px 9px;
   border-radius: 9999px;
