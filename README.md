@@ -31,8 +31,10 @@ src/
                          locales)
 .eleventy.js             Eleventy config (passthrough rules, year filter,
                          inlineSvg shortcode, localizedHref filter)
-.github/workflows/       CI: build, deploy, link check, i18n drift, roadmap
-                         autostamp, scheduled rebuild, Indico + board sync
+.github/workflows/       CI: build, deploy, link check, i18n drift, build
+                         sanity (+ a11y lint), roadmap autostamp, scheduled
+                         rebuild, Indico + board sync, scheduled-workflow
+                         failure alarm
 scripts/                 dev helpers (a11y_lint.py, sync-board.py,
                          sync-indico.py, sync-roadmap.py, release.sh,
                          check-links.sh, derive-logo-variants.py, etc.),
@@ -73,7 +75,7 @@ Push to `master` to deploy. GitHub Actions runs the build and publishes via GitH
 
 ### Accessibility lint
 
-`scripts/a11y_lint.py` walks every built HTML file and checks for missing landmarks, alt-less images, heading-hierarchy gaps, duplicate IDs, accessible-name absence, etc. Run after any template change:
+`scripts/a11y_lint.py` walks every built HTML file and checks for missing landmarks, alt-less images, heading-hierarchy gaps, duplicate IDs, accessible-name absence, etc. It runs as a **gating CI check** (in the Build sanity workflow, exiting non-zero on any finding), so a regression fails the PR. Run it locally after any template change:
 
 ```bash
 npm run build

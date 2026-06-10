@@ -65,6 +65,14 @@ src/*.njk (pages)  +  src/_includes/*.njk (components)  +  src/_data/* (data)
 Each sync opens an auto-PR (auto-merge armed, CI-gated) rather than
 pushing to `master`.
 
+**`failure-alarm.yml`** watches those scheduled workflows plus the
+deploy: on a `failure` conclusion it opens (or threads a comment onto)
+a `CI alarm` tracking issue, labelled `automated` + `bug`, so a silent
+cron failure surfaces instead of going unnoticed. It ignores
+`cancelled` (the sync workflows use `cancel-in-progress` concurrency,
+so supersession is normal). Pure `gh` CLI, no third-party actions
+(#56).
+
 ## CI gates (on PRs)
 
 | Workflow | Gate |
@@ -73,6 +81,8 @@ pushing to `master`.
 | `link-check.yml` → `check-links.sh` | Every internal/external link + `#fragment` in `_site/` resolves. |
 | `i18n-drift.yml` → `check-i18n-drift.py` | Every FR/DE page matches its EN source hash (`data/i18n-state.json`). |
 | `i18n-drift.yml` → `check-i18n-keys.js` | EN/FR/DE chrome catalogs have identical key sets. |
+| `sanity-check.yml` → `check-build-sanity.mjs` | No duplicate `_data` object keys, no empty/junk `href`/`src`, no scheme-less `board.json` links, and no markup class left undefined in `site.css` (§14 unstyled-feature guard). |
+| `sanity-check.yml` → `a11y_lint.py` | No accessibility findings (missing landmarks / alt / labels, heading-hierarchy gaps, duplicate IDs, accessible-name absence). |
 | CodeQL | Static analysis. |
 
 `CHANGELOG.md` is pinned `merge=union` in `.gitattributes` so concurrent
