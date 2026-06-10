@@ -140,6 +140,15 @@ SKIP_HOSTS = {
                                 # visitors. The link auto-hides once the
                                 # edition is past, so this skip is moot
                                 # after the conference.
+    "gess.ethz.ch",             # ETH Zürich's GESS department person page
+                                # (a board member's profile, linked from
+                                # the board cards). Intermittently 503s
+                                # under automated load: returns 200 from a
+                                # browser and on a manual re-probe, but
+                                # flaked a PR's link-check with a transient
+                                # 503. Same intermittent-5xx class as the
+                                # academic hosts above; skipping stops the
+                                # recurring false-red.
 }
 
 internal_links = {}  # (file, target) for de-dupe display
