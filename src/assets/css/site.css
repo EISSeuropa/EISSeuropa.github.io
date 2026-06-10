@@ -3275,6 +3275,101 @@ a.programme-live-tag:focus-visible {
   padding-top: var(--space-4);
 }
 
+/* ---------- Speaker index (/speakers) ----------------------------------
+   Alphabetical list of everyone who has presented across ESSC editions,
+   built from the corpus.js data spine. */
+.speaker-az {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: var(--space-6);
+}
+.speaker-az a {
+  display: inline-flex;
+  min-width: 2rem;
+  justify-content: center;
+  padding: 0.25rem 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  text-decoration: none;
+  color: var(--text-muted);
+}
+.speaker-az a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.speaker-index {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 52rem;
+}
+.speaker-letter-h {
+  scroll-margin-top: 6rem;
+  margin: var(--space-6) 0 var(--space-2);
+  padding-bottom: 0.2rem;
+  border-bottom: 2px solid var(--border);
+  font-size: var(--fs-lg);
+  color: var(--accent);
+}
+.speaker-entry {
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border);
+}
+.speaker-name {
+  margin: 0;
+  font-weight: 600;
+}
+.speaker-badge {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  vertical-align: 0.05em;
+}
+.speaker-aff {
+  margin: 0.15rem 0 0;
+  font-size: var(--fs-sm);
+}
+.speaker-papers {
+  margin-top: 0.3rem;
+}
+.speaker-papers > summary {
+  cursor: pointer;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  width: fit-content;
+}
+.speaker-papers ul {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0 0 0 var(--space-3);
+  border-left: 2px solid var(--border);
+  display: grid;
+  gap: 0.4rem;
+}
+.speaker-papers li {
+  font-size: var(--fs-sm);
+}
+.speaker-paper-conf {
+  display: inline-block;
+  min-width: 11rem;
+  font-weight: 600;
+}
+.speaker-paper-title {
+  color: var(--text);
+}
+@media (max-width: 600px) {
+  .speaker-paper-conf { display: block; min-width: 0; margin-bottom: 0.1rem; }
+}
+
 @media (max-width: 720px) {
   /* Collapse the time gutter so cards take the full width on phones. */
   .programme-row {
