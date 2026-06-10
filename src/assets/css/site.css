@@ -89,7 +89,7 @@
   --bg-tinted: hsl(220 50% 96%);
   --surface: hsl(0 0% 100% / 0.72);
   --surface-strong: hsl(0 0% 100% / 0.86);
-  --surface-nav: hsl(210 33% 98% / 0.72);
+  --surface-nav: hsl(210 33% 98% / 0.90);
   --border: hsl(220 14% 90%);
   --border-strong: hsl(220 14% 82%);
   --border-glass: hsl(220 30% 100% / 0.6);
@@ -120,7 +120,7 @@
     --bg-tinted: hsl(222 28% 9%);
     --surface: hsl(222 20% 14% / 0.6);
     --surface-strong: hsl(222 20% 16% / 0.78);
-    --surface-nav: hsl(222 28% 7% / 0.66);
+    --surface-nav: hsl(222 28% 7% / 0.88);
     --border: hsl(222 14% 22%);
     --border-strong: hsl(222 14% 30%);
     --border-glass: hsl(220 30% 100% / 0.08);
@@ -154,7 +154,7 @@
   --bg-tinted: hsl(222 28% 9%);
   --surface: hsl(222 20% 14% / 0.6);
   --surface-strong: hsl(222 20% 16% / 0.78);
-  --surface-nav: hsl(222 28% 7% / 0.66);
+  --surface-nav: hsl(222 28% 7% / 0.88);
   --border: hsl(222 14% 22%);
   --border-strong: hsl(222 14% 30%);
   --border-glass: hsl(220 30% 100% / 0.08);
