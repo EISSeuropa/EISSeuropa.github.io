@@ -50,8 +50,8 @@ other way round, so this is where a new release first appears.
 | --- | --- | --- | --- |
 | v2.24.0 | 30 May 2026 | **Shipped** | Live programme depth and a print overhaul |
 | v2.25.0 | 9 Jun 2026 | **Shipped** | Ready for Stockholm (pre-conference release) |
-| v2.26.0 | Sep 2026 | Planned | Post-conference: activation, content & feedback |
-| v2.27.0 | Dec 2026 | Planned | Polish and ESSC 2027 prep |
+| v2.26.0 | Late Jun 2026 | Planned | Post-conference: activation, content & feedback |
+| v2.27.0 | Sep 2026 | Planned | Polish and ESSC 2027 prep |
 
 (`v2.24.1` was planned as a pre-ESSC patch but the work grew into a feature-rich minor, so it shipped as the **v2.25.0** *Ready for Stockholm* release instead; the `v2.24.1` milestone is closed as superseded.)
 
@@ -88,7 +88,7 @@ drops. Sequence: legal pages first (highest accuracy bar), then
 rest. Per [`docs/i18n.md`](i18n.md). Each reviewed page can ship in
 any patch.
 
-### v2.26.0 — Post-conference: activation, content and feedback · target September 2026
+### v2.26.0 — Post-conference: activation, content and feedback · target late June 2026
 
 The first release after ESSC 2026. It turns conference-week feedback
 into fixes and builds out the public-content surfaces (a news feed, an
@@ -132,7 +132,7 @@ the headline items:
   the conference numbering and the deferred-2020 edition.
   [#329](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/329), M.
 
-### v2.27.0 — Polish and ESSC 2027 prep · target December 2026
+### v2.27.0 — Polish and ESSC 2027 prep · target September 2026
 
 - **CSS class-collision guard** — a build check so an archive
   component can never again override the live grid (the regression
