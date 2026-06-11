@@ -28,7 +28,15 @@ module.exports = [
     date: "2025-11-19",
     title: "Joint Seminar on Election Interference and Disinformation",
     eventId: 23,
-    presenters: [{ name: "Arthur Laudrain", affiliation: "Stanford CISAC" }],
+    // Held as the Stanford CISAC panel "Election Interference & Disinformation:
+    // How Can Democracies Fight Back?", moderated by Arthur Laudrain.
+    presenters: [
+      { name: "Patrick Chevallereau", affiliation: "Open Diplomacy Institute" },
+      { name: "David Colon", affiliation: "Sciences Po Paris" },
+      { name: "Herb Lin", affiliation: "Stanford CISAC / Hoover Institution" },
+      { name: "Kathryn Stoner", affiliation: "Stanford University" },
+      { name: "Arthur Laudrain", affiliation: "Stanford CISAC (moderator)" },
+    ],
     href: "https://indico.eiss-europa.com/event/23/",
   },
   {
