@@ -8561,7 +8561,7 @@ module.exports = {
     "keynotes": [
       {
         "speaker": "Michael Kofman",
-        "affiliation": "Center for Naval Analysis"
+        "affiliation": "Center for Naval Analyses"
       }
     ],
     "days": [
@@ -8584,7 +8584,7 @@ module.exports = {
                   },
                   {
                     "name": "Jonathan Paquin",
-                    "affiliation": "Laval University & Network for Strategic Studies"
+                    "affiliation": "Laval University & Network for Strategic Analysis"
                   },
                   {
                     "name": "Larry Valero",
@@ -8608,7 +8608,7 @@ module.exports = {
                     "authors": [
                       {
                         "name": "Michael Kofman",
-                        "affiliation": "Center for Naval Analysis",
+                        "affiliation": "Center for Naval Analyses",
                         "isSpeaker": true
                       }
                     ]
@@ -8627,8 +8627,8 @@ module.exports = {
                 "title": "Roundtable 1: Military Lessons Learned",
                 "conveners": [
                   {
-                    "name": "Eliza Gheorge",
-                    "affiliation": "Bikent University"
+                    "name": "Eliza Gheorghe",
+                    "affiliation": "Bilkent University"
                   }
                 ],
                 "contributions": [
@@ -8686,7 +8686,7 @@ module.exports = {
                     "authors": [
                       {
                         "name": "Justin Massie",
-                        "affiliation": "University of Québec",
+                        "affiliation": "University of Québec in Montreal",
                         "isSpeaker": true
                       }
                     ]
