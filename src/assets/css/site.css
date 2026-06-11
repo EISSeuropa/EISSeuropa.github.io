@@ -3379,14 +3379,17 @@ a.programme-live-tag:focus-visible {
   gap: 0.4rem;
 }
 .speaker-papers li {
+  display: flex;
+  gap: var(--space-3);
   font-size: var(--fs-sm);
 }
 .speaker-paper-conf {
-  display: inline-block;
-  min-width: 11rem;
+  flex: 0 0 11rem;
   font-weight: 600;
 }
 .speaker-paper-title {
+  flex: 1 1 auto;
+  min-width: 0;
   color: var(--text);
 }
 
@@ -3436,8 +3439,19 @@ a.programme-live-tag:focus-visible {
 .speaker-field select {
   max-width: 20rem;
 }
+/* The Clear button sits on the light filter panel, so it can't use the
+   dark-surface .btn-ghost colours (white-on-white). Give it surface-aware
+   tokens instead, and let it sit on the same baseline as the fields. */
 .speaker-clear {
   align-self: flex-end;
+  color: var(--text);
+  background: var(--bg-elev);
+  border: 1px solid var(--border-strong);
+}
+.speaker-clear:hover,
+.speaker-clear:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 .speaker-status {
   color: var(--text-muted);
@@ -3479,7 +3493,8 @@ a.programme-live-tag:focus-visible {
   line-height: 1.5;
 }
 @media (max-width: 600px) {
-  .speaker-paper-conf { display: block; min-width: 0; margin-bottom: 0.1rem; }
+  .speaker-papers li { flex-direction: column; gap: 0.1rem; }
+  .speaker-paper-conf { flex: none; }
 }
 
 @media (max-width: 720px) {
