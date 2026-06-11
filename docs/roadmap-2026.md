@@ -101,6 +101,13 @@ lives on the
 [v2.26.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/9);
 the headline items:
 
+- **Speaker index across every edition** — a surname-ordered,
+  theme-filterable directory of everyone who has presented at an ESSC,
+  on the new `corpus.js` spine, with summary cards and signposting from
+  the sitemap, the conference programmes and the People page. Built
+  early (originally a v2.27.0 item) and already in `[Unreleased]`, so it
+  ships with this release.
+  [#635](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/635), done.
 - **Conference-week QA pass** — work the ESSC 2026 feedback checklist
   on production and fix what it surfaces.
   [#655](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/655), M.
