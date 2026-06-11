@@ -132,7 +132,11 @@ function confMeta(slug) {
   if (SPECIAL[slug]) {
     return { ...SPECIAL[slug], slug, url: `/${slug}.html` };
   }
-  return { label: "ESSC", year: Number(slug), url: `/${slug}.html` };
+  // The annual conference was the "EISS Annual Conference" (EISS 2017…2025)
+  // until it was renamed the European Security Studies Conference (ESSC)
+  // from the 2026 Stockholm edition onwards.
+  const year = Number(slug);
+  return { label: year < 2026 ? "EISS" : "ESSC", year, url: `/${slug}.html` };
 }
 
 // ── Themes (#658) ───────────────────────────────────────────────────────
@@ -331,7 +335,7 @@ const themes = THEME_ORDER.map((name) => ({
 
 // Editions for the event filter: one per conference page (keyed on its
 // URL), newest first, with the speaker count. `display` distinguishes the
-// nine ESSC years from the joint events ("ESSC 2024" vs the full joint name).
+// nine ESSC years from the joint events ("EISS 2024" vs the full joint name).
 const editionMap = new Map();
 for (const p of papers) {
   if (!p.conferenceUrl) continue;

@@ -18,14 +18,14 @@
     "src/initiative.njk": {
       "fr": {
         "file": "src/initiative.fr.njk",
-        "source_sha1": "66493ae9770fb63bfcd49b2098ce539796f43434",
-        "translated_on": "2026-06-05",
+        "source_sha1": "600e0fb25276e5f55cc368ef870fe19aabb01c2e",
+        "translated_on": "2026-06-12",
         "status": "beta"
       },
       "de": {
         "file": "src/initiative.de.njk",
-        "source_sha1": "66493ae9770fb63bfcd49b2098ce539796f43434",
-        "translated_on": "2026-06-05",
+        "source_sha1": "600e0fb25276e5f55cc368ef870fe19aabb01c2e",
+        "translated_on": "2026-06-12",
         "status": "beta"
       }
     },
@@ -88,28 +88,28 @@
     "src/past.njk": {
       "fr": {
         "file": "src/past.fr.njk",
-        "source_sha1": "dde9e794e95df5436f46ad7594be12c410a62a9f",
-        "translated_on": "2026-06-04",
+        "source_sha1": "c335cb2249f373fd490333c1bb3ef5334d994c03",
+        "translated_on": "2026-06-12",
         "status": "beta"
       },
       "de": {
         "file": "src/past.de.njk",
-        "source_sha1": "dde9e794e95df5436f46ad7594be12c410a62a9f",
-        "translated_on": "2026-06-04",
+        "source_sha1": "c335cb2249f373fd490333c1bb3ef5334d994c03",
+        "translated_on": "2026-06-12",
         "status": "beta"
       }
     },
     "src/sitemap.njk": {
       "fr": {
         "file": "src/sitemap.fr.njk",
-        "source_sha1": "3469070616b7e35c334fb0cdf0f3abb09bb0f644",
-        "translated_on": "2026-06-10",
+        "source_sha1": "b46fb4095b1557769a90f105b5306acd108ad0ad",
+        "translated_on": "2026-06-12",
         "status": "beta"
       },
       "de": {
         "file": "src/sitemap.de.njk",
-        "source_sha1": "3469070616b7e35c334fb0cdf0f3abb09bb0f644",
-        "translated_on": "2026-06-10",
+        "source_sha1": "b46fb4095b1557769a90f105b5306acd108ad0ad",
+        "translated_on": "2026-06-12",
         "status": "beta"
       }
     },
