@@ -144,21 +144,11 @@ const roadmap = {
             de: "Die 9. Jährliche Konferenz für Europäische Sicherheitsstudien an der Universität Stockholm. Das wichtigste Treffen des Jahres; die Website ist der zentrale Einstiegspunkt für Neuankömmlinge.",
           },
         },
-      ],
-    },
-    {
-      label: { en: "Q3 2026", fr: "T3 2026", de: "Q3 2026" },
-      sub: {
-        en: "July · August · September",
-        fr: "juillet · août · septembre",
-        de: "Juli · August · September",
-      },
-      entries: [
         {
           status: "planned",
           version: "v2.26.0",
           milestone: "v2.26.0",
-          when: { en: "September 2026 · v2.26.0", fr: "septembre 2026 · v2.26.0", de: "September 2026 · v2.26.0" },
+          when: { en: "Late June 2026 · v2.26.0", fr: "fin juin 2026 · v2.26.0", de: "Ende Juni 2026 · v2.26.0" },
           title: {
             en: "Post-conference: activation, content and feedback",
             fr: "Après la conférence : activation, contenus et retours",
@@ -173,18 +163,18 @@ const roadmap = {
       ],
     },
     {
-      label: { en: "Q4 2026", fr: "T4 2026", de: "Q4 2026" },
+      label: { en: "Q3 2026", fr: "T3 2026", de: "Q3 2026" },
       sub: {
-        en: "October · November · December",
-        fr: "octobre · novembre · décembre",
-        de: "Oktober · November · Dezember",
+        en: "July · August · September",
+        fr: "juillet · août · septembre",
+        de: "Juli · August · September",
       },
       entries: [
         {
           status: "planned",
           version: "v2.27.0",
           milestone: "v2.27.0",
-          when: { en: "December 2026 · v2.27.0", fr: "décembre 2026 · v2.27.0", de: "Dezember 2026 · v2.27.0" },
+          when: { en: "September 2026 · v2.27.0", fr: "septembre 2026 · v2.27.0", de: "September 2026 · v2.27.0" },
           title: {
             en: "Polish and ESSC 2027 prep",
             fr: "Finitions et préparation de l’ESSC 2027",
