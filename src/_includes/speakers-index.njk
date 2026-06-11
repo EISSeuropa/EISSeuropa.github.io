@@ -1,0 +1,113 @@
+{# Speaker index body — shared by /speakers (EN), /speakers.fr and
+   /speakers.de. All chrome comes from `t.speakers.*`; the data
+   (corpus.speakers) is identical across locales, so names, paper titles,
+   affiliations and theme labels stay in their original language (each
+   carries lang="en"). The page wrappers set `lang`, `permalink` and
+   `alternates`; this include holds the markup so the 490-entry loop
+   isn't triplicated.
+
+   `speaker-filter.js` reads its live-region strings from the data-*
+   attributes on [data-speaker-status] so the JS stays locale-agnostic.
+#}
+{%- set t = i18n[lang or "en"] -%}
+{%- set s18n = t.speakers -%}
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">{{ s18n.eyebrow }}</span>
+    <h1>{{ s18n.title }}</h1>
+    <p class="page-lead">{{ s18n.lead }}</p>
+    <dl class="stats-row" aria-label="{{ s18n.eyebrow }}">
+      <div class="stat">
+        <dt>{{ corpus.stats.speakerCount }}</dt>
+        <dd>{{ s18n.statSpeakers }}</dd>
+      </div>
+      <div class="stat">
+        <dt>{{ corpus.stats.editions }}</dt>
+        <dd>{{ s18n.statConferences }} <span class="muted">{{ s18n.statConferencesSince }}</span></dd>
+      </div>
+      <div class="stat">
+        <dt>{{ corpus.stats.paperCount }}</dt>
+        <dd>{{ s18n.statPapers }}</dd>
+      </div>
+    </dl>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+
+    <div class="speaker-toolbar">
+      <span class="speaker-find">
+        <input type="search" data-speaker-find placeholder="{{ s18n.findPlaceholder }}" autocomplete="off" aria-label="{{ s18n.findLabel }}">
+      </span>
+      <label class="speaker-filter">
+        <span>{{ s18n.themeLabel }}</span>
+        <select data-speaker-theme>
+          <option value="">{{ s18n.allThemes }} ({{ corpus.stats.speakerCount }})</option>
+          {%- for th in corpus.themes %}
+          <option value="{{ th.name }}">{{ th.name }} ({{ th.count }})</option>
+          {%- endfor %}
+        </select>
+      </label>
+      <button type="button" class="btn btn-ghost btn-sm" data-speaker-clear hidden>{{ s18n.clear }}</button>
+      <nav class="speaker-az" aria-label="{{ s18n.jumpToLetter }}">
+        {%- for L in corpus.letters %}
+        <a href="#ltr-{{ L }}">{{ L }}</a>
+        {%- endfor %}
+      </nav>
+    </div>
+
+    {# Filter status, announced to assistive tech (role=status → polite live
+       region). Empty when nothing is filtered. The data-msg-* strings are
+       the localised templates speaker-filter.js fills in. #}
+    <p class="speaker-status" role="status" aria-live="polite" data-speaker-status hidden
+       data-msg-none="{{ s18n.noMatch }}"
+       data-msg-one="{{ s18n.resultsOne }}"
+       data-msg-many="{{ s18n.resultsMany }}"
+       data-msg-matching="{{ s18n.matching }}"></p>
+
+    <ol class="speaker-index" role="list" data-speaker-list>
+      {%- for s in corpus.speakers %}
+      {%- set prevLetter = corpus.speakers[loop.index0 - 1].letter if not loop.first else "" %}
+      {%- if s.letter != prevLetter %}
+      <li class="speaker-letter" role="presentation" data-speaker-letter="{{ s.letter }}">
+        <h2 id="ltr-{{ s.letter }}" class="speaker-letter-h">{{ s.letter }}</h2>
+      </li>
+      {%- endif %}
+      <li class="speaker-entry" data-speaker-entry data-name="{{ s.display }}" data-themes="{{ s.themes | join('|') }}">
+        <p class="speaker-name" lang="en">
+          {%- if s.profileUrl %}<a href="{{ s.profileUrl }}">{{ s.display }}</a>
+          {%- else %}{{ s.display }}{% endif %}
+          {%- if s.profileUrl %} <span class="speaker-badge">{{ s18n.memberBadge }}</span>{% endif %}
+        </p>
+        {%- if s.affiliation %}
+        <p class="speaker-aff muted" lang="en">{{ s.affiliation }}</p>
+        {%- endif %}
+        {%- if s.themes.length %}
+        <p class="speaker-themes">
+          {%- for th in s.themes %}<span class="speaker-theme-chip" lang="en">{{ th }}</span>{% endfor %}
+        </p>
+        {%- endif %}
+        <details class="speaker-papers">
+          <summary>{{ s.count }} {{ s18n.contributionOne if s.count == 1 else s18n.contributionMany }}{% if s.firstYear %} · {{ s.firstYear }}{% if s.lastYear != s.firstYear %}–{{ s.lastYear }}{% endif %}{% endif %}</summary>
+          <ul role="list">
+            {%- for p in s.papers %}
+            <li>
+              <span class="speaker-paper-conf"><a href="{{ p.conferenceUrl }}">{{ p.conferenceLabel }}{% if p.year %} {{ p.year }}{% endif %}</a></span>
+              <span class="speaker-paper-title" lang="en">{{ p.title }}</span>
+            </li>
+            {%- endfor %}
+          </ul>
+        </details>
+      </li>
+      {%- endfor %}
+    </ol>
+
+    <p class="muted" style="margin-top: var(--space-6); font-size: var(--fs-sm); max-width: 44rem;">
+      {{ s18n.note }}
+    </p>
+  </div>
+</section>
+
+<script src="{{ '/assets/js/speaker-filter.js' | bust }}" defer></script>

@@ -112,8 +112,10 @@
     </div>
     {%- endfor %}
 
+    {% include "speakers-signpost.njk" %}
+
     {%- if _prog.sourceNote %}
-    <p class="muted programme-footnote" style="margin-top: var(--space-6); font-size: var(--fs-sm);">
+    <p class="muted programme-footnote" style="margin-top: var(--space-4); font-size: var(--fs-sm);">
       {{ t.archiveProgramme.reconstructedNote }}
     </p>
     {%- endif %}

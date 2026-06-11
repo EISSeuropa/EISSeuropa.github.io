@@ -103,10 +103,11 @@ the headline items:
 
 - **Speaker index across every edition** — a surname-ordered,
   theme-filterable directory of everyone who has presented at an ESSC,
-  on the new `corpus.js` spine, with summary cards and signposting from
-  the sitemap, the conference programmes and the People page. Built
-  early (originally a v2.27.0 item) and already in `[Unreleased]`, so it
-  ships with this release.
+  on the new `corpus.js` spine, with summary cards and a locale-aware
+  link-card signpost from the sitemap, the conference programmes and the
+  People page. In EN + FR + DE (interface hand-translated, names and
+  themes stay original). Built early (originally a v2.27.0 item) and
+  already in `[Unreleased]`, so it ships with this release.
   [#635](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/635), done.
 - **Conference-week QA pass** — work the ESSC 2026 feedback checklist
   on production and fix what it surfaces.

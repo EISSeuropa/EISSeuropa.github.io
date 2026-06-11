@@ -389,6 +389,35 @@ const locales = {
       onIndico: "View on Indico",
     },
 
+    speakers: {
+      // /speakers index (EN + FR + DE share one include, this is the
+      // chrome). Speaker names, paper titles, affiliations and the theme
+      // labels stay in their original language (see `note`).
+      eyebrow: "The ESSC corpus",
+      title: "Speakers",
+      lead: "Everyone who has presented at a European Security Studies Conference, drawn from the programmes of every edition. Listed by surname, with the most recent affiliation on record. Use the site search to find a specific name.",
+      statSpeakers: "speakers",
+      statConferences: "conferences",
+      statConferencesSince: "since 2017",
+      statPapers: "papers presented",
+      findPlaceholder: "Find by name…",
+      findLabel: "Find a speaker by name",
+      themeLabel: "Theme",
+      allThemes: "All themes",
+      clear: "Clear",
+      jumpToLetter: "Jump to letter",
+      memberBadge: "EISS member",
+      contributionOne: "contribution",
+      contributionMany: "contributions",
+      note: "Assembled from the published conference programmes. Names are matched conservatively, so a person who appears under noticeably different spellings across years may show more than once. Themes are inferred from the panel each paper sat in (the nine permanent EISS sections plus recurring themes). Names, affiliations and theme labels stay in their original language.",
+      // Live-region status strings, read by speaker-filter.js. {n}/{q}
+      // are substituted client-side.
+      resultsOne: "{n} speaker",
+      resultsMany: "{n} speakers",
+      noMatch: "No speakers match.",
+      matching: 'matching "{q}"',
+    },
+
     mapEmbed: {
       // Google Maps embed on /YYYY venue sections. Only the iframe
       // title is i18n'd; the embed loads on page view, and is disclosed
@@ -712,6 +741,30 @@ const locales = {
       onIndico: "Voir sur Indico",
     },
 
+    speakers: {
+      eyebrow: "Le corpus de l'ESSC",
+      title: "Intervenants",
+      lead: "Toutes les personnes ayant présenté lors d'une European Security Studies Conference, à partir des programmes de chaque édition. Classées par nom de famille, avec l'affiliation la plus récente connue. Utilisez la recherche du site pour trouver un nom précis.",
+      statSpeakers: "intervenants",
+      statConferences: "conférences",
+      statConferencesSince: "depuis 2017",
+      statPapers: "communications présentées",
+      findPlaceholder: "Rechercher par nom…",
+      findLabel: "Rechercher un intervenant par nom",
+      themeLabel: "Thème",
+      allThemes: "Tous les thèmes",
+      clear: "Effacer",
+      jumpToLetter: "Aller à une lettre",
+      memberBadge: "Membre de l'EISS",
+      contributionOne: "communication",
+      contributionMany: "communications",
+      note: "Constitué à partir des programmes publiés des conférences. Les noms sont rapprochés avec prudence : une personne apparaissant sous des graphies sensiblement différentes selon les années peut figurer plusieurs fois. Les thèmes sont déduits du panel dans lequel chaque communication a été présentée (les neuf sections permanentes de l'EISS et des thèmes récurrents). Les noms, affiliations et intitulés de thèmes restent dans leur langue d'origine.",
+      resultsOne: "{n} intervenant",
+      resultsMany: "{n} intervenants",
+      noMatch: "Aucun intervenant ne correspond.",
+      matching: 'correspondant à « {q} »',
+    },
+
     mapEmbed: {
       viewOnMap: "Voir sur OpenStreetMap",
     },
@@ -1030,6 +1083,30 @@ const locales = {
       oneDayToGo: "Morgen",
       today: "Heute",
       onIndico: "Auf Indico ansehen",
+    },
+
+    speakers: {
+      eyebrow: "Das ESSC-Korpus",
+      title: "Vortragende",
+      lead: "Alle Personen, die auf einer European Security Studies Conference vorgetragen haben, zusammengestellt aus den Programmen jeder Ausgabe. Nach Nachnamen geordnet, mit der jeweils jüngsten bekannten Zugehörigkeit. Nutzen Sie die Seitensuche, um einen bestimmten Namen zu finden.",
+      statSpeakers: "Vortragende",
+      statConferences: "Konferenzen",
+      statConferencesSince: "seit 2017",
+      statPapers: "vorgestellte Beiträge",
+      findPlaceholder: "Nach Namen suchen…",
+      findLabel: "Vortragende nach Namen suchen",
+      themeLabel: "Thema",
+      allThemes: "Alle Themen",
+      clear: "Zurücksetzen",
+      jumpToLetter: "Zu Buchstabe springen",
+      memberBadge: "EISS-Mitglied",
+      contributionOne: "Beitrag",
+      contributionMany: "Beiträge",
+      note: "Zusammengestellt aus den veröffentlichten Konferenzprogrammen. Namen werden konservativ zusammengeführt: Wer über die Jahre unter deutlich verschiedenen Schreibweisen auftritt, kann mehrfach erscheinen. Themen werden aus dem Panel abgeleitet, in dem der jeweilige Beitrag stand (die neun ständigen EISS-Sektionen sowie wiederkehrende Themen). Namen, Zugehörigkeiten und Themenbezeichnungen bleiben in ihrer Originalsprache.",
+      resultsOne: "{n} Vortragende:r",
+      resultsMany: "{n} Vortragende",
+      noMatch: "Keine Vortragenden gefunden.",
+      matching: 'passend zu „{q}“',
     },
 
     mapEmbed: {
