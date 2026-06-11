@@ -320,7 +320,10 @@ module.exports = {
   stats: {
     paperCount: papers.length,
     speakerCount: speakers.length,
-    editions: [...new Set(papers.map((p) => p.conferenceLabel))].length,
+    // Distinct editions, keyed by the per-edition page URL. (Keying on
+    // conferenceLabel under-counts: every ESSC year shares the label
+    // "ESSC", so all nine collapse to one.)
+    editions: [...new Set(papers.map((p) => p.conferenceUrl))].length,
     taggedSpeakers: speakers.filter((s) => s.themes.length).length,
   },
 };

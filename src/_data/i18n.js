@@ -289,6 +289,7 @@ const locales = {
       readFullAbstract: "Read full abstract",
       sourceNote: "Indico holds the authoritative programme. This grid is a daily snapshot.",
       viewOnIndico: "View the event on Indico",
+      speakersLink: "Browse every speaker across all editions",
       // Livestream signpost + per-session pill (replaces the old standalone
       // "Livestreamed sessions" block).
       livestreamPill: "Livestream",
@@ -640,6 +641,7 @@ const locales = {
       readFullAbstract: "Lire le résumé complet",
       sourceNote: "Indico fait foi pour le programme. Cette grille en est un instantané quotidien.",
       viewOnIndico: "Voir l'événement sur Indico",
+      speakersLink: "Parcourir tous les intervenants, toutes éditions confondues",
       livestreamPill: "En direct",
       livestreamNote: "Les sessions plénières sont diffusées en direct, signalées ci-dessous.",
       livestreamNoteCta: "Suivre en ligne sur Indico",
@@ -959,6 +961,7 @@ const locales = {
       readFullAbstract: "Vollständiges Abstract lesen",
       sourceNote: "Indico ist die maßgebliche Quelle für das Programm. Dieses Raster ist ein tägliches Abbild.",
       viewOnIndico: "Veranstaltung auf Indico ansehen",
+      speakersLink: "Alle Vortragenden aller Ausgaben durchsuchen",
       livestreamPill: "Livestream",
       livestreamNote: "Die Plenarsitzungen werden live übertragen, unten gekennzeichnet.",
       livestreamNoteCta: "Online auf Indico teilnehmen",

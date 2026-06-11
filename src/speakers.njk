@@ -16,11 +16,23 @@ alternates:
     <h1>Speakers</h1>
     <p class="page-lead">
       Everyone who has presented at a European Security Studies Conference, drawn
-      from the programmes of every edition. {{ corpus.stats.speakerCount }}
-      speakers across {{ corpus.stats.editions }} conferences, {{ corpus.stats.paperCount }}
-      papers in all. Listed by surname; the affiliation shown is the most
-      recent on record. Use the site search to find a specific name.
+      from the programmes of every edition. Listed by surname, with the most
+      recent affiliation on record. Use the site search to find a specific name.
     </p>
+    <dl class="stats-row" aria-label="The ESSC corpus at a glance">
+      <div class="stat">
+        <dt>{{ corpus.stats.speakerCount }}</dt>
+        <dd>speakers</dd>
+      </div>
+      <div class="stat">
+        <dt>{{ corpus.stats.editions }}</dt>
+        <dd>conferences <span class="muted">since 2017</span></dd>
+      </div>
+      <div class="stat">
+        <dt>{{ corpus.stats.paperCount }}</dt>
+        <dd>papers presented</dd>
+      </div>
+    </dl>
   </div>
 </header>
 
