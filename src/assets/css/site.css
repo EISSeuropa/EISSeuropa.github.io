@@ -3310,6 +3310,13 @@ a.programme-live-tag:focus-visible {
   padding: var(--space-3) 0;
   border-bottom: 1px solid var(--border);
 }
+/* `display: flex` above overrides the UA `[hidden] { display: none }`
+   rule, so the filter JS (which toggles the hidden attribute) could not
+   actually hide a row. Restore it explicitly. Without this, theme / name /
+   event filtering counts correctly but nothing visually disappears. */
+.speaker-entry[hidden] {
+  display: none;
+}
 .speaker-entry-body {
   flex: 1 1 auto;
   min-width: 0;
