@@ -416,6 +416,9 @@ const locales = {
       resultsMany: "{n} speakers",
       noMatch: "No speakers match.",
       matching: 'matching "{q}"',
+      eventLabel: "Event",
+      allEvents: "All events",
+      attendedLabel: "Editions attended",
     },
 
     mapEmbed: {
@@ -763,6 +766,9 @@ const locales = {
       resultsMany: "{n} intervenants",
       noMatch: "Aucun intervenant ne correspond.",
       matching: 'correspondant à « {q} »',
+      eventLabel: "Événement",
+      allEvents: "Tous les événements",
+      attendedLabel: "Éditions",
     },
 
     mapEmbed: {
@@ -1107,6 +1113,9 @@ const locales = {
       resultsMany: "{n} Vortragende",
       noMatch: "Keine Vortragenden gefunden.",
       matching: 'passend zu „{q}“',
+      eventLabel: "Veranstaltung",
+      allEvents: "Alle Veranstaltungen",
+      attendedLabel: "Ausgaben",
     },
 
     mapEmbed: {

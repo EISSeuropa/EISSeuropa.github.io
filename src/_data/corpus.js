@@ -233,7 +233,13 @@ const profileByKey = {};
 try {
   const people = (peopleIndexFn() || {}).people || [];
   for (const p of people) {
-    profileByKey[canonicalKey(p.detect || p.name)] = p.url;
+    // Keep the photo + initials too, so a member's speaker entry can show
+    // a headshot bubble (falling back to initials when there's no photo).
+    profileByKey[canonicalKey(p.detect || p.name)] = {
+      url: p.url,
+      photo: p.photo || null,
+      initials: p.initials || "",
+    };
   }
 } catch (_) {
   /* peopleIndex unavailable — speakers just won't carry a profile link */
@@ -247,11 +253,14 @@ for (const paper of papers) {
     if (!key) continue;
     let s = speakerMap.get(key);
     if (!s) {
+      const profile = profileByKey[key] || null;
       s = {
         key,
         name: a.name,
         nameVariants: {},
-        profileUrl: profileByKey[key] || null,
+        profileUrl: profile ? profile.url : null,
+        photo: profile ? profile.photo : null,
+        initials: profile ? profile.initials : "",
         themes: new Set(),
         papers: [],
       };
@@ -279,6 +288,10 @@ const speakers = [...speakerMap.values()]
     )[0][0];
     const papersByYear = s.papers.sort((a, b) => (b.year || 0) - (a.year || 0));
     const years = papersByYear.map((p) => p.year).filter(Boolean);
+    // Distinct years (newest first) for the at-a-glance pills, and the
+    // distinct edition URLs the person presented at, for the event filter.
+    const yearList = [...new Set(years)].sort((a, b) => b - a);
+    const editionKeys = [...new Set(papersByYear.map((p) => p.conferenceUrl).filter(Boolean))];
     // Most-recent affiliation: the one from the latest paper that carries
     // one (not a cumulative list — a person's affiliation changes over the
     // years, and the current one is what's useful).
@@ -294,6 +307,10 @@ const speakers = [...speakerMap.values()]
       affiliation,
       themes, // permanent + derived themes, in canonical order
       profileUrl: s.profileUrl,
+      photo: s.photo, // member headshot (null for non-members / no photo)
+      initials: s.initials,
+      years: yearList, // distinct years, newest first (pills)
+      editionKeys, // distinct edition URLs attended (event filter)
       papers: papersByYear,
       count: papersByYear.length,
       firstYear: years.length ? Math.min(...years) : null,
@@ -312,11 +329,35 @@ const themes = THEME_ORDER.map((name) => ({
   count: speakers.filter((s) => s.themes.includes(name)).length,
 })).filter((t) => t.count > 0);
 
+// Editions for the event filter: one per conference page (keyed on its
+// URL), newest first, with the speaker count. `display` distinguishes the
+// nine ESSC years from the joint events ("ESSC 2024" vs the full joint name).
+const editionMap = new Map();
+for (const p of papers) {
+  if (!p.conferenceUrl) continue;
+  let e = editionMap.get(p.conferenceUrl);
+  if (!e) {
+    e = { key: p.conferenceUrl, label: p.conferenceLabel, year: p.year, speakers: new Set() };
+    editionMap.set(p.conferenceUrl, e);
+  }
+  for (const a of p.authors) if (a.name) e.speakers.add(canonicalKey(a.name));
+}
+const editions = [...editionMap.values()]
+  .map((e) => ({
+    key: e.key,
+    year: e.year,
+    label: e.label,
+    display: e.year ? `${e.label} ${e.year}` : e.label,
+    count: e.speakers.size,
+  }))
+  .sort((a, b) => (b.year || 0) - (a.year || 0) || a.display.localeCompare(b.display));
+
 module.exports = {
   papers,
   speakers,
   letters,
   themes,
+  editions,
   stats: {
     paperCount: papers.length,
     speakerCount: speakers.length,
