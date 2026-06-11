@@ -217,10 +217,8 @@
     </div>
     {%- endfor %}
 
-    <p class="muted" style="margin-top: var(--space-6); font-size: var(--fs-sm);">
-      <a href="/speakers.html">{{ t.programme.speakersLink }} {{ icon("arrow-right") }}</a>
-    </p>
-    <p class="muted programme-footnote" style="margin-top: var(--space-3); font-size: var(--fs-sm);">
+    {% include "speakers-signpost.njk" %}
+    <p class="muted programme-footnote" style="margin-top: var(--space-4); font-size: var(--fs-sm);">
       {{ t.programme.sourceNote }}
       <a href="https://indico.eiss-europa.com/event/{{ _conf.id }}/" target="_blank" rel="noopener">
         {{ t.programme.viewOnIndico }} {{ icon("external-link") }}

@@ -66,14 +66,21 @@
         statusEl.textContent = "";
       } else {
         statusEl.hidden = false;
+        var d = statusEl.dataset;
         if (visible === 0) {
-          statusEl.textContent = "No speakers match.";
+          statusEl.textContent = d.msgNone || "No speakers match.";
         } else {
+          var tmpl = visible === 1
+            ? (d.msgOne || "{n} speaker")
+            : (d.msgMany || "{n} speakers");
           var bits = [];
           if (theme) bits.push(theme);
-          if (q) bits.push('matching "' + (findEl.value || "").trim() + '"');
+          if (q) {
+            var matchTmpl = d.msgMatching || 'matching "{q}"';
+            bits.push(matchTmpl.replace("{q}", (findEl.value || "").trim()));
+          }
           statusEl.textContent =
-            visible + " speaker" + (visible === 1 ? "" : "s") +
+            tmpl.replace("{n}", visible) +
             (bits.length ? " · " + bits.join(" · ") : "");
         }
       }

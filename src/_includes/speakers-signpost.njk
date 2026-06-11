@@ -1,0 +1,15 @@
+{# Locale-aware signpost to the /speakers index, as a link-card. Used at
+   the foot of the conference programme grid and on the People page.
+   Reads `lang` to pick the right-locale page, and `t.programme.speakersLink`
+   for the label. The count line reuses the speaker stats. #}
+{% from "icons.njk" import icon %}
+{%- set t = i18n[lang or "en"] -%}
+{%- set _spk = "/speakers.html" if (lang or "en") == "en" else "/speakers." + lang + ".html" -%}
+<a class="speakers-cta" href="{{ _spk }}">
+  <span class="speakers-cta__icon" aria-hidden="true">{{ icon("users") }}</span>
+  <span class="speakers-cta__body">
+    <span class="speakers-cta__title">{{ t.programme.speakersLink }}</span>
+    <span class="speakers-cta__sub muted">{{ corpus.stats.speakerCount }} {{ t.speakers.statSpeakers }} · {{ t.speakers.statConferencesSince }}</span>
+  </span>
+  <span class="speakers-cta__arrow" aria-hidden="true">{{ icon("arrow-right") }}</span>
+</a>
