@@ -22,6 +22,7 @@
   var themeSel = document.querySelector("[data-speaker-theme]");
   if (!list || !themeSel) return;
 
+  var eventSel = document.querySelector("[data-speaker-event]");
   var findEl = document.querySelector("[data-speaker-find]");
   var clearEl = document.querySelector("[data-speaker-clear]");
   var statusEl = document.querySelector("[data-speaker-status]");
@@ -38,12 +39,14 @@
 
   function apply() {
     var theme = themeSel.value;
+    var ev = eventSel ? eventSel.value : "";
     var q = norm(findEl && findEl.value);
     var visible = 0;
     entries.forEach(function (el) {
       var okTheme = !theme || (el.getAttribute("data-themes") || "").split("|").indexOf(theme) !== -1;
+      var okEvent = !ev || (el.getAttribute("data-events") || "").split("|").indexOf(ev) !== -1;
       var okName = !q || norm(el.getAttribute("data-name")).indexOf(q) !== -1;
-      var show = okTheme && okName;
+      var show = okTheme && okEvent && okName;
       el.hidden = !show;
       if (show) visible++;
     });
@@ -58,7 +61,7 @@
       letterEl.hidden = !any;
     });
 
-    var filtering = !!(theme || q);
+    var filtering = !!(theme || ev || q);
     if (clearEl) clearEl.hidden = !filtering;
     if (statusEl) {
       if (!filtering) {
@@ -75,6 +78,9 @@
             : (d.msgMany || "{n} speakers");
           var bits = [];
           if (theme) bits.push(theme);
+          if (ev && eventSel) {
+            bits.push(eventSel.options[eventSel.selectedIndex].text.replace(/\s*\(\d+\)\s*$/, ""));
+          }
           if (q) {
             var matchTmpl = d.msgMatching || 'matching "{q}"';
             bits.push(matchTmpl.replace("{q}", (findEl.value || "").trim()));
@@ -94,14 +100,18 @@
     var url = new URL(window.location.href);
     if (themeSel.value) url.searchParams.set("theme", themeSel.value);
     else url.searchParams.delete("theme");
+    if (eventSel && eventSel.value) url.searchParams.set("event", eventSel.value);
+    else url.searchParams.delete("event");
     history.replaceState(null, "", url.pathname + url.search + url.hash);
   }
 
   themeSel.addEventListener("change", function () { syncUrl(); apply(); });
+  if (eventSel) eventSel.addEventListener("change", function () { syncUrl(); apply(); });
   if (findEl) findEl.addEventListener("input", apply);
   if (clearEl) {
     clearEl.addEventListener("click", function () {
       themeSel.value = "";
+      if (eventSel) eventSel.value = "";
       if (findEl) findEl.value = "";
       syncUrl();
       apply();
@@ -109,11 +119,13 @@
     });
   }
 
-  // Restore theme from the URL on load (deep link / Back).
-  var initial = new URL(window.location.href).searchParams.get("theme");
-  if (initial) {
-    var match = [].some.call(themeSel.options, function (o) { return o.value === initial; });
-    if (match) themeSel.value = initial;
+  // Restore theme + event from the URL on load (deep link / Back).
+  function restore(param, sel) {
+    if (!sel) return;
+    var v = new URL(window.location.href).searchParams.get(param);
+    if (v && [].some.call(sel.options, function (o) { return o.value === v; })) sel.value = v;
   }
+  restore("theme", themeSel);
+  restore("event", eventSel);
   apply();
 })();
