@@ -3542,6 +3542,40 @@ a.programme-live-tag:focus-visible {
   color: white;
 }
 
+/* On the homepage featured card the badge sits on a light, theme-aware
+   surface, not the dark /YYYY hero it was first styled for. The default
+   white text and translucent-white chrome read as white-on-white there
+   (the "Happening now" label vanished in light mode). Re-skin it with
+   surface tokens so the label and CTA stay legible in both themes. */
+.featured .registration-badge {
+  color: var(--text);
+  background: var(--accent-soft);
+  border-color: var(--border-strong);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.featured .registration-badge__cta {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.featured .registration-badge__cta:hover,
+.featured .registration-badge__cta:focus-visible {
+  background: var(--accent-hover);
+}
+
+.featured .registration-badge--past {
+  background: var(--surface-strong);
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+
+.featured .registration-badge--past .registration-badge__cta {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .registration-badge__dot--live {
     animation: none;

@@ -70,6 +70,10 @@ alternates:
           </div>
         </div>
         <div class="featured-registration">
+          {# While the conference is current, the Livestream pill is the call
+             to action, so suppress the badge's "View on Indico" CTA (it would
+             otherwise sit redundantly beside the livestream link). #}
+          {%- set hideBadgeCta = conf.livestreamUrl and conf.endDate >= conferences.today -%}
           {% include "registration-badge.njk" %}
           {%- if conf.livestreamUrl and conf.endDate >= conferences.today %}
           <a class="programme-live-tag" href="{{ conf.livestreamUrl }}" target="_blank" rel="noopener">{{ icon("video") }} Livestream {{ icon("external-link") }}</a>

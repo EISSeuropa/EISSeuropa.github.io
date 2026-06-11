@@ -68,6 +68,7 @@ alternates:
           </div>
         </div>
         <div class="featured-registration">
+          {%- set hideBadgeCta = conf.livestreamUrl and conf.endDate >= conferences.today -%}
           {% include "registration-badge.njk" %}
           {%- if conf.livestreamUrl and conf.endDate >= conferences.today %}
           <a class="programme-live-tag" href="{{ conf.livestreamUrl }}" target="_blank" rel="noopener">{{ icon("video") }} En direct {{ icon("external-link") }}</a>
