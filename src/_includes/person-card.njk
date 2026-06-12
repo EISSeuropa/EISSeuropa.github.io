@@ -98,20 +98,13 @@
       <p class="person-affiliation" lang="en">{{ person.affiliation | safe }}{%- if iso or person.country %}&nbsp;{{ flag_inline(iso, person.country, icon) }}{%- endif %}</p>
     {%- endif %}
 
-    {%- if person.bio %}
-    <div class="person-bio-wrap"{% if person.bioIsLong %} data-collapsible="true"{% endif %}>
-      <p class="person-bio" lang="en">{{ person.bio | safe }}</p>
-      {%- if person.bioIsLong %}
-      <button type="button"
-              class="person-bio-toggle"
-              aria-expanded="false"
-              data-label-collapsed="{{ t.boardPage.readMore }}"
-              data-label-expanded="{{ t.boardPage.readLess }}">
-        {{ t.boardPage.readMore }}
-      </button>
-      {%- endif %}
-    </div>
-    {%- endif %}
+    {# Deep content (full bio + recent ORCID publications) is moved off the
+       card face into a modal dialog (see the bottom of this card and
+       board-profile.js), so the grid stays compact and uniform: an open
+       profile can't stretch its rowmates the way inline bio expansion did.
+       The card face is identity only. #}
+    {%- set recentWorks = orcidWorksBySlug[person.slug] -%}
+    {%- set hasDetail = person.slug and (person.bio or recentWorks) -%}
 
     {%- if person.themes %}
     <p class="person-themes muted">
@@ -146,5 +139,60 @@
       {%- endif %}
     </ul>
     {%- endif %}
+
+    {%- if hasDetail %}
+    {# Anchor (not button) so it degrades to a working in-page link when JS is
+       off: the dialog's `:target` rule reveals the profile inline. With JS,
+       board-profile.js intercepts the click and opens it as a modal instead. #}
+    <a class="person-more" href="#dialog-{{ person.slug }}" data-dialog="dialog-{{ person.slug }}">
+      {{ t.boardPage.viewProfile }}{{ icon("arrow-right") }}
+    </a>
+    {%- endif %}
   </div>
+
+  {%- if hasDetail %}
+  {# Per-person profile dialog. Native <dialog>: backdrop, focus trap and Esc
+     come for free; board-profile.js wires the open trigger and backdrop-click
+     close. Publications are rendered server-side here (no client fetch), so
+     they are crawlable and survive a JS-off visit: the `.person-dialog:target`
+     CSS rule reveals this block inline when the anchor above is followed
+     without JavaScript. #}
+  <dialog class="person-dialog" id="dialog-{{ person.slug }}" aria-labelledby="dlg-name-{{ person.slug }}">
+    <button type="button" class="person-dialog-close" data-dialog-close aria-label="{{ t.boardPage.close }}">&times;</button>
+    <div class="person-dialog-body">
+      <p class="person-role">
+        <span class="person-role-primary">{{ person.role }}</span>
+        {%- if person.functionalResponsibility %}
+        <span class="person-functional-resp">{{ person.functionalResponsibility }}</span>
+        {%- endif %}
+      </p>
+      <p class="person-name" id="dlg-name-{{ person.slug }}">{{ person.name }}</p>
+      {%- if person.position %}<p class="person-position" lang="en">{{ person.position | safe }}</p>{%- endif %}
+      {%- if person.institution %}<p class="person-institution" lang="en">{{ person.institution | safe }}</p>
+      {%- elif person.affiliation %}<p class="person-affiliation" lang="en">{{ person.affiliation | safe }}</p>{%- endif %}
+
+      {%- if person.bio %}
+      <p class="person-dialog-bio" lang="en">{{ person.bio | safe }}</p>
+      {%- endif %}
+
+      {%- if recentWorks %}
+      <p class="profile-pub-heading">{{ t.boardPage.recentPublications }}</p>
+      <ul class="profile-pub-list" role="list">
+        {%- for w in recentWorks %}
+        <li class="profile-pub">
+          {%- if w.doi %}
+          <a class="profile-pub-title" href="{{ w.doi }}" target="_blank" rel="noopener" lang="en">{{ w.title }}</a>
+          {%- else %}
+          <span class="profile-pub-title" lang="en">{{ w.title }}</span>
+          {%- endif %}
+          {%- if w.year or w.journal %}
+          <span class="profile-pub-meta muted">{% if w.year %}{{ w.year }}{% endif %}{% if w.year and w.journal %} · {% endif %}{% if w.journal %}<span lang="en">{{ w.journal }}</span>{% endif %}</span>
+          {%- endif %}
+        </li>
+        {%- endfor %}
+      </ul>
+      {%- endif %}
+    </div>
+  </dialog>
+  {%- endif %}
 </article>

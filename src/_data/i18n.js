@@ -395,6 +395,12 @@ const locales = {
       // who are chairing, discussing, or speaking at the live ESSC
       // edition (matched against the Indico programme at build time).
       esscSpeakerTitle: "Chairing or speaking at the current ESSC",
+      // Profile dialog (board cards with a bio or recent publications):
+      // the trigger label, the close button, and the heading above a
+      // member's recent ORCID publications inside the dialog.
+      viewProfile: "View profile",
+      close: "Close",
+      recentPublications: "Recent publications",
     },
 
     registrationBadge: {
@@ -814,6 +820,9 @@ const locales = {
       readLess: "Réduire",
       linksAriaLabel: "Liens",
       esscSpeakerTitle: "Préside ou intervient à l'ESSC en cours",
+      viewProfile: "Voir le profil",
+      close: "Fermer",
+      recentPublications: "Publications récentes",
     },
 
     registrationBadge: {
@@ -1212,6 +1221,9 @@ const locales = {
       readLess: "Weniger anzeigen",
       linksAriaLabel: "Links",
       esscSpeakerTitle: "Leitet oder spricht beim aktuellen ESSC",
+      viewProfile: "Profil ansehen",
+      close: "Schließen",
+      recentPublications: "Neueste Veröffentlichungen",
     },
 
     registrationBadge: {

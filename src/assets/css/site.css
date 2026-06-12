@@ -5991,3 +5991,124 @@ a.joint-orgs-card:hover .joint-orgs-name {
   .person-ref { border-bottom: 0; color: inherit; }
   .person-hovercard { display: none !important; }
 }
+
+/* ───────────────────────────────────────────────────────────────────────
+   Board profile dialogs (#719 redesign).
+   Card faces stay compact and uniform identity; the full bio + recent ORCID
+   publications open in a per-person modal so an expanded profile can never
+   stretch its grid rowmates (the inline-bio blow-out this replaces). */
+
+/* Cards size to their own content; a tall card no longer drags its row. */
+.people-grid,
+.people-grid--compact {
+  align-items: start;
+}
+
+/* Clamp the research-themes line so a long list doesn't make cards uneven. */
+.person-themes {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* "View profile" trigger, pinned under the card body. */
+.person-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  margin-top: var(--space-3);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+}
+.person-more:hover { text-decoration: underline; }
+.person-more svg { width: 1em; height: 1em; }
+
+/* The modal. Closed → hidden (UA default). Opened via showModal() → centred
+   card over a dimmed backdrop. */
+.person-dialog {
+  width: min(34rem, calc(100vw - 2rem));
+  max-height: calc(100vh - 4rem);
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elev);
+  color: var(--text);
+  box-shadow: var(--shadow-3);
+  overflow: auto;
+}
+.person-dialog::backdrop { background: hsl(0 0% 0% / 0.5); }
+.person-dialog-body { padding: var(--space-2) var(--space-6) var(--space-6); }
+.person-dialog-close {
+  position: sticky;
+  top: var(--space-2);
+  margin: var(--space-2) var(--space-2) 0 auto;
+  display: block;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+}
+.person-dialog-close:hover { color: var(--text); background: var(--surface-strong); }
+.person-dialog-bio {
+  margin-top: var(--space-4);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* Recent publications inside the dialog. The fix from the reverted version:
+   title on its own line, year · journal on a separate muted line beneath,
+   real spacing between entries. */
+.profile-pub-heading {
+  margin: var(--space-5) 0 var(--space-2);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+.profile-pub-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.profile-pub { margin: 0; }
+.profile-pub-title {
+  display: block;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--accent);
+  text-decoration: none;
+}
+a.profile-pub-title:hover { text-decoration: underline; }
+.profile-pub-meta {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: var(--fs-sm);
+}
+
+/* Progressive-enhancement fallback: with no JS (or no <dialog> support) the
+   trigger is a plain in-page link, and following it reveals the dialog inline
+   via :target. Once board-profile.js confirms modal support it tags <html>
+   with .has-dialog, which suppresses the inline path so a stray #dialog-…
+   hash never shows the block inline in the modal-capable view. */
+.person-dialog:target {
+  display: block;
+  position: static;
+  width: auto;
+  max-height: none;
+  margin-top: var(--space-4);
+  box-shadow: none;
+}
+.person-dialog:not([open]) .person-dialog-close { display: none; }
+.has-dialog .person-dialog:not([open]) { display: none; }
