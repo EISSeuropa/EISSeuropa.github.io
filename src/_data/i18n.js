@@ -421,6 +421,32 @@ const locales = {
       attendedLabel: "Editions attended",
     },
 
+    papers: {
+      // /papers index (EN + FR + DE share one include, this is the
+      // chrome). Paper titles, author names, affiliations, panel names and
+      // theme labels stay in their original language (see `note`).
+      eyebrow: "The ESSC corpus",
+      title: "Papers",
+      lead: "Every paper presented at a European Security Studies Conference, drawn from the programmes of every edition. Browse the whole corpus, or filter by year and theme. Use the site search to find a specific title or author.",
+      statPapers: "papers presented",
+      statEditions: "editions",
+      statEditionsSince: "since 2017",
+      findPlaceholder: "Find by title or author…",
+      findLabel: "Find a paper by title or author",
+      yearLabel: "Year",
+      allYears: "All years",
+      themeLabel: "Theme",
+      allThemes: "All themes",
+      clear: "Clear",
+      note: "Assembled from the published conference programmes. Themes are inferred from the panel each paper sat in (the nine permanent EISS sections plus recurring themes), so a paper may carry more than one or none. Titles, author names, affiliations and theme labels stay in their original language.",
+      // Live-region status strings, read by paper-filter.js. {n}/{q} are
+      // substituted client-side.
+      resultsOne: "{n} paper",
+      resultsMany: "{n} papers",
+      noMatch: "No papers match.",
+      matching: 'matching "{q}"',
+    },
+
     outputs: {
       // /outputs (EN + FR + DE share one include). Member publication
       // titles/journals stay in their original language (lang="en").
@@ -786,6 +812,27 @@ const locales = {
       attendedLabel: "Éditions",
     },
 
+    papers: {
+      eyebrow: "Le corpus de l'ESSC",
+      title: "Communications",
+      lead: "Toutes les communications présentées lors d'une European Security Studies Conference, à partir des programmes de chaque édition. Parcourez l'ensemble du corpus ou filtrez par année et par thème. Utilisez la recherche du site pour trouver un titre ou un auteur précis.",
+      statPapers: "communications présentées",
+      statEditions: "éditions",
+      statEditionsSince: "depuis 2017",
+      findPlaceholder: "Rechercher par titre ou auteur…",
+      findLabel: "Rechercher une communication par titre ou auteur",
+      yearLabel: "Année",
+      allYears: "Toutes les années",
+      themeLabel: "Thème",
+      allThemes: "Tous les thèmes",
+      clear: "Effacer",
+      note: "Constitué à partir des programmes publiés des conférences. Les thèmes sont déduits du panel dans lequel chaque communication a été présentée (les neuf sections permanentes de l'EISS et des thèmes récurrents) : une communication peut en porter plusieurs ou aucun. Les titres, noms d'auteurs, affiliations et intitulés de thèmes restent dans leur langue d'origine.",
+      resultsOne: "{n} communication",
+      resultsMany: "{n} communications",
+      noMatch: "Aucune communication ne correspond.",
+      matching: 'correspondant à « {q} »',
+    },
+
     outputs: {
       eyebrow: "Ce que nous produisons",
       title: "Publications et productions",
@@ -1144,6 +1191,27 @@ const locales = {
       eventLabel: "Veranstaltung",
       allEvents: "Alle Veranstaltungen",
       attendedLabel: "Ausgaben",
+    },
+
+    papers: {
+      eyebrow: "Das ESSC-Korpus",
+      title: "Beiträge",
+      lead: "Alle Beiträge, die auf einer European Security Studies Conference vorgestellt wurden, zusammengestellt aus den Programmen jeder Ausgabe. Durchsuchen Sie das gesamte Korpus oder filtern Sie nach Jahr und Thema. Nutzen Sie die Seitensuche, um einen bestimmten Titel oder Autor zu finden.",
+      statPapers: "vorgestellte Beiträge",
+      statEditions: "Ausgaben",
+      statEditionsSince: "seit 2017",
+      findPlaceholder: "Nach Titel oder Autor suchen…",
+      findLabel: "Beitrag nach Titel oder Autor suchen",
+      yearLabel: "Jahr",
+      allYears: "Alle Jahre",
+      themeLabel: "Thema",
+      allThemes: "Alle Themen",
+      clear: "Zurücksetzen",
+      note: "Zusammengestellt aus den veröffentlichten Konferenzprogrammen. Themen werden aus dem Panel abgeleitet, in dem der jeweilige Beitrag stand (die neun ständigen EISS-Sektionen sowie wiederkehrende Themen): ein Beitrag kann mehrere oder gar keines tragen. Titel, Autorennamen, Zugehörigkeiten und Themenbezeichnungen bleiben in ihrer Originalsprache.",
+      resultsOne: "{n} Beitrag",
+      resultsMany: "{n} Beiträge",
+      noMatch: "Keine Beiträge gefunden.",
+      matching: 'passend zu „{q}“',
     },
 
     outputs: {
