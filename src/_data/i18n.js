@@ -401,6 +401,7 @@ const locales = {
       viewProfile: "View profile",
       close: "Close",
       recentPublications: "Recent publications",
+      backToPeople: "Back to People",
     },
 
     registrationBadge: {
@@ -834,6 +835,7 @@ const locales = {
       viewProfile: "Voir le profil",
       close: "Fermer",
       recentPublications: "Publications récentes",
+      backToPeople: "Retour à l'équipe",
     },
 
     registrationBadge: {
@@ -1243,6 +1245,7 @@ const locales = {
       viewProfile: "Profil ansehen",
       close: "Schließen",
       recentPublications: "Neueste Veröffentlichungen",
+      backToPeople: "Zurück zu den Personen",
     },
 
     registrationBadge: {

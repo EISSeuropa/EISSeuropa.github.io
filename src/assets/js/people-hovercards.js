@@ -33,7 +33,9 @@
   }
 
   function profileUrl(person) {
-    if (lang !== "en") return "/board." + lang + ".html#" + person.slug;
+    // person.url is the EN profile page (/board/<slug>.html). For FR/DE,
+    // swap to that locale's paginated profile page.
+    if (lang !== "en") return "/board/" + person.slug + "." + lang + ".html";
     return person.url;
   }
 
