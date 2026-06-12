@@ -2021,7 +2021,13 @@ h4 { font-size: var(--fs-lg); }
 
 .person-body {
   padding: var(--space-4) var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
 }
+/* Footer (links + View profile) pushed to the card bottom so it aligns across
+   a row of equal-height cards. */
+.person-foot { margin-top: auto; }
 
 .person-role {
   font-size: var(--fs-xs);
@@ -5998,10 +6004,13 @@ a.joint-orgs-card:hover .joint-orgs-name {
    publications open in a per-person modal so an expanded profile can never
    stretch its grid rowmates (the inline-bio blow-out this replaces). */
 
-/* Cards size to their own content; a tall card no longer drags its row. */
+/* Cards in a row share one height (uniform boxes), and the footer pins to the
+   bottom (see .person-foot) so View profile / links align across the row. Safe
+   now that deep content lives in a modal: no inline expansion can blow a card
+   out, which is why the grid briefly used align-items: start. */
 .people-grid,
 .people-grid--compact {
-  align-items: start;
+  align-items: stretch;
 }
 
 /* Clamp the research-themes line so a long list doesn't make cards uneven. */
