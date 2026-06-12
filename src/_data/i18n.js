@@ -395,6 +395,9 @@ const locales = {
       // who are chairing, discussing, or speaking at the live ESSC
       // edition (matched against the Indico programme at build time).
       esscSpeakerTitle: "Chairing or speaking at the current ESSC",
+      // Subheading on a board card listing the member's own recent works,
+      // drawn from ORCID and injected lazily by board-publications.js.
+      recentPublications: "Recent publications",
     },
 
     registrationBadge: {
@@ -788,6 +791,7 @@ const locales = {
       readLess: "Réduire",
       linksAriaLabel: "Liens",
       esscSpeakerTitle: "Préside ou intervient à l'ESSC en cours",
+      recentPublications: "Publications récentes",
     },
 
     registrationBadge: {
@@ -1165,6 +1169,7 @@ const locales = {
       readLess: "Weniger anzeigen",
       linksAriaLabel: "Links",
       esscSpeakerTitle: "Leitet oder spricht beim aktuellen ESSC",
+      recentPublications: "Neueste Veröffentlichungen",
     },
 
     registrationBadge: {
