@@ -3553,6 +3553,72 @@ a.programme-live-tag:focus-visible {
   .speaker-paper-conf { flex: none; }
 }
 
+/* /papers — the cross-year paper index (#632). The filter chrome reuses
+   the .speaker-filters / .speaker-field / .speaker-clear / .speaker-status
+   panel above; the list below is a one-card-per-paper stack. */
+.paper-index {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+  max-width: 52rem;
+}
+/* The card uses `display: block`, but toggling the hidden attribute on the
+   list item should still hide it. Be explicit (mirrors .speaker-entry). */
+.paper-entry[hidden] {
+  display: none;
+}
+.paper-card {
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border);
+}
+.paper-title {
+  margin: 0;
+  font-size: var(--fs-base);
+  font-weight: 600;
+  line-height: 1.4;
+}
+.paper-authors {
+  margin: 0.2rem 0 0;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+}
+.paper-aff {
+  margin: 0.1rem 0 0;
+  font-size: var(--fs-sm);
+}
+.paper-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem var(--space-3);
+  margin: 0.35rem 0 0;
+  font-size: var(--fs-sm);
+}
+.paper-edition {
+  font-weight: 600;
+  white-space: nowrap;
+}
+.paper-panel {
+  min-width: 0;
+}
+.paper-themes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0.35rem 0 0;
+}
+.paper-theme-chip {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  background: var(--bg-tinted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.05rem 0.5rem;
+  line-height: 1.5;
+}
+
 @media (max-width: 720px) {
   /* Collapse the time gutter so cards take the full width on phones. */
   .programme-row {

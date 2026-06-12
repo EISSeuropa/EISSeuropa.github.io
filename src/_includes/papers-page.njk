@@ -1,0 +1,107 @@
+{# Paper index body — shared by /papers (EN), /papers.fr and /papers.de.
+   All chrome comes from `t.papers.*`; the data (paperIndex.papers) is
+   identical across locales, so paper titles, author names, affiliations
+   and theme labels stay in their original language (each carries
+   lang="en"). The page wrappers set `lang`, `permalink` and `alternates`;
+   this include holds the markup so the full corpus loop isn't triplicated.
+
+   The list is server-rendered (not JS-built) so Pagefind indexes every
+   title for the site search. `paper-filter.js` reads its live-region
+   strings from the data-* attributes on [data-paper-status] so the JS
+   stays locale-agnostic. Filtering matches on data attributes, not visible
+   text, so it is locale-agnostic too.
+#}
+{%- set t = i18n[lang or "en"] -%}
+{%- set p18n = t.papers -%}
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">{{ p18n.eyebrow }}</span>
+    <h1>{{ p18n.title }}</h1>
+    <p class="page-lead">{{ p18n.lead }}</p>
+    <dl class="stats-row" aria-label="{{ p18n.eyebrow }}">
+      <div class="stat">
+        <dt>{{ paperIndex.stats.paperCount }}</dt>
+        <dd>{{ p18n.statPapers }}</dd>
+      </div>
+      <div class="stat">
+        <dt>{{ paperIndex.stats.editions }}</dt>
+        <dd>{{ p18n.statEditions }} <span class="muted">{{ p18n.statEditionsSince }}</span></dd>
+      </div>
+    </dl>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+
+    <div class="speaker-filters" role="search">
+      <div class="speaker-field speaker-field--search">
+        <label class="speaker-field-label" for="paper-find">{{ p18n.findLabel }}</label>
+        <input id="paper-find" type="search" data-paper-find placeholder="{{ p18n.findPlaceholder }}" autocomplete="off">
+      </div>
+      <div class="speaker-field">
+        <label class="speaker-field-label" for="paper-year">{{ p18n.yearLabel }}</label>
+        <select id="paper-year" data-paper-year>
+          <option value="">{{ p18n.allYears }} ({{ paperIndex.stats.paperCount }})</option>
+          {%- for y in paperIndex.years %}
+          <option value="{{ y.year }}">{{ y.year }} ({{ y.count }})</option>
+          {%- endfor %}
+        </select>
+      </div>
+      <div class="speaker-field">
+        <label class="speaker-field-label" for="paper-theme">{{ p18n.themeLabel }}</label>
+        <select id="paper-theme" data-paper-theme>
+          <option value="">{{ p18n.allThemes }} ({{ paperIndex.stats.paperCount }})</option>
+          {%- for th in paperIndex.themes %}
+          <option value="{{ th.name }}">{{ th.name }} ({{ th.count }})</option>
+          {%- endfor %}
+        </select>
+      </div>
+      <button type="button" class="btn btn-sm speaker-clear" data-paper-clear hidden>{{ p18n.clear }}</button>
+    </div>
+
+    {# Filter status, announced to assistive tech (role=status → polite live
+       region). Empty when nothing is filtered. The data-msg-* strings are
+       the localised templates paper-filter.js fills in. #}
+    <p class="speaker-status" role="status" aria-live="polite" data-paper-status hidden
+       data-msg-none="{{ p18n.noMatch }}"
+       data-msg-one="{{ p18n.resultsOne }}"
+       data-msg-many="{{ p18n.resultsMany }}"
+       data-msg-matching="{{ p18n.matching }}"></p>
+
+    <ol class="paper-index" role="list" data-paper-list>
+      {%- for p in paperIndex.papers %}
+      <li class="paper-entry" data-paper-entry
+          data-year="{{ p.year }}"
+          data-themes="{{ p.theme | join('|') }}"
+          data-search="{{ p.title }} {{ p.authors | join(' ') }} {{ p.affiliations | join(' ') }}">
+        <article class="paper-card">
+          <h2 class="paper-title" lang="en">{{ p.title }}</h2>
+          {%- if p.authors.length %}
+          <p class="paper-authors" lang="en">{{ p.authors | join(', ') }}</p>
+          {%- endif %}
+          {%- if p.affiliations.length %}
+          <p class="paper-aff muted" lang="en">{{ p.affiliations | join(' · ') }}</p>
+          {%- endif %}
+          <p class="paper-meta">
+            <a class="paper-edition" href="{{ p.programmeUrl }}">{{ p.conferenceLabel }}{% if p.year %} {{ p.year }}{% endif %}</a>
+            {%- if p.panel %}<span class="paper-panel muted" lang="en">{{ p.panel }}</span>{% endif %}
+          </p>
+          {%- if p.theme.length %}
+          <p class="paper-themes">
+            {%- for th in p.theme %}<span class="paper-theme-chip" lang="en">{{ th }}</span>{% endfor %}
+          </p>
+          {%- endif %}
+        </article>
+      </li>
+      {%- endfor %}
+    </ol>
+
+    <p class="muted" style="margin-top: var(--space-6); font-size: var(--fs-sm); max-width: 44rem;">
+      {{ p18n.note }}
+    </p>
+  </div>
+</section>
+
+<script src="{{ '/assets/js/paper-filter.js' | bust }}" defer></script>
