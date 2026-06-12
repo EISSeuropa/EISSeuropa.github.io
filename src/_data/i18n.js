@@ -274,6 +274,32 @@ const locales = {
       },
     },
 
+    confTour: {
+      // ESSC edition tour list on /initiative, extracted into the shared
+      // src/_includes/conf-tour.njk partial (issue #606). The markup is
+      // identical across locales; only the text below differs. `editions`
+      // is reverse-chronological (most recent first). Each entry carries
+      // its own year, ordinal label, host, link label, and an optional
+      // `flag` (ISO-3166 alpha-2, drives the flag SVG + alt). The 2020
+      // edition was DEFERRED to 2021 (COVID-19), so it has no flag and an
+      // `online` flag for the muted styling; the 2017 inaugural carries
+      // `inaugural` for its accent. The key set (not the array contents)
+      // is what the parity checker compares, so the array stays drift-clean.
+      ariaLabel: "ESSC editions, most recent first",
+      editions: [
+        { year: "2026", ordinal: "9th", flag: "se", country: "Sweden", city: "Stockholm", host: "Stockholm University", slug: "/2026.html", link: "Programme" },
+        { year: "2025", ordinal: "8th", flag: "gr", country: "Greece", city: "Thessaloniki", host: "University of Macedonia", slug: "/2025.html", link: "Recap" },
+        { year: "2024", ordinal: "7th", flag: "cz", country: "Czech Republic", city: "Prague", host: "Charles University", slug: "/2024.html", link: "Recap" },
+        { year: "2023", ordinal: "6th", flag: "es", country: "Spain", city: "Barcelona", host: "IBEI (Institut Barcelona d'Estudis Internacionals)", slug: "/2023.html", link: "Recap" },
+        { year: "2022", ordinal: "5th", flag: "de", country: "Germany", city: "Berlin", host: "Hertie School", slug: "/2022.html", link: "Recap" },
+        { year: "2021", ordinal: "4th", flag: "pt", country: "Portugal", city: "Lisbon", host: "ISCTE — University Institute of Lisbon", slug: "/2021.html", link: "Recap" },
+        { year: "2020", ordinal: "Deferred", online: true, city: "Deferred to 2021", host: "Postponed (COVID-19); held in Lisbon in 2021", slug: "/2020.html", link: "Details" },
+        { year: "2019", ordinal: "3rd", flag: "fr", country: "France", city: "Paris", host: "Sciences Po CERI", slug: "/2019.html", link: "Recap" },
+        { year: "2018", ordinal: "2nd", flag: "fr", country: "France", city: "Paris", host: "Université Panthéon-Assas", slug: "/2018.html", link: "Recap" },
+        { year: "2017", ordinal: "Inaugural", inaugural: true, flag: "fr", country: "France", city: "Paris", host: "Université Panthéon-Assas", slug: "/2017.html", link: "Recap" },
+      ],
+    },
+
     programme: {
       // Live programme grid on /YYYY pages. Pulled from Indico's
       // timetable every day and rendered alongside the polished PDF
@@ -676,6 +702,23 @@ const locales = {
       },
     },
 
+    confTour: {
+      // Voir le fichier EN pour la logique du partial conf-tour.njk (#606).
+      ariaLabel: "Éditions de l'ESSC, de la plus récente à la première",
+      editions: [
+        { year: "2026", ordinal: "9<sup>e</sup>", flag: "se", country: "Suède", city: "Stockholm", host: "Université de Stockholm", slug: "/2026.html", link: "Programme" },
+        { year: "2025", ordinal: "8<sup>e</sup>", flag: "gr", country: "Grèce", city: "Thessalonique", host: "Université de Macédoine", slug: "/2025.html", link: "Compte-rendu" },
+        { year: "2024", ordinal: "7<sup>e</sup>", flag: "cz", country: "République tchèque", city: "Prague", host: "Université Charles", slug: "/2024.html", link: "Compte-rendu" },
+        { year: "2023", ordinal: "6<sup>e</sup>", flag: "es", country: "Espagne", city: "Barcelone", host: "IBEI (Institut Barcelona d'Estudis Internacionals)", slug: "/2023.html", link: "Compte-rendu" },
+        { year: "2022", ordinal: "5<sup>e</sup>", flag: "de", country: "Allemagne", city: "Berlin", host: "Hertie School", slug: "/2022.html", link: "Compte-rendu" },
+        { year: "2021", ordinal: "4<sup>e</sup>", flag: "pt", country: "Portugal", city: "Lisbonne", host: "ISCTE — Institut Universitaire de Lisbonne", slug: "/2021.html", link: "Compte-rendu" },
+        { year: "2020", ordinal: "Reportée", online: true, city: "Reportée à 2021", host: "Reportée (COVID-19), tenue à Lisbonne en 2021", slug: "/2020.html", link: "Détails" },
+        { year: "2019", ordinal: "3<sup>e</sup>", flag: "fr", country: "France", city: "Paris", host: "Sciences Po CERI", slug: "/2019.html", link: "Compte-rendu" },
+        { year: "2018", ordinal: "2<sup>e</sup>", flag: "fr", country: "France", city: "Paris", host: "Université Panthéon-Assas", slug: "/2018.html", link: "Compte-rendu" },
+        { year: "2017", ordinal: "Inaugurale", inaugural: true, flag: "fr", country: "France", city: "Paris", host: "Université Panthéon-Assas", slug: "/2017.html", link: "Compte-rendu" },
+      ],
+    },
+
     programme: {
       eyebrow: "En direct depuis Indico",
       heading: "Programme",
@@ -1034,6 +1077,23 @@ const locales = {
         "Treasurer": "EISS-Schatzmeisterin",
         "Founding Director": "EISS-Gründungsdirektor",
       },
+    },
+
+    confTour: {
+      // Siehe EN-Datei für die Logik des conf-tour.njk-Partials (#606).
+      ariaLabel: "ESSC-Editionen, neueste zuerst",
+      editions: [
+        { year: "2026", ordinal: "9.", flag: "se", country: "Schweden", city: "Stockholm", host: "Universität Stockholm", slug: "/2026.html", link: "Programm" },
+        { year: "2025", ordinal: "8.", flag: "gr", country: "Griechenland", city: "Thessaloniki", host: "Universität Makedonien", slug: "/2025.html", link: "Rückblick" },
+        { year: "2024", ordinal: "7.", flag: "cz", country: "Tschechien", city: "Prag", host: "Karls-Universität", slug: "/2024.html", link: "Rückblick" },
+        { year: "2023", ordinal: "6.", flag: "es", country: "Spanien", city: "Barcelona", host: "IBEI (Institut Barcelona d'Estudis Internacionals)", slug: "/2023.html", link: "Rückblick" },
+        { year: "2022", ordinal: "5.", flag: "de", country: "Deutschland", city: "Berlin", host: "Hertie School", slug: "/2022.html", link: "Rückblick" },
+        { year: "2021", ordinal: "4.", flag: "pt", country: "Portugal", city: "Lissabon", host: "ISCTE — Universitätsinstitut Lissabon", slug: "/2021.html", link: "Rückblick" },
+        { year: "2020", ordinal: "Verschoben", online: true, city: "Auf 2021 verschoben", host: "Verschoben (COVID-19), 2021 in Lissabon abgehalten", slug: "/2020.html", link: "Details" },
+        { year: "2019", ordinal: "3.", flag: "fr", country: "Frankreich", city: "Paris", host: "Sciences Po CERI", slug: "/2019.html", link: "Rückblick" },
+        { year: "2018", ordinal: "2.", flag: "fr", country: "Frankreich", city: "Paris", host: "Université Panthéon-Assas", slug: "/2018.html", link: "Rückblick" },
+        { year: "2017", ordinal: "Eröffnung", inaugural: true, flag: "fr", country: "Frankreich", city: "Paris", host: "Université Panthéon-Assas", slug: "/2017.html", link: "Rückblick" },
+      ],
     },
 
     programme: {
