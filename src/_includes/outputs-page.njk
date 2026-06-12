@@ -1,0 +1,68 @@
+{# /outputs body — shared by EN + FR + DE thin wrappers.
+
+   Two deliberately distinct sections:
+     1. "EISS publications" — the network's OWN / planned outputs (book
+        series, the Prix Bastien Irondelle, briefs, survey results).
+        Hand-curated; the full catalogue is tracked in #97.
+     2. "Recent publications by our members" — works members published in
+        their own right, drawn live from `orcidWorks.json` (built weekly
+        by scripts/sync-orcid.py). Member titles / journals stay in their
+        original language (lang="en"); the chrome is localised via
+        `t.outputs`.
+#}
+{% from "icons.njk" import icon %}
+{%- set t = i18n[lang or "en"] -%}
+{%- set o = t.outputs -%}
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">{{ o.eyebrow }}</span>
+    <h1>{{ o.title }}</h1>
+    <p class="page-lead">{{ o.lead }}</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <h2 style="margin-bottom: var(--space-3);">{{ o.networkHeading }}</h2>
+    <article class="prose">
+      <p>{{ o.networkIntro }}</p>
+      <p><a href="/GlobalRisks.html">{{ o.globalRisksLabel }} {{ icon("arrow-right") }}</a></p>
+    </article>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 style="margin-bottom: var(--space-3);">{{ o.membersHeading }}</h2>
+    <article class="prose" style="margin-bottom: var(--space-5);">
+      <p>{{ o.membersIntro }}</p>
+    </article>
+
+    {%- if orcidWorks and orcidWorks.length %}
+    <ul class="member-pubs" role="list">
+      {%- for m in orcidWorks %}
+      <li class="member-pub">
+        <p class="member-pub-name"><a href="/board.html#{{ m.slug }}">{{ m.name }}</a></p>
+        <ul class="member-pub-works" role="list">
+          {%- for w in m.works %}
+          <li>
+            <span class="member-pub-title" lang="en">
+              {%- if w.doi %}<a href="{{ w.doi }}" target="_blank" rel="noopener">{{ w.title }}</a>
+              {%- else %}{{ w.title }}{% endif %}
+            </span>
+            {%- if w.year or w.journal %}
+            <span class="member-pub-meta muted">{% if w.year %}{{ w.year }}{% endif %}{% if w.year and w.journal %} · {% endif %}{% if w.journal %}<span lang="en">{{ w.journal }}</span>{% endif %}</span>
+            {%- endif %}
+          </li>
+          {%- endfor %}
+        </ul>
+      </li>
+      {%- endfor %}
+    </ul>
+    <p class="muted" style="margin-top: var(--space-5); font-size: var(--fs-sm); max-width: 44rem;">{{ o.sourceNote }}</p>
+    {%- else %}
+    <p class="muted">{{ o.empty }}</p>
+    {%- endif %}
+  </div>
+</section>
