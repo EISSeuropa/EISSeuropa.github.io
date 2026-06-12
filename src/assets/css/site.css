@@ -3517,6 +3517,21 @@ a.programme-live-tag:focus-visible {
   font-size: var(--fs-xs);
 }
 
+/* Recent-publications region on a /board card (Issue #719). Injected
+   lazily by board-publications.js; reuses the .member-pub-works /
+   -title / -meta type styles above. */
+.member-pub-recent {
+  margin-top: var(--space-4);
+}
+.member-pub-recent-heading {
+  margin: 0 0 0.3rem;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
 /* Per-speaker theme chips (also the text Pagefind indexes for theme search). */
 .speaker-themes {
   display: flex;
