@@ -47,7 +47,7 @@
         <select id="speaker-theme" data-speaker-theme>
           <option value="">{{ s18n.allThemes }} ({{ corpus.stats.speakerCount }})</option>
           {%- for th in corpus.themes %}
-          <option value="{{ th.name }}">{{ th.name }} ({{ th.count }})</option>
+          <option value="{{ th.key }}">{{ th.label[lang or "en"] or th.label.en }} ({{ th.count }})</option>
           {%- endfor %}
         </select>
       </div>
@@ -109,7 +109,7 @@
           {%- endif %}
           {%- if s.themes.length %}
           <p class="speaker-themes">
-            {%- for th in s.themes %}<span class="speaker-theme-chip" lang="en">{{ th }}</span>{% endfor %}
+            {%- for th in s.themes %}<span class="speaker-theme-chip">{{ corpus.themeLabels[th][lang or "en"] or corpus.themeLabels[th].en }}</span>{% endfor %}
           </p>
           {%- endif %}
           <details class="speaker-papers">

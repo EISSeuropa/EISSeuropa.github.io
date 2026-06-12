@@ -1,0 +1,31 @@
+{# ESSC edition tour list on /initiative (+ fr / de). Shared partial
+   extracted under issue #606 from the block the #329 fix touched (the
+   2020 "deferred", not "online", correction and the per-year links).
+   All localised text comes from the `confTour` block in
+   src/_data/i18n.js; the markup here is identical across the three
+   locale pages, so the i18n drift checker sees one identical include
+   line and stays clean. `i18n` and `lang` are in scope from the page.
+
+   Each edition object carries: year, ordinal (raw HTML, e.g. the FR
+   "9<sup>e</sup>"), host, link label, slug, and either a `flag`
+   (ISO-3166 alpha-2 → flag SVG + alt) or `online: true` for the 2020
+   deferred edition (calendar icon, muted card). `inaugural: true`
+   accents the 2017 card. #}
+{% from "icons.njk" import icon %}
+{%- set _lang = lang or "en" -%}
+{%- set t = i18n[_lang] -%}
+<ul class="conf-tour" aria-label="{{ t.confTour.ariaLabel }}">
+  {%- for ed in t.confTour.editions %}
+  <li class="conf-tour-card{% if ed.online %} conf-tour-online{% elif ed.inaugural %} conf-tour-inaugural{% endif %}">
+    <div class="conf-tour-year">{{ ed.year }} <span class="conf-tour-ordinal">{{ ed.ordinal | safe }}</span></div>
+    <div class="conf-tour-city">
+      {%- if ed.flag %}
+      <img src="/assets/images/flags/{{ ed.flag }}.svg" alt="{{ ed.country }}" title="{{ ed.country }}" width="22" height="22" loading="lazy">
+      {{ ed.city }}
+      {%- else %}{{ icon("calendar") }} {{ ed.city }}{%- endif %}
+    </div>
+    <div class="conf-tour-host">{{ ed.host }}</div>
+    <a class="conf-tour-link" href="{{ ed.slug | localizedHref(_lang) }}">{{ ed.link }} &rarr;</a>
+  </li>
+  {%- endfor %}
+</ul>
