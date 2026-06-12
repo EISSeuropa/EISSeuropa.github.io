@@ -91,14 +91,6 @@ jobs:
             echo "_Triggered: \`${{ github.event_name }}\` · run_id: \`${{ github.run_id }}\`_"
           } > /tmp/board-pr-body.md
 
-      - name: Refresh member ORCID works
-        # Best-effort: pull each board / community member's recent public
-        # works from ORCID into src/_data/orcidWorks.json (powers the
-        # "Recent publications by our members" section on /outputs, #718).
-        # Soft-fail so a transient ORCID API hiccup never blocks the board
-        # sync; the existing file is left in place and rides the same PR.
-        run: python3 scripts/sync-orcid.py || true
-
       - name: Open or update PR if board.json or photos changed
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         with:
