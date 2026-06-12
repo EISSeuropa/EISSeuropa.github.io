@@ -3,7 +3,7 @@
   "members": [
     {
       "name": "Dr Hugo Meijer",
-      "role": "Founding Director",
+      "role": "Honorary Director",
       "photo": "/assets/images/meijer-2-140x175.jpg",
       "alt": "Dr Hugo MEIJER",
       "themes": "International Relations, Foreign Policy Analysis, Security Studies, Alliances.",
@@ -13,7 +13,7 @@
     },
     {
       "name": "Dr Moritz Weiss",
-      "role": "Secretary-General",
+      "role": "Co-Director",
       "alt": "Prof. Moritz Weiss",
       "photo": "/assets/images/board/moritz-weiss.jpg",
       "position": "Senior lecturer",
@@ -221,7 +221,7 @@
     },
     {
       "name": "Prof. Chiara Ruffa",
-      "role": "Board Member",
+      "role": "Co-Director",
       "photo": "/assets/images/jritvrpl-400x400.jpg",
       "alt": "Prof. Chiara Ruffa",
       "themes": "Multilateralism on the ground, Peacekeeping, Civil-military relations, Political sociology, Fieldwork.",
