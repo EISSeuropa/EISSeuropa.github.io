@@ -3483,6 +3483,40 @@ a.programme-live-tag:focus-visible {
   line-height: 1.5;
 }
 
+/* /outputs — "Recent publications by our members" (ORCID sidecar). */
+.member-pubs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-5);
+  max-width: 48rem;
+}
+.member-pub {
+  break-inside: avoid;
+}
+.member-pub-name {
+  margin: 0 0 0.3rem;
+  font-weight: 600;
+}
+.member-pub-title {
+  font-weight: 500;
+}
+.member-pub-works {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 var(--space-3);
+  border-left: 2px solid var(--border);
+  display: grid;
+  gap: 0.4rem;
+}
+.member-pub-works li {
+  font-size: var(--fs-sm);
+}
+.member-pub-meta {
+  font-size: var(--fs-xs);
+}
+
 /* Per-speaker theme chips (also the text Pagefind indexes for theme search). */
 .speaker-themes {
   display: flex;

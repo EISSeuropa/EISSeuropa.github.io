@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Dr Arthur Laudrain",
+    "slug": "arthur-laudrain",
+    "orcid": "https://orcid.org/0000-0002-8642-2671",
+    "works": [
+      {
+        "title": "Interpreting India's Cyber Statecraft",
+        "year": 2025,
+        "journal": null,
+        "doi": null
+      },
+      {
+        "title": "Objectifs rationnels, enjeux bureaucratiques et arbitrages politiques : un examen du modèle français de cyberpolitique",
+        "year": 2025,
+        "journal": "Études françaises de renseignement et de cyber",
+        "doi": "https://doi.org/10.3917/efrc.243.0234"
+      },
+      {
+        "title": "Le Risque Cyber en Droit des Sociétés",
+        "year": 2022,
+        "journal": null,
+        "doi": null
+      }
+    ]
+  },
+  {
+    "name": "Dr Moritz Weiss",
+    "slug": "dr-moritz-weiss",
+    "orcid": "https://orcid.org/0000-0001-9311-6480",
+    "works": [
+      {
+        "title": "Bringing society (back) in? Defence transformations across Europe in the Zeitenwende",
+        "year": 2026,
+        "journal": "West European Politics",
+        "doi": "https://doi.org/10.1080/01402382.2026.2669961"
+      },
+      {
+        "title": "Beyond the European Army Illusion: A Prudent Strategy for the Real European Zeitenwende",
+        "year": 2026,
+        "journal": "JCMS: Journal of Common Market Studies",
+        "doi": "https://doi.org/10.1111/jcms.70029"
+      },
+      {
+        "title": "Who should be in charge of cyberspace? : the European Union, member states and the constitution of structural power",
+        "year": 2020,
+        "journal": null,
+        "doi": null
+      }
+    ]
+  }
+]

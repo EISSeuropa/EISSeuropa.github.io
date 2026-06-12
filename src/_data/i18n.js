@@ -421,6 +421,21 @@ const locales = {
       attendedLabel: "Editions attended",
     },
 
+    outputs: {
+      // /outputs (EN + FR + DE share one include). Member publication
+      // titles/journals stay in their original language (lang="en").
+      eyebrow: "What we produce",
+      title: "Publications & outputs",
+      lead: "The work the EISS network produces, and the research our members publish in their own right.",
+      networkHeading: "EISS publications",
+      networkIntro: "The network's own outputs: the book series, the Prix Bastien Irondelle for the best PhD paper, policy briefs, white papers, and survey results. This catalogue is being assembled.",
+      globalRisksLabel: "Global Risks to the EU — survey results",
+      membersHeading: "Recent publications by our members",
+      membersIntro: "Distinct from the network's own publications above, these are recent works our board and community members have published in their own right, drawn live from their public ORCID records.",
+      sourceNote: "Pulled from members' public ORCID records and refreshed weekly. Members who add their ORCID iD to the directory form appear here automatically.",
+      empty: "No member works to show yet.",
+    },
+
     mapEmbed: {
       // Google Maps embed on /YYYY venue sections. Only the iframe
       // title is i18n'd; the embed loads on page view, and is disclosed
@@ -771,6 +786,19 @@ const locales = {
       attendedLabel: "Éditions",
     },
 
+    outputs: {
+      eyebrow: "Ce que nous produisons",
+      title: "Publications et productions",
+      lead: "Les travaux produits par le réseau EISS, et les recherches que nos membres publient à titre personnel.",
+      networkHeading: "Publications de l'EISS",
+      networkIntro: "Les productions propres du réseau : la collection d'ouvrages, le Prix Bastien Irondelle du meilleur article doctoral, des notes d'analyse, des livres blancs et des résultats d'enquêtes. Ce catalogue est en cours de constitution.",
+      globalRisksLabel: "Risques globaux pour l'UE — résultats de l'enquête",
+      membersHeading: "Publications récentes de nos membres",
+      membersIntro: "Distinctes des publications propres du réseau ci-dessus, voici des travaux récents que les membres de notre bureau et de notre communauté ont publiés à titre personnel, tirés en direct de leurs fiches ORCID publiques.",
+      sourceNote: "Extrait des fiches ORCID publiques des membres et actualisé chaque semaine. Les membres qui ajoutent leur identifiant ORCID au formulaire du répertoire apparaissent ici automatiquement.",
+      empty: "Aucune publication de membre à afficher pour l'instant.",
+    },
+
     mapEmbed: {
       viewOnMap: "Voir sur OpenStreetMap",
     },
@@ -1116,6 +1144,19 @@ const locales = {
       eventLabel: "Veranstaltung",
       allEvents: "Alle Veranstaltungen",
       attendedLabel: "Ausgaben",
+    },
+
+    outputs: {
+      eyebrow: "Was wir hervorbringen",
+      title: "Publikationen und Ergebnisse",
+      lead: "Die Arbeiten des EISS-Netzwerks und die Forschung, die unsere Mitglieder in eigenem Namen veröffentlichen.",
+      networkHeading: "EISS-Publikationen",
+      networkIntro: "Die eigenen Ergebnisse des Netzwerks: die Buchreihe, der Prix Bastien Irondelle für die beste Doktorarbeit, Policy Briefs, Weißbücher und Umfrageergebnisse. Dieser Katalog wird derzeit zusammengestellt.",
+      globalRisksLabel: "Globale Risiken für die EU — Umfrageergebnisse",
+      membersHeading: "Neueste Veröffentlichungen unserer Mitglieder",
+      membersIntro: "Anders als die eigenen Publikationen des Netzwerks oben sind dies neuere Arbeiten, die unsere Vorstands- und Community-Mitglieder in eigenem Namen veröffentlicht haben, live aus ihren öffentlichen ORCID-Datensätzen gezogen.",
+      sourceNote: "Aus den öffentlichen ORCID-Datensätzen der Mitglieder gezogen und wöchentlich aktualisiert. Mitglieder, die ihre ORCID-iD im Verzeichnisformular angeben, erscheinen hier automatisch.",
+      empty: "Noch keine Mitgliederpublikationen anzuzeigen.",
     },
 
     mapEmbed: {
