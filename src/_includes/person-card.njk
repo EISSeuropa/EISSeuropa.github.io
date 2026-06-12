@@ -114,6 +114,11 @@
 
     {%- set links = person.links or {} -%}
     {%- set hasAnyLink = links.publicEmail or links.website or links.orcid or links.linkedin or links.twitter or links.bluesky or links.mastodon -%}
+    {# Footer (contact links + View profile) pinned to the card bottom via
+       `.person-foot { margin-top: auto }`, so footers align across a row and
+       cards in a row share one height (align-items: stretch). #}
+    {%- if hasAnyLink or hasDetail %}
+    <div class="person-foot">
     {%- if hasAnyLink %}
     <ul class="person-links" aria-label="{{ t.boardPage.linksAriaLabel }}">
       {%- if links.publicEmail %}
@@ -147,6 +152,8 @@
     <a class="person-more" href="#dialog-{{ person.slug }}" data-dialog="dialog-{{ person.slug }}">
       {{ t.boardPage.viewProfile }}{{ icon("arrow-right") }}
     </a>
+    {%- endif %}
+    </div>
     {%- endif %}
   </div>
 
