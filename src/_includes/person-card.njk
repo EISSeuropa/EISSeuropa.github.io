@@ -113,20 +113,6 @@
     </div>
     {%- endif %}
 
-    {%- if person.slug %}
-    {# Recent publications, drawn from the member's ORCID record and
-       injected lazily by board-publications.js. Rendered empty + hidden
-       here so /board carries zero extra weight at first paint; the script
-       fetches /data/orcid-works.json once when a card scrolls into view,
-       looks the person up by this card's id (the same slug), and fills
-       this region only when there are works. The heading text rides on a
-       data attribute so the script needs no locale strings of its own. #}
-    <div class="member-pub-recent"
-         data-pubs-for="{{ person.slug }}"
-         data-pubs-heading="{{ t.boardPage.recentPublications }}"
-         hidden></div>
-    {%- endif %}
-
     {%- if person.themes %}
     <p class="person-themes muted">
       <strong>{{ t.boardPage.researchThemes }}:</strong> <span lang="en">{{ person.themes | safe }}</span>
