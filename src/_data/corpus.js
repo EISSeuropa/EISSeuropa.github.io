@@ -146,34 +146,170 @@ function confMeta(slug) {
 // may carry more than one. Confidence over coverage: a session that matches
 // nothing stays UNTAGGED rather than be force-fit into a bucket. The rule
 // map is the curation lever — refine a pattern to fix a mis-tag.
+// Each theme carries a STABLE KEY (locale-agnostic, used as the filter
+// value and in the `data-themes` attribute), a per-locale display `label`,
+// and the `re` keyword-match rule. The filter matches on the key, so the
+// label can be translated without breaking the filter (#693). The FR/DE
+// wording of the nine permanent sections is taken verbatim from the
+// official translations on /initiative.fr and /initiative.de.
 const THEME_RULES = [
   // The nine permanent sections (from /initiative)
-  ["Transformations of warfare and conflict", /transformation|future war|conduct of.*war|character of war|military innovation|military technolog|military strateg|change and continuity in war|art of war|warfare/i],
-  ["Emerging domains: cyber and technology", /cyber|digital|\bAI\b|artificial intelligence|information operation|outer space|\bspace\b|autonom|drone|disruptive machine|hybrid (threat|war|domain)/i],
-  ["Arms acquisition and transfer", /arms (procurement|production|transfer|acquisition|trade)|defen[cs]e (industry|procurement)|weapons? (procurement|transfer|production)/i],
-  ["Private military actors", /private (actor|militar|security)|mercenar|\bpmc\b|non-?state.*(armed|actor)|beyond the state/i],
-  ["Defence cooperation and military assistance", /defen[cs]e cooperation|military assistance|security assistance|\balliance|burden.?sharing|\bnato\b|interoperab|coalition|realignment|\balignment/i],
-  ["Military interventions", /military intervention|peace.?building|peace.?keeping|operations abroad|stabili[sz]ation|use of force|multilateral operation|conflict intervention|external sponsorship/i],
-  ["Non-proliferation and arms control", /non-?proliferation|arms control|\bWMD\b|weapons of mass destruction|disarmament/i],
-  ["Terrorism and counter-terrorism", /terroris|counter-?terroris|insurgenc|radicali[sz]|violent extremis/i],
-  ["Theoretical developments in security studies", /theor|conceptuali[sz]|knowledge production|epistem|ontolog|methodolog|origins of war|peace.?violence/i],
-  // Derived recurring themes (open-panel remainder)
-  ["Deterrence", /deterrence|deterrent/i],
-  ["Intelligence", /\bintelligence\b/i],
-  ["European and transatlantic security", /european (security|defen[cs]e|grand strategy)|transatlantic|geopolitical power europe|military issues in europe|european deterrent/i],
-  ["Regional security and area studies", /east asia|indo-?pacific|\basia\b|\bindia\b|balkans|latin america|maritime security|regional security|eastern neighbo/i],
-  ["Civil–military relations and the armed forces", /civil-?military|military professional|military recruit|armed forces|psychology and emotions/i],
-  ["Climate and security", /climate/i],
-  ["Gender and security", /gender/i],
-  ["Political economy of security", /political economy/i],
+  {
+    key: "warfare-transformations",
+    label: {
+      en: "Transformations of warfare and conflict",
+      fr: "Transformations du phénomène guerrier et de la conflictualité",
+      de: "Transformationen des Krieges und der Konfliktualität",
+    },
+    re: /transformation|future war|conduct of.*war|character of war|military innovation|military technolog|military strateg|change and continuity in war|art of war|warfare/i,
+  },
+  {
+    key: "emerging-domains",
+    label: {
+      en: "Emerging domains: cyber and technology",
+      fr: "Domaines émergents : cyber et technologie",
+      de: "Aufkommende Domänen: Cyber und Technologie",
+    },
+    re: /cyber|digital|\bAI\b|artificial intelligence|information operation|outer space|\bspace\b|autonom|drone|disruptive machine|hybrid (threat|war|domain)/i,
+  },
+  {
+    key: "arms-acquisition",
+    label: {
+      en: "Arms acquisition and transfer",
+      fr: "Acquisition et transfert d'armement",
+      de: "Rüstungsbeschaffung und Rüstungstransfer",
+    },
+    re: /arms (procurement|production|transfer|acquisition|trade)|defen[cs]e (industry|procurement)|weapons? (procurement|transfer|production)/i,
+  },
+  {
+    key: "private-military-actors",
+    label: {
+      en: "Private military actors",
+      fr: "Acteurs militaires privés",
+      de: "Private militärische Akteure",
+    },
+    re: /private (actor|militar|security)|mercenar|\bpmc\b|non-?state.*(armed|actor)|beyond the state/i,
+  },
+  {
+    key: "defence-cooperation",
+    label: {
+      en: "Defence cooperation and military assistance",
+      fr: "Coopération de défense et assistance militaire",
+      de: "Verteidigungskooperation und militärische Unterstützung",
+    },
+    re: /defen[cs]e cooperation|military assistance|security assistance|\balliance|burden.?sharing|\bnato\b|interoperab|coalition|realignment|\balignment/i,
+  },
+  {
+    key: "military-interventions",
+    label: {
+      en: "Military interventions",
+      fr: "Interventions militaires",
+      de: "Militärische Interventionen",
+    },
+    re: /military intervention|peace.?building|peace.?keeping|operations abroad|stabili[sz]ation|use of force|multilateral operation|conflict intervention|external sponsorship/i,
+  },
+  {
+    key: "non-proliferation",
+    label: {
+      en: "Non-proliferation and arms control",
+      fr: "Non-prolifération et maîtrise des armements",
+      de: "Nichtverbreitung und Rüstungskontrolle",
+    },
+    re: /non-?proliferation|arms control|\bWMD\b|weapons of mass destruction|disarmament/i,
+  },
+  {
+    key: "terrorism",
+    label: {
+      en: "Terrorism and counter-terrorism",
+      fr: "Terrorisme et contre-terrorisme",
+      de: "Terrorismus und Terrorismusbekämpfung",
+    },
+    re: /terroris|counter-?terroris|insurgenc|radicali[sz]|violent extremis/i,
+  },
+  {
+    key: "security-studies-theory",
+    label: {
+      en: "Theoretical developments in security studies",
+      fr: "Développements théoriques dans les études de sécurité",
+      de: "Theoretische Entwicklungen in den Sicherheitsstudien",
+    },
+    re: /theor|conceptuali[sz]|knowledge production|epistem|ontolog|methodolog|origins of war|peace.?violence/i,
+  },
+  // Derived recurring themes (open-panel remainder), hand-translated
+  {
+    key: "deterrence",
+    label: { en: "Deterrence", fr: "Dissuasion", de: "Abschreckung" },
+    re: /deterrence|deterrent/i,
+  },
+  {
+    key: "intelligence",
+    label: { en: "Intelligence", fr: "Renseignement", de: "Nachrichtendienste" },
+    re: /\bintelligence\b/i,
+  },
+  {
+    key: "european-transatlantic-security",
+    label: {
+      en: "European and transatlantic security",
+      fr: "Sécurité européenne et transatlantique",
+      de: "Europäische und transatlantische Sicherheit",
+    },
+    re: /european (security|defen[cs]e|grand strategy)|transatlantic|geopolitical power europe|military issues in europe|european deterrent/i,
+  },
+  {
+    key: "regional-security",
+    label: {
+      en: "Regional security and area studies",
+      fr: "Sécurité régionale et études aréales",
+      de: "Regionale Sicherheit und Regionalstudien",
+    },
+    re: /east asia|indo-?pacific|\basia\b|\bindia\b|balkans|latin america|maritime security|regional security|eastern neighbo/i,
+  },
+  {
+    key: "civil-military-relations",
+    label: {
+      en: "Civil–military relations and the armed forces",
+      fr: "Relations civilo-militaires et forces armées",
+      de: "Zivil-militärische Beziehungen und Streitkräfte",
+    },
+    re: /civil-?military|military professional|military recruit|armed forces|psychology and emotions/i,
+  },
+  {
+    key: "climate-security",
+    label: {
+      en: "Climate and security",
+      fr: "Climat et sécurité",
+      de: "Klima und Sicherheit",
+    },
+    re: /climate/i,
+  },
+  {
+    key: "gender-security",
+    label: {
+      en: "Gender and security",
+      fr: "Genre et sécurité",
+      de: "Geschlecht und Sicherheit",
+    },
+    re: /gender/i,
+  },
+  {
+    key: "political-economy-security",
+    label: {
+      en: "Political economy of security",
+      fr: "Économie politique de la sécurité",
+      de: "Politische Ökonomie der Sicherheit",
+    },
+    re: /political economy/i,
+  },
 ];
-const THEME_ORDER = THEME_RULES.map(([n]) => n);
-const themeRank = new Map(THEME_ORDER.map((n, i) => [n, i]));
+const THEME_BY_KEY = new Map(THEME_RULES.map((th) => [th.key, th]));
+const THEME_ORDER = THEME_RULES.map((th) => th.key);
+const themeRank = new Map(THEME_ORDER.map((k, i) => [k, i]));
 
+// Returns the stable theme KEYS a session title matches (locale-agnostic).
 function themesOf(sessionTitle) {
   const t = String(sessionTitle || "");
   if (!t) return [];
-  return THEME_RULES.filter(([, re]) => re.test(t)).map(([n]) => n);
+  return THEME_RULES.filter((th) => th.re.test(t)).map((th) => th.key);
 }
 
 // ── Flatten both sources into one paper list ────────────────────────────
@@ -327,10 +463,12 @@ const speakers = [...speakerMap.values()]
 const letters = [...new Set(speakers.map((s) => s.letter))].sort();
 
 // Theme list for the filter UI: each theme that actually tags at least one
-// speaker, in canonical order, with its speaker count.
-const themes = THEME_ORDER.map((name) => ({
-  name,
-  count: speakers.filter((s) => s.themes.includes(name)).length,
+// speaker, in canonical order, with its speaker count. `key` is the stable
+// filter value, `label` the per-locale display string (#693).
+const themes = THEME_ORDER.map((key) => ({
+  key,
+  label: THEME_BY_KEY.get(key).label,
+  count: speakers.filter((s) => s.themes.includes(key)).length,
 })).filter((t) => t.count > 0);
 
 // Editions for the event filter: one per conference page (keyed on its
@@ -361,6 +499,9 @@ module.exports = {
   speakers,
   letters,
   themes,
+  // Stable theme key → per-locale label, for resolving the localised chip
+  // text on a speaker entry (whose `themes` array holds keys, not labels).
+  themeLabels: Object.fromEntries(THEME_RULES.map((th) => [th.key, th.label])),
   editions,
   stats: {
     paperCount: papers.length,

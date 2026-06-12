@@ -13,8 +13,9 @@
  *     stays the clean /speakers.html (the param is added client-side only),
  *     so this introduces no duplicate-content URL for crawlers.
  *
- * Entries carry data-name and data-themes="A|B"; letter rows carry
- * data-speaker-letter.
+ * Entries carry data-name and data-themes="key-a|key-b" (stable theme
+ * keys, locale-agnostic, matched against the <option value>); letter rows
+ * carry data-speaker-letter.
  */
 (function () {
   "use strict";
@@ -77,7 +78,11 @@
             ? (d.msgOne || "{n} speaker")
             : (d.msgMany || "{n} speakers");
           var bits = [];
-          if (theme) bits.push(theme);
+          if (theme) {
+            // Use the selected option's visible (localised) label in the
+            // status line, not the stable key value. Strip the count suffix.
+            bits.push(themeSel.options[themeSel.selectedIndex].text.replace(/\s*\(\d+\)\s*$/, ""));
+          }
           if (ev && eventSel) {
             bits.push(eventSel.options[eventSel.selectedIndex].text.replace(/\s*\(\d+\)\s*$/, ""));
           }
