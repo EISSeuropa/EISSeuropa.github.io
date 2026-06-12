@@ -5999,10 +5999,10 @@ a.joint-orgs-card:hover .joint-orgs-name {
 }
 
 /* ───────────────────────────────────────────────────────────────────────
-   Board profile dialogs (#719 redesign).
-   Card faces stay compact and uniform identity; the full bio + recent ORCID
-   publications open in a per-person modal so an expanded profile can never
-   stretch its grid rowmates (the inline-bio blow-out this replaces). */
+   Board card footer + the "View profile" link (#719 / #756 phase 2).
+   Card faces stay compact, uniform identity with a clamped themes line and a
+   pinned "View profile" link to the member's profile page; the recent-
+   publications styles below are reused on that page. */
 
 /* Cards in a row share one height (uniform boxes), and the footer pins to the
    bottom (see .person-foot) so View profile / links align across the row. Safe
@@ -6035,46 +6035,8 @@ a.joint-orgs-card:hover .joint-orgs-name {
 .person-more:hover { text-decoration: underline; }
 .person-more svg { width: 1em; height: 1em; }
 
-/* The modal. Closed → hidden (UA default). Opened via showModal() → centred
-   card over a dimmed backdrop. */
-.person-dialog {
-  width: min(34rem, calc(100vw - 2rem));
-  max-height: calc(100vh - 4rem);
-  padding: 0;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  background: var(--bg-elev);
-  color: var(--text);
-  box-shadow: var(--shadow-3);
-  overflow: auto;
-}
-.person-dialog::backdrop { background: hsl(0 0% 0% / 0.5); }
-.person-dialog-body { padding: var(--space-2) var(--space-6) var(--space-6); }
-.person-dialog-close {
-  position: sticky;
-  top: var(--space-2);
-  margin: var(--space-2) var(--space-2) 0 auto;
-  display: block;
-  width: 2.25rem;
-  height: 2.25rem;
-  border: none;
-  background: transparent;
-  color: var(--text-muted);
-  font-size: 1.6rem;
-  line-height: 1;
-  cursor: pointer;
-  border-radius: var(--radius-md);
-}
-.person-dialog-close:hover { color: var(--text); background: var(--surface-strong); }
-.person-dialog-bio {
-  margin-top: var(--space-4);
-  color: var(--text);
-  line-height: 1.6;
-}
-
-/* Recent publications inside the dialog. The fix from the reverted version:
-   title on its own line, year · journal on a separate muted line beneath,
-   real spacing between entries. */
+/* Recent publications on a member's profile page: title on its own line, the
+   year · journal on a separate muted line beneath, spacing between entries. */
 .profile-pub-heading {
   margin: var(--space-5) 0 var(--space-2);
   font-size: var(--fs-xs);
@@ -6105,22 +6067,6 @@ a.profile-pub-title:hover { text-decoration: underline; }
   margin-top: 0.2rem;
   font-size: var(--fs-sm);
 }
-
-/* Progressive-enhancement fallback: with no JS (or no <dialog> support) the
-   trigger is a plain in-page link, and following it reveals the dialog inline
-   via :target. Once board-profile.js confirms modal support it tags <html>
-   with .has-dialog, which suppresses the inline path so a stray #dialog-…
-   hash never shows the block inline in the modal-capable view. */
-.person-dialog:target {
-  display: block;
-  position: static;
-  width: auto;
-  max-height: none;
-  margin-top: var(--space-4);
-  box-shadow: none;
-}
-.person-dialog:not([open]) .person-dialog-close { display: none; }
-.has-dialog .person-dialog:not([open]) { display: none; }
 
 /* ───────────────────────────────────────────────────────────────────────
    Conference Navigator view toggle (#756). A segmented control that switches

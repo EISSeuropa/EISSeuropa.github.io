@@ -105,6 +105,17 @@ const papers = [...byKey.values()].sort(
   (a, b) => (b.year || 0) - (a.year || 0) || a.title.localeCompare(b.title)
 );
 
+// Resolve each author to their profile page when they are a known board /
+// community member, so the by-paper view can link author names through to the
+// by-person side (the cross-link the Conference Navigator is built around).
+// Matched the same way speakers are: profileByKey[canonicalKey(name)].
+for (const p of papers) {
+  p.authorsLinked = p.authors.map((name) => {
+    const profile = corpus.profileByKey[corpus.canonicalKey(name)];
+    return { name, url: profile ? profile.url : null };
+  });
+}
+
 // ── Facets ───────────────────────────────────────────────────────────────
 // Years: distinct, newest first, with a paper count each.
 const yearMap = new Map();
