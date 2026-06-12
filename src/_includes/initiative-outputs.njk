@@ -1,0 +1,18 @@
+{# "Publications & outputs" section, folded onto /initiative from the retired
+   /outputs page (#756 phase 3). Reuses the existing t.outputs.* chrome, so no
+   re-translation. Only the network's own curated outputs live here now;
+   members' personal publications moved to their profile pages
+   (/board/<slug>). Included identically by the three /initiative locale files,
+   so the drift checker stays clean. #}
+{% from "icons.njk" import icon %}
+{%- set t = i18n[lang or "en"] -%}
+{%- set o = t.outputs -%}
+<section class="section" id="outputs" aria-labelledby="outputs-title">
+  <div class="container">
+    <h2 id="outputs-title">{{ o.networkHeading }}</h2>
+    <article class="prose">
+      <p>{{ o.networkIntro }}</p>
+      <p><a href="/GlobalRisks.html">{{ o.globalRisksLabel }} {{ icon("arrow-right") }}</a></p>
+    </article>
+  </div>
+</section>
