@@ -421,6 +421,17 @@ const locales = {
       onIndico: "View on Indico",
     },
 
+    navigator: {
+      // Conference Navigator (#756): the unified archive over the ESSC
+      // corpus. These cover the page header + the by-person / by-paper view
+      // toggle; the two panels reuse the speakers.* and papers.* blocks below.
+      eyebrow: "The ESSC corpus",
+      title: "Conference Navigator",
+      lead: "Everyone who has presented at the European Security Studies Conference since 2017, and every paper they gave. Browse by person or by paper, and filter by year or theme.",
+      byPerson: "By person",
+      byPaper: "By paper",
+    },
+
     speakers: {
       // /speakers index (EN + FR + DE share one include, this is the
       // chrome). Speaker names, paper titles, affiliations and the theme
@@ -837,6 +848,14 @@ const locales = {
       onIndico: "Voir sur Indico",
     },
 
+    navigator: {
+      eyebrow: "Le corpus de l'ESSC",
+      title: "Navigateur de la conférence",
+      lead: "Toutes les personnes ayant présenté à l'European Security Studies Conference depuis 2017, et chaque communication donnée. Parcourez par personne ou par communication, et filtrez par année ou par thème.",
+      byPerson: "Par personne",
+      byPaper: "Par communication",
+    },
+
     speakers: {
       eyebrow: "Le corpus de l'ESSC",
       title: "Intervenants",
@@ -1236,6 +1255,14 @@ const locales = {
       oneDayToGo: "Morgen",
       today: "Heute",
       onIndico: "Auf Indico ansehen",
+    },
+
+    navigator: {
+      eyebrow: "Das ESSC-Korpus",
+      title: "Konferenz-Navigator",
+      lead: "Alle Personen, die seit 2017 auf der European Security Studies Conference vorgetragen haben, und jeder Beitrag. Durchsuchen Sie nach Person oder nach Beitrag und filtern Sie nach Jahr oder Thema.",
+      byPerson: "Nach Person",
+      byPaper: "Nach Beitrag",
     },
 
     speakers: {
