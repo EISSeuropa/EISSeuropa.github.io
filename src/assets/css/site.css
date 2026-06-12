@@ -6155,3 +6155,31 @@ a.profile-pub-title:hover { text-decoration: underline; }
 /* Panel wrapper; the inactive view is toggled with the [hidden] attribute.
    scroll-margin keeps the A–Z anchor jumps clear of the sticky header. */
 .archive-panel { scroll-margin-top: var(--nav-height, 4rem); }
+
+/* ───────────────────────────────────────────────────────────────────────
+   Per-person profile page (#756 phase 2). The hub a board card links to:
+   identity, bio, themes, recent publications and links on a linkable URL. */
+.profile-page { max-width: 48rem; }
+.profile-back { font-size: var(--fs-sm); margin-bottom: var(--space-5); }
+.profile-back a { color: var(--text-muted); text-decoration: none; }
+.profile-back a:hover { color: var(--text); text-decoration: underline; }
+.profile-head {
+  display: flex;
+  gap: var(--space-5);
+  align-items: flex-start;
+  margin-bottom: var(--space-4);
+}
+.profile-photo {
+  flex: 0 0 auto;
+  width: 7rem;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  background: var(--bg-tinted);
+}
+.profile-head-text { min-width: 0; }
+.profile-name { font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2rem); margin: 0.15rem 0 0.35rem; }
+.profile-bio { line-height: 1.7; margin: var(--space-5) 0; max-width: 42rem; }
+@media (max-width: 30rem) {
+  .profile-head { flex-direction: column; }
+}

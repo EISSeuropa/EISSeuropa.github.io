@@ -1,0 +1,20 @@
+---
+pagination:
+  data: profilePages
+  size: 1
+  alias: profile
+layout: base.njk
+permalink: "/board/{{ profile.slug }}{{ profile.suffix }}.html"
+navKey: ""
+eleventyComputed:
+  lang: "{{ profile.lang }}"
+  title: "{{ profile.person.name }}"
+  description: "{{ profile.person.name }}, {{ profile.person.role }} — European Initiative for Security Studies."
+  status: "{% if profile.lang != 'en' %}beta{% endif %}"
+---
+{# Per-person profile page (#756 phase 2). One template paginates over
+   profilePages to emit /board/<slug>(.fr|.de).html for every member. The
+   People grid (/board) stays the overview and links here. #}
+{%- set person = profile.person -%}
+{%- set lang = profile.lang -%}
+{% include "board-profile-body.njk" %}
