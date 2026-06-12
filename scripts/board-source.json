@@ -41,6 +41,7 @@
     { "label": "Co-Director",        "kind": "board",   "tier": 2   },
     { "label": "Treasurer",          "kind": "board",   "tier": 3   },
     { "label": "Secretary-General",  "kind": "board",   "tier": 4   },
+    { "label": "Honorary Director",  "kind": "board",   "tier": 10  },
     { "label": "Board Member",       "kind": "board",   "tier": 100 },
     { "label": "Support Staff",      "kind": "support", "tier": 100, "aliases": ["Support Staff (incl. intern)"] }
   ],
