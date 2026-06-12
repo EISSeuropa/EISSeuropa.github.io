@@ -114,7 +114,13 @@
         }
       }
     }, { rootMargin: "200px" });
-    Array.prototype.forEach.call(placeholders, function (el) { io.observe(el); });
+    // Observe the visible card, NOT the placeholder itself: the placeholder
+    // ships `hidden` (display:none), which has no layout box, so an observer
+    // on it never reports an intersection and the fetch never fires. Observe
+    // the enclosing `.person` card (always visible) instead.
+    Array.prototype.forEach.call(placeholders, function (el) {
+      io.observe(el.closest(".person") || el.parentElement || el);
+    });
   } else {
     // No observer: fall back to a single deferred fetch so the feature still works.
     trigger();
