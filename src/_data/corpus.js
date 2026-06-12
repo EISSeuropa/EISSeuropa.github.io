@@ -499,6 +499,10 @@ module.exports = {
   speakers,
   letters,
   themes,
+  // Exposed so paperIndex.js can resolve a paper author to their profile the
+  // same way speakers are matched: profileByKey[canonicalKey(name)].url.
+  profileByKey,
+  canonicalKey,
   // Stable theme key → per-locale label, for resolving the localised chip
   // text on a speaker entry (whose `themes` array holds keys, not labels).
   themeLabels: Object.fromEntries(THEME_RULES.map((th) => [th.key, th.label])),

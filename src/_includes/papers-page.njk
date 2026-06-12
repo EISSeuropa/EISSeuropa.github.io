@@ -54,8 +54,14 @@
       data-search="{{ p.title }} {{ p.authors | join(' ') }} {{ p.affiliations | join(' ') }}">
     <article class="paper-card">
       <h2 class="paper-title" lang="en">{{ p.title }}</h2>
-      {%- if p.authors.length %}
-      <p class="paper-authors" lang="en">{{ p.authors | join(', ') }}</p>
+      {%- if p.authorsLinked.length %}
+      {# Authors that are EISS board / community members link through to their
+         profile page (the by-paper → by-person cross-link); others are plain. #}
+      <p class="paper-authors" lang="en">
+        {%- for a in p.authorsLinked -%}
+        {%- if a.url %}<a href="{{ a.url }}">{{ a.name }}</a>{% else %}{{ a.name }}{% endif %}{% if not loop.last %}, {% endif %}
+        {%- endfor -%}
+      </p>
       {%- endif %}
       {%- if p.affiliations.length %}
       <p class="paper-aff muted" lang="en">{{ p.affiliations | join(' · ') }}</p>
