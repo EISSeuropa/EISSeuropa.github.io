@@ -105,6 +105,17 @@ SKIP_HOSTS = {
                                 # initiative) returns 403 to anonymous
                                 # HEAD/GET. Article reads fine in a
                                 # browser.
+    "doi.org",                  # DOI resolver for the member-publication
+                                # links on /outputs (and the board cards),
+                                # sourced from ORCID. It 302-redirects to
+                                # the publisher, which then 403s the bot
+                                # (West European Politics, JCMS, Cairn and
+                                # the like, same anti-bot class as the
+                                # academic hosts here). The DOIs are
+                                # machine-sourced and resolve fine in a
+                                # browser. Skipping covers every current
+                                # and future synced DOI without a per-link
+                                # allowlist.
     "www.berlin-airport.de",    # Anti-bot UA filter, returns 403 to
                                 # unrecognised User-Agent strings.
                                 # The transit-info page works for
