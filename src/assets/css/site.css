@@ -6121,3 +6121,37 @@ a.profile-pub-title:hover { text-decoration: underline; }
 }
 .person-dialog:not([open]) .person-dialog-close { display: none; }
 .has-dialog .person-dialog:not([open]) { display: none; }
+
+/* ───────────────────────────────────────────────────────────────────────
+   Conference Navigator view toggle (#756). A segmented control that switches
+   the by-person and by-paper panels of the unified archive (/speakers and
+   /papers both render it, defaulting to their own view). */
+.archive-toggle {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  margin-bottom: var(--space-5);
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+.archive-tab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  padding: 0.4em 1.1em;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.archive-tab[aria-selected="true"] {
+  background: var(--bg-elev);
+  color: var(--text);
+}
+.archive-tab:hover { color: var(--text); }
+/* Panel wrapper; the inactive view is toggled with the [hidden] attribute.
+   scroll-margin keeps the A–Z anchor jumps clear of the sticky header. */
+.archive-panel { scroll-margin-top: var(--nav-height, 4rem); }
