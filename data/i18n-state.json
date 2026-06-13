@@ -46,14 +46,14 @@
     "src/board.njk": {
       "fr": {
         "file": "src/board.fr.njk",
-        "source_sha1": "0016d185361893c872d329bbad00da7675a5b3de",
-        "translated_on": "2026-06-11",
+        "source_sha1": "6293b20ce036249573abb96815079f321e204786",
+        "translated_on": "2026-06-13",
         "status": "beta"
       },
       "de": {
         "file": "src/board.de.njk",
-        "source_sha1": "0016d185361893c872d329bbad00da7675a5b3de",
-        "translated_on": "2026-06-11",
+        "source_sha1": "6293b20ce036249573abb96815079f321e204786",
+        "translated_on": "2026-06-13",
         "status": "beta"
       }
     },
@@ -88,27 +88,27 @@
     "src/past.njk": {
       "fr": {
         "file": "src/past.fr.njk",
-        "source_sha1": "c335cb2249f373fd490333c1bb3ef5334d994c03",
-        "translated_on": "2026-06-12",
+        "source_sha1": "0272a2f6609841d9fdddea3b238b2b966d8e4211",
+        "translated_on": "2026-06-13",
         "status": "beta"
       },
       "de": {
         "file": "src/past.de.njk",
-        "source_sha1": "c335cb2249f373fd490333c1bb3ef5334d994c03",
-        "translated_on": "2026-06-12",
+        "source_sha1": "0272a2f6609841d9fdddea3b238b2b966d8e4211",
+        "translated_on": "2026-06-13",
         "status": "beta"
       }
     },
     "src/sitemap.njk": {
       "fr": {
         "file": "src/sitemap.fr.njk",
-        "source_sha1": "62e719444e1cd70eb5116cd104c2f2e39dfc5de6",
+        "source_sha1": "2f2bf8a5f4310e9a8d457b1fa89a9881e9162358",
         "translated_on": "2026-06-13",
         "status": "beta"
       },
       "de": {
         "file": "src/sitemap.de.njk",
-        "source_sha1": "62e719444e1cd70eb5116cd104c2f2e39dfc5de6",
+        "source_sha1": "2f2bf8a5f4310e9a8d457b1fa89a9881e9162358",
         "translated_on": "2026-06-13",
         "status": "beta"
       }
