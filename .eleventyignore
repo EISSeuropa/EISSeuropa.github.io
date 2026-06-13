@@ -1,2 +1,9 @@
 src/assets/
 src/.well-known/
+
+# Hidden next-edition scaffold (copy of the live ESSC 2026 page, year
+# bumped to 2027). Kept out of the build until the edition is announced.
+# See the header comment in each file and docs/new-conference.md.
+src/2027.njk
+src/2027.fr.njk
+src/2027.de.njk

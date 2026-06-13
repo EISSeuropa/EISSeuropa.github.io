@@ -92,14 +92,6 @@ CARDS = [
     # Rollover: when this edition becomes past, repoint /2026 to past-meta
     # and add the next edition here under its own slug. See
     # docs/new-conference.md.
-    {"slug": "2026", "i18n": {
-        "en": {"eyebrow": "ESSC 2026", "title": "European Security Studies Conference",
-               "subtitle": "11–12 June 2026 · Stockholm University"},
-        "fr": {"eyebrow": "ESSC 2026", "title": "Conférence européenne d'études de sécurité",
-               "subtitle": "11–12 juin 2026 · Université de Stockholm"},
-        "de": {"eyebrow": "ESSC 2026", "title": "Europäische Konferenz für Sicherheitsstudien",
-               "subtitle": "11.–12. Juni 2026 · Universität Stockholm"},
-    }},
     {"slug": "board", "i18n": {
         "en": {"eyebrow": "About", "title": "The People",
                "subtitle": "The EISS board and support team"},
