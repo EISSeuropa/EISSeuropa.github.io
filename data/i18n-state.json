@@ -102,13 +102,13 @@
     "src/sitemap.njk": {
       "fr": {
         "file": "src/sitemap.fr.njk",
-        "source_sha1": "62e719444e1cd70eb5116cd104c2f2e39dfc5de6",
+        "source_sha1": "2f2bf8a5f4310e9a8d457b1fa89a9881e9162358",
         "translated_on": "2026-06-13",
         "status": "beta"
       },
       "de": {
         "file": "src/sitemap.de.njk",
-        "source_sha1": "62e719444e1cd70eb5116cd104c2f2e39dfc5de6",
+        "source_sha1": "2f2bf8a5f4310e9a8d457b1fa89a9881e9162358",
         "translated_on": "2026-06-13",
         "status": "beta"
       }
