@@ -216,10 +216,54 @@ function checkUndefinedClasses() {
   }
 }
 
+// ── 5. People hovercard index present, non-empty, and resolvable ────────
+// The site-wide hovercard (src/assets/js/people-hovercards.js) fetches
+// /data/people-index.json at runtime; if that file goes missing or empty,
+// every name silently loses its card with no build error. And each entry's
+// `url` must point at a real built profile page, or the card's "View
+// profile" link 404s. Both the index (peopleIndex.js) and the profile pages
+// (profilePages.js) derive from boardSorted, so this asserts the two stay in
+// lockstep across any board.json edit.
+function checkPeopleIndex() {
+  const file = "_site/data/people-index.json";
+  if (!existsSync(file)) {
+    // Only a problem if a build actually ran; otherwise checkBuiltHtml warned.
+    if (htmlFiles("_site").length) {
+      problems.push(`${file}: missing — the people hovercard index was not built`);
+    }
+    return;
+  }
+  let data;
+  try {
+    data = JSON.parse(readFileSync(file, "utf8"));
+  } catch (e) {
+    problems.push(`${file}: could not parse (${e.message})`);
+    return;
+  }
+  if (!Array.isArray(data.people) || data.people.length === 0) {
+    problems.push(`${file}: no people in the hovercard index — every name would silently lose its card`);
+    return;
+  }
+  for (const p of data.people) {
+    if (!p.detect || !p.slug || !p.url) {
+      problems.push(`${file}: entry ${JSON.stringify(p.name || p.slug || "?")} is missing detect/slug/url`);
+      continue;
+    }
+    const page = join("_site", p.url.replace(/^\//, ""));
+    if (!existsSync(page)) {
+      problems.push(
+        `${file}: ${p.name || p.detect} → ${p.url} has no built profile page ` +
+          `(hovercard "View profile" would 404 — peopleIndex.js and profilePages.js out of sync)`
+      );
+    }
+  }
+}
+
 checkDataKeys();
 checkBoardLinks();
 checkBuiltHtml();
 checkUndefinedClasses();
+checkPeopleIndex();
 
 if (problems.length) {
   console.error(`\n✗ build-sanity check failed (${problems.length} problem${problems.length > 1 ? "s" : ""}):\n`);
@@ -227,4 +271,4 @@ if (problems.length) {
   console.error("");
   process.exit(1);
 }
-console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes).");
+console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, people hovercard index resolvable).");
