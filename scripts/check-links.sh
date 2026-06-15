@@ -91,11 +91,6 @@ SKIP_HOSTS = {
     "indico.eiss-europa.com",   # Indico HEADs return 400, works for
                                 # visitors. Real-URL health is
                                 # confirmed manually.
-    "www.linkedin.com",         # LinkedIn 999s every automated
-                                # request regardless of UA. Member
-                                # profile URLs (board cards) work for
-                                # any logged-out visitor with a
-                                # browser.
     "twitter.com",              # X/Twitter 403s unauthenticated bots
                                 # (same class as LinkedIn). The EISS
                                 # profile link in the footer resolves
@@ -160,6 +155,16 @@ SKIP_HOSTS = {
                                 # 503. Same intermittent-5xx class as the
                                 # academic hosts above; skipping stops the
                                 # recurring false-red.
+}
+
+# Domains skipped together with ALL their subdomains. SKIP_HOSTS matches an
+# exact hostname, which misses country subdomains. LinkedIn serves member
+# profiles on www. and on country hosts (tr., fr., de., …, sourced from board
+# submissions); every one returns HTTP 999 to automated requests regardless of
+# UA but opens fine for any logged-out visitor. Skipping the whole domain
+# covers present and future board members without a per-subdomain allowlist.
+SKIP_DOMAINS = {
+    "linkedin.com",
 }
 
 internal_links = {}  # (file, target) for de-dupe display
@@ -247,7 +252,8 @@ def _make_ssl_ctx(verify=True):
 
 def check_external(url):
     parsed = urllib.parse.urlparse(url)
-    if parsed.hostname in SKIP_HOSTS:
+    host = parsed.hostname or ""
+    if host in SKIP_HOSTS or any(host == d or host.endswith("." + d) for d in SKIP_DOMAINS):
         return (url, "skip")
     method = "GET" if parsed.hostname in GET_HOSTS else "HEAD"
     headers = {
