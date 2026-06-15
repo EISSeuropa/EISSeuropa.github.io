@@ -98,12 +98,25 @@ for (const p of corpus.papers || []) {
     theme: themesOf(p.sessionTitle), // array, this feature's own derivation
     conferenceLabel: p.conferenceLabel,
     programmeUrl: p.conferenceUrl, // per-edition page (no per-slot anchor available)
+    slug: p.slug, // stable per-paper slug from corpus (anchor + landing page)
+    abstract: p.abstract || null,
+    abstractUrl: p.abstractUrl || null,
+    publishedUrl: p.publishedUrl || null,
+    doi: p.doi || null,
   });
 }
 
 const papers = [...byKey.values()].sort(
   (a, b) => (b.year || 0) - (a.year || 0) || a.title.localeCompare(b.title)
 );
+
+// A paper gets its own landing page (#794) only when there is something to
+// land on: an abstract or an external published-version link. The rest are
+// still deep-linkable by their slug anchor in the list below.
+for (const p of papers) {
+  p.hasPage = !!(p.abstract || p.publishedUrl || p.doi);
+  p.paperUrl = p.hasPage && p.slug ? `/papers/${p.slug}.html` : null;
+}
 
 // Resolve each author to their profile page when they are a known board /
 // community member, so the by-paper view can link author names through to the

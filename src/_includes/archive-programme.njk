@@ -15,7 +15,7 @@
 {% from "icons.njk" import icon %}
 {%- set _lang = lang or "en" -%}
 {%- set t = i18n[_lang] -%}
-{%- set _prog = archiveProgrammes[archiveSlug] -%}
+{%- set _prog = archiveProgrammesEnriched[archiveSlug] -%}
 
 {% if _prog and _prog.days and _prog.days.length %}
 <section class="section programme programme--archive" id="programme" aria-labelledby="archive-programme-title">
@@ -78,6 +78,12 @@
               </p>
               {%- endif %}
 
+              {%- if slot.abstract %}
+              <p class="programme-contrib-abstract">{{ slot.abstract }}
+              {%- if slot.abstractUrl %} <a href="{{ slot.abstractUrl }}" target="_blank" rel="noopener">{{ t.programme.readFullAbstract }}</a>{% endif -%}
+              </p>
+              {%- endif %}
+
               {%- if slot.contributions and slot.contributions.length %}
               <details class="programme-contribs">
                 <summary>{{ t.programme.showContributions }} <span class="muted">({{ slot.contributions.length }})</span></summary>
@@ -93,6 +99,11 @@
                             {%- if a.isSpeaker %}<span class="programme-author-mic" title="{{ t.programme.presenter }}">{{ icon("mic") }}</span><span class="sr-only">{{ t.programme.presenter }}: </span>{% endif -%}
                             {{ a.name }}{% if a.affiliation %} <em>({{ a.affiliation }})</em>{% endif %}</span>{% if not loop.last %} · {% endif %}
                         {%- endfor -%}
+                      </p>
+                      {%- endif %}
+                      {%- if c.abstract %}
+                      <p class="programme-contrib-abstract">{{ c.abstract }}
+                      {%- if c.abstractUrl %} <a href="{{ c.abstractUrl }}" target="_blank" rel="noopener">{{ t.programme.readFullAbstract }}</a>{% endif -%}
                       </p>
                       {%- endif %}
                     </div>

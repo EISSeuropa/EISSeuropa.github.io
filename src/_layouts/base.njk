@@ -34,6 +34,21 @@
     <link rel="canonical" href="{{ site.url }}{{ page.url }}">
   {% endif %}
 
+  {# Google Scholar / Highwire citation metadata for per-paper landing pages
+     (#794). `paper` is the pagination alias set by paper.njk; it is undefined
+     on every other page, so this block only renders on /papers/<slug>.html.
+     These MUST live in <head> — Scholar ignores body meta tags. #}
+  {%- if paper and paper.slug %}
+  <meta name="citation_title" content="{{ paper.title }}">
+  {%- for a in paper.authorNames %}
+  <meta name="citation_author" content="{{ a }}">
+  {%- endfor %}
+  <meta name="citation_publication_date" content="{{ paper.year }}">
+  <meta name="citation_conference_title" content="European Security Studies Conference {{ paper.year }}">
+  {%- if paper.doi %}<meta name="citation_doi" content="{{ paper.doi }}">{% endif %}
+  {%- if paper.publishedUrl %}<meta name="citation_fulltext_world_readable" content="">{% endif %}
+  {%- endif %}
+
   {# hreflang alternates. Only emitted when the page declares `alternates`
      in its front-matter — most pages currently don't, and that's fine
      (English-only pages don't need alternates). The shape is:
