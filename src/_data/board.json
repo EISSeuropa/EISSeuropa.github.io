@@ -2,13 +2,13 @@
   "_documentation": "Data source for /board.html. The page template (src/board.njk) loops over `members` and `support`. New people, role changes, photo swaps — edit this file, not the template. A future workflow will overwrite this file from the linked Google Sheet (see docs/board-bios-setup.md once added).",
   "members": [
     {
-      "name": "Dr Hugo Meijer",
-      "role": "Honorary Director",
-      "photo": "/assets/images/meijer-2-140x175.jpg",
-      "alt": "Dr Hugo MEIJER",
-      "themes": "International Relations, Foreign Policy Analysis, Security Studies, Alliances.",
+      "name": "Prof. Chiara Ruffa",
+      "role": "Co-Director",
+      "photo": "/assets/images/jritvrpl-400x400.jpg",
+      "alt": "Prof. Chiara Ruffa",
+      "themes": "Multilateralism on the ground, Peacekeeping, Civil-military relations, Political sociology, Fieldwork.",
       "country": "France",
-      "position": "CNRS Research Fellow",
+      "position": "Professor of Political Science",
       "institution": "Sciences Po, Center for International Studies (CERI)"
     },
     {
@@ -38,6 +38,16 @@
       "country": "Netherlands",
       "position": "Assistant Professor of War Studies",
       "institution": "Leiden University"
+    },
+    {
+      "name": "Dr Hugo Meijer",
+      "role": "Honorary Director",
+      "photo": "/assets/images/meijer-2-140x175.jpg",
+      "alt": "Dr Hugo MEIJER",
+      "themes": "International Relations, Foreign Policy Analysis, Security Studies, Alliances.",
+      "country": "France",
+      "position": "CNRS Research Fellow",
+      "institution": "Sciences Po, Center for International Studies (CERI)"
     },
     {
       "name": "Prof. Nicolas Blarel",
@@ -101,12 +111,21 @@
     {
       "name": "Dr Eliza Gheorghe",
       "role": "Board Member",
-      "photo": "/assets/images/eliza-gheorghe.jpg",
       "alt": "Dr Eliza Gheorghe",
-      "themes": "International Relations Theory, International Security, Nuclear Politics.",
-      "country": "Turkey",
+      "photo": "/assets/images/board/eliza-gheorghe.jpg",
       "position": "Assistant Professor",
-      "institution": "Department of International Relations, Bilkent University"
+      "institution": "Bilkent University",
+      "country": "Türkiye",
+      "bio": "Eliza Gheorghe is an Assistant Professor in the International Relations Department at Bilkent University, Ankara. She earned her doctorate in International Relations from the University of Oxford (No Corrections, 2014) and an M.A. in Security Studies from Georgetown University (Honors, 2010) on a Fulbright scholarship. She held research fellowships at Vanderbilt University, the University of Hamburg, Yale University, Harvard Kennedy School, Cornell University, SAIS-Johns Hopkins University, the Norwegian Institute for Defense Studies, and Université Paris 1 Panthéon – Sorbonne. Her research was funded by the Stanton Foundation, the Woodrow Wilson International Center for Scholars, Fundação Getúlio Vargas, and the University of Vienna. She is the recipient of the International Fellowship for Outstanding Researchers from the Scientific and Technological Research Council of Türkiye, and the Outstanding Young Scientist Prize from the Turkish Academy of Sciences. Her research focuses on nuclear proliferation and the evolution of the nuclear market; nuclear alliances; the nuclear non-proliferation regime; and nuclear security. Her work has been published in International Security, Journal of Politics, and the Journal of Strategic Studies, among others. She is the author of Market of Doom. Proliferation and the Logic of Nuclear Trade, which is coming out with Cornell University Press. She is on the editorial team of the journal International Security.",
+      "themes": "nuclear proliferation, extended nuclear deterrence, nuclear non-proliferation regime, nuclear security",
+      "links": {
+        "publicEmail": "eliza.gheorghe@bilkent.edu.tr",
+        "website": "https://ir.bilkent.edu.tr/?page_id=3039",
+        "orcid": "https://orcid.org/0000-0003-0849-5397",
+        "linkedin": "https://tr.linkedin.com/in/eliza-rodica-gheorghe-b62a299",
+        "twitter": "https://x.com/gheorghe_eliza"
+      },
+      "workingGroups": "WG2"
     },
     {
       "name": "Mauro Gilli",
@@ -218,16 +237,6 @@
       "country": "Greece",
       "position": "Associate Professor of International Relations",
       "institution": "University of Macedonia"
-    },
-    {
-      "name": "Prof. Chiara Ruffa",
-      "role": "Co-Director",
-      "photo": "/assets/images/jritvrpl-400x400.jpg",
-      "alt": "Prof. Chiara Ruffa",
-      "themes": "Multilateralism on the ground, Peacekeeping, Civil-military relations, Political sociology, Fieldwork.",
-      "country": "France",
-      "position": "Professor of Political Science",
-      "institution": "Sciences Po, Center for International Studies (CERI)"
     },
     {
       "name": "Prof. Olivier Schmitt",
