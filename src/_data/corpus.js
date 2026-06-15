@@ -23,7 +23,10 @@
  * splits/merges by hand without touching the algorithm (mirrors the
  * `photoOverride` escape hatch in board.json).
  */
-const archive = require("./archiveProgrammes.js");
+// Enriched programmes = the transcribed archive with Indico abstracts merged
+// on by title (see archiveProgrammesEnriched.js / paperAbstracts.json), so a
+// paper's abstract flows through to the Navigator and per-paper pages.
+const archive = require("./archiveProgrammesEnriched.js")();
 const indico = require("./indico.json");
 const peopleIndexFn = require("./peopleIndex.js");
 
@@ -353,6 +356,9 @@ for (const { slug, slot, c } of iterContributions()) {
     title: c.title,
     authors,
     abstract: c.abstract || null,
+    abstractUrl: c.abstractUrl || null, // Indico record, when the abstract came from there
+    publishedUrl: c.publishedUrl || null, // "later published at" link (hand-curated; growth lever)
+    doi: c.doi || null,
     year: conf.year,
     conferenceSlug: conf.slug || slug,
     conferenceLabel: conf.label,
@@ -364,6 +370,29 @@ for (const { slug, slot, c } of iterContributions()) {
 
 // Stable ordering: newest edition first, then title.
 papers.sort((a, b) => (b.year || 0) - (a.year || 0) || a.title.localeCompare(b.title));
+
+// Stable per-paper slug, for the deep-link anchor in the Navigator and the
+// per-paper landing pages (#794). `<conferenceSlug>-<kebab-title>`, deduped
+// with a numeric suffix, assigned in the (deterministic) sorted order so a
+// paper keeps its slug build-to-build. Frozen once shipped.
+const kebab = (s) =>
+  String(s || "")
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80)
+    .replace(/-+$/, "");
+const slugSeen = Object.create(null);
+for (const p of papers) {
+  const base = `${p.conferenceSlug}-${kebab(p.title)}`.replace(/-+$/, "");
+  let slug = base;
+  let i = 2;
+  while (slugSeen[slug]) slug = `${base}-${i++}`;
+  slugSeen[slug] = true;
+  p.slug = slug;
+}
 
 // ── Aggregate speakers ──────────────────────────────────────────────────
 // Build the board name→profile lookup from peopleIndex (keyed on the same

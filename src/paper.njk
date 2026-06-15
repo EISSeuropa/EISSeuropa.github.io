@@ -1,0 +1,18 @@
+---
+pagination:
+  data: paperPages
+  size: 1
+  alias: paper
+layout: base.njk
+permalink: "/papers/{{ paper.slug }}.html"
+navKey: conferences
+eleventyComputed:
+  title: "{{ paper.title }}"
+  description: "{{ (paper.abstract or paper.title) | striptags | truncate(155) }}"
+---
+{# Per-paper landing page (#794). One template paginates over paperPages to
+   emit /papers/<slug>.html for every abstract- or published-link-bearing
+   ESSC paper, EN-only. The citation_* meta tags live in base.njk's <head>
+   (it reads the `paper` alias); this body carries the human-readable record
+   plus the ScholarlyArticle JSON-LD. #}
+{% include "paper-page-body.njk" %}
