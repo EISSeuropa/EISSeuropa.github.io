@@ -156,6 +156,17 @@ This is the same swap, in reverse, that step 3 does for the new edition,
 so at any time exactly one edition (the upcoming / live one) carries the
 full-name card and everything else shares the archive card.
 
+**Pull the abstracts.** The printed programmes transcribed into
+`src/_data/archiveProgrammes.js` carry no abstracts, but Indico holds
+them. Add the edition's year → Indico event id to the `EVENTS` map in
+[`scripts/sync-abstracts.mjs`](../scripts/sync-abstracts.mjs) and run
+`node scripts/sync-abstracts.mjs`. It refreshes
+`src/_data/paperAbstracts.json`; `archiveProgrammesEnriched.js` merges
+each abstract onto the matching programme entry by title, and the
+archive programme grid renders it. Matching is exact on the normalised
+title, so an abstract whose Indico title differs from the transcription
+simply does not attach (no harm, just a gap).
+
 If you want to keep the just-past year visible in the homepage hero
 for a few days after, edit `src/_data/conferences.js` and bump that
 year's `endDate` to a date a week or two later. Reset when you're
