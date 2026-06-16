@@ -75,19 +75,28 @@ The human-in-the-loop step. Review the queue, then record the matches
 you accept:
 
 ```bash
-node scripts/confirm-publication.mjs --list         # show pending candidates
-node scripts/confirm-publication.mjs <slug> [<slug> ...]
+node scripts/confirm-publication.mjs --list           # show pending candidates
+node scripts/confirm-publication.mjs <slug> [<slug> ...]   # accept
+node scripts/confirm-publication.mjs --reject <slug> ...   # mark a non-match
 ```
 
 Each accepted slug is copied into `src/_data/paperLinks.json`. Rebuild
-to surface it. Reject a match simply by not confirming it (it stays in
-the queue for a later call, or is dropped on the next matcher run).
+to surface it.
+
+A match you have checked and decided is **wrong** should be rejected, not
+just left alone: `--reject` records the (paper, doi) pair in
+`data/publication-rejects.json`, and the matcher skips it from then on, so
+a validated non-match does not keep coming back in the monthly queue.
+Rejection is per pair, not per paper, so a genuinely better match for the
+same paper can still surface later. (A match you simply have not looked at
+yet just stays in the queue.)
 
 Judge each one on the merits. A strong match keeps most of the title and
 the same author across a plausible gap. A weak one shares only a theme
-word and drifts in focus or by many years — leave those unconfirmed. The
-first confirmed batch held back one such case (a 2019 nuclear-deterrence
-paper proposed against a 2024 strategic-autonomy piece).
+word and drifts in focus or by many years. The first review found one such
+case: a 2019 paper on European perceptions of nuclear deterrence proposed
+against a 2024 piece on European strategic autonomy — same author (Tara
+Varma), shared theme, but a different work. It was rejected.
 
 ## The scheduled refresh
 
