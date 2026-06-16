@@ -5,7 +5,7 @@ pagination:
   alias: paper
 layout: base.njk
 permalink: "/papers/{{ paper.slug }}.html"
-navKey: conferences
+navKey: "navigator"
 eleventyComputed:
   title: "{{ paper.title }}"
   description: "{{ (paper.abstract or paper.title) | striptags | truncate(155) }}"
