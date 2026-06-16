@@ -155,6 +155,14 @@ SKIP_HOSTS = {
                                 # 503. Same intermittent-5xx class as the
                                 # academic hosts above; skipping stops the
                                 # recurring false-red.
+    "www.cnil.fr",              # France's data-protection regulator (CNIL),
+                                # cited from the privacy notice (`/policy` +
+                                # FR/DE). Returns HTTP 503 to the checker
+                                # under automated load while loading fine for
+                                # visitors — same intermittent-5xx class as
+                                # gess.ethz.ch. Flaked the link-check on
+                                # PR #814; skipping stops the recurring
+                                # false-red on every src-touching PR.
 }
 
 # Domains skipped together with ALL their subdomains. SKIP_HOSTS matches an
