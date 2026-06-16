@@ -22,15 +22,30 @@ const paperLinks = require("./paperLinks.json"); // confirmed publication matche
 // string free of the `{{` that would collide with Nunjucks if built in-template.
 function toBibtex(p, link) {
   const authors = (link.publishedAuthors && link.publishedAuthors.length ? link.publishedAuthors : p.authors) || [];
-  const fields = [`author  = {${authors.join(" and ")}}`, `title   = {${p.title}}`];
-  if (link.journal) fields.push(`journal = {${link.journal}}`);
   const year = link.publishedYear || p.year;
-  if (year) fields.push(`year    = {${year}}`);
-  if (link.volume) fields.push(`volume  = {${link.volume}}`);
-  if (link.issue) fields.push(`number  = {${link.issue}}`);
-  if (link.pages) fields.push(`pages   = {${String(link.pages).replace(/-+/g, "--")}}`);
-  if (link.doi) fields.push(`doi     = {${link.doi}}`);
-  return `@article{eiss-${p.slug},\n  ${fields.join(",\n  ")}\n}`;
+  const type = link.pubType || "";
+  const fields = [`author = {${authors.join(" and ")}}`, `title = {${p.title}}`];
+  let entry = "article";
+  if (/preprint|working paper/i.test(type)) {
+    entry = "misc";
+    const how = ["Preprint", link.publisher].filter(Boolean).join(", ");
+    if (how) fields.push(`howpublished = {${how}}`);
+  } else if (/book chapter|edited/i.test(type)) {
+    entry = "incollection";
+    if (link.journal) fields.push(`booktitle = {${link.journal}}`);
+    if (link.publisher) fields.push(`publisher = {${link.publisher}}`);
+  } else if (/^book$/i.test(type)) {
+    entry = "book";
+    if (link.publisher) fields.push(`publisher = {${link.publisher}}`);
+  } else if (link.journal) {
+    fields.push(`journal = {${link.journal}}`);
+  }
+  if (year) fields.push(`year = {${year}}`);
+  if (link.volume) fields.push(`volume = {${link.volume}}`);
+  if (link.issue) fields.push(`number = {${link.issue}}`);
+  if (link.pages) fields.push(`pages = {${String(link.pages).replace(/-+/g, "--")}}`);
+  if (link.doi) fields.push(`doi = {${link.doi}}`);
+  return `@${entry}{eiss-${p.slug},\n  ${fields.join(",\n  ")}\n}`;
 }
 
 module.exports = function () {
@@ -61,6 +76,8 @@ module.exports = function () {
         publishedVolume: link.volume || null,
         publishedIssue: link.issue || null,
         publishedPages: link.pages || null,
+        publishedType: link.pubType || null, // "Journal article", "Preprint", …
+        publishedPublisher: link.publisher || null, // outlet fallback for preprints
         publishedAuthors: link.publishedAuthors || [],
         // Ready-to-copy BibTeX for the published version (null when unmatched).
         bibtex: link.publishedUrl || link.doi ? toBibtex(p, link) : null,
