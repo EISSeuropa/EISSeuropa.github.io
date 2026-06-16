@@ -60,28 +60,28 @@
     "src/events.njk": {
       "fr": {
         "file": "src/events.fr.njk",
-        "source_sha1": "9925cf9a351ad5c93aac4c3237bed47a81612815",
-        "translated_on": "2026-06-01",
+        "source_sha1": "fcbd0d50da0a672a0da685e9e06d553344c8014e",
+        "translated_on": "2026-06-16",
         "status": "beta"
       },
       "de": {
         "file": "src/events.de.njk",
-        "source_sha1": "9925cf9a351ad5c93aac4c3237bed47a81612815",
-        "translated_on": "2026-06-01",
+        "source_sha1": "fcbd0d50da0a672a0da685e9e06d553344c8014e",
+        "translated_on": "2026-06-16",
         "status": "beta"
       }
     },
     "src/programmes.njk": {
       "fr": {
         "file": "src/programmes.fr.njk",
-        "source_sha1": "cacd95ae19b35cabcff4afc0a41e0a22b0c4c3ec",
-        "translated_on": "2026-06-04",
+        "source_sha1": "cb2e31c76f9fe8bd4e5e1c7c4567f470e74572dd",
+        "translated_on": "2026-06-16",
         "status": "beta"
       },
       "de": {
         "file": "src/programmes.de.njk",
-        "source_sha1": "cacd95ae19b35cabcff4afc0a41e0a22b0c4c3ec",
-        "translated_on": "2026-06-04",
+        "source_sha1": "cb2e31c76f9fe8bd4e5e1c7c4567f470e74572dd",
+        "translated_on": "2026-06-16",
         "status": "beta"
       }
     },

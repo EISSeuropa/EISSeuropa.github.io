@@ -322,9 +322,18 @@ function themesOf(sessionTitle) {
 }
 
 // ── Flatten both sources into one paper list ────────────────────────────
+// Slugs with a live Indico programme are authoritative; skip the same slug
+// from the static archive so contributions are not emitted twice.
+const liveIndicoSlugs = new Set(
+  Object.entries(indico.annualConferences || {})
+    .filter(([, conf]) => conf && conf.programme)
+    .map(([year]) => year)
+);
+
 function* iterContributions() {
-  // archive editions
+  // archive editions (skip any year Indico covers live)
   for (const [slug, prog] of Object.entries(archive)) {
+    if (liveIndicoSlugs.has(slug)) continue;
     for (const day of prog.days || []) {
       for (const row of day.rows || []) {
         for (const slot of row.items || []) {
@@ -335,14 +344,14 @@ function* iterContributions() {
       }
     }
   }
-  // live 2026 from Indico
-  const live = (indico.annualConferences || {})["2026"];
-  if (live && live.programme) {
-    for (const day of live.programme.days || []) {
+  // live editions from Indico
+  for (const [year, conf] of Object.entries(indico.annualConferences || {})) {
+    if (!conf || !conf.programme) continue;
+    for (const day of conf.programme.days || []) {
       for (const row of day.rows || []) {
         for (const slot of row.items || []) {
           for (const c of slot.contributions || []) {
-            yield { slug: "2026", slot, c };
+            yield { slug: year, slot, c };
           }
         }
       }
