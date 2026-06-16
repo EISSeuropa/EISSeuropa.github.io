@@ -419,6 +419,30 @@ for (const p of papers) {
   p.doi = link.doi || p.doi;
 }
 
+// Resolve each paper's landing-page URL (#794), so the by-person view can link
+// a speaker's paper title to the same /papers/<slug> page the by-paper view
+// links to. A paper earns a page only when there is something to land on (an
+// abstract or a confirmed publication) — the rule paperPages.js applies.
+//
+// The pages are generated from paperIndex.js's DEDUPED list (keyed on title +
+// year, keeping the first occurrence's slug). corpus.papers is one row per
+// contribution, so a paper presented under two near-identical rows carries a
+// `-2` slug on the second row that paperIndex drops — linking to it would 404.
+// We therefore resolve every row against its first-occurrence twin: same key,
+// same first-seen slug + landing decision as the generated page.
+const urlKey = (p) =>
+  `${String(p.title || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim()}::${p.year || ""}`;
+const firstByKey = new Map();
+for (const p of papers) {
+  const k = urlKey(p);
+  if (!firstByKey.has(k)) firstByKey.set(k, p);
+}
+for (const p of papers) {
+  const lead = firstByKey.get(urlKey(p));
+  const hasPage = !!(lead.abstract || lead.publishedUrl || lead.doi);
+  p.paperUrl = hasPage && lead.slug ? `/papers/${lead.slug}.html` : null;
+}
+
 // ── Aggregate speakers ──────────────────────────────────────────────────
 // Build the board name→profile lookup from peopleIndex (keyed on the same
 // normalisation) so a speaker who is a board/community member links to
