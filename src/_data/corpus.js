@@ -35,6 +35,24 @@ const peopleIndexFn = require("./peopleIndex.js");
 // land here once confirmed; merged onto papers below so the landing page can
 // link the published version. Empty {} until the first confirmed match.
 const paperLinks = require("./paperLinks.json");
+// Full abstracts pulled from Indico by scripts/sync-abstracts.mjs, keyed by
+// `<year>::<normalised-title>`. The enriched archive already merges these for
+// past editions, but the LIVE indico.json (used for the 2026 slug) carries
+// only a ~360-char truncated description that ends in "…". We look these up
+// per paper below and keep the longest available text, so the Navigator and
+// the per-paper landing pages show the complete abstract whichever source is
+// truncated. The normaliser MUST match archiveProgrammesEnriched.js /
+// sync-abstracts.mjs.
+const paperAbstracts = require("./paperAbstracts.json");
+function normAbsTitle(t) {
+  return String(t || "")
+    .normalize("NFKD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+    .replace(/\s+/g, " ");
+}
 
 // ── Name normalisation ──────────────────────────────────────────────────
 const HONORIFIC = /^(prof(?:essor)?\.?|dr\.?|sir|dame|mr\.?|mrs\.?|ms\.?|mx\.?)\s+/;
@@ -367,11 +385,19 @@ for (const { slug, slot, c } of iterContributions()) {
     (a) => ({ name: a.name, affiliation: a.affiliation || null, isSpeaker: !!a.isSpeaker })
   );
   const sessionTitle = slot.title || slot.slotTitle || null;
+  // Prefer the longest abstract available across the inline source (the live
+  // indico.json truncates to ~360 chars) and the full-text sync. Picking the
+  // longer of the two is robust whichever source is the truncated one.
+  const fullAbs = paperAbstracts[`${conf.year}::${normAbsTitle(c.title)}`];
+  const abstract =
+    [c.abstract, fullAbs && fullAbs.abstract]
+      .filter(Boolean)
+      .sort((a, b) => b.length - a.length)[0] || null;
   papers.push({
     title: c.title,
     authors,
-    abstract: c.abstract || null,
-    abstractUrl: c.abstractUrl || null, // Indico record, when the abstract came from there
+    abstract,
+    abstractUrl: c.abstractUrl || (fullAbs && fullAbs.url) || null, // Indico record, when the abstract came from there
     publishedUrl: c.publishedUrl || null, // "later published at" link (hand-curated; growth lever)
     doi: c.doi || null,
     year: conf.year,

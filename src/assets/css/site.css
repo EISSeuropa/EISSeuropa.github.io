@@ -3436,6 +3436,16 @@ a.programme-live-tag:focus-visible {
   min-width: 0;
   color: var(--text);
 }
+/* A paper with a landing page renders as an <a>; give it the accent link
+   colour so it reads as clickable. Papers without a page stay a plain <span>
+   in --text. (The by-paper view inherits the default link colour already; the
+   --text rule above is what suppressed it here.) */
+a.speaker-paper-title {
+  color: var(--accent);
+}
+a.speaker-paper-title:hover {
+  text-decoration: underline;
+}
 
 /* Faceted filter panel above the list (NetSec-directory style): a bordered
    card grouping the name search with the theme + event selects, each in a
