@@ -404,8 +404,11 @@ const locales = {
       close: "Close",
       recentPublications: "Recent publications",
       backToPeople: "Back to People",
-      // Link on member profile pages pointing at their Navigator entry.
-      esscContributions: "Their ESSC papers",
+      // Heading + link for the embedded list of a member's conference papers
+      // on their profile page. esscContributions is the "see also" link to
+      // their filterable entry in the Conference Navigator.
+      esscPapers: "Conference papers",
+      esscContributions: "View in the Conference Navigator",
     },
 
     registrationBadge: {
@@ -846,7 +849,8 @@ const locales = {
       close: "Fermer",
       recentPublications: "Publications récentes",
       backToPeople: "Retour à l'équipe",
-      esscContributions: "Leurs communications ESSC",
+      esscPapers: "Communications en conférence",
+      esscContributions: "Voir dans le Navigateur de la conférence",
     },
 
     registrationBadge: {
@@ -1263,7 +1267,8 @@ const locales = {
       close: "Schließen",
       recentPublications: "Neueste Veröffentlichungen",
       backToPeople: "Zurück zu den Personen",
-      esscContributions: "Ihre ESSC-Beiträge",
+      esscPapers: "Konferenzbeiträge",
+      esscContributions: "Im Konferenz-Navigator ansehen",
     },
 
     registrationBadge: {
