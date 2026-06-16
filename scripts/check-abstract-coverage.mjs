@@ -49,6 +49,11 @@ function jaccard(a, b) {
 }
 
 const abstracts = { ...load("paperAbstracts.json"), ...load("paperAbstractsManual.json") };
+// Drift aliases re-point a synced key onto the programme key at build time, so
+// an aliased source key is reconciled, not stranded; don't flag it. See
+// paperAbstractAliases.json.
+const aliases = load("paperAbstractAliases.json");
+const aliasedSources = new Set(Object.keys(aliases).filter((k) => k.includes("::")));
 // paperIndex.js is the deduplicated paper list that the Anthology and the
 // per-paper landing pages actually render, so it is the right attach target.
 const corpus = require(join(ROOT, "src", "_data", "paperIndex.js")).papers || [];
@@ -73,10 +78,13 @@ console.log("Abstract coverage — stranded entries by year\n");
 for (const year of years) {
   const corpusNts = new Set((corpusByYear[year] || []).map((c) => c.nt));
   const keys = keysByYear[year];
-  const stranded = keys.filter((nt) => !corpusNts.has(nt));
+  // An aliased source key reconciles at build time, so it is attached, not stranded.
+  const reconciled = keys.filter((nt) => aliasedSources.has(`${year}::${nt}`));
+  const stranded = keys.filter((nt) => !corpusNts.has(nt) && !aliasedSources.has(`${year}::${nt}`));
   const attached = keys.length - stranded.length;
   const flag = stranded.length ? "⚠ " : "✓ ";
-  console.log(`${flag}${year}: ${attached}/${keys.length} attached, ${stranded.length} stranded`);
+  const recNote = reconciled.length ? ` (${reconciled.length} reconciled via alias)` : "";
+  console.log(`${flag}${year}: ${attached}/${keys.length} attached, ${stranded.length} stranded${recNote}`);
   totalStranded += stranded.length;
   for (const nt of stranded.sort()) {
     let best = null, score = 0;

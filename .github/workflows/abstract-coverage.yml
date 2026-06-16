@@ -1,0 +1,90 @@
+# Abstract coverage report (#794).
+#
+# scripts/check-abstract-coverage.mjs lists every paper abstract that fails to
+# attach to an Anthology paper: title drift between the Indico title and the
+# transcribed programme, or a paper missing from the programme. It is a §5
+# release-time cross-check, but a drift that creeps in between releases would
+# otherwise sit unseen, so this runs it on a slow cron too.
+#
+# Cadence: every four months (1 Jan / 1 May / 1 Sep, 06:00 UTC), plus manual
+# dispatch. The full report always lands in the run's step summary. Only a
+# LIKELY DRIFT finding (a high-similarity near-miss, i.e. a fixable title
+# mismatch) opens or threads a tracking issue — the low-similarity "paper
+# absent from the programme" entries are long-tail backlog tracked elsewhere,
+# not something to reopen an issue for three times a year.
+#
+# The script needs no npm install (it requires only the repo's data files), so
+# this is a checkout plus a node run. checkout is SHA-pinned per CLAUDE.md §2;
+# node is the runner's preinstalled version.
+name: Abstract coverage report
+
+on:
+  schedule:
+    - cron: "0 6 1 */4 *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  coverage:
+    name: Report stranded abstracts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+
+      - name: Run coverage alarm
+        run: |
+          set -euo pipefail
+          node scripts/check-abstract-coverage.mjs | tee report.txt
+          {
+            echo "## Abstract coverage"
+            echo '```'
+            cat report.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Open or thread a drift issue
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          if ! grep -q "LIKELY DRIFT" report.txt; then
+            echo "No likely title drift; nothing to file."
+            exit 0
+          fi
+          title="Abstract coverage: likely title drift detected"
+          body="$(cat <<EOF
+          The coverage alarm found abstracts whose title looks like it drifted from the transcribed programme (a fixable mismatch), so they render nowhere.
+
+          Reconcile each: add an entry to \`src/_data/paperAbstractAliases.json\` (when the programme title is the one to keep) or fix the title in \`src/_data/archiveProgrammes.js\` (when the programme has the typo). See CLAUDE.md §5.
+
+          Run: ${RUN_URL}
+
+          \`\`\`
+          $(grep -A1 "LIKELY DRIFT" report.txt)
+          \`\`\`
+
+          Filed automatically by the abstract-coverage workflow (#794).
+          EOF
+          )"
+          existing=$(gh issue list --repo "$GITHUB_REPOSITORY" \
+            --state open --label automated \
+            --search "\"$title\" in:title" \
+            --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --repo "$GITHUB_REPOSITORY" \
+              --body "Drift still present as of ${RUN_URL}."
+            echo "Threaded onto #$existing"
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" \
+              --title "$title" \
+              --body "$body" \
+              --label automated --label known-issue \
+              --milestone "Backlog — Under watch"
+            echo "Opened a new drift issue"
+          fi

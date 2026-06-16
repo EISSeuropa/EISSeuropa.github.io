@@ -275,9 +275,16 @@ same release. If yes but too big to fit, open a tracking issue
 - Run `node scripts/check-abstract-coverage.mjs`. It lists every paper
   abstract that fails to attach to an Anthology paper, by year, with the
   closest programme title and a similarity score. A high score is title
-  drift (reconcile the title between Indico and the transcription); a low
-  score means the paper is absent from the programme (or is a panel-level
-  abstract, which correctly matches nothing). Informational, not a gate.
+  drift; a low score means the paper is absent from the programme (or is a
+  panel-level abstract, which correctly matches nothing). Informational, not
+  a gate. The `abstract-coverage.yml` workflow also runs it every four months
+  and files a tracking issue if it finds likely drift, so this is a backstop
+  more than a chore.
+- Reconcile drift one of two ways. If the **programme** title is the one to
+  keep (correct British spelling, or a clean version of a garbled Indico
+  title), add the synced→programme mapping to
+  `src/_data/paperAbstractAliases.json`. If the **programme** has the typo,
+  fix it in `src/_data/archiveProgrammes.js`.
 - Pre-Indico abstracts live in `src/_data/paperAbstractsManual.json`, never
   in `paperAbstracts.json` (the sync overwrites the latter wholesale). If a
   recovered abstract for 2017–2022 ends up in the synced file, it will be

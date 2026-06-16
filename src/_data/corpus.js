@@ -47,6 +47,16 @@ const paperLinks = require("./paperLinks.json");
 // files are kept apart so sync-abstracts.mjs's wholesale overwrite of the
 // synced file can never strand the manual ones; see archiveProgrammesEnriched.js.
 const paperAbstracts = { ...require("./paperAbstracts.json"), ...require("./paperAbstractsManual.json") };
+// Title drift: an abstract whose Indico title differs from the programme is
+// re-pointed onto the programme key so it still attaches. See
+// paperAbstractAliases.json and scripts/check-abstract-coverage.mjs.
+{
+  const aliases = require("./paperAbstractAliases.json");
+  for (const [from, to] of Object.entries(aliases)) {
+    if (from[0] === "_") continue;
+    if (paperAbstracts[from] && !paperAbstracts[to]) paperAbstracts[to] = paperAbstracts[from];
+  }
+}
 function normAbsTitle(t) {
   return String(t || "")
     .normalize("NFKD")
