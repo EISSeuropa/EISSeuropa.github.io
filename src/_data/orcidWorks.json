@@ -25,6 +25,31 @@
     ]
   },
   {
+    "name": "Dr Eliza Gheorghe",
+    "slug": "dr-eliza-gheorghe",
+    "orcid": "https://orcid.org/0000-0003-0849-5397",
+    "works": [
+      {
+        "title": "Proliferation Within Alliances",
+        "year": 2025,
+        "journal": "Atomic Backfires",
+        "doi": "https://doi.org/10.7551/mitpress/16163.003.0021"
+      },
+      {
+        "title": "The spoilers from within: Allies and export controls",
+        "year": 2025,
+        "journal": "Journal of Strategic Studies",
+        "doi": "https://doi.org/10.1080/01402390.2025.2454706"
+      },
+      {
+        "title": "Nuclear topsy turvy: the security-economics nexus in Turkish-American relations",
+        "year": 2025,
+        "journal": "Middle Eastern Studies",
+        "doi": "https://doi.org/10.1080/00263206.2024.2410357"
+      }
+    ]
+  },
+  {
     "name": "Dr Moritz Weiss",
     "slug": "dr-moritz-weiss",
     "orcid": "https://orcid.org/0000-0001-9311-6480",

@@ -1,0 +1,64 @@
+{# Conference Navigator — the unified archive over the ESSC corpus (#756).
+   One surface, two lenses: a by-person view (speakers-index.njk) and a
+   by-paper view (papers-page.njk), both rendering from corpus.js /
+   paperIndex.js. The wrapper page sets `archiveDefaultView` ("people" or
+   "papers"): /speakers.html defaults to people, /papers.html to papers, and
+   both URLs stay live (no link breaks, one include = no drift). archive.js
+   toggles the panels and mirrors the choice in ?view=. The non-default panel
+   is server-rendered (so the toggle has content) but carries
+   data-pagefind-ignore, so each URL contributes only its own view to the
+   site search rather than indexing both lists twice. #}
+{%- set t = i18n[lang or "en"] -%}
+{%- set n18n = t.navigator -%}
+{%- set defaultView = archiveDefaultView or "people" -%}
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">{{ n18n.eyebrow }}</span>
+    <h1>{{ n18n.title }}</h1>
+    <p class="page-lead">{{ n18n.lead }}</p>
+    <dl class="stats-row" aria-label="{{ n18n.eyebrow }}">
+      <div class="stat">
+        <dt>{{ corpus.stats.speakerCount }}</dt>
+        <dd>{{ t.speakers.statSpeakers }}</dd>
+      </div>
+      <div class="stat">
+        <dt>{{ corpus.stats.editions }}</dt>
+        <dd>{{ t.speakers.statConferences }} <span class="muted">{{ t.speakers.statConferencesSince }}</span></dd>
+      </div>
+      <div class="stat">
+        <dt>{{ corpus.stats.paperCount }}</dt>
+        <dd>{{ t.speakers.statPapers }}</dd>
+      </div>
+    </dl>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+
+    <div class="archive-toggle" role="tablist" aria-label="{{ n18n.title }}">
+      <button type="button" role="tab" class="archive-tab" data-archive-tab="people"
+              id="archive-tab-people" aria-controls="archive-panel-people"
+              aria-selected="{{ 'true' if defaultView == 'people' else 'false' }}">{{ n18n.byPerson }}</button>
+      <button type="button" role="tab" class="archive-tab" data-archive-tab="papers"
+              id="archive-tab-papers" aria-controls="archive-panel-papers"
+              aria-selected="{{ 'true' if defaultView == 'papers' else 'false' }}">{{ n18n.byPaper }}</button>
+    </div>
+
+    <div class="archive-panel" id="archive-panel-people" role="tabpanel"
+         aria-labelledby="archive-tab-people" data-archive-panel="people"
+         {%- if defaultView != 'people' %} hidden data-pagefind-ignore{% endif %}>
+      {% include "speakers-index.njk" %}
+    </div>
+
+    <div class="archive-panel" id="archive-panel-papers" role="tabpanel"
+         aria-labelledby="archive-tab-papers" data-archive-panel="papers"
+         {%- if defaultView != 'papers' %} hidden data-pagefind-ignore{% endif %}>
+      {% include "papers-page.njk" %}
+    </div>
+
+  </div>
+</section>
+
+<script src="{{ '/assets/js/archive.js' | bust }}" defer></script>

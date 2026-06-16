@@ -1,0 +1,138 @@
+# Publication matching
+
+How an ESSC paper gets linked to the journal article or book chapter it
+was later published as, so the archive reads as a "presented at ESSC,
+published here" record. Tracked in
+[#805](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/805).
+
+## The shape of the problem
+
+It is fuzzy record-linkage, not a lookup. A conference paper is often
+retitled before publication, the published version appears nought to a
+few years later, and prolific authors have many works. So matching is
+multi-signal, anchored on the author, and **always confirmed by a human
+before anything is recorded**. A wrong "published as" link is a
+mis-citation on a scholarly site, which is worse than a blank field, so
+the pipeline biases to under-matching (the same posture as the speaker
+de-duplication in `corpus.js`).
+
+## The pipeline
+
+```
+match-publications.mjs   →  data/publication-candidates.json   (proposals, a review queue)
+        ↓ human reviews
+confirm-publication.mjs  →  src/_data/paperLinks.json          (confirmed, keyed by paper slug)
+        ↓ build
+corpus.js merges by slug →  /papers/<slug> shows the published link + DOI
+```
+
+Two files, two roles:
+
+- **`data/publication-candidates.json`** — the review queue. Machine
+  output. Never read by the build. Safe to regenerate or discard.
+- **`src/_data/paperLinks.json`** — the confirmed store. Hand-curated
+  (via the confirm step). `corpus.js` merges it onto papers by slug, so
+  a paper with a confirmed link gains a `/papers/<slug>` landing page
+  (with a "Read the published version" link, the DOI, and a
+  `citation_doi` meta tag) even when it has no abstract.
+
+## The matcher: `scripts/match-publications.mjs`
+
+Proposes matches into the review queue. Two phases, both fuzzy title
+matches (token-set Dice) over a publication-lag year window, banded
+high / review / discard. It only ever **proposes** — it does not write
+`paperLinks.json`.
+
+- **ORCID (phase 1).** For papers by a member with an ORCID iD on file
+  (`src/_data/orcidWorks.json`), it matches the title against that
+  member's own ORCID works. The author match is exact, so it is the
+  highest-precision phase.
+- **OpenAlex (phase 2).** For any paper, it resolves each author to an
+  OpenAlex author, pulls their works, and title-matches against them.
+  Anchoring on the author (not the title) is deliberate: a title search
+  cannot find a paper that was retitled on publication, which is the
+  case that matters. Homonym contamination (OpenAlex sometimes lumps two
+  people under one author entity) is filtered out by the title bar.
+
+Both sources are free and need no key (OpenAlex uses the polite pool via
+a `mailto`). Author lookups and works are cached, so each distinct
+author costs two requests regardless of how many papers they wrote.
+
+```bash
+node scripts/match-publications.mjs                 # ORCID only (fast, default)
+node scripts/match-publications.mjs --openalex      # OpenAlex sweep (all papers; slower)
+node scripts/match-publications.mjs --all           # both phases
+node scripts/match-publications.mjs --openalex --since 2017 --until 2020 --limit 40
+```
+
+The queue accumulates across runs (one entry per paper slug, ORCID
+preferred) and excludes papers that already have a confirmed link, so it
+shrinks as matches are confirmed.
+
+## Confirming a match: `scripts/confirm-publication.mjs`
+
+The human-in-the-loop step. Review the queue, then record the matches
+you accept:
+
+```bash
+node scripts/confirm-publication.mjs --list           # show pending candidates
+node scripts/confirm-publication.mjs <slug> [<slug> ...]   # accept
+node scripts/confirm-publication.mjs --reject <slug> ...   # mark a non-match
+```
+
+Each accepted slug is copied into `src/_data/paperLinks.json`. Rebuild
+to surface it.
+
+A match you have checked and decided is **wrong** should be rejected, not
+just left alone: `--reject` records the (paper, doi) pair in
+`data/publication-rejects.json`, and the matcher skips it from then on, so
+a validated non-match does not keep coming back in the monthly queue.
+Rejection is per pair, not per paper, so a genuinely better match for the
+same paper can still surface later. (A match you simply have not looked at
+yet just stays in the queue.)
+
+Judge each one on the merits. A strong match keeps most of the title and
+the same author across a plausible gap. A weak one shares only a theme
+word and drifts in focus or by many years. The first review found one such
+case: a 2019 paper on European perceptions of nuclear deterrence proposed
+against a 2024 piece on European strategic autonomy — same author (Tara
+Varma), shared theme, but a different work. It was rejected.
+
+## Confidence tiers
+
+A candidate's `band` (set by the matcher from the title score) decides how
+it is handled:
+
+- **High (title ≥ 0.80)** — a near-verbatim title by the resolved author.
+  Treated as high-confidence and **auto-confirmed**
+  (`confirm-publication.mjs --auto-high`): recorded in `paperLinks.json` and
+  published, each carrying the "Early-access preview" badge that warns it
+  may be inaccurate. Shown to the maintainer for information, who can reject
+  any. (Auto-confirmed entries carry `"auto": true` in `paperLinks.json`.)
+- **Review (0.50–0.79)** — titles that drifted on publication. Left in the
+  queue for a human accept/reject. An LLM judge to pre-assess these is a
+  possible later addition (kept off for now).
+
+The threshold is the maintainer's chosen policy: high enough that the
+auto-published set is near-exact, low enough that genuine same-title
+publications are not held up.
+
+## The scheduled refresh
+
+[`.github/workflows/sync-publications.yml`](../.github/workflows/sync-publications.yml)
+runs monthly (and on manual dispatch): it runs the matcher, auto-confirms
+the high band (`--auto-high`), and opens a PR on `publications-sync/auto`
+that it **auto-merges**, so the high-confidence matches go live and the
+queue is refreshed. The PR body lists the auto-confirmed matches for
+information and the review band for a human decision. Auto-merging does
+**not** publish the review band — those stay queue data until confirmed by
+hand.
+
+## Growing coverage
+
+- Phase 1 coverage grows as members add their ORCID iD to the directory
+  Form (see [board-bios-setup.md](board-bios-setup.md)).
+- Minting our own DOIs for ESSC papers is a separate, heavier option
+  ([#795](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/795)).
+- An optional LLM judge for the ambiguous (review) band is a possible
+  later refinement, noted in #805.

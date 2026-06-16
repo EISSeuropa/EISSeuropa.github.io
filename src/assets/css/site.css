@@ -2021,7 +2021,13 @@ h4 { font-size: var(--fs-lg); }
 
 .person-body {
   padding: var(--space-4) var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
 }
+/* Footer (links + View profile) pushed to the card bottom so it aligns across
+   a row of equal-height cards. */
+.person-foot { margin-top: auto; }
 
 .person-role {
   font-size: var(--fs-xs);
@@ -3263,6 +3269,37 @@ a.programme-live-tag:focus-visible {
   padding-top: var(--space-4);
 }
 
+/* Auto-matched publication callout on a /papers/<slug> page (#805). A quiet
+   amber caution box: it states the match and warns it may be inaccurate. */
+.pub-match {
+  margin: 0 0 var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--warning);
+  border-radius: var(--radius-md);
+  background: hsl(36 95% 50% / 0.07);
+}
+.pub-match-badge {
+  display: inline-block;
+  margin-bottom: var(--space-3);
+  padding: 0.18em 0.7em;
+  border-radius: var(--radius-full);
+  background: var(--warning);
+  color: hsl(222 30% 8%);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.pub-match-lead {
+  margin: 0 0 var(--space-2);
+}
+.pub-match-note {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
 /* ---------- Speaker index (/speakers) ----------------------------------
    Alphabetical list of everyone who has presented across ESSC editions,
    built from the corpus.js data spine. */
@@ -3536,6 +3573,88 @@ a.programme-live-tag:focus-visible {
 @media (max-width: 600px) {
   .speaker-papers li { flex-direction: column; gap: 0.1rem; }
   .speaker-paper-conf { flex: none; }
+}
+
+/* /papers — the cross-year paper index (#632). The filter chrome reuses
+   the .speaker-filters / .speaker-field / .speaker-clear / .speaker-status
+   panel above; the list below is a one-card-per-paper stack. */
+.paper-index {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+  max-width: 52rem;
+}
+/* The card uses `display: block`, but toggling the hidden attribute on the
+   list item should still hide it. Be explicit (mirrors .speaker-entry). */
+.paper-entry[hidden] {
+  display: none;
+}
+.paper-card {
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border);
+}
+.paper-title {
+  margin: 0;
+  font-size: var(--fs-base);
+  font-weight: 600;
+  line-height: 1.4;
+}
+.paper-authors {
+  margin: 0.2rem 0 0;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+}
+.paper-aff {
+  margin: 0.1rem 0 0;
+  font-size: var(--fs-sm);
+}
+.paper-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem var(--space-3);
+  margin: 0.35rem 0 0;
+  font-size: var(--fs-sm);
+}
+.paper-edition {
+  font-weight: 600;
+  white-space: nowrap;
+}
+.paper-panel {
+  min-width: 0;
+}
+.paper-themes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0.35rem 0 0;
+}
+.paper-theme-chip {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  background: var(--bg-tinted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.05rem 0.5rem;
+  line-height: 1.5;
+}
+.paper-pub-chip {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.45em;
+  padding: 0.05em 0.5em;
+  font-size: 0.65em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  white-space: nowrap;
+  line-height: 1.6;
 }
 
 @media (max-width: 720px) {
@@ -4337,6 +4456,64 @@ body.search-open { overflow: hidden; }
 .stats-row .stat > dd .muted {
   display: block;
   font-size: var(--fs-xs);
+}
+
+/* Conference Navigator promo panel (navigator-promo.njk): a stats-backed
+   entry point used on the homepage and at the head of the /past conferences
+   page. Text on the left, the live corpus counts on the right; stacks on
+   narrow viewports. */
+.navigator-promo {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: var(--space-6);
+  align-items: center;
+  padding: var(--space-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-2, var(--surface));
+}
+.navigator-promo__text h2 {
+  margin: var(--space-2) 0 var(--space-3);
+}
+.navigator-promo__text p {
+  color: var(--text-muted);
+  margin: 0 0 var(--space-5);
+  max-width: 48ch;
+}
+.navigator-promo__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+}
+.navigator-promo__stats .stat {
+  margin: 0;
+}
+.navigator-promo__stats .stat > dt {
+  font-size: clamp(1.75rem, 1.2rem + 1.4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent);
+  margin: 0 0 var(--space-2);
+  letter-spacing: -0.02em;
+}
+.navigator-promo__stats .stat > dd {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: var(--lh-snug);
+  margin: 0;
+}
+.navigator-promo__stats .stat > dd .muted {
+  display: block;
+  font-size: var(--fs-xs);
+}
+@media (max-width: 720px) {
+  .navigator-promo {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    padding: var(--space-5);
+  }
 }
 
 /* "Learn more →" link inside tiles + cards. Underline appears on
@@ -5924,4 +6101,136 @@ a.joint-orgs-card:hover .joint-orgs-name {
 @media print {
   .person-ref { border-bottom: 0; color: inherit; }
   .person-hovercard { display: none !important; }
+}
+
+/* ───────────────────────────────────────────────────────────────────────
+   Board card footer + the "View profile" link (#719 / #756 phase 2).
+   Card faces stay compact, uniform identity with a clamped themes line and a
+   pinned "View profile" link to the member's profile page; the recent-
+   publications styles below are reused on that page. */
+
+/* Cards in a row share one height (uniform boxes), and the footer pins to the
+   bottom (see .person-foot) so View profile / links align across the row. Safe
+   now that deep content lives in a modal: no inline expansion can blow a card
+   out, which is why the grid briefly used align-items: start. */
+.people-grid,
+.people-grid--compact {
+  align-items: stretch;
+}
+
+/* Clamp the research-themes line so a long list doesn't make cards uneven. */
+.person-themes {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* "View profile" trigger, pinned under the card body. */
+.person-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  margin-top: var(--space-3);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+}
+.person-more:hover { text-decoration: underline; }
+.person-more svg { width: 1em; height: 1em; }
+
+/* Recent publications on a member's profile page: title on its own line, the
+   year · journal on a separate muted line beneath, spacing between entries. */
+.profile-pub-heading {
+  margin: var(--space-5) 0 var(--space-2);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+.profile-pub-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.profile-pub { margin: 0; }
+.profile-pub-title {
+  display: block;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--accent);
+  text-decoration: none;
+}
+a.profile-pub-title:hover { text-decoration: underline; }
+.profile-pub-meta {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: var(--fs-sm);
+}
+
+/* ───────────────────────────────────────────────────────────────────────
+   Conference Navigator view toggle (#756). A segmented control that switches
+   the by-person and by-paper panels of the unified archive (/speakers and
+   /papers both render it, defaulting to their own view). */
+.archive-toggle {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  margin-bottom: var(--space-5);
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+.archive-tab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  padding: 0.4em 1.1em;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.archive-tab[aria-selected="true"] {
+  background: var(--bg-elev);
+  color: var(--text);
+}
+.archive-tab:hover { color: var(--text); }
+/* Panel wrapper; the inactive view is toggled with the [hidden] attribute.
+   scroll-margin keeps the A–Z anchor jumps clear of the sticky header. */
+.archive-panel { scroll-margin-top: var(--nav-height, 4rem); }
+
+/* ───────────────────────────────────────────────────────────────────────
+   Per-person profile page (#756 phase 2). The hub a board card links to:
+   identity, bio, themes, recent publications and links on a linkable URL. */
+.profile-page { max-width: 48rem; }
+.profile-back { font-size: var(--fs-sm); margin-bottom: var(--space-5); }
+.profile-back a { color: var(--text-muted); text-decoration: none; }
+.profile-back a:hover { color: var(--text); text-decoration: underline; }
+.profile-head {
+  display: flex;
+  gap: var(--space-5);
+  align-items: flex-start;
+  margin-bottom: var(--space-4);
+}
+.profile-photo {
+  flex: 0 0 auto;
+  width: 7rem;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  background: var(--bg-tinted);
+}
+.profile-head-text { min-width: 0; }
+.profile-name { font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2rem); margin: 0.15rem 0 0.35rem; }
+.profile-bio { line-height: 1.7; margin: var(--space-5) 0; max-width: 42rem; }
+@media (max-width: 30rem) {
+  .profile-head { flex-direction: column; }
 }

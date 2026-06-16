@@ -328,95 +328,7 @@ alternates:
       </figcaption>
     </figure>
 
-    <ul class="conf-tour" aria-label="Éditions de l'ESSC, de la plus récente à la première">
-      <li class="conf-tour-card">
-        <div class="conf-tour-year">2026 <span class="conf-tour-ordinal">9<sup>e</sup></span></div>
-        <div class="conf-tour-city">
-          <img src="/assets/images/flags/se.svg" alt="Suède" title="Suède" width="22" height="22" loading="lazy">
-          Stockholm
-        </div>
-        <div class="conf-tour-host">Université de Stockholm</div>
-        <a class="conf-tour-link" href="{{ '/2026.html' | localizedHref(lang) }}">Programme &rarr;</a>
-      </li>
-      <li class="conf-tour-card">
-        <div class="conf-tour-year">2025 <span class="conf-tour-ordinal">8<sup>e</sup></span></div>
-        <div class="conf-tour-city">
-          <img src="/assets/images/flags/gr.svg" alt="Grèce" title="Grèce" width="22" height="22" loading="lazy">
-          Thessalonique
-        </div>
-        <div class="conf-tour-host">Université de Macédoine</div>
-        <a class="conf-tour-link" href="{{ '/2025.html' | localizedHref(lang) }}">Compte-rendu &rarr;</a>
-      </li>
-      <li class="conf-tour-card">
-        <div class="conf-tour-year">2024 <span class="conf-tour-ordinal">7<sup>e</sup></span></div>
-        <div class="conf-tour-city">
-          <img src="/assets/images/flags/cz.svg" alt="République tchèque" title="République tchèque" width="22" height="22" loading="lazy">
-          Prague
-        </div>
-        <div class="conf-tour-host">Université Charles</div>
-        <a class="conf-tour-link" href="{{ '/2024.html' | localizedHref(lang) }}">Compte-rendu &rarr;</a>
-      </li>
-      <li class="conf-tour-card">
-        <div class="conf-tour-year">2023 <span class="conf-tour-ordinal">6<sup>e</sup></span></div>
-        <div class="conf-tour-city">
-          <img src="/assets/images/flags/es.svg" alt="Espagne" title="Espagne" width="22" height="22" loading="lazy">
-          Barcelone
-        </div>
-        <div class="conf-tour-host">IBEI (Institut Barcelona d'Estudis Internacionals)</div>
-        <a class="conf-tour-link" href="{{ '/2023.html' | localizedHref(lang) }}">Compte-rendu &rarr;</a>
-      </li>
-      <li class="conf-tour-card">
-        <div class="conf-tour-year">2022 <span class="conf-tour-ordinal">5<sup>e</sup></span></div>
-        <div class="conf-tour-city">
-          <img src="/assets/images/flags/de.svg" alt="Allemagne" title="Allemagne" width="22" height="22" loading="lazy">
-          Berlin
-        </div>
-        <div class="conf-tour-host">Hertie School</div>
-        <a class="conf-tour-link" href="{{ '/2022.html' | localizedHref(lang) }}">Compte-rendu &rarr;</a>
-      </li>
-      <li class="conf-tour-card">
-        <div class="conf-tour-year">2021 <span class="conf-tour-ordinal">4<sup>e</sup></span></div>
-        <div class="conf-tour-city">
-          <img src="/assets/images/flags/pt.svg" alt="Portugal" title="Portugal" width="22" height="22" loading="lazy">
-          Lisbonne
-        </div>
-        <div class="conf-tour-host">ISCTE — Institut Universitaire de Lisbonne</div>
-        <a class="conf-tour-link" href="{{ '/2021.html' | localizedHref(lang) }}">Compte-rendu &rarr;</a>
-      </li>
-      <li class="conf-tour-card conf-tour-online">
-        <div class="conf-tour-year">2020 <span class="conf-tour-ordinal">Reportée</span></div>
-        <div class="conf-tour-city">{{ icon("calendar") }} Reportée à 2021</div>
-        <div class="conf-tour-host">Reportée (COVID-19), tenue à Lisbonne en 2021</div>
-        <a class="conf-tour-link" href="{{ '/2020.html' | localizedHref(lang) }}">Détails &rarr;</a>
-      </li>
-      <li class="conf-tour-card">
-        <div class="conf-tour-year">2019 <span class="conf-tour-ordinal">3<sup>e</sup></span></div>
-        <div class="conf-tour-city">
-          <img src="/assets/images/flags/fr.svg" alt="France" title="France" width="22" height="22" loading="lazy">
-          Paris
-        </div>
-        <div class="conf-tour-host">Sciences Po CERI</div>
-        <a class="conf-tour-link" href="{{ '/2019.html' | localizedHref(lang) }}">Compte-rendu &rarr;</a>
-      </li>
-      <li class="conf-tour-card">
-        <div class="conf-tour-year">2018 <span class="conf-tour-ordinal">2<sup>e</sup></span></div>
-        <div class="conf-tour-city">
-          <img src="/assets/images/flags/fr.svg" alt="France" title="France" width="22" height="22" loading="lazy">
-          Paris
-        </div>
-        <div class="conf-tour-host">Université Panthéon-Assas</div>
-        <a class="conf-tour-link" href="{{ '/2018.html' | localizedHref(lang) }}">Compte-rendu &rarr;</a>
-      </li>
-      <li class="conf-tour-card conf-tour-inaugural">
-        <div class="conf-tour-year">2017 <span class="conf-tour-ordinal">Inaugurale</span></div>
-        <div class="conf-tour-city">
-          <img src="/assets/images/flags/fr.svg" alt="France" title="France" width="22" height="22" loading="lazy">
-          Paris
-        </div>
-        <div class="conf-tour-host">Université Panthéon-Assas</div>
-        <a class="conf-tour-link" href="{{ '/2017.html' | localizedHref(lang) }}">Compte-rendu &rarr;</a>
-      </li>
-    </ul>
+    {% include "conf-tour.njk" %}
 
     <p style="margin-top: var(--space-5);">
       <a class="btn btn-secondary" href="/past.fr.html">Archive complète des conférences {{ icon("arrow-right") }}</a>
@@ -523,6 +435,8 @@ alternates:
     </div>
   </div>
 </section>
+
+{% include "initiative-outputs.njk" %}
 
 <section class="section" aria-labelledby="cta-title">
   <div class="container">

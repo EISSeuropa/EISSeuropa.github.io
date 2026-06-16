@@ -1,0 +1,203 @@
+---
+layout: base.njk
+permalink: /2027.de.html
+title: Konferenz 2027 — Stockholm
+description: European Security Studies Conference, 11. - 12. Juni 2027 an der Universität Stockholm. Gemeinsam organisiert von der COST-Aktion NetSec, EISS und der Universität Stockholm.
+metaImage: /assets/images/2027-meta.jpg
+navKey: conferences
+lang: de
+status: beta
+alternates:
+  en: /2027.html
+  fr: /2027.fr.html
+  de: /2027.de.html
+---
+{# ============================================================
+   HIDDEN TEMPLATE — ESSC 2027 (DE) — not built; see .eleventyignore.
+   Copy of the live ESSC 2026 DE page, "2026" bumped to "2027".
+   To activate, follow docs/new-conference.md (add the conferences.js
+   entry, replace the Stockholm-specific copy, regenerate the share
+   card, re-register the i18n-state translation, then remove this file
+   from .eleventyignore). Inert until then: Eleventy never renders it.
+   ============================================================ #}
+{% from "icons.njk" import icon %}
+
+{# schema.org Event structured data for this edition (built from
+   conferences.js). Renders into the body, which is valid for JSON-LD. #}
+{% set year = "2027" %}
+{% include "event-jsonld.njk" %}
+
+<section class="hero" aria-labelledby="hero-title-2027">
+  <div class="hero-bg" aria-hidden="true">
+    <img src="/assets/images/8e43301e-7945-4a0c-aac2-04719ac702a8-1600x900.jpg"
+         srcset="/assets/images/8e43301e-7945-4a0c-aac2-04719ac702a8-480x270.jpg 480w,
+                 /assets/images/8e43301e-7945-4a0c-aac2-04719ac702a8-800x450.jpg 800w,
+                 /assets/images/8e43301e-7945-4a0c-aac2-04719ac702a8-1600x900.jpg 1600w"
+         sizes="100vw"
+         alt=""
+         loading="eager"
+         fetchpriority="high"
+         width="1600" height="900">
+  </div>
+  <div class="container hero-inner">
+    <p class="reveal" style="font-size: var(--fs-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: hsl(0 0% 100% / 0.85); margin-bottom: var(--space-3);">
+      Nächste Jahreskonferenz
+    </p>
+    <h1 id="hero-title-2027" class="reveal reveal-delay-1" style="font-size: clamp(2.25rem, 1.6rem + 3vw, 4rem);">
+      European Security Studies Conference 2027
+    </h1>
+    <p class="hero-tagline reveal reveal-delay-2">
+      Gemeinsam organisiert von der COST-Aktion NetSec, der Europäischen Initiative für
+      Sicherheitsstudien (EISS) und der Universität Stockholm.
+    </p>
+    {%- set _live2027 = conferences.byYear["2027"] -%}
+    {%- set _liveShown = _live2027 and _live2027.livestreamUrl and _live2027.endDate >= conferences.today -%}
+    <div class="hero-actions reveal reveal-delay-3">
+      {%- if _liveShown %}
+      <a class="btn btn-primary hero-watch-live" href="{{ _live2027.livestreamUrl }}" target="_blank" rel="noopener">
+        <span class="hero-watch-live__dot" aria-hidden="true"></span>{{ icon("video") }} Livestream {{ icon("external-link") }}
+      </a>
+      {%- endif %}
+      <a class="btn {{ 'btn-ghost' if _liveShown else 'btn-primary' }}" href="#programme">{{ icon("file-text") }} Programm ansehen</a>
+      <a class="btn btn-ghost" href="#venue">{{ icon("map-pin") }} Veranstaltungsort</a>
+    </div>
+    <p class="reveal reveal-delay-3" style="margin-top: var(--space-6); font-size: var(--fs-sm); color: hsl(0 0% 100% / 0.9);">
+      <strong>11. - 12. Juni 2027</strong>
+      <span aria-hidden="true">&nbsp;·&nbsp;</span>
+      Universität Stockholm, Schweden
+    </p>
+    {% set year = "2027" %}
+    <div class="reveal reveal-delay-3 conf-status-row">
+      {% include "registration-badge.njk" %}
+      {% include "countdown.njk" %}
+    </div>
+    {%- set _reg2027 = conferences.byYear["2027"] -%}
+    {%- if _reg2027 and _reg2027.registrationStatus == "closed" -%}
+    <p class="reveal reveal-delay-3" style="margin-top: var(--space-4); font-size: var(--fs-sm); color: hsl(0 0% 100% / 0.9); max-width: 42rem;">
+      Die Anmeldung ist geschlossen. Sie können trotzdem dabei sein: Das <a href="#programme" style="color:#fff;text-decoration:underline;">Programm</a> unten kennzeichnet die live übertragenen Sitzungen.
+    </p>
+    {%- endif -%}
+  </div>
+</section>
+
+<section class="section" aria-label="Veranstalter der Konferenz" style="padding-block: var(--space-5);">
+  <div class="container">
+    {%- set jointOrgs = [
+      {
+        "name": "Europäische Initiative für Sicherheitsstudien (EISS)",
+        "url": "https://eiss-europa.com/",
+        "logo": "/assets/images/partners/eiss-lockup.svg"
+      },
+      {
+        "name": "NetSec (COST-Aktion CA24154)",
+        "url": "https://netsec-cost.eu/",
+        "logo": "/assets/images/partners/netsec.svg"
+      },
+      {
+        "name": "Universität Stockholm",
+        "url": "https://www.su.se/",
+        "logo": "/assets/images/partners/stockholm-university.svg"
+      }
+    ] -%}
+    {%- set jointOrgsLabel = "Gemeinsam organisiert von" -%}
+    {% include "joint-orgs.njk" %}
+  </div>
+</section>
+
+{% set year = "2027" %}
+{% include "speaking-chairing.njk" %}
+
+{% include "programme-grid.njk" %}
+{% include "programme-pdf.njk" %}
+
+<section class="section" id="venue" aria-labelledby="venue-title">
+  <div class="container">
+    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div class="featured-eyebrow">Gastgeber &amp; Veranstaltungsort</div>
+      <h2 id="venue-title">Universität Stockholm</h2>
+      <p class="lead">
+        Jedes Jahr wird die European Security Studies Conference in einem anderen europäischen Land organisiert.
+        Die Konferenz 2027 findet im Rahmen der COST-Aktion NetSec an der Universität Stockholm statt.
+      </p>
+      {% set year = "2027" %}
+      {% if conferences.byYear[year].mapEmbed %}
+        {% include "map-embed.njk" %}
+      {% endif %}
+    </article>
+  </div>
+</section>
+
+<section class="section-tight" id="travel" aria-labelledby="travel-title">
+  <div class="container">
+    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div class="featured-eyebrow">Anreise und Unterkunft</div>
+      <h2 id="travel-title">Sich in Stockholm bewegen</h2>
+      <p class="lead">
+        Der Veranstaltungsort der Konferenz, der Hauptcampus der Universität Stockholm, liegt entlang
+        der <strong>„roten Linie"</strong> des öffentlichen Nahverkehrs der Stadt.
+      </p>
+      <p>
+        Wir empfehlen, eine Unterkunft in der Stadt in einem der folgenden Stadtviertel zu suchen:
+      </p>
+      <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr)); margin-block: var(--space-5) var(--space-6);">
+        <article class="tile">
+          <div class="tile-icon" aria-hidden="true">{{ icon("map-pin") }}</div>
+          <h3>Södermalm</h3>
+          <p>
+            Metros <strong>Hornstull</strong>, <strong>Zinkensdamm</strong>,
+            <strong>Mariatorget</strong>, <strong>Slussen</strong>. Im Allgemeinen günstiger als andere
+            Stadtviertel, mit mehr Hostel-Optionen.
+          </p>
+        </article>
+        <article class="tile">
+          <div class="tile-icon" aria-hidden="true">{{ icon("map-pin") }}</div>
+          <h3>Gamla stan</h3>
+          <p>Die Altstadt — das historische Zentrum von Stockholm auf einer eigenen kleinen Insel.</p>
+        </article>
+        <article class="tile">
+          <div class="tile-icon" aria-hidden="true">{{ icon("map-pin") }}</div>
+          <h3>T-centralen</h3>
+          <p>Hauptbahnhof Stockholm — der zentrale Verkehrsknotenpunkt.</p>
+        </article>
+        <article class="tile">
+          <div class="tile-icon" aria-hidden="true">{{ icon("map-pin") }}</div>
+          <h3>Östermalmstorg</h3>
+          <p>Ein elegantes zentrales Viertel im Nordosten.</p>
+        </article>
+        <article class="tile">
+          <div class="tile-icon" aria-hidden="true">{{ icon("map-pin") }}</div>
+          <h3>Stadion</h3>
+          <p>In der Nähe des Olympiastadions von Stockholm von 1912 — nur einen Sprung vom Veranstaltungsort entfernt.</p>
+        </article>
+      </div>
+      <p class="muted" style="font-size: var(--fs-sm);">
+        Unterkünfte sind in Södermalm in der Regel günstiger; dort finden Sie auch mehr Hostels.
+      </p>
+    </article>
+  </div>
+</section>
+
+<section class="section-tight" aria-labelledby="netsec-title">
+  <div class="container">
+    <article class="card" style="display: grid; grid-template-columns: 1fr; gap: var(--space-5); padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div>
+        <div class="featured-eyebrow">Förderung und Partner</div>
+        <h2 id="netsec-title" style="margin-bottom: var(--space-3);">Unterstützt durch Horizon Europe</h2>
+        <p class="muted">
+          Die COST-Aktion Networking European Security Knowledge (NetSec) (CA24154) wird vom
+          Horizon-Programm der Europäischen Union unterstützt.
+        </p>
+        <p style="margin-top: var(--space-4);">
+          <a class="btn btn-secondary btn-sm" href="https://netsec-cost.eu/" target="_blank" rel="noopener">
+            netsec-cost.eu besuchen {{ icon("external-link") }}
+          </a>
+        </p>
+      </div>
+      <figure style="margin: 0; max-width: 28rem;">
+        <img src="/assets/images/en-funded20by20the20eu-pantone-1529x321.jpg"
+             alt="Gefördert von der Europäischen Union — Horizon-Programm."
+             loading="lazy">
+      </figure>
+    </article>
+  </div>
+</section>

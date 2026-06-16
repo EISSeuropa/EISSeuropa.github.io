@@ -62,7 +62,7 @@ module.exports = function () {
         country: p.country || "",
         photo: p.photoOverride || p.photo || "",
         initials: p.initials || "",
-        url: "/board.html#" + p.slug,
+        url: "/board/" + p.slug + ".html",
       });
     }
   }

@@ -61,6 +61,11 @@ alternates:
 </section>
 {% endif %}
 
+{# Konferenz-Navigator-Abschnitt: das zitierfähige Archiv aller Vortragenden
+   und Beiträge, über der Liste der einzelnen Ausgaben hervorgehoben. #}
+{% set promoHeadingId = "navigator-section-title" %}
+{% include "navigator-promo.njk" %}
+
 <section class="section-tight" aria-labelledby="archive-title">
   <div class="container">
     <h2 id="archive-title" style="margin-bottom: var(--space-5);">Archiv</h2>

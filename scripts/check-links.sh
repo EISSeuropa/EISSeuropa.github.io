@@ -91,11 +91,6 @@ SKIP_HOSTS = {
     "indico.eiss-europa.com",   # Indico HEADs return 400, works for
                                 # visitors. Real-URL health is
                                 # confirmed manually.
-    "www.linkedin.com",         # LinkedIn 999s every automated
-                                # request regardless of UA. Member
-                                # profile URLs (board cards) work for
-                                # any logged-out visitor with a
-                                # browser.
     "twitter.com",              # X/Twitter 403s unauthenticated bots
                                 # (same class as LinkedIn). The EISS
                                 # profile link in the footer resolves
@@ -105,6 +100,17 @@ SKIP_HOSTS = {
                                 # initiative) returns 403 to anonymous
                                 # HEAD/GET. Article reads fine in a
                                 # browser.
+    "doi.org",                  # DOI resolver for the member-publication
+                                # links on /outputs (and the board cards),
+                                # sourced from ORCID. It 302-redirects to
+                                # the publisher, which then 403s the bot
+                                # (West European Politics, JCMS, Cairn and
+                                # the like, same anti-bot class as the
+                                # academic hosts here). The DOIs are
+                                # machine-sourced and resolve fine in a
+                                # browser. Skipping covers every current
+                                # and future synced DOI without a per-link
+                                # allowlist.
     "www.berlin-airport.de",    # Anti-bot UA filter, returns 403 to
                                 # unrecognised User-Agent strings.
                                 # The transit-info page works for
@@ -149,6 +155,24 @@ SKIP_HOSTS = {
                                 # 503. Same intermittent-5xx class as the
                                 # academic hosts above; skipping stops the
                                 # recurring false-red.
+    "www.cnil.fr",              # France's data-protection regulator (CNIL),
+                                # cited from the privacy notice (`/policy` +
+                                # FR/DE). Returns HTTP 503 to the checker
+                                # under automated load while loading fine for
+                                # visitors — same intermittent-5xx class as
+                                # gess.ethz.ch. Flaked the link-check on
+                                # PR #814; skipping stops the recurring
+                                # false-red on every src-touching PR.
+}
+
+# Domains skipped together with ALL their subdomains. SKIP_HOSTS matches an
+# exact hostname, which misses country subdomains. LinkedIn serves member
+# profiles on www. and on country hosts (tr., fr., de., …, sourced from board
+# submissions); every one returns HTTP 999 to automated requests regardless of
+# UA but opens fine for any logged-out visitor. Skipping the whole domain
+# covers present and future board members without a per-subdomain allowlist.
+SKIP_DOMAINS = {
+    "linkedin.com",
 }
 
 internal_links = {}  # (file, target) for de-dupe display
@@ -236,7 +260,8 @@ def _make_ssl_ctx(verify=True):
 
 def check_external(url):
     parsed = urllib.parse.urlparse(url)
-    if parsed.hostname in SKIP_HOSTS:
+    host = parsed.hostname or ""
+    if host in SKIP_HOSTS or any(host == d or host.endswith("." + d) for d in SKIP_DOMAINS):
         return (url, "skip")
     method = "GET" if parsed.hostname in GET_HOSTS else "HEAD"
     headers = {

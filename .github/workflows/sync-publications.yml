@@ -1,0 +1,151 @@
+# Monthly publication-match refresh.
+#
+# What this does
+#   - scripts/match-publications.mjs --all proposes, for each ESSC paper
+#     without a confirmed published version, the later-published article
+#     (with a DOI). Phase 1 anchors on members' ORCID records; phase 2 on
+#     the paper's authors via OpenAlex. Both are fuzzy title matches over
+#     a publication-lag window. See docs/publication-matching.md.
+#   - scripts/confirm-publication.mjs --auto-high then records the
+#     HIGH-confidence matches (title ≥ 0.80, near-verbatim) into
+#     src/_data/paperLinks.json automatically, and drops them from the queue.
+#   - Opens a PR on `publications-sync/auto` and auto-merges it, so the
+#     auto-confirmed matches go live and the queue is refreshed.
+#
+# Two tiers (the maintainer's chosen policy)
+#   - HIGH band → auto-confirmed and published. These are near-identical
+#     titles by the resolved author; each surfaces with the
+#     "Early-access preview" badge that warns it may be inaccurate, and the
+#     PR lists them for information (reject any by editing paperLinks.json).
+#   - REVIEW band (0.50–0.79) → left in data/publication-candidates.json for
+#     a human to accept (`confirm-publication.mjs <slug>`) or reject
+#     (`--reject <slug>`). Auto-merging the PR does NOT publish these — they
+#     are just queue data until confirmed.
+#
+# Monthly (not weekly): published versions appear slowly, and the full
+# OpenAlex sweep is a few hundred polite API calls. The matcher skips
+# papers that already have a confirmed link or a recorded reject, so both
+# the published set grows and the queue shrinks as matches are reviewed.
+
+name: Sync publication matches
+
+on:
+  schedule:
+    - cron: '0 7 1 * *' # 07:00 UTC on the 1st of each month
+  workflow_dispatch:
+  push:
+    branches: [master]
+    # Re-run when the matcher itself changes. Deliberately NOT triggered
+    # by src/_data/* (the corpus changes often); the cron + manual
+    # dispatch cover routine refreshes.
+    paths:
+      - 'scripts/match-publications.mjs'
+      - '.github/workflows/sync-publications.yml'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: publications-sync
+  cancel-in-progress: true
+
+jobs:
+  match:
+    name: Refresh publication-match candidates for review
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+
+      - name: Set up Node
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Match, then auto-confirm the high-confidence tier
+        run: |
+          set -o pipefail
+          node scripts/match-publications.mjs --all | tee /tmp/match.txt
+          node scripts/confirm-publication.mjs --auto-high | tee /tmp/auto.txt
+          node scripts/publication-review-md.mjs > /tmp/review.md
+          {
+            echo "Monthly publication-match sync. **Two parts:**"
+            echo ""
+            echo "## ✅ Auto-confirmed — now live"
+            echo ""
+            echo "High-confidence matches (title ≥ 0.80, near-verbatim) were recorded"
+            echo "automatically in \`src/_data/paperLinks.json\` and now show the"
+            echo "published-version link on their \`/papers/<slug>\` page, each with the"
+            echo "\"Early-access preview\" badge. The exact set is the \`paperLinks.json\`"
+            echo "diff in this PR — **to undo one, delete its entry.**"
+            echo ""
+            grep -iE 'auto-confirmed' /tmp/auto.txt || echo "_(none this run)_"
+            echo ""
+            echo "## 👀 To review"
+            echo ""
+            cat /tmp/review.md
+            echo ""
+            echo "<details><summary>Raw matcher log</summary>"
+            echo ""
+            echo '```'
+            cat /tmp/match.txt
+            echo '```'
+            echo "</details>"
+            echo ""
+            echo "Auto-merging this PR publishes the auto-confirmed matches and refreshes"
+            echo "the queue. The review band above is **not** published by the merge — it"
+            echo "stays queued until you confirm it. See docs/publication-matching.md."
+            echo ""
+            echo "---"
+            echo "_Workflow: **Sync publication matches**, run_id \`${{ github.run_id }}\`, trigger \`${{ github.event_name }}\`._"
+          } > /tmp/pub-sync-pr-body.md
+
+      - name: Open or update the PR if anything changed
+        id: create-pr
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: publications-sync/auto
+          base: master
+          delete-branch: true
+          title: 'data(publications): auto-confirm high-confidence matches + refresh queue'
+          commit-message: |
+            data(publications): auto-confirm high-confidence matches + refresh queue
+
+            Auto-generated by match-publications.mjs --all + confirm-publication.mjs
+            --auto-high. High-band matches recorded in paperLinks.json; review band
+            left in the candidate queue. See the PR body.
+          body-path: /tmp/pub-sync-pr-body.md
+          labels: |
+            automated
+            data-sync
+
+      # Auto-merge: publishes the auto-confirmed (high-confidence) matches and
+      # refreshes the queue. CodeQL + build + build-sanity + link-check still
+      # gate it. The review band is plain queue data, not published by this.
+      - name: Arm auto-merge on the PR
+        if: steps.create-pr.outputs.pull-request-number
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pr="${{ steps.create-pr.outputs.pull-request-number }}"
+          repo="${{ github.repository }}"
+          for attempt in 1 2 3 4 5; do
+            if gh pr merge "$pr" --squash --auto --repo "$repo"; then
+              echo "Auto-merge armed (attempt $attempt)."; exit 0
+            fi
+            state=$(gh pr view "$pr" --repo "$repo" --json state,autoMergeRequest \
+              -q '.state + " auto=" + ((.autoMergeRequest != null) | tostring)' || true)
+            echo "Attempt $attempt failed; PR state: $state"
+            case "$state" in
+              MERGED*)    echo "Already merged."; exit 0 ;;
+              *auto=true) echo "Auto-merge already enabled."; exit 0 ;;
+            esac
+            sleep 15
+          done
+          echo "::error::Could not arm auto-merge after 5 attempts."; exit 1

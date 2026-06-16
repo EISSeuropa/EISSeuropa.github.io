@@ -8311,6 +8311,1385 @@ module.exports = {
       "'Zarras Konstantinos' printed surname-first as in source."
     ]
   },
+  "2026":   {
+    "slug": "2026",
+    "year": 2026,
+    "edition": "9th Annual Conference",
+    "venue": "Stockholm University (D House, Lecture Hall 8), Stockholm, Sweden",
+    "city": "Stockholm",
+    "country": "Sweden",
+    "dates": "11 - 12 June 2026",
+    "startDate": "2026-06-11",
+    "endDate": "2026-06-12",
+    "days": [
+      {
+        "date": "2026-06-11",
+        "label": "Day 1 — Thursday 11 June",
+        "rows": [
+          {
+            "startTime": "09:00",
+            "endTime": "09:30",
+            "items": [
+              {
+                "kind": "break",
+                "title": "Registration and Coffee",
+                "room": "D House, Floor 3"
+              }
+            ]
+          },
+          {
+            "startTime": "09:35",
+            "endTime": "09:45",
+            "items": [
+              {
+                "kind": "session",
+                "subtype": "plenary",
+                "title": "Introductory Remarks",
+                "room": "D House, Lecture Hall 8",
+                "conveners": [
+                  {
+                    "name": "Dr Hugo Meijer",
+                    "affiliation": "Sciences Po CERI"
+                  },
+                  {
+                    "name": "Sanne Verschuren",
+                    "affiliation": "Boston University"
+                  },
+                  {
+                    "name": "Julia Carver",
+                    "affiliation": "Leiden University"
+                  },
+                  {
+                    "name": "Magnus Petersson",
+                    "affiliation": "Stockholm University"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "startTime": "09:45",
+            "endTime": "11:00",
+            "items": [
+              {
+                "kind": "session",
+                "subtype": "roundtable",
+                "title": "Taking Stock of European Security in a Rapidly Changing Geopolitical Environment",
+                "room": "D House, Lecture Hall 8",
+                "conveners": [
+                  {
+                    "name": "Sanne Verschuren",
+                    "affiliation": "Boston University"
+                  },
+                  {
+                    "name": "Eliza Gheorghe",
+                    "affiliation": "Bilkent University"
+                  },
+                  {
+                    "name": "Dr John Helferich",
+                    "affiliation": "University of Oxford"
+                  },
+                  {
+                    "name": "Linde Desmaele",
+                    "affiliation": "Leiden University"
+                  },
+                  {
+                    "name": "Antulio Echevarria",
+                    "affiliation": "Swedish Defence University"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "startTime": "11:00",
+            "endTime": "11:15",
+            "items": [
+              {
+                "kind": "break",
+                "title": "Break",
+                "room": "D House, Floor 3"
+              }
+            ]
+          },
+          {
+            "startTime": "11:15",
+            "endTime": "12:30",
+            "parallel": true,
+            "items": [
+              {
+                "kind": "session",
+                "title": "Virtually Transformed? Digital Infrastructures, Competition, and Governance",
+                "room": "D House, Lecture Hall 8",
+                "conveners": [
+                  {
+                    "name": "Julia Carver",
+                    "affiliation": "Leiden University"
+                  }
+                ],
+                "contributions": [
+                  {
+                    "title": "Knowing cybersecurity: The epistemic infrastructural power of big tech",
+                    "authors": [
+                      {
+                        "name": "Tobias Liebetrau",
+                        "affiliation": "University of Copenhagen",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Governing cybersecurity and the politics of state control in the digital age",
+                    "authors": [
+                      {
+                        "name": "Moritz Weiss",
+                        "affiliation": "LMU Munich",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Ms Yagnyashri Kodaru",
+                        "affiliation": "Ludwig Maximilian University of Munich",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Cyber risk logics and their implications for cybersecurity",
+                    "authors": [
+                      {
+                        "name": "Sarah Backman",
+                        "affiliation": "Swedish Defence University",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Dr Tim Stevens"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Do Parliaments Dream of Cyber Power? Parliamentary Scrutiny in the Strategic Domain of Cyberspace",
+                    "authors": [
+                      {
+                        "name": "Mattia Sguazzini",
+                        "affiliation": "University of Genova, Italy",
+                        "isSpeaker": true
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "session",
+                "title": "War and Peace Abroad: Security Assistance, Multilateral Operations, and Peace‑Building",
+                "room": "D House, Lecture Hall 9",
+                "conveners": [
+                  {
+                    "name": "Kersti Larsdotter",
+                    "affiliation": "Swedish Defense University"
+                  }
+                ],
+                "contributions": [
+                  {
+                    "title": "Mapping Plural Visions of Peace: The Peace Cube as an Analytical Framework",
+                    "authors": [
+                      {
+                        "name": "Yijun Xu",
+                        "affiliation": "Free University of Berlin",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Dr Gijsbert Van Iterson Scholten",
+                        "affiliation": "University of Amsterdam"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Interpreting Counterterrorism in African Conflict Management",
+                    "authors": [
+                      {
+                        "name": "Saurav Narain",
+                        "affiliation": "Leiden University",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Silvia D'Amato",
+                        "affiliation": "James Madison University",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Socialized to Cooperate? Foreign Military Training and Coordination in UN Peacekeeping Operations",
+                    "authors": [
+                      {
+                        "name": "Ilker Kalin",
+                        "affiliation": "Stockholm University",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Prof. Carla Martinez Machain",
+                        "affiliation": "University at Buffalo, SUNY"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "From rebels’ to State’s justice: post-conflict justice choices in 2026 Syria",
+                    "authors": [
+                      {
+                        "name": "Marie Robin",
+                        "affiliation": "Leiden University",
+                        "isSpeaker": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "startTime": "12:30",
+            "endTime": "13:25",
+            "items": [
+              {
+                "kind": "break",
+                "title": "Lunch",
+                "room": "D House, Floor 3"
+              }
+            ]
+          },
+          {
+            "startTime": "13:30",
+            "endTime": "14:30",
+            "items": [
+              {
+                "kind": "session",
+                "subtype": "plenary",
+                "title": "Keynote by the Director of Military Intelligence and Security, Swedish Armed Forces",
+                "room": "D House, Lecture Hall 8",
+                "conveners": [
+                  {
+                    "name": "Lieutenant General Thomas Nilsson",
+                    "affiliation": "Swedish Air Force"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "startTime": "14:35",
+            "endTime": "15:50",
+            "parallel": true,
+            "items": [
+              {
+                "kind": "session",
+                "title": "Nuclear Weapons in a Changing World: From Deterrence to Arms Control",
+                "room": "D House, Lecture Hall 8",
+                "conveners": [
+                  {
+                    "name": "Sanne Verschuren",
+                    "affiliation": "Boston University"
+                  }
+                ],
+                "contributions": [
+                  {
+                    "title": "Upload Pending? Tradeoffs, Uncertainty, and Damage-Limitation in a Multipolar Age",
+                    "authors": [
+                      {
+                        "name": "Tyler Bowen",
+                        "affiliation": "United States Naval War College",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "From Precision to Existential Risk: Hypersonic Weapons and the Erosion of the Conventional–Nuclear Divide",
+                    "authors": [
+                      {
+                        "name": "Mr Tahir Azad",
+                        "affiliation": "Department of Politics & IR, University of Reading, UK",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Legitimating the Bomb: US Efforts to Manage Public Information about Nuclear Weapons after World War II",
+                    "authors": [
+                      {
+                        "name": "Jennifer Erickson",
+                        "isSpeaker": true
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "session",
+                "title": "Gender, Politics, and Security",
+                "room": "D House, Lecture Hall 9",
+                "conveners": [
+                  {
+                    "name": "Chiara Ruffa",
+                    "affiliation": "Sciences Po"
+                  }
+                ],
+                "contributions": [
+                  {
+                    "title": "The Gender politics of LIO contestation: A research Agenda",
+                    "authors": [
+                      {
+                        "name": "Elisabetta Ginevra Iida",
+                        "affiliation": "University of Padova",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "No Woman's Land: Securitisation of Female Forced Migration in Afghanistan",
+                    "authors": [
+                      {
+                        "name": "Jéssica da Costa Pereira",
+                        "affiliation": "NOVA University of Lisbon - School of Social Sciences and Humanities",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Artistic Resilience-Building in Lithuania’s Local Security Policy",
+                    "authors": [
+                      {
+                        "name": "Anna Luisa Reinhardt",
+                        "affiliation": "Sciences Po, Northern German Lutheran Church, Lithuanian Diakonija",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Gendering Non-Traditional Security: A Comparative Analysis of Sexual Violence, Reconciliation and Post-War Development in Bosnia-Herzegovina and Colombia",
+                    "authors": [
+                      {
+                        "name": "Teodora Stoicescu",
+                        "affiliation": "National University of Political Studies and Public Administration",
+                        "isSpeaker": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "startTime": "15:50",
+            "endTime": "16:00",
+            "items": [
+              {
+                "kind": "break",
+                "title": "Coffee break",
+                "room": "D House, Floor 3"
+              }
+            ]
+          },
+          {
+            "startTime": "16:05",
+            "endTime": "17:20",
+            "parallel": true,
+            "items": [
+              {
+                "kind": "session",
+                "title": "The Conduct of Contemporary and Future War",
+                "room": "D House, Lecture Hall 8",
+                "conveners": [
+                  {
+                    "name": "Giles Moon",
+                    "affiliation": "Oxford University"
+                  }
+                ],
+                "contributions": [
+                  {
+                    "title": "Learning from Ukraine: The West must be prepared for positional warfare",
+                    "authors": [
+                      {
+                        "name": "Baptiste Alloui-Cros",
+                        "affiliation": "Oxford University",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Giles Moon",
+                        "affiliation": "Oxford University",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Conceptual Inquiry into Military Deep Operations: A Framework for Analysis",
+                    "authors": [
+                      {
+                        "name": "Mr Martijn Rouvroije",
+                        "affiliation": "Netherlands Defence Academy - Faculty of Military Sciences",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Martijn Rouvroije",
+                        "affiliation": "Netherlands Faculty of Military Sciences",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Working in the Margins: Can Small State Special Operations contribute to Deterrence?",
+                    "authors": [
+                      {
+                        "name": "Troels Burchall Henningsen",
+                        "affiliation": "Royal Danish Defence University",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Domestic Politics and Military Aid to Ukraine: Explaining Disclosure Policies in France and Germany",
+                    "authors": [
+                      {
+                        "name": "Marius Ghincea",
+                        "affiliation": "European University Institute",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Wolfgang Minatti",
+                        "affiliation": "European University Institute"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "session",
+                "title": "The Politics of Deterrence in Europe",
+                "room": "D House, Lecture Hall 9",
+                "conveners": [
+                  {
+                    "name": "Thomas Fraise",
+                    "affiliation": "University of Copenhagen/Sciences Po"
+                  }
+                ],
+                "contributions": [
+                  {
+                    "title": "Reconceptualizing nuclear deterrence and national identity: the cases of Finland and Sweden",
+                    "authors": [
+                      {
+                        "name": "Emma Rosengren",
+                        "affiliation": "Stockholm University",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Ritual deterrence, magic strategies, and nuclear war in Europe",
+                    "authors": [
+                      {
+                        "name": "Prof. Matthew Evangelista",
+                        "affiliation": "Cornell University",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Nuclear Futures, Utopias, and the Case for a Renewed ‘Strict Sufficiency’",
+                    "authors": [
+                      {
+                        "name": "Benoît Pelopidas",
+                        "affiliation": "Sciences Po",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Plus ca Change: Continuity in the French Nuclear Approach.",
+                    "authors": [
+                      {
+                        "name": "July Decarpentrie",
+                        "affiliation": "Swedish Defence University",
+                        "isSpeaker": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "startTime": "17:30",
+            "endTime": "18:30",
+            "items": [
+              {
+                "kind": "break",
+                "title": "Walking Tour of Stockholm"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "date": "2026-06-12",
+        "label": "Day 2 — Friday 12 June",
+        "rows": [
+          {
+            "startTime": "08:45",
+            "endTime": "09:00",
+            "items": [
+              {
+                "kind": "break",
+                "title": "Sign-in for Day 2 & Coffee Break",
+                "room": "D House, Floor 3"
+              }
+            ]
+          },
+          {
+            "startTime": "09:00",
+            "endTime": "10:15",
+            "parallel": true,
+            "items": [
+              {
+                "kind": "session",
+                "title": "Navigating the Job Market",
+                "room": "D House, Lecture Hall 8",
+                "conveners": [
+                  {
+                    "name": "Julia Carver",
+                    "affiliation": "Leiden University"
+                  },
+                  {
+                    "name": "Chiara Libiseller",
+                    "affiliation": "King's College London"
+                  },
+                  {
+                    "name": "Jennifer Erickson",
+                    "affiliation": "Boston College"
+                  },
+                  {
+                    "name": "Magnus Petersson",
+                    "affiliation": "Stockholm University"
+                  },
+                  {
+                    "name": "Chiara Ruffa",
+                    "affiliation": "Sciences Po"
+                  }
+                ]
+              },
+              {
+                "kind": "session",
+                "title": "Geopolitical Power Europe: A Reality Check in Western Balkans and Eastern Neighbourhood",
+                "room": "D House, Lecture Hall 9",
+                "conveners": [
+                  {
+                    "name": "Filip Ejdus",
+                    "affiliation": "University of Belgrade"
+                  }
+                ],
+                "contributions": [
+                  {
+                    "title": "EU’s Ontological Security and Geopolitical Enlargement",
+                    "authors": [
+                      {
+                        "name": "Nikolaos Tzifakis",
+                        "affiliation": "University of the Peloponnese",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Geopoliticisation of EU Enlargement in the Western Balkans and Eastern Partnership: A Role-Theoretical Perspective",
+                    "authors": [
+                      {
+                        "name": "Marko Kovačević",
+                        "affiliation": "University of Belgrade",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Milan Varda",
+                        "affiliation": "University of Belgrade",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Dr Tijana Rečević Krstić",
+                        "affiliation": "University of Belgrade",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Filling the EU’s Identity Void from Without and Within – Forging a Geopolitics of Values",
+                    "authors": [
+                      {
+                        "name": "Kurt Bassuener",
+                        "affiliation": "Democratization Policy Council, Sarajevo",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "From Normalisation to Strategic Stabilisation: Geopolitisation of the Pristina–Belgrade Dialogue within EU Enlargement",
+                    "authors": [
+                      {
+                        "name": "Filip Ejdus",
+                        "affiliation": "University of Belgrade",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Alexandra Prodromidou",
+                        "affiliation": "York Europe Campus, Business School"
+                      },
+                      {
+                        "name": "Faye Ververidou",
+                        "affiliation": "York Europe Campus, Business School"
+                      },
+                      {
+                        "name": "Sonja Stojanovic Gajic",
+                        "affiliation": "University of Rijeka / University of Belgrade"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "startTime": "10:20",
+            "endTime": "11:35",
+            "parallel": true,
+            "items": [
+              {
+                "kind": "session",
+                "title": "Cyber and Digital Sovereignty",
+                "room": "D House, Lecture Hall 8",
+                "conveners": [
+                  {
+                    "name": "Moritz Weiss",
+                    "affiliation": "LMU Munich"
+                  },
+                  {
+                    "name": "Eugenio Sánchez",
+                    "affiliation": "Sciences Po Paris"
+                  }
+                ],
+                "contributions": [
+                  {
+                    "title": "AI-Driven Cloud Monitoring and Cyber Situational Awareness in European Digital Infrastructures",
+                    "authors": [
+                      {
+                        "name": "Prof. Daniela Mechkaroska",
+                        "affiliation": "University of Information Science and Technology “St. Paul the Apostle”, Ohrid, N.Macedonia",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Prof. Ervin Domazet",
+                        "affiliation": "International Balkan University, Faculty of Engineering"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Quantum-Resilient SATIN and European Digital Sovereignty",
+                    "authors": [
+                      {
+                        "name": "Dr Gürkan Gür",
+                        "affiliation": "Zurich University of Applied Sciences ZHAW",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Classical geopolitics in cyberspace: Explaining cyber state behaviour with power position",
+                    "authors": [
+                      {
+                        "name": "Lorenz Sommer",
+                        "affiliation": "Geschwister-Scholl-Institute for Political Science, LMU Munich",
+                        "isSpeaker": true
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "session",
+                "title": "Stepping into the Future: Military Technology, Innovation Practices, and Contemporary Challenges",
+                "room": "D House, Lecture Hall 9",
+                "conveners": [
+                  {
+                    "name": "Jennifer Erickson",
+                    "affiliation": "Boston College"
+                  }
+                ],
+                "contributions": [
+                  {
+                    "title": "Selling the Future of War: Discursive Power and Military Innovation",
+                    "authors": [
+                      {
+                        "name": "Nicolas Krieger",
+                        "affiliation": "Technical University of Munich",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Disclosure and Duplicity: How Technology Influences International Competition",
+                    "authors": [
+                      {
+                        "name": "Tristan Volpe",
+                        "affiliation": "IFSH University of Hamburg / Naval Postgraduate School",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Prof. Jane Vaynman",
+                        "affiliation": "SAIS Johns Hopkins"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "The Self-Reliance Dilemma in Conventional Weapons: When does India Innovate Instead of Import?",
+                    "authors": [
+                      {
+                        "name": "Ms Yagnyashri Kodaru",
+                        "affiliation": "Ludwig Maximilian University of Munich",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Sending the Wrong Signals: When Armaments Worry Allies",
+                    "authors": [
+                      {
+                        "name": "Tim Thies",
+                        "affiliation": "Institute for Peace Research and Security Policy at the University of Hamburg",
+                        "isSpeaker": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "startTime": "11:40",
+            "endTime": "12:55",
+            "parallel": true,
+            "items": [
+              {
+                "kind": "session",
+                "title": "Conceptualizing Military Strategy: From Planning to War",
+                "room": "D House, Lecture Hall 8",
+                "conveners": [
+                  {
+                    "name": "Chiara Libiseller",
+                    "affiliation": "King's College London"
+                  }
+                ],
+                "contributions": [
+                  {
+                    "title": "Fortifying the Eastern Flank:  Leveraging Historical Lessons to Create Effective Defence Systems",
+                    "authors": [
+                      {
+                        "name": "Alexander Lanoszka",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Dr Michael Hunzeker",
+                        "affiliation": "George Mason University",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Anticipated Failure: Why States Go to War Un(der)prepared",
+                    "authors": [
+                      {
+                        "name": "Mariya Grinberg",
+                        "affiliation": "MIT",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Revisiting Multi-Domain Operations: A Historical Reflection on the Respective Roles of Combination and Prioritisation in the Conduct of War",
+                    "authors": [
+                      {
+                        "name": "Dr Samuel Zilincik",
+                        "affiliation": "Royal Danish Defence College",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Dr James Horncastle",
+                        "affiliation": "Simon Fraser University"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Influence as Strategic Infrastructure: China, NATO, and Competition Below the Threshold of War",
+                    "authors": [
+                      {
+                        "name": "Sara Russo",
+                        "affiliation": "Centre for High Defence Studies (CASD)",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Mrs Giulia Biselli",
+                        "affiliation": "Centre for High Defence Studies (CASD)"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "session",
+                "title": "Politics at the Intersection of Climate, Industrialization and Security",
+                "room": "D House, Lecture Hall 9",
+                "conveners": [
+                  {
+                    "name": "Nicolas Blarel",
+                    "affiliation": "Leiden University"
+                  }
+                ],
+                "contributions": [
+                  {
+                    "title": "Water In-Security and Climate Migration in Iraq  Analyzing Socio-Economic Threats",
+                    "authors": [
+                      {
+                        "name": "Saman Omar",
+                        "affiliation": "College of Humanity, University of Duhok, Kurdistan Region of Iraq",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Ms Dunia Baban",
+                        "affiliation": "Stockholm University"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Living with the nuclear:  Spatio-temporal entanglements, nuclear cultures, and the afterlives of uranium mining",
+                    "authors": [
+                      {
+                        "name": "Elisabeth Saar",
+                        "affiliation": "Hamburg University",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Fragile Control: How De Facto States Degrade Nuclear Security in the Donbas",
+                    "authors": [
+                      {
+                        "name": "Eliza Gheorghe",
+                        "affiliation": "Bilkent University",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Ms Isil Idrisoglu",
+                        "affiliation": "University of Pittsburgh"
+                      },
+                      {
+                        "name": "Mrs Yanina Shved-Dogrul",
+                        "affiliation": "Bogazici Universitesi"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "startTime": "12:55",
+            "endTime": "13:45",
+            "items": [
+              {
+                "kind": "break",
+                "title": "Lunch",
+                "room": "D House, Floor 3"
+              }
+            ]
+          },
+          {
+            "startTime": "13:45",
+            "endTime": "15:00",
+            "parallel": true,
+            "items": [
+              {
+                "kind": "session",
+                "title": "Military Transformation: Military Innovation and Strategic Change in the Transatlantic Context",
+                "room": "D House, Lecture Hall 8",
+                "conveners": [
+                  {
+                    "name": "Magnus Petersson",
+                    "affiliation": "Stockholm University"
+                  }
+                ],
+                "contributions": [
+                  {
+                    "title": "From Platforms to Networks: The Political Hurdles of Transitioning to Data-Centric Warfare",
+                    "authors": [
+                      {
+                        "name": "Mr Dumitru-Catalin Vasile",
+                        "affiliation": "National School of Political and Administrative Studies, Bucharest, Romania",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "NATO as an Innovation Hub? How Emerging and Disruptive Technologies Are Reshaping Allied Innovation",
+                    "authors": [
+                      {
+                        "name": "Vasiliki Plessia Aravani",
+                        "affiliation": "Diplomatische Academie Wien, University of Vienna",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "From Rogue States to Russia: How Threat Perceptions Drove Congressional Support for Low-Yield Nuclear Weapons, 1993–2020",
+                    "authors": [
+                      {
+                        "name": "Frank Kuhn",
+                        "affiliation": "Peace Research Institute Frankfurt (PRIF)",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Vectorial Analysis of Hybrid Warfare: Directionality, Interaction, and Systemic Effects",
+                    "authors": [
+                      {
+                        "name": "Fabio Duarte",
+                        "affiliation": "Czech Technical University / Charles University",
+                        "isSpeaker": true
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "session",
+                "title": "War & Strategy: Strategic Deterrence under Duress",
+                "room": "D House, Lecture Hall 9",
+                "conveners": [
+                  {
+                    "name": "Jan Angstrom",
+                    "affiliation": "Swedish Defence University"
+                  }
+                ],
+                "contributions": [
+                  {
+                    "title": "Explaining Heterogeneity in Public Support for Collective Defense in NATO: Evidence from a Cross - National Survey of Allied Countries",
+                    "authors": [
+                      {
+                        "name": "Isabelle Haynes",
+                        "affiliation": "Charles University",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Dr Ondrej Rosendorf",
+                        "affiliation": "Charles University"
+                      },
+                      {
+                        "name": "Michal Smetana",
+                        "affiliation": "Peace Research Center Prague / Charles University"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "The Confidence Trap: Leader-Advisor Deliberations and the Making of (In)Credible Threats",
+                    "authors": [
+                      {
+                        "name": "Wendy He",
+                        "affiliation": "S. Rajaratnam School of International Studies (RSIS), Nanyang Technological University (NTU)",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Cooperation under Stress: Organisational Compatibility and NATO–EU Cooperation in a Fractured Transatlantic Order",
+                    "authors": [
+                      {
+                        "name": "Mark Rhinard",
+                        "affiliation": "Stockholm University",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Dr Niklas Bremberg",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Anna Michalski"
+                      },
+                      {
+                        "name": "August Danielson"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Small states in the current international war agenda: Between shelter seeking and souverenism",
+                    "authors": [
+                      {
+                        "name": "Mitko Arnaudov",
+                        "affiliation": "Institute of International Politics and Economics",
+                        "isSpeaker": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "startTime": "15:05",
+            "endTime": "16:20",
+            "parallel": true,
+            "items": [
+              {
+                "kind": "session",
+                "title": "Beyond the State: Securitization, Governance, and Private Actors",
+                "room": "D House, Lecture Hall 8",
+                "conveners": [
+                  {
+                    "name": "Mark Rhinard",
+                    "affiliation": "Stockholm University"
+                  }
+                ],
+                "contributions": [
+                  {
+                    "title": "Beyond the State: Voluntary Civilian Pro-Defence Organisations and Security Governance in Georgia",
+                    "authors": [
+                      {
+                        "name": "Rusudan Zabakhidze",
+                        "affiliation": "Swedish Defence University",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "From Privateers to Private Maritime Security: Irregular Maritime Actors and the Long History of Delegated Security at Sea",
+                    "authors": [
+                      {
+                        "name": "Pieter Zhao",
+                        "affiliation": "Erasmus University Rotterdam",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Criminalising Solidarity: Border Securitisation, Non-State Actors, and Vernacular Humanitarianism in Europe",
+                    "authors": [
+                      {
+                        "name": "Mia Abdić",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "The Strategic Logic of Violence During Negotiations",
+                    "authors": [
+                      {
+                        "name": "Johannes Lucht",
+                        "affiliation": "ETH Zurich",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Prof. Allard Duursma",
+                        "affiliation": "ETH Zurich"
+                      },
+                      {
+                        "name": "Evan Perkoski",
+                        "affiliation": "University of Connecticut"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "session",
+                "title": "Extended Nuclear Deterrence through European Eyes",
+                "room": "D House, Lecture Hall 9",
+                "conveners": [
+                  {
+                    "name": "Ludovica Castelli",
+                    "affiliation": "Istituto Affari Internazionali"
+                  }
+                ],
+                "contributions": [
+                  {
+                    "title": "What are tactical nuclear weapons for? The multiple logics of NATO’s theater nuclear posture",
+                    "authors": [
+                      {
+                        "name": "Linde Desmaele",
+                        "affiliation": "Leiden University",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "'Europe is Not a Country': Nuclear Patronage and Eurodeterrence Concerns in the Frontline States",
+                    "authors": [
+                      {
+                        "name": "Christopher David LaRoche",
+                        "affiliation": "Carnegie Endowment for International Peace, Central European University",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Patterns of Foreign Nuclear Deployment: Understanding Host State Refusal in NATO",
+                    "authors": [
+                      {
+                        "name": "Jacklyn Majnemer",
+                        "affiliation": "LSE",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Conceptualizing Nuclear Umbrellas",
+                    "authors": [
+                      {
+                        "name": "Alexander Sorg",
+                        "affiliation": "Hertie School",
+                        "isSpeaker": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "startTime": "16:20",
+            "endTime": "16:40",
+            "items": [
+              {
+                "kind": "break",
+                "title": "Coffee break",
+                "room": "D House, Floor 3"
+              }
+            ]
+          },
+          {
+            "startTime": "16:40",
+            "endTime": "17:55",
+            "parallel": true,
+            "items": [
+              {
+                "kind": "session",
+                "title": "Disruptive Machines: AI, Information Operations, and Cyber Security",
+                "room": "D House, Lecture Hall 8",
+                "conveners": [
+                  {
+                    "name": "Dr Arthur Laudrain",
+                    "affiliation": "ETH Zurich - CSS"
+                  }
+                ],
+                "contributions": [
+                  {
+                    "title": "Cybercrime & AI: Resilience-by-Design in the Information Age: Tabletop Evidence on AI-Enabled Cybercrime, Coordination, and Public Trust",
+                    "authors": [
+                      {
+                        "name": "Gil Baram",
+                        "affiliation": "UC Berkeley and Bar Ilan University",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Financial (In)Security, TikTok, and the Far-Right Pipeline",
+                    "authors": [
+                      {
+                        "name": "Clara Jammot",
+                        "affiliation": "King's College London",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Telegram in Russia’s Information Strategy: Evidence from Serbia",
+                    "authors": [
+                      {
+                        "name": "Anna Seliverstova",
+                        "affiliation": "Linnaeus University",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Narrative Amplification, Plot Structures, and Emotions on VKontakte: Tsargrad’s Popular Geopolitics in the Russo-Ukrainian War",
+                    "authors": [
+                      {
+                        "name": "Alexandra Brankova",
+                        "affiliation": "Swedish Defence University",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Ms Dalia Pablo Ortiz",
+                        "affiliation": "Uppsala University"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "session",
+                "title": "Regional Security in the Balkans",
+                "room": "D House, Lecture Hall 9",
+                "conveners": [
+                  {
+                    "name": "Filip Ejdus",
+                    "affiliation": "University of Belgrade"
+                  }
+                ],
+                "contributions": [
+                  {
+                    "title": "Western Balkan Criminal Groups and the Transformation of Regional Security",
+                    "authors": [
+                      {
+                        "name": "Dr Kire Babanoski",
+                        "affiliation": "Faculty of Security - Skopje, University \"St. Kliment Ohridski\" Bitola, North Macedonia",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Peace as Stalemate: Bosnia and Herzegovina, Forever Missions and the Strategic Logic of Frozen Peace",
+                    "authors": [
+                      {
+                        "name": "Dr SENADA ŠELO ŠABIĆ",
+                        "affiliation": "Institute for Development and International Relations, Zagreb, Croatia",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Pitfalls of Transitional Justice and (In)Security in the Western Balkans: Case Study of Serbia",
+                    "authors": [
+                      {
+                        "name": "Dr SANDRA CVIKIĆ",
+                        "affiliation": "Institute of Social Sciences Ivo Pilar, Regional Center Vukovar",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Bosnia and Herzegovina on the Edge of European Stability",
+                    "authors": [
+                      {
+                        "name": "Prof. Kenan Hodžić",
+                        "affiliation": "Assistant Professor",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Prof. Jasmin Ahić",
+                        "affiliation": "Full Professor"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "startTime": "18:00",
+            "endTime": "18:30",
+            "items": [
+              {
+                "kind": "session",
+                "subtype": "plenary",
+                "title": "Concluding Remarks & Award of the European Security Studies Best Paper Prize",
+                "room": "D House, Lecture Hall 8",
+                "conveners": [
+                  {
+                    "name": "Sanne Verschuren",
+                    "affiliation": "Boston University"
+                  },
+                  {
+                    "name": "Julia Carver",
+                    "affiliation": "Leiden University"
+                  },
+                  {
+                    "name": "Moritz Weiss",
+                    "affiliation": "LMU Munich"
+                  },
+                  {
+                    "name": "Magnus Petersson",
+                    "affiliation": "Stockholm University"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "startTime": "18:30",
+            "endTime": "19:30",
+            "items": [
+              {
+                "kind": "session",
+                "title": "Cocktail & Poster Session",
+                "room": "D House, Floor 3",
+                "conveners": [
+                  {
+                    "name": "Fiona Galvis"
+                  },
+                  {
+                    "name": "Archishman Ray Goswami",
+                    "affiliation": "DPhil International Relations, University of Oxford"
+                  },
+                  {
+                    "name": "Lucian Bumeder",
+                    "affiliation": "IFSH"
+                  },
+                  {
+                    "name": "Gulzhan Asylbek kyzy",
+                    "affiliation": "UNU-MERIT"
+                  }
+                ],
+                "contributions": [
+                  {
+                    "title": "A Shadow in the Clouds: Where Is Germany’s Missile Posture Heading?",
+                    "authors": [
+                      {
+                        "name": "Lucian Bumeder",
+                        "affiliation": "IFSH",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Speak through the Nocturne: Navigating Strategic Interest in Intelligence Diplomacy",
+                    "authors": [
+                      {
+                        "name": "Archishman Ray Goswami",
+                        "affiliation": "DPhil International Relations, University of Oxford",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "“A Nuclear War Cannot be Won and Must Never be Fought”: Analyzing the U.S. Response to Russian Nuclear Threats in Ukraine",
+                    "authors": [
+                      {
+                        "name": "Fiona Galvis",
+                        "isSpeaker": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "State fragility, power sharing institutions and group inequalities",
+                    "authors": [
+                      {
+                        "name": "Gulzhan Asylbek kyzy",
+                        "affiliation": "UNU-MERIT",
+                        "isSpeaker": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
   "joint-2024": {
     "slug": "joint-2024",
     "year": 2024,

@@ -43,11 +43,12 @@ const locales = {
     nav: {
       home: "Home",
       conferences: "Conferences",
+      navigator: "Navigator",
       programmes: "Activities",
       initiative: "The Initiative",
       people: "People",
       membership: "Membership",
-      events: "Network events",
+      events: "Events",
       brandLabel: "EISS",
     },
     skipLink: "Skip to content",
@@ -175,6 +176,7 @@ const locales = {
         c2025: "2025 — Thessaloniki",
         c2024: "2024 — Prague",
         allPast: "All past conferences",
+        navigator: "Conference Navigator",
       },
       programmesItems: {
         netsec: "NetSec Summer School",
@@ -274,6 +276,32 @@ const locales = {
       },
     },
 
+    confTour: {
+      // ESSC edition tour list on /initiative, extracted into the shared
+      // src/_includes/conf-tour.njk partial (issue #606). The markup is
+      // identical across locales; only the text below differs. `editions`
+      // is reverse-chronological (most recent first). Each entry carries
+      // its own year, ordinal label, host, link label, and an optional
+      // `flag` (ISO-3166 alpha-2, drives the flag SVG + alt). The 2020
+      // edition was DEFERRED to 2021 (COVID-19), so it has no flag and an
+      // `online` flag for the muted styling; the 2017 inaugural carries
+      // `inaugural` for its accent. The key set (not the array contents)
+      // is what the parity checker compares, so the array stays drift-clean.
+      ariaLabel: "ESSC editions, most recent first",
+      editions: [
+        { year: "2026", ordinal: "9th", flag: "se", country: "Sweden", city: "Stockholm", host: "Stockholm University", slug: "/2026.html", link: "Programme" },
+        { year: "2025", ordinal: "8th", flag: "gr", country: "Greece", city: "Thessaloniki", host: "University of Macedonia", slug: "/2025.html", link: "Recap" },
+        { year: "2024", ordinal: "7th", flag: "cz", country: "Czech Republic", city: "Prague", host: "Charles University", slug: "/2024.html", link: "Recap" },
+        { year: "2023", ordinal: "6th", flag: "es", country: "Spain", city: "Barcelona", host: "IBEI (Institut Barcelona d'Estudis Internacionals)", slug: "/2023.html", link: "Recap" },
+        { year: "2022", ordinal: "5th", flag: "de", country: "Germany", city: "Berlin", host: "Hertie School", slug: "/2022.html", link: "Recap" },
+        { year: "2021", ordinal: "4th", flag: "pt", country: "Portugal", city: "Lisbon", host: "ISCTE — University Institute of Lisbon", slug: "/2021.html", link: "Recap" },
+        { year: "2020", ordinal: "Deferred", online: true, city: "Deferred to 2021", host: "Postponed (COVID-19); held in Lisbon in 2021", slug: "/2020.html", link: "Details" },
+        { year: "2019", ordinal: "3rd", flag: "fr", country: "France", city: "Paris", host: "Sciences Po CERI", slug: "/2019.html", link: "Recap" },
+        { year: "2018", ordinal: "2nd", flag: "fr", country: "France", city: "Paris", host: "Université Panthéon-Assas", slug: "/2018.html", link: "Recap" },
+        { year: "2017", ordinal: "Inaugural", inaugural: true, flag: "fr", country: "France", city: "Paris", host: "Université Panthéon-Assas", slug: "/2017.html", link: "Recap" },
+      ],
+    },
+
     programme: {
       // Live programme grid on /YYYY pages. Pulled from Indico's
       // timetable every day and rendered alongside the polished PDF
@@ -289,7 +317,7 @@ const locales = {
       readFullAbstract: "Read full abstract",
       sourceNote: "Indico holds the authoritative programme. This grid is a daily snapshot.",
       viewOnIndico: "View the event on Indico",
-      speakersLink: "Browse every speaker across all editions",
+      speakersLink: "Conference Navigator",
       // Livestream signpost + per-session pill (replaces the old standalone
       // "Livestreamed sessions" block).
       livestreamPill: "Livestream",
@@ -369,6 +397,13 @@ const locales = {
       // who are chairing, discussing, or speaking at the live ESSC
       // edition (matched against the Indico programme at build time).
       esscSpeakerTitle: "Chairing or speaking at the current ESSC",
+      // Profile dialog (board cards with a bio or recent publications):
+      // the trigger label, the close button, and the heading above a
+      // member's recent ORCID publications inside the dialog.
+      viewProfile: "View profile",
+      close: "Close",
+      recentPublications: "Recent publications",
+      backToPeople: "Back to People",
     },
 
     registrationBadge: {
@@ -387,6 +422,20 @@ const locales = {
       oneDayToGo: "Tomorrow",
       today: "Today",
       onIndico: "View on Indico",
+    },
+
+    navigator: {
+      // Conference Navigator (#756): the unified archive over the ESSC
+      // corpus. These cover the page header + the by-person / by-paper view
+      // toggle; the two panels reuse the speakers.* and papers.* blocks below.
+      eyebrow: "The ESSC corpus",
+      title: "Conference Navigator",
+      lead: "Everyone who has presented at the European Security Studies Conference since 2017, and every paper they gave, now with abstracts, citation details and links to the published versions where we have them. Browse by person or by paper, and filter by year or theme.",
+      byPerson: "By person",
+      byPaper: "By paper",
+      promoBody: "The full record of the European Security Studies Conference: every speaker and every paper since 2017, with abstracts, citation details and links to the published versions. Browse by person or by paper.",
+      cta: "Open the Conference Navigator",
+      initiativeLink: "Browse every ESSC speaker and paper in the Conference Navigator",
     },
 
     speakers: {
@@ -419,6 +468,32 @@ const locales = {
       eventLabel: "Event",
       allEvents: "All events",
       attendedLabel: "Editions attended",
+    },
+
+    papers: {
+      // /papers index (EN + FR + DE share one include, this is the
+      // chrome). Paper titles, author names, affiliations, panel names and
+      // theme labels stay in their original language (see `note`).
+      eyebrow: "The ESSC corpus",
+      title: "Papers",
+      lead: "Every paper presented at a European Security Studies Conference, drawn from the programmes of every edition. Browse the whole corpus, or filter by year and theme. Use the site search to find a specific title or author.",
+      statPapers: "papers presented",
+      statEditions: "editions",
+      statEditionsSince: "since 2017",
+      findPlaceholder: "Find by title or author…",
+      findLabel: "Find a paper by title or author",
+      yearLabel: "Year",
+      allYears: "All years",
+      themeLabel: "Theme",
+      allThemes: "All themes",
+      clear: "Clear",
+      note: "Assembled from the published conference programmes. Themes are inferred from the panel each paper sat in (the nine permanent EISS sections plus recurring themes), so a paper may carry more than one or none. Titles, author names, affiliations and theme labels stay in their original language.",
+      // Live-region status strings, read by paper-filter.js. {n}/{q} are
+      // substituted client-side.
+      resultsOne: "{n} paper",
+      resultsMany: "{n} papers",
+      noMatch: "No papers match.",
+      matching: 'matching "{q}"',
     },
 
     outputs: {
@@ -466,11 +541,12 @@ const locales = {
     nav: {
       home: "Accueil",
       conferences: "Conférences",
+      navigator: "Navigateur",
       programmes: "Activités",
       initiative: "L'Initiative",
       people: "L'équipe",
       membership: "Adhésion",
-      events: "Événements du réseau",
+      events: "Événements",
       brandLabel: "EISS",
     },
     skipLink: "Aller au contenu",
@@ -598,6 +674,7 @@ const locales = {
         c2025: "2025 — Thessalonique",
         c2024: "2024 — Prague",
         allPast: "Toutes les conférences passées",
+        navigator: "Navigateur de la conférence",
       },
       programmesItems: {
         netsec: "École d'été NetSec",
@@ -676,6 +753,23 @@ const locales = {
       },
     },
 
+    confTour: {
+      // Voir le fichier EN pour la logique du partial conf-tour.njk (#606).
+      ariaLabel: "Éditions de l'ESSC, de la plus récente à la première",
+      editions: [
+        { year: "2026", ordinal: "9<sup>e</sup>", flag: "se", country: "Suède", city: "Stockholm", host: "Université de Stockholm", slug: "/2026.html", link: "Programme" },
+        { year: "2025", ordinal: "8<sup>e</sup>", flag: "gr", country: "Grèce", city: "Thessalonique", host: "Université de Macédoine", slug: "/2025.html", link: "Compte-rendu" },
+        { year: "2024", ordinal: "7<sup>e</sup>", flag: "cz", country: "République tchèque", city: "Prague", host: "Université Charles", slug: "/2024.html", link: "Compte-rendu" },
+        { year: "2023", ordinal: "6<sup>e</sup>", flag: "es", country: "Espagne", city: "Barcelone", host: "IBEI (Institut Barcelona d'Estudis Internacionals)", slug: "/2023.html", link: "Compte-rendu" },
+        { year: "2022", ordinal: "5<sup>e</sup>", flag: "de", country: "Allemagne", city: "Berlin", host: "Hertie School", slug: "/2022.html", link: "Compte-rendu" },
+        { year: "2021", ordinal: "4<sup>e</sup>", flag: "pt", country: "Portugal", city: "Lisbonne", host: "ISCTE — Institut Universitaire de Lisbonne", slug: "/2021.html", link: "Compte-rendu" },
+        { year: "2020", ordinal: "Reportée", online: true, city: "Reportée à 2021", host: "Reportée (COVID-19), tenue à Lisbonne en 2021", slug: "/2020.html", link: "Détails" },
+        { year: "2019", ordinal: "3<sup>e</sup>", flag: "fr", country: "France", city: "Paris", host: "Sciences Po CERI", slug: "/2019.html", link: "Compte-rendu" },
+        { year: "2018", ordinal: "2<sup>e</sup>", flag: "fr", country: "France", city: "Paris", host: "Université Panthéon-Assas", slug: "/2018.html", link: "Compte-rendu" },
+        { year: "2017", ordinal: "Inaugurale", inaugural: true, flag: "fr", country: "France", city: "Paris", host: "Université Panthéon-Assas", slug: "/2017.html", link: "Compte-rendu" },
+      ],
+    },
+
     programme: {
       eyebrow: "En direct depuis Indico",
       heading: "Programme",
@@ -688,7 +782,7 @@ const locales = {
       readFullAbstract: "Lire le résumé complet",
       sourceNote: "Indico fait foi pour le programme. Cette grille en est un instantané quotidien.",
       viewOnIndico: "Voir l'événement sur Indico",
-      speakersLink: "Parcourir tous les intervenants, toutes éditions confondues",
+      speakersLink: "Navigateur de la conférence",
       livestreamPill: "En direct",
       livestreamNote: "Les sessions plénières sont diffusées en direct, signalées ci-dessous.",
       livestreamNoteCta: "Suivre en ligne sur Indico",
@@ -745,6 +839,10 @@ const locales = {
       readLess: "Réduire",
       linksAriaLabel: "Liens",
       esscSpeakerTitle: "Préside ou intervient à l'ESSC en cours",
+      viewProfile: "Voir le profil",
+      close: "Fermer",
+      recentPublications: "Publications récentes",
+      backToPeople: "Retour à l'équipe",
     },
 
     registrationBadge: {
@@ -757,6 +855,17 @@ const locales = {
       oneDayToGo: "Demain",
       today: "Aujourd'hui",
       onIndico: "Voir sur Indico",
+    },
+
+    navigator: {
+      eyebrow: "Le corpus de l'ESSC",
+      title: "Navigateur de la conférence",
+      lead: "Toutes les personnes ayant présenté à l'European Security Studies Conference depuis 2017, et chaque communication donnée, désormais avec les résumés, les références de citation et des liens vers les versions publiées lorsque nous en disposons. Parcourez par personne ou par communication, et filtrez par année ou par thème.",
+      byPerson: "Par personne",
+      byPaper: "Par communication",
+      promoBody: "Le relevé complet de l'European Security Studies Conference : chaque intervenant et chaque communication depuis 2017, avec les résumés, les références de citation et des liens vers les versions publiées. Parcourez par personne ou par communication.",
+      cta: "Ouvrir le Navigateur de la conférence",
+      initiativeLink: "Parcourez chaque intervenant et chaque communication de l'ESSC dans le Navigateur de la conférence",
     },
 
     speakers: {
@@ -784,6 +893,27 @@ const locales = {
       eventLabel: "Événement",
       allEvents: "Tous les événements",
       attendedLabel: "Éditions",
+    },
+
+    papers: {
+      eyebrow: "Le corpus de l'ESSC",
+      title: "Communications",
+      lead: "Toutes les communications présentées lors d'une European Security Studies Conference, à partir des programmes de chaque édition. Parcourez l'ensemble du corpus ou filtrez par année et par thème. Utilisez la recherche du site pour trouver un titre ou un auteur précis.",
+      statPapers: "communications présentées",
+      statEditions: "éditions",
+      statEditionsSince: "depuis 2017",
+      findPlaceholder: "Rechercher par titre ou auteur…",
+      findLabel: "Rechercher une communication par titre ou auteur",
+      yearLabel: "Année",
+      allYears: "Toutes les années",
+      themeLabel: "Thème",
+      allThemes: "Tous les thèmes",
+      clear: "Effacer",
+      note: "Constitué à partir des programmes publiés des conférences. Les thèmes sont déduits du panel dans lequel chaque communication a été présentée (les neuf sections permanentes de l'EISS et des thèmes récurrents) : une communication peut en porter plusieurs ou aucun. Les titres, noms d'auteurs, affiliations et intitulés de thèmes restent dans leur langue d'origine.",
+      resultsOne: "{n} communication",
+      resultsMany: "{n} communications",
+      noMatch: "Aucune communication ne correspond.",
+      matching: 'correspondant à « {q} »',
     },
 
     outputs: {
@@ -826,11 +956,12 @@ const locales = {
     nav: {
       home: "Startseite",
       conferences: "Konferenzen",
+      navigator: "Navigator",
       programmes: "Aktivitäten",
       initiative: "Die Initiative",
       people: "Personen",
       membership: "Mitgliedschaft",
-      events: "Netzwerk-Veranstaltungen",
+      events: "Veranstaltungen",
       brandLabel: "EISS",
     },
     skipLink: "Zum Inhalt springen",
@@ -958,6 +1089,7 @@ const locales = {
         c2025: "2025 — Thessaloniki",
         c2024: "2024 — Prag",
         allPast: "Alle vergangenen Konferenzen",
+        navigator: "Konferenz-Navigator",
       },
       programmesItems: {
         netsec: "NetSec Sommerschule",
@@ -1036,6 +1168,23 @@ const locales = {
       },
     },
 
+    confTour: {
+      // Siehe EN-Datei für die Logik des conf-tour.njk-Partials (#606).
+      ariaLabel: "ESSC-Editionen, neueste zuerst",
+      editions: [
+        { year: "2026", ordinal: "9.", flag: "se", country: "Schweden", city: "Stockholm", host: "Universität Stockholm", slug: "/2026.html", link: "Programm" },
+        { year: "2025", ordinal: "8.", flag: "gr", country: "Griechenland", city: "Thessaloniki", host: "Universität Makedonien", slug: "/2025.html", link: "Rückblick" },
+        { year: "2024", ordinal: "7.", flag: "cz", country: "Tschechien", city: "Prag", host: "Karls-Universität", slug: "/2024.html", link: "Rückblick" },
+        { year: "2023", ordinal: "6.", flag: "es", country: "Spanien", city: "Barcelona", host: "IBEI (Institut Barcelona d'Estudis Internacionals)", slug: "/2023.html", link: "Rückblick" },
+        { year: "2022", ordinal: "5.", flag: "de", country: "Deutschland", city: "Berlin", host: "Hertie School", slug: "/2022.html", link: "Rückblick" },
+        { year: "2021", ordinal: "4.", flag: "pt", country: "Portugal", city: "Lissabon", host: "ISCTE — Universitätsinstitut Lissabon", slug: "/2021.html", link: "Rückblick" },
+        { year: "2020", ordinal: "Verschoben", online: true, city: "Auf 2021 verschoben", host: "Verschoben (COVID-19), 2021 in Lissabon abgehalten", slug: "/2020.html", link: "Details" },
+        { year: "2019", ordinal: "3.", flag: "fr", country: "Frankreich", city: "Paris", host: "Sciences Po CERI", slug: "/2019.html", link: "Rückblick" },
+        { year: "2018", ordinal: "2.", flag: "fr", country: "Frankreich", city: "Paris", host: "Université Panthéon-Assas", slug: "/2018.html", link: "Rückblick" },
+        { year: "2017", ordinal: "Eröffnung", inaugural: true, flag: "fr", country: "Frankreich", city: "Paris", host: "Université Panthéon-Assas", slug: "/2017.html", link: "Rückblick" },
+      ],
+    },
+
     programme: {
       eyebrow: "Live von Indico",
       heading: "Programm",
@@ -1048,7 +1197,7 @@ const locales = {
       readFullAbstract: "Vollständiges Abstract lesen",
       sourceNote: "Indico ist die maßgebliche Quelle für das Programm. Dieses Raster ist ein tägliches Abbild.",
       viewOnIndico: "Veranstaltung auf Indico ansehen",
-      speakersLink: "Alle Vortragenden aller Ausgaben durchsuchen",
+      speakersLink: "Konferenz-Navigator",
       livestreamPill: "Livestream",
       livestreamNote: "Die Plenarsitzungen werden live übertragen, unten gekennzeichnet.",
       livestreamNoteCta: "Online auf Indico teilnehmen",
@@ -1105,6 +1254,10 @@ const locales = {
       readLess: "Weniger anzeigen",
       linksAriaLabel: "Links",
       esscSpeakerTitle: "Leitet oder spricht beim aktuellen ESSC",
+      viewProfile: "Profil ansehen",
+      close: "Schließen",
+      recentPublications: "Neueste Veröffentlichungen",
+      backToPeople: "Zurück zu den Personen",
     },
 
     registrationBadge: {
@@ -1117,6 +1270,17 @@ const locales = {
       oneDayToGo: "Morgen",
       today: "Heute",
       onIndico: "Auf Indico ansehen",
+    },
+
+    navigator: {
+      eyebrow: "Das ESSC-Korpus",
+      title: "Konferenz-Navigator",
+      lead: "Alle Personen, die seit 2017 auf der European Security Studies Conference vorgetragen haben, und jeder Beitrag, nun mit Abstracts, Zitationsangaben und Links zu den veröffentlichten Fassungen, soweit vorhanden. Durchsuchen Sie nach Person oder nach Beitrag und filtern Sie nach Jahr oder Thema.",
+      byPerson: "Nach Person",
+      byPaper: "Nach Beitrag",
+      promoBody: "Die vollständige Aufzeichnung der European Security Studies Conference: jeder Vortragende und jeder Beitrag seit 2017, mit Abstracts, Zitationsangaben und Links zu den veröffentlichten Fassungen. Durchsuchen Sie nach Person oder nach Beitrag.",
+      cta: "Konferenz-Navigator öffnen",
+      initiativeLink: "Durchsuchen Sie jeden ESSC-Vortragenden und jeden Beitrag im Konferenz-Navigator",
     },
 
     speakers: {
@@ -1144,6 +1308,27 @@ const locales = {
       eventLabel: "Veranstaltung",
       allEvents: "Alle Veranstaltungen",
       attendedLabel: "Ausgaben",
+    },
+
+    papers: {
+      eyebrow: "Das ESSC-Korpus",
+      title: "Beiträge",
+      lead: "Alle Beiträge, die auf einer European Security Studies Conference vorgestellt wurden, zusammengestellt aus den Programmen jeder Ausgabe. Durchsuchen Sie das gesamte Korpus oder filtern Sie nach Jahr und Thema. Nutzen Sie die Seitensuche, um einen bestimmten Titel oder Autor zu finden.",
+      statPapers: "vorgestellte Beiträge",
+      statEditions: "Ausgaben",
+      statEditionsSince: "seit 2017",
+      findPlaceholder: "Nach Titel oder Autor suchen…",
+      findLabel: "Beitrag nach Titel oder Autor suchen",
+      yearLabel: "Jahr",
+      allYears: "Alle Jahre",
+      themeLabel: "Thema",
+      allThemes: "Alle Themen",
+      clear: "Zurücksetzen",
+      note: "Zusammengestellt aus den veröffentlichten Konferenzprogrammen. Themen werden aus dem Panel abgeleitet, in dem der jeweilige Beitrag stand (die neun ständigen EISS-Sektionen sowie wiederkehrende Themen): ein Beitrag kann mehrere oder gar keines tragen. Titel, Autorennamen, Zugehörigkeiten und Themenbezeichnungen bleiben in ihrer Originalsprache.",
+      resultsOne: "{n} Beitrag",
+      resultsMany: "{n} Beiträge",
+      noMatch: "Keine Beiträge gefunden.",
+      matching: 'passend zu „{q}“',
     },
 
     outputs: {

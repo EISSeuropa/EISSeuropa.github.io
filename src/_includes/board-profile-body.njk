@@ -1,0 +1,83 @@
+{# Profile-page body (#756 phase 2). Rendered by board-profile.njk for each
+   (person, locale). The hub for a board / community member: identity, bio,
+   research themes, recent ORCID publications and contact links. The People
+   grid (/board) is the overview and links here; this is the linkable,
+   crawlable home the speaker index and hovercards point to. Member content
+   (name, bio, publications) renders in its original language (lang="en");
+   the chrome comes from the page locale's `t.boardPage.*`. #}
+{% from "icons.njk" import icon %}
+{%- set t = i18n[lang or "en"] -%}
+{%- set bp = t.boardPage -%}
+{%- set recentWorks = orcidWorksBySlug[person.slug] -%}
+{%- set countryKey = (person.country or '') | lower | trim -%}
+{%- set iso = countryFlags.byName[countryKey] -%}
+{%- set backHref = "/board.html" if (lang or "en") == "en" else "/board." + lang + ".html" -%}
+
+<article class="section">
+  <div class="container profile-page">
+    <p class="profile-back"><a href="{{ backHref }}">&larr; {{ bp.backToPeople }}</a></p>
+
+    <header class="profile-head">
+      {%- set photoSrc = person.photoOverride or person.photo -%}
+      {%- if photoSrc %}
+      <img class="profile-photo" src="{{ photoSrc }}" alt="{{ person.alt or person.name }}" width="140" height="175" loading="lazy">
+      {%- else %}
+      <div class="profile-photo person-photo-placeholder" role="img" aria-label="{{ person.alt or person.name }}">
+        <span aria-hidden="true">{{ person.initials or "?" }}</span>
+      </div>
+      {%- endif %}
+      <div class="profile-head-text">
+        <p class="person-role">
+          <span class="person-role-primary">{{ person.role }}</span>
+          {%- if person.activeYear %}<span class="person-active-year">· {{ person.activeYear }}</span>{%- endif %}
+          {%- if person.functionalResponsibility %}<span class="person-functional-resp">{{ person.functionalResponsibility }}</span>{%- endif %}
+        </p>
+        <h1 class="profile-name">{{ person.name }}</h1>
+        {%- if person.position %}<p class="person-position" lang="en">{{ person.position | safe }}</p>{%- endif %}
+        {%- if person.institution %}
+        <p class="person-institution" lang="en">{{ person.institution | safe }}{% if iso %}&nbsp;<img class="person-flag" src="/assets/images/flags/{{ iso }}.svg" alt="{{ person.country }}" title="{{ person.country }}" width="20" height="20" loading="lazy">{% elif person.country %} <span class="person-country-fallback">{{ icon("map-pin") }} {{ person.country }}</span>{% endif %}</p>
+        {%- elif person.affiliation %}<p class="person-affiliation" lang="en">{{ person.affiliation | safe }}</p>{%- endif %}
+      </div>
+    </header>
+
+    {%- if person.bio %}
+    <div class="profile-bio" lang="en"><p>{{ person.bio | safe }}</p></div>
+    {%- endif %}
+
+    {%- if person.themes %}
+    <p class="person-themes muted"><strong>{{ bp.researchThemes }}:</strong> <span lang="en">{{ person.themes | safe }}</span></p>
+    {%- endif %}
+
+    {%- if recentWorks %}
+    <p class="profile-pub-heading">{{ bp.recentPublications }}</p>
+    <ul class="profile-pub-list" role="list">
+      {%- for w in recentWorks %}
+      <li class="profile-pub">
+        {%- if w.doi %}
+        <a class="profile-pub-title" href="{{ w.doi }}" target="_blank" rel="noopener" lang="en">{{ w.title }}</a>
+        {%- else %}
+        <span class="profile-pub-title" lang="en">{{ w.title }}</span>
+        {%- endif %}
+        {%- if w.year or w.journal %}
+        <span class="profile-pub-meta muted">{% if w.year %}{{ w.year }}{% endif %}{% if w.year and w.journal %} · {% endif %}{% if w.journal %}<span lang="en">{{ w.journal }}</span>{% endif %}</span>
+        {%- endif %}
+      </li>
+      {%- endfor %}
+    </ul>
+    {%- endif %}
+
+    {%- set links = person.links or {} -%}
+    {%- set hasAnyLink = links.publicEmail or links.website or links.orcid or links.linkedin or links.twitter or links.bluesky or links.mastodon -%}
+    {%- if hasAnyLink %}
+    <ul class="person-links" aria-label="{{ bp.linksAriaLabel }}">
+      {%- if links.publicEmail %}<li><a href="mailto:{{ links.publicEmail }}" aria-label="Email {{ person.name }}">{{ icon("mail") }}</a></li>{%- endif %}
+      {%- if links.website %}<li><a href="{{ links.website | extLink }}" target="_blank" rel="noopener" aria-label="{{ person.name }}'s website">{{ icon("globe") }}</a></li>{%- endif %}
+      {%- if links.orcid %}<li><a href="{{ links.orcid | extLink }}" target="_blank" rel="noopener" aria-label="{{ person.name }}'s ORCID iD">{{ icon("orcid") }}</a></li>{%- endif %}
+      {%- if links.linkedin %}<li><a href="{{ links.linkedin | extLink }}" target="_blank" rel="noopener" aria-label="{{ person.name }} on LinkedIn">{{ icon("linkedin") }}</a></li>{%- endif %}
+      {%- if links.twitter %}<li><a href="{{ links.twitter | extLink }}" target="_blank" rel="noopener" aria-label="{{ person.name }} on X / Twitter">{{ icon("twitter") }}</a></li>{%- endif %}
+      {%- if links.bluesky %}<li><a href="{{ links.bluesky | extLink }}" target="_blank" rel="noopener" aria-label="{{ person.name }} on Bluesky">{{ icon("bluesky") }}</a></li>{%- endif %}
+      {%- if links.mastodon %}<li><a href="{{ links.mastodon | extLink }}" target="_blank" rel="noopener" aria-label="{{ person.name }} on Mastodon">{{ icon("mastodon") }}</a></li>{%- endif %}
+    </ul>
+    {%- endif %}
+  </div>
+</article>
