@@ -51,21 +51,25 @@ EVENT_ID = "1"
 CONTRIB_ID = "72"  # "Addressing Wicked Problems in Cyber Conflict" — has the 4 new abstracts
 
 # (label, path, params, use_bearer_header). When use_bearer is False the token
-# is sent as ?apikey=… (the scheme that works on this install per round 1).
+# is sent as ?apikey=…; when True it goes in an Authorization: Bearer header.
+#
+# Round 1 result: ?apikey=<this token> → 400 "Malformed API key" on every
+# /export/ route, i.e. the token is NOT a legacy HTTP-API key — it is a newer
+# Personal Access Token, which authenticates via the Bearer header. And
+# /api/events/{id}/… returned 405 HTML (no such JSON route on this install).
+# Round 2 therefore tests Bearer on the /export/ endpoints (the combo round 1
+# never tried), which is what a PAT needs and which recent Indico accepts.
 CANDIDATES: list[tuple[str, str, dict, bool]] = [
-    # Event export at the subcontributions detail level — does authenticating
-    # (or a richer fossil) add a description field the anonymous call lacks?
-    ("qry/evt-subcontribs", f"/export/event/{EVENT_ID}.json", {"detail": "subcontributions"}, False),
-    # Same, but contributions detail — maybe the nested subContributions here
-    # carry descriptions even when the dedicated detail level doesn't.
-    ("qry/evt-contribs",    f"/export/event/{EVENT_ID}.json", {"detail": "contributions"}, False),
-    # Single-contribution legacy export, a few detail levels.
-    ("qry/contrib",         f"/export/event/{EVENT_ID}/contribution/{CONTRIB_ID}.json", {}, False),
-    ("qry/contrib-sub",     f"/export/event/{EVENT_ID}/contribution/{CONTRIB_ID}.json", {"detail": "subcontributions"}, False),
-    # Newer flask REST surface (round 1 saw /api/v1/* return HTML, but
-    # /api/events/{id}/contributions answered 405 anonymously — try with auth).
-    ("hdr/api-contribs",    f"/api/events/{EVENT_ID}/contributions", {}, True),
-    ("hdr/api-contrib",     f"/api/events/{EVENT_ID}/contributions/{CONTRIB_ID}", {}, True),
+    # Bearer (PAT) on the legacy export across detail levels — the key test.
+    ("hdr/evt-subcontribs", f"/export/event/{EVENT_ID}.json", {"detail": "subcontributions"}, True),
+    ("hdr/evt-contribs",    f"/export/event/{EVENT_ID}.json", {"detail": "contributions"}, True),
+    ("hdr/contrib",         f"/export/event/{EVENT_ID}/contribution/{CONTRIB_ID}.json", {}, True),
+    ("hdr/contrib-sub",     f"/export/event/{EVENT_ID}/contribution/{CONTRIB_ID}.json", {"detail": "subcontributions"}, True),
+    # Indico's abstracts module sometimes carries the paper abstract text.
+    ("hdr/abstracts",       f"/export/event/{EVENT_ID}/abstracts.json", {}, True),
+    # Sanity: does Bearer even authenticate the export at all? A plain event
+    # call should still be 200 JSON; if this 400s, Bearer isn't accepted here.
+    ("hdr/evt-base",        f"/export/event/{EVENT_ID}.json", {}, True),
 ]
 
 
