@@ -3384,6 +3384,10 @@ a.programme-live-tag:focus-visible {
 @media (max-width: 30rem) {
   .pub-match-meta { grid-template-columns: 1fr; gap: 0.1rem; }
   .pub-match-meta dt { margin-top: 0.4rem; }
+  /* The header wraps on narrow screens (badge + title fill the first row),
+     so the type chip drops to its own line. Drop the auto-margin that
+     right-aligns it on desktop, else it strands alone at the far right. */
+  .pub-type-chip { margin-left: 0; }
 }
 
 /* ---------- Speaker index (/speakers) ----------------------------------
