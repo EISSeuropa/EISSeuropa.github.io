@@ -36,6 +36,26 @@ const authorList = (arr) =>
     .map((a) => `${a.given || ""} ${a.family || ""}`.trim() || a.name || "")
     .filter(Boolean);
 
+// Crossref work type → a reader-facing label. "posted-content" is Crossref's
+// bucket for preprints and working papers; the subtype disambiguates.
+function prettyType(m) {
+  if (m.type === "posted-content") return m.subtype === "preprint" ? "Preprint" : "Working paper";
+  const map = {
+    "journal-article": "Journal article",
+    "proceedings-article": "Conference paper",
+    "book-chapter": "Book chapter",
+    book: "Book",
+    monograph: "Book",
+    "edited-book": "Edited volume",
+    report: "Report",
+    "report-component": "Report",
+    dissertation: "Thesis",
+    dataset: "Dataset",
+  };
+  if (map[m.type]) return map[m.type];
+  return m.type ? m.type.replace(/-/g, " ").replace(/^./, (c) => c.toUpperCase()) : null;
+}
+
 let enriched = 0;
 let skipped = 0;
 for (const [slug, link] of Object.entries(links)) {
@@ -54,8 +74,13 @@ for (const [slug, link] of Object.entries(links)) {
     const authors = authorList(m.author);
     if (authors.length) link.publishedAuthors = authors;
     if (!link.journal && (m["container-title"] || [])[0]) link.journal = m["container-title"][0];
+    const type = prettyType(m);
+    if (type) link.pubType = type;
+    // Outlet fallback for preprints / working papers with no journal title:
+    // the publisher is the recognisable venue (e.g. "Copernicus GmbH").
+    if (m.publisher) link.publisher = m.publisher;
     enriched++;
-    console.log(`✓ ${slug} — ${link.journal || "?"} ${link.volume || ""}${link.issue ? `(${link.issue})` : ""}${link.pages ? `: ${link.pages}` : ""}`);
+    console.log(`✓ ${slug} — ${link.pubType || "?"} · ${link.journal || link.publisher || "?"} ${link.volume || ""}${link.issue ? `(${link.issue})` : ""}${link.pages ? `: ${link.pages}` : ""}`);
   } catch (e) {
     console.warn(`! ${slug}: ${e.message}`);
   }

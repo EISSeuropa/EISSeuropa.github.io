@@ -14,7 +14,9 @@
     "publishedAuthors": [
       "Fabrizio Coticchia",
       "Silvia D’Amato"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "2017-private-military-and-security-companies-on-twitter-hiding-in-plain-sight": {
     "doi": "10.1177/1750635218810912",
@@ -34,7 +36,9 @@
       "Jutta Joachim",
       "Marlen Martin",
       "Henriette Lange"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "SAGE Publications"
   },
   "2017-why-a-nuclear-weapons-ban-treaty-is-a-bad-idea": {
     "doi": "10.1080/23340460.2017.1409082",
@@ -49,7 +53,9 @@
     "pages": "391-404",
     "publishedAuthors": [
       "Michal Onderco"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "2018-a-weapon-of-the-weak-cyberwarfare-and-china-s-threat-perception": {
     "doi": "10.1007/978-3-319-54118-1_18",
@@ -62,7 +68,9 @@
     "pages": "357-377",
     "publishedAuthors": [
       "Simone Dossi"
-    ]
+    ],
+    "pubType": "Book chapter",
+    "publisher": "Springer International Publishing"
   },
   "2018-analyzing-private-military-and-security-contractors-power-in-multi-stakeholder-i": {
     "doi": "10.1080/13523260.2021.1897225",
@@ -78,7 +86,9 @@
     "pages": "345-370",
     "publishedAuthors": [
       "Berenike Prem"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "2018-cooperation-and-non-cooperation-in-european-defense-procurement-the-italian-job": {
     "doi": "10.1080/07036337.2019.1682567",
@@ -93,7 +103,9 @@
     "pages": "799-815",
     "publishedAuthors": [
       "Antonio Calcara"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "2018-migrant-rescuing-as-organized-hypocrisy-eu-maritime-missions-offshore-libya-betw": {
     "doi": "10.1177/0010836718780175",
@@ -109,7 +121,9 @@
     "pages": "3-24",
     "publishedAuthors": [
       "Eugenio Cusumano"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "SAGE Publications"
   },
   "2018-military-interventions-liberal-militarism-and-republican-restraints-on-power": {
     "doi": "10.1080/23337486.2020.1835342",
@@ -124,7 +138,9 @@
     "pages": "299-314",
     "publishedAuthors": [
       "Kevin Blachford"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "2018-nuclear-alliances-strategies-of-extended-nuclear-deterrence-and-the-pursuit-of-h": {
     "doi": "10.1093/cjip/poac003",
@@ -139,7 +155,9 @@
     "pages": "87-109",
     "publishedAuthors": [
       "Eliza Gheorghe"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Oxford University Press (OUP)"
   },
   "2018-small-state-big-impact-iceland-s-first-national-security-policy": {
     "doi": "10.4324/9781315265797-16",
@@ -153,7 +171,9 @@
     "publishedAuthors": [
       "Page Wilson",
       "Auður H. Ingólfsdóttir"
-    ]
+    ],
+    "pubType": "Book chapter",
+    "publisher": "Routledge"
   },
   "2018-the-anti-mercenary-norm-and-united-nations-use-of-private-military-and-security": {
     "doi": "10.1163/19426720-02501002",
@@ -170,7 +190,9 @@
     "publishedAuthors": [
       "Oldrich Bures",
       "Jeremy Meyer"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Walter de Gruyter GmbH"
   },
   "2019-france-european-defense-and-deterrence-since-the-end-of-the-cold-war": {
     "doi": "10.1515/9781800733268-013",
@@ -183,7 +205,9 @@
     "pages": "285-320",
     "publishedAuthors": [
       "Guillaume de Rougé"
-    ]
+    ],
+    "pubType": "Book chapter",
+    "publisher": "Berghahn Books"
   },
   "2019-libyan-covert-actions-in-europe-the-palestinian-armed-struggle-and-western-intel": {
     "doi": "10.1080/01402390.2020.1868995",
@@ -198,7 +222,9 @@
     "pages": "993-1020",
     "publishedAuthors": [
       "Aviva Guttmann"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "2021-autonomous-weapons-systems-in-international-law": {
     "doi": "10.4337/9781789903621.autonomous.weapons.systems",
@@ -211,7 +237,9 @@
     "pages": "209-213",
     "publishedAuthors": [
       "Verena Jackson"
-    ]
+    ],
+    "pubType": "Book chapter",
+    "publisher": "Edward Elgar Publishing"
   },
   "2021-comparative-analysis-of-north-atlantic-treaty-organization-nato-and-shanghai-coo": {
     "doi": "10.11610/isij.4810",
@@ -227,7 +255,9 @@
     "publishedAuthors": [
       "Giray Sadık",
       "Aybike Yalçın İspir"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Procon, Ltd."
   },
   "2021-from-confrontation-to-cooperation-non-state-armed-group-un-interactions-in-peace": {
     "doi": "10.1093/isr/viae015",
@@ -242,7 +272,9 @@
     "issue": "2",
     "publishedAuthors": [
       "Jenniina Kotajoki"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Oxford University Press (OUP)"
   },
   "2021-the-rise-of-cybersecurity-warriors": {
     "doi": "10.1080/09592318.2021.1976574",
@@ -258,7 +290,9 @@
     "pages": "272-293",
     "publishedAuthors": [
       "Moritz Weiss"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "2022-cyber-arms-transfer-meaning-limits-and-implications": {
     "doi": "10.1080/09636412.2022.2041081",
@@ -274,7 +308,9 @@
     "pages": "65-91",
     "publishedAuthors": [
       "Max Smeets"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "2022-rules-expertise-and-the-rise-of-the-regulatory-security-state": {
     "doi": "10.1080/13501763.2023.2172061",
@@ -290,7 +326,9 @@
     "publishedAuthors": [
       "Andreas Kruck",
       "Moritz Weiss"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "2022-sanctions-and-the-authority-of-legitimate-punishment-in-international-politics": {
     "doi": "10.1093/oso/9780197693483.003.0008",
@@ -303,7 +341,9 @@
     "pages": "167-186",
     "publishedAuthors": [
       "Elin Hellquist"
-    ]
+    ],
+    "pubType": "Book chapter",
+    "publisher": "Oxford University PressNew York"
   },
   "2022-the-impact-of-commercial-military-actors-on-armed-conflict-termination-1980-2010": {
     "doi": "10.1093/jogss/ogae016",
@@ -318,7 +358,9 @@
     "issue": "3",
     "publishedAuthors": [
       "Ulrich Petersohn"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Oxford University Press (OUP)"
   },
   "2022-the-lesser-evil-experimental-evidence-on-nuclear-and-chemical-weapon-taboos": {
     "doi": "10.1177/07388942221124515",
@@ -336,7 +378,9 @@
       "Michal Smetana",
       "Marek Vranka",
       "Ondrej Rosendorf"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "SAGE Publications"
   },
   "2022-veterans-novices-and-patterns-of-rebel-recruitment": {
     "doi": "10.1080/09636412.2025.2467148",
@@ -353,7 +397,9 @@
     "publishedAuthors": [
       "Evan Perkoski",
       "Alec Worsnop"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "2022-why-states-arm-and-why-they-sometimes-do-so-together": {
     "doi": "10.1093/isr/viae031",
@@ -369,7 +415,9 @@
     "publishedAuthors": [
       "Jonata Anicetti",
       "Ulrich Krotz"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Oxford University Press (OUP)"
   },
   "2023-arms-purchases-in-the-baltic-states-and-transfers-to-ukraine-balancing-national": {
     "doi": "10.1080/14751798.2024.2315810",
@@ -385,7 +433,9 @@
     "pages": "167-189",
     "publishedAuthors": [
       "Donatas Palavenis"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "2023-changing-threat-perceptions-and-american-grand-strategy-evidence-from-maritime-m": {
     "doi": "10.1093/jogss/ogae017",
@@ -400,7 +450,9 @@
     "publishedAuthors": [
       "Peter Dombrowski",
       "Simon Reich"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Oxford University Press (OUP)"
   },
   "2023-credibility-in-crises-how-patrons-reassure-in-crises": {
     "doi": "10.1093/isq/sqae062",
@@ -416,7 +468,9 @@
     "publishedAuthors": [
       "Lauren Sukin",
       "Alexander Lanoszka"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Oxford University Press (OUP)"
   },
   "2023-development-aid-humanitarian-assistance-and-criminal-violence-a-triple-nexus-for": {
     "doi": "10.1093/9780198967385.003.0006",
@@ -429,7 +483,9 @@
     "pages": "76-95",
     "publishedAuthors": [
       "Pablo Kalmanovitz"
-    ]
+    ],
+    "pubType": "Book chapter",
+    "publisher": "Oxford University PressOxford"
   },
   "2023-engine-or-brake-the-franco-german-couple-and-the-future-of-the-european-defence": {
     "doi": "10.1080/13501763.2024.2358112",
@@ -445,7 +501,9 @@
     "publishedAuthors": [
       "Antonio Calcara",
       "Luis Simón"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "2023-eu-arms-collaboration-and-procurement-the-impact-of-the-war-in-ukraine": {
     "doi": "10.1080/01442872.2024.2324141",
@@ -461,7 +519,9 @@
     "pages": "443-466",
     "publishedAuthors": [
       "Jonata Anicetti"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "2023-nato-and-multi-domain-operations-between-deterrence-and-conflict": {
     "doi": "10.1080/01495933.2024.2445491",
@@ -478,7 +538,9 @@
       "Andrea Gilli",
       "Mauro Gilli",
       "Gorana Grgić"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "2023-on-the-institutional-battlefield-of-intelligence-oversight-the-case-of-questione": {
     "doi": "10.4324/9781032616377-9",
@@ -493,7 +555,9 @@
       "Melanie Hartvigsen",
       "Mia Hartmann",
       "Adam Diderichsen"
-    ]
+    ],
+    "pubType": "Book chapter",
+    "publisher": "Routledge"
   },
   "2023-parliamentary-acceptance-of-eu-military-operations-in-member-states-beyond-rubbe": {
     "doi": "10.1080/07036337.2024.2416685",
@@ -511,7 +575,9 @@
       "Robert Kissack",
       "Eva Michaels",
       "Óscar Fernández"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "2023-populist-publics-and-nuclear-weapons-does-populism-predict-higher-nuclear-use-wi": {
     "doi": "10.1093/isq/sqaf093",
@@ -528,7 +594,9 @@
       "Michal Onderco",
       "Sandra Destradi",
       "André Krouwel"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Oxford University Press (OUP)"
   },
   "2023-the-intelligence-community-as-a-normative-actor-under-international-law": {
     "doi": "10.2139/ssrn.4952054",
@@ -541,7 +609,9 @@
     "verifiedOn": "2026-06-16",
     "publishedAuthors": [
       "Sophie Duroy"
-    ]
+    ],
+    "pubType": "Preprint",
+    "publisher": "Elsevier BV"
   },
   "2024-defence-offsets-and-the-global-arms-trade-explaining-cross-national-variations": {
     "doi": "10.4324/9781003396956",
@@ -553,7 +623,9 @@
     "verifiedOn": "2026-06-16",
     "publishedAuthors": [
       "Jonata Anicetti"
-    ]
+    ],
+    "pubType": "Book",
+    "publisher": "Routledge"
   },
   "2024-developing-digital-peripheries-for-strategic-advantage-competitive-cyber-capacit": {
     "doi": "10.1080/13523260.2024.2430021",
@@ -569,7 +641,9 @@
     "pages": "455-496",
     "publishedAuthors": [
       "Julia Carver"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "2024-eu-s-use-of-private-military-and-security-companies-services-filling-the-capabil": {
     "doi": "10.1080/14751798.2025.2468530",
@@ -585,7 +659,9 @@
     "publishedAuthors": [
       "Oldrich Bures",
       "Eugenio Cusumano"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "2024-exploring-how-the-emotion-of-interest-shapes-strategic-studies-scholarship-and-h": {
     "doi": "10.1093/isp/ekaf001",
@@ -598,7 +674,9 @@
     "publishedAuthors": [
       "Samuel Zilincik",
       "Dagmar Ludackova"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Oxford University Press (OUP)"
   },
   "2024-multilateral-maritime-exercises-and-strategic-change-the-american-case-and-beyon": {
     "doi": "10.1093/jogss/ogae017",
@@ -614,7 +692,9 @@
     "publishedAuthors": [
       "Peter Dombrowski",
       "Simon Reich"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Oxford University Press (OUP)"
   },
   "2024-public-support-for-arms-control-in-the-third-nuclear-age-new-evidence-from-nato": {
     "doi": "10.2139/ssrn.4881267",
@@ -628,7 +708,9 @@
       "Michal Smetana",
       "Marek Vranka",
       "Ondřej Rosendorf"
-    ]
+    ],
+    "pubType": "Preprint",
+    "publisher": "Elsevier BV"
   },
   "2024-russian-nuclear-roulette-elites-and-public-debates-on-nuclear-weapons-in-moscow": {
     "doi": "10.1080/10736700.2024.2435706",
@@ -644,7 +726,9 @@
     "pages": "173-196",
     "publishedAuthors": [
       "Lydia Wachs"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "2024-winning-the-battle-for-hearts-and-minds-u-s-reassurance-during-the-russo-ukraini": {
     "doi": "10.1177/00220027251363229",
@@ -661,7 +745,9 @@
       "Lauren Sukin",
       "Stephen Herzog",
       "Alexander Lanoszka"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "SAGE Publications"
   },
   "2025-assisting-to-win-military-assistance-and-coercion-in-war": {
     "doi": "10.1080/01402390.2026.2650788",
@@ -674,7 +760,9 @@
     "pages": "1-23",
     "publishedAuthors": [
       "Kersti Larsdotter"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "2025-big-tech-at-war-the-infrastructural-politics-of-public-private-relations": {
     "doi": "10.1177/13540661251370265",
@@ -690,7 +778,9 @@
     "publishedAuthors": [
       "Jeppe T. Jacobsen",
       "Tobias Liebetrau"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "SAGE Publications"
   },
   "2025-russian-countertrade-as-a-mechanism-for-promoting-arms-sales-and-diplomatic-infl": {
     "doi": "10.1017/eis.2025.10014",
@@ -706,7 +796,9 @@
       "Jonata Anicetti",
       "Shang-Su Wu",
       "Ron Matthews"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Cambridge University Press (CUP)"
   },
   "2026-living-with-the-nuclear-spatio-temporal-entanglements-nuclear-cultures-and-the-a": {
     "doi": "10.5194/sand-2025-7",
@@ -719,7 +811,9 @@
     "verifiedOn": "2026-06-16",
     "publishedAuthors": [
       "Elisabeth Saar"
-    ]
+    ],
+    "pubType": "Preprint",
+    "publisher": "Copernicus GmbH"
   },
   "2026-living-with-the-nuclear-spatio-temporal-entanglements-nuclear-cultures-and-the-a-2": {
     "doi": "10.5194/sand-2025-7",
@@ -732,7 +826,9 @@
     "verifiedOn": "2026-06-16",
     "publishedAuthors": [
       "Elisabeth Saar"
-    ]
+    ],
+    "pubType": "Preprint",
+    "publisher": "Copernicus GmbH"
   },
   "JPW2019-a-critical-appraisal-of-visegrad-4-security-potential": {
     "doi": "10.1080/09668136.2018.1562045",
@@ -747,7 +843,9 @@
     "pages": "225-248",
     "publishedAuthors": [
       "Šárka Kolmašová"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   },
   "JPW2019-change-in-burden-sharing-mind-set-in-nato": {
     "doi": "10.1080/14702436.2022.2082953",
@@ -765,6 +863,8 @@
       "Dominika Kunertova",
       "Madison Sargeant",
       "Andrew Webster"
-    ]
+    ],
+    "pubType": "Journal article",
+    "publisher": "Informa UK Limited"
   }
 }
