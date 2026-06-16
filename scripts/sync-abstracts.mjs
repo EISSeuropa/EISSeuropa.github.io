@@ -29,6 +29,16 @@
  * title drift, or a paper missing from the programme), run on demand:
  *   node scripts/check-abstract-coverage.mjs
  *
+ * SUBCONTRIBUTIONS ARE OUT OF REACH. This reads contribution-level descriptions
+ * only. Papers run as subcontributions of a panel (the panel is the
+ * contribution, each paper a subcontribution) keep their abstract on the
+ * subcontribution, and Indico's export API does NOT expose subcontribution
+ * descriptions at any detail level or auth — the fossil has no description
+ * field at all (confirmed by scripts/probe-indico-subcontribs.py, both
+ * anonymous and with a Personal Access Token). So a panel's own description
+ * syncs (and then strands, matching no single paper) while its papers get
+ * nothing. Hand-add those abstracts to paperAbstractsManual.json instead.
+ *
  * Editions → Indico event ids (EISS adopted Indico around 2023; add older
  * editions here if/when they gain an Indico event):
  *

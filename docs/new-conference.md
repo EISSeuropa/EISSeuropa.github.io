@@ -168,11 +168,16 @@ title, so an abstract whose Indico title differs from the transcription
 simply does not attach (no harm, just a gap).
 
 The sync **overwrites `paperAbstracts.json` wholesale** (it rebuilds the
-map from the `EVENTS` editions, it does not merge). Hand-recovered
-abstracts for pre-Indico editions therefore live in a separate file,
-`src/_data/paperAbstractsManual.json`, which the sync never touches;
-both are merged at build time. Put any abstract for an edition not in
-`EVENTS` there, never in `paperAbstracts.json`.
+map from the `EVENTS` editions, it does not merge) and reads
+**contribution-level descriptions only**. Two kinds of abstract it
+cannot pull therefore live in a separate file,
+`src/_data/paperAbstractsManual.json`, which the sync never touches
+(both are merged at build time): abstracts for pre-Indico editions, and
+**subcontribution-level abstracts** — papers run as subcontributions of
+a panel. Indico's export API does not expose subcontribution
+descriptions at any detail level or auth, so hand-add those from the
+organisers' files. Put any such abstract there, never in
+`paperAbstracts.json`.
 
 After syncing, run `node scripts/check-abstract-coverage.mjs` to see
 which abstracts failed to attach: it lists every stranded entry by
