@@ -66,6 +66,12 @@
     </ul>
     {%- endif %}
 
+    {%- set speakerEntry = corpus.speakerByProfileUrl["/board/" + person.slug + ".html"] -%}
+    {%- if speakerEntry -%}
+    {%- set _navHref = "/speakers.html?person=" + person.slug if (lang or "en") == "en" else "/speakers." + lang + ".html?person=" + person.slug -%}
+    <p class="profile-essc-link"><a href="{{ _navHref }}">{{ bp.esscContributions }}</a></p>
+    {%- endif %}
+
     {%- set links = person.links or {} -%}
     {%- set hasAnyLink = links.publicEmail or links.website or links.orcid or links.linkedin or links.twitter or links.bluesky or links.mastodon -%}
     {%- if hasAnyLink %}
