@@ -21,6 +21,13 @@ const programmes = require("./archiveProgrammes.js");
 // Manual wins on the (rare) collision, so a hand-correction can override a bad
 // synced abstract if it ever needs to.
 const abstracts = { ...require("./paperAbstracts.json"), ...require("./paperAbstractsManual.json") };
+// Title drift: copy an abstract whose Indico title differs from the programme
+// onto the programme's key, so it attaches. See paperAbstractAliases.json.
+const aliases = require("./paperAbstractAliases.json");
+for (const [from, to] of Object.entries(aliases)) {
+  if (from[0] === "_") continue; // skip _documentation
+  if (abstracts[from] && !abstracts[to]) abstracts[to] = abstracts[from];
+}
 
 function normTitle(t) {
   return String(t || "")

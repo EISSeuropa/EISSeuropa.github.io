@@ -176,9 +176,14 @@ both are merged at build time. Put any abstract for an edition not in
 
 After syncing, run `node scripts/check-abstract-coverage.mjs` to see
 which abstracts failed to attach: it lists every stranded entry by
-year with its closest programme title, so title drift (reconcile the
-title) is easy to tell apart from a paper genuinely absent from the
-programme. This is also a release-time cross-check (rule §5).
+year with its closest programme title, so title drift is easy to tell
+apart from a paper genuinely absent from the programme. To reconcile
+drift, map the synced title to the programme title in
+`src/_data/paperAbstractAliases.json` (when the programme title is the
+one to keep, e.g. correct British spelling) or fix the typo in
+`archiveProgrammes.js` (when the programme is the wrong one). This is
+also a release-time cross-check (rule §5), and the
+`abstract-coverage.yml` workflow runs the same check every four months.
 
 If you want to keep the just-past year visible in the homepage hero
 for a few days after, edit `src/_data/conferences.js` and bump that

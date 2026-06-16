@@ -8119,7 +8119,7 @@ module.exports = {
                     ]
                   },
                   {
-                    "title": "Innovation and engineering at the front: the Ukrainian case of Unmanned System",
+                    "title": "Innovation and engineering at the front: the Ukrainian case of Unmanned Systems",
                     "authors": [
                       {
                         "name": "Emilie Berthelsen",
