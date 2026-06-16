@@ -24,14 +24,43 @@
   <div class="container">
     <article class="prose" lang="en" style="max-width: 48rem;">
       {%- if paper.publishedUrl %}
-      {# Auto-matched publication link. Framed plainly and flagged as a
-         preview that may be wrong, because the match is fuzzy (#805). #}
-      <aside class="pub-match" aria-label="Publication match">
-        <span class="pub-match-badge">Early-access preview</span>
+      {# Published version (#805). Auto-matched by author + title, so flagged a
+         "Beta feature" that may be wrong. The outlet line, author byline and
+         BibTeX come from Crossref via scripts/enrich-publications.mjs; any
+         field may be absent. The published byline can differ from the
+         conference presenters. #}
+      <aside class="pub-match" aria-labelledby="pub-match-h-{{ paper.slug }}">
+        <div class="pub-match-head">
+          <span class="pub-match-badge">Beta feature</span>
+          <h2 class="pub-match-title" id="pub-match-h-{{ paper.slug }}">Published version</h2>
+        </div>
         <p class="pub-match-lead">
-          This presentation at <a href="{{ paper.conferenceUrl }}">{{ paper.conferenceLabel }} {{ paper.year }}</a> was followed by a publication{% if paper.publishedJournal %} in <a href="{{ paper.publishedUrl }}" target="_blank" rel="noopener">{{ paper.publishedJournal }}</a>{% else %} (<a href="{{ paper.publishedUrl }}" target="_blank" rel="noopener">{{ paper.publishedTitle or "see the published version" }}</a>){% endif %}{% if paper.publishedYear %} in {{ paper.publishedYear }}{% endif %}.{% if paper.doi %} DOI <a href="https://doi.org/{{ paper.doi }}">{{ paper.doi }}</a>.{% endif %}
+          Presented at <a href="{{ paper.conferenceUrl }}">{{ paper.conferenceLabel }} {{ paper.year }}</a>, later published{% if paper.publishedJournal %} in <em lang="en">{{ paper.publishedJournal }}</em>{% endif %}{% if paper.publishedYear %} ({{ paper.publishedYear }}){% endif %}.
         </p>
-        <p class="pub-match-note">This match was found automatically, by comparing authors and titles, so it may be inaccurate. <a href="mailto:{{ site.contactEmail }}?subject=Publication%20match%3A%20{{ paper.slug }}">Let us know</a> if it looks wrong.</p>
+        <dl class="pub-match-meta">
+          {%- if paper.publishedAuthors.length %}
+          <dt>Authors</dt><dd lang="en">{{ paper.publishedAuthors | join(', ') }}</dd>
+          {%- endif %}
+          {%- if paper.publishedJournal %}
+          <dt>Outlet</dt><dd lang="en">{{ paper.publishedJournal }}{% if paper.publishedVolume %}, vol.&nbsp;{{ paper.publishedVolume }}{% endif %}{% if paper.publishedIssue %}, no.&nbsp;{{ paper.publishedIssue }}{% endif %}{% if paper.publishedPages %}, pp.&nbsp;{{ paper.publishedPages }}{% endif %}</dd>
+          {%- endif %}
+          {%- if paper.doi %}
+          <dt>DOI</dt><dd><a href="https://doi.org/{{ paper.doi }}">{{ paper.doi }}</a></dd>
+          {%- endif %}
+        </dl>
+        <div class="pub-match-actions">
+          <a class="btn btn-secondary btn-sm" href="{{ paper.publishedUrl }}" target="_blank" rel="noopener">{{ icon("external-link") }} Read the published version</a>
+          {%- if paper.bibtex %}
+          <button class="btn btn-secondary btn-sm" type="button" data-bibtex-toggle aria-expanded="false" aria-controls="bibtex-{{ paper.slug }}">{{ icon("file-text") }} Cite (BibTeX)</button>
+          {%- endif %}
+        </div>
+        {%- if paper.bibtex %}
+        <div class="pub-bibtex" id="bibtex-{{ paper.slug }}" hidden>
+          <button class="pub-bibtex-copy" type="button" data-bibtex-copy>Copy</button>
+          <pre><code>{{ paper.bibtex }}</code></pre>
+        </div>
+        {%- endif %}
+        <p class="pub-match-note">Matched automatically by comparing authors and titles, so it may be inaccurate, and the published author list can differ from the conference presenters. <a href="mailto:{{ site.contactEmail }}?subject=Publication%20match%3A%20{{ paper.slug }}">Let us know</a> if it looks wrong.</p>
       </aside>
       {%- endif %}
       {%- if paper.abstract %}
@@ -67,3 +96,4 @@
   "url": {{ (site.url + "/papers/" + paper.slug + ".html") | dump | safe }}
 }
 </script>
+{%- if paper.bibtex %}<script src="{{ '/assets/js/paper-cite.js' | bust }}" defer></script>{% endif %}

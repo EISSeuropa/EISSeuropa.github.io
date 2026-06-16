@@ -16,7 +16,7 @@
  *
  * --auto-high is the scheduled workflow's hands-off path: high-confidence
  * matches are recorded automatically (and removed from the queue), surfacing
- * with the "Early-access preview" badge that warns they may be inaccurate.
+ * under the "Beta feature" badge that warns they may be inaccurate.
  * --reject records a (paper, doi) pair in data/publication-rejects.json so the
  * matcher stops re-proposing a match validated as wrong. A match left alone
  * just stays in the queue.

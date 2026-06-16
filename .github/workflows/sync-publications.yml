@@ -72,6 +72,7 @@ jobs:
           set -o pipefail
           node scripts/match-publications.mjs --all | tee /tmp/match.txt
           node scripts/confirm-publication.mjs --auto-high | tee /tmp/auto.txt
+          node scripts/enrich-publications.mjs | tee /tmp/enrich.txt
           node scripts/publication-review-md.mjs > /tmp/review.md
           {
             echo "Monthly publication-match sync. **Two parts:**"

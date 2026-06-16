@@ -3279,9 +3279,14 @@ a.programme-live-tag:focus-visible {
   border-radius: var(--radius-md);
   background: hsl(36 95% 50% / 0.07);
 }
+.pub-match-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
 .pub-match-badge {
   display: inline-block;
-  margin-bottom: var(--space-3);
   padding: 0.18em 0.7em;
   border-radius: var(--radius-full);
   background: var(--warning);
@@ -3290,14 +3295,77 @@ a.programme-live-tag:focus-visible {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.pub-match-title {
+  margin: 0;
+  font-size: var(--fs-base);
+  font-weight: 600;
 }
 .pub-match-lead {
-  margin: 0 0 var(--space-2);
+  margin: 0 0 var(--space-3);
 }
-.pub-match-note {
+/* Outlet detail: a compact label/value grid (authors, journal+vol/issue/pages,
+   DOI). Stacks to one column on narrow screens. */
+.pub-match-meta {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25rem var(--space-3);
+  margin: 0 0 var(--space-4);
+  font-size: var(--fs-sm);
+}
+.pub-match-meta dt {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.pub-match-meta dd {
   margin: 0;
+  min-width: 0;
+  word-break: break-word;
+}
+.pub-match-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.pub-bibtex {
+  position: relative;
+  margin-top: var(--space-3);
+}
+.pub-bibtex pre {
+  margin: 0;
+  padding: var(--space-4);
+  padding-right: 5rem;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elev);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+.pub-bibtex-copy {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  padding: 0.25em 0.7em;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-strong);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
+}
+.pub-bibtex-copy:hover { border-color: var(--accent); color: var(--accent); }
+.pub-match-note {
+  margin: var(--space-4) 0 0;
   font-size: var(--fs-sm);
   color: var(--text-muted);
+}
+@media (max-width: 30rem) {
+  .pub-match-meta { grid-template-columns: 1fr; gap: 0.1rem; }
+  .pub-match-meta dt { margin-top: 0.4rem; }
 }
 
 /* ---------- Speaker index (/speakers) ----------------------------------

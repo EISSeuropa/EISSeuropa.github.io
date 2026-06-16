@@ -15,6 +15,24 @@
 const paperIndex = require("./paperIndex.js");
 const paperLinks = require("./paperLinks.json"); // confirmed publication matches, keyed by slug
 
+// Build a BibTeX @article entry for a confirmed published version. Authors are
+// the published byline when known (it can differ from the conference
+// presenters), else the conference authors. Optional fields are emitted only
+// when present. Single braces around values: valid BibTeX, and it keeps the
+// string free of the `{{` that would collide with Nunjucks if built in-template.
+function toBibtex(p, link) {
+  const authors = (link.publishedAuthors && link.publishedAuthors.length ? link.publishedAuthors : p.authors) || [];
+  const fields = [`author  = {${authors.join(" and ")}}`, `title   = {${p.title}}`];
+  if (link.journal) fields.push(`journal = {${link.journal}}`);
+  const year = link.publishedYear || p.year;
+  if (year) fields.push(`year    = {${year}}`);
+  if (link.volume) fields.push(`volume  = {${link.volume}}`);
+  if (link.issue) fields.push(`number  = {${link.issue}}`);
+  if (link.pages) fields.push(`pages   = {${String(link.pages).replace(/-+/g, "--")}}`);
+  if (link.doi) fields.push(`doi     = {${link.doi}}`);
+  return `@article{eiss-${p.slug},\n  ${fields.join(",\n  ")}\n}`;
+}
+
 module.exports = function () {
   return (paperIndex.papers || [])
     .filter((p) => p.hasPage && p.slug)
@@ -36,6 +54,16 @@ module.exports = function () {
         publishedTitle: link.publishedTitle || null,
         publishedJournal: link.journal || null,
         publishedYear: link.publishedYear || null,
+        // Bibliographic detail backfilled from Crossref by DOI
+        // (scripts/enrich-publications.mjs): the outlet line + BibTeX export.
+        // publishedAuthors is the published byline, which can differ from the
+        // conference presenters. Any of these may be absent.
+        publishedVolume: link.volume || null,
+        publishedIssue: link.issue || null,
+        publishedPages: link.pages || null,
+        publishedAuthors: link.publishedAuthors || [],
+        // Ready-to-copy BibTeX for the published version (null when unmatched).
+        bibtex: link.publishedUrl || link.doi ? toBibtex(p, link) : null,
         authorNames: p.authors || [], // display-name strings (for citation meta + JSON-LD)
         authorsLinked: p.authorsLinked || [], // { name, url } — members link to their profile
         affiliations: p.affiliations || [], // distinct affiliation strings
