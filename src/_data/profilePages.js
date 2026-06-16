@@ -18,16 +18,20 @@ const LOCALES = [
 module.exports = function () {
   const seen = new Set();
   const people = [];
-  for (const section of [
-    boardSorted.leadership,
-    boardSorted.boardMembers,
-    boardSorted.support,
-    boardSorted.pastMembers,
+  // pastMembers carry `isFormer` so the profile page can label the role
+  // "Former Board Member" rather than the raw, still-current-sounding role.
+  // Active sections are pushed first, so a person is only ever tagged from
+  // the section they actually belong to (the `seen` set dedups).
+  for (const { section, isFormer } of [
+    { section: boardSorted.leadership },
+    { section: boardSorted.boardMembers },
+    { section: boardSorted.support },
+    { section: boardSorted.pastMembers, isFormer: true },
   ]) {
     for (const p of section || []) {
       if (!p.slug || seen.has(p.slug)) continue;
       seen.add(p.slug);
-      people.push(p);
+      people.push(isFormer ? { ...p, isFormer: true } : p);
     }
   }
 

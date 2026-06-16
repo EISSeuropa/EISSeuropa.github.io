@@ -6324,7 +6324,7 @@ a.profile-pub-title:hover { text-decoration: underline; }
 }
 .profile-photo {
   flex: 0 0 auto;
-  width: 7rem;
+  width: 8.5rem;
   aspect-ratio: 4 / 5;
   object-fit: cover;
   border-radius: var(--radius-md);
