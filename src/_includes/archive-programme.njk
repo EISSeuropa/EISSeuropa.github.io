@@ -16,7 +16,7 @@
 {%- set _lang = lang or "en" -%}
 {%- set t = i18n[_lang] -%}
 {%- set _prog = archiveProgrammesEnriched[archiveSlug] -%}
-
+{% include "event-jsonld.njk" %}
 {% if _prog and _prog.days and _prog.days.length %}
 <section class="section programme programme--archive" id="programme" aria-labelledby="archive-programme-title">
   <div class="container">
