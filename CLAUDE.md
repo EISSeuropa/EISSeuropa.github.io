@@ -212,10 +212,10 @@ escalate to per-PR changelog fragments (`changelog.d/`, one file per PR,
 collated by `release.sh`), which removes the shared-file conflict
 entirely.
 
-## 5. Release-time four-point cross-check (minor / major only)
+## 5. Release-time five-point cross-check (minor / major only)
 
 Every **minor (`X.Y.0` where `Y > prev`) or major (`X.0.0`)
-release** should trigger a deliberate check across four surfaces
+release** should trigger a deliberate check across five surfaces
 before `scripts/release.sh` runs. Skip the cross-check on **patch
 releases** (`X.Y.Z` where `Z > 0`); they're scoped to small fixes
 and the overhead isn't justified. The release script's
@@ -270,7 +270,20 @@ same release. If yes but too big to fit, open a tracking issue
 - `BRAND.md` and the brand SVGs under `src/assets/images/brand/`:
   refresh if the visual identity changes.
 
-### 5. Milestone hygiene (gate, not a surface)
+### 5. Abstract coverage (Anthology)
+
+- Run `node scripts/check-abstract-coverage.mjs`. It lists every paper
+  abstract that fails to attach to an Anthology paper, by year, with the
+  closest programme title and a similarity score. A high score is title
+  drift (reconcile the title between Indico and the transcription); a low
+  score means the paper is absent from the programme (or is a panel-level
+  abstract, which correctly matches nothing). Informational, not a gate.
+- Pre-Indico abstracts live in `src/_data/paperAbstractsManual.json`, never
+  in `paperAbstracts.json` (the sync overwrites the latter wholesale). If a
+  recovered abstract for 2017–2022 ends up in the synced file, it will be
+  silently dropped on the next `sync-abstracts.mjs` run.
+
+### 6. Milestone hygiene (gate, not a surface)
 
 - Every issue closed by this release carries the matching milestone.
 - Every issue still open and tagged with a milestone that just shipped

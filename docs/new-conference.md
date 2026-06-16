@@ -167,6 +167,19 @@ archive programme grid renders it. Matching is exact on the normalised
 title, so an abstract whose Indico title differs from the transcription
 simply does not attach (no harm, just a gap).
 
+The sync **overwrites `paperAbstracts.json` wholesale** (it rebuilds the
+map from the `EVENTS` editions, it does not merge). Hand-recovered
+abstracts for pre-Indico editions therefore live in a separate file,
+`src/_data/paperAbstractsManual.json`, which the sync never touches;
+both are merged at build time. Put any abstract for an edition not in
+`EVENTS` there, never in `paperAbstracts.json`.
+
+After syncing, run `node scripts/check-abstract-coverage.mjs` to see
+which abstracts failed to attach: it lists every stranded entry by
+year with its closest programme title, so title drift (reconcile the
+title) is easy to tell apart from a paper genuinely absent from the
+programme. This is also a release-time cross-check (rule §5).
+
 If you want to keep the just-past year visible in the homepage hero
 for a few days after, edit `src/_data/conferences.js` and bump that
 year's `endDate` to a date a week or two later. Reset when you're

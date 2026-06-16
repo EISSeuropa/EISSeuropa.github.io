@@ -17,6 +17,18 @@
  * effectively impossible; the cost is that a handful of abstracts whose
  * Indico title differs from the transcription simply don't attach.
  *
+ * IMPORTANT — this script OVERWRITES paperAbstracts.json wholesale (it rebuilds
+ * the map from the Indico EVENTS below, it does not merge). So this file may
+ * only ever hold abstracts for the editions listed in EVENTS. Hand-recovered
+ * abstracts for pre-Indico editions (2022 and earlier) live in the sibling
+ * src/_data/paperAbstractsManual.json, which this script never reads or writes,
+ * precisely so the overwrite cannot strand them. Both files are merged at build
+ * time by corpus.js and archiveProgrammesEnriched.js.
+ *
+ * To see which synced abstracts fail to attach to a paper (Indico-vs-transcription
+ * title drift, or a paper missing from the programme), run on demand:
+ *   node scripts/check-abstract-coverage.mjs
+ *
  * Editions → Indico event ids (EISS adopted Indico around 2023; add older
  * editions here if/when they gain an Indico event):
  *

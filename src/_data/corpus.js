@@ -43,7 +43,10 @@ const paperLinks = require("./paperLinks.json");
 // the per-paper landing pages show the complete abstract whichever source is
 // truncated. The normaliser MUST match archiveProgrammesEnriched.js /
 // sync-abstracts.mjs.
-const paperAbstracts = require("./paperAbstracts.json");
+// Synced (Indico, 2023+) plus hand-recovered pre-Indico abstracts. The two
+// files are kept apart so sync-abstracts.mjs's wholesale overwrite of the
+// synced file can never strand the manual ones; see archiveProgrammesEnriched.js.
+const paperAbstracts = { ...require("./paperAbstracts.json"), ...require("./paperAbstractsManual.json") };
 function normAbsTitle(t) {
   return String(t || "")
     .normalize("NFKD")
