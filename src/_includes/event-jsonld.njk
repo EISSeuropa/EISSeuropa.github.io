@@ -1,30 +1,27 @@
 {# schema.org Event JSON-LD for a conference page.
 
    Emits a <script type="application/ld+json"> Event block built from
-   conferences.byYear[year], so search engines can render event rich
-   results (dates, place, virtual location for the livestream). Valid
-   anywhere in the document; the conference pages include it near the
-   top of their body.
+   conferences.byYear[year or archiveSlug], so search engines can index
+   conference metadata (dates, venue, organiser). Valid anywhere in the
+   document; archive-programme.njk includes it near the top of the body
+   for all /YYYY archive pages (#796).
 
-   Requires `year` (string) in scope. Renders nothing when the year has
-   no conference entry, so it is safe to include unconditionally.
+   Requires `year` or `archiveSlug` (string) in scope. Renders nothing
+   when the year has no conferences entry or when the edition was deferred
+   (2020), so it is safe to include unconditionally.
 
    The conference name and description stay in English on all locales
    (the event's canonical name, matching the site convention), while
    `inLanguage` reflects the page. `url` points at the canonical English
-   page on every locale so the three pages describe one event, not three.
-
-   Currently wired on /2026 (the upcoming edition, where event rich
-   results have pre-conference value). Generalising to the archive years
-   is tracked in #603. #}
-{%- set _c = conferences.byYear[year] -%}
-{%- if _c -%}
+   page on every locale so the three pages describe one event, not three. #}
+{%- set _c = conferences.byYear[year or archiveSlug] -%}
+{%- if _c and not _c.deferred -%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Event",
   "name": "European Security Studies Conference {{ _c.year }}",
-  "description": "The {{ _c.ordinal }}th European Security Studies Conference, hosted at {{ _c.venue.en }} in {{ _c.city }}, {{ _c.country }}.",
+  "description": "{{ _c.archiveMeta.en }}",
   "startDate": "{{ _c.startDate }}",
   "endDate": "{{ _c.endDate }}",
   "inLanguage": "{{ lang or 'en' }}",
@@ -46,7 +43,7 @@
     "name": "{{ site.fullName }}",
     "url": "{{ site.url }}/"
   },
-  "image": "{{ site.url }}/assets/images/{{ _c.slug }}-meta.jpg",
+  "image": "{{ site.url }}/assets/images/past-meta.jpg",
   "url": "{{ site.url }}/{{ _c.slug }}.html"
 }
 </script>
