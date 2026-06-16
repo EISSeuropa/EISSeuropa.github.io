@@ -23,6 +23,17 @@
 <section class="section-tight">
   <div class="container">
     <article class="prose" lang="en" style="max-width: 48rem;">
+      {%- if paper.publishedUrl %}
+      {# Auto-matched publication link. Framed plainly and flagged as a
+         preview that may be wrong, because the match is fuzzy (#805). #}
+      <aside class="pub-match" aria-label="Publication match">
+        <span class="pub-match-badge">Early-access preview</span>
+        <p class="pub-match-lead">
+          This presentation at <a href="{{ paper.conferenceUrl }}">{{ paper.conferenceLabel }} {{ paper.year }}</a> was followed by a publication{% if paper.publishedJournal %} in <a href="{{ paper.publishedUrl }}" target="_blank" rel="noopener">{{ paper.publishedJournal }}</a>{% else %} (<a href="{{ paper.publishedUrl }}" target="_blank" rel="noopener">{{ paper.publishedTitle or "see the published version" }}</a>){% endif %}{% if paper.publishedYear %} in {{ paper.publishedYear }}{% endif %}.{% if paper.doi %} DOI <a href="https://doi.org/{{ paper.doi }}">{{ paper.doi }}</a>.{% endif %}
+        </p>
+        <p class="pub-match-note">This match was found automatically, by comparing authors and titles, so it may be inaccurate. <a href="mailto:{{ site.contactEmail }}?subject=Publication%20match%3A%20{{ paper.slug }}">Let us know</a> if it looks wrong.</p>
+      </aside>
+      {%- endif %}
       {%- if paper.abstract %}
       <h2>Abstract</h2>
       <p>{{ paper.abstract }}</p>
@@ -30,11 +41,7 @@
       {%- if paper.panel %}
       <p class="muted" lang="en"><strong>Panel:</strong> {{ paper.panel }}</p>
       {%- endif %}
-      {%- if paper.doi %}
-      <p class="muted">DOI: <a href="https://doi.org/{{ paper.doi }}">{{ paper.doi }}</a></p>
-      {%- endif %}
       <p style="margin-top: var(--space-5); display: flex; gap: var(--space-3); flex-wrap: wrap;">
-        {%- if paper.publishedUrl %}<a class="btn btn-primary btn-sm" href="{{ paper.publishedUrl }}" target="_blank" rel="noopener">{{ icon("external-link") }} Read the published version</a>{% endif %}
         {%- if paper.abstractUrl %}<a class="btn btn-secondary btn-sm" href="{{ paper.abstractUrl }}" target="_blank" rel="noopener">{{ icon("external-link") }} View on Indico</a>{% endif %}
         <a class="btn btn-ghost btn-sm" href="{{ paper.conferenceUrl }}#programme">{{ icon("file-text") }} {{ paper.conferenceLabel }} {{ paper.year }} programme</a>
         <a class="btn btn-ghost btn-sm" href="/papers.html#paper-{{ paper.slug }}">All papers</a>

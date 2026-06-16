@@ -3269,6 +3269,37 @@ a.programme-live-tag:focus-visible {
   padding-top: var(--space-4);
 }
 
+/* Auto-matched publication callout on a /papers/<slug> page (#805). A quiet
+   amber caution box: it states the match and warns it may be inaccurate. */
+.pub-match {
+  margin: 0 0 var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--warning);
+  border-radius: var(--radius-md);
+  background: hsl(36 95% 50% / 0.07);
+}
+.pub-match-badge {
+  display: inline-block;
+  margin-bottom: var(--space-3);
+  padding: 0.18em 0.7em;
+  border-radius: var(--radius-full);
+  background: var(--warning);
+  color: hsl(222 30% 8%);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.pub-match-lead {
+  margin: 0 0 var(--space-2);
+}
+.pub-match-note {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
 /* ---------- Speaker index (/speakers) ----------------------------------
    Alphabetical list of everyone who has presented across ESSC editions,
    built from the corpus.js data spine. */
