@@ -13,23 +13,32 @@
 // citation_* meta (rendered in <head> by base.njk) and a ScholarlyArticle
 // JSON-LD block, the basis of Google Scholar indexing.
 const paperIndex = require("./paperIndex.js");
+const paperLinks = require("./paperLinks.json"); // confirmed publication matches, keyed by slug
 
 module.exports = function () {
   return (paperIndex.papers || [])
     .filter((p) => p.hasPage && p.slug)
-    .map((p) => ({
-      slug: p.slug,
-      title: p.title,
-      year: p.year,
-      conferenceLabel: p.conferenceLabel,
-      conferenceUrl: p.programmeUrl,
-      panel: p.panel,
-      abstract: p.abstract || null,
-      abstractUrl: p.abstractUrl || null,
-      publishedUrl: p.publishedUrl || null,
-      doi: p.doi || null,
-      authorNames: p.authors || [], // display-name strings (for citation meta + JSON-LD)
-      authorsLinked: p.authorsLinked || [], // { name, url } — members link to their profile
-      affiliations: p.affiliations || [], // distinct affiliation strings
-    }));
+    .map((p) => {
+      const link = paperLinks[p.slug] || {};
+      return {
+        slug: p.slug,
+        title: p.title,
+        year: p.year,
+        conferenceLabel: p.conferenceLabel,
+        conferenceUrl: p.programmeUrl,
+        panel: p.panel,
+        abstract: p.abstract || null,
+        abstractUrl: p.abstractUrl || null,
+        publishedUrl: p.publishedUrl || null,
+        doi: p.doi || null,
+        // Published-version detail, for the "followed by a publication in …"
+        // line on the page. Only set when a match has been confirmed.
+        publishedTitle: link.publishedTitle || null,
+        publishedJournal: link.journal || null,
+        publishedYear: link.publishedYear || null,
+        authorNames: p.authors || [], // display-name strings (for citation meta + JSON-LD)
+        authorsLinked: p.authorsLinked || [], // { name, url } — members link to their profile
+        affiliations: p.affiliations || [], // distinct affiliation strings
+      };
+    });
 };
