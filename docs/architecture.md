@@ -59,11 +59,18 @@ src/*.njk (pages)  +  src/_includes/*.njk (components)  +  src/_data/* (data)
   CHANGELOG `[Unreleased]` section; `roadmap-progress.yml` →
   `sync-roadmap-progress.py` → `data/roadmap-progress.json` (closed/total
   per milestone, drives the `/roadmap` progress bars).
+- **`sync-orcid.yml`** → `sync-orcid.py` → `orcidWorks.json` (members'
+  recent public ORCID works; weekly).
+- **`sync-publications.yml`** → `match-publications.mjs` →
+  `data/publication-candidates.json` (proposed ESSC-paper-to-publication
+  matches; monthly). See `publication-matching.md`.
 - **`scheduled-rebuild.yml`** redeploys daily so build-time values
   (countdown, registration status) don't drift between content changes.
 
 Each sync opens an auto-PR (auto-merge armed, CI-gated) rather than
-pushing to `master`.
+pushing to `master` — except **`sync-publications.yml`**, whose PR is a
+review surface (a wrong match mis-cites), so it does not auto-merge:
+accepted matches are recorded by hand with `confirm-publication.mjs`.
 
 **`failure-alarm.yml`** watches those scheduled workflows plus the
 deploy: on a `failure` conclusion it opens (or threads a comment onto)
