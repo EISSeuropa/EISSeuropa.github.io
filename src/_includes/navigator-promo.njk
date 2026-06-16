@@ -1,0 +1,38 @@
+{# Stats-backed entry point to the Conference Navigator: the searchable
+   archive of every ESSC speaker and paper since 2017, now with abstracts,
+   citation details and links to the published versions. Shared by the
+   homepage and the /past conferences page (where it sits as its own section
+   above the annual archive). Reuses the t.navigator.* chrome and the live
+   corpus.stats counts, so it stays in sync and the drift checker stays clean.
+   Pass `promoHeadingId` to keep the heading id unique per page. #}
+{% from "icons.njk" import icon %}
+{%- set t = i18n[lang or "en"] -%}
+{%- set nav = t.navigator -%}
+{%- set _spk = "/speakers.html" if (lang or "en") == "en" else "/speakers." + lang + ".html" -%}
+{%- set _hid = promoHeadingId or "navigator-promo-title" -%}
+<section class="section" aria-labelledby="{{ _hid }}">
+  <div class="container">
+    <div class="navigator-promo">
+      <div class="navigator-promo__text">
+        <span class="eyebrow">{{ nav.eyebrow }}</span>
+        <h2 id="{{ _hid }}">{{ nav.title }}</h2>
+        <p>{{ nav.promoBody }}</p>
+        <a class="btn btn-primary" href="{{ _spk }}">{{ nav.cta }} {{ icon("arrow-right") }}</a>
+      </div>
+      <dl class="navigator-promo__stats" aria-label="{{ nav.eyebrow }}">
+        <div class="stat">
+          <dt>{{ corpus.stats.speakerCount }}</dt>
+          <dd>{{ t.speakers.statSpeakers }}</dd>
+        </div>
+        <div class="stat">
+          <dt>{{ corpus.stats.paperCount }}</dt>
+          <dd>{{ t.speakers.statPapers }}</dd>
+        </div>
+        <div class="stat">
+          <dt>{{ corpus.stats.editions }}</dt>
+          <dd>{{ t.speakers.statConferences }} <span class="muted">{{ t.speakers.statConferencesSince }}</span></dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>

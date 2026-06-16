@@ -13,6 +13,8 @@
     <article class="prose">
       <p>{{ o.networkIntro }}</p>
       <p><a href="/GlobalRisks.html">{{ o.globalRisksLabel }} {{ icon("arrow-right") }}</a></p>
+      {%- set _spk = "/speakers.html" if (lang or "en") == "en" else "/speakers." + lang + ".html" -%}
+      <p><a href="{{ _spk }}">{{ t.navigator.initiativeLink }} {{ icon("arrow-right") }}</a></p>
     </article>
   </div>
 </section>

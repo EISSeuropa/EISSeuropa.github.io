@@ -4442,6 +4442,64 @@ body.search-open { overflow: hidden; }
   font-size: var(--fs-xs);
 }
 
+/* Conference Navigator promo panel (navigator-promo.njk): a stats-backed
+   entry point used on the homepage and at the head of the /past conferences
+   page. Text on the left, the live corpus counts on the right; stacks on
+   narrow viewports. */
+.navigator-promo {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: var(--space-6);
+  align-items: center;
+  padding: var(--space-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-2, var(--surface));
+}
+.navigator-promo__text h2 {
+  margin: var(--space-2) 0 var(--space-3);
+}
+.navigator-promo__text p {
+  color: var(--text-muted);
+  margin: 0 0 var(--space-5);
+  max-width: 48ch;
+}
+.navigator-promo__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+}
+.navigator-promo__stats .stat {
+  margin: 0;
+}
+.navigator-promo__stats .stat > dt {
+  font-size: clamp(1.75rem, 1.2rem + 1.4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent);
+  margin: 0 0 var(--space-2);
+  letter-spacing: -0.02em;
+}
+.navigator-promo__stats .stat > dd {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: var(--lh-snug);
+  margin: 0;
+}
+.navigator-promo__stats .stat > dd .muted {
+  display: block;
+  font-size: var(--fs-xs);
+}
+@media (max-width: 720px) {
+  .navigator-promo {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    padding: var(--space-5);
+  }
+}
+
 /* "Learn more →" link inside tiles + cards. Underline appears on
    hover; arrow shifts a hair to the right. Matches the existing
    .btn-ghost typography but reads as a plain link. */

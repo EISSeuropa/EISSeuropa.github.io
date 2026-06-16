@@ -43,6 +43,7 @@ const locales = {
     nav: {
       home: "Home",
       conferences: "Conferences",
+      navigator: "Navigator",
       programmes: "Activities",
       initiative: "The Initiative",
       people: "People",
@@ -175,6 +176,7 @@ const locales = {
         c2025: "2025 — Thessaloniki",
         c2024: "2024 — Prague",
         allPast: "All past conferences",
+        navigator: "Conference Navigator",
       },
       programmesItems: {
         netsec: "NetSec Summer School",
@@ -428,9 +430,12 @@ const locales = {
       // toggle; the two panels reuse the speakers.* and papers.* blocks below.
       eyebrow: "The ESSC corpus",
       title: "Conference Navigator",
-      lead: "Everyone who has presented at the European Security Studies Conference since 2017, and every paper they gave. Browse by person or by paper, and filter by year or theme.",
+      lead: "Everyone who has presented at the European Security Studies Conference since 2017, and every paper they gave, now with abstracts, citation details and links to the published versions where we have them. Browse by person or by paper, and filter by year or theme.",
       byPerson: "By person",
       byPaper: "By paper",
+      promoBody: "The full record of the European Security Studies Conference: every speaker and every paper since 2017, with abstracts, citation details and links to the published versions. Browse by person or by paper.",
+      cta: "Open the Conference Navigator",
+      initiativeLink: "Browse every ESSC speaker and paper in the Conference Navigator",
     },
 
     speakers: {
@@ -536,6 +541,7 @@ const locales = {
     nav: {
       home: "Accueil",
       conferences: "Conférences",
+      navigator: "Navigateur",
       programmes: "Activités",
       initiative: "L'Initiative",
       people: "L'équipe",
@@ -668,6 +674,7 @@ const locales = {
         c2025: "2025 — Thessalonique",
         c2024: "2024 — Prague",
         allPast: "Toutes les conférences passées",
+        navigator: "Navigateur de la conférence",
       },
       programmesItems: {
         netsec: "École d'été NetSec",
@@ -853,9 +860,12 @@ const locales = {
     navigator: {
       eyebrow: "Le corpus de l'ESSC",
       title: "Navigateur de la conférence",
-      lead: "Toutes les personnes ayant présenté à l'European Security Studies Conference depuis 2017, et chaque communication donnée. Parcourez par personne ou par communication, et filtrez par année ou par thème.",
+      lead: "Toutes les personnes ayant présenté à l'European Security Studies Conference depuis 2017, et chaque communication donnée, désormais avec les résumés, les références de citation et des liens vers les versions publiées lorsque nous en disposons. Parcourez par personne ou par communication, et filtrez par année ou par thème.",
       byPerson: "Par personne",
       byPaper: "Par communication",
+      promoBody: "Le relevé complet de l'European Security Studies Conference : chaque intervenant et chaque communication depuis 2017, avec les résumés, les références de citation et des liens vers les versions publiées. Parcourez par personne ou par communication.",
+      cta: "Ouvrir le Navigateur de la conférence",
+      initiativeLink: "Parcourez chaque intervenant et chaque communication de l'ESSC dans le Navigateur de la conférence",
     },
 
     speakers: {
@@ -946,6 +956,7 @@ const locales = {
     nav: {
       home: "Startseite",
       conferences: "Konferenzen",
+      navigator: "Navigator",
       programmes: "Aktivitäten",
       initiative: "Die Initiative",
       people: "Personen",
@@ -1078,6 +1089,7 @@ const locales = {
         c2025: "2025 — Thessaloniki",
         c2024: "2024 — Prag",
         allPast: "Alle vergangenen Konferenzen",
+        navigator: "Konferenz-Navigator",
       },
       programmesItems: {
         netsec: "NetSec Sommerschule",
@@ -1263,9 +1275,12 @@ const locales = {
     navigator: {
       eyebrow: "Das ESSC-Korpus",
       title: "Konferenz-Navigator",
-      lead: "Alle Personen, die seit 2017 auf der European Security Studies Conference vorgetragen haben, und jeder Beitrag. Durchsuchen Sie nach Person oder nach Beitrag und filtern Sie nach Jahr oder Thema.",
+      lead: "Alle Personen, die seit 2017 auf der European Security Studies Conference vorgetragen haben, und jeder Beitrag, nun mit Abstracts, Zitationsangaben und Links zu den veröffentlichten Fassungen, soweit vorhanden. Durchsuchen Sie nach Person oder nach Beitrag und filtern Sie nach Jahr oder Thema.",
       byPerson: "Nach Person",
       byPaper: "Nach Beitrag",
+      promoBody: "Die vollständige Aufzeichnung der European Security Studies Conference: jeder Vortragende und jeder Beitrag seit 2017, mit Abstracts, Zitationsangaben und Links zu den veröffentlichten Fassungen. Durchsuchen Sie nach Person oder nach Beitrag.",
+      cta: "Konferenz-Navigator öffnen",
+      initiativeLink: "Durchsuchen Sie jeden ESSC-Vortragenden und jeden Beitrag im Konferenz-Navigator",
     },
 
     speakers: {
