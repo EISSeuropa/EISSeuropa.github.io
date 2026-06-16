@@ -61,6 +61,12 @@ alternates:
 </section>
 {% endif %}
 
+{# Section Navigateur de la conférence : l'archive citable de chaque
+   intervenant et chaque communication, mise en avant au-dessus de la liste
+   des éditions. #}
+{% set promoHeadingId = "navigator-section-title" %}
+{% include "navigator-promo.njk" %}
+
 <section class="section-tight" aria-labelledby="archive-title">
   <div class="container">
     <h2 id="archive-title" style="margin-bottom: var(--space-5);">Archive</h2>
@@ -89,7 +95,6 @@ alternates:
     <p class="muted" style="font-size: var(--fs-sm); margin-top: var(--space-4);">
       <em>Les pages d'archive individuelles ne sont disponibles qu'en anglais.</em>
     </p>
-    {% include "speakers-signpost.njk" %}
   </div>
 </section>
 
