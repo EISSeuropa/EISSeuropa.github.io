@@ -3650,9 +3650,9 @@ a.programme-live-tag:focus-visible {
   letter-spacing: 0.04em;
   text-transform: uppercase;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--accent) 12%, transparent);
-  color: var(--accent);
-  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  background: var(--warning);
+  color: hsl(222 30% 8%);
+  border: 1px solid transparent;
   white-space: nowrap;
   line-height: 1.6;
 }
