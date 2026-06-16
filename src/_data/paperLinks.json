@@ -7,5 +7,32 @@
     "publishedYear": 2022,
     "source": "orcid",
     "verifiedOn": "2026-06-16"
+  },
+  "2019-france-european-defense-and-deterrence-since-the-end-of-the-cold-war": {
+    "doi": "10.1515/9781800733268-013",
+    "publishedUrl": "https://doi.org/10.1515/9781800733268-013",
+    "publishedTitle": "Chapter 11 France, Germany and Nuclear Deterrence since the End of the Cold War. From Estrangement to Rapprochement?",
+    "journal": "Berghahn Books",
+    "publishedYear": 2022,
+    "source": "openalex",
+    "verifiedOn": "2026-06-16"
+  },
+  "JPW2019-a-critical-appraisal-of-visegrad-4-security-potential": {
+    "doi": "10.1080/09668136.2018.1562045",
+    "publishedUrl": "https://doi.org/10.1080/09668136.2018.1562045",
+    "publishedTitle": "Competing Norms and Strategic Visions: A Critical Appraisal of V4 Security Potential",
+    "journal": "Europe Asia Studies",
+    "publishedYear": 2019,
+    "source": "openalex",
+    "verifiedOn": "2026-06-16"
+  },
+  "JPW2019-change-in-burden-sharing-mind-set-in-nato": {
+    "doi": "10.1080/14702436.2022.2082953",
+    "publishedUrl": "https://doi.org/10.1080/14702436.2022.2082953",
+    "publishedTitle": "NATO burden-sharing: past, present, future",
+    "journal": "Defence Studies",
+    "publishedYear": 2022,
+    "source": "openalex",
+    "verifiedOn": "2026-06-16"
   }
 }
