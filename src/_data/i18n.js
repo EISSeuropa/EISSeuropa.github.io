@@ -404,6 +404,8 @@ const locales = {
       close: "Close",
       recentPublications: "Recent publications",
       backToPeople: "Back to People",
+      // Link on member profile pages pointing at their Navigator entry.
+      esscContributions: "Their ESSC papers",
     },
 
     registrationBadge: {
@@ -843,6 +845,7 @@ const locales = {
       close: "Fermer",
       recentPublications: "Publications récentes",
       backToPeople: "Retour à l'équipe",
+      esscContributions: "Leurs communications ESSC",
     },
 
     registrationBadge: {
@@ -1258,6 +1261,7 @@ const locales = {
       close: "Schließen",
       recentPublications: "Neueste Veröffentlichungen",
       backToPeople: "Zurück zu den Personen",
+      esscContributions: "Ihre ESSC-Beiträge",
     },
 
     registrationBadge: {

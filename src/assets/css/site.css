@@ -6231,6 +6231,9 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .profile-head-text { min-width: 0; }
 .profile-name { font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2rem); margin: 0.15rem 0 0.35rem; }
 .profile-bio { line-height: 1.7; margin: var(--space-5) 0; max-width: 42rem; }
+.profile-essc-link { margin: var(--space-4) 0 0; }
+.profile-essc-link a { color: var(--accent); font-weight: 500; text-decoration: none; }
+.profile-essc-link a:hover { text-decoration: underline; }
 @media (max-width: 30rem) {
   .profile-head { flex-direction: column; }
 }
