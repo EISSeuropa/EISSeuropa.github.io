@@ -28,7 +28,7 @@
       {%- endif %}
       <div class="profile-head-text">
         <p class="person-role">
-          <span class="person-role-primary">{{ person.role }}</span>
+          <span class="person-role-primary">{% if person.isFormer %}Former {% endif %}{{ person.role }}</span>
           {%- if person.activeYear %}<span class="person-active-year">· {{ person.activeYear }}</span>{%- endif %}
           {%- if person.functionalResponsibility %}<span class="person-functional-resp">{{ person.functionalResponsibility }}</span>{%- endif %}
         </p>
