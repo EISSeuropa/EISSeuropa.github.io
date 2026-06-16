@@ -43,8 +43,8 @@
       {%- endif %}
       <p style="margin-top: var(--space-5); display: flex; gap: var(--space-3); flex-wrap: wrap;">
         {%- if paper.abstractUrl %}<a class="btn btn-secondary btn-sm" href="{{ paper.abstractUrl }}" target="_blank" rel="noopener">{{ icon("external-link") }} View on Indico</a>{% endif %}
-        <a class="btn btn-ghost btn-sm" href="{{ paper.conferenceUrl }}#programme">{{ icon("file-text") }} {{ paper.conferenceLabel }} {{ paper.year }} programme</a>
-        <a class="btn btn-ghost btn-sm" href="/papers.html#paper-{{ paper.slug }}">All papers</a>
+        <a class="btn btn-secondary btn-sm" href="{{ paper.conferenceUrl }}#programme">{{ icon("file-text") }} {{ paper.conferenceLabel }} {{ paper.year }} programme</a>
+        <a class="btn btn-secondary btn-sm" href="/papers.html#paper-{{ paper.slug }}">All papers</a>
       </p>
     </article>
   </div>
