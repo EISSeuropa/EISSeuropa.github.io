@@ -285,10 +285,14 @@ same release. If yes but too big to fit, open a tracking issue
   title), add the synced→programme mapping to
   `src/_data/paperAbstractAliases.json`. If the **programme** has the typo,
   fix it in `src/_data/archiveProgrammes.js`.
-- Pre-Indico abstracts live in `src/_data/paperAbstractsManual.json`, never
-  in `paperAbstracts.json` (the sync overwrites the latter wholesale). If a
-  recovered abstract for 2017–2022 ends up in the synced file, it will be
-  silently dropped on the next `sync-abstracts.mjs` run.
+- Abstracts the sync can't pull live in `src/_data/paperAbstractsManual.json`,
+  never in `paperAbstracts.json` (the sync overwrites the latter wholesale, so
+  anything hand-added there is silently dropped on the next run). Two cases:
+  pre-Indico editions (2022 and earlier), and **subcontribution-level
+  abstracts** — papers run as subcontributions of a panel. Indico's export API
+  does not expose subcontribution descriptions at any detail level or auth
+  (confirmed by `scripts/probe-indico-subcontribs.py`), so those paper
+  abstracts must be hand-added here from the organisers' files.
 
 ### 6. Milestone hygiene (gate, not a surface)
 
