@@ -1,4 +1,44 @@
 {
+  "2017-do-you-hear-me-major-tom-media-narratives-and-contemporary-military-operations-t": {
+    "doi": "10.1080/09662839.2018.1484729",
+    "publishedUrl": "https://doi.org/10.1080/09662839.2018.1484729",
+    "publishedTitle": "Can you hear me Major Tom? News, narratives and contemporary military operations: the case of the Italian mission in Afghanistan",
+    "journal": "European Security",
+    "publishedYear": 2018,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2017-private-military-and-security-companies-on-twitter-hiding-in-plain-sight": {
+    "doi": "10.1177/1750635218810912",
+    "publishedUrl": "https://doi.org/10.1177/1750635218810912",
+    "publishedTitle": "Hiding in plain sight: Private military and security companies’ use of Twitter as a distraction tool",
+    "journal": "Media War & Conflict",
+    "publishedYear": 2018,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2018-analyzing-private-military-and-security-contractors-power-in-multi-stakeholder-i": {
+    "doi": "10.1080/13523260.2021.1897225",
+    "publishedUrl": "https://doi.org/10.1080/13523260.2021.1897225",
+    "publishedTitle": "The regulation of private military and security companies: Analyzing power in multi-stakeholder initiatives",
+    "journal": "Contemporary Security Policy",
+    "publishedYear": 2021,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2018-migrant-rescuing-as-organized-hypocrisy-eu-maritime-missions-offshore-libya-betw": {
+    "doi": "10.1177/0010836718780175",
+    "publishedUrl": "https://doi.org/10.1177/0010836718780175",
+    "publishedTitle": "Migrant rescue as organized hypocrisy: EU maritime missions offshore Libya between humanitarianism and border control",
+    "journal": "Cooperation and Conflict",
+    "publishedYear": 2018,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
   "2018-nuclear-alliances-strategies-of-extended-nuclear-deterrence-and-the-pursuit-of-h": {
     "doi": "10.1093/cjip/poac003",
     "publishedUrl": "https://doi.org/10.1093/cjip/poac003",
@@ -8,6 +48,16 @@
     "source": "orcid",
     "verifiedOn": "2026-06-16"
   },
+  "2018-the-anti-mercenary-norm-and-united-nations-use-of-private-military-and-security": {
+    "doi": "10.1163/19426720-02501002",
+    "publishedUrl": "https://doi.org/10.1163/19426720-02501002",
+    "publishedTitle": "The Anti-Mercenary Norm and United Nations’ Use of Private Military and Security Companies",
+    "journal": "Global Governance A Review of Multilateralism and International Organizations",
+    "publishedYear": 2019,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
   "2019-france-european-defense-and-deterrence-since-the-end-of-the-cold-war": {
     "doi": "10.1515/9781800733268-013",
     "publishedUrl": "https://doi.org/10.1515/9781800733268-013",
@@ -15,6 +65,196 @@
     "journal": "Berghahn Books",
     "publishedYear": 2022,
     "source": "openalex",
+    "verifiedOn": "2026-06-16"
+  },
+  "2021-comparative-analysis-of-north-atlantic-treaty-organization-nato-and-shanghai-coo": {
+    "doi": "10.11610/isij.4810",
+    "publishedUrl": "https://doi.org/10.11610/isij.4810",
+    "publishedTitle": "Comparative Analysis of Counter-Terrorism Efforts of NATO and the Shanghai Cooperation Organization",
+    "journal": "Information & Security An International Journal",
+    "publishedYear": 2021,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2021-from-confrontation-to-cooperation-non-state-armed-group-un-interactions-in-peace": {
+    "doi": "10.1093/isr/viae015",
+    "publishedUrl": "https://doi.org/10.1093/isr/viae015",
+    "publishedTitle": "From Confrontation to Cooperation: Describing Non-State Armed Group–UN Interactions in Peace Operations",
+    "journal": "International Studies Review",
+    "publishedYear": 2024,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2021-the-rise-of-cybersecurity-warriors": {
+    "doi": "10.1080/09592318.2021.1976574",
+    "publishedUrl": "https://doi.org/10.1080/09592318.2021.1976574",
+    "publishedTitle": "The rise of cybersecurity warriors?",
+    "journal": "Small Wars and Insurgencies",
+    "publishedYear": 2021,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2022-cyber-arms-transfer-meaning-limits-and-implications": {
+    "doi": "10.1080/09636412.2022.2041081",
+    "publishedUrl": "https://doi.org/10.1080/09636412.2022.2041081",
+    "publishedTitle": "Cyber Arms Transfer: Meaning, Limits, and Implications",
+    "journal": "Security Studies",
+    "publishedYear": 2022,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2022-the-impact-of-commercial-military-actors-on-armed-conflict-termination-1980-2010": {
+    "doi": "10.1093/jogss/ogae016",
+    "publishedUrl": "https://doi.org/10.1093/jogss/ogae016",
+    "publishedTitle": "The Impact of Commercial Military Actors on Armed Conflict Termination, 1990–2010",
+    "journal": "Journal of Global Security Studies",
+    "publishedYear": 2024,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2022-the-lesser-evil-experimental-evidence-on-nuclear-and-chemical-weapon-taboos": {
+    "doi": "10.1177/07388942221124515",
+    "publishedUrl": "https://doi.org/10.1177/07388942221124515",
+    "publishedTitle": "The lesser evil? Experimental evidence on the strength of nuclear and chemical weapon “taboos”",
+    "journal": "Conflict Management and Peace Science",
+    "publishedYear": 2022,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2022-veterans-novices-and-patterns-of-rebel-recruitment": {
+    "doi": "10.1080/09636412.2025.2467148",
+    "publishedUrl": "https://doi.org/10.1080/09636412.2025.2467148",
+    "publishedTitle": "Veterans, Novices, and Patterns of Rebel Recruitment",
+    "journal": "Security Studies",
+    "publishedYear": 2025,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2022-why-states-arm-and-why-they-sometimes-do-so-together": {
+    "doi": "10.1093/isr/viae031",
+    "publishedUrl": "https://doi.org/10.1093/isr/viae031",
+    "publishedTitle": "Why States Arm and Why, Sometimes, They Do So Together",
+    "journal": "International Studies Review",
+    "publishedYear": 2024,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2023-arms-purchases-in-the-baltic-states-and-transfers-to-ukraine-balancing-national": {
+    "doi": "10.1080/14751798.2024.2315810",
+    "publishedUrl": "https://doi.org/10.1080/14751798.2024.2315810",
+    "publishedTitle": "Arms acquisition in the Baltic States and transfers to Ukraine: balancing national security",
+    "journal": "Defense and Security Analysis",
+    "publishedYear": 2024,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2023-credibility-in-crises-how-patrons-reassure-in-crises": {
+    "doi": "10.1093/isq/sqae062",
+    "publishedUrl": "https://doi.org/10.1093/isq/sqae062",
+    "publishedTitle": "Credibility in Crises: How Patrons Reassure Their Allies",
+    "journal": "International Studies Quarterly",
+    "publishedYear": 2024,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2023-eu-arms-collaboration-and-procurement-the-impact-of-the-war-in-ukraine": {
+    "doi": "10.1080/01442872.2024.2324141",
+    "publishedUrl": "https://doi.org/10.1080/01442872.2024.2324141",
+    "publishedTitle": "EU arms collaboration, procurement, and offsets: the impact of the war in Ukraine",
+    "journal": "Policy Studies",
+    "publishedYear": 2024,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2023-parliamentary-acceptance-of-eu-military-operations-in-member-states-beyond-rubbe": {
+    "doi": "10.1080/07036337.2024.2416685",
+    "publishedUrl": "https://doi.org/10.1080/07036337.2024.2416685",
+    "publishedTitle": "Parliamentary acceptability of EU military deployments in member states: beyond rubber-stamping?",
+    "journal": "Journal of European Integration",
+    "publishedYear": 2024,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2023-the-intelligence-community-as-a-normative-actor-under-international-law": {
+    "doi": "10.2139/ssrn.4952054",
+    "publishedUrl": "https://doi.org/10.2139/ssrn.4952054",
+    "publishedTitle": "The Intelligence Community as a Normative Actor under International Law",
+    "journal": "SSRN Electronic Journal",
+    "publishedYear": 2024,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2024-developing-digital-peripheries-for-strategic-advantage-competitive-cyber-capacit": {
+    "doi": "10.1080/13523260.2024.2430021",
+    "publishedUrl": "https://doi.org/10.1080/13523260.2024.2430021",
+    "publishedTitle": "Developing digital “peripheries\" for strategic advantage: Capacity building assistance and strategic competition in Africa",
+    "journal": "Contemporary Security Policy",
+    "publishedYear": 2024,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2024-multilateral-maritime-exercises-and-strategic-change-the-american-case-and-beyon": {
+    "doi": "10.1093/jogss/ogae017",
+    "publishedUrl": "https://doi.org/10.1093/jogss/ogae017",
+    "publishedTitle": "Multilateral Maritime Exercises, Grand Strategy, and Strategic Change: The American Case and Beyond",
+    "journal": "Journal of Global Security Studies",
+    "publishedYear": 2024,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2024-russian-nuclear-roulette-elites-and-public-debates-on-nuclear-weapons-in-moscow": {
+    "doi": "10.1080/10736700.2024.2435706",
+    "publishedUrl": "https://doi.org/10.1080/10736700.2024.2435706",
+    "publishedTitle": "Russian nuclear roulette? Elites and public debates on nuclear weapons in Moscow after Ukraine",
+    "journal": "The Nonproliferation Review",
+    "publishedYear": 2023,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2025-russian-countertrade-as-a-mechanism-for-promoting-arms-sales-and-diplomatic-infl": {
+    "doi": "10.1017/eis.2025.10014",
+    "publishedUrl": "https://doi.org/10.1017/eis.2025.10014",
+    "publishedTitle": "Russian counter-trade as a mechanism for promoting arms sales and diplomatic influence",
+    "journal": "European Journal of International Security",
+    "publishedYear": 2025,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2026-living-with-the-nuclear-spatio-temporal-entanglements-nuclear-cultures-and-the-a": {
+    "doi": "10.5194/sand-2025-7",
+    "publishedUrl": "https://doi.org/10.5194/sand-2025-7",
+    "publishedTitle": "Living with the nuclear: Spatio-temporal entanglements, nuclear cultures, and the afterlives of uranium mining",
+    "journal": null,
+    "publishedYear": 2026,
+    "source": "openalex",
+    "auto": true,
+    "verifiedOn": "2026-06-16"
+  },
+  "2026-living-with-the-nuclear-spatio-temporal-entanglements-nuclear-cultures-and-the-a-2": {
+    "doi": "10.5194/sand-2025-7",
+    "publishedUrl": "https://doi.org/10.5194/sand-2025-7",
+    "publishedTitle": "Living with the nuclear: Spatio-temporal entanglements, nuclear cultures, and the afterlives of uranium mining",
+    "journal": null,
+    "publishedYear": 2026,
+    "source": "openalex",
+    "auto": true,
     "verifiedOn": "2026-06-16"
   },
   "JPW2019-a-critical-appraisal-of-visegrad-4-security-potential": {

@@ -98,16 +98,35 @@ case: a 2019 paper on European perceptions of nuclear deterrence proposed
 against a 2024 piece on European strategic autonomy — same author (Tara
 Varma), shared theme, but a different work. It was rejected.
 
+## Confidence tiers
+
+A candidate's `band` (set by the matcher from the title score) decides how
+it is handled:
+
+- **High (title ≥ 0.80)** — a near-verbatim title by the resolved author.
+  Treated as high-confidence and **auto-confirmed**
+  (`confirm-publication.mjs --auto-high`): recorded in `paperLinks.json` and
+  published, each carrying the "Early-access preview" badge that warns it
+  may be inaccurate. Shown to the maintainer for information, who can reject
+  any. (Auto-confirmed entries carry `"auto": true` in `paperLinks.json`.)
+- **Review (0.50–0.79)** — titles that drifted on publication. Left in the
+  queue for a human accept/reject. An LLM judge to pre-assess these is a
+  possible later addition (kept off for now).
+
+The threshold is the maintainer's chosen policy: high enough that the
+auto-published set is near-exact, low enough that genuine same-title
+publications are not held up.
+
 ## The scheduled refresh
 
 [`.github/workflows/sync-publications.yml`](../.github/workflows/sync-publications.yml)
-runs the matcher monthly (and on manual dispatch), and opens a PR on
-`publications-sync/auto` with the refreshed queue when it changes.
-**That PR does not auto-merge** — unlike the orcid / bios / roadmap
-syncs, the queue is a review surface, not data the site consumes. Read
-the proposals, confirm the good ones with `confirm-publication.mjs`, and
-merge the PR only to keep the committed queue current (it does not change
-the live site).
+runs monthly (and on manual dispatch): it runs the matcher, auto-confirms
+the high band (`--auto-high`), and opens a PR on `publications-sync/auto`
+that it **auto-merges**, so the high-confidence matches go live and the
+queue is refreshed. The PR body lists the auto-confirmed matches for
+information and the review band for a human decision. Auto-merging does
+**not** publish the review band — those stay queue data until confirmed by
+hand.
 
 ## Growing coverage
 
