@@ -29,6 +29,12 @@
 const archive = require("./archiveProgrammesEnriched.js")();
 const indico = require("./indico.json");
 const peopleIndexFn = require("./peopleIndex.js");
+// Confirmed external publications (#805): a human-reviewed map of paper slug →
+// { publishedUrl, doi, publishedTitle, journal, publishedYear }. Matches are
+// proposed by scripts/match-publications.mjs into a review queue and only
+// land here once confirmed; merged onto papers below so the landing page can
+// link the published version. Empty {} until the first confirmed match.
+const paperLinks = require("./paperLinks.json");
 
 // ── Name normalisation ──────────────────────────────────────────────────
 const HONORIFIC = /^(prof(?:essor)?\.?|dr\.?|sir|dame|mr\.?|mrs\.?|ms\.?|mx\.?)\s+/;
@@ -392,6 +398,16 @@ for (const p of papers) {
   while (slugSeen[slug]) slug = `${base}-${i++}`;
   slugSeen[slug] = true;
   p.slug = slug;
+}
+
+// Merge confirmed external publications onto papers by slug (#805). A paper
+// with a confirmed publishedUrl/doi gains a landing page even when it has no
+// abstract, turning the archive into a "presented at ESSC → published here" hub.
+for (const p of papers) {
+  const link = paperLinks[p.slug];
+  if (!link) continue;
+  p.publishedUrl = link.publishedUrl || p.publishedUrl;
+  p.doi = link.doi || p.doi;
 }
 
 // ── Aggregate speakers ──────────────────────────────────────────────────
