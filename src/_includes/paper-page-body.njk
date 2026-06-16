@@ -29,13 +29,15 @@
          BibTeX come from Crossref via scripts/enrich-publications.mjs; any
          field may be absent. The published byline can differ from the
          conference presenters. #}
+      {%- set _isPreprint = paper.publishedType and ("preprint" in paper.publishedType | lower or "working" in paper.publishedType | lower) -%}
       <aside class="pub-match" aria-labelledby="pub-match-h-{{ paper.slug }}">
         <div class="pub-match-head">
           <span class="pub-match-badge">Beta feature</span>
           <h2 class="pub-match-title" id="pub-match-h-{{ paper.slug }}">Published version</h2>
+          {%- if paper.publishedType %}<span class="pub-type-chip">{{ paper.publishedType }}</span>{% endif %}
         </div>
         <p class="pub-match-lead">
-          Presented at <a href="{{ paper.conferenceUrl }}">{{ paper.conferenceLabel }} {{ paper.year }}</a>, later published{% if paper.publishedJournal %} in <em lang="en">{{ paper.publishedJournal }}</em>{% endif %}{% if paper.publishedYear %} ({{ paper.publishedYear }}){% endif %}.
+          Presented at <a href="{{ paper.conferenceUrl }}">{{ paper.conferenceLabel }} {{ paper.year }}</a>, {% if _isPreprint %}later released as a preprint{% elif paper.publishedJournal %}later published in <em lang="en">{{ paper.publishedJournal }}</em>{% else %}later published{% endif %}{% if paper.publishedYear %} ({{ paper.publishedYear }}){% endif %}.
         </p>
         <dl class="pub-match-meta">
           {%- if paper.publishedAuthors.length %}
@@ -43,6 +45,8 @@
           {%- endif %}
           {%- if paper.publishedJournal %}
           <dt>Outlet</dt><dd lang="en">{{ paper.publishedJournal }}{% if paper.publishedVolume %}, vol.&nbsp;{{ paper.publishedVolume }}{% endif %}{% if paper.publishedIssue %}, no.&nbsp;{{ paper.publishedIssue }}{% endif %}{% if paper.publishedPages %}, pp.&nbsp;{{ paper.publishedPages }}{% endif %}</dd>
+          {%- elif paper.publishedPublisher %}
+          <dt>Outlet</dt><dd lang="en">{{ paper.publishedPublisher }}</dd>
           {%- endif %}
           {%- if paper.doi %}
           <dt>DOI</dt><dd><a href="https://doi.org/{{ paper.doi }}">{{ paper.doi }}</a></dd>
