@@ -42,7 +42,7 @@ const locales = {
 
     nav: {
       home: "Home",
-      conferences: "Conferences",
+      conferences: "Annual Conference",
       navigator: "Navigator",
       programmes: "Activities",
       initiative: "The Initiative",
@@ -176,7 +176,7 @@ const locales = {
         c2025: "2025 — Thessaloniki",
         c2024: "2024 — Prague",
         allPast: "All past conferences",
-        navigator: "Conference Navigator",
+        navigator: "Anthology",
       },
       programmesItems: {
         netsec: "NetSec Summer School",
@@ -317,7 +317,7 @@ const locales = {
       readFullAbstract: "Read full abstract",
       sourceNote: "Indico holds the authoritative programme. This grid is a daily snapshot.",
       viewOnIndico: "View the event on Indico",
-      speakersLink: "Conference Navigator",
+      speakersLink: "Anthology",
       // Livestream signpost + per-session pill (replaces the old standalone
       // "Livestreamed sessions" block).
       livestreamPill: "Livestream",
@@ -408,7 +408,7 @@ const locales = {
       // on their profile page. esscContributions is the "see also" link to
       // their filterable entry in the Conference Navigator.
       esscPapers: "Conference papers",
-      esscContributions: "View in the Conference Navigator",
+      esscContributions: "View in the Anthology",
     },
 
     registrationBadge: {
@@ -430,17 +430,20 @@ const locales = {
     },
 
     navigator: {
-      // Conference Navigator (#756): the unified archive over the ESSC
-      // corpus. These cover the page header + the by-person / by-paper view
-      // toggle; the two panels reuse the speakers.* and papers.* blocks below.
-      eyebrow: "The ESSC corpus",
-      title: "Conference Navigator",
-      lead: "Everyone who has presented at the European Security Studies Conference since 2017, and every paper they gave, now with abstracts, citation details and links to the published versions where we have them. Browse by person or by paper, and filter by year or theme.",
+      // The European Security Studies Anthology (#756): the unified archive
+      // over every EISS annual conference and workshop. Short form "Anthology"
+      // / "the Anthology". (The i18n key stays `navigator` and the URLs stay
+      // /speakers + /papers; only the public name changed.) These cover the
+      // page header + the by-person / by-paper view toggle; the two panels
+      // reuse the speakers.* and papers.* blocks below.
+      eyebrow: "EISS conferences & workshops",
+      title: "The European Security Studies Anthology",
+      lead: "Every paper presented at an EISS annual conference or workshop since 2017, and everyone who presented it. Many now carry an abstract, citation details and a link to the published version where we have one. Browse by person or by paper, and filter by year or theme.",
       byPerson: "By person",
       byPaper: "By paper",
-      promoBody: "The full record of the European Security Studies Conference: every speaker and every paper since 2017, with abstracts, citation details and links to the published versions. Browse by person or by paper.",
-      cta: "Open the Conference Navigator",
-      initiativeLink: "Browse every ESSC speaker and paper in the Conference Navigator",
+      promoBody: "The full record of EISS scholarship: every speaker and every paper from our annual conferences and workshops since 2017, with abstracts, citation details and links to the published versions. Browse by person or by paper.",
+      cta: "Open the Anthology",
+      initiativeLink: "Browse every speaker and paper in the Anthology",
     },
 
     speakers: {
@@ -546,7 +549,7 @@ const locales = {
 
     nav: {
       home: "Accueil",
-      conferences: "Conférences",
+      conferences: "Conférence annuelle",
       navigator: "Navigateur",
       programmes: "Activités",
       initiative: "L'Initiative",
@@ -680,7 +683,7 @@ const locales = {
         c2025: "2025 — Thessalonique",
         c2024: "2024 — Prague",
         allPast: "Toutes les conférences passées",
-        navigator: "Navigateur de la conférence",
+        navigator: "Anthologie",
       },
       programmesItems: {
         netsec: "École d'été NetSec",
@@ -788,7 +791,7 @@ const locales = {
       readFullAbstract: "Lire le résumé complet",
       sourceNote: "Indico fait foi pour le programme. Cette grille en est un instantané quotidien.",
       viewOnIndico: "Voir l'événement sur Indico",
-      speakersLink: "Navigateur de la conférence",
+      speakersLink: "Anthologie",
       livestreamPill: "En direct",
       livestreamNote: "Les sessions plénières sont diffusées en direct, signalées ci-dessous.",
       livestreamNoteCta: "Suivre en ligne sur Indico",
@@ -850,7 +853,7 @@ const locales = {
       recentPublications: "Publications récentes",
       backToPeople: "Retour à l'équipe",
       esscPapers: "Communications en conférence",
-      esscContributions: "Voir dans le Navigateur de la conférence",
+      esscContributions: "Voir dans l'Anthologie",
     },
 
     registrationBadge: {
@@ -866,14 +869,14 @@ const locales = {
     },
 
     navigator: {
-      eyebrow: "Le corpus de l'ESSC",
-      title: "Navigateur de la conférence",
-      lead: "Toutes les personnes ayant présenté à l'European Security Studies Conference depuis 2017, et chaque communication donnée, désormais avec les résumés, les références de citation et des liens vers les versions publiées lorsque nous en disposons. Parcourez par personne ou par communication, et filtrez par année ou par thème.",
+      eyebrow: "Conférences et ateliers de l'EISS",
+      title: "L'Anthologie des études de sécurité européennes",
+      lead: "Chaque communication présentée lors d'une conférence annuelle ou d'un atelier de l'EISS depuis 2017, et toutes les personnes qui les ont présentées. Beaucoup comportent désormais un résumé, des références de citation et un lien vers la version publiée lorsque nous en disposons. Parcourez par personne ou par communication, et filtrez par année ou par thème.",
       byPerson: "Par personne",
       byPaper: "Par communication",
-      promoBody: "Le relevé complet de l'European Security Studies Conference : chaque intervenant et chaque communication depuis 2017, avec les résumés, les références de citation et des liens vers les versions publiées. Parcourez par personne ou par communication.",
-      cta: "Ouvrir le Navigateur de la conférence",
-      initiativeLink: "Parcourez chaque intervenant et chaque communication de l'ESSC dans le Navigateur de la conférence",
+      promoBody: "Le relevé complet des travaux de l'EISS : chaque intervenant et chaque communication de nos conférences annuelles et ateliers depuis 2017, avec les résumés, les références de citation et des liens vers les versions publiées. Parcourez par personne ou par communication.",
+      cta: "Ouvrir l'Anthologie",
+      initiativeLink: "Parcourez chaque intervenant et chaque communication dans l'Anthologie",
     },
 
     speakers: {
@@ -964,7 +967,7 @@ const locales = {
 
     nav: {
       home: "Startseite",
-      conferences: "Konferenzen",
+      conferences: "Jahreskonferenz",
       navigator: "Navigator",
       programmes: "Aktivitäten",
       initiative: "Die Initiative",
@@ -1098,7 +1101,7 @@ const locales = {
         c2025: "2025 — Thessaloniki",
         c2024: "2024 — Prag",
         allPast: "Alle vergangenen Konferenzen",
-        navigator: "Konferenz-Navigator",
+        navigator: "Anthologie",
       },
       programmesItems: {
         netsec: "NetSec Sommerschule",
@@ -1206,7 +1209,7 @@ const locales = {
       readFullAbstract: "Vollständiges Abstract lesen",
       sourceNote: "Indico ist die maßgebliche Quelle für das Programm. Dieses Raster ist ein tägliches Abbild.",
       viewOnIndico: "Veranstaltung auf Indico ansehen",
-      speakersLink: "Konferenz-Navigator",
+      speakersLink: "Anthologie",
       livestreamPill: "Livestream",
       livestreamNote: "Die Plenarsitzungen werden live übertragen, unten gekennzeichnet.",
       livestreamNoteCta: "Online auf Indico teilnehmen",
@@ -1268,7 +1271,7 @@ const locales = {
       recentPublications: "Neueste Veröffentlichungen",
       backToPeople: "Zurück zu den Personen",
       esscPapers: "Konferenzbeiträge",
-      esscContributions: "Im Konferenz-Navigator ansehen",
+      esscContributions: "In der Anthologie ansehen",
     },
 
     registrationBadge: {
@@ -1284,14 +1287,14 @@ const locales = {
     },
 
     navigator: {
-      eyebrow: "Das ESSC-Korpus",
-      title: "Konferenz-Navigator",
-      lead: "Alle Personen, die seit 2017 auf der European Security Studies Conference vorgetragen haben, und jeder Beitrag, nun mit Abstracts, Zitationsangaben und Links zu den veröffentlichten Fassungen, soweit vorhanden. Durchsuchen Sie nach Person oder nach Beitrag und filtern Sie nach Jahr oder Thema.",
+      eyebrow: "EISS-Konferenzen und -Workshops",
+      title: "Die Anthologie der europäischen Sicherheitsstudien",
+      lead: "Jeder Beitrag, der seit 2017 auf einer EISS-Jahreskonferenz oder einem Workshop vorgestellt wurde, und alle, die ihn vorgestellt haben. Viele tragen inzwischen ein Abstract, Zitationsangaben und einen Link zur veröffentlichten Fassung, soweit vorhanden. Durchsuchen Sie nach Person oder nach Beitrag und filtern Sie nach Jahr oder Thema.",
       byPerson: "Nach Person",
       byPaper: "Nach Beitrag",
-      promoBody: "Die vollständige Aufzeichnung der European Security Studies Conference: jeder Vortragende und jeder Beitrag seit 2017, mit Abstracts, Zitationsangaben und Links zu den veröffentlichten Fassungen. Durchsuchen Sie nach Person oder nach Beitrag.",
-      cta: "Konferenz-Navigator öffnen",
-      initiativeLink: "Durchsuchen Sie jeden ESSC-Vortragenden und jeden Beitrag im Konferenz-Navigator",
+      promoBody: "Die vollständige Aufzeichnung der EISS-Arbeiten: jeder Vortragende und jeder Beitrag unserer Jahreskonferenzen und Workshops seit 2017, mit Abstracts, Zitationsangaben und Links zu den veröffentlichten Fassungen. Durchsuchen Sie nach Person oder nach Beitrag.",
+      cta: "Anthologie öffnen",
+      initiativeLink: "Durchsuchen Sie jeden Vortragenden und jeden Beitrag in der Anthologie",
     },
 
     speakers: {
