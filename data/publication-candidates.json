@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "slug": "2023-how-russia-s-war-on-ukraine-has-an-impact-on-the-eu-s-nuclear-disarmament-policy",
+    "paperTitle": "How Russia's War on Ukraine has an Impact on the EU's Nuclear Disarmament Policy",
+    "paperYear": 2023,
+    "conference": "EISS 2023",
+    "matchedVia": "openalex",
+    "member": null,
+    "candidateTitle": "Russia’s War on Ukraine",
+    "candidateYear": 2023,
+    "journal": "Contributions to political science",
+    "doi": "10.1007/978-3-031-32221-1",
+    "publishedUrl": "https://doi.org/10.1007/978-3-031-32221-1",
+    "titleScore": 0.533,
+    "band": "review",
+    "verified": false
+  }
+]
