@@ -34,6 +34,12 @@
       {%- endfor %}
     </select>
   </div>
+  <div class="speaker-field speaker-field--check">
+    <label class="speaker-field-label--check" for="paper-published">
+      <input type="checkbox" id="paper-published" data-paper-published data-label="{{ p18n.publishedOnly }}">
+      {{ p18n.publishedOnly }}
+    </label>
+  </div>
   <button type="button" class="btn btn-sm speaker-clear" data-paper-clear hidden>{{ p18n.clear }}</button>
 </div>
 
@@ -52,7 +58,8 @@
       {% if p.slug %}id="paper-{{ p.slug }}"{% endif %}
       data-year="{{ p.year }}"
       data-themes="{{ p.theme | join('|') }}"
-      data-search="{{ p.title }} {{ p.authors | join(' ') }} {{ p.affiliations | join(' ') }}">
+      data-search="{{ p.title }} {{ p.authors | join(' ') }} {{ p.affiliations | join(' ') }}"
+      {% if p.publishedUrl %}data-published="1"{% endif %}>
     <article class="paper-card">
       <h2 class="paper-title" lang="en">{% if p.paperUrl %}<a href="{{ p.paperUrl }}">{{ p.title }}</a>{% else %}{{ p.title }}{% endif %}{%- if p.publishedUrl %}<span class="paper-pub-chip" lang="en" title="A published version of this paper exists">Published</span>{% endif %}</h2>
       {%- if p.authorsLinked.length %}
