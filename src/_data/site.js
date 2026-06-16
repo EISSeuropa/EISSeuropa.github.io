@@ -18,10 +18,16 @@ module.exports = {
     twitterHandle: "@EISSnetwork",
     linkedin: "https://www.linkedin.com/company/eiss-europa/",
   },
+  // Top-nav order is flagship → identity → rest: the Annual Conference (the
+  // draw most visitors come for), then other Events, then who EISS is, the
+  // People, and the Membership call to action last. The Anthology (the
+  // /speakers + /papers archive) is intentionally NOT in the top nav; it is
+  // reached from the conference pages, /past, the footer and the homepage
+  // promo. `text` here is a fallback; the visible label comes from
+  // i18n.js → nav.<key>.
   nav: [
     { href: "/", text: "Home", key: "home" },
-    { href: "/past.html", text: "Conferences", key: "conferences" },
-    { href: "/speakers.html", text: "Navigator", key: "navigator" },
+    { href: "/past.html", text: "Annual Conference", key: "conferences" },
     { href: "/events.html", text: "Events", key: "events" },
     { href: "/initiative.html", text: "The Initiative", key: "initiative" },
     { href: "/board.html", text: "People", key: "people" },
