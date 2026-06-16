@@ -32,6 +32,13 @@ import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 const corpus = require("../src/_data/corpus.js");
 const orcidMembers = require("../src/_data/orcidWorks.json");
+// Human-validated NON-matches: { slug: [doi, …] }. A reviewer who decides a
+// proposal is wrong records it here (confirm-publication.mjs --reject) so the
+// matcher stops re-proposing that (paper, doi) pair. Keyed on the pair, not
+// the paper, so a genuinely better match can still surface later.
+let rejects = {};
+try { rejects = require("../data/publication-rejects.json"); } catch { /* none yet */ }
+const isRejected = (slug, doi) => (rejects[slug] || []).includes(doi);
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = join(ROOT, "data", "publication-candidates.json");
@@ -106,6 +113,7 @@ async function orcidPhase() {
       let best = null;
       for (const w of works) {
         if (w.year && (w.year < p.year - 1 || w.year > p.year + 6)) continue;
+        if (isRejected(p.slug, w.doi)) continue; // human-validated non-match
         const score = dice(p.title, w.title);
         if (!best || score > best.score) best = { w, score };
       }
@@ -183,6 +191,7 @@ async function openAlexPhase() {
     let best = null;
     for (const w of pool) {
       if (w.year && (w.year < p.year - 1 || w.year > p.year + 6)) continue; // publication-lag window
+      if (isRejected(p.slug, w.doi)) continue; // human-validated non-match
       const score = dice(p.title, w.title);
       if (!best || score > best.score) best = { w, score };
     }
