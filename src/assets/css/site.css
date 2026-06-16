@@ -6183,9 +6183,13 @@ a.joint-orgs-card:hover .joint-orgs-name {
   display: block;
   font-weight: 500;
   line-height: 1.4;
-  color: var(--accent);
+  color: var(--text);
   text-decoration: none;
 }
+/* Only the linked variant (a publication with a DOI, or a paper with a
+   landing page) takes the accent colour, so a plain-text entry doesn't read
+   as clickable. Applies to both the ORCID works and the conference papers. */
+a.profile-pub-title { color: var(--accent); }
 a.profile-pub-title:hover { text-decoration: underline; }
 .profile-pub-meta {
   display: block;
