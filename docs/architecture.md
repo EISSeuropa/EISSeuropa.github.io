@@ -61,16 +61,18 @@ src/*.njk (pages)  +  src/_includes/*.njk (components)  +  src/_data/* (data)
   per milestone, drives the `/roadmap` progress bars).
 - **`sync-orcid.yml`** → `sync-orcid.py` → `orcidWorks.json` (members'
   recent public ORCID works; weekly).
-- **`sync-publications.yml`** → `match-publications.mjs` →
-  `data/publication-candidates.json` (proposed ESSC-paper-to-publication
-  matches; monthly). See `publication-matching.md`.
+- **`sync-publications.yml`** → `match-publications.mjs` +
+  `confirm-publication.mjs --auto-high` → `paperLinks.json` (high-confidence
+  matches, published) + `data/publication-candidates.json` (review band,
+  queued; monthly). See `publication-matching.md`.
 - **`scheduled-rebuild.yml`** redeploys daily so build-time values
   (countdown, registration status) don't drift between content changes.
 
 Each sync opens an auto-PR (auto-merge armed, CI-gated) rather than
-pushing to `master` — except **`sync-publications.yml`**, whose PR is a
-review surface (a wrong match mis-cites), so it does not auto-merge:
-accepted matches are recorded by hand with `confirm-publication.mjs`.
+pushing to `master`. `sync-publications.yml` auto-merges too, but only the
+**high-confidence** matches are published; its mid-confidence "review band"
+rides along as queue data and is published only when a human confirms it by
+hand (`confirm-publication.mjs <slug>`), since a wrong match mis-cites.
 
 **`failure-alarm.yml`** watches those scheduled workflows plus the
 deploy: on a `failure` conclusion it opens (or threads a comment onto)
