@@ -3460,6 +3460,26 @@ a.programme-live-tag:focus-visible {
 .speaker-field--search {
   flex: 1 1 16rem;
 }
+.speaker-field--check {
+  justify-content: flex-end;
+}
+.speaker-field-label--check {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  cursor: pointer;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+}
+.speaker-field-label--check input[type="checkbox"] {
+  width: 1em;
+  height: 1em;
+  accent-color: var(--accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
 .speaker-field-label {
   font-size: var(--fs-xs);
   font-weight: 600;
