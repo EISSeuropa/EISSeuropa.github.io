@@ -128,4 +128,16 @@
   restore("theme", themeSel);
   restore("event", eventSel);
   apply();
+
+  // Deep-link to a specific person: ?person=<profile-slug> scrolls to their
+  // entry and opens their papers list. Only member entries carry an id.
+  var personSlug = new URL(window.location.href).searchParams.get("person");
+  if (personSlug) {
+    var personEl = document.getElementById("person-" + personSlug);
+    if (personEl) {
+      personEl.scrollIntoView({ behavior: "smooth", block: "center" });
+      var det = personEl.querySelector("details.speaker-papers");
+      if (det) det.open = true;
+    }
+  }
 })();
