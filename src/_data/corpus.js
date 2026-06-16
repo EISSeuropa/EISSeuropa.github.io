@@ -470,6 +470,8 @@ for (const paper of papers) {
       conferenceLabel: paper.conferenceLabel,
       conferenceUrl: paper.conferenceUrl,
       isSpeaker: a.isSpeaker,
+      slug: paper.slug || null,
+      paperUrl: paper.paperUrl || null,
     });
   }
 }
@@ -548,9 +550,17 @@ const editions = [...editionMap.values()]
   }))
   .sort((a, b) => (b.year || 0) - (a.year || 0) || a.display.localeCompare(b.display));
 
+// Reverse lookup: profileUrl → speaker entry. Used by board-profile-body.njk
+// to add a "Their ESSC papers →" link when the person is a known speaker.
+const speakerByProfileUrl = {};
+for (const s of speakers) {
+  if (s.profileUrl) speakerByProfileUrl[s.profileUrl] = s;
+}
+
 module.exports = {
   papers,
   speakers,
+  speakerByProfileUrl,
   letters,
   themes,
   // Exposed so paperIndex.js can resolve a paper author to their profile the

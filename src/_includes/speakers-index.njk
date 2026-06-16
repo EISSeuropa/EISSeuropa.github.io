@@ -59,7 +59,7 @@
     <h2 id="ltr-{{ s.letter }}" class="speaker-letter-h">{{ s.letter }}</h2>
   </li>
   {%- endif %}
-  <li class="speaker-entry" data-speaker-entry data-name="{{ s.display }}" data-themes="{{ s.themes | join('|') }}" data-events="{{ s.editionKeys | join('|') }}">
+  <li class="speaker-entry" {% if s.profileUrl %}id="person-{{ s.profileUrl | replace('/board/', '') | replace('.html', '') }}"{% endif %} data-speaker-entry data-name="{{ s.display }}" data-themes="{{ s.themes | join('|') }}" data-events="{{ s.editionKeys | join('|') }}">
     {%- if s.profileUrl %}
     <span class="speaker-headshot" aria-hidden="true">
       {%- if s.photo %}<img src="{{ s.photo }}" alt="" loading="lazy" width="48" height="48">
@@ -91,7 +91,8 @@
           {%- for p in s.papers %}
           <li>
             <span class="speaker-paper-conf"><a href="{{ p.conferenceUrl }}">{{ p.conferenceLabel }}{% if p.year %} {{ p.year }}{% endif %}</a></span>
-            <span class="speaker-paper-title" lang="en">{{ p.title }}</span>
+            {%- if p.paperUrl %}<a class="speaker-paper-title" href="{{ p.paperUrl }}" lang="en">{{ p.title }}</a>
+            {%- else %}<span class="speaker-paper-title" lang="en">{{ p.title }}</span>{% endif %}
           </li>
           {%- endfor %}
         </ul>
