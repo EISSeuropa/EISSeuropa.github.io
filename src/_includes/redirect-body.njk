@@ -23,3 +23,20 @@
     </article>
   </div>
 </section>
+
+{%- if redirectPreserveQuery %}
+{# Instant client-side redirect that PRESERVES the query string and hash (the
+   <head> meta-refresh is the no-JS fallback but can only hit the bare target).
+   Used by the Anthology moves (/speakers, /papers → /anthology) so old links
+   like ?person=, ?year= and #paper-<slug> still land in the right place.
+   redirectForceView pins the view (the /papers move opens the by-paper view). #}
+<script>
+(function () {
+  var u = new URL("{{ redirectTo }}", location.origin);
+  new URLSearchParams(location.search).forEach(function (v, k) { u.searchParams.set(k, v); });
+  {% if redirectForceView %}u.searchParams.set("view", "{{ redirectForceView }}");{% endif %}
+  u.hash = location.hash;
+  location.replace(u.pathname + u.search + u.hash);
+}());
+</script>
+{%- endif %}
