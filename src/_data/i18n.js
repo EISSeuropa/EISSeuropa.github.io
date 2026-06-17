@@ -444,6 +444,12 @@ const locales = {
       promoBody: "The full record of EISS scholarship: every speaker and every paper from our annual conferences and workshops since 2017, with abstracts, citation details and links to the published versions. Browse by person or by paper.",
       cta: "Open the Anthology",
       initiativeLink: "Browse every speaker and paper in the Anthology",
+      // Module-level "early access" notice, rendered once by archive-page.njk
+      // (so it covers /speakers and /papers in every locale). The FR/DE bodies
+      // also note that the individual paper pages are English-only.
+      earlyAccessBadge: "Early access",
+      earlyAccessBody: "The Anthology is an early-access preview. We are still filling it in, edition by edition, with abstracts, citation details and links to published versions, so some entries are still sparse. Found a gap or a mistake?",
+      earlyAccessCta: "Let us know",
     },
 
     speakers: {
@@ -877,6 +883,9 @@ const locales = {
       promoBody: "Le relevé complet des travaux de l'EISS : chaque intervenant et chaque communication de nos conférences annuelles et ateliers depuis 2017, avec les résumés, les références de citation et des liens vers les versions publiées. Parcourez par personne ou par communication.",
       cta: "Ouvrir l'Anthologie",
       initiativeLink: "Parcourez chaque intervenant et chaque communication dans l'Anthologie",
+      earlyAccessBadge: "Accès anticipé",
+      earlyAccessBody: "L'Anthologie est une version préliminaire en accès anticipé. Nous la complétons édition après édition (résumés, références de citation et liens vers les versions publiées), si bien que certaines entrées restent succinctes. Les pages individuelles des communications sont consultables en anglais. Vous avez repéré un manque ou une erreur ?",
+      earlyAccessCta: "Signalez-le-nous",
     },
 
     speakers: {
@@ -1295,6 +1304,9 @@ const locales = {
       promoBody: "Die vollständige Aufzeichnung der EISS-Arbeiten: jeder Vortragende und jeder Beitrag unserer Jahreskonferenzen und Workshops seit 2017, mit Abstracts, Zitationsangaben und Links zu den veröffentlichten Fassungen. Durchsuchen Sie nach Person oder nach Beitrag.",
       cta: "Anthologie öffnen",
       initiativeLink: "Durchsuchen Sie jeden Vortragenden und jeden Beitrag in der Anthologie",
+      earlyAccessBadge: "Vorabversion",
+      earlyAccessBody: "Die Anthologie ist eine Vorabversion mit frühem Zugang. Wir vervollständigen sie Konferenz für Konferenz mit Abstracts, Zitationsangaben und Links zu den veröffentlichten Fassungen, sodass einige Einträge noch lückenhaft sind. Die einzelnen Beitragsseiten sind auf Englisch verfügbar. Eine Lücke oder einen Fehler entdeckt?",
+      earlyAccessCta: "Sagen Sie uns Bescheid",
     },
 
     speakers: {

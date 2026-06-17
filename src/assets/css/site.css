@@ -1633,6 +1633,40 @@ h4 { font-size: var(--fs-lg); }
     var(--bg-elev);
 }
 
+/* Early-access notice on the Anthology index (#889 follow-on). An amber-left
+   callout echoing the "Beta feature" badge treatment used on paper pages. */
+.anthology-notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 0.75rem;
+  margin-bottom: var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--warning);
+  border-radius: var(--radius-md);
+  background: var(--bg-elev);
+}
+.anthology-notice-badge {
+  flex: none;
+  padding: 0.18em 0.7em;
+  border-radius: var(--radius-full);
+  background: var(--warning);
+  color: hsl(222 30% 8%);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.anthology-notice-text {
+  flex: 1 1 16rem;
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+.anthology-notice-text a { color: var(--accent); }
+
 /* /initiative hero brand banner — small full lockup (constellation +
    EiSS + tagline) above the eyebrow as a tasteful brand cue, NOT a
    poster. Width is set directly on the SVG (rather than on the
