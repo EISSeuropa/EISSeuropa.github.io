@@ -37,6 +37,14 @@
 <section class="section">
   <div class="container">
 
+    {# Module-level early-access notice. One element, every locale, via the
+       navigator i18n catalog; the FR/DE bodies also flag that the individual
+       paper pages are English-only. #}
+    <aside class="anthology-notice" role="note">
+      <span class="anthology-notice-badge">{{ n18n.earlyAccessBadge }}</span>
+      <p class="anthology-notice-text">{{ n18n.earlyAccessBody }} <a href="mailto:{{ site.contactEmail }}?subject=Anthology">{{ n18n.earlyAccessCta }}</a></p>
+    </aside>
+
     <div class="archive-toggle" role="tablist" aria-label="{{ n18n.title }}">
       <button type="button" role="tab" class="archive-tab" data-archive-tab="people"
               id="archive-tab-people" aria-controls="archive-panel-people"
