@@ -875,7 +875,13 @@
     "publishedYear": 2025,
     "pubType": "Journal article",
     "source": "manual",
-    "verifiedOn": "2026-06-17"
+    "verifiedOn": "2026-06-17",
+    "publishedAuthors": [
+      "Samuel M. Seitz",
+      "Elliot S. Ji"
+    ],
+    "pages": "1-23",
+    "publisher": "Informa UK Limited"
   },
   "2025-does-preeminence-in-emerging-and-military-technologies-matter-for-international": {
     "doi": "10.1080/09662839.2025.2568576",
@@ -885,6 +891,11 @@
     "publishedYear": 2025,
     "pubType": "Journal article",
     "source": "manual",
-    "verifiedOn": "2026-06-17"
+    "verifiedOn": "2026-06-17",
+    "publishedAuthors": [
+      "Zakir Rzazade"
+    ],
+    "pages": "1-18",
+    "publisher": "Informa UK Limited"
   }
 }

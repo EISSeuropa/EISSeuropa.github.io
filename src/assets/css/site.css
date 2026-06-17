@@ -3493,6 +3493,12 @@ a.programme-live-tag:focus-visible {
 .pub-match-lead {
   margin: 0 0 var(--space-3);
 }
+/* The published title, shown verbatim because it often differs from the
+   conference paper's title. */
+.pub-match-pubtitle {
+  margin: 0 0 var(--space-3);
+  font-weight: 600;
+}
 /* Outlet detail: a compact label/value grid (authors, journal+vol/issue/pages,
    DOI). Stacks to one column on narrow screens. */
 .pub-match-meta {
