@@ -1,0 +1,49 @@
+{# Photo gallery for the 2026 European Security Studies Conference (Stockholm).
+   Shared across the three /2026 locale pages: the figures (image + EN alt) are
+   identical everywhere, and the section heading comes from a `galleryTitle`
+   variable each page sets in its own language before the include. Reuses the
+   `.photo-gallery` component already defined for /2025, so no new CSS.
+   Photos by the organisers; three responsive sizes generated with sips. #}
+<section class="section-tight" aria-labelledby="gallery-2026-title">
+  <div class="container">
+    <h2 id="gallery-2026-title" style="margin-bottom: var(--space-5);">{{ galleryTitle }}</h2>
+    <div class="photo-gallery">
+      <figure>
+        <img src="/assets/images/2026/essc2026-06.jpg"
+             srcset="/assets/images/2026/essc2026-06-480.jpg 480w,
+                     /assets/images/2026/essc2026-06-960.jpg 960w,
+                     /assets/images/2026/essc2026-06.jpg 1500w"
+             sizes="(max-width: 720px) 100vw, 18rem"
+             alt="Lieutenant General Ulf Thomas Nilsson delivers the keynote at Stockholm University."
+             width="1500" height="1127" loading="lazy">
+      </figure>
+      <figure>
+        <img src="/assets/images/2026/essc2026-10.jpg"
+             srcset="/assets/images/2026/essc2026-10-480.jpg 480w,
+                     /assets/images/2026/essc2026-10-960.jpg 960w,
+                     /assets/images/2026/essc2026-10.jpg 1500w"
+             sizes="(max-width: 720px) 100vw, 18rem"
+             alt="The 'Contemporary and Future Warfare' panel in session."
+             width="1500" height="1089" loading="lazy">
+      </figure>
+      <figure>
+        <img src="/assets/images/2026/essc2026-08.jpg"
+             srcset="/assets/images/2026/essc2026-08-480.jpg 480w,
+                     /assets/images/2026/essc2026-08-960.jpg 960w,
+                     /assets/images/2026/essc2026-08.jpg 1500w"
+             sizes="(max-width: 720px) 100vw, 18rem"
+             alt="The audience in the auditorium during a conference session."
+             width="1500" height="960" loading="lazy">
+      </figure>
+      <figure>
+        <img src="/assets/images/2026/essc2026-03.jpg"
+             srcset="/assets/images/2026/essc2026-03-480.jpg 480w,
+                     /assets/images/2026/essc2026-03-960.jpg 960w,
+                     /assets/images/2026/essc2026-03.jpg 1500w"
+             sizes="(max-width: 720px) 100vw, 18rem"
+             alt="Delegates between sessions in the foyer at Stockholm University."
+             width="1500" height="1125" loading="lazy">
+      </figure>
+    </div>
+  </div>
+</section>

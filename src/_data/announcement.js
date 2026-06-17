@@ -24,9 +24,9 @@
  */
 
 const sharedImage = {
-  src: "/assets/images/8e43301e-7945-4a0c-aac2-04719ac702a8-800x450.jpg",
-  width: 800,
-  height: 450,
+  src: "/assets/images/2026/essc2026-06-960.jpg",
+  width: 960,
+  height: 721,
 };
 
 module.exports = {
@@ -38,7 +38,7 @@ module.exports = {
     headline: "The European Security Studies Conference closes in Stockholm",
     body: [
       'The annual conference has closed two days of panels and roundtables at Stockholm University. From this 2026 edition it carries a new name, the <strong>European Security Studies Conference</strong> (ESSC), marking its first year jointly organised by the <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">COST Action NetSec</a>, the European Initiative for Security Studies (EISS), and Stockholm University.',
-      'The full programme, the keynote and a selection of session recordings are now on the <a href="/2026.html">2026 conference page</a>.',
+      'The full programme, the conference film and a photo gallery from the event are now on the <a href="/2026.html">2026 conference page</a>.',
     ],
     cta: {
       label: "See the 2026 conference",
@@ -47,8 +47,8 @@ module.exports = {
     },
     image: {
       ...sharedImage,
-      alt: "Stockholm, host city of the 2026 European Security Studies Conference.",
-      caption: "Stockholm University hosted the 2026 European Security Studies Conference.",
+      alt: "The keynote at the 2026 European Security Studies Conference, Stockholm University.",
+      caption: "Lieutenant General Ulf Thomas Nilsson, Director of Military Intelligence and Security, gives the keynote at Stockholm University.",
     },
   },
 
@@ -57,7 +57,7 @@ module.exports = {
     headline: "La Conférence européenne d'études de sécurité s'achève à Stockholm",
     body: [
       'La conférence annuelle vient de clore deux journées de panels et de tables rondes à l\'Université de Stockholm. Depuis cette édition 2026, elle porte un nouveau nom, la <strong>Conférence européenne d\'études de sécurité</strong> (European Security Studies Conference, ESSC), et marque sa première année d\'organisation conjointe par l\'<a href="https://netsec-cost.eu/" target="_blank" rel="noopener">Action COST NetSec</a>, l\'Initiative européenne pour les études de sécurité (EISS) et l\'Université de Stockholm.',
-      'Le programme complet, la conférence inaugurale et une sélection d\'enregistrements de sessions sont désormais disponibles sur la <a href="/2026.fr.html">page de la conférence 2026</a>.',
+      'Le programme complet, le film de la conférence et une galerie de photos de l\'événement sont désormais disponibles sur la <a href="/2026.fr.html">page de la conférence 2026</a>.',
     ],
     cta: {
       label: "Voir la conférence 2026",
@@ -66,8 +66,8 @@ module.exports = {
     },
     image: {
       ...sharedImage,
-      alt: "Stockholm, ville hôte de la Conférence européenne d'études de sécurité 2026.",
-      caption: "L'Université de Stockholm a accueilli la Conférence européenne d'études de sécurité 2026.",
+      alt: "La conférence inaugurale de la Conférence européenne d'études de sécurité 2026, Université de Stockholm.",
+      caption: "Le général de corps d'armée Ulf Thomas Nilsson, directeur du renseignement et de la sécurité militaires, prononce la conférence inaugurale à l'Université de Stockholm.",
     },
   },
 
@@ -76,7 +76,7 @@ module.exports = {
     headline: "Die European Security Studies Conference geht in Stockholm zu Ende",
     body: [
       'Die Jahreskonferenz hat zwei Tage mit Panels und Round Tables an der Universität Stockholm abgeschlossen. Seit dieser Ausgabe 2026 trägt sie einen neuen Namen, die <strong>European Security Studies Conference</strong> (ESSC), und wird erstmals gemeinsam von der <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">COST-Aktion NetSec</a>, der Europäischen Initiative für Sicherheitsstudien (EISS) und der Universität Stockholm ausgerichtet.',
-      'Das vollständige Programm, die Keynote und eine Auswahl an Sitzungsaufzeichnungen sind jetzt auf der <a href="/2026.de.html">Seite der Konferenz 2026</a> verfügbar.',
+      'Das vollständige Programm, der Konferenzfilm und eine Fotogalerie der Veranstaltung sind jetzt auf der <a href="/2026.de.html">Seite der Konferenz 2026</a> verfügbar.',
     ],
     cta: {
       label: "Zur Konferenz 2026",
@@ -85,8 +85,8 @@ module.exports = {
     },
     image: {
       ...sharedImage,
-      alt: "Stockholm, Gastgeberstadt der European Security Studies Conference 2026.",
-      caption: "Die Universität Stockholm war Gastgeberin der European Security Studies Conference 2026.",
+      alt: "Die Keynote der European Security Studies Conference 2026, Universität Stockholm.",
+      caption: "Generalleutnant Ulf Thomas Nilsson, Direktor des militärischen Nachrichten- und Sicherheitsdienstes, hält die Keynote an der Universität Stockholm.",
     },
   },
 };

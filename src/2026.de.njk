@@ -68,6 +68,9 @@ alternates:
 {# Endgültiges Programm, aus Indico in src/_data/archiveProgrammes.js
    eingefroren, um es vor späteren Indico-Änderungen zu bewahren, gerendert
    über dieselbe Komponente und dasselbe CSS wie das Live-Programm von /2026. #}
+{% set galleryTitle = "Konferenzgalerie" %}
+{% include "conference-gallery-2026.njk" %}
+
 {% set archiveSlug = "2026" %}
 {% include "archive-programme.njk" %}
 
