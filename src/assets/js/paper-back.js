@@ -41,7 +41,7 @@
     var label;
     if (confPath && path === confPath) {
       label = "Back to " + (el.getAttribute("data-back-event") || "the conference");
-    } else if (/\/(papers|speakers)(\.(fr|de))?\.html$/.test(path)) {
+    } else if (/\/(anthology|papers|speakers)(\.(fr|de))?\.html$/.test(path)) {
       label = el.getAttribute("data-back-anthology") || "Back to the Anthology";
     } else {
       label = el.getAttribute("data-back-generic") || "Back";

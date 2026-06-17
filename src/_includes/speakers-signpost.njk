@@ -8,7 +8,7 @@
 {% from "icons.njk" import icon %}
 {%- set t = i18n[lang or "en"] -%}
 {%- set _suffix = "" if (lang or "en") == "en" else "." + lang -%}
-{%- set _href = ("/papers" + _suffix + ".html?year=" + signpostYear) if signpostYear else ("/speakers" + _suffix + ".html") -%}
+{%- set _href = ("/anthology" + _suffix + ".html?view=papers&year=" + signpostYear) if signpostYear else ("/anthology" + _suffix + ".html") -%}
 <a class="speakers-cta" href="{{ _href }}">
   <span class="speakers-cta__icon" aria-hidden="true">{{ icon("users") }}</span>
   <span class="speakers-cta__body">

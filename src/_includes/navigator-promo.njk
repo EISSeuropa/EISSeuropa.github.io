@@ -8,7 +8,7 @@
 {% from "icons.njk" import icon %}
 {%- set t = i18n[lang or "en"] -%}
 {%- set nav = t.navigator -%}
-{%- set _spk = "/speakers.html" if (lang or "en") == "en" else "/speakers." + lang + ".html" -%}
+{%- set _spk = "/anthology.html" if (lang or "en") == "en" else "/anthology." + lang + ".html" -%}
 {%- set _hid = promoHeadingId or "navigator-promo-title" -%}
 <section class="section" aria-labelledby="{{ _hid }}">
   <div class="container">

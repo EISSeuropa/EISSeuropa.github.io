@@ -9,7 +9,7 @@
    in-article one) to history.back() with a referrer-aware label. #}
 <div class="paper-back-sticky">
   <div class="container">
-    <a class="btn btn-secondary btn-sm" href="/papers.html#paper-{{ paper.slug }}"
+    <a class="btn btn-secondary btn-sm" href="/anthology.html?view=papers#paper-{{ paper.slug }}"
        data-paper-back
        data-back-conf-path="{{ paper.conferenceUrl }}"
        data-back-event="{{ paper.conferenceLabel }} {{ paper.year }}"
@@ -26,7 +26,7 @@
        JSON-LD at the foot are kept identical. #}
     <nav class="breadcrumb" aria-label="Breadcrumb" lang="en">
       <a href="/">EISS</a>
-      <a href="/papers.html">Anthology</a>
+      <a href="/anthology.html">Anthology</a>
       <a href="{{ paper.conferenceUrl }}">{{ paper.conferenceLabel }} {{ paper.year }}</a>
       <span aria-current="page">{{ paper.title }}</span>
     </nav>
@@ -105,7 +105,7 @@
          a referrer-aware label when the reader came from a same-origin page,
          returning them to their exact filtered index + scroll. #}
       <p style="margin-top: var(--space-5);">
-        <a class="btn btn-secondary" href="/papers.html#paper-{{ paper.slug }}"
+        <a class="btn btn-secondary" href="/anthology.html?view=papers#paper-{{ paper.slug }}"
            data-paper-back
            data-back-conf-path="{{ paper.conferenceUrl }}"
            data-back-event="{{ paper.conferenceLabel }} {{ paper.year }}"
@@ -163,7 +163,7 @@
   "@type": "BreadcrumbList",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "EISS", "item": {{ (site.url + "/") | dump | safe }} },
-    { "@type": "ListItem", "position": 2, "name": "Anthology", "item": {{ (site.url + "/papers.html") | dump | safe }} },
+    { "@type": "ListItem", "position": 2, "name": "Anthology", "item": {{ (site.url + "/anthology.html") | dump | safe }} },
     { "@type": "ListItem", "position": 3, "name": {{ (paper.conferenceLabel + " " + (paper.year | string)) | dump | safe }}, "item": {{ (site.url + paper.conferenceUrl) | dump | safe }} },
     { "@type": "ListItem", "position": 4, "name": {{ paper.title | dump | safe }}, "item": {{ (site.url + "/papers/" + paper.slug + ".html") | dump | safe }} }
   ]
