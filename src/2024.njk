@@ -35,6 +35,20 @@ status: archive
 {% set year = "2024" %}
 {% include "programme-download.njk" %}
 
+{# Keynote, surfaced ahead of the full session-recordings playlist. #}
+<section class="section-tight" aria-labelledby="keynote-2024-title">
+  <div class="container">
+    <h2 id="keynote-2024-title" style="margin-bottom: var(--space-5);">Keynote</h2>
+    <figure style="margin: 0; max-width: 48rem;">
+      {%- set youtubeId = "9HjkVgMRV90" -%}
+      {%- set youtubeIsList = false -%}
+      {%- set youtubeTitle = "EISS 2024 keynote" -%}
+      {% include "youtube-embed.njk" %}
+      <figcaption class="muted" style="margin-top: var(--space-2); font-size: var(--fs-sm);">EISS 2024 keynote. Clicking play loads the YouTube iframe; no YouTube cookies are set before that.</figcaption>
+    </figure>
+  </div>
+</section>
+
 {# Session recordings — shared, data-driven block (playlist in conferences.js). #}
 {% set mediaYear = "2024" %}
 {% include "conference-media.njk" %}
