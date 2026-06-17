@@ -15,7 +15,7 @@
 {% from "icons.njk" import icon %}
 {%- set _lang = lang or "en" -%}
 {%- set t = i18n[_lang] -%}
-{%- set _prog = archiveProgrammesEnriched[archiveSlug] -%}
+{%- set _prog = archiveProgrammesLinked[archiveSlug] -%}
 {% include "event-jsonld.njk" %}
 {% if _prog and _prog.days and _prog.days.length %}
 <section class="section programme programme--archive" id="programme" aria-labelledby="archive-programme-title">
@@ -105,9 +105,20 @@
                       </p>
                       {%- endif %}
                       {%- if c.abstract %}
-                      <p class="programme-contrib-abstract">{{ c.abstract }}
-                      {%- if c.abstractUrl %} <a href="{{ c.abstractUrl }}" target="_blank" rel="noopener">{{ t.programme.readFullAbstract }}</a>{% endif -%}
-                      </p>
+                      {# Preview + inline expand (#889). With JS the text is
+                         clamped and the toggle reveals the rest in place; with
+                         no JS the full abstract shows and the toggle stays
+                         hidden. programme-abstracts.js runs on first panel open. #}
+                      <div class="programme-contrib-abstract" data-abstract>
+                        <p class="programme-contrib-abstract-text" data-abstract-text>{{ c.abstract }}</p>
+                        <button type="button" class="programme-abstract-toggle" data-abstract-toggle
+                                aria-expanded="false" hidden
+                                data-expand-label="{{ t.programme.readFullAbstract }}"
+                                data-collapse-label="{{ t.programme.showLess }}">{{ t.programme.readFullAbstract }}</button>
+                      </div>
+                      {%- endif %}
+                      {%- if c.paperUrl %}
+                      <p class="programme-contrib-anthology"><a href="{{ c.paperUrl }}">{{ t.programme.openInAnthology }} {{ icon("arrow-right") }}</a></p>
                       {%- endif %}
                     </div>
                   </li>
@@ -143,4 +154,6 @@
     {% include "speakers-signpost.njk" %}
   </div>
 </section>
+
+<script src="{{ '/assets/js/programme-abstracts.js' | bust }}" defer></script>
 {% endif %}
