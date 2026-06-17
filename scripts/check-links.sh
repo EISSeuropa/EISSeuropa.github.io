@@ -53,7 +53,23 @@ for arg in "$@"; do
   esac
 done
 
-python3 - "$SITE_ROOT" $INTERNAL_ONLY $QUIET <<'PY'
+# Resolve a python3 that actually runs. On some macOS setups the first
+# python3 on PATH is an x86 framework build that aborts with "Bad CPU
+# type in executable" on Apple silicon, so test each candidate before
+# committing to it rather than trusting `command -v`.
+PY3=""
+for _cand in python3 /usr/bin/python3 /opt/homebrew/bin/python3 python; do
+  if command -v "$_cand" >/dev/null 2>&1 && "$_cand" -c '' >/dev/null 2>&1; then
+    PY3="$_cand"; break
+  fi
+done
+if [ -z "$PY3" ]; then
+  echo "error: no working python3 found (tried python3, /usr/bin/python3, /opt/homebrew/bin/python3, python)." >&2
+  echo "       install python3 or fix the broken interpreter on PATH, then re-run." >&2
+  exit 2
+fi
+
+"$PY3" - "$SITE_ROOT" $INTERNAL_ONLY $QUIET <<'PY'
 """Inline-Python link checker. Avoids extra deps; portable across
 the maintainer's macOS laptop and Ubuntu CI."""
 import os, re, sys, urllib.parse, urllib.request, urllib.error, ssl

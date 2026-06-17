@@ -112,6 +112,22 @@ step() {
   echo "── $1"
 }
 
+# Resolve a python3 that actually runs. On some macOS setups the first
+# python3 on PATH is an x86 framework build that aborts with "Bad CPU
+# type in executable" on Apple silicon, so test each candidate before
+# committing to it rather than trusting `command -v`.
+PY3=""
+for _cand in python3 /usr/bin/python3 /opt/homebrew/bin/python3 python; do
+  if command -v "$_cand" >/dev/null 2>&1 && "$_cand" -c '' >/dev/null 2>&1; then
+    PY3="$_cand"; break
+  fi
+done
+if [[ -z "$PY3" ]]; then
+  echo "✗ No working python3 found (tried python3, /usr/bin/python3, /opt/homebrew/bin/python3, python)."
+  echo "  Install python3 or fix the broken interpreter on PATH, then re-run."
+  exit 1
+fi
+
 # ────────────────────────────────────────────────────────────────────
 # Pre-flight checks
 # ────────────────────────────────────────────────────────────────────
@@ -229,7 +245,7 @@ if [[ "$DRY_RUN" != "--dry-run" ]]; then
 fi
 
 if [[ "$DRY_RUN" != "--dry-run" ]]; then
-  python3 - "$CHANGELOG" "$VERSION" "$TODAY" "$TITLE" <<'PY'
+  "$PY3" - "$CHANGELOG" "$VERSION" "$TODAY" "$TITLE" <<'PY'
 import re
 import sys
 from pathlib import Path
@@ -306,7 +322,7 @@ step "Publish GitHub Release v$VERSION"
 NOTES_FILE="$(mktemp -t "release-v$VERSION-XXXXXX.md")"
 
 if [[ "$DRY_RUN" != "--dry-run" ]]; then
-  python3 - "$CHANGELOG" "$VERSION" >"$NOTES_FILE" <<'PY'
+  "$PY3" - "$CHANGELOG" "$VERSION" >"$NOTES_FILE" <<'PY'
 import re
 import sys
 
