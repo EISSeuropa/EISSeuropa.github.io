@@ -35,6 +35,9 @@ const peopleIndexFn = require("./peopleIndex.js");
 // land here once confirmed; merged onto papers below so the landing page can
 // link the published version. Empty {} until the first confirmed match.
 const paperLinks = require("./paperLinks.json");
+// Prize winners (Early-Career Researcher Best Paper Prize), keyed
+// <year>::<normalised-title>. A winner earns a badge and always a landing page.
+const paperPrizes = require("./paperPrizes.json");
 // Full abstracts pulled from Indico by scripts/sync-abstracts.mjs, keyed by
 // `<year>::<normalised-title>`. The enriched archive already merges these for
 // past editions, but the LIVE indico.json (used for the 2026 slug) carries
@@ -413,6 +416,7 @@ for (const { slug, slot, c } of iterContributions()) {
     abstractUrl: c.abstractUrl || (fullAbs && fullAbs.url) || null, // Indico record, when the abstract came from there
     publishedUrl: c.publishedUrl || null, // "later published at" link (hand-curated; growth lever)
     doi: c.doi || null,
+    prize: paperPrizes[`${conf.year}::${normAbsTitle(c.title)}`] || null, // Best Paper Prize winner
     year: conf.year,
     conferenceSlug: conf.slug || slug,
     conferenceLabel: conf.label,
@@ -478,7 +482,7 @@ for (const p of papers) {
 }
 for (const p of papers) {
   const lead = firstByKey.get(urlKey(p));
-  const hasPage = !!(lead.abstract || lead.publishedUrl || lead.doi);
+  const hasPage = !!(lead.abstract || lead.publishedUrl || lead.doi || lead.prize);
   p.paperUrl = hasPage && lead.slug ? `/papers/${lead.slug}.html` : null;
 }
 

@@ -105,7 +105,7 @@
                   {%- for c in slot.contributions %}
                   <li class="programme-contrib">
                     <div>
-                      <p class="programme-contrib-title">{{ c.title }}</p>
+                      <p class="programme-contrib-title">{{ c.title }}{%- if c.prize %} <span class="paper-prize-chip" lang="en" title="{{ c.prize.award }} — EISS × {{ c.prize.partner }}">{{ icon("award") }} Best Paper Prize</span>{% endif %}</p>
                       {%- if c.authors and c.authors.length %}
                       <p class="programme-contrib-speakers muted">
                         {%- for a in c.authors -%}
