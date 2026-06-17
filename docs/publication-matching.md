@@ -117,6 +117,26 @@ The threshold is the maintainer's chosen policy: high enough that the
 auto-published set is near-exact, low enough that genuine same-title
 publications are not held up.
 
+## Sanity-checking a match against the published abstract
+
+The matcher scores on title + author, which can't tell a renamed-but-genuine
+match from a wrong one. [`scripts/check-publication-similarity.mjs`](../scripts/check-publication-similarity.mjs)
+is the abstract-level backstop: for every confirmed publication it fetches the
+**published** abstract from Crossref by DOI and scores its similarity to the
+**conference** abstract, flagging anything below a threshold (default `0.35`)
+to read by hand.
+
+```
+node scripts/check-publication-similarity.mjs [--threshold 0.35] [--quiet]
+```
+
+It is advisory, not a gate (exit 0), like `check-abstract-coverage.mjs`. Two
+limits to keep in mind: it can only score a paper that has both a conference
+abstract on file and a published abstract on Crossref (Taylor & Francis often
+omits the latter), and conference abstracts here carry inline citations that
+depress the score, so a genuine match can still read modestly — the threshold
+is a prompt to look, not a verdict.
+
 ## The scheduled refresh
 
 [`.github/workflows/sync-publications.yml`](../.github/workflows/sync-publications.yml)
