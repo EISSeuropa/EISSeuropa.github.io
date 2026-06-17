@@ -76,9 +76,18 @@
       if (fmt === "ris") {
         text = btn.getAttribute("data-cite-ris") || "";
       } else {
-        var section = btn.closest(".paper-cite");
+        // The cite block sits in one of two containers: the standalone
+        // ".paper-cite" section (non-published papers) or the ".pub-match"
+        // published-version card. Match either, or the published card's
+        // .bib button would find no <pre>.
+        var section = btn.closest(".paper-cite, .pub-match");
         var pre = section && section.querySelector("[data-cite-bibtex]");
-        text = pre ? pre.innerText : "";
+        // textContent, not innerText: the BibTeX <pre> lives in a box that
+        // is `hidden` until "Show BibTeX" is clicked, and innerText returns
+        // "" for a hidden element — so .bib downloaded nothing unless the
+        // reader expanded the box first. textContent is visibility-
+        // independent, and a <pre> preserves the source newlines.
+        text = pre ? pre.textContent : "";
       }
       if (!text) return;
       try {
