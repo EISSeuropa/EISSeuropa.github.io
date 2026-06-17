@@ -393,7 +393,18 @@ def build_from_row(row: dict, cols: dict, role_info: dict, prior: dict | None) -
     full_name = _cell(row, cols, "name")
     title = _cell(row, cols, "title")
     if full_name:
-        name = f"{title} {full_name}".strip() if title.lower() not in TITLE_NULL_SENTINELS else full_name
+        if title.lower() not in TITLE_NULL_SENTINELS:
+            # The Title dropdown is authoritative. A returning member used
+            # to the old combined field may still type a title into the
+            # name box ("Prof. Chiara Ruffa") AND pick one in the dropdown;
+            # strip a single leading honorific off the name first so we
+            # render "Prof. Chiara Ruffa", not "Prof. Prof. Chiara Ruffa".
+            base = HONORIFIC_RE.sub("", full_name, count=1).strip() or full_name
+            name = f"{title} {base}".strip()
+        else:
+            # No title chosen — leave the name verbatim, including any
+            # honorific the member typed (we can't tell intent here).
+            name = full_name
     else:
         name = (prior or {}).get("name", "")
     person: dict = {
