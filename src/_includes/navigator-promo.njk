@@ -25,7 +25,9 @@
           <dd>{{ t.speakers.statSpeakers }}</dd>
         </div>
         <div class="stat">
-          <dt>{{ corpus.stats.paperCount }}</dt>
+          {# Deduplicated count (paperIndex), matching the Anthology's by-paper
+             list; corpus.stats.paperCount is the raw per-contribution total. #}
+          <dt>{{ paperIndex.stats.paperCount }}</dt>
           <dd>{{ t.speakers.statPapers }}</dd>
         </div>
         <div class="stat">
