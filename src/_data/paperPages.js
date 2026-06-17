@@ -80,6 +80,8 @@ module.exports = function () {
         abstractUrl: p.abstractUrl || null,
         publishedUrl: p.publishedUrl || null,
         doi: p.doi || null,
+        prize: p.prize || null, // Best Paper Prize winner
+
         // Published-version detail, for the "followed by a publication in …"
         // line on the page. Only set when a match has been confirmed.
         publishedTitle: link.publishedTitle || null,

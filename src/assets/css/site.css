@@ -3951,6 +3951,47 @@ a.speaker-paper-title:hover {
   line-height: 1.6;
 }
 
+/* Best Paper Prize winner — a gold chip beside the title in the programme grid
+   and the Anthology by-paper list. Solid gold with dark text reads on both
+   themes, like .paper-pub-chip. */
+.paper-prize-chip {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.45em;
+  padding: 0.05em 0.55em;
+  font-size: 0.65em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  background: hsl(43 96% 56%);
+  color: hsl(222 35% 10%);
+  border: 1px solid hsl(40 80% 42%);
+  white-space: nowrap;
+  line-height: 1.6;
+}
+.paper-prize-chip svg {
+  width: 1.05em;
+  height: 1.05em;
+  vertical-align: -0.15em;
+  margin-right: 0.25em;
+}
+
+/* The same prize, shown as a line under the title on a paper landing page.
+   Icon kept inline (not a flex child) so the viewBox SVG keeps its width. */
+.paper-prize-line {
+  margin: var(--space-2) 0 0;
+  font-size: var(--fs-sm);
+  color: var(--text);
+}
+.paper-prize-line svg {
+  width: 1.15em;
+  height: 1.15em;
+  vertical-align: -0.2em;
+  margin-right: 0.4em;
+  color: hsl(40 85% 42%);
+}
+
 @media (max-width: 720px) {
   /* Collapse the time gutter so cards take the full width on phones. */
   .programme-row {

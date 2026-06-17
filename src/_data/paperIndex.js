@@ -103,6 +103,7 @@ for (const p of corpus.papers || []) {
     abstractUrl: p.abstractUrl || null,
     publishedUrl: p.publishedUrl || null,
     doi: p.doi || null,
+    prize: p.prize || null, // Best Paper Prize winner (badge + always a landing page)
   });
 }
 
@@ -114,7 +115,7 @@ const papers = [...byKey.values()].sort(
 // land on: an abstract or an external published-version link. The rest are
 // still deep-linkable by their slug anchor in the list below.
 for (const p of papers) {
-  p.hasPage = !!(p.abstract || p.publishedUrl || p.doi);
+  p.hasPage = !!(p.abstract || p.publishedUrl || p.doi || p.prize);
   p.paperUrl = p.hasPage && p.slug ? `/papers/${p.slug}.html` : null;
 }
 

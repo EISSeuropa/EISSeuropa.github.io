@@ -24,6 +24,9 @@ const abstracts = { ...require("./paperAbstracts.json"), ...require("./paperAbst
 // Title drift: copy an abstract whose Indico title differs from the programme
 // onto the programme's key, so it attaches. See paperAbstractAliases.json.
 const aliases = require("./paperAbstractAliases.json");
+// Best Paper Prize winners, same key scheme, so the edition programme grid can
+// badge a winning contribution. See src/_data/paperPrizes.json.
+const prizes = require("./paperPrizes.json");
 for (const [from, to] of Object.entries(aliases)) {
   if (from[0] === "_") continue; // skip _documentation
   if (abstracts[from] && !abstracts[to]) abstracts[to] = abstracts[from];
@@ -41,11 +44,13 @@ function normTitle(t) {
 
 function attach(node, year) {
   if (!node || !node.title) return;
-  const hit = abstracts[`${year}::${normTitle(node.title)}`];
+  const key = `${year}::${normTitle(node.title)}`;
+  const hit = abstracts[key];
   if (hit) {
     node.abstract = hit.abstract;
     node.abstractUrl = hit.url;
   }
+  if (prizes[key]) node.prize = prizes[key];
 }
 
 module.exports = function () {

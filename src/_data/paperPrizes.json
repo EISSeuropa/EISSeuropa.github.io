@@ -1,0 +1,15 @@
+{
+  "_documentation": "Papers that won the Early-Career Researcher Best Paper Prize (EISS x Journal of Strategic Studies). Keyed <year>::<normalised-title>, the same key scheme as paperAbstracts*.json (NFKD, strip diacritics, lowercase, non-alphanumerics to single spaces). Looked up in corpus.js (so the Anthology paper page + by-paper list show a badge, and a winner always earns a landing page) and in archiveProgrammesEnriched.js (so the edition programme grid shows it on the contribution). The winning year is the key's year prefix and the paper's conference year. Add a new winner by adding its key here; no code change needed.",
+  "2026::do parliaments dream of cyber power parliamentary scrutiny in the strategic domain of cyberspace": {
+    "award": "Early-Career Researcher Best Paper Prize",
+    "partner": "Journal of Strategic Studies"
+  },
+  "2026::telegram in russia s information strategy evidence from serbia": {
+    "award": "Early-Career Researcher Best Paper Prize",
+    "partner": "Journal of Strategic Studies"
+  },
+  "2025::does preeminence in emerging and military technologies matter for international status and prestige experimental study": {
+    "award": "Early-Career Researcher Best Paper Prize",
+    "partner": "Journal of Strategic Studies"
+  }
+}
