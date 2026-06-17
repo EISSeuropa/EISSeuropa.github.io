@@ -65,6 +65,9 @@
     var filtering = !!(theme || ev || q);
     if (clearEl) clearEl.hidden = !filtering;
     if (statusEl) {
+      // Box + centre the "nothing matched" message so the empty list reads as
+      // intentional, not broken.
+      statusEl.classList.toggle("speaker-status--empty", filtering && visible === 0);
       if (!filtering) {
         statusEl.hidden = true;
         statusEl.textContent = "";

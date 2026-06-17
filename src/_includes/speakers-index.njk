@@ -7,6 +7,7 @@
    affiliations and theme labels stay in their original language
    (lang="en"). `speaker-filter.js` reads its live-region strings from the
    data-* attributes on [data-speaker-status] so the JS stays locale-agnostic. #}
+{% from "icons.njk" import icon %}
 {%- set t = i18n[lang or "en"] -%}
 {%- set s18n = t.speakers -%}
 
@@ -93,6 +94,7 @@
             <span class="speaker-paper-conf"><a href="{{ p.conferenceUrl }}">{{ p.conferenceLabel }}{% if p.year %} {{ p.year }}{% endif %}</a></span>
             {%- if p.paperUrl %}<a class="speaker-paper-title" href="{{ p.paperUrl }}" lang="en">{{ p.title }}</a>
             {%- else %}<span class="speaker-paper-title" lang="en">{{ p.title }}</span>{% endif %}
+            {%- if p.prize %}<span class="paper-prize-chip" lang="en" title="{{ p.prize.award }} — EISS × {{ p.prize.partner }}">{{ icon("award") }} Best Paper Prize</span>{% endif %}
           </li>
           {%- endfor %}
         </ul>

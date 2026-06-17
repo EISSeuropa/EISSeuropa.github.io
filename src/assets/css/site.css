@@ -3819,6 +3819,17 @@ a.speaker-paper-title:hover {
   font-size: var(--fs-sm);
   margin: 0 0 var(--space-4);
 }
+/* When a filter leaves nothing, give the message presence so the blank list
+   below it doesn't read as a broken page. Toggled by the filter JS. */
+.speaker-status--empty {
+  color: var(--text);
+  font-size: var(--fs-base);
+  text-align: center;
+  padding: var(--space-5);
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
 
 /* At-a-glance edition-year pills under the name. */
 .speaker-years {
@@ -6543,6 +6554,7 @@ a.profile-pub-title:hover { text-decoration: underline; }
    /papers both render it, defaulting to their own view). */
 .archive-toggle {
   display: inline-flex;
+  align-items: center; /* tabs size to their own min-height, not stretched */
   gap: 2px;
   padding: 3px;
   margin-bottom: var(--space-5);
@@ -6558,6 +6570,9 @@ a.profile-pub-title:hover { text-decoration: underline; }
   font: inherit;
   font-size: var(--fs-sm);
   font-weight: 500;
+  /* min-height keeps the view toggle a comfortable touch target (>= 44px);
+     the button vertically centres its own label. */
+  min-height: 44px;
   padding: 0.4em 1.1em;
   border-radius: 999px;
   cursor: pointer;

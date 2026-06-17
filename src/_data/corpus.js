@@ -537,6 +537,7 @@ for (const paper of papers) {
       conferenceLabel: paper.conferenceLabel,
       conferenceUrl: paper.conferenceUrl,
       isSpeaker: a.isSpeaker,
+      prize: paper.prize || null, // Best Paper Prize winner (badge in the by-person list)
       slug: paper.slug || null,
       paperUrl: paper.paperUrl || null,
     });
