@@ -68,9 +68,16 @@
         <p class="pub-match-lead">
           Presented at <a href="{{ paper.conferenceUrl }}">{{ paper.conferenceLabel }} {{ paper.year }}</a>, {% if _isPreprint %}later released as a preprint{% elif paper.publishedJournal %}later published in <em lang="en">{{ paper.publishedJournal }}</em>{% else %}later published{% endif %}{% if paper.publishedYear %} ({{ paper.publishedYear }}){% endif %}.
         </p>
+        {%- if paper.publishedTitle %}
+        {# The published title can differ from the conference title, so it is
+           always shown verbatim. #}
+        <p class="pub-match-pubtitle" lang="en">“{{ paper.publishedTitle }}”</p>
+        {%- endif %}
         <dl class="pub-match-meta">
           {%- if paper.publishedAuthors.length %}
-          <dt>Authors</dt><dd lang="en">{{ paper.publishedAuthors | join(', ') }}</dd>
+          {# The published byline can add or drop co-authors versus the
+             conference presenters, so it is listed in full. #}
+          <dt>Published as</dt><dd lang="en">{{ paper.publishedAuthors | join(', ') }}</dd>
           {%- endif %}
           {%- if paper.publishedJournal %}
           <dt>Outlet</dt><dd lang="en">{{ paper.publishedJournal }}{% if paper.publishedVolume %}, vol.&nbsp;{{ paper.publishedVolume }}{% endif %}{% if paper.publishedIssue %}, no.&nbsp;{{ paper.publishedIssue }}{% endif %}{% if paper.publishedPages %}, pp.&nbsp;{{ paper.publishedPages }}{% endif %}</dd>
