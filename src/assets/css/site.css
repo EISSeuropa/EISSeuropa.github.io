@@ -3569,6 +3569,12 @@ a.programme-live-tag:focus-visible {
   flex-wrap: wrap;
   gap: var(--space-3);
 }
+/* Inside the published-version card the cite controls follow the "Read the
+   published version" action directly, so give them room above. The standalone
+   "Cite this paper" section gets its spacing from its heading instead. */
+.pub-match .paper-cite-actions {
+  margin-top: var(--space-4);
+}
 /* Scoped under .pub-match to beat `.prose p` (which otherwise zeroes the
    top margin, leaving the separator cramped against the buttons above it). */
 .pub-match .pub-match-note {
