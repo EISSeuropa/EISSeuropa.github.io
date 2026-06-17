@@ -73,7 +73,7 @@
        when it has one (an abstract or a confirmed publication). #}
     {%- set speakerEntry = corpus.speakerByProfileUrl["/board/" + person.slug + ".html"] -%}
     {%- if speakerEntry and speakerEntry.papers.length -%}
-    {%- set _navHref = "/speakers.html?person=" + person.slug if (lang or "en") == "en" else "/speakers." + lang + ".html?person=" + person.slug -%}
+    {%- set _navHref = "/anthology.html?person=" + person.slug if (lang or "en") == "en" else "/anthology." + lang + ".html?person=" + person.slug -%}
     <p class="profile-pub-heading">{{ bp.esscPapers }}</p>
     <ul class="profile-pub-list" role="list">
       {%- for p in speakerEntry.papers %}
