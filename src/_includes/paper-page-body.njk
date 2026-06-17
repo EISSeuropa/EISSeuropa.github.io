@@ -81,21 +81,25 @@
       <p>{{ paper.abstract }}</p>
       {%- endif %}
       {%- if paper.panel %}
-      <p class="muted" lang="en"><strong>Panel:</strong> {{ paper.panel }}</p>
+      {# Panel title links to that panel's anchor in the edition programme. #}
+      <p class="muted" lang="en"><strong>Panel:</strong> <a href="{{ paper.conferenceUrl }}#panel-{{ paper.panel | slugify }}">{{ paper.panel }}</a></p>
       {%- endif %}
-      <p style="margin-top: var(--space-5); display: flex; gap: var(--space-3); flex-wrap: wrap;">
-        {%- if paper.abstractUrl %}<a class="btn btn-secondary btn-sm" href="{{ paper.abstractUrl }}" target="_blank" rel="noopener">{{ icon("external-link") }} View on Indico</a>{% endif %}
-        <a class="btn btn-secondary btn-sm" href="{{ paper.conferenceUrl }}#programme">{{ icon("file-text") }} {{ paper.conferenceLabel }} {{ paper.year }} programme</a>
-        {# Adaptive Back (#889, item 1). Baseline: a real anchor to the index at
-           this paper's anchor. paper-back.js upgrades it to history.back() with
-           a referrer-aware label when the reader came from a same-origin page,
-           returning them to their exact filtered index + scroll. #}
-        <a class="btn btn-secondary btn-sm" href="/papers.html#paper-{{ paper.slug }}"
+      {# Adaptive Back (#889). Stands apart from the secondary actions and is a
+         touch larger, with a return arrow. Baseline: a real anchor to the index
+         at this paper's anchor. paper-back.js upgrades it to history.back() with
+         a referrer-aware label when the reader came from a same-origin page,
+         returning them to their exact filtered index + scroll. #}
+      <p style="margin-top: var(--space-5);">
+        <a class="btn btn-secondary" href="/papers.html#paper-{{ paper.slug }}"
            data-paper-back
            data-back-conf-path="{{ paper.conferenceUrl }}"
            data-back-event="{{ paper.conferenceLabel }} {{ paper.year }}"
            data-back-anthology="Back to the Anthology"
-           data-back-generic="Back"><span data-back-label>All papers</span></a>
+           data-back-generic="Back">{{ icon("arrow-left") }} <span data-back-label>All papers</span></a>
+      </p>
+      <p style="margin-top: var(--space-4); display: flex; gap: var(--space-3); flex-wrap: wrap;">
+        {%- if paper.abstractUrl %}<a class="btn btn-secondary btn-sm" href="{{ paper.abstractUrl }}" target="_blank" rel="noopener">{{ icon("external-link") }} View on Indico</a>{% endif %}
+        <a class="btn btn-secondary btn-sm" href="{{ paper.conferenceUrl }}#programme">{{ icon("file-text") }} {{ paper.conferenceLabel }} {{ paper.year }} programme</a>
       </p>
     </article>
   </div>

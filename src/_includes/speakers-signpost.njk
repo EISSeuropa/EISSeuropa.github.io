@@ -1,15 +1,19 @@
-{# Locale-aware signpost to the /speakers index, as a link-card. Used at
-   the foot of the conference programme grid and on the People page.
-   Reads `lang` to pick the right-locale page, and `t.programme.speakersLink`
-   for the label. The count line reuses the speaker stats. #}
+{# Locale-aware signpost to the Anthology, as a link-card. Used on the People
+   page (generic: links to /speakers, shows the global speaker count) and at the
+   foot of a conference programme. On a conference page the caller sets
+   `signpostYear` to the edition year: the card then links to that edition's
+   papers in the Anthology (/papers?year=YYYY) and the sub-line frames it as
+   this edition within the wider archive. Reads `lang` for the right-locale URL
+   and `t.programme.*` for the copy. #}
 {% from "icons.njk" import icon %}
 {%- set t = i18n[lang or "en"] -%}
-{%- set _spk = "/speakers.html" if (lang or "en") == "en" else "/speakers." + lang + ".html" -%}
-<a class="speakers-cta" href="{{ _spk }}">
+{%- set _suffix = "" if (lang or "en") == "en" else "." + lang -%}
+{%- set _href = ("/papers" + _suffix + ".html?year=" + signpostYear) if signpostYear else ("/speakers" + _suffix + ".html") -%}
+<a class="speakers-cta" href="{{ _href }}">
   <span class="speakers-cta__icon" aria-hidden="true">{{ icon("users") }}</span>
   <span class="speakers-cta__body">
     <span class="speakers-cta__title">{{ t.programme.speakersLink }}</span>
-    <span class="speakers-cta__sub muted">{{ corpus.stats.speakerCount }} {{ t.speakers.statSpeakers }} · {{ t.speakers.statConferencesSince }}</span>
+    <span class="speakers-cta__sub muted">{% if signpostYear %}{{ t.programme.speakersSignpostEdition }}{% else %}{{ corpus.stats.speakerCount }} {{ t.speakers.statSpeakers }} · {{ t.speakers.statConferencesSince }}{% endif %}</span>
   </span>
   <span class="speakers-cta__arrow" aria-hidden="true">{{ icon("arrow-right") }}</span>
 </a>
