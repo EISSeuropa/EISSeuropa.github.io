@@ -5,7 +5,16 @@
 
 <header class="page-header">
   <div class="container">
-    <span class="eyebrow"><a href="{{ paper.conferenceUrl }}">{{ paper.conferenceLabel }} {{ paper.year }}</a></span>
+    {# Breadcrumb trail (#889, item 2): a fixed second exit, correct even on a
+       direct landing from search and independent of the referrer. EN-only,
+       like the rest of this page. The visible trail and the BreadcrumbList
+       JSON-LD at the foot are kept identical. #}
+    <nav class="breadcrumb" aria-label="Breadcrumb" lang="en">
+      <a href="/">EISS</a>
+      <a href="/papers.html">Anthology</a>
+      <a href="{{ paper.conferenceUrl }}">{{ paper.conferenceLabel }} {{ paper.year }}</a>
+      <span aria-current="page">{{ paper.title }}</span>
+    </nav>
     <h1 lang="en">{{ paper.title }}</h1>
     {%- if paper.authorsLinked and paper.authorsLinked.length %}
     <p class="page-lead" lang="en">
@@ -77,7 +86,16 @@
       <p style="margin-top: var(--space-5); display: flex; gap: var(--space-3); flex-wrap: wrap;">
         {%- if paper.abstractUrl %}<a class="btn btn-secondary btn-sm" href="{{ paper.abstractUrl }}" target="_blank" rel="noopener">{{ icon("external-link") }} View on Indico</a>{% endif %}
         <a class="btn btn-secondary btn-sm" href="{{ paper.conferenceUrl }}#programme">{{ icon("file-text") }} {{ paper.conferenceLabel }} {{ paper.year }} programme</a>
-        <a class="btn btn-secondary btn-sm" href="/papers.html#paper-{{ paper.slug }}">All papers</a>
+        {# Adaptive Back (#889, item 1). Baseline: a real anchor to the index at
+           this paper's anchor. paper-back.js upgrades it to history.back() with
+           a referrer-aware label when the reader came from a same-origin page,
+           returning them to their exact filtered index + scroll. #}
+        <a class="btn btn-secondary btn-sm" href="/papers.html#paper-{{ paper.slug }}"
+           data-paper-back
+           data-back-conf-path="{{ paper.conferenceUrl }}"
+           data-back-event="{{ paper.conferenceLabel }} {{ paper.year }}"
+           data-back-anthology="Back to the Anthology"
+           data-back-generic="Back"><span data-back-label>All papers</span></a>
       </p>
     </article>
   </div>
@@ -100,4 +118,19 @@
   "url": {{ (site.url + "/papers/" + paper.slug + ".html") | dump | safe }}
 }
 </script>
+
+{# BreadcrumbList (#889, item 2) — identical to the visible trail above. #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "EISS", "item": {{ (site.url + "/") | dump | safe }} },
+    { "@type": "ListItem", "position": 2, "name": "Anthology", "item": {{ (site.url + "/papers.html") | dump | safe }} },
+    { "@type": "ListItem", "position": 3, "name": {{ (paper.conferenceLabel + " " + (paper.year | string)) | dump | safe }}, "item": {{ (site.url + paper.conferenceUrl) | dump | safe }} },
+    { "@type": "ListItem", "position": 4, "name": {{ paper.title | dump | safe }}, "item": {{ (site.url + "/papers/" + paper.slug + ".html") | dump | safe }} }
+  ]
+}
+</script>
 {%- if paper.bibtex %}<script src="{{ '/assets/js/paper-cite.js' | bust }}" defer></script>{% endif %}
+<script src="{{ '/assets/js/paper-back.js' | bust }}" defer></script>
