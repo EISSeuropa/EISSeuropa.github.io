@@ -128,6 +128,31 @@ information and the review band for a human decision. Auto-merging does
 **not** publish the review band — those stay queue data until confirmed by
 hand.
 
+## Known limitation: renamed-title publications need a manual add
+
+The matcher anchors on title similarity, so a paper **published under a
+substantially different title is invisible to the auto-confirm tier**: its
+score falls well below the 0.80 high band, and often below the 0.50 review
+band too, so it never surfaces in the queue. Phase 1 can still catch it when
+the author is a member and the work is on their ORCID record; otherwise it
+will not be found automatically.
+
+The 2024 Best Paper Prize winner is the worked example: presented as
+"Inter-alliance Security Dilemmas: Korean Counterforce Systems…" (Samuel
+Seitz), published in the *Journal of Strategic Studies* as "When competition
+becomes contagious…" with a new co-author (Elliot Ji). Different title,
+different byline, so it had to be added by hand.
+
+To add one manually: put the entry in `src/_data/paperLinks.json` keyed by
+the paper's slug, with `doi`, `publishedUrl`, `publishedTitle`, `journal`,
+`publishedYear` and `publishedAuthors` (the *published* byline, which can
+add or drop authors versus the conference presenters). Set `"source":
+"manual"`. The next `enrich-publications.mjs` run backfills volume / issue /
+pages / BibTeX from Crossref by DOI, and the paper's page shows the
+published title and "Published as" byline. Prize winners are the highest-value
+candidates to check by hand, since the prize publishes them in the *Journal
+of Strategic Studies* (often retitled).
+
 ## Growing coverage
 
 - Phase 1 coverage grows as members add their ORCID iD to the directory
