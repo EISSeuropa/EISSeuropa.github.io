@@ -14,23 +14,38 @@
 // JSON-LD block, the basis of Google Scholar indexing.
 const paperIndex = require("./paperIndex.js");
 const paperLinks = require("./paperLinks.json"); // confirmed publication matches, keyed by slug
+const site = require("./site.js");
 
-// Build a BibTeX @article entry for a confirmed published version. The entry
-// describes the PUBLISHED work, so title, authors and year prefer the
-// published values (each can differ from the conference paper): the published
-// title when known else the conference title, the published byline when known
-// else the conference authors, the published year else the conference year.
-// Optional fields are emitted only when present. Single braces around values:
-// valid BibTeX, and it keeps the string free of the `{{` that would collide
-// with Nunjucks if built in-template.
+// Every paper page offers a citation export (#805). When a confirmed
+// publication exists, the citation describes the PUBLISHED work (title,
+// authors, year, outlet prefer the published values, each of which can differ
+// from the conference paper). Otherwise it describes the conference
+// presentation itself — a citable @inproceedings / RIS conference paper.
+// Two formats are produced: BibTeX (LaTeX) and RIS (the format Zotero,
+// Mendeley, EndNote and RefWorks all import). Single braces around BibTeX
+// values keep the string free of the `{{` that would collide with Nunjucks.
+const CONF_NAME = (p) => `European Security Studies Conference ${p.year}`;
+const pageUrl = (p) => `${String(site.url || "").replace(/\/$/, "")}/papers/${p.slug}.html`;
+// Split a "1-23" / "1--23" page range into [start, end] for RIS SP/EP.
+function pageParts(pages) {
+  if (!pages) return [null, null];
+  const m = String(pages).split(/\s*-+\s*/);
+  return [m[0] || null, m[1] || null];
+}
+
 function toBibtex(p, link) {
+  const published = !!(link.publishedUrl || link.doi);
   const authors = (link.publishedAuthors && link.publishedAuthors.length ? link.publishedAuthors : p.authors) || [];
   const year = link.publishedYear || p.year;
   const type = link.pubType || "";
   const title = link.publishedTitle || p.title;
   const fields = [`author = {${authors.join(" and ")}}`, `title = {${title}}`];
   let entry = "article";
-  if (/preprint|working paper/i.test(type)) {
+  if (!published) {
+    // The conference presentation itself.
+    entry = "inproceedings";
+    fields.push(`booktitle = {${CONF_NAME(p)}}`);
+  } else if (/preprint|working paper/i.test(type)) {
     entry = "misc";
     const how = ["Preprint", link.publisher].filter(Boolean).join(", ");
     if (how) fields.push(`howpublished = {${how}}`);
@@ -49,7 +64,38 @@ function toBibtex(p, link) {
   if (link.issue) fields.push(`number = {${link.issue}}`);
   if (link.pages) fields.push(`pages = {${String(link.pages).replace(/-+/g, "--")}}`);
   if (link.doi) fields.push(`doi = {${link.doi}}`);
+  fields.push(`url = {${published ? link.publishedUrl || (link.doi ? "https://doi.org/" + link.doi : pageUrl(p)) : pageUrl(p)}}`);
   return `@${entry}{eiss-${p.slug},\n  ${fields.join(",\n  ")}\n}`;
+}
+
+// RIS — the import format Zotero / Mendeley / EndNote / RefWorks open on
+// download. CRLF line endings per the RIS spec; TY first, ER last.
+function toRis(p, link) {
+  const published = !!(link.publishedUrl || link.doi);
+  const authors = (link.publishedAuthors && link.publishedAuthors.length ? link.publishedAuthors : p.authors) || [];
+  const year = link.publishedYear || p.year;
+  const type = link.pubType || "";
+  const title = link.publishedTitle || p.title;
+  let ty = "JOUR";
+  if (!published) ty = "CPAPER";
+  else if (/preprint|working paper/i.test(type)) ty = "GEN";
+  else if (/book chapter|edited/i.test(type)) ty = "CHAP";
+  else if (/^book$/i.test(type)) ty = "BOOK";
+  const lines = [["TY", ty], ["TI", title]];
+  for (const a of authors) lines.push(["AU", a]);
+  if (year) lines.push(["PY", year]);
+  // T2 = the container: journal/book for a publication, else the conference.
+  lines.push(["T2", published ? link.journal || link.publisher || "" : CONF_NAME(p)]);
+  if (link.volume) lines.push(["VL", link.volume]);
+  if (link.issue) lines.push(["IS", link.issue]);
+  const [sp, ep] = pageParts(link.pages);
+  if (sp) lines.push(["SP", sp]);
+  if (ep) lines.push(["EP", ep]);
+  if (link.doi) lines.push(["DO", link.doi]);
+  lines.push(["UR", published ? link.publishedUrl || (link.doi ? "https://doi.org/" + link.doi : pageUrl(p)) : pageUrl(p)]);
+  // Body lines (drop any empty ones), then the mandatory ER terminator.
+  const body = lines.filter(([, v]) => v !== "").map(([t, v]) => `${t}  - ${v}`).join("\r\n");
+  return body + "\r\nER  - \r\n";
 }
 
 module.exports = function () {
@@ -101,8 +147,11 @@ module.exports = function () {
         publishedType: link.pubType || null, // "Journal article", "Preprint", …
         publishedPublisher: link.publisher || null, // outlet fallback for preprints
         publishedAuthors: link.publishedAuthors || [],
-        // Ready-to-copy BibTeX for the published version (null when unmatched).
-        bibtex: link.publishedUrl || link.doi ? toBibtex(p, link) : null,
+        // Citation export, on every paper page: the published version when one
+        // is confirmed, else the conference presentation itself. BibTeX (copy
+        // or download) + RIS (download; Zotero/Mendeley/EndNote import it).
+        bibtex: toBibtex(p, link),
+        ris: toRis(p, link),
         authorNames: p.authors || [], // display-name strings (for citation meta + JSON-LD)
         authorsLinked: p.authorsLinked || [], // { name, url } — members link to their profile
         affiliations: p.affiliations || [], // distinct affiliation strings

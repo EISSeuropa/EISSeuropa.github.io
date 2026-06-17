@@ -3552,6 +3552,23 @@ a.programme-live-tag:focus-visible {
   cursor: pointer;
 }
 .pub-bibtex-copy:hover { border-color: var(--accent); color: var(--accent); }
+
+/* "Cite this paper" block — on every paper page (copy BibTeX, download
+   .bib / .ris). Set off from the actions above with a quiet rule. */
+.paper-cite {
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border);
+}
+.paper-cite-title {
+  font-size: var(--fs-base);
+  margin: 0 0 var(--space-3);
+}
+.paper-cite-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
 /* Scoped under .pub-match to beat `.prose p` (which otherwise zeroes the
    top margin, leaving the separator cramped against the buttons above it). */
 .pub-match .pub-match-note {
