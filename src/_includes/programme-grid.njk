@@ -203,9 +203,10 @@
                 {%- endfor -%}</span>
               </p>
               {%- endif %}
-              {%- if slot.abstract %}
-              <p class="programme-contrib-abstract">{{ slot.abstract }}</p>
-              {%- endif %}
+              {# Panel-level (session) abstracts are intentionally not shown:
+                 only some panels carry one, so rendering them made the
+                 programme look uneven. Hidden for consistency (#903). The
+                 per-paper contribution abstracts above are unaffected. #}
               {%- endif %}
 
             </article>

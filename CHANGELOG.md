@@ -100,6 +100,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- **Conference programmes no longer show a panel's own abstract.** A panel slot could carry a session-level description that rendered in full beneath the panel title. Only some panels had one, so the programme looked uneven, a long block of text under a few panels and nothing under the rest. The panel-level abstract is now hidden across all programme grids for consistency. The per-paper abstracts under "show contributions" (with their preview-and-expand) are unaffected. Tracked in [#903](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/903).
 - **The separator above a paper's "matched automatically" note is no longer cramped against the buttons.** The note's top margin was being zeroed by the more specific `.prose p` rule, so the dividing line sat tight under the Cite button. Scoping it as `.pub-match .pub-match-note` restores the intended breathing room. Part of [#889](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/889).
 
 ### Added

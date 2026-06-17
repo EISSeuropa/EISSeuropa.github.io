@@ -81,11 +81,10 @@
               </p>
               {%- endif %}
 
-              {%- if slot.abstract %}
-              <p class="programme-contrib-abstract">{{ slot.abstract }}
-              {%- if slot.abstractUrl %} <a href="{{ slot.abstractUrl }}" target="_blank" rel="noopener">{{ t.programme.readFullAbstract }}</a>{% endif -%}
-              </p>
-              {%- endif %}
+              {# Panel-level (session) abstracts are intentionally not shown:
+                 only some panels carry one, so rendering them made the
+                 programme look uneven. Hidden for consistency (#903). The
+                 per-paper contribution abstracts below are unaffected. #}
 
               {%- if slot.contributions and slot.contributions.length %}
               <details class="programme-contribs">
