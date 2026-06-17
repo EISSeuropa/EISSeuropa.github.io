@@ -143,6 +143,15 @@
       personEl.scrollIntoView({ behavior: "smooth", block: "center" });
       var det = personEl.querySelector("details.speaker-papers");
       if (det) det.open = true;
+      // Move focus to the entry so keyboard and screen-reader users land on it,
+      // matching the #paper-/#person- hash focus-return in archive.js (#889).
+      // preventScroll keeps the centred position the scrollIntoView just set.
+      if (!personEl.hasAttribute("tabindex")) personEl.setAttribute("tabindex", "-1");
+      try {
+        personEl.focus({ preventScroll: true });
+      } catch (e) {
+        personEl.focus();
+      }
     }
   }
 })();
