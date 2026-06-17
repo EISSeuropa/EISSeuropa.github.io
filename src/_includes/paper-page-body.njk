@@ -90,16 +90,10 @@
         </dl>
         <div class="pub-match-actions">
           <a class="btn btn-secondary btn-sm" href="{{ paper.publishedUrl }}" target="_blank" rel="noopener">{{ icon("external-link") }} Read the published version</a>
-          {%- if paper.bibtex %}
-          <button class="btn btn-secondary btn-sm" type="button" data-bibtex-toggle aria-expanded="false" aria-controls="bibtex-{{ paper.slug }}">{{ icon("file-text") }} Cite (BibTeX)</button>
-          {%- endif %}
         </div>
-        {%- if paper.bibtex %}
-        <div class="pub-bibtex" id="bibtex-{{ paper.slug }}" hidden>
-          <button class="pub-bibtex-copy" type="button" data-bibtex-copy>Copy</button>
-          <pre><code>{{ paper.bibtex }}</code></pre>
-        </div>
-        {%- endif %}
+        {# Cite controls live here when published — the citation is of the
+           published version this card describes. #}
+        {% include "paper-cite-block.njk" %}
         <p class="pub-match-note">Matched automatically by comparing authors and titles, so it may be inaccurate, and the published author list can differ from the conference presenters. <a href="mailto:{{ site.contactEmail }}?subject=Publication%20match%3A%20{{ paper.slug }}">Let us know</a> if it looks wrong.</p>
       </aside>
       {%- endif %}
@@ -128,6 +122,17 @@
         {%- if paper.abstractUrl %}<a class="btn btn-secondary btn-sm" href="{{ paper.abstractUrl }}" target="_blank" rel="noopener">{{ icon("external-link") }} View on Indico</a>{% endif %}
         <a class="btn btn-secondary btn-sm" href="{{ paper.conferenceUrl }}#programme">{{ icon("file-text") }} {{ paper.conferenceLabel }} {{ paper.year }} programme</a>
       </p>
+      {# Cite this paper (#805). When the paper has a confirmed publication the
+         cite controls live in the published-version card above (the citation is
+         of the published work); otherwise they stand here, citing the
+         conference presentation. Copy the BibTeX, or download .bib / .ris — the
+         RIS file imports directly into Zotero, Mendeley, EndNote and RefWorks. #}
+      {%- if not paper.publishedUrl %}
+      <section class="paper-cite" aria-labelledby="cite-h-{{ paper.slug }}">
+        <h2 class="paper-cite-title" id="cite-h-{{ paper.slug }}">Cite this paper</h2>
+        {% include "paper-cite-block.njk" %}
+      </section>
+      {%- endif %}
       {# Within-edition prev/next (#889, item 3): page through this edition's
          papers in the Anthology's by-paper order, without returning to the index. #}
       {%- if paper.editionPrev or paper.editionNext %}
@@ -181,5 +186,5 @@
   ]
 }
 </script>
-{%- if paper.bibtex %}<script src="{{ '/assets/js/paper-cite.js' | bust }}" defer></script>{% endif %}
+<script src="{{ '/assets/js/paper-cite.js' | bust }}" defer></script>
 <script src="{{ '/assets/js/paper-back.js' | bust }}" defer></script>

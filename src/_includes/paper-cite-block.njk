@@ -1,0 +1,17 @@
+{# Citation controls (#805): show/copy the BibTeX, download .bib / .ris.
+   Shared by two placements, never both on one page: inside the published-
+   version card when a publication is confirmed (the citation describes the
+   published work), else the standalone "Cite this paper" section (it describes
+   the conference presentation). `paper` is in scope. The control row is hidden
+   until paper-cite.js reveals it, so no-JS readers see no dead buttons; the
+   page's citation_* metadata still lets reference-manager connectors save it. #}
+{% from "icons.njk" import icon %}
+<div class="paper-cite-actions" data-cite hidden>
+  <button class="btn btn-secondary btn-sm" type="button" data-cite-toggle aria-expanded="false" aria-controls="cite-bib-{{ paper.slug }}">{{ icon("file-text") }} <span data-cite-toggle-label>Show BibTeX</span></button>
+  <button class="btn btn-secondary btn-sm" type="button" data-cite-download="bib" data-cite-name="{{ paper.slug }}">{{ icon("download") }} Download .bib</button>
+  <button class="btn btn-secondary btn-sm" type="button" data-cite-download="ris" data-cite-name="{{ paper.slug }}" data-cite-ris="{{ paper.ris }}">{{ icon("download") }} Download .ris</button>
+</div>
+<div class="pub-bibtex" id="cite-bib-{{ paper.slug }}" hidden>
+  <button class="pub-bibtex-copy" type="button" data-bibtex-copy>Copy</button>
+  <pre data-cite-bibtex><code>{{ paper.bibtex }}</code></pre>
+</div>
