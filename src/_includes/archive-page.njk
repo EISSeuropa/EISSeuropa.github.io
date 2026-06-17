@@ -27,7 +27,11 @@
         <dd>{{ t.speakers.statConferences }} <span class="muted">{{ t.speakers.statConferencesSince }}</span></dd>
       </div>
       <div class="stat">
-        <dt>{{ corpus.stats.paperCount }}</dt>
+        {# Deduplicated paper count (paperIndex), so the headline matches the
+           by-paper list and its filter dropdowns. corpus.stats.paperCount is
+           the raw per-contribution total and double-counts the few papers that
+           appear twice in the programmes (e.g. a poster shown on both days). #}
+        <dt>{{ paperIndex.stats.paperCount }}</dt>
         <dd>{{ t.speakers.statPapers }}</dd>
       </div>
     </dl>
