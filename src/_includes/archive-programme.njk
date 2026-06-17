@@ -47,7 +47,10 @@
 
           <div class="programme-row-items">
             {%- for slot in row.items %}
-            <article class="programme-slot programme-slot--{{ slot.kind }}{% if slot.subtype %} programme-slot--{{ slot.subtype }}{% endif %}">
+            {# id="panel-<slugified title>" gives each session an anchor that
+               a paper landing page can deep-link to (its "Panel:" line). #}
+            <article class="programme-slot programme-slot--{{ slot.kind }}{% if slot.subtype %} programme-slot--{{ slot.subtype }}{% endif %}"
+                     {% if slot.kind != "break" and slot.title %}id="panel-{{ slot.title | slugify }}"{% endif %}>
 
               {%- if slot.kind == "break" %}
               <p class="programme-break-title">{{ slot.title }}</p>
@@ -123,13 +126,21 @@
     </div>
     {%- endfor %}
 
-    {% include "speakers-signpost.njk" %}
-
     {%- if _prog.sourceNote %}
     <p class="muted programme-footnote" style="margin-top: var(--space-4); font-size: var(--fs-sm);">
       {{ t.archiveProgramme.reconstructedNote }}
     </p>
     {%- endif %}
+  </div>
+</section>
+
+{# Anthology signpost (#889): its own section after the programme for
+   prominence, edition-aware — links to this edition's papers in the Anthology
+   when the slug is a year, else the generic /speakers card. #}
+<section class="section">
+  <div class="container">
+    {%- set signpostYear = archiveSlug if (archiveSlug | int) >= 2017 else "" -%}
+    {% include "speakers-signpost.njk" %}
   </div>
 </section>
 {% endif %}

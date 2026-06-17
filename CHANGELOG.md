@@ -93,6 +93,14 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+### Changed
+
+- **Anthology navigation and signposting polish.** Four refinements: (1) the Anthology signpost on every conference archive page is now its own section after the programme (rather than tucked under it) and is edition-aware, linking to that edition's papers in the Anthology (`/papers.html?year=YYYY`) with a sub-line placing the edition within the full archive. (2) On a paper page, the "Panel:" line below the abstract now links to that panel's anchor in the edition programme. (3) The adaptive Back control on paper pages stands on its own line, a touch larger than the secondary actions, with a return-arrow icon. Part of [#889](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/889).
+
+### Fixed
+
+- **The separator above a paper's "matched automatically" note is no longer cramped against the buttons.** The note's top margin was being zeroed by the more specific `.prose p` rule, so the dividing line sat tight under the Cite button. Scoping it as `.pub-match .pub-match-note` restores the intended breathing room. Part of [#889](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/889).
+
 ### Added
 
 - **The Anthology now carries an "early access" notice.** Both `/speakers` and `/papers` open with a small amber-flagged callout explaining the archive is an evolving preview, still being filled in edition by edition, and inviting corrections. On the French and German pages the same notice also states that the individual paper pages are in English (the per-paper pages are EN-only by design, alongside the existing beta-translation ribbon on those locales). EN + FR + DE, rendered once from the navigator i18n catalog so it stays in step across both views and all three languages. Part of [#889](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/889).

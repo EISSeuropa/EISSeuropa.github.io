@@ -318,6 +318,7 @@ const locales = {
       sourceNote: "Indico holds the authoritative programme. This grid is a daily snapshot.",
       viewOnIndico: "View the event on Indico",
       speakersLink: "Anthology",
+      speakersSignpostEdition: "This edition's papers and speakers, within the full archive since 2017.",
       // Livestream signpost + per-session pill (replaces the old standalone
       // "Livestreamed sessions" block).
       livestreamPill: "Livestream",
@@ -798,6 +799,7 @@ const locales = {
       sourceNote: "Indico fait foi pour le programme. Cette grille en est un instantané quotidien.",
       viewOnIndico: "Voir l'événement sur Indico",
       speakersLink: "Anthologie",
+      speakersSignpostEdition: "Les communications et intervenants de cette édition, au sein de l'archive complète depuis 2017.",
       livestreamPill: "En direct",
       livestreamNote: "Les sessions plénières sont diffusées en direct, signalées ci-dessous.",
       livestreamNoteCta: "Suivre en ligne sur Indico",
@@ -1219,6 +1221,7 @@ const locales = {
       sourceNote: "Indico ist die maßgebliche Quelle für das Programm. Dieses Raster ist ein tägliches Abbild.",
       viewOnIndico: "Veranstaltung auf Indico ansehen",
       speakersLink: "Anthologie",
+      speakersSignpostEdition: "Die Beiträge und Vortragenden dieser Ausgabe, innerhalb des Gesamtarchivs seit 2017.",
       livestreamPill: "Livestream",
       livestreamNote: "Die Plenarsitzungen werden live übertragen, unten gekennzeichnet.",
       livestreamNoteCta: "Online auf Indico teilnehmen",

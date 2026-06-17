@@ -3442,9 +3442,11 @@ a.programme-live-tag:focus-visible {
   cursor: pointer;
 }
 .pub-bibtex-copy:hover { border-color: var(--accent); color: var(--accent); }
-.pub-match-note {
-  margin: var(--space-4) 0 0;
-  padding-top: var(--space-3);
+/* Scoped under .pub-match to beat `.prose p` (which otherwise zeroes the
+   top margin, leaving the separator cramped against the buttons above it). */
+.pub-match .pub-match-note {
+  margin: var(--space-5) 0 0;
+  padding-top: var(--space-4);
   border-top: 1px solid var(--border);
   font-size: var(--fs-sm);
   color: var(--text-muted);
