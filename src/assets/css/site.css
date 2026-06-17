@@ -3986,7 +3986,9 @@ a.speaker-paper-title:hover {
 /* The same prize, shown as a line under the title on a paper landing page.
    Icon kept inline (not a flex child) so the viewBox SVG keeps its width. */
 .paper-prize-line {
-  margin: var(--space-2) 0 0;
+  /* Bottom margin gives the author byline below it room to breathe; this line
+     only renders on prize pages, so the extra space is scoped to them. */
+  margin: var(--space-2) 0 var(--space-3);
   font-size: var(--fs-sm);
   color: var(--text);
 }
