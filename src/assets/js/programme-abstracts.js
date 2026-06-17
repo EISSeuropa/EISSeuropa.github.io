@@ -40,10 +40,31 @@
     Array.prototype.forEach.call(wraps, setup);
   }
 
+  // In a parallel row (two or more sessions sharing a timeslot), keep the
+  // panels' open state in step: expanding "View papers" on one used to leave a
+  // tall empty gap beside its still-collapsed neighbour, and collapsing one
+  // left the other open. Mirror the toggled panel's state onto its siblings in
+  // the same row. The equality check stops the mirrored toggles from looping,
+  // and the `syncing` guard skips re-entry within the synchronous pass. Only
+  // parallel rows are touched; a lone panel has no siblings to sync.
+  var syncing = false;
+  function syncParallel(source) {
+    if (syncing) return;
+    var row = source.closest(".programme-row--parallel");
+    if (!row) return;
+    syncing = true;
+    var sibs = row.querySelectorAll("details.programme-contribs");
+    Array.prototype.forEach.call(sibs, function (d) {
+      if (d !== source && d.open !== source.open) d.open = source.open;
+    });
+    syncing = false;
+  }
+
   var panels = document.querySelectorAll("details.programme-contribs");
   Array.prototype.forEach.call(panels, function (d) {
     d.addEventListener("toggle", function () {
       if (d.open) setupAll(d);
+      syncParallel(d);
     });
     if (d.open) setupAll(d); // already open (e.g. deep-linked / no summary collapse)
   });
