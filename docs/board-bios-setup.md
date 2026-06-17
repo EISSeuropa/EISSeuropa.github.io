@@ -45,37 +45,51 @@ just don't merge.
 
 | # | Question text | Type | Required? |
 |---|---|---|---|
-| 1 | **Full name (with title — Dr / Prof / Mr / Ms)** | Short answer | ✅ |
-| 2 | **What is your role at EISS?** | Dropdown — see *Q2 options* below | ✅ |
-| 3 | **Do you have functional responsibilities?** | Dropdown — see *Q3 options* below | ⬜ |
-| 4 | **Position or current role (e.g. PhD candidate, Associate Professor, Policy analyst)** | Short answer | ✅ |
-| 5 | **Institution or organisation** | Short answer | ✅ |
-| 6 | **Country** | Short answer | ✅ |
-| 7 | **Public email (optional)** | Short answer | ⬜ |
-| 8 | **Short bio (max. 300 words)** | Paragraph | ✅ |
-| 9 | **Research keywords (comma-separated, 3 to 5 suggested)** | Short answer | ⬜ |
-| 10 | **Working Group involvement (tick all that apply)** | Checkboxes | ⬜ |
-| 11 | **Personal or institutional website (optional)** | Short answer | ⬜ |
-| 12 | **ORCID iD (optional)** | Short answer | ⬜ |
-| 13 | **LinkedIn URL (optional)** | Short answer | ⬜ |
-| 14 | **X / Twitter URL (optional)** | Short answer | ⬜ |
-| 15 | **Bluesky URL (optional)** | Short answer | ⬜ |
-| 16 | **Mastodon URL (optional)** | Short answer | ⬜ |
-| 17 | **Headshot photo (optional)** | File upload — image only — max 5 MB | ⬜ |
-| 18 | **Internship end date (optional)** | Date | ⬜ |
-| 19 | **I consent to publication of my bio on eiss-europa.com** | Checkboxes — single option | ✅ |
+| 1 | **Title** | Dropdown — see *Q1 options* below | ✅ |
+| 2 | **Full name** | Short answer | ✅ |
+| 3 | **What is your role at EISS?** | Dropdown — see *Q3 options* below | ✅ |
+| 4 | **Do you have functional responsibilities?** | Dropdown — see *Q4 options* below | ⬜ |
+| 5 | **Position or current role (e.g. PhD candidate, Associate Professor, Policy analyst)** | Short answer | ✅ |
+| 6 | **Institution or organisation** | Short answer | ✅ |
+| 7 | **Country** | Short answer | ✅ |
+| 8 | **Public email (optional)** | Short answer | ⬜ |
+| 9 | **Short bio (max. 300 words)** | Paragraph | ✅ |
+| 10 | **Research keywords (comma-separated, 3 to 5 suggested)** | Short answer | ⬜ |
+| 11 | **Working Group involvement (tick all that apply)** | Checkboxes | ⬜ |
+| 12 | **Personal or institutional website (optional)** | Short answer | ⬜ |
+| 13 | **ORCID iD (optional)** | Short answer | ⬜ |
+| 14 | **LinkedIn URL (optional)** | Short answer | ⬜ |
+| 15 | **X / Twitter URL (optional)** | Short answer | ⬜ |
+| 16 | **Bluesky URL (optional)** | Short answer | ⬜ |
+| 17 | **Mastodon URL (optional)** | Short answer | ⬜ |
+| 18 | **Headshot photo (optional)** | File upload — image only — max 5 MB | ⬜ |
+| 19 | **Internship end date (optional)** | Date | ⬜ |
+| 20 | **I consent to publication of my bio on eiss-europa.com** | Checkboxes — single option | ✅ |
 
-**Q2 options**, which must match exactly the `label` values in
+**Q1 options** (the honorific title). The sync prepends the chosen title to
+the full name, so the card renders e.g. "Prof. Jane Doe". "None" prepends
+nothing. The script accepts any value, so this list is the Form's set rather
+than a hard constraint:
+
+- Prof.
+- Dr
+- M
+- Mr
+- Mx
+- None
+
+**Q3 options**, which must match exactly the `label` values in
 `scripts/board-source.json` → `roles` table:
 
 - *(None — leave blank)* → falls through to *Board Member* (tier 100)
-- Founding Director
+- Founding and Honorary Director
 - Co-Director
-- Treasurer
 - Secretary-General
-- Support Staff
+- Treasurer
+- Board Member
+- Support Staff (incl. intern)
 
-**Q3 options**, which must match values in `scripts/board-source.json` →
+**Q4 options**, which must match values in `scripts/board-source.json` →
 `functional_responsibilities` list. A member can hold a Functional
 Responsibility independently of their formal role (Arthur is both a
 Board Member AND the Technology Coordinator):

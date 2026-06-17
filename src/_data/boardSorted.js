@@ -1,10 +1,10 @@
 // Computed view over board.json + the Form-pipeline roles table +
 // indico.json. Produces three arrays the template iterates over:
 //
-//   - leadership   — tier < 100 (Founding Director / Treasurer /
-//                    Secretary-General; plus any future named officer
-//                    roles, since they live in board-source.json with
-//                    explicit tiers)
+//   - leadership   — tier < 100 (Founding and Honorary Director /
+//                    Co-Director / Secretary-General / Treasurer; plus
+//                    any future named officer roles, since they live in
+//                    board-source.json with explicit tiers)
 //   - boardMembers — tier ≥ 100 (the rank-and-file "Board Member"
 //                    entries plus any future low-tier roles)
 //   - support      — the existing src/_data/board.json `support` list,
