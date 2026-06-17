@@ -16,6 +16,11 @@
 {%- set _lang = lang or "en" -%}
 {%- set t = i18n[_lang] -%}
 {%- set _prog = archiveProgrammesLinked[archiveSlug] -%}
+{# Tracks the panel anchors already emitted on this page. A title can repeat
+   across a programme (a daily "Coffee break", or a poster session listed on
+   both days), so an anchor is emitted only the first time, keeping ids unique
+   and landing a deep link on the earliest occurrence. #}
+{%- set _seenPanels = [] -%}
 {% include "event-jsonld.njk" %}
 {% if _prog and _prog.days and _prog.days.length %}
 <section class="section programme programme--archive" id="programme" aria-labelledby="archive-programme-title">
@@ -48,9 +53,16 @@
           <div class="programme-row-items">
             {%- for slot in row.items %}
             {# id="panel-<slugified title>" gives each session an anchor that
-               a paper landing page can deep-link to (its "Panel:" line). #}
+               a paper landing page can deep-link to (its "Panel:" line). Break
+               slots normally carry no anchor, but a poster session is modelled
+               as a break that still holds contributions, so those papers' deep
+               links need it too. The id is emitted once per slug (see
+               _seenPanels above) so a repeated title can't produce duplicates. #}
+            {%- set _slug = slot.title | slugify -%}
+            {%- set _anchor = slot.title and (slot.kind != "break" or (slot.contributions and slot.contributions.length)) and (_slug not in _seenPanels) -%}
+            {%- if _anchor %}{% set _ = _seenPanels.push(_slug) %}{% endif -%}
             <article class="programme-slot programme-slot--{{ slot.kind }}{% if slot.subtype %} programme-slot--{{ slot.subtype }}{% endif %}"
-                     {% if slot.kind != "break" and slot.title %}id="panel-{{ slot.title | slugify }}"{% endif %}>
+                     {% if _anchor %}id="panel-{{ _slug }}"{% endif %}>
 
               {%- if slot.kind == "break" %}
               <p class="programme-break-title">{{ slot.title }}</p>
