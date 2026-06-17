@@ -32,6 +32,7 @@
 
   var findEl = document.querySelector("[data-paper-find]");
   var pubCheck = document.querySelector("[data-paper-published]");
+  var prizeCheck = document.querySelector("[data-paper-prize]");
   var clearEl = document.querySelector("[data-paper-clear]");
   var statusEl = document.querySelector("[data-paper-status]");
   var entries = [].slice.call(list.querySelectorAll("[data-paper-entry]"));
@@ -48,19 +49,21 @@
     var year = yearSel ? yearSel.value : "";
     var theme = themeSel ? themeSel.value : "";
     var pub = pubCheck && pubCheck.checked;
+    var prize = prizeCheck && prizeCheck.checked;
     var q = norm(findEl && findEl.value);
     var visible = 0;
     entries.forEach(function (el) {
       var okYear = !year || el.getAttribute("data-year") === year;
       var okTheme = !theme || (el.getAttribute("data-themes") || "").split("|").indexOf(theme) !== -1;
       var okPub = !pub || el.getAttribute("data-published") === "1";
+      var okPrize = !prize || el.getAttribute("data-prize") === "1";
       var okText = !q || norm(el.getAttribute("data-search")).indexOf(q) !== -1;
-      var show = okYear && okTheme && okPub && okText;
+      var show = okYear && okTheme && okPub && okPrize && okText;
       el.hidden = !show;
       if (show) visible++;
     });
 
-    var filtering = !!(year || theme || pub || q);
+    var filtering = !!(year || theme || pub || prize || q);
     if (clearEl) clearEl.hidden = !filtering;
     if (statusEl) {
       if (!filtering) {
@@ -79,6 +82,7 @@
           if (year) bits.push(year);
           if (theme) bits.push(theme);
           if (pub && pubCheck && pubCheck.dataset.label) bits.push(pubCheck.dataset.label);
+          if (prize && prizeCheck && prizeCheck.dataset.label) bits.push(prizeCheck.dataset.label);
           if (q) {
             var matchTmpl = d.msgMatching || 'matching "{q}"';
             bits.push(matchTmpl.replace("{q}", (findEl.value || "").trim()));
@@ -102,18 +106,22 @@
     else url.searchParams.delete("theme");
     if (pubCheck && pubCheck.checked) url.searchParams.set("published", "1");
     else url.searchParams.delete("published");
+    if (prizeCheck && prizeCheck.checked) url.searchParams.set("prize", "1");
+    else url.searchParams.delete("prize");
     history.replaceState(null, "", url.pathname + url.search + url.hash);
   }
 
   if (yearSel) yearSel.addEventListener("change", function () { syncUrl(); apply(); });
   if (themeSel) themeSel.addEventListener("change", function () { syncUrl(); apply(); });
   if (pubCheck) pubCheck.addEventListener("change", function () { syncUrl(); apply(); });
+  if (prizeCheck) prizeCheck.addEventListener("change", function () { syncUrl(); apply(); });
   if (findEl) findEl.addEventListener("input", apply);
   if (clearEl) {
     clearEl.addEventListener("click", function () {
       if (yearSel) yearSel.value = "";
       if (themeSel) themeSel.value = "";
       if (pubCheck) pubCheck.checked = false;
+      if (prizeCheck) prizeCheck.checked = false;
       if (findEl) findEl.value = "";
       syncUrl();
       apply();
@@ -130,5 +138,6 @@
   restore("year", yearSel);
   restore("theme", themeSel);
   if (pubCheck && new URL(window.location.href).searchParams.get("published") === "1") pubCheck.checked = true;
+  if (prizeCheck && new URL(window.location.href).searchParams.get("prize") === "1") prizeCheck.checked = true;
   apply();
 })();

@@ -504,6 +504,7 @@ const locales = {
       themeLabel: "Theme",
       allThemes: "All themes",
       publishedOnly: "Published only",
+      prizeOnly: "Best Paper Prize",
       clear: "Clear",
       note: "Assembled from the published conference programmes. Themes are inferred from the panel each paper sat in (the nine permanent EISS sections plus recurring themes), so a paper may carry more than one or none. Titles, author names, affiliations and theme labels stay in their original language.",
       // Live-region status strings, read by paper-filter.js. {n}/{q} are
@@ -935,6 +936,7 @@ const locales = {
       themeLabel: "Thème",
       allThemes: "Tous les thèmes",
       publishedOnly: "Publiées uniquement",
+      prizeOnly: "Prix du meilleur article",
       clear: "Effacer",
       note: "Constitué à partir des programmes publiés des conférences. Les thèmes sont déduits du panel dans lequel chaque communication a été présentée (les neuf sections permanentes de l'EISS et des thèmes récurrents) : une communication peut en porter plusieurs ou aucun. Les titres, noms d'auteurs, affiliations et intitulés de thèmes restent dans leur langue d'origine.",
       resultsOne: "{n} communication",
@@ -1359,6 +1361,7 @@ const locales = {
       themeLabel: "Thema",
       allThemes: "Alle Themen",
       publishedOnly: "Nur veröffentlichte",
+      prizeOnly: "Best-Paper-Preis",
       clear: "Zurücksetzen",
       note: "Zusammengestellt aus den veröffentlichten Konferenzprogrammen. Themen werden aus dem Panel abgeleitet, in dem der jeweilige Beitrag stand (die neun ständigen EISS-Sektionen sowie wiederkehrende Themen): ein Beitrag kann mehrere oder gar keines tragen. Titel, Autorennamen, Zugehörigkeiten und Themenbezeichnungen bleiben in ihrer Originalsprache.",
       resultsOne: "{n} Beitrag",
