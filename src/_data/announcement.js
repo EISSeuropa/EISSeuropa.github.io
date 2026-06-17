@@ -24,83 +24,69 @@
  */
 
 const sharedImage = {
-  src: "/assets/images/1760518013943-1280x720.jpg",
-  width: 1280,
-  height: 720,
+  src: "/assets/images/8e43301e-7945-4a0c-aac2-04719ac702a8-800x450.jpg",
+  width: 800,
+  height: 450,
 };
-
-const sharedCtaUrl = "https://netsec-cost.eu/";
 
 module.exports = {
   // Set to false to hide the announcement section entirely.
   visible: true,
 
   en: {
-    eyebrow: "Brussels, 10 October 2025",
-    headline: "EISS launches major initiative to network European Security Studies",
+    eyebrow: "Stockholm, 12 June 2026",
+    headline: "The European Security Studies Conference closes in Stockholm",
     body: [
-      'Thanks to the generous support of the <a href="https://www.cost.eu" target="_blank" rel="noopener">European Cooperation in Science and Technology</a> (COST) organisation, EISS — together with a dozen institutions throughout Europe — launches <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">"Networking European Security Knowledge" (NetSec)</a>, a four-year programme to address the fragmentation of the continent\'s intellectual and analytical base in the field of security studies.',
-      "Dr Hugo Meijer, Founding Director of EISS, and Dr Marie Robin, EISS Treasurer, serve as NetSec Action Chair and Vice-Chair, respectively.",
+      'The annual conference has closed two days of panels and roundtables at Stockholm University. From this 2026 edition it carries a new name, the <strong>European Security Studies Conference</strong> (ESSC), marking its first year jointly organised by the <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">COST Action NetSec</a>, the European Initiative for Security Studies (EISS), and Stockholm University.',
+      'The full programme, the keynote and a selection of session recordings are now on the <a href="/2026.html">2026 conference page</a>.',
     ],
-    pullquote: {
-      text: "“The launch of NetSec is a huge step in the development of EISS and its partners. Watch out for policy workshops, summer schools and conferences in the next four years.”",
-      cite: "— Dr Hugo Meijer, NetSec Action Chair and Founding Director of EISS",
-    },
     cta: {
-      label: "Learn more about NetSec",
-      url: sharedCtaUrl,
-      external: true,
+      label: "See the 2026 conference",
+      url: "/2026.html",
+      external: false,
     },
     image: {
       ...sharedImage,
-      alt: "Members of the NetSec Management Committee at the launch event in Brussels.",
-      caption: "Members of the NetSec Management Committee at the launch event in Brussels — Dr Moritz Weiss (Leader of WG1, top) and Dr Hugo Meijer (Action Chair and Founding Director of EISS, bottom).",
+      alt: "Stockholm, host city of the 2026 European Security Studies Conference.",
+      caption: "Stockholm University hosted the 2026 European Security Studies Conference.",
     },
   },
 
   fr: {
-    eyebrow: "Bruxelles, 10 octobre 2025",
-    headline: "EISS lance une initiative majeure pour mettre en réseau les études européennes de sécurité",
+    eyebrow: "Stockholm, 12 juin 2026",
+    headline: "La Conférence européenne d'études de sécurité s'achève à Stockholm",
     body: [
-      'Grâce au généreux soutien de l\'organisation <a href="https://www.cost.eu" target="_blank" rel="noopener">European Cooperation in Science and Technology</a> (COST), EISS — aux côtés d\'une douzaine d\'institutions à travers l\'Europe — lance <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">« Networking European Security Knowledge » (NetSec)</a>, un programme de quatre ans visant à remédier à la fragmentation de la base intellectuelle et analytique du continent dans le domaine des études de sécurité.',
-      "Le Dr Hugo Meijer, directeur fondateur d'EISS, et la Dre Marie Robin, trésorière d'EISS, assurent respectivement la présidence et la vice-présidence de l'Action NetSec.",
+      'La conférence annuelle vient de clore deux journées de panels et de tables rondes à l\'Université de Stockholm. Depuis cette édition 2026, elle porte un nouveau nom, la <strong>Conférence européenne d\'études de sécurité</strong> (European Security Studies Conference, ESSC), et marque sa première année d\'organisation conjointe par l\'<a href="https://netsec-cost.eu/" target="_blank" rel="noopener">Action COST NetSec</a>, l\'Initiative européenne pour les études de sécurité (EISS) et l\'Université de Stockholm.',
+      'Le programme complet, la conférence inaugurale et une sélection d\'enregistrements de sessions sont désormais disponibles sur la <a href="/2026.fr.html">page de la conférence 2026</a>.',
     ],
-    pullquote: {
-      text: "« Le lancement de NetSec représente une étape majeure dans le développement d'EISS et de ses partenaires. Restez attentifs aux ateliers politiques, écoles d'été et conférences à venir au cours des quatre prochaines années. »",
-      cite: "— Dr Hugo Meijer, président de l'Action NetSec et directeur fondateur d'EISS",
-    },
     cta: {
-      label: "En savoir plus sur NetSec",
-      url: sharedCtaUrl,
-      external: true,
+      label: "Voir la conférence 2026",
+      url: "/2026.fr.html",
+      external: false,
     },
     image: {
       ...sharedImage,
-      alt: "Membres du comité de gestion NetSec lors du lancement à Bruxelles.",
-      caption: "Membres du comité de gestion NetSec lors de l'événement de lancement à Bruxelles — Dr Moritz Weiss (responsable du WG1, en haut) et Dr Hugo Meijer (président de l'Action et directeur fondateur d'EISS, en bas).",
+      alt: "Stockholm, ville hôte de la Conférence européenne d'études de sécurité 2026.",
+      caption: "L'Université de Stockholm a accueilli la Conférence européenne d'études de sécurité 2026.",
     },
   },
 
   de: {
-    eyebrow: "Brüssel, 10. Oktober 2025",
-    headline: "EISS startet Großinitiative zur Vernetzung der europäischen Sicherheitsstudien",
+    eyebrow: "Stockholm, 12. Juni 2026",
+    headline: "Die European Security Studies Conference geht in Stockholm zu Ende",
     body: [
-      'Dank der großzügigen Unterstützung der Organisation <a href="https://www.cost.eu" target="_blank" rel="noopener">European Cooperation in Science and Technology</a> (COST) startet EISS — gemeinsam mit einem Dutzend Institutionen in ganz Europa — <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">„Networking European Security Knowledge" (NetSec)</a>, ein vierjähriges Programm zur Bewältigung der Fragmentierung der intellektuellen und analytischen Basis des Kontinents im Bereich der Sicherheitsstudien.',
-      "Dr. Hugo Meijer, Gründungsdirektor von EISS, und Dr. Marie Robin, Schatzmeisterin von EISS, fungieren als Vorsitzender bzw. stellvertretende Vorsitzende der NetSec-Aktion.",
+      'Die Jahreskonferenz hat zwei Tage mit Panels und Round Tables an der Universität Stockholm abgeschlossen. Seit dieser Ausgabe 2026 trägt sie einen neuen Namen, die <strong>European Security Studies Conference</strong> (ESSC), und wird erstmals gemeinsam von der <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">COST-Aktion NetSec</a>, der Europäischen Initiative für Sicherheitsstudien (EISS) und der Universität Stockholm ausgerichtet.',
+      'Das vollständige Programm, die Keynote und eine Auswahl an Sitzungsaufzeichnungen sind jetzt auf der <a href="/2026.de.html">Seite der Konferenz 2026</a> verfügbar.',
     ],
-    pullquote: {
-      text: '„Der Start von NetSec ist ein großer Schritt in der Entwicklung von EISS und seinen Partnern. Achten Sie auf politische Workshops, Sommerschulen und Konferenzen in den nächsten vier Jahren.“',
-      cite: "— Dr. Hugo Meijer, Vorsitzender der NetSec-Aktion und Gründungsdirektor von EISS",
-    },
     cta: {
-      label: "Mehr über NetSec erfahren",
-      url: sharedCtaUrl,
-      external: true,
+      label: "Zur Konferenz 2026",
+      url: "/2026.de.html",
+      external: false,
     },
     image: {
       ...sharedImage,
-      alt: "Mitglieder des NetSec-Managementkomitees bei der Auftaktveranstaltung in Brüssel.",
-      caption: "Mitglieder des NetSec-Managementkomitees bei der Auftaktveranstaltung in Brüssel — Dr. Moritz Weiss (Leiter der WG1, oben) und Dr. Hugo Meijer (Vorsitzender der Aktion und Gründungsdirektor von EISS, unten).",
+      alt: "Stockholm, Gastgeberstadt der European Security Studies Conference 2026.",
+      caption: "Die Universität Stockholm war Gastgeberin der European Security Studies Conference 2026.",
     },
   },
 };
