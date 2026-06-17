@@ -15,16 +15,20 @@
 const paperIndex = require("./paperIndex.js");
 const paperLinks = require("./paperLinks.json"); // confirmed publication matches, keyed by slug
 
-// Build a BibTeX @article entry for a confirmed published version. Authors are
-// the published byline when known (it can differ from the conference
-// presenters), else the conference authors. Optional fields are emitted only
-// when present. Single braces around values: valid BibTeX, and it keeps the
-// string free of the `{{` that would collide with Nunjucks if built in-template.
+// Build a BibTeX @article entry for a confirmed published version. The entry
+// describes the PUBLISHED work, so title, authors and year prefer the
+// published values (each can differ from the conference paper): the published
+// title when known else the conference title, the published byline when known
+// else the conference authors, the published year else the conference year.
+// Optional fields are emitted only when present. Single braces around values:
+// valid BibTeX, and it keeps the string free of the `{{` that would collide
+// with Nunjucks if built in-template.
 function toBibtex(p, link) {
   const authors = (link.publishedAuthors && link.publishedAuthors.length ? link.publishedAuthors : p.authors) || [];
   const year = link.publishedYear || p.year;
   const type = link.pubType || "";
-  const fields = [`author = {${authors.join(" and ")}}`, `title = {${p.title}}`];
+  const title = link.publishedTitle || p.title;
+  const fields = [`author = {${authors.join(" and ")}}`, `title = {${title}}`];
   let entry = "article";
   if (/preprint|working paper/i.test(type)) {
     entry = "misc";
