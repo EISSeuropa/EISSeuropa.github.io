@@ -382,7 +382,20 @@ def build_from_row(row: dict, cols: dict, role_info: dict, prior: dict | None) -
     (working-group involvement, country, social-media URLs). Everything
     is captured into board.json; the template decides what to render
     based on field presence."""
-    name = _cell(row, cols, "name") or (prior or {}).get("name", "")
+    # Name + honorific title. The Form collects the title as a separate
+    # dropdown (Prof. / Dr / M / Mr / Mx / None) from the full name, so we
+    # prepend it here to keep the rendered "Prof. Jane Doe" format the card
+    # has always shown. A "None"/blank title prepends nothing. slugify() and
+    # identity_key() strip honorifics, so splitting the title out of the name
+    # field doesn't move a person's anchor. A submission with no name at all
+    # keeps the prior entry's name verbatim (already title-prefixed).
+    TITLE_NULL_SENTINELS = {"", "none"}
+    full_name = _cell(row, cols, "name")
+    title = _cell(row, cols, "title")
+    if full_name:
+        name = f"{title} {full_name}".strip() if title.lower() not in TITLE_NULL_SENTINELS else full_name
+    else:
+        name = (prior or {}).get("name", "")
     person: dict = {
         "name": name,
         "role": role_info["label"],

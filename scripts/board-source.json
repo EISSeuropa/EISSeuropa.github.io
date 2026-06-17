@@ -6,12 +6,13 @@
   },
   "form_url": "https://docs.google.com/forms/d/e/1FAIpQLSeVVwOHOwukLF9bzryNj1WeApuXOjxM-sOGbK_O908OLaPyGg/viewform",
 
-  "_columns_doc": "Header names exactly as Google Sheets writes them for this form. Timestamp + email columns are localised to the form owner's account language (this form is owned by an FR-locale account, so the timestamp column is 'Horodateur' and email is 'Adresse e-mail'). If you ever rename a question in the form, mirror the change here so the sync script keeps matching.",
+  "_columns_doc": "Header names exactly as Google Sheets writes them for this form. Timestamp + email columns are localised to the form owner's account language (this form is owned by an FR-locale account, so the timestamp column is 'Horodateur' and email is 'Adresse e-mail'). If you ever rename a question in the form, mirror the change here so the sync script keeps matching. `title` is a separate dropdown question (Prof. / Dr / M / Mr / Mx / None); the sync prepends the chosen title to the full name so the card still renders 'Prof. Jane Doe' (a 'None'/blank title prepends nothing). Slug + identity keys strip honorifics, so splitting the title out of the name field does not move a person's anchor.",
 
   "columns": {
     "timestamp": "Horodateur",
     "email": "Adresse e-mail",
-    "name": "Full name (with title — Dr / Prof / Mr / Ms)",
+    "title": "Title",
+    "name": "Full name",
     "role": "What is your role at EISS?",
     "functionalResponsibility": "Do you have functional responsibilities?",
     "position": "Position or current role (e.g. PhD candidate, Associate Professor, Policy analyst)",
@@ -37,13 +38,12 @@
   "_roles_aliases_doc": "Each role entry MAY carry an optional `aliases` array — list of additional Form-dropdown labels that should map to the same canonical role. The script tries an exact match against `label` first, then walks each role's `aliases` for a match. The CANONICAL `label` is what gets written into board.json (and therefore rendered on the card), regardless of which alias the Form used. Use aliases when the Form's display label evolves (e.g. clarifying 'Support Staff' to 'Support Staff (incl. intern)') without forcing a board.json rewrite.",
 
   "roles": [
-    { "label": "Founding Director",  "kind": "board",   "tier": 1   },
-    { "label": "Co-Director",        "kind": "board",   "tier": 2   },
-    { "label": "Treasurer",          "kind": "board",   "tier": 3   },
-    { "label": "Secretary-General",  "kind": "board",   "tier": 4   },
-    { "label": "Honorary Director",  "kind": "board",   "tier": 10  },
-    { "label": "Board Member",       "kind": "board",   "tier": 100 },
-    { "label": "Support Staff",      "kind": "support", "tier": 100, "aliases": ["Support Staff (incl. intern)"] }
+    { "label": "Founding and Honorary Director", "kind": "board",   "tier": 1,   "aliases": ["Founding Director", "Honorary Director"] },
+    { "label": "Co-Director",                     "kind": "board",   "tier": 2   },
+    { "label": "Secretary-General",               "kind": "board",   "tier": 3   },
+    { "label": "Treasurer",                       "kind": "board",   "tier": 4   },
+    { "label": "Board Member",                    "kind": "board",   "tier": 100 },
+    { "label": "Support Staff",                   "kind": "support", "tier": 100, "aliases": ["Support Staff (incl. intern)"] }
   ],
 
   "_functional_responsibilities_doc": "Allowed values for the new 'Functional responsibility' Form dropdown. The script copies whichever value the member picks into the entry's `functionalResponsibility` field verbatim; the template renders it as a quiet pill alongside the primary role. The list here exists only as a sanity check on the Form options — if a member submits an unrecognised value, the script accepts it (forward-compatible) but logs a warning.",
