@@ -55,3 +55,27 @@
     });
   });
 })();
+
+/* Focus-return (#889, item 4). When the reader arrives at a specific entry —
+ * the Back link from a paper page lands on /papers#paper-<slug>, or a deep
+ * link targets a person — move focus to that row so keyboard and screen-reader
+ * users resume where they left off rather than at the top of the page. The
+ * browser's native anchor scroll already positions it; preventScroll keeps
+ * that position so focusing doesn't jump. */
+(function () {
+  "use strict";
+  function focusFromHash() {
+    var h = location.hash;
+    if (!h || !/^#(paper|person)-/.test(h)) return;
+    var el = document.getElementById(h.slice(1));
+    if (!el) return;
+    if (!el.hasAttribute("tabindex")) el.setAttribute("tabindex", "-1");
+    try {
+      el.focus({ preventScroll: true });
+    } catch (e) {
+      el.focus();
+    }
+  }
+  focusFromHash();
+  window.addEventListener("hashchange", focusFromHash);
+})();

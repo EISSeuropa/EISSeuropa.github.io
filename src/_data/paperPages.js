@@ -49,11 +49,27 @@ function toBibtex(p, link) {
 }
 
 module.exports = function () {
-  return (paperIndex.papers || [])
-    .filter((p) => p.hasPage && p.slug)
+  const pages = (paperIndex.papers || []).filter((p) => p.hasPage && p.slug);
+  // Within-edition prev/next (#889). The reader pages through one edition's
+  // papers in the SAME order the Anthology's by-paper view lists them (the
+  // paperIndex order, alphabetical within year), so it matches what they'd see
+  // filtering /papers to that year. True programme order isn't carried in the
+  // data spine, so this is the index order rather than the running order.
+  const byYear = {};
+  pages.forEach((p) => {
+    (byYear[p.year] = byYear[p.year] || []).push(p);
+  });
+  const linkOf = (p) => (p ? { slug: p.slug, title: p.title } : null);
+
+  return pages
     .map((p) => {
+      const grp = byYear[p.year];
+      const i = grp.indexOf(p);
       const link = paperLinks[p.slug] || {};
       return {
+        // { slug, title } | null — previous / next paper in this edition.
+        editionPrev: linkOf(i > 0 ? grp[i - 1] : null),
+        editionNext: linkOf(i < grp.length - 1 ? grp[i + 1] : null),
         slug: p.slug,
         title: p.title,
         year: p.year,
