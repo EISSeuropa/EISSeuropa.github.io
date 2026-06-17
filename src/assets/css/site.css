@@ -3331,6 +3331,47 @@ a.programme-live-tag:focus-visible {
   line-height: var(--lh-relaxed);
   color: var(--text-muted);
 }
+/* The abstract text lives in its own paragraph inside the .programme-contrib-
+   abstract wrapper (#889) so JS can clamp it to a preview and a toggle reveals
+   the rest in place. .is-collapsible (added by JS) applies the clamp; removing
+   it on expand shows everything. No-JS: neither class is set, so the full
+   abstract renders unclamped. */
+.programme-contrib-abstract-text {
+  margin: 0;
+}
+.programme-contrib-abstract.is-collapsible:not(.is-expanded) .programme-contrib-abstract-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.programme-abstract-toggle {
+  margin-top: 0.35rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+}
+.programme-abstract-toggle:hover { text-decoration: underline; }
+/* Signpost from a programme paper to its Anthology landing page (#889). */
+.programme-contrib-anthology {
+  margin: 0.35rem 0 0;
+  font-size: var(--fs-sm);
+}
+.programme-contrib-anthology a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 600;
+}
+.programme-contrib-anthology svg {
+  width: 0.9em;
+  height: 0.9em;
+}
 
 .programme-footnote {
   border-top: 1px solid var(--border);
