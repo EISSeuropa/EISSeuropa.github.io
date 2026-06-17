@@ -3,6 +3,21 @@
    no new CSS. Authors that are EISS members link to their profile. #}
 {% from "icons.njk" import icon %}
 
+{# Mobile-only sticky Back (#889, item 4). Keeps an entry-aware exit in reach
+   while scrolling a long abstract. Hidden on desktop, where the breadcrumb sits
+   at the top. paper-back.js upgrades every [data-paper-back] (this + the
+   in-article one) to history.back() with a referrer-aware label. #}
+<div class="paper-back-sticky">
+  <div class="container">
+    <a class="btn btn-secondary btn-sm" href="/papers.html#paper-{{ paper.slug }}"
+       data-paper-back
+       data-back-conf-path="{{ paper.conferenceUrl }}"
+       data-back-event="{{ paper.conferenceLabel }} {{ paper.year }}"
+       data-back-anthology="Back to the Anthology"
+       data-back-generic="Back">{{ icon("arrow-left") }} <span data-back-label>All papers</span></a>
+  </div>
+</div>
+
 <header class="page-header">
   <div class="container">
     {# Breadcrumb trail (#889, item 2): a fixed second exit, correct even on a
@@ -101,6 +116,24 @@
         {%- if paper.abstractUrl %}<a class="btn btn-secondary btn-sm" href="{{ paper.abstractUrl }}" target="_blank" rel="noopener">{{ icon("external-link") }} View on Indico</a>{% endif %}
         <a class="btn btn-secondary btn-sm" href="{{ paper.conferenceUrl }}#programme">{{ icon("file-text") }} {{ paper.conferenceLabel }} {{ paper.year }} programme</a>
       </p>
+      {# Within-edition prev/next (#889, item 3): page through this edition's
+         papers in the Anthology's by-paper order, without returning to the index. #}
+      {%- if paper.editionPrev or paper.editionNext %}
+      <nav class="paper-prevnext" aria-label="More from {{ paper.conferenceLabel }} {{ paper.year }}">
+        {%- if paper.editionPrev %}
+        <a class="paper-prevnext__link paper-prevnext__prev" href="/papers/{{ paper.editionPrev.slug }}.html" rel="prev">
+          {{ icon("arrow-left") }}
+          <span class="paper-prevnext__body"><span class="paper-prevnext__label">Previous in {{ paper.conferenceLabel }} {{ paper.year }}</span><span class="paper-prevnext__title" lang="en">{{ paper.editionPrev.title }}</span></span>
+        </a>
+        {%- endif %}
+        {%- if paper.editionNext %}
+        <a class="paper-prevnext__link paper-prevnext__next" href="/papers/{{ paper.editionNext.slug }}.html" rel="next">
+          <span class="paper-prevnext__body"><span class="paper-prevnext__label">Next in {{ paper.conferenceLabel }} {{ paper.year }}</span><span class="paper-prevnext__title" lang="en">{{ paper.editionNext.title }}</span></span>
+          {{ icon("arrow-right") }}
+        </a>
+        {%- endif %}
+      </nav>
+      {%- endif %}
     </article>
   </div>
 </section>

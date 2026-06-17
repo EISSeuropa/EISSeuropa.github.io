@@ -16,8 +16,8 @@
  */
 (function () {
   "use strict";
-  var el = document.querySelector("[data-paper-back]");
-  if (!el) return;
+  var els = document.querySelectorAll("[data-paper-back]"); // in-article + mobile sticky
+  if (!els.length) return;
 
   var ref = document.referrer;
   if (!ref) return; // no referrer — keep the baseline anchor + label
@@ -31,27 +31,30 @@
   if (refUrl.origin !== window.location.origin) return; // external — keep baseline
   if (window.history.length <= 1) return; // nothing to go back to
 
-  // Referrer-aware label. The template supplies the paper's own conference path
-  // and label, so "Back to EISS 2025" is only shown when that's truly where the
-  // reader came from; the Anthology index pages collapse to one label.
   var path = refUrl.pathname;
-  var confPath = el.getAttribute("data-back-conf-path");
-  var label;
-  if (confPath && path === confPath) {
-    label = "Back to " + (el.getAttribute("data-back-event") || "the conference");
-  } else if (/\/(papers|speakers)(\.(fr|de))?\.html$/.test(path)) {
-    label = el.getAttribute("data-back-anthology") || "Back to the Anthology";
-  } else {
-    label = el.getAttribute("data-back-generic") || "Back";
-  }
 
-  var labelEl = el.querySelector("[data-back-label]");
-  if (labelEl) labelEl.textContent = label;
-  else el.textContent = label;
-  el.setAttribute("aria-label", label);
+  Array.prototype.forEach.call(els, function (el) {
+    // Referrer-aware label. The template supplies the paper's own conference
+    // path and label, so "Back to EISS 2025" is only shown when that's truly
+    // where the reader came from; the Anthology index pages collapse to one.
+    var confPath = el.getAttribute("data-back-conf-path");
+    var label;
+    if (confPath && path === confPath) {
+      label = "Back to " + (el.getAttribute("data-back-event") || "the conference");
+    } else if (/\/(papers|speakers)(\.(fr|de))?\.html$/.test(path)) {
+      label = el.getAttribute("data-back-anthology") || "Back to the Anthology";
+    } else {
+      label = el.getAttribute("data-back-generic") || "Back";
+    }
 
-  el.addEventListener("click", function (e) {
-    e.preventDefault();
-    window.history.back();
+    var labelEl = el.querySelector("[data-back-label]");
+    if (labelEl) labelEl.textContent = label;
+    else el.textContent = label;
+    el.setAttribute("aria-label", label);
+
+    el.addEventListener("click", function (e) {
+      e.preventDefault();
+      window.history.back();
+    });
   });
 }());
