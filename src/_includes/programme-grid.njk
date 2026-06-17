@@ -227,4 +227,9 @@
     </p>
   </div>
 </section>
+{# Keeps parallel panels' expand/collapse in step (a session shares a row with
+   another), the same behaviour the archive programmes get. The abstract
+   clamp/expand half of this script is inert here: the live grid renders no
+   data-abstract markup, so it finds nothing to set up. #}
+<script src="{{ '/assets/js/programme-abstracts.js' | bust }}" defer></script>
 {% endif %}
