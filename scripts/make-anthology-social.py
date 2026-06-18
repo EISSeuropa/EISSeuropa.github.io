@@ -10,6 +10,7 @@ Outputs (all light-brand, official EISS lockup, name-led):
   src/assets/images/anthology-meta.de.jpg     OG, 1200x630, DE
   src/assets/images/social/anthology-square.jpg   1080x1080, EN (IG / LinkedIn feed)
   src/assets/images/social/anthology-story.jpg     1080x1920, EN (stories / reels)
+  src/assets/images/social/anthology-poster.jpg    1240x1754, EN (A4 portrait, print + social)
 
 Because this owns anthology-meta.jpg, the `anthology` entry is removed from
 make-share-cards.py's CARDS table (single owner).
@@ -206,6 +207,33 @@ def build_story() -> str:
     return "".join(s)
 
 
+def build_poster() -> str:
+    # A4 portrait 1240x1754 (print + social). Authored in a 1754 square with the
+    # content in the centred 1240-wide band [257, 1497]; rasterize() crops to
+    # 1240x1754. bx offsets every x into that band.
+    C, bx = 1754, 257
+    s = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {C} {C}" width="{C}" height="{C}">', _defs()]
+    s.append(f'<rect width="{C}" height="{C}" fill="url(#bg)"/>')
+    s.append(_motif(bx + 470, 60, 760, 0.4))
+    s.append(f'<rect x="0" y="0" width="{C}" height="14" fill="{BLUE}"/>')
+    s.append(f'<rect x="0" y="{C-14}" width="{C}" height="14" fill="{BLUE}"/>')
+    s.append(_lockup(bx + 12, 110, 300))
+    s.append(_text(bx + 12, 300, 26, MUTED, "Open access research archive", weight=600, spacing="1.5"))
+    s.append(_text(bx + 12, 472, 56, NAVY, "The European Security Studies", weight=600, spacing="-1"))
+    s.append(_text(bx + 12, 588, 112, BLUE, "Anthology", weight=700, spacing="-3"))
+    s.append(_text(bx + 12, 684, 32, SLATE, "Every EISS conference paper since 2017,", weight=400))
+    s.append(_text(bx + 12, 730, 32, SLATE, "and everyone who gave it.", weight=400))
+    s.append(_stat_cell(bx + 12, 804, 290, 150, "~500", "papers"))
+    s.append(_stat_cell(bx + 317, 804, 290, 150, "~500", "scholars"))
+    s.append(_stat_cell(bx + 622, 804, 290, 150, "dozens", "events"))
+    for i, feat in enumerate(FEATURES):
+        s.append(_feature(bx + 16, 1064 + i * 86, 34, feat))
+    s.append(_text(bx + 12, 1566, 42, BLUE, URL, weight=500))
+    s.append(_text(bx + 12, 1622, 28, MUTED, "Free · open access · no sign-up", weight=500, spacing="0.5"))
+    s.append("</svg>")
+    return "".join(s)
+
+
 def rasterize(svg: str, w: int, h: int, dest: Path) -> None:
     dest.parent.mkdir(parents=True, exist_ok=True)
     tmp = Path(tempfile.mkstemp(suffix=".svg", prefix="anth-")[1])
@@ -232,6 +260,7 @@ def main() -> None:
         rasterize(build_og(strings), 1200, 630, OUT / name)
     rasterize(build_square(), 1080, 1080, SOCIAL / "anthology-square.jpg")
     rasterize(build_story(), 1080, 1920, SOCIAL / "anthology-story.jpg")
+    rasterize(build_poster(), 1240, 1754, SOCIAL / "anthology-poster.jpg")
 
 
 if __name__ == "__main__":
