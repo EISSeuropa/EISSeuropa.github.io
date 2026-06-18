@@ -180,6 +180,22 @@ CARDS = [
         "en": {"eyebrow": "Survey", "title": "Global Risks to the EU",
                "subtitle": "Annual survey of European security expert opinion"},
     }},
+    {"slug": "news", "i18n": {
+        "en": {"eyebrow": "Latest", "title": "News",
+               "subtitle": "Conferences · publications · prizes · partnerships"},
+        "fr": {"eyebrow": "Actualités", "title": "Actualités",
+               "subtitle": "Conférences · publications · prix · partenariats"},
+        "de": {"eyebrow": "Aktuelles", "title": "Aktuelles",
+               "subtitle": "Konferenzen · Publikationen · Preise · Partnerschaften"},
+    }},
+    {"slug": "anthology", "i18n": {
+        "en": {"eyebrow": "Archive", "title": "The Anthology",
+               "subtitle": "Every conference paper and speaker since 2017"},
+        "fr": {"eyebrow": "Archives", "title": "L'Anthologie",
+               "subtitle": "Chaque communication et intervenant de conférence depuis 2017"},
+        "de": {"eyebrow": "Archiv", "title": "Die Anthologie",
+               "subtitle": "Alle Konferenzbeiträge und -Vortragenden seit 2017"},
+    }},
 ]
 
 # 1200×1200 square share card SVG template.
@@ -422,10 +438,17 @@ def dest_filename(slug: str, lang: str) -> str:
 
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    # Optional slug filter: `make-share-cards.py news anthology` regenerates
+    # only those cards, leaving the rest untouched (qlmanage/sips output can
+    # drift by a few bytes between machines, so regenerating everything would
+    # dirty cards you didn't mean to change). No args → regenerate all.
+    only = set(sys.argv[1:])
     lockup = build_lockup()
     motif = build_motif()
     font_face = inter_face()
     for card in CARDS:
+        if only and card["slug"] not in only:
+            continue
         for lang, strings in card["i18n"].items():
             svg = render(strings, lockup, motif, font_face)
             try:
