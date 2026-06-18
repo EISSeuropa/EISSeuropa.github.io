@@ -15,6 +15,7 @@ alternates:
 {% from "icons.njk" import icon %}
 
 {%- set confCount = conferences.editionCount -%}
+{%- set scholarsApprox = (corpus.stats.speakerCount / 10) | round(0, "floor") * 10 -%}
 
 <header class="page-header">
   <div class="container">
@@ -25,12 +26,20 @@ alternates:
     <span class="eyebrow">À propos</span>
     <h1>L'Initiative</h1>
     <p class="page-lead">
-      L'Initiative européenne pour les études de sécurité (EISS) est un réseau européen multidisciplinaire
-      de chercheurs consolidant les études de sécurité en Europe. EISS accueille la conférence annuelle
-      European Security Studies Conference (ESSC) et est membre fondateur de l'Action COST
-      <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">NetSec</a>,
-      un partenariat plus large qui rassemble une douzaine d'institutions à travers le continent — dont
-      une grande partie des responsables est issue de la communauté EISS.
+      Fondée en 2017, l'Initiative européenne pour les études de sécurité (EISS) est un réseau européen
+      multidisciplinaire de chercheurs qui œuvre à consolider les études de sécurité sur le continent.
+      Indépendante et animée par des chercheurs, l'EISS construit le champ disciplinaire et ne prend
+      aucune position partisane sur les questions qu'étudient ses membres. Elle accueille la conférence
+      annuelle European Security Studies Conference (ESSC) et est membre fondateur de l'Action COST
+      <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">NetSec</a>, un partenariat plus
+      large rassemblant une douzaine d'institutions à travers le continent, dont une grande partie des
+      responsables est issue de la communauté EISS.
+    </p>
+
+    <p class="impact-strip">
+      <strong>{{ confCount }}</strong> conférences <span class="impact-sep" aria-hidden="true">·</span>
+      <strong>{{ corpus.stats.paperCount }}</strong> communications <span class="impact-sep" aria-hidden="true">·</span>
+      <strong>~{{ scholarsApprox }}</strong> chercheurs <span class="muted">depuis 2017</span>
     </p>
 
     <dl class="stats-row" aria-label="EISS en bref">
