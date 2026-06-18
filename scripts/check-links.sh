@@ -179,6 +179,14 @@ SKIP_HOSTS = {
                                 # gess.ethz.ch. Flaked the link-check on
                                 # PR #814; skipping stops the recurring
                                 # false-red on every src-touching PR.
+    "www.etsi.org",             # ETSI, cited from the accessibility statement
+                                # (`/accessibility` + FR/DE) for EN 301 549.
+                                # The deep `/deliver/...` standard URL reads
+                                # the connection slowly and times out from
+                                # GitHub's runners (a TimeoutError, not a 4xx),
+                                # same CI-side reachability class as su.se /
+                                # the EUI host above. Loads for visitors;
+                                # skipping stops the recurring false-red.
 }
 
 # Domains skipped together with ALL their subdomains. SKIP_HOSTS matches an
