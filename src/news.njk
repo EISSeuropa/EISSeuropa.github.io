@@ -1,0 +1,14 @@
+---
+layout: base.njk
+permalink: /news.html
+title: News
+description: "News from the European Initiative for Security Studies: conferences, publications, prizes, and partnership milestones."
+navKey: ""
+lang: en
+alternates:
+  en: /news.html
+  fr: /news.fr.html
+  de: /news.de.html
+---
+{%- set t = i18n[lang or "en"] -%}
+{% include "news-archive.njk" %}

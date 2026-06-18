@@ -38,6 +38,19 @@ const locales = {
     code: "en",
     name: "English",
     htmlLang: "en",
+    news: {
+      eyebrow: "Latest",
+      heading: "Latest news",
+      lead: "Recent news from the EISS network: conferences, publications, and milestones.",
+      viewAll: "All news",
+      readMore: "Read more",
+      pageTitle: "News",
+      pageLead: "News from the European Initiative for Security Studies: conferences, publications, prizes, and partnership milestones.",
+      empty: "No news yet.",
+      feedTitle: "EISS news",
+      feedLabel: "RSS feed",
+      types: { paper: "Publication", event: "Event", press: "In the press", podcast: "Podcast", news: "News" },
+    },
     htmlNameInOwnLang: "English",
 
     nav: {
@@ -553,6 +566,19 @@ const locales = {
 
   fr: {
     code: "fr",
+    news: {
+      eyebrow: "Actualités",
+      heading: "Dernières actualités",
+      lead: "Les actualités récentes du réseau EISS : conférences, publications et temps forts.",
+      viewAll: "Toutes les actualités",
+      readMore: "Lire la suite",
+      pageTitle: "Actualités",
+      pageLead: "Les actualités de l'Initiative européenne pour les études de sécurité : conférences, publications, prix et étapes du partenariat.",
+      empty: "Aucune actualité pour l'instant.",
+      feedTitle: "Actualités EISS",
+      feedLabel: "Flux RSS",
+      types: { paper: "Publication", event: "Événement", press: "Dans la presse", podcast: "Podcast", news: "Actualité" },
+    },
     name: "French",
     htmlLang: "fr",
     htmlNameInOwnLang: "Français",
@@ -978,6 +1004,19 @@ const locales = {
 
   de: {
     code: "de",
+    news: {
+      eyebrow: "Aktuelles",
+      heading: "Neuigkeiten",
+      lead: "Aktuelle Neuigkeiten aus dem EISS-Netzwerk: Konferenzen, Publikationen und Meilensteine.",
+      viewAll: "Alle Neuigkeiten",
+      readMore: "Mehr lesen",
+      pageTitle: "Aktuelles",
+      pageLead: "Neuigkeiten der Europäischen Initiative für Sicherheitsstudien: Konferenzen, Publikationen, Preise und Meilensteine der Partnerschaft.",
+      empty: "Noch keine Neuigkeiten.",
+      feedTitle: "EISS-Neuigkeiten",
+      feedLabel: "RSS-Feed",
+      types: { paper: "Publikation", event: "Veranstaltung", press: "In der Presse", podcast: "Podcast", news: "Neuigkeit" },
+    },
     name: "German",
     htmlLang: "de",
     htmlNameInOwnLang: "Deutsch",

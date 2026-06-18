@@ -1,0 +1,35 @@
+{# Homepage "Latest" surface (#96): the most recent news items (decayed to
+   the last ~18 months, capped at 5 by src/_data/news.js). Chrome strings come
+   from the i18n catalog; item titles/excerpts are authored once in English and
+   shown across locales, like the Anthology paper pages. Hidden entirely when
+   there's nothing recent, so the homepage never shows an empty shell. #}
+{% from "icons.njk" import icon %}
+{# `t` isn't set during homepage content render (base.njk sets it at layout
+   time), so resolve the active-locale catalog here, like the other homepage
+   includes do. #}
+{%- set _lang = lang or "en" -%}
+{%- set t = i18n[_lang] -%}
+{%- if news.homepage.length -%}
+<section class="section-tight" aria-labelledby="news-latest-title">
+  <div class="container">
+    <div class="news-head">
+      <h2 id="news-latest-title">{{ t.news.heading }}</h2>
+      <a class="news-all" href="{{ '/news.html' | localizedHref(_lang) }}">{{ t.news.viewAll }} {{ icon("arrow-right", "icon-inline") }}</a>
+    </div>
+    <ul class="news-list">
+      {%- for item in news.homepage %}
+      <li class="news-item">
+        <div class="news-meta">
+          <time class="news-date" datetime="{{ item.date }}">{{ item.date | newsDate(_lang) }}</time>
+          <span class="news-type" data-type="{{ item.type }}">{{ t.news.types[item.type] or item.type }}</span>
+        </div>
+        <h3 class="news-item-title" lang="en">
+          {%- if item.url %}<a href="{{ item.url }}"{% if "://" in item.url %} target="_blank" rel="noopener"{% endif %}>{{ item.title }}</a>{% else %}{{ item.title }}{% endif -%}
+        </h3>
+        {%- if item.excerpt %}<p class="news-excerpt" lang="en">{{ item.excerpt }}</p>{% endif %}
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>
+{%- endif -%}

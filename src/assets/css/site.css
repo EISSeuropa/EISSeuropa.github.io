@@ -1959,6 +1959,60 @@ h4 { font-size: var(--fs-lg); }
   object-position: center;
 }
 
+/* News surface (#96): the homepage "Latest" list and the /news archive share
+   .news-list / .news-item; --full just relaxes the spacing on the archive. */
+.news-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-5);
+}
+.news-head h2 { margin: 0; }
+.news-all { white-space: nowrap; font-weight: 600; }
+.news-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-5);
+}
+.news-list--full { gap: var(--space-6); }
+.news-item {
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border);
+}
+.news-list .news-item:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.news-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+.news-date { color: var(--text-muted); font-size: var(--fs-sm); }
+.news-type {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--bg-tinted);
+  padding: 0.15em 0.6em;
+  border-radius: 999px;
+}
+.news-item-title {
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-lg);
+  line-height: 1.3;
+}
+.news-item-title a { text-decoration: none; }
+.news-item-title a:hover { text-decoration: underline; }
+.news-excerpt { margin: 0; color: var(--text-muted); max-width: 62ch; }
+
 /* Programme cover banner — the title band cropped from the designer
    programme PDF's cover page (gs render + ffmpeg crop, ~2.4:1). Sits at
    the top of the /YYYY page header. The .programme-download button
