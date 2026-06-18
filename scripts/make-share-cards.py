@@ -212,16 +212,17 @@ CARDS = [
 #
 # Design rationale (landscape 1200×630, the canonical Open Graph /
 # summary_large_image ratio — 1.91:1):
-#   - Deep brand-navy gradient on hue 203 (the #007bc6 brand-blue hue),
-#     readable against both light and dark social feeds.
+#   - Light field (white → faint blue #E9F2FC), matching the site's own
+#     airy design language, with brand-blue (#007bc6) rules at the top and
+#     bottom edges of the cropped band.
 #   - The REAL EISS lockup (constellation mark + EiSS wordmark) top-left,
 #     embedded from src/assets/images/brand/logo-lockup.svg — not a
 #     hand-drawn approximation. Constellation in network blue #73caff,
-#     wordmark in white via currentColor.
-#   - A large, faint constellation motif (the real network mark) bleeding
+#     wordmark in brand blue #007bc6 via currentColor (the official logo).
+#   - A large, soft constellation motif (the real network mark) bleeding
 #     off the top-right, for brand texture.
-#   - Eyebrow + Title + (optional) Subtitle stack lower-left, like the
-#     page heros. Title font-size auto-shrinks for long strings.
+#   - Eyebrow (brand blue) + Title (brand navy #0C3A5E) + optional Subtitle
+#     (slate) stack lower-left, like the page heros. Title auto-shrinks.
 #   - eiss-europa.com tagline bottom-left for context.
 # The card is authored as a full-bleed 1200×1200 square (qlmanage renders
 # SVGs onto a square thumbnail canvas), with all content laid out inside
@@ -233,32 +234,36 @@ CROP_TOP = 285  # (1200 - 630) / 2
 TEMPLATE = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200">
   <defs>
     <style>{font_face}</style>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="hsl(205, 70%, 16%)"/>
-      <stop offset="55%" stop-color="hsl(209, 66%, 10%)"/>
-      <stop offset="100%" stop-color="hsl(214, 56%, 6%)"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#E9F2FC"/>
     </linearGradient>
   </defs>
 
   <rect width="1200" height="1200" fill="url(#bg)"/>
 
-  <!-- Faint constellation motif (the real network mark) bleeding off the
-       top-right of the visible band. -->
-  <g opacity="0.16">{motif}</g>
+  <!-- Brand-blue rules at the top + bottom edges of the cropped band. -->
+  <rect x="0" y="285" width="1200" height="10" fill="#007bc6"/>
+  <rect x="0" y="905" width="1200" height="10" fill="#007bc6"/>
 
-  <!-- The EISS lockup (constellation + EiSS wordmark), top-left. -->
+  <!-- Soft constellation motif (the real network mark) bleeding off the
+       top-right of the visible band, as a faint watermark. -->
+  <g opacity="0.5">{motif}</g>
+
+  <!-- The official EISS lockup (constellation + EiSS wordmark), top-left,
+       in brand blue on the light field. -->
   {lockup}
 
   <!-- Eyebrow / title / subtitle stack, lower-left -->
-  <g font-family="'Inter', -apple-system, system-ui, sans-serif" fill="#ffffff">
-    <text x="80" y="600" font-size="30" font-weight="700" letter-spacing="3" fill="hsl(203, 100%, 76%)">{eyebrow}</text>
+  <g font-family="'Inter', -apple-system, system-ui, sans-serif" fill="#0C3A5E">
+    <text x="80" y="600" font-size="30" font-weight="700" letter-spacing="3" fill="#007bc6">{eyebrow}</text>
     {title_block}
     {subtitle_block}
   </g>
 
   <!-- Footer tagline bottom-left -->
   <text x="80" y="866" font-family="'Inter', -apple-system, system-ui, sans-serif"
-        font-size="26" font-weight="500" fill="hsl(203, 70%, 72%)" letter-spacing="1">
+        font-size="26" font-weight="500" fill="#007bc6" letter-spacing="1">
     eiss-europa.com
   </text>
 </svg>
@@ -338,12 +343,13 @@ def layout_title(title: str) -> tuple[int, list[str]]:
 
 def build_lockup() -> str:
     """The EISS lockup (constellation + EiSS wordmark) as a nested <svg>
-    at the top-left of the visible band. `color:#ffffff` resolves the
-    wordmark's currentColor to white; the constellation keeps its #73caff."""
+    at the top-left of the visible band. `color:#007bc6` resolves the
+    wordmark's currentColor to the brand blue; the constellation keeps its
+    own #73caff — i.e. the official logo, on the light field."""
     view_box, inner = brand_svg_inner("logo-lockup.svg")
     return (
         f'<svg x="80" y="350" width="300" height="135" viewBox="{view_box}" '
-        f'preserveAspectRatio="xMidYMid meet" style="color:#ffffff">{inner}</svg>'
+        f'preserveAspectRatio="xMidYMid meet" style="color:#007bc6">{inner}</svg>'
     )
 
 
@@ -387,7 +393,7 @@ def render(strings: dict, lockup: str, motif: str, font_face: str) -> Path:
         sub_y = title_bottom + sub_size + 28
         subtitle_block = (
             f'<text x="80" y="{sub_y}" font-size="{sub_size}" font-weight="500" '
-            f'fill="hsl(210, 32%, 84%)">{escape(strings["subtitle"])}</text>'
+            f'fill="#46627A">{escape(strings["subtitle"])}</text>'
         )
     svg = TEMPLATE.format(
         font_face=font_face,
