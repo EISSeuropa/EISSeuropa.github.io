@@ -9,3 +9,9 @@ requests>=2.34.2,<3
 # uploaded via the Google Form. Optional at runtime — sync-board.py
 # falls back to copying the raw bytes if Pillow is unavailable.
 Pillow>=12.2.0,<13
+
+# qrcode generates the QR matrix baked into the A4 poster by
+# scripts/make-anthology-social.py. Matrix-only (no Pillow needed) — the
+# script renders the modules as SVG rects. Optional at runtime: the script
+# omits the QR (keeping the printed URL) if qrcode is unavailable.
+qrcode>=8,<9

@@ -31,6 +31,11 @@ import tempfile
 from pathlib import Path
 from xml.sax.saxutils import escape
 
+try:
+    import qrcode
+except ImportError:  # optional — the poster falls back to the printed URL
+    qrcode = None
+
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "src" / "assets" / "images"
 SOCIAL = OUT / "social"
@@ -207,6 +212,28 @@ def build_story() -> str:
     return "".join(s)
 
 
+def _qr(x: float, y: float, size: float, data: str) -> str:
+    """A scannable QR for `data`, rendered as SVG rects (dark modules in navy
+    on a white rounded card). Needs the qrcode lib (matrix only, no Pillow);
+    returns "" when it's unavailable so the poster still builds."""
+    if qrcode is None:
+        return ""
+    qr = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_M, border=4)
+    qr.add_data(data)
+    qr.make(fit=True)
+    matrix = qr.get_matrix()
+    n = len(matrix)
+    mod = size / n
+    parts = [f'<rect x="{x:.1f}" y="{y:.1f}" width="{size:.1f}" height="{size:.1f}" rx="10" fill="#ffffff"/>']
+    parts.append(f'<g fill="{NAVY}">')
+    for r, row in enumerate(matrix):
+        for c, dark in enumerate(row):
+            if dark:
+                parts.append(f'<rect x="{x + c*mod:.2f}" y="{y + r*mod:.2f}" width="{mod:.2f}" height="{mod:.2f}"/>')
+    parts.append("</g>")
+    return "".join(parts)
+
+
 def build_poster() -> str:
     # A4 portrait 1240x1754 (print + social). Authored in a 1754 square with the
     # content in the centred 1240-wide band [257, 1497]; rasterize() crops to
@@ -227,9 +254,13 @@ def build_poster() -> str:
     s.append(_stat_cell(bx + 317, 804, 290, 150, "~500", "scholars"))
     s.append(_stat_cell(bx + 622, 804, 290, 150, "dozens", "events"))
     for i, feat in enumerate(FEATURES):
-        s.append(_feature(bx + 16, 1064 + i * 86, 34, feat))
-    s.append(_text(bx + 12, 1566, 42, BLUE, URL, weight=500))
-    s.append(_text(bx + 12, 1622, 28, MUTED, "Free · open access · no sign-up", weight=500, spacing="0.5"))
+        s.append(_feature(bx + 16, 1052 + i * 84, 34, feat))
+    # Footer row: CTA text on the left, scannable QR on the right.
+    s.append(f'<line x1="{bx+12}" y1="1486" x2="{bx+1228}" y2="1486" stroke="{HAIR}" stroke-width="2"/>')
+    s.append(_qr(bx + 978, 1512, 250, "https://eiss-europa.com/anthology.html"))
+    s.append(_text(bx + 12, 1560, 32, NAVY, "Scan to explore the archive", weight=600))
+    s.append(_text(bx + 12, 1620, 40, BLUE, URL, weight=500))
+    s.append(_text(bx + 12, 1672, 28, MUTED, "Free · open access · no sign-up", weight=500, spacing="0.5"))
     s.append("</svg>")
     return "".join(s)
 
