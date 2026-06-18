@@ -189,25 +189,31 @@ def build_story() -> str:
     # Portrait 1080x1920. qlmanage renders square, so author a 1920x1920 canvas
     # with the content in the centred 1080-wide band [420, 1500]; rasterize()
     # crops to 1080x1920. bx offsets every x into that band.
-    C, bx = 1920, 420
+    C, bx, M = 1920, 420, 50
+    L = bx + M
+    R = bx + 1080 - M
+    CW = R - L            # 980
     s = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {C} {C}" width="{C}" height="{C}">', _defs()]
     s.append(f'<rect width="{C}" height="{C}" fill="url(#bg)"/>')
-    s.append(_motif(bx + 470, 70, 700, 0.4))
+    s.append(_motif(R - 320, 50, 700, 0.38))
     s.append(f'<rect x="0" y="0" width="{C}" height="14" fill="{BLUE}"/>')
     s.append(f'<rect x="0" y="{C-14}" width="{C}" height="14" fill="{BLUE}"/>')
-    s.append(_lockup(bx + 10, 150, 280))
-    s.append(_text(bx + 10, 318, 24, MUTED, "Open access research archive", weight=600, spacing="1.5"))
-    s.append(_text(bx + 10, 560, 64, NAVY, "The European Security Studies", weight=600, spacing="-1"))
-    s.append(_text(bx + 10, 684, 132, BLUE, "Anthology", weight=700, spacing="-3"))
-    s.append(_text(bx + 10, 786, 36, SLATE, "Every EISS conference paper since 2017,", weight=400))
-    s.append(_text(bx + 10, 836, 36, SLATE, "and everyone who gave it.", weight=400))
-    s.append(_stat_cell(bx + 10, 910, 290, 150, "~500", "papers"))
-    s.append(_stat_cell(bx + 315, 910, 290, 150, "~500", "scholars"))
-    s.append(_stat_cell(bx + 620, 910, 290, 150, "dozens", "events"))
+    s.append(_lockup(L, 150, 280))
+    s.append(_text(L, 340, 24, MUTED, "Open access research archive", weight=600, spacing="1.5"))
+    s.append(_text(L, 564, 58, NAVY, "The European Security Studies", weight=600, spacing="-1"))
+    s.append(_text(L, 684, 124, BLUE, "Anthology", weight=700, spacing="-3"))
+    s.append(_text(L, 784, 34, SLATE, "Every EISS conference paper since 2017,", weight=400))
+    s.append(_text(L, 832, 34, SLATE, "and everyone who gave it.", weight=400))
+    gap = 24
+    cw = (CW - 2 * gap) / 3
+    s.append(_stat_cell(L, 908, cw, 158, "~500", "papers"))
+    s.append(_stat_cell(L + cw + gap, 908, cw, 158, "~500", "scholars"))
+    s.append(_stat_cell(L + 2 * (cw + gap), 908, cw, 158, "dozens", "events"))
     for i, feat in enumerate(FEATURES):
-        s.append(_feature(bx + 14, 1180 + i * 86, 34, feat))
-    s.append(_text(bx + 10, 1700, 42, BLUE, URL, weight=500))
-    s.append(_text(bx + 10, 1760, 28, MUTED, "Free · open access · no sign-up", weight=500, spacing="0.5"))
+        s.append(_feature(L + 4, 1176 + i * 84, 34, feat))
+    s.append(f'<line x1="{L}" y1="1636" x2="{R}" y2="1636" stroke="{HAIR}" stroke-width="2"/>')
+    s.append(_text(L, 1696, 42, BLUE, URL, weight=500))
+    s.append(_text(L, 1748, 28, MUTED, "Free · open access · no sign-up", weight=500, spacing="0.5"))
     s.append("</svg>")
     return "".join(s)
 
@@ -236,31 +242,38 @@ def _qr(x: float, y: float, size: float, data: str) -> str:
 
 def build_poster() -> str:
     # A4 portrait 1240x1754 (print + social). Authored in a 1754 square with the
-    # content in the centred 1240-wide band [257, 1497]; rasterize() crops to
-    # 1240x1754. bx offsets every x into that band.
-    C, bx = 1754, 257
+    # content in the centred 1240-wide band; rasterize() crops to 1240x1754.
+    # L/R are the actual left/right content edges (80px poster margins), so the
+    # stats span the full width and the footer QR stays in bounds.
+    C, bx, M = 1754, 257, 80
+    L = bx + M            # left content edge
+    R = bx + 1240 - M     # right content edge
+    CW = R - L            # 1080
     s = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {C} {C}" width="{C}" height="{C}">', _defs()]
     s.append(f'<rect width="{C}" height="{C}" fill="url(#bg)"/>')
-    s.append(_motif(bx + 470, 60, 760, 0.4))
+    s.append(_motif(R - 360, 36, 760, 0.38))
     s.append(f'<rect x="0" y="0" width="{C}" height="14" fill="{BLUE}"/>')
     s.append(f'<rect x="0" y="{C-14}" width="{C}" height="14" fill="{BLUE}"/>')
-    s.append(_lockup(bx + 12, 110, 300))
-    s.append(_text(bx + 12, 300, 26, MUTED, "Open access research archive", weight=600, spacing="1.5"))
-    s.append(_text(bx + 12, 472, 56, NAVY, "The European Security Studies", weight=600, spacing="-1"))
-    s.append(_text(bx + 12, 588, 112, BLUE, "Anthology", weight=700, spacing="-3"))
-    s.append(_text(bx + 12, 684, 32, SLATE, "Every EISS conference paper since 2017,", weight=400))
-    s.append(_text(bx + 12, 730, 32, SLATE, "and everyone who gave it.", weight=400))
-    s.append(_stat_cell(bx + 12, 804, 290, 150, "~500", "papers"))
-    s.append(_stat_cell(bx + 317, 804, 290, 150, "~500", "scholars"))
-    s.append(_stat_cell(bx + 622, 804, 290, 150, "dozens", "events"))
+    s.append(_lockup(L, 110, 300))
+    s.append(_text(L, 302, 26, MUTED, "Open access research archive", weight=600, spacing="1.5"))
+    s.append(_text(L, 462, 58, NAVY, "The European Security Studies", weight=600, spacing="-1"))
+    s.append(_text(L, 584, 116, BLUE, "Anthology", weight=700, spacing="-3"))
+    s.append(_text(L, 682, 32, SLATE, "Every EISS conference paper since 2017,", weight=400))
+    s.append(_text(L, 730, 32, SLATE, "and everyone who gave it.", weight=400))
+    gap = 24
+    cw = (CW - 2 * gap) / 3
+    s.append(_stat_cell(L, 804, cw, 162, "~500", "papers"))
+    s.append(_stat_cell(L + cw + gap, 804, cw, 162, "~500", "scholars"))
+    s.append(_stat_cell(L + 2 * (cw + gap), 804, cw, 162, "dozens", "of EISS events"))
     for i, feat in enumerate(FEATURES):
-        s.append(_feature(bx + 16, 1052 + i * 84, 34, feat))
-    # Footer row: CTA text on the left, scannable QR on the right.
-    s.append(f'<line x1="{bx+12}" y1="1486" x2="{bx+1228}" y2="1486" stroke="{HAIR}" stroke-width="2"/>')
-    s.append(_qr(bx + 978, 1512, 250, "https://eiss-europa.com/anthology.html"))
-    s.append(_text(bx + 12, 1560, 32, NAVY, "Scan to explore the archive", weight=600))
-    s.append(_text(bx + 12, 1620, 40, BLUE, URL, weight=500))
-    s.append(_text(bx + 12, 1672, 28, MUTED, "Free · open access · no sign-up", weight=500, spacing="0.5"))
+        s.append(_feature(L + 4, 1066 + i * 82, 34, feat))
+    # Footer: hairline, CTA text left, scannable QR right — all above the rule.
+    s.append(f'<line x1="{L}" y1="1452" x2="{R}" y2="1452" stroke="{HAIR}" stroke-width="2"/>')
+    qr = 230
+    s.append(_qr(R - qr, 1474, qr, "https://eiss-europa.com/anthology.html"))
+    s.append(_text(L, 1520, 32, NAVY, "Scan to explore the archive", weight=600))
+    s.append(_text(L, 1580, 40, BLUE, URL, weight=500))
+    s.append(_text(L, 1632, 26, MUTED, "Free · open access · no sign-up", weight=500, spacing="0.5"))
     s.append("</svg>")
     return "".join(s)
 
