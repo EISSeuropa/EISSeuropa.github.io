@@ -69,7 +69,7 @@
       {% if p.publishedUrl %}data-published="1"{% endif %}
       {% if p.prize %}data-prize="1"{% endif %}>
     <article class="paper-card">
-      <h2 class="paper-title" lang="en">{% if p.paperUrl %}<a href="{{ p.paperUrl }}">{{ p.title }}</a>{% else %}{{ p.title }}{% endif %}{%- if p.publishedUrl %}<span class="paper-pub-chip" lang="en" title="A published version of this paper exists">Published</span>{% endif %}{%- if p.prize %}<span class="paper-prize-chip" lang="en" title="{{ p.prize.award }} — EISS × {{ p.prize.partner }}">{{ icon("award") }} Best Paper Prize</span>{% endif %}</h2>
+      <h2 class="paper-title" lang="en">{% if p.paperUrl %}<a href="{{ p.paperUrl }}">{{ p.title }}</a>{% else %}{{ p.title }}{% endif %}{%- if p.publishedUrl %}<span class="paper-pub-chip" lang="en" title="A published version of this paper exists">Published</span>{% endif %}{%- if p.prize %}<span class="paper-prize-chip" lang="en" title="{{ p.prize.award }} — EISS × {{ p.prize.partner }}">{{ icon("award") }} {{ p.prize.award }}</span>{% endif %}</h2>
       {%- if p.authorsLinked.length %}
       {# Authors that are EISS board / community members link through to their
          profile page (the by-paper → by-person cross-link); others are plain. #}

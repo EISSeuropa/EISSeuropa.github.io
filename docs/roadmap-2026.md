@@ -122,8 +122,8 @@ the headline items:
   auto-PR a news post, so an update doesn't need a hand-built page.
   [#634](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/634), M.
 - **Outputs / Publications page** — list the network's outputs (book
-  series, the Prix Bastien Irondelle, deliverables) on a dedicated
-  page.
+  series, policy briefs, white papers, survey results, the European
+  Security Studies Prize) on a dedicated page.
   [#97](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/97), M.
 - **Working Groups page** — render each group's objective and people.
   The NetSec sister site ships its own, this mirrors it for EISS.

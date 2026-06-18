@@ -2023,6 +2023,17 @@ h4 { font-size: var(--fs-lg); }
 .impact-strip strong { color: var(--accent); font-weight: 700; }
 .impact-sep { margin: 0 0.4em; opacity: 0.5; }
 
+/* Laureate roll on /prizes (#639): a year-keyed list of prize-winning
+   papers, each linking to its Anthology entry. */
+.laureate-roll { list-style: none; margin: var(--space-5) 0 0; padding: 0; display: grid; gap: var(--space-4); }
+.laureate { display: flex; gap: var(--space-4); align-items: baseline; padding-bottom: var(--space-4); border-bottom: 1px solid var(--border); }
+.laureate-roll .laureate:last-child { padding-bottom: 0; border-bottom: 0; }
+.laureate-year { flex: none; width: 3.5rem; font-size: var(--fs-lg); font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+.laureate-body { display: flex; flex-direction: column; gap: 3px; }
+.laureate-title { font-size: var(--fs-lg); font-weight: 600; text-decoration: none; line-height: 1.3; }
+.laureate-title:hover { text-decoration: underline; }
+.laureate-meta { color: var(--text-muted); font-size: var(--fs-sm); }
+
 /* Programme cover banner — the title band cropped from the designer
    programme PDF's cover page (gs render + ffmpeg crop, ~2.4:1). Sits at
    the top of the /YYYY page header. The .programme-download button

@@ -1,0 +1,32 @@
+{# Prizes page body (#639), shared by the three locale pages. The laureate
+   roll is read from prizeLaureates.js, which derives it from the Anthology
+   corpus — so each laureate links straight to its /papers/<slug> entry (the
+   abstract, the published version, the citation already live there) and
+   adding a year stays a one-line edit to paperPrizes.json. Chrome strings
+   come from i18n; laureate titles + names are English, like the Anthology. #}
+{% from "icons.njk" import icon %}
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">{{ t.prizes.eyebrow }}</span>
+    <h1>{{ t.prizes.title }}</h1>
+    <p class="page-lead">{{ t.prizes.lead }}</p>
+  </div>
+</header>
+
+<section class="section" aria-labelledby="best-paper-title">
+  <div class="container">
+    <h2 id="best-paper-title">{{ t.prizes.bestPaperHeading }}</h2>
+    <p class="muted" style="max-width: 46rem;">{{ t.prizes.bestPaperIntro }}</p>
+    <ol class="laureate-roll">
+      {%- for l in prizeLaureates.bestPaper %}
+      <li class="laureate">
+        <span class="laureate-year">{{ l.year }}</span>
+        <span class="laureate-body">
+          <a class="laureate-title" href="{{ l.url }}" lang="en">{{ l.title }}</a>
+          <span class="laureate-meta" lang="en">{{ l.authors | join(', ') }}{% if l.affiliation %} &middot; {{ l.affiliation }}{% endif %}</span>
+        </span>
+      </li>
+      {%- endfor %}
+    </ol>
+  </div>
+</section>
