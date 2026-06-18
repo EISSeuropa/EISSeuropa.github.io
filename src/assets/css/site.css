@@ -2013,6 +2013,16 @@ h4 { font-size: var(--fs-lg); }
 .news-item-title a:hover { text-decoration: underline; }
 .news-excerpt { margin: 0; color: var(--text-muted); max-width: 62ch; }
 
+/* Impact strip (#800): a compact "N conferences · N papers · ~N scholars"
+   line under the /initiative lede, sourced from corpus.js. */
+.impact-strip {
+  margin: var(--space-4) 0 0;
+  font-size: var(--fs-lg);
+  color: var(--text-muted);
+}
+.impact-strip strong { color: var(--accent); font-weight: 700; }
+.impact-sep { margin: 0 0.4em; opacity: 0.5; }
+
 /* Programme cover banner — the title band cropped from the designer
    programme PDF's cover page (gs render + ffmpeg crop, ~2.4:1). Sits at
    the top of the /YYYY page header. The .programme-download button

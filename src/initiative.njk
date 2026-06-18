@@ -17,6 +17,10 @@ alternates:
     editions (2017 + 2018) that pre-date the standalone-page convention.
     Bump the "+ 2" if more historical editions are added to past.njk. -#}
 {%- set confCount = conferences.editionCount -%}
+{#- Corpus-scale totals for the impact strip (#800), from corpus.js so they
+    stay accurate as editions land. Scholars rounded down to the nearest ten
+    because the speaker de-duplication is deliberately conservative. -#}
+{%- set scholarsApprox = (corpus.stats.speakerCount / 10) | round(0, "floor") * 10 -%}
 
 <header class="page-header">
   <div class="container">
@@ -32,11 +36,22 @@ alternates:
     <span class="eyebrow">About</span>
     <h1>The Initiative</h1>
     <p class="page-lead">
-      The European Initiative for Security Studies (EISS) is a Europe-wide multidisciplinary network of
-      scholars consolidating security studies in Europe. EISS hosts the annual European Security Studies
-      Conference (ESSC) and is a founding member of the COST Action <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">NetSec</a>,
-      a wider partnership that knits together a dozen institutions across the continent, much of whose
-      leadership is drawn from the EISS community.
+      Founded in 2017, the European Initiative for Security Studies (EISS) is a Europe-wide,
+      multidisciplinary network of scholars working to consolidate security studies across the continent.
+      It is independent and scholar-led: EISS builds the field and takes no partisan position on the
+      questions its members study. It hosts the annual European Security Studies Conference (ESSC) and is
+      a founding member of the COST Action <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">NetSec</a>,
+      a wider partnership of a dozen institutions across the continent whose leadership is largely drawn
+      from the EISS community.
+    </p>
+
+    {#- Corpus-scale impact strip (#800): what the community has produced,
+        distinct from the organisation stats-row below (who we are now).
+        Numbers come from corpus.js + conferences.js, so they self-update. -#}
+    <p class="impact-strip">
+      <strong>{{ confCount }}</strong> conferences <span class="impact-sep" aria-hidden="true">·</span>
+      <strong>{{ corpus.stats.paperCount }}</strong> papers <span class="impact-sep" aria-hidden="true">·</span>
+      <strong>~{{ scholarsApprox }}</strong> scholars <span class="muted">since 2017</span>
     </p>
 
     <dl class="stats-row" aria-label="EISS at a glance">

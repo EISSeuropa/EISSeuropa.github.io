@@ -15,6 +15,7 @@ alternates:
 {% from "icons.njk" import icon %}
 
 {%- set confCount = conferences.editionCount -%}
+{%- set scholarsApprox = (corpus.stats.speakerCount / 10) | round(0, "floor") * 10 -%}
 
 <header class="page-header">
   <div class="container">
@@ -25,12 +26,20 @@ alternates:
     <span class="eyebrow">Über uns</span>
     <h1>Die Initiative</h1>
     <p class="page-lead">
-      Die Europäische Initiative für Sicherheitsstudien (EISS) ist ein europaweites multidisziplinäres
-      Netzwerk von Wissenschaftlern, das die Sicherheitsstudien in Europa konsolidiert. EISS richtet die
-      jährliche European Security Studies Conference (ESSC) aus und ist Gründungsmitglied der COST-Aktion
-      <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">NetSec</a> — eines breiteren
-      Verbunds aus einem Dutzend Institutionen aus ganz Europa, dessen Führung größtenteils aus der
-      EISS-Gemeinschaft stammt.
+      Die 2017 gegründete Europäische Initiative für Sicherheitsstudien (EISS) ist ein europaweites,
+      multidisziplinäres Netzwerk von Wissenschaftlern, das die Sicherheitsstudien auf dem gesamten
+      Kontinent konsolidiert. Sie ist unabhängig und wissenschaftsgeleitet: EISS baut das Fachgebiet auf
+      und bezieht keine parteiische Position zu den Fragen, die ihre Mitglieder erforschen. Sie richtet
+      die jährliche European Security Studies Conference (ESSC) aus und ist Gründungsmitglied der
+      COST-Aktion <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">NetSec</a> — eines
+      breiteren Verbunds aus einem Dutzend Institutionen aus ganz Europa, dessen Führung größtenteils aus
+      der EISS-Gemeinschaft stammt.
+    </p>
+
+    <p class="impact-strip">
+      <strong>{{ confCount }}</strong> Konferenzen <span class="impact-sep" aria-hidden="true">·</span>
+      <strong>{{ corpus.stats.paperCount }}</strong> Beiträge <span class="impact-sep" aria-hidden="true">·</span>
+      <strong>~{{ scholarsApprox }}</strong> Wissenschaftler <span class="muted">seit 2017</span>
     </p>
 
     <dl class="stats-row" aria-label="EISS auf einen Blick">
