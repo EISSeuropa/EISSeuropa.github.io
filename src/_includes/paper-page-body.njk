@@ -32,8 +32,8 @@
     </nav>
     <h1 lang="en">{{ paper.title }}</h1>
     {%- if paper.prize %}
-    {# Early-Career Researcher Best Paper Prize winner (EISS × Journal of
-       Strategic Studies). EN only, like the rest of this page. #}
+    {# European Security Studies Prize winner (EISS × Journal of Strategic
+       Studies). EN only, like the rest of this page. #}
     <p class="paper-prize-line" lang="en">{{ icon("award") }} <strong><a href="/prizes.html">{{ paper.prize.award }}</a></strong> &middot; EISS &times; {{ paper.prize.partner }} &middot; {{ paper.year }}</p>
     {%- endif %}
     {%- if paper.authorsLinked and paper.authorsLinked.length %}
