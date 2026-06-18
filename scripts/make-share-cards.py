@@ -188,14 +188,9 @@ CARDS = [
         "de": {"eyebrow": "Aktuelles", "title": "Aktuelles",
                "subtitle": "Konferenzen · Publikationen · Preise · Partnerschaften"},
     }},
-    {"slug": "anthology", "i18n": {
-        "en": {"eyebrow": "Archive", "title": "The Anthology",
-               "subtitle": "Every conference paper and speaker since 2017"},
-        "fr": {"eyebrow": "Archives", "title": "L'Anthologie",
-               "subtitle": "Chaque communication et intervenant de conférence depuis 2017"},
-        "de": {"eyebrow": "Archiv", "title": "Die Anthologie",
-               "subtitle": "Alle Konferenzbeiträge und -Vortragenden seit 2017"},
-    }},
+    # NOTE: the `anthology` card lives in scripts/make-anthology-social.py — a
+    # bespoke, marketing-oriented card (+ square/story social images). Do not
+    # add an `anthology` entry here, or the two would fight over the same file.
 ]
 
 # 1200×1200 square share card SVG template.
