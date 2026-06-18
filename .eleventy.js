@@ -25,6 +25,18 @@ module.exports = function (eleventyConfig) {
     return Math.round((target - today) / 86400000);
   });
 
+  // Format an ISO date (YYYY-MM-DD) as a long localised date for the News
+  // surface — "12 June 2026" / "12 juin 2026" / "12. Juni 2026". Falls back
+  // to the raw string if the date can't be parsed.
+  eleventyConfig.addFilter("newsDate", (iso, lang) => {
+    const d = new Date(String(iso).slice(0, 10) + "T00:00:00Z");
+    if (isNaN(d.getTime())) return iso;
+    const loc = { en: "en-GB", fr: "fr-FR", de: "de-DE" }[lang || "en"] || "en-GB";
+    return new Intl.DateTimeFormat(loc, {
+      day: "numeric", month: "long", year: "numeric", timeZone: "UTC",
+    }).format(d);
+  });
+
   eleventyConfig.addFilter("bust", (url) => {
     try {
       const rel = String(url).replace(/^\//, "").split("?")[0];

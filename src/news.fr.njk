@@ -1,0 +1,15 @@
+---
+layout: base.njk
+permalink: /news.fr.html
+title: Actualités
+description: "Les actualités de l’Initiative européenne pour les études de sécurité : conférences, publications, prix et étapes du partenariat."
+navKey: ""
+lang: fr
+status: beta
+alternates:
+  en: /news.html
+  fr: /news.fr.html
+  de: /news.de.html
+---
+{%- set t = i18n[lang or "en"] -%}
+{% include "news-archive.njk" %}

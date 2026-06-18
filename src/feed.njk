@@ -1,0 +1,30 @@
+---
+permalink: /feed.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  <title>EISS news</title>
+  <subtitle>News from the European Initiative for Security Studies</subtitle>
+  <link href="{{ site.url }}/feed.xml" rel="self" type="application/atom+xml"/>
+  <link href="{{ site.url }}/news.html"/>
+  <updated>{{ news.updated }}</updated>
+  <id>{{ site.url }}/feed.xml</id>
+  <author><name>European Initiative for Security Studies</name></author>
+  {%- for item in news.feed %}
+  {%- set id = site.url + "/news.html#news-" + item.slug -%}
+  {%- set link = item.url or ("/news.html#news-" + item.slug) -%}
+  {%- if "://" not in link %}{% set link = site.url + link %}{% endif -%}
+  <entry>
+    <title>{{ item.title }}</title>
+    <link href="{{ link }}"/>
+    <id>{{ id }}</id>
+    <updated>{{ item.isoDate }}</updated>
+    <published>{{ item.isoDate }}</published>
+    <category term="{{ item.type }}"/>
+    {%- if item.excerpt %}
+    <summary>{{ item.excerpt }}</summary>
+    {%- endif %}
+  </entry>
+  {%- endfor %}
+</feed>

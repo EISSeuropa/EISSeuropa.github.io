@@ -4,14 +4,14 @@
     "src/index.njk": {
       "fr": {
         "file": "src/index.fr.njk",
-        "source_sha1": "9054f32e1e8f637c67cf74c6ac3c901bb6765d8d",
-        "translated_on": "2026-06-16",
+        "source_sha1": "c99b63783fecb838c318e9a8564c4d8a0e5020a6",
+        "translated_on": "2026-06-18",
         "status": "beta"
       },
       "de": {
         "file": "src/index.de.njk",
-        "source_sha1": "9054f32e1e8f637c67cf74c6ac3c901bb6765d8d",
-        "translated_on": "2026-06-16",
+        "source_sha1": "c99b63783fecb838c318e9a8564c4d8a0e5020a6",
+        "translated_on": "2026-06-18",
         "status": "beta"
       }
     },
@@ -102,14 +102,14 @@
     "src/sitemap.njk": {
       "fr": {
         "file": "src/sitemap.fr.njk",
-        "source_sha1": "aea8fc8797dc7401adcf31be18a87b2f1378f727",
-        "translated_on": "2026-06-17",
+        "source_sha1": "783413bb4d60a4259a26eeae9ccbf9204b432bbf",
+        "translated_on": "2026-06-18",
         "status": "beta"
       },
       "de": {
         "file": "src/sitemap.de.njk",
-        "source_sha1": "aea8fc8797dc7401adcf31be18a87b2f1378f727",
-        "translated_on": "2026-06-17",
+        "source_sha1": "783413bb4d60a4259a26eeae9ccbf9204b432bbf",
+        "translated_on": "2026-06-18",
         "status": "beta"
       }
     },

@@ -1,0 +1,15 @@
+---
+layout: base.njk
+permalink: /news.de.html
+title: Aktuelles
+description: "Neuigkeiten der Europäischen Initiative für Sicherheitsstudien: Konferenzen, Publikationen, Preise und Meilensteine der Partnerschaft."
+navKey: ""
+lang: de
+status: beta
+alternates:
+  en: /news.html
+  fr: /news.fr.html
+  de: /news.de.html
+---
+{%- set t = i18n[lang or "en"] -%}
+{% include "news-archive.njk" %}

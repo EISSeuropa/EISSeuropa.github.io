@@ -1,0 +1,39 @@
+{# Full chronological News archive (#96), shared by the three locale pages
+   (src/news{,.fr,.de}.njk) — each sets its own front matter + `lang`, then
+   includes this. Chrome from the i18n catalog; item titles/excerpts are
+   authored once in English (shown across locales). A link to the Atom feed
+   (#605) sits in the header. #}
+{% from "icons.njk" import icon %}
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">{{ t.news.eyebrow }}</span>
+    <h1>{{ t.news.pageTitle }}</h1>
+    <p class="page-lead">{{ t.news.pageLead }}</p>
+    <p style="margin-top: var(--space-4);">
+      <a class="btn btn-secondary btn-sm" href="/feed.xml">{{ icon("rss") }} {{ t.news.feedLabel }}</a>
+    </p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    {%- if news.items.length %}
+    <ul class="news-list news-list--full">
+      {%- for item in news.items %}
+      <li class="news-item" id="news-{{ item.slug }}">
+        <div class="news-meta">
+          <time class="news-date" datetime="{{ item.date }}">{{ item.date | newsDate(lang) }}</time>
+          <span class="news-type" data-type="{{ item.type }}">{{ t.news.types[item.type] or item.type }}</span>
+        </div>
+        <h2 class="news-item-title" lang="en">
+          {%- if item.url %}<a href="{{ item.url }}"{% if "://" in item.url %} target="_blank" rel="noopener"{% endif %}>{{ item.title }}</a>{% else %}{{ item.title }}{% endif -%}
+        </h2>
+        {%- if item.excerpt %}<p class="news-excerpt" lang="en">{{ item.excerpt }}</p>{% endif %}
+      </li>
+      {%- endfor %}
+    </ul>
+    {%- else %}
+    <p class="muted">{{ t.news.empty }}</p>
+    {%- endif %}
+  </div>
+</section>
