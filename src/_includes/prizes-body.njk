@@ -7,6 +7,17 @@
 {% from "icons.njk" import icon %}
 <header class="page-header">
   <div class="container">
+    {# Co-branding: EISS and the Journal of Strategic Studies, who jointly
+       award the prize. The EISS lockup is the real brand SVG; the JSS mark
+       is a typographic wordmark (no official JSS logo asset on file —
+       swap in src/assets/images/brand/ if one is added). #}
+    <div class="prize-partners" role="img" aria-label="{{ t.prizes.partner }}">
+      <span class="prize-partner prize-partner--eiss" aria-hidden="true">{% inlineSvg "assets/images/brand/logo-lockup.svg" %}</span>
+      <span class="prize-partner-sep" aria-hidden="true"></span>
+      <a class="prize-partner prize-partner--jss" href="https://www.tandfonline.com/journals/fjss20" target="_blank" rel="noopener" aria-label="Journal of Strategic Studies (opens in a new tab)">
+        <span class="jss-mark"><span class="jss-pre">The Journal of</span><span class="jss-name">Strategic Studies</span></span>
+      </a>
+    </div>
     <span class="eyebrow">{{ t.prizes.eyebrow }}</span>
     <h1>{{ t.prizes.title }}</h1>
     <p class="page-lead">{{ t.prizes.lead }}</p>
@@ -28,5 +39,8 @@
       </li>
       {%- endfor %}
     </ol>
+    <p style="margin-top: var(--space-5);">
+      <a class="btn btn-secondary" href="/anthology.html?view=papers&amp;prize=1">{{ t.prizes.seeAll }} {{ icon("arrow-right") }}</a>
+    </p>
   </div>
 </section>
