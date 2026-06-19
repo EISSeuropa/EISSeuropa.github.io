@@ -45,31 +45,29 @@ alternates:
       from the EISS community.
     </p>
 
-    {#- Corpus-scale impact strip (#800): what the community has produced,
-        distinct from the organisation stats-row below (who we are now).
-        Numbers come from corpus.js + conferences.js, so they self-update. -#}
-    <p class="impact-strip">
-      <strong>{{ confCount }}</strong> conferences <span class="impact-sep" aria-hidden="true">·</span>
-      <strong>{{ corpus.stats.paperCount }}</strong> papers <span class="impact-sep" aria-hidden="true">·</span>
-      <strong>~{{ scholarsApprox }}</strong> scholars <span class="muted">since 2017</span>
-    </p>
-
+    {#- One rationalised stats row: the scale of the field EISS has built,
+        from corpus.js + conferences.js + board.json, so the numbers self-update.
+        Scholars rounded down to the nearest ten because the speaker
+        de-duplication is deliberately conservative. (Earlier this header
+        carried two overlapping rows that both led on the conference count and
+        a weak "1 COST Action" tile; NetSec's reach has its own stats row in
+        the NetSec section below.) -#}
     <dl class="stats-row" aria-label="EISS at a glance">
       <div class="stat">
         <dt>{{ confCount }}</dt>
         <dd>annual conferences <span class="muted">since 2017</span></dd>
       </div>
       <div class="stat">
-        <dt>{{ boardSorted.counts.peopleTotal }}</dt>
-        <dd>board members &amp; support</dd>
+        <dt>{{ corpus.stats.paperCount }}</dt>
+        <dd>papers presented</dd>
+      </div>
+      <div class="stat">
+        <dt>~{{ scholarsApprox }}</dt>
+        <dd>scholars</dd>
       </div>
       <div class="stat">
         <dt>{{ boardSorted.counts.countriesTotal }}</dt>
         <dd>countries represented</dd>
-      </div>
-      <div class="stat">
-        <dt>1</dt>
-        <dd>COST Action (<a href="https://netsec-cost.eu/" target="_blank" rel="noopener">NetSec</a>)</dd>
       </div>
     </dl>
   </div>
@@ -237,30 +235,34 @@ alternates:
     <p class="muted open-panels-intro" style="max-width: 44rem;">
       Recent open panels have ranged widely:
     </p>
+    {#- Each card deep-links to its panel anchor on the edition programme
+        (id="panel-<title|slugify>" from archive-programme.njk). The title is
+        the whole-card link (.stretched-link covers the card); titles are the
+        exact programme wording so the anchor resolves. -#}
     <ul class="open-panels" aria-label="Examples of recent open panels">
       <li class="open-panel">
         <span class="open-panel-year">EISS 2018</span>
-        <span class="open-panel-title">Asymmetric Threats, Non-State Actors and Domestic Politics</span>
+        <a class="open-panel-title open-panel-link stretched-link" href="/2018.html#panel-asymmetric-threats-non-state-actors-and-domestic-politics">Asymmetric Threats, Non-State Actors and Domestic Politics</a>
       </li>
       <li class="open-panel">
         <span class="open-panel-year">EISS 2019</span>
-        <span class="open-panel-title">Climate Change and Security Actors</span>
+        <a class="open-panel-title open-panel-link stretched-link" href="/2019.html#panel-climate-change-and-security-actors">Climate Change and Security Actors</a>
       </li>
       <li class="open-panel">
         <span class="open-panel-year">EISS 2021</span>
-        <span class="open-panel-title">Thinking European Security through India</span>
+        <a class="open-panel-title open-panel-link stretched-link" href="/2021.html#panel-thinking-european-security-through-india">Thinking European Security through India</a>
       </li>
       <li class="open-panel">
         <span class="open-panel-year">EISS 2023</span>
-        <span class="open-panel-title">(In)security and Organized Crime in Latin America</span>
+        <a class="open-panel-title open-panel-link stretched-link" href="/2023.html#panel-in-security-and-organized-crime-in-latin-america">(In)security and Organized Crime in Latin America</a>
       </li>
       <li class="open-panel">
         <span class="open-panel-year">EISS 2024</span>
-        <span class="open-panel-title">Knowledge Production on War</span>
+        <a class="open-panel-title open-panel-link stretched-link" href="/2024.html#panel-knowledge-production-on-war">Knowledge Production on War</a>
       </li>
       <li class="open-panel">
         <span class="open-panel-year">ESSC 2026</span>
-        <span class="open-panel-title">Cyber and Digital Sovereignty</span>
+        <a class="open-panel-title open-panel-link stretched-link" href="/2026.html#panel-cyber-and-digital-sovereignty">Cyber and Digital Sovereignty</a>
       </li>
     </ul>
   </div>
