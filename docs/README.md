@@ -16,6 +16,7 @@ Maintainer-facing docs for [eiss-europa.com](https://eiss-europa.com)
 | [indico-api-token.md](indico-api-token.md) | Indico API token setup for the authenticated sync. |
 | [new-conference.md](new-conference.md) | Per-year-page rollover procedure for a new ESSC. |
 | [publication-matching.md](publication-matching.md) | Linking ESSC papers to their later-published versions: the matcher, the review queue, the confirm step, the monthly sync. |
+| [netsec-directory-integration.md](netsec-directory-integration.md) | Anthology authors ↔ NetSec member directory cross-links (both directions): the two JSON contracts, the name-key join, the sync, per-author addressability. |
 | [roadmap-2026.md](roadmap-2026.md) | The internal roadmap (autostamped from the CHANGELOG). |
 | [branch-protection.md](branch-protection.md) | The `master` rulesets (force-push/deletion/linear + PR gate), the bypass design, and the deferred required-checks plan. |
 
