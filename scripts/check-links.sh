@@ -187,6 +187,13 @@ SKIP_HOSTS = {
                                 # same CI-side reachability class as su.se /
                                 # the EUI host above. Loads for visitors;
                                 # skipping stops the recurring false-red.
+    "www.tandfonline.com",      # Taylor & Francis, the publisher hosting the
+                                # Journal of Strategic Studies (linked from the
+                                # /prizes co-branding, since EISS awards the
+                                # prize with the journal). Returns 403 to
+                                # anonymous HEAD/GET, same academic-publisher
+                                # anti-bot class as doi.org / shs.cairn.info.
+                                # The journal page opens fine in a browser.
 }
 
 # Domains skipped together with ALL their subdomains. SKIP_HOSTS matches an
