@@ -3774,32 +3774,53 @@ a.programme-live-tag:focus-visible {
   font-weight: 600;
   vertical-align: 0.05em;
 }
-/* NetSec directory cross-link (#966): a quiet pill-link next to an author who
-   also has a NetSec member-directory profile. Sibling of .speaker-badge, but a
-   real outbound link, so it carries the external-link glyph. */
+/* NetSec directory cross-link (#966): a pill-link next to an author who also
+   has a NetSec member-directory profile, carried in NetSec's network blue
+   (the #73caff family of the constellation mark) so it reads as the partner
+   network beside the EISS "member" badge — the dual-affiliation cue. The
+   literal #73caff is too light for accessible text/border on white, so those
+   use a readable same-hue blue and the light blue is the soft fill; a
+   dark-mode override keeps it legible on the dark surface. Outlined (not the
+   borderless member badge) because it's an interactive outbound link. */
 .speaker-netsec-link {
+  --ns-fg: hsl(205 85% 33%);
+  --ns-line: hsl(205 78% 52%);
+  --ns-bg: hsl(205 100% 72% / 0.14);
   display: inline-flex;
   align-items: center;
-  gap: 0.25em;
+  gap: 0.3em;
   margin-left: 0.4rem;
-  padding: 0.05rem 0.45rem;
+  padding: 0.08rem 0.5rem;
   border-radius: 999px;
-  border: 1px solid var(--border);
-  color: var(--text-muted);
+  border: 1px solid var(--ns-line);
+  background: var(--ns-bg);
+  color: var(--ns-fg);
   font-size: var(--fs-xs);
   font-weight: 600;
   text-decoration: none;
   vertical-align: 0.05em;
   white-space: nowrap;
 }
+[data-theme="dark"] .speaker-netsec-link {
+  --ns-fg: hsl(205 100% 78%);
+  --ns-line: hsl(205 90% 64% / 0.6);
+  --ns-bg: hsl(205 100% 66% / 0.16);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .speaker-netsec-link {
+    --ns-fg: hsl(205 100% 78%);
+    --ns-line: hsl(205 90% 64% / 0.6);
+    --ns-bg: hsl(205 100% 66% / 0.16);
+  }
+}
 .speaker-netsec-link:hover,
 .speaker-netsec-link:focus-visible {
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: var(--ns-fg);
+  background: hsl(205 100% 72% / 0.24);
 }
 .speaker-netsec-link svg {
-  width: 0.85em;
-  height: 0.85em;
+  width: 0.9em;
+  height: 0.9em;
 }
 .speaker-aff {
   margin: 0.15rem 0 0;
