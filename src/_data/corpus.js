@@ -592,12 +592,21 @@ const speakers = [...speakerMap.values()]
     const affiliation = (papersByYear.find((p) => p.affiliation) || {}).affiliation || null;
     const n = nameSort(rawName);
     const themes = [...s.themes].sort((a, b) => themeRank.get(a) - themeRank.get(b));
+    // Stable per-author slug for the by-person deep link (?person=<slug>) and
+    // the published authors-index.json (#966). Board/community members keep
+    // their existing board-page slug so the board → Anthology links don't
+    // change; everyone else gets a kebab of their canonicalKey, which is the
+    // corpus's unique dedup key, so the slugs can't collide.
+    const slug = s.profileUrl
+      ? s.profileUrl.replace(/^.*\/board\//, "").replace(/\.html$/, "")
+      : s.key.replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
     return {
       name: cleanDisplay(rawName), // honorific-stripped natural name
       display: n.display, // "Surname, Given" for the by-lastname list
       surname: n.surname,
       sortKey: n.sortKey,
       letter: n.letter,
+      slug, // stable anchor / deep-link id, unique across the corpus (#966)
       affiliation,
       themes, // permanent + derived themes, in canonical order
       profileUrl: s.profileUrl,
