@@ -2034,6 +2034,21 @@ h4 { font-size: var(--fs-lg); }
 .laureate-title:hover { text-decoration: underline; }
 .laureate-meta { color: var(--text-muted); font-size: var(--fs-sm); }
 
+/* Co-branding strip on /prizes (#639): the EISS lockup beside the Journal of
+   Strategic Studies wordmark, who jointly award the prize. */
+.prize-partners {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-6);
+}
+.prize-partner { display: inline-flex; align-items: center; }
+.prize-partner--eiss svg { height: 58px; width: auto; color: var(--accent); display: block; }
+.prize-partner-sep { width: 1px; align-self: stretch; min-height: 46px; background: var(--border); }
+.prize-partner--jss { text-decoration: none; color: var(--text-muted); }
+.prize-partner--jss svg { height: 50px; width: auto; display: block; }
+
 /* Programme cover banner — the title band cropped from the designer
    programme PDF's cover page (gs render + ffmpeg crop, ~2.4:1). Sits at
    the top of the /YYYY page header. The .programme-download button
