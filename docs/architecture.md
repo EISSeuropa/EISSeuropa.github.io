@@ -46,6 +46,8 @@ src/*.njk (pages)  +  src/_includes/*.njk (components)  +  src/_data/* (data)
 | `i18n.js` | The chrome-string catalog (`en`/`fr`/`de`): nav, footer, search, ribbons, badges. Key parity enforced by `check-i18n-keys.js`. | Hand-maintained. |
 | `roadmap.js` | The public `/roadmap` cards (per locale). | Hand-maintained. |
 | `netsec.js` | NetSec leadership held by EISS people. | Hand-maintained. |
+| `netsecDirectory.json` | Mirror of NetSec's published `directory-index.json`; `corpus.js` matches it to authors to render the "NetSec profile" link. See `netsec-directory-integration.md`. | `sync-netsec-directory.mjs`. |
+| `netsecDirectoryRejects.json` | Suppresses a wrong homonym match in the above. | Hand-maintained. |
 | `announcement.js` | The data-driven announcement/quote blocks. | Hand-maintained. |
 | `panels2022.js`, `countryFlags.js`, `site.js` | 2022 panels, flag lookup, site-wide config (nav array, URLs). | Hand-maintained. |
 
@@ -65,8 +67,18 @@ src/*.njk (pages)  +  src/_includes/*.njk (components)  +  src/_data/* (data)
   `confirm-publication.mjs --auto-high` → `paperLinks.json` (high-confidence
   matches, published) + `data/publication-candidates.json` (review band,
   queued; monthly). See `publication-matching.md`.
+- **`sync-netsec-directory.yml`** → `sync-netsec-directory.mjs` →
+  `netsecDirectory.json` (NetSec member directory, for the Anthology
+  cross-links; weekly + a `repository_dispatch` fast path). See
+  `netsec-directory-integration.md`.
 - **`scheduled-rebuild.yml`** redeploys daily so build-time values
   (countdown, registration status) don't drift between content changes.
+
+**Outbound contracts (EISS publishes, siblings consume).** Two build-time
+permalinks let the NetSec site link into EISS: `/data/anthology-index.json`
+(per-paper, for programme links) and `/data/authors-index.json` (per-author,
+for directory profile links). Both regenerate from `corpus.js` every build.
+See `netsec-directory-integration.md`.
 
 Each sync opens an auto-PR (auto-merge armed, CI-gated) rather than
 pushing to `master`. `sync-publications.yml` auto-merges too, but only the
