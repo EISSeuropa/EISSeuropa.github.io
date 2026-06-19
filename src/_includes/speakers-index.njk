@@ -72,6 +72,7 @@
         {%- if s.profileUrl %}<a href="{{ s.profileUrl }}">{{ s.display }}</a>
         {%- else %}{{ s.display }}{% endif %}
         {%- if s.profileUrl %} <span class="speaker-badge">{{ s18n.memberBadge }}</span>{% endif %}
+        {%- if s.netsecUrl %} <a class="speaker-netsec-link" href="{{ s.netsecUrl }}" target="_blank" rel="noopener">{{ icon("external-link") }} {{ s18n.netsecProfile }}</a>{% endif %}
       </p>
       {%- if s.affiliation %}
       <p class="speaker-aff muted" lang="en">{{ s.affiliation }}</p>

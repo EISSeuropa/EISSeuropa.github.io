@@ -38,6 +38,15 @@ const paperLinks = require("./paperLinks.json");
 // Prize winners (Early-Career Researcher Best Paper Prize), keyed
 // <year>::<normalised-title>. A winner earns a badge and always a landing page.
 const paperPrizes = require("./paperPrizes.json");
+// NetSec member directory (#966): a slim index published by the NetSec site
+// and mirrored here by scripts/sync-netsec-directory.mjs, plus a reject list
+// to suppress a wrong homonym match. Optional — absent until the first sync.
+const netsecDirectory = (() => {
+  try { return require("./netsecDirectory.json"); } catch { return { members: [] }; }
+})();
+const netsecRejects = (() => {
+  try { return require("./netsecDirectoryRejects.json"); } catch { return {}; }
+})();
 // Full abstracts pulled from Indico by scripts/sync-abstracts.mjs, keyed by
 // `<year>::<normalised-title>`. The enriched archive already merges these for
 // past editions, but the LIVE indico.json (used for the 2026 slug) carries
@@ -506,6 +515,25 @@ try {
   /* peopleIndex unavailable — speakers just won't carry a profile link */
 }
 
+// NetSec directory cross-link (#966): an Anthology author who also has a
+// profile in the NetSec member directory links out to it. Fold each member
+// under every name key it can be reached by — canonicalKey(name), NetSec's
+// published name_key (which drops middle initials, so "Dr John N.T. Helferich"
+// matches a speaker recorded as "John Helferich"), and any declared aliases —
+// so the join survives a middle-initial or maiden-name mismatch on either
+// side. ORCID is not a join key (Anthology authors carry none). The published
+// `url` is used verbatim so EISS never hardcodes NetSec's profile-URL scheme.
+const netsecByKey = {};
+for (const m of netsecDirectory.members || []) {
+  if (!m || !m.url) continue;
+  const keys = new Set();
+  const add = (n) => { const k = canonicalKey(n); if (k) keys.add(k); };
+  add(m.name);
+  if (m.name_key) keys.add(keyOf(m.name_key));
+  (m.aliases || []).forEach(add);
+  for (const k of keys) netsecByKey[k] = { url: m.url, name: m.name };
+}
+
 const speakerMap = new Map();
 for (const paper of papers) {
   for (const a of paper.authors) {
@@ -515,11 +543,13 @@ for (const paper of papers) {
     let s = speakerMap.get(key);
     if (!s) {
       const profile = profileByKey[key] || null;
+      const netsec = netsecRejects[key] ? null : netsecByKey[key] || null;
       s = {
         key,
         name: a.name,
         nameVariants: {},
         profileUrl: profile ? profile.url : null,
+        netsecUrl: netsec ? netsec.url : null,
         photo: profile ? profile.photo : null,
         initials: profile ? profile.initials : "",
         themes: new Set(),
@@ -571,6 +601,7 @@ const speakers = [...speakerMap.values()]
       affiliation,
       themes, // permanent + derived themes, in canonical order
       profileUrl: s.profileUrl,
+      netsecUrl: s.netsecUrl, // NetSec directory profile (null when no match) (#966)
       photo: s.photo, // member headshot (null for non-members / no photo)
       initials: s.initials,
       years: yearList, // distinct years, newest first (pills)
