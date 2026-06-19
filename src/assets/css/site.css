@@ -3774,6 +3774,33 @@ a.programme-live-tag:focus-visible {
   font-weight: 600;
   vertical-align: 0.05em;
 }
+/* NetSec directory cross-link (#966): a quiet pill-link next to an author who
+   also has a NetSec member-directory profile. Sibling of .speaker-badge, but a
+   real outbound link, so it carries the external-link glyph. */
+.speaker-netsec-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-decoration: none;
+  vertical-align: 0.05em;
+  white-space: nowrap;
+}
+.speaker-netsec-link:hover,
+.speaker-netsec-link:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.speaker-netsec-link svg {
+  width: 0.85em;
+  height: 0.85em;
+}
 .speaker-aff {
   margin: 0.15rem 0 0;
   font-size: var(--fs-sm);
