@@ -58,7 +58,10 @@ alternates:
         <dd>annual conferences <span class="muted">since 2017</span></dd>
       </div>
       <div class="stat">
-        <dt>{{ corpus.stats.paperCount }}</dt>
+        {# Deduplicated count (paperIndex), the same figure the Anthology
+           stat block shows; corpus.stats.paperCount is the raw per-contribution
+           total and reads higher. #}
+        <dt>{{ paperIndex.stats.paperCount }}</dt>
         <dd>papers presented</dd>
       </div>
       <div class="stat">
