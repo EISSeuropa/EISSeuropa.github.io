@@ -2013,16 +2013,6 @@ h4 { font-size: var(--fs-lg); }
 .news-item-title a:hover { text-decoration: underline; }
 .news-excerpt { margin: 0; color: var(--text-muted); max-width: 62ch; }
 
-/* Impact strip (#800): a compact "N conferences · N papers · ~N scholars"
-   line under the /initiative lede, sourced from corpus.js. */
-.impact-strip {
-  margin: var(--space-4) 0 0;
-  font-size: var(--fs-lg);
-  color: var(--text-muted);
-}
-.impact-strip strong { color: var(--accent); font-weight: 700; }
-.impact-sep { margin: 0 0.4em; opacity: 0.5; }
-
 /* Laureate roll on /prizes (#639): a year-keyed list of prize-winning
    papers, each linking to its Anthology entry. */
 .laureate-roll { list-style: none; margin: var(--space-5) 0 0; padding: 0; display: grid; gap: var(--space-4); }
@@ -5369,6 +5359,7 @@ body.search-open { overflow: hidden; }
 }
 
 .open-panels > .open-panel {
+  position: relative; /* anchor for the .stretched-link whole-card overlay */
   margin: 0;
   padding: var(--space-4);
   border: 1px solid var(--border);
@@ -5378,6 +5369,17 @@ body.search-open { overflow: hidden; }
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  transition: box-shadow var(--motion-base) var(--ease-out),
+              border-color var(--motion-base) var(--ease-out);
+}
+
+/* Each card deep-links to its panel on the edition programme. Lift on hover
+   and on keyboard focus of the stretched link, matching the activity tiles. */
+.open-panels > .open-panel:hover,
+.open-panels > .open-panel:focus-within {
+  box-shadow: var(--shadow-2);
+  border-color: var(--border-strong);
+  border-left-color: var(--accent);
 }
 
 .open-panel-year {
@@ -5392,6 +5394,15 @@ body.search-open { overflow: hidden; }
   font-size: var(--fs-sm);
   line-height: 1.35;
   color: var(--text);
+}
+
+a.open-panel-link {
+  text-decoration: none;
+}
+
+a.open-panel-link:hover,
+a.open-panel-link:focus-visible {
+  text-decoration: underline;
 }
 
 .origin-layout {
