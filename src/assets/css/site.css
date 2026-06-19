@@ -2046,10 +2046,8 @@ h4 { font-size: var(--fs-lg); }
 .prize-partner { display: inline-flex; align-items: center; }
 .prize-partner--eiss svg { height: 58px; width: auto; color: var(--accent); display: block; }
 .prize-partner-sep { width: 1px; align-self: stretch; min-height: 46px; background: var(--border); }
-.prize-partner--jss { text-decoration: none; }
-.jss-mark { display: inline-flex; flex-direction: column; line-height: 1.06; font-family: Georgia, "Times New Roman", serif; }
-.jss-pre { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.2em; font-style: normal; color: var(--text-muted); margin-bottom: 3px; }
-.jss-name { font-size: 1.7rem; font-weight: 400; letter-spacing: 0.2px; color: var(--text); }
+.prize-partner--jss { text-decoration: none; color: var(--text-muted); }
+.prize-partner--jss svg { height: 50px; width: auto; display: block; }
 
 /* Programme cover banner — the title band cropped from the designer
    programme PDF's cover page (gs render + ffmpeg crop, ~2.4:1). Sits at
