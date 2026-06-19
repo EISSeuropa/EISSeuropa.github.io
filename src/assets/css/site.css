@@ -3824,8 +3824,16 @@ a.programme-live-tag:focus-visible {
 }
 .speaker-papers li {
   display: flex;
+  /* Wrap so a long prize chip ("European Security Studies Prize") drops to its
+     own line below the title instead of overflowing/clipping this tight
+     conf | title row. The title's flex-grow fills line 1, so the chip wraps
+     naturally at its own pill width; the row-gap gives the vertical spacing. */
+  flex-wrap: wrap;
   gap: var(--space-3);
   font-size: var(--fs-sm);
+}
+.speaker-papers li .paper-prize-chip {
+  margin-left: 0; /* align to the row's left edge once wrapped to its own line */
 }
 .speaker-paper-conf {
   flex: 0 0 11rem;
