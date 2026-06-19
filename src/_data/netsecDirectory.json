@@ -1,7 +1,7 @@
 {
   "generated_at": "2026-06-17T15:59:39+00:00",
   "count": 37,
-  "source": "bootstrap from netsec.github.io bios.json — replaced by the published directory-index.json on first sync",
+  "source": "https://netsec-cost.eu/directory-index.json",
   "members": [
     {
       "name": "Dr Alexander Lanoszka",
@@ -261,7 +261,7 @@
     },
     {
       "name": "Prof. Seyithan Ahmet Ates",
-      "name_key": "seyithan ahmet ates",
+      "name_key": "seyithan ates",
       "aliases": [],
       "slug": "seyithan-ahmet-ates",
       "url": "https://netsec-cost.eu/people/seyithan-ahmet-ates.html",
@@ -269,7 +269,7 @@
     },
     {
       "name": "Dr Silvia D'Amato",
-      "name_key": "silvia d'amato",
+      "name_key": "silvia damato",
       "aliases": [],
       "slug": "silvia-damato",
       "url": "https://netsec-cost.eu/people/silvia-damato.html",
@@ -277,7 +277,7 @@
     },
     {
       "name": "Dr Sophie Enos-Attali",
-      "name_key": "sophie enos-attali",
+      "name_key": "sophie attali",
       "aliases": [],
       "slug": "sophie-enos-attali",
       "url": "https://netsec-cost.eu/people/sophie-enos-attali.html",
@@ -293,7 +293,7 @@
     },
     {
       "name": "Ms Yanina Shved-Dogrul",
-      "name_key": "yanina shved-dogrul",
+      "name_key": "yanina dogrul",
       "aliases": [],
       "slug": "yanina-shved-dogrul",
       "url": "https://netsec-cost.eu/people/yanina-shved-dogrul.html",
