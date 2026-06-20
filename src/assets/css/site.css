@@ -1,3 +1,13 @@
+/* ==========================================================================
+   CSS namespacing convention (CLAUDE.md §15)
+   This is one global, unscoped stylesheet, so the last selector wins. To stop
+   two components silently fighting over a class name (the #231 -> #239
+   `.programme-slot` collision), EACH COMPONENT OWNS A UNIQUE CLASS PREFIX and
+   never reuses another's: the live grid reserves `programme-*`, the archive
+   list `archive-programme-*`, the by-person view `speaker-*`, etc. Before
+   adding a component, grep this file for the prefix to confirm it's free.
+   ========================================================================== */
+
 /* ---------- self-hosted Inter (variable) ----------
    Served from our own origin instead of Google Fonts, so no visitor IP
    is sent to a third party on first paint. Matches the site's no-tracking

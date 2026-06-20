@@ -623,6 +623,36 @@ on-request**:
   dumped DOM file instead; `--force-prefers-reduced-motion=reduce` and
   computed-style reads are the dependable parts.)
 
+## 15. CSS namespacing: one prefix per component
+
+`site.css` is a single global stylesheet with no scoping, so two
+unrelated components can quietly fight over the same class name. The
+last selector in the file wins the cascade, so a later component that
+reuses an earlier one's class silently rewrites it. This shipped once:
+the `/2021` archive programme list redefined `.programme-slot` /
+`.programme-day`, the names the live `/2026` grid (`programme-grid.njk`)
+already owned, and broke the live grid in production (#231 → fixed in
+#239). The build was green throughout, because the §14 sanity guard
+catches a class used in markup but **undefined** in CSS, not a class
+**defined twice** by different components.
+
+So: **each component owns a unique class prefix, and never reuses
+another component's prefix.** The live programme grid reserves
+`programme-*`; the archive list uses `archive-programme-*`; the
+by-person view uses `speaker-*`; and so on. When adding a component,
+pick a fresh prefix and confirm it isn't already claimed
+(`grep -n '\.your-prefix' src/assets/css/site.css`) before defining it.
+Reuse another component's base class only when you genuinely mean to
+extend that component, not by accident.
+
+The enforcement half (a duplicate-definition CI lint) is the harder
+piece and is deferred: `stylelint`'s `no-duplicate-selectors` flags
+every intentional repeat (dark-mode + responsive overrides), and a
+custom check needs reliable component-block attribution to tell a
+collision from a variant (a naïve "same base class defined twice" pass
+flags ~100 legitimate cases). Tracked in #241; the convention above is
+the guard until it lands.
+
 ---
 
 *This file is short on purpose. If you need to add a rule, add it
