@@ -14,4 +14,4 @@ Pillow>=12.2.0,<13
 # scripts/make-anthology-social.py. Matrix-only (no Pillow needed) — the
 # script renders the modules as SVG rects. Optional at runtime: the script
 # omits the QR (keeping the printed URL) if qrcode is unavailable.
-qrcode>=8,<9
+qrcode>=8.2,<9
