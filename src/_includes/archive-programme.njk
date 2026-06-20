@@ -21,6 +21,13 @@
    both days), so an anchor is emitted only the first time, keeping ids unique
    and landing a deep link on the earliest occurrence. #}
 {%- set _seenPanels = [] -%}
+{# Per-paper deep-link anchors (#676): each contribution gets a stable
+   id="paper-<title|slugify>" so a single paper can be linked to (the paper
+   index, the by-person/by-paper views, abstract sharing). Emitted once per
+   slug (a paper listed twice keeps one anchor) to avoid duplicate ids; the
+   year is already in the page URL, so the slug needn't carry it. Distinct
+   prefix from the panel anchors above, so the two never collide. #}
+{%- set _seenPapers = [] -%}
 {% include "event-jsonld.njk" %}
 {% if _prog and _prog.days and _prog.days.length %}
 <section class="section programme programme--archive" id="programme" aria-labelledby="archive-programme-title">
@@ -103,7 +110,10 @@
                 <summary>{{ t.programme.showContributions }} <span class="muted">({{ slot.contributions.length }})</span></summary>
                 <ol class="programme-contrib-list" role="list">
                   {%- for c in slot.contributions %}
-                  <li class="programme-contrib">
+                  {%- set _pslug = c.title | slugify -%}
+                  {%- set _panchor = _pslug and (_pslug not in _seenPapers) -%}
+                  {%- if _panchor %}{% set _ = _seenPapers.push(_pslug) %}{% endif -%}
+                  <li class="programme-contrib"{% if _panchor %} id="paper-{{ _pslug }}"{% endif %}>
                     <div>
                       <p class="programme-contrib-title">{{ c.title }}{%- if c.prize %} <span class="paper-prize-chip" lang="en" title="{{ c.prize.award }} — EISS × {{ c.prize.partner }}">{{ icon("award") }} {{ c.prize.award }}</span>{% endif %}</p>
                       {%- if c.authors and c.authors.length %}
