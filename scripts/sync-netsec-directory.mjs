@@ -79,6 +79,12 @@ async function main() {
       slug: m.slug || "",
       url: m.url,
       orcid: m.orcid || null,
+      // Optional display fields (netsec#1155) for the richer hovercard; null
+      // when the member hasn't set them. corpus.js attaches them to the matched
+      // author; the chip falls back to a plain link when they're absent.
+      role: m.role || null,
+      affiliation: m.affiliation || null,
+      photo: m.photo || null,
     }))
     .sort((a, b) => (a.slug || a.name).localeCompare(b.slug || b.name));
 

@@ -72,7 +72,24 @@
         {%- if s.profileUrl %}<a href="{{ s.profileUrl }}">{{ s.display }}</a>
         {%- else %}{{ s.display }}{% endif %}
         {%- if s.profileUrl %} <span class="speaker-badge">{{ s18n.memberBadge }}</span>{% endif %}
-        {%- if s.netsecUrl %} <a class="speaker-netsec-link" href="{{ s.netsecUrl | extLink }}" target="_blank" rel="noopener" aria-label="{{ s18n.netsecProfileAria | replace('{name}', s.name) }}">{{ icon("external-link") }} <span aria-hidden="true">{{ s18n.netsecProfile }}</span></a>{% endif %}
+        {%- if s.netsec %} <span class="speaker-netsec" data-no-hovercard>
+          <a class="speaker-netsec-link" href="{{ s.netsec.url | extLink }}" target="_blank" rel="noopener" aria-label="{{ s18n.netsecProfileAria | replace('{name}', s.name) }}">{{ icon("external-link") }} <span aria-hidden="true">{{ s18n.netsecProfile }}</span></a>
+          {%- if s.netsec.role or s.netsec.affiliation or s.netsec.photo %}
+          {# Hovercard, aria-hidden (the chip link carries the accessible name).
+             The photo is deferred by the card's display:none until hover/focus,
+             so no cross-origin request to netsec-cost.eu fires on page load;
+             no-referrer keeps the EISS URL out of that request. #}
+          <span class="speaker-netsec-card" aria-hidden="true">
+            {%- if s.netsec.photo %}<img class="speaker-netsec-card-photo" src="{{ s.netsec.photo }}" alt="" loading="lazy" width="48" height="48" referrerpolicy="no-referrer">{% endif %}
+            <span class="speaker-netsec-card-body">
+              <span class="speaker-netsec-card-name" lang="en">{{ s.name }}</span>
+              {%- if s.netsec.role %}<span class="speaker-netsec-card-role" lang="en">{{ s.netsec.role }}</span>{% endif %}
+              {%- if s.netsec.affiliation %}<span class="speaker-netsec-card-aff" lang="en">{{ s.netsec.affiliation }}</span>{% endif %}
+              <span class="speaker-netsec-card-cta">{{ s18n.netsecProfile }} <span aria-hidden="true">&rarr;</span></span>
+            </span>
+          </span>
+          {%- endif %}
+        </span>{% endif %}
       </p>
       {%- if s.affiliation %}
       <p class="speaker-aff muted" lang="en">{{ s.affiliation }}</p>

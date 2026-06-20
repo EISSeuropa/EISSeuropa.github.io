@@ -56,8 +56,13 @@ of each other.
     { "name": "Dr Mattia Sguazzini", "name_key": "mattia sguazzini",
       "aliases": [], "slug": "mattia-sguazzini",
       "url": "https://netsec-cost.eu/people/mattia-sguazzini.html",
-      "orcid": null } ] }
+      "orcid": null,
+      "role": "…", "affiliation": "…", "photo": "https://…" } ] }
 ```
+
+`role` / `affiliation` / `photo` are optional display fields (null when
+unset), used to enrich the forward chip into a hovercard (below). The
+`name_key` → `url` join is unaffected by them.
 
 ### EISS publishes `authors-index.json` (NetSec consumes)
 
@@ -114,7 +119,14 @@ The "NetSec profile" link on a by-person entry.
 - **Render**: `speakers-index.njk` shows the link (`.speaker-netsec-link`)
   in NetSec's network blue, EN/FR/DE. The literal `#73caff` is too light
   for accessible text on white, so text/border use a readable same-hue
-  blue over a soft `#73caff` fill, with a dark-mode override.
+  blue over a soft `#73caff` fill, with a dark-mode override. When the
+  member carries `role`/`affiliation`/`photo`, the chip gains a **hovercard**
+  (`.speaker-netsec-card`) showing them. The card is `display:none` until
+  hover/focus, so the cross-origin photo on `netsec-cost.eu` is **not
+  fetched on page load** (it would otherwise leak the visitor's IP to the
+  sibling site against the no-third-party-on-first-paint stance); the
+  `<img>` also carries `referrerpolicy="no-referrer"`. The card is
+  `aria-hidden` — the chip link already carries the accessible name.
 
 ### Reverse: NetSec profile → Anthology author
 
