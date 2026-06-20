@@ -509,6 +509,12 @@ try {
       url: p.url,
       photo: p.photo || null,
       initials: p.initials || "",
+      // Affiliation category for the by-person pill: "Support Staff" (interns
+      // + the comms/admin assistants, current or past) reads as "staff", every
+      // other role (Co-Director, Treasurer, Board Member, …) as "board". Driven
+      // off the role string so a departed intern and a departed board member
+      // sort correctly without depending on which boardSorted section they sit in.
+      category: /support staff/i.test(p.role || "") ? "staff" : "board",
     };
   }
 } catch (_) {
@@ -549,6 +555,7 @@ for (const paper of papers) {
         name: a.name,
         nameVariants: {},
         profileUrl: profile ? profile.url : null,
+        category: profile ? profile.category : null, // "board" | "staff" | null
         netsec: netsec ? { url: netsec.url, role: netsec.role, affiliation: netsec.affiliation, photo: netsec.photo } : null,
         photo: profile ? profile.photo : null,
         initials: profile ? profile.initials : "",
@@ -610,6 +617,7 @@ const speakers = [...speakerMap.values()]
       affiliation,
       themes, // permanent + derived themes, in canonical order
       profileUrl: s.profileUrl,
+      category: s.category, // "board" | "staff" | null — drives the EISS affiliation pill
       netsec: s.netsec, // NetSec directory profile { url, role, affiliation, photo } or null (#966)
       photo: s.photo, // member headshot (null for non-members / no photo)
       initials: s.initials,
