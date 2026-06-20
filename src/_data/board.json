@@ -2,6 +2,23 @@
   "_documentation": "Data source for /board.html. The page template (src/board.njk) loops over `members` and `support`. New people, role changes, photo swaps — edit this file, not the template. A future workflow will overwrite this file from the linked Google Sheet (see docs/board-bios-setup.md once added).",
   "members": [
     {
+      "name": "Dr Hugo Meijer",
+      "role": "Founding and Honorary Director",
+      "alt": "Dr Hugo MEIJER",
+      "photo": "/assets/images/meijer-2-140x175.jpg",
+      "position": "CNRS Research Fellow",
+      "institution": "Sciences Po, Center for International Studies (CERI)",
+      "country": "France",
+      "bio": "Hugo Meijer is CNRS Research Fellow at the Center for International Studies (CERI) at Sciences Po, where he also serves as Deputy Director. His research focuses on the deep history of war and peace and long-term processes of biocultural evolution. Recent and forthcoming publications include: The Origins of War and Peace in the Human Species (Cambridge University Press, forthcoming 2026); with Richard Wrangham, “The Evolutionary Roots of War and Peace,” Journal of Strategic Studies, 48(6-7) (2026), pp. 1134–1222; “Janus faced: The Co-Evolution of War and Peace in the Human Species,” Evolutionary Anthropology 33/3 (2024), pp. 1-14; “The Origins of War: A Global Archaeological Review,” Human Nature, 35(3) (2024), pp. 225–288. For more details on his profile, see: https://www.hugomeijer.com.",
+      "themes": "war, peace, diplomacy, biocultural evolution, deep history",
+      "links": {
+        "website": "https://www.hugomeijer.com/",
+        "linkedin": "https://www.hugomeijer.com/",
+        "twitter": "https://x.com/Hg_Meijer"
+      },
+      "workingGroups": "WG1"
+    },
+    {
       "name": "Prof. Chiara Ruffa",
       "role": "Co-Director",
       "photo": "/assets/images/jritvrpl-400x400.jpg",
@@ -38,16 +55,6 @@
       "country": "Netherlands",
       "position": "Assistant Professor of War Studies",
       "institution": "Leiden University"
-    },
-    {
-      "name": "Dr Hugo Meijer",
-      "role": "Founding and Honorary Director",
-      "photo": "/assets/images/meijer-2-140x175.jpg",
-      "alt": "Dr Hugo MEIJER",
-      "themes": "International Relations, Foreign Policy Analysis, Security Studies, Alliances.",
-      "country": "France",
-      "position": "CNRS Research Fellow",
-      "institution": "Sciences Po, Center for International Studies (CERI)"
     },
     {
       "name": "Prof. Nicolas Blarel",
