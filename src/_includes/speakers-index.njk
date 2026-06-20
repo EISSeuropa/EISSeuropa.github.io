@@ -71,7 +71,7 @@
       <p class="speaker-name" lang="en">
         {%- if s.profileUrl %}<a href="{{ s.profileUrl }}">{{ s.display }}</a>
         {%- else %}{{ s.display }}{% endif %}
-        {%- if s.profileUrl %} <span class="speaker-badge">{{ s18n.memberBadge }}</span>{% endif %}
+        {%- if s.profileUrl %} <span class="speaker-badge speaker-badge--{{ s.category or 'board' }}">{{ s18n.staffBadge if s.category == 'staff' else s18n.boardBadge }}</span>{% endif %}
         {%- if s.netsec %} <span class="speaker-netsec" data-no-hovercard>
           <a class="speaker-netsec-link" href="{{ s.netsec.url | extLink }}" target="_blank" rel="noopener" aria-label="{{ s18n.netsecProfileAria | replace('{name}', s.name) }}">{{ icon("external-link") }} <span aria-hidden="true">{{ s18n.netsecProfile }}</span></a>
           {%- if s.netsec.role or s.netsec.affiliation or s.netsec.photo %}

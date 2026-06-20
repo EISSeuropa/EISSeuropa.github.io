@@ -3786,16 +3786,41 @@ a.programme-live-tag:focus-visible {
   margin: 0;
   font-weight: 600;
 }
+/* EISS affiliation pill on a by-person entry: the author is on the EISS board
+   or is EISS staff. Rendered SOLID and opaque so it reads as the home
+   affiliation and stands clearly apart from the outlined, translucent NetSec
+   partner link beside it — fill-vs-outline is the primary distinguishing cue,
+   the staff slate adds a second one. Owns the `speaker-badge*` prefix (§15). */
 .speaker-badge {
   display: inline-block;
   margin-left: 0.4rem;
-  padding: 0.05rem 0.4rem;
+  padding: 0.05rem 0.45rem;
   border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--accent);
   font-size: var(--fs-xs);
   font-weight: 600;
   vertical-align: 0.05em;
+  white-space: nowrap;
+}
+/* Board: solid EISS brand accent (theme-aware: white-on-blue in light, dark
+   ink on the lighter accent in dark, via --accent / --accent-text). */
+.speaker-badge--board {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+/* Staff (interns + admin/comms support, current or past): a solid neutral
+   slate, distinct from both the board blue and the NetSec blue. A fixed tone
+   that holds white-text contrast on either theme's surface. */
+.speaker-badge--staff {
+  background: hsl(222 14% 39%);
+  color: hsl(0 0% 100%);
+}
+[data-theme="dark"] .speaker-badge--staff {
+  background: hsl(220 13% 46%);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .speaker-badge--staff {
+    background: hsl(220 13% 46%);
+  }
 }
 /* NetSec directory cross-link (#966): a pill-link next to an author who also
    has a NetSec member-directory profile, carried in NetSec's network blue
