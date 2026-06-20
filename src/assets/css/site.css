@@ -3845,6 +3845,48 @@ a.programme-live-tag:focus-visible {
   width: 0.9em;
   height: 0.9em;
 }
+/* NetSec chip hovercard (#966): on hover/focus the chip reveals a small card
+   with the member's NetSec photo, role and affiliation (display fields from
+   directory-index.json). display:none until shown, so the cross-origin photo
+   only loads on interaction. The card is aria-hidden — the chip link carries
+   the accessible name. Owns the `speaker-netsec*` prefix (CLAUDE.md §15). */
+.speaker-netsec { position: relative; display: inline-block; }
+.speaker-netsec-card {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 30;
+  width: max-content;
+  max-width: 17rem;
+  padding: 0.6rem 0.75rem;
+  gap: 0.6rem;
+  align-items: center;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-3);
+  text-align: left;
+  white-space: normal;
+  cursor: default;
+}
+.speaker-netsec:hover .speaker-netsec-card,
+.speaker-netsec:focus-within .speaker-netsec-card { display: flex; }
+.speaker-netsec-card-photo {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--surface);
+}
+.speaker-netsec-card-body { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.speaker-netsec-card-name { font-size: var(--fs-sm); font-weight: 600; color: var(--text); line-height: 1.25; }
+.speaker-netsec-card-role { font-size: var(--fs-xs); font-weight: 600; color: hsl(205 85% 33%); }
+[data-theme="dark"] .speaker-netsec-card-role { color: hsl(205 100% 78%); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .speaker-netsec-card-role { color: hsl(205 100% 78%); } }
+.speaker-netsec-card-aff { font-size: var(--fs-xs); color: var(--text-muted); }
+.speaker-netsec-card-cta { margin-top: 0.2rem; font-size: var(--fs-xs); font-weight: 600; color: var(--text-muted); }
 .speaker-aff {
   margin: 0.15rem 0 0;
   font-size: var(--fs-sm);

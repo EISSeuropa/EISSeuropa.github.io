@@ -531,7 +531,7 @@ for (const m of netsecDirectory.members || []) {
   add(m.name);
   if (m.name_key) keys.add(keyOf(m.name_key));
   (m.aliases || []).forEach(add);
-  for (const k of keys) netsecByKey[k] = { url: m.url, name: m.name };
+  for (const k of keys) netsecByKey[k] = { url: m.url, name: m.name, role: m.role || null, affiliation: m.affiliation || null, photo: m.photo || null };
 }
 
 const speakerMap = new Map();
@@ -549,7 +549,7 @@ for (const paper of papers) {
         name: a.name,
         nameVariants: {},
         profileUrl: profile ? profile.url : null,
-        netsecUrl: netsec ? netsec.url : null,
+        netsec: netsec ? { url: netsec.url, role: netsec.role, affiliation: netsec.affiliation, photo: netsec.photo } : null,
         photo: profile ? profile.photo : null,
         initials: profile ? profile.initials : "",
         themes: new Set(),
@@ -610,7 +610,7 @@ const speakers = [...speakerMap.values()]
       affiliation,
       themes, // permanent + derived themes, in canonical order
       profileUrl: s.profileUrl,
-      netsecUrl: s.netsecUrl, // NetSec directory profile (null when no match) (#966)
+      netsec: s.netsec, // NetSec directory profile { url, role, affiliation, photo } or null (#966)
       photo: s.photo, // member headshot (null for non-members / no photo)
       initials: s.initials,
       years: yearList, // distinct years, newest first (pills)
