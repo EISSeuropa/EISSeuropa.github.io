@@ -3951,7 +3951,13 @@ a.programme-live-tag:focus-visible {
   font-weight: 600;
 }
 .speaker-paper-title {
-  flex: 1 1 auto;
+  /* flex-basis 0 (not auto) is load-bearing: in the wrapping row above, an
+     auto basis = the title's content width, so a long title's hypothetical
+     size overflows line 1 and the whole title drops to its own line below the
+     conf label (the EISS-2017 "States vs. Markets in Rising Powers…" case).
+     With basis 0 the title fits beside the 11rem conf, grows to fill the rest
+     of line 1, and wraps its *text* inside; only the prize chip wraps to line 2. */
+  flex: 1 1 0;
   min-width: 0;
   color: var(--text);
 }
