@@ -20,10 +20,10 @@ module.exports = {
   },
   // Top-nav order is flagship → identity → rest: the Annual Conference (the
   // draw most visitors come for), then other Events, then who EISS is, the
-  // People, and the Membership call to action last. The Anthology (the
-  // /speakers + /papers archive) is intentionally NOT in the top nav; it is
-  // reached from the conference pages, /past, the footer and the homepage
-  // promo. `text` here is a fallback; the visible label comes from
+  // People, and the Anthology (the unified /anthology archive of every
+  // speaker and paper) last. Membership is no longer a top-nav item; the
+  // membership page stays reachable from the footer and the homepage.
+  // `text` here is a fallback; the visible label comes from
   // i18n.js → nav.<key>.
   nav: [
     { href: "/", text: "Home", key: "home" },
@@ -31,6 +31,6 @@ module.exports = {
     { href: "/events.html", text: "Events", key: "events" },
     { href: "/initiative.html", text: "The Initiative", key: "initiative" },
     { href: "/board.html", text: "People", key: "people" },
-    { href: "/membership.html", text: "Membership", key: "membership" },
+    { href: "/anthology.html", text: "Anthology", key: "anthology" },
   ],
 };
