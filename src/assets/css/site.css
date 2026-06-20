@@ -2034,6 +2034,19 @@ h4 { font-size: var(--fs-lg); }
 .laureate-title:hover { text-decoration: underline; }
 .laureate-meta { color: var(--text-muted); font-size: var(--fs-sm); }
 
+/* Aggregate "Recent publications by our members" on /initiative#outputs
+   (#718): a flat list of members' own ORCID works, distinct from the curated
+   network outputs above. Owns the `member-work*` prefix (CLAUDE.md §15). */
+.member-works { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; gap: var(--space-3); max-width: 46rem; }
+.member-work { display: flex; flex-direction: column; gap: 2px; padding-bottom: var(--space-3); border-bottom: 1px solid var(--border); }
+.member-works .member-work:last-child { padding-bottom: 0; border-bottom: 0; }
+.member-work-title { font-size: var(--fs-sm); line-height: 1.35; }
+.member-work-title a { text-decoration: none; }
+.member-work-title a:hover { text-decoration: underline; }
+.member-work-meta { font-size: var(--fs-xs); }
+.member-work-meta a { color: inherit; }
+.member-work-meta a:hover { color: var(--accent); }
+
 /* Co-branding strip on /prizes (#639): the EISS lockup beside the Journal of
    Strategic Studies wordmark, who jointly award the prize. */
 .prize-partners {
