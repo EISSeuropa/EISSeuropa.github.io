@@ -1,6 +1,6 @@
 # Dependabot configuration.
 #
-# Watches two surfaces for upstream updates:
+# Watches three surfaces for upstream updates:
 #
 #   1. GitHub Actions used in any .github/workflows/*.yml. We SHA-pin
 #      every third-party action. Dependabot opens a PR each time an
@@ -12,12 +12,15 @@
 #      `contents: write` in the sync workflows, so a compromised package
 #      on the chain matters.
 #
+#   3. npm dependencies in package.json (currently just @11ty/eleventy).
+#      Eleventy is the static-site generator; its transitive tree (the
+#      dev-server's `ws`, `liquidjs`, `markdown-it`, …) is where the
+#      `npm audit` advisories land. Patch/minor bumps are grouped into one
+#      PR; majors stay individual for review.
+#
 # Weekly cadence keeps the PR volume manageable. Each PR is auto-mergeable
 # once CI is green (link-check + CodeQL + drift checkers cover the surface
 # Dependabot bumps could break).
-#
-# No npm ecosystem: there is no package.json — Eleventy is invoked via npx
-# at deploy time and that is a separate concern.
 
 version: 2
 updates:
@@ -59,3 +62,26 @@ updates:
     commit-message:
       prefix: "deps(python)"
     open-pull-requests-limit: 5
+
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Europe/Stockholm"
+    reviewers:
+      - "APB-LDN"
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "deps(npm)"
+    open-pull-requests-limit: 5
+    groups:
+      # Patch + minor bumps move together (Eleventy 3.1.x and its
+      # transitive tree) so a routine refresh is one PR. A major
+      # (Eleventy 4.x) stays its own PR — it warrants a deliberate review.
+      eleventy:
+        update-types:
+          - "minor"
+          - "patch"
