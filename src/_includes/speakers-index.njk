@@ -60,7 +60,7 @@
     <h2 id="ltr-{{ s.letter }}" class="speaker-letter-h">{{ s.letter }}</h2>
   </li>
   {%- endif %}
-  <li class="speaker-entry" {% if s.profileUrl %}id="person-{{ s.profileUrl | replace('/board/', '') | replace('.html', '') }}"{% endif %} data-speaker-entry data-name="{{ s.display }}" data-themes="{{ s.themes | join('|') }}" data-events="{{ s.editionKeys | join('|') }}">
+  <li class="speaker-entry" id="person-{{ s.slug }}" data-speaker-entry data-name="{{ s.display }}" data-themes="{{ s.themes | join('|') }}" data-events="{{ s.editionKeys | join('|') }}">
     {%- if s.profileUrl %}
     <span class="speaker-headshot" aria-hidden="true">
       {%- if s.photo %}<img src="{{ s.photo }}" alt="" loading="lazy" width="48" height="48">
