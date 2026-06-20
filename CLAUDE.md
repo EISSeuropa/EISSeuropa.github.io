@@ -66,6 +66,20 @@ authoritative for EISS.
   merging (GitHub shows it dirty, or a required check is failing):
   there, rebase and force-push that branch, because it cannot merge
   underneath you until the block clears. When in doubt, fresh branch.
+- **Branch off *freshly-fetched* `origin/master`, never local `master`.**
+  Always `git fetch origin && git checkout -b <branch> origin/master`
+  (or `git checkout master && git pull` first). A bare
+  `git checkout master` without a pull is the trap. Branching off a stale
+  local `master` is worse than orphaning a late push: your branch
+  silently *excludes* whatever merged since your last pull, and its
+  squash-merge ships the whole file as of that stale base, **reverting
+  those merges on production**. This bit live: a one-line tweak branched
+  off a stale master (PR #974) reverted the per-author anchor an earlier
+  PR (#971) had shipped, breaking a cross-repo contract until it was
+  caught and re-landed (#317-class, but a revert not an orphan). After a
+  merge you expected, confirm it's actually on `master`
+  (`git show origin/master:<file> | grep …`) rather than trusting the PR
+  body.
 - **SHA-pin GitHub Actions.** Every `uses:` in `.github/workflows/`
   is pinned to a full 40-character commit SHA with a trailing
   `# vN` comment (e.g. `uses: actions/checkout@de0fac2… # v6`).
