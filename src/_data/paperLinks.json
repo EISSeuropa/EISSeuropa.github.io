@@ -678,6 +678,22 @@
     "pubType": "Journal article",
     "publisher": "Oxford University Press (OUP)"
   },
+  "2024-inter-alliance-security-dilemmas-korean-counterforce-systems-and-their-effect-on": {
+    "doi": "10.1080/01402390.2025.2543859",
+    "publishedUrl": "https://doi.org/10.1080/01402390.2025.2543859",
+    "publishedTitle": "When competition becomes contagious: Strategic arms racing spillovers, alliance politics, and the Sino-American nuclear competition",
+    "journal": "Journal of Strategic Studies",
+    "publishedYear": 2025,
+    "pubType": "Journal article",
+    "source": "manual",
+    "verifiedOn": "2026-06-17",
+    "publishedAuthors": [
+      "Samuel M. Seitz",
+      "Elliot S. Ji"
+    ],
+    "pages": "1-23",
+    "publisher": "Informa UK Limited"
+  },
   "2024-multilateral-maritime-exercises-and-strategic-change-the-american-case-and-beyon": {
     "doi": "10.1093/jogss/ogae017",
     "publishedUrl": "https://doi.org/10.1093/jogss/ogae017",
@@ -865,22 +881,6 @@
       "Andrew Webster"
     ],
     "pubType": "Journal article",
-    "publisher": "Informa UK Limited"
-  },
-  "2024-inter-alliance-security-dilemmas-korean-counterforce-systems-and-their-effect-on": {
-    "doi": "10.1080/01402390.2025.2543859",
-    "publishedUrl": "https://doi.org/10.1080/01402390.2025.2543859",
-    "publishedTitle": "When competition becomes contagious: Strategic arms racing spillovers, alliance politics, and the Sino-American nuclear competition",
-    "journal": "Journal of Strategic Studies",
-    "publishedYear": 2025,
-    "pubType": "Journal article",
-    "source": "manual",
-    "verifiedOn": "2026-06-17",
-    "publishedAuthors": [
-      "Samuel M. Seitz",
-      "Elliot S. Ji"
-    ],
-    "pages": "1-23",
     "publisher": "Informa UK Limited"
   }
 }
