@@ -575,6 +575,7 @@ for (const paper of papers) {
       conferenceUrl: paper.conferenceUrl,
       isSpeaker: a.isSpeaker,
       prize: paper.prize || null, // Best Paper Prize winner (badge in the by-person list)
+      publishedUrl: paper.publishedUrl || null, // drives the "Published" chip, mirroring the by-paper view
       slug: paper.slug || null,
       paperUrl: paper.paperUrl || null,
     });

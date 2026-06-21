@@ -112,6 +112,7 @@
             <span class="speaker-paper-conf"><a href="{{ p.conferenceUrl }}">{{ p.conferenceLabel }}{% if p.year %} {{ p.year }}{% endif %}</a></span>
             {%- if p.paperUrl %}<a class="speaker-paper-title" href="{{ p.paperUrl }}" lang="en">{{ p.title }}</a>
             {%- else %}<span class="speaker-paper-title" lang="en">{{ p.title }}</span>{% endif %}
+            {%- if p.publishedUrl %}<span class="paper-pub-chip" lang="en" title="A published version of this paper exists">Published</span>{% endif %}
             {%- if p.prize %}<span class="paper-prize-chip" lang="en" title="{{ p.prize.award }} — EISS × {{ p.prize.partner }}">{{ icon("award") }} {{ p.prize.award }}</span>{% endif %}
           </li>
           {%- endfor %}
