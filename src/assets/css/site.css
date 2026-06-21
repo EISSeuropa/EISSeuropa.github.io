@@ -3940,6 +3940,11 @@ a.programme-live-tag:focus-visible {
      conf | title row. The title's flex-grow fills line 1, so the chip wraps
      naturally at its own pill width; the row-gap gives the vertical spacing. */
   flex-wrap: wrap;
+  /* Top-align, not the default stretch: beside a title that wraps to several
+     lines, stretch would blow the conf label and the Published / prize pills up
+     to the full row height (a tall blob, text floating). flex-start keeps each
+     pill its natural height, level with the conf label and the title's first line. */
+  align-items: flex-start;
   gap: var(--space-3);
   font-size: var(--fs-sm);
 }
