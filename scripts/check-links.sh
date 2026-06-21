@@ -194,6 +194,14 @@ SKIP_HOSTS = {
                                 # anonymous HEAD/GET, same academic-publisher
                                 # anti-bot class as doi.org / shs.cairn.info.
                                 # The journal page opens fine in a browser.
+    "www.hugomeijer.com",       # Founding-and-Honorary-Director Hugo Meijer's
+                                # personal site, linked from his board profile
+                                # (`/board/...` + FR/DE). Returns HTTP 429
+                                # (rate-limited) to the checker under automated
+                                # load while loading fine for visitors. Same
+                                # recurring-flake class as the academic hosts
+                                # above; flaked PR #1007's link-check. Skipping
+                                # stops the false-red on every src-touching PR.
 }
 
 # Domains skipped together with ALL their subdomains. SKIP_HOSTS matches an
