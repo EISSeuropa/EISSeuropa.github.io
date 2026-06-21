@@ -667,6 +667,43 @@ collision from a variant (a naïve "same base class defined twice" pass
 flags ~100 legitimate cases). Tracked in #241; the convention above is
 the guard until it lands.
 
+## 16. Ponytail: the lazy ladder, tuned to this repo
+
+The `ponytail` plugin (laziest solution that works) is customised here by
+this section rather than by editing the global plugin (which updates
+out from under us). The generic ladder is code-centric. For two static
+Eleventy sites it reads:
+
+1. **Does it need to exist?** Most "features" here are content, not
+   mechanism. A one-off page or a single edition's quirk is data plus an
+   existing partial, not a new component. Build mechanism only when the
+   second caller actually arrives.
+2. **Native HTML/CSS before JS.** Progressive enhancement is already the
+   house style: `<details>` for disclosure, `:target` and anchors for
+   deep links, click-to-load for embeds. Reach for JS only when the
+   feature still degrades without it (the abstract clamp, the parallel
+   panels). No framework, ever.
+3. **No new npm dependency.** The build is `npx @11ty/eleventy` plus a
+   few `scripts/*.py`. Every dependency becomes a Dependabot lane and an
+   `npm audit` line (rule §2). A few lines of Nunjucks or vanilla JS beats
+   pulling a package.
+4. **One data-driven include, not N hand-wired copies.** A repeated block
+   reads `_data` through a single partial. The drift this prevents is
+   real and has bitten: `conference-media.njk` replaced three near-identical
+   per-year sections (#358).
+5. **Reuse the cross-repo JSON contract, don't rebuild a NetSec system**
+   (rule §13, and the "don't duplicate NetSec-unique systems" memory). The
+   directory and Anthology link by published index files, not scraping.
+6. **Then** the shortest diff: one CSS prefix per component (§15), delete
+   over add.
+
+Repo-specific "when NOT to be lazy": a green `npx @11ty/eleventy` is not
+"it works" (§14). The ponytail "one runnable check" here is a render plus a
+computed-style read at desktop and phone width, not a screenshot. And no
+machine translation as a shortcut (§1): FR/DE are hand-translated or they
+do not ship. Mark deliberate simplifications with a `ponytail:` comment
+(fits the existing one-line `# label` comment style).
+
 ---
 
 *This file is short on purpose. If you need to add a rule, add it
