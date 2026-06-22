@@ -154,6 +154,26 @@ module.exports = function (eleventyConfig) {
     return `https://${v}`;
   });
 
+  // Deterministic per-paper anchor slug (#676 / #738). The SINGLE source of
+  // truth for both the `id="paper-…"` emitted on the /YYYY programme grids
+  // (archive-programme.njk) and the `#paper-…` fragment the Anthology by-paper
+  // and by-person views append to their conference link. Because both sides run
+  // the same filter on the same (original-language) title, the anchor and the
+  // deep link always agree, and the slug is locale-stable. Two papers that share
+  // a title in one edition collapse to one anchor — acceptable, the link still
+  // resolves to that slot. Returns the slug WITHOUT the `paper-` prefix; callers
+  // add it. Mirrors corpus.js's kebab so it reads consistently.
+  eleventyConfig.addFilter("paperAnchor", (title) =>
+    String(title || "")
+      .normalize("NFD")
+      .replace(/[̀-ͯ]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 80)
+      .replace(/-+$/, ""),
+  );
+
   eleventyConfig.addPassthroughCopy("src/assets");
   // Runtime-fetched data files live under src/data/ (NOT src/_data/,
   // which is Eleventy's build-time data cascade and never lands in

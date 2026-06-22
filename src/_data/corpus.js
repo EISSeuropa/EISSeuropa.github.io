@@ -430,6 +430,11 @@ for (const { slug, slot, c } of iterContributions()) {
     conferenceSlug: conf.slug || slug,
     conferenceLabel: conf.label,
     conferenceUrl: conf.url,
+    // The programme grid only emits a `#paper-<slug>` anchor for contributions
+    // in a rendered (non-break) slot. A poster session is modelled as a break
+    // slot, whose papers the grid does not render, so they have no slot to
+    // deep-link to — guard the Anthology deep link off this (#738).
+    slotAnchored: slot.kind !== "break",
     sessionTitle,
     themes: themesOf(sessionTitle),
   });
@@ -459,6 +464,15 @@ for (const p of papers) {
   while (slugSeen[slug]) slug = `${base}-${i++}`;
   slugSeen[slug] = true;
   p.slug = slug;
+  // Deep link to the paper's exact slot on its edition programme (#738). The
+  // fragment is `#paper-<kebab(title)>`, identical to the `paperAnchor` filter
+  // the grid templates emit (archive-programme.njk / programme-grid.njk), so it
+  // resolves by construction. Only when the slot actually renders an anchor —
+  // poster (break-slot) papers fall back to the bare edition page. Two papers
+  // sharing a title in one edition collapse to one anchor; both still resolve.
+  p.programmeUrl = p.slotAnchored
+    ? `${p.conferenceUrl}#paper-${kebab(p.title)}`
+    : p.conferenceUrl;
 }
 
 // Merge confirmed external publications onto papers by slug (#805). A paper
@@ -573,6 +587,7 @@ for (const paper of papers) {
       affiliation: a.affiliation || null,
       conferenceLabel: paper.conferenceLabel,
       conferenceUrl: paper.conferenceUrl,
+      programmeUrl: paper.programmeUrl || paper.conferenceUrl, // deep link to the slot (#738)
       isSpeaker: a.isSpeaker,
       prize: paper.prize || null, // Best Paper Prize winner (badge in the by-person list)
       publishedUrl: paper.publishedUrl || null, // drives the "Published" chip, mirroring the by-paper view

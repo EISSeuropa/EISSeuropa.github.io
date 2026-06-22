@@ -110,7 +110,7 @@
                 <summary>{{ t.programme.showContributions }} <span class="muted">({{ slot.contributions.length }})</span></summary>
                 <ol class="programme-contrib-list" role="list">
                   {%- for c in slot.contributions %}
-                  {%- set _pslug = c.title | slugify -%}
+                  {%- set _pslug = c.title | paperAnchor -%}
                   {%- set _panchor = _pslug and (_pslug not in _seenPapers) -%}
                   {%- if _panchor %}{% set _ = _seenPapers.push(_pslug) %}{% endif -%}
                   <li class="programme-contrib"{% if _panchor %} id="paper-{{ _pslug }}"{% endif %}>

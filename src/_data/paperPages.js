@@ -124,7 +124,7 @@ module.exports = function () {
         title: p.title,
         year: p.year,
         conferenceLabel: p.conferenceLabel,
-        conferenceUrl: p.programmeUrl,
+        conferenceUrl: p.conferenceUrl, // bare edition page; paper-page-body appends #panel-/#programme
         panel: p.panel,
         abstract: p.abstract || null,
         abstractUrl: p.abstractUrl || null,

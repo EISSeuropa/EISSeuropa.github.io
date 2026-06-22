@@ -68,4 +68,28 @@
     });
     if (d.open) setupAll(d); // already open (e.g. deep-linked / no summary collapse)
   });
+
+  // Deep link to a single paper (#738): the Anthology by-paper / by-person
+  // views link to `#paper-<slug>`, which lives inside a "View papers" panel
+  // that is closed by default, so the browser's fragment jump lands on hidden,
+  // zero-height content. Open the panel (its `toggle` handler runs setupAll +
+  // syncParallel) and re-scroll the paper into view; the sticky-header offset
+  // comes from the existing html { scroll-padding-top }.
+  function revealHash() {
+    if (!location.hash || location.hash.length < 2) return;
+    var target;
+    try {
+      target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    } catch (e) {
+      return;
+    }
+    if (!target) return;
+    var panel = target.closest("details.programme-contribs");
+    if (panel && !panel.open) {
+      panel.open = true;
+      target.scrollIntoView();
+    }
+  }
+  window.addEventListener("hashchange", revealHash);
+  revealHash();
 }());
