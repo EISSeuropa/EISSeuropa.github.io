@@ -72,6 +72,11 @@
     </nav>
     {%- endif %}
 
+    {# Per-paper deep-link anchors (#676 / #738), emitted once per slug so the
+       Anthology by-paper / by-person views can link to a paper's exact slot.
+       Same `paperAnchor` filter as archive-programme.njk, so the live editions
+       resolve identically to the archived ones. #}
+    {%- set _seenPapers = [] -%}
     {%- for day in _programme.days %}
     <div class="programme-day" id="day-{{ day.date }}">
       <h3 class="programme-day-title">{{ day.label }} <span class="muted">— {{ day.date }}</span></h3>
@@ -145,7 +150,10 @@
                 <summary>{{ t.programme.showContributions }} <span class="muted">({{ slot.contributions.length }})</span></summary>
                 <ol class="programme-contrib-list" role="list">
                   {%- for c in slot.contributions %}
-                  <li class="programme-contrib">
+                  {%- set _pslug = c.title | paperAnchor -%}
+                  {%- set _panchor = _pslug and (_pslug not in _seenPapers) -%}
+                  {%- if _panchor %}{% set _ = _seenPapers.push(_pslug) %}{% endif -%}
+                  <li class="programme-contrib"{% if _panchor %} id="paper-{{ _pslug }}"{% endif %}>
                     <div class="programme-contrib-when" aria-hidden="true">
                       {{ c.startTime }}
                     </div>

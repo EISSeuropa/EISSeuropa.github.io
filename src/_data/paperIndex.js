@@ -14,10 +14,11 @@
  * mis-tag. Confidence over coverage: a session that matches nothing stays
  * UNTAGGED rather than be force-fit into a bucket.
  *
- * `programmeUrl` is the per-edition page (e.g. /2024.html). The source
- * programmes carry no per-slot anchors, so there is no #fragment to append
- * yet. If anchors are added to the programme grids later, thread the slot id
- * through corpus.js and append it here.
+ * `programmeUrl` is the deep link to the paper's slot on its edition page
+ * (e.g. /2024.html#paper-<slug>), computed in corpus.js off the per-paper
+ * anchor the programme grids now emit (#676 / #738). Poster (break-slot) papers
+ * have no rendered anchor, so corpus leaves their programmeUrl at the bare
+ * edition page.
  */
 const corpus = require("./corpus.js");
 
@@ -97,7 +98,8 @@ for (const p of corpus.papers || []) {
     panel: p.sessionTitle || null,
     theme: themesOf(p.sessionTitle), // array, this feature's own derivation
     conferenceLabel: p.conferenceLabel,
-    programmeUrl: p.conferenceUrl, // per-edition page (no per-slot anchor available)
+    programmeUrl: p.programmeUrl || p.conferenceUrl, // deep link to the slot (#738)
+    conferenceUrl: p.conferenceUrl, // bare edition page (base for #panel-/#programme links)
     slug: p.slug, // stable per-paper slug from corpus (anchor + landing page)
     abstract: p.abstract || null,
     abstractUrl: p.abstractUrl || null,
