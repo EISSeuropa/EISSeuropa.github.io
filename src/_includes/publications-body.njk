@@ -12,6 +12,21 @@
 {%- set t = i18n[lang or "en"] -%}
 {%- set o = t.outputs -%}
 
+{# Member headshot by slug, same bubble as the Anthology by-person view. An
+   explicit loop, NOT `selectattr("slug","equalto",…)` — that test silently
+   matches nothing here and `| first` then returns the wrong (first) person.
+   Renders the photo if known, else initials; the _hit guard keeps it to the
+   first match. #}
+{%- macro headshot(slug) -%}
+<span class="speaker-headshot" aria-hidden="true">
+{%- set _hit = [] -%}
+{%- for p in peopleIndex.people -%}
+{%- if p.slug == slug and not _hit.length -%}{%- set _ = _hit.push(1) -%}{%- if p.photo %}<img src="{{ p.photo }}" alt="" loading="lazy" width="48" height="48">{% else %}<span class="speaker-headshot-ph">{{ p.initials }}</span>{% endif -%}{%- endif -%}
+{%- endfor -%}
+{%- if not _hit.length %}<span class="speaker-headshot-ph"></span>{% endif -%}
+</span>
+{%- endmacro -%}
+
 {# Flatten for the counts + year facet (Nunjucks set doesn't leak out of a for
    loop, so accumulate by pushing onto arrays whose reference we mutate). #}
 {%- set _allWorks = [] -%}
@@ -45,7 +60,8 @@
         <select id="pub-year" data-pub-year>
           <option value="">{{ o.filterAllYears }} ({{ _allWorks.length }})</option>
           {%- for y in (_years | sort(true)) %}
-          <option value="{{ y }}">{{ y }} ({{ _allWorks | selectattr("year", "equalto", y) | list | length }})</option>
+          {%- set _yc = [] -%}{%- for w in _allWorks -%}{%- if w.year == y -%}{%- set _ = _yc.push(1) -%}{%- endif -%}{%- endfor -%}
+          <option value="{{ y }}">{{ y }} ({{ _yc.length }})</option>
           {%- endfor %}
         </select>
       </div>
@@ -63,13 +79,9 @@
     <div class="member-pubs" data-pub-list>
       {%- for m in orcidWorks %}
       {%- if m.works.length %}
-      {%- set _p = peopleIndex.people | selectattr("slug", "equalto", m.slug) | first %}
       <section class="member-pub-group" data-pub-group data-member="{{ m.slug }}">
         <div class="member-pub-head">
-          <span class="speaker-headshot" aria-hidden="true">
-            {%- if _p and _p.photo %}<img src="{{ _p.photo }}" alt="" loading="lazy" width="48" height="48">
-            {%- else %}<span class="speaker-headshot-ph">{{ _p.initials if _p else "" }}</span>{% endif %}
-          </span>
+          {{ headshot(m.slug) }}
           <h2 class="member-pub-name"><a href="/board/{{ m.slug }}.html" lang="en">{{ m.name }}</a></h2>
         </div>
         <ul class="member-works" role="list">
