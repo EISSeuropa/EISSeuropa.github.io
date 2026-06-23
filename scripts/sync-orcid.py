@@ -41,7 +41,36 @@ ORCID_ID_RE = re.compile(r"(\d{4}-\d{4}-\d{4}-\d{3}[\dX])")
 API = "https://pub.orcid.org/v3.0/{}/works"
 HEADERS = {"Accept": "application/json", "User-Agent": "eiss-europa.com sync-orcid"}
 TIMEOUT = 20
-MAX_WORKS = 3  # top N by year per member — keeps the sidecar light
+MAX_WORKS = 5  # top N by year per member — the full list lives on /publications
+
+# Front/back matter ORCID lists as its own "work" (mostly book chapters): a
+# title that is JUST one of these carries no information in a publications list,
+# so skip it. Matched on the stripped, lowercased title — a real chapter like
+# "Introduction to Strategic Studies" keeps its subtitle and stays.
+_NON_SUBSTANTIVE = {
+    "introduction", "conclusion", "conclusions", "preface", "foreword",
+    "afterword", "epilogue", "prologue", "index", "bibliography", "references",
+    "notes", "acknowledgements", "acknowledgments", "appendix", "contributors",
+    "list of contributors", "about the authors", "about the contributors",
+    "abstract", "editorial", "comment", "reply", "erratum", "corrigendum",
+}
+
+
+def _substantive(title):
+    """False for bare front/back-matter titles (Introduction, Conclusion, …)."""
+    t = title.strip().rstrip(".:;,").strip().lower()
+    return t not in _NON_SUBSTANTIVE and not re.match(r"^chapter\s+\d+$", t)
+
+
+# ORCID work types to drop. The big one is `book-chapter`: scholars deposit a
+# whole monograph as the `book` entry PLUS one work per chapter (front-matter
+# included — "Dedication", "List of Figures", …), which would flood the feed
+# with one book's internals. The book itself stays (type `book`); chapters in
+# others' edited volumes are the accepted small loss. `other` is ORCID's
+# catch-all for non-publications. Everything substantive (journal-article, book,
+# conference-paper, report, working-paper, preprint, …) is kept.
+_SKIP_TYPES = {"book-chapter", "other", "conference-abstract", "data-set",
+               "journal-issue", "dictionary-entry", "encyclopedia-entry"}
 
 
 def slugify(name: str) -> str:
@@ -88,7 +117,9 @@ def parse_works(payload):
             continue
         s = summaries[0]
         title = _val(s, "title", "title", "value")
-        if not title:
+        if not title or not _substantive(title):
+            continue
+        if (s.get("type") or "").lower() in _SKIP_TYPES:
             continue
         year = _val(s, "publication-date", "year", "value")
         journal = _val(s, "journal-title", "value")

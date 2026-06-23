@@ -2046,6 +2046,13 @@ h4 { font-size: var(--fs-lg); }
 .member-work-meta { font-size: var(--fs-xs); }
 .member-work-meta a { color: inherit; }
 .member-work-meta a:hover { color: var(--accent); }
+/* /publications: the full member-works feed grouped by member (#718 / #756).
+   Each member is a group with their name as the heading, then their works. */
+.member-pubs { display: grid; gap: var(--space-6); margin-top: var(--space-5); max-width: 48rem; }
+.member-pub-name { font-size: 1.05rem; margin: 0 0 var(--space-2); }
+.member-pub-name a { color: var(--text); text-decoration: none; }
+.member-pub-name a:hover { color: var(--accent); }
+.member-pub-group .member-works { margin-top: 0; }
 
 /* Co-branding strip on /prizes (#639): the EISS lockup beside the Journal of
    Strategic Studies wordmark, who jointly award the prize. */
