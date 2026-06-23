@@ -2049,10 +2049,12 @@ h4 { font-size: var(--fs-lg); }
 /* /publications: the full member-works feed grouped by member (#718 / #756).
    Each member is a group with their name as the heading, then their works. */
 .member-pubs { display: grid; gap: var(--space-6); margin-top: var(--space-5); max-width: 48rem; }
-.member-pub-name { font-size: 1.05rem; margin: 0 0 var(--space-2); }
+/* Headshot + name row, same headshot bubble as the Anthology by-person view. */
+.member-pub-head { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2); }
+.member-pub-name { font-size: 1.05rem; margin: 0; }
 .member-pub-name a { color: var(--text); text-decoration: none; }
 .member-pub-name a:hover { color: var(--accent); }
-.member-pub-group .member-works { margin-top: 0; }
+.member-pub-group .member-works { margin-top: 0; padding-left: calc(48px + var(--space-3)); }
 
 /* Co-branding strip on /prizes (#639): the EISS lockup beside the Journal of
    Strategic Studies wordmark, who jointly award the prize. */
