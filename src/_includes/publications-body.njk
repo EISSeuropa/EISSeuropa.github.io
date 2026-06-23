@@ -1,29 +1,80 @@
-{# /publications page body (#718 / #756). The full "Recent publications by our
-   members" feed, grouped by member, drawn from orcidWorks.json (refreshed
-   weekly by sync-orcid from public ORCID records). /initiative shows one work
-   per member and links here for the rest. These are members' OWN external
-   works, kept separate from the Anthology of EISS-conference papers by design.
-   Shared by the three locale pages so the i18n drift checker stays clean;
-   titles, journals and names stay in their original language (lang="en"). #}
+{# /publications page body (#718 / #756). Members' own external works, grouped
+   by member, drawn from orcidWorks.json (refreshed weekly by sync-orcid from
+   public ORCID records). Imports the Anthology's faceted-filter pattern: a
+   search + year filter over the list, an aria-live status with an empty state,
+   a stats line, and the by-person headshot bubble. Filtering is on data-*
+   attributes (publications-filter.js), so the JS stays locale-agnostic and the
+   list is fully server-rendered (Pagefind indexes every title). Members' OWN
+   external works, deliberately separate from the Anthology of EISS-conference
+   papers. Shared by the three locale pages; titles/journals/names stay in
+   their original language (lang="en"). #}
 {% from "icons.njk" import icon %}
 {%- set t = i18n[lang or "en"] -%}
 {%- set o = t.outputs -%}
+
+{# Flatten for the counts + year facet (Nunjucks set doesn't leak out of a for
+   loop, so accumulate by pushing onto arrays whose reference we mutate). #}
+{%- set _allWorks = [] -%}
+{%- set _members = [] -%}
+{%- set _years = [] -%}
+{%- for m in orcidWorks -%}
+  {%- if m.works.length -%}
+    {%- set _ = _members.push(m) -%}
+    {%- for w in m.works -%}
+      {%- set _ = _allWorks.push(w) -%}
+      {%- if w.year and w.year not in _years -%}{%- set _ = _years.push(w.year) -%}{%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endfor -%}
+
 <section class="section">
   <div class="container">
     <p class="eyebrow">{{ o.eyebrow }}</p>
     <h1>{{ o.membersHeading }}</h1>
     <p class="lead" style="max-width: 48rem;">{{ o.membersPageLead }}</p>
+    {%- if _allWorks.length %}
+    <p class="muted" style="font-size: var(--fs-sm);">{{ o.stats | replace("{works}", _allWorks.length) | replace("{members}", _members.length) }}</p>
 
-    {%- set _members = orcidWorks | selectattr("works") | list -%}
-    {%- if _members.length %}
-    <div class="member-pubs">
+    <div class="speaker-filters" role="search">
+      <div class="speaker-field speaker-field--search">
+        <label class="speaker-field-label" for="pub-find">{{ o.filterFind }}</label>
+        <input id="pub-find" type="search" data-pub-find placeholder="{{ o.filterPlaceholder }}" autocomplete="off">
+      </div>
+      <div class="speaker-field">
+        <label class="speaker-field-label" for="pub-year">{{ o.filterYear }}</label>
+        <select id="pub-year" data-pub-year>
+          <option value="">{{ o.filterAllYears }} ({{ _allWorks.length }})</option>
+          {%- for y in (_years | sort(true)) %}
+          <option value="{{ y }}">{{ y }} ({{ _allWorks | selectattr("year", "equalto", y) | list | length }})</option>
+          {%- endfor %}
+        </select>
+      </div>
+      <button type="button" class="btn btn-sm speaker-clear" data-pub-clear hidden>{{ o.filterClear }}</button>
+    </div>
+
+    {# Filter status, announced to assistive tech (role=status → polite live
+       region). Empty when nothing is filtered; publications-filter.js fills the
+       localised data-msg-* templates and marks the empty state. #}
+    <p class="speaker-status" role="status" aria-live="polite" data-pub-status hidden
+       data-msg-none="{{ o.filterNone }}"
+       data-msg-one="{{ o.filterOne }}"
+       data-msg-many="{{ o.filterMany }}"></p>
+
+    <div class="member-pubs" data-pub-list>
       {%- for m in orcidWorks %}
       {%- if m.works.length %}
-      <section class="member-pub-group">
-        <h2 class="member-pub-name"><a href="/board/{{ m.slug }}.html" lang="en">{{ m.name }}</a></h2>
+      {%- set _p = peopleIndex.people | selectattr("slug", "equalto", m.slug) | first %}
+      <section class="member-pub-group" data-pub-group data-member="{{ m.slug }}">
+        <div class="member-pub-head">
+          <span class="speaker-headshot" aria-hidden="true">
+            {%- if _p and _p.photo %}<img src="{{ _p.photo }}" alt="" loading="lazy" width="48" height="48">
+            {%- else %}<span class="speaker-headshot-ph">{{ _p.initials if _p else "" }}</span>{% endif %}
+          </span>
+          <h2 class="member-pub-name"><a href="/board/{{ m.slug }}.html" lang="en">{{ m.name }}</a></h2>
+        </div>
         <ul class="member-works" role="list">
           {%- for w in m.works %}
-          <li class="member-work">
+          <li class="member-work" data-pub-entry data-year="{{ w.year }}" data-search="{{ m.name }} {{ w.title }} {{ w.journal }}">
             <span class="member-work-title" lang="en">{% if w.doi %}<a href="{{ w.doi | extLink }}" target="_blank" rel="noopener">{{ w.title }}</a>{% else %}{{ w.title }}{% endif %}</span>
             <span class="member-work-meta muted" lang="en">{% if w.journal %}{{ w.journal }}{% endif %}{% if w.journal and w.year %} &middot; {% endif %}{% if w.year %}{{ w.year }}{% endif %}</span>
           </li>
@@ -40,3 +91,4 @@
     <p style="margin-top: var(--space-6);"><a href="{{ _initiative }}#outputs">{{ icon("arrow-left") }} {{ o.networkHeading }}</a></p>
   </div>
 </section>
+<script src="{{ '/assets/js/publications-filter.js' | bust }}" defer></script>
