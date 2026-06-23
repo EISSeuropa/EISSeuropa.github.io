@@ -1,0 +1,14 @@
+---
+layout: base.njk
+permalink: /publications.html
+title: Recent publications by our members
+description: "Recent publications by EISS board and community members, drawn automatically from their public ORCID records — distinct from the Anthology of papers presented at EISS conferences."
+navKey: ""
+lang: en
+alternates:
+  en: /publications.html
+  fr: /publications.fr.html
+  de: /publications.de.html
+---
+{%- set t = i18n[lang or "en"] -%}
+{% include "publications-body.njk" %}
