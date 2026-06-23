@@ -68,6 +68,31 @@
     ]
   },
   {
+    "name": "Dr Chiara Libiseller",
+    "slug": "dr-chiara-libiseller",
+    "orcid": "https://orcid.org/0000-0001-5775-9630",
+    "works": [
+      {
+        "title": "Anchoring Fashions in the Field of Strategic Studies",
+        "year": 2026,
+        "journal": null,
+        "doi": "https://doi.org/10.1093/9780198972389.003.0002"
+      },
+      {
+        "title": "Conclusion",
+        "year": 2026,
+        "journal": null,
+        "doi": "https://doi.org/10.1093/9780198972389.003.0008"
+      },
+      {
+        "title": "Data Collection",
+        "year": 2026,
+        "journal": null,
+        "doi": "https://doi.org/10.1093/9780198972389.005.0001"
+      }
+    ]
+  },
+  {
     "name": "Dr Eliza Gheorghe",
     "slug": "dr-eliza-gheorghe",
     "orcid": "https://orcid.org/0000-0003-0849-5397",
@@ -247,6 +272,106 @@
     ]
   },
   {
+    "name": "Dr Hugo Meijer",
+    "slug": "dr-hugo-meijer",
+    "orcid": "https://orcid.org/0000-0001-6745-9914",
+    "works": [
+      {
+        "title": "The evolutionary roots of war and peace",
+        "year": 2025,
+        "journal": "Journal of Strategic Studies",
+        "doi": "https://doi.org/10.1080/01402390.2024.2440397"
+      },
+      {
+        "title": "The Origins of War",
+        "year": 2024,
+        "journal": "Human Nature",
+        "doi": "https://doi.org/10.1007/s12110-024-09477-3"
+      },
+      {
+        "title": "Janus faced: The co‐evolution of war and peace in the human species",
+        "year": 2024,
+        "journal": "Evolutionary Anthropology: Issues, News, and Reviews",
+        "doi": "https://doi.org/10.1002/evan.22027"
+      }
+    ]
+  },
+  {
+    "name": "Dr John N.T. Helferich",
+    "slug": "dr-john-n-t-helferich",
+    "orcid": "https://orcid.org/0000-0002-9085-846X",
+    "works": [
+      {
+        "title": "Trapped in the grey zone: NATO-CSDP relations in a new era of European security governance",
+        "year": 2025,
+        "journal": "International Politics",
+        "doi": "https://doi.org/10.1057/s41311-024-00647-9"
+      },
+      {
+        "title": "Overcoming the Community Dilemma: Defence Integration in a Post-Heroic European Union",
+        "year": 2025,
+        "journal": null,
+        "doi": "https://doi.org/10.5287/ORA-GJXPMZY8W"
+      },
+      {
+        "title": "Pfadabhängigkeiten und Verfügbarkeitsheuristiken als Determinanten von Außenpolitik. Die US-Iranpolitik unter Donald Trump",
+        "year": 2023,
+        "journal": "Transatlantische Perspektiven unter Obama und Trump",
+        "doi": "https://doi.org/10.1007/978-3-658-41564-8_17"
+      }
+    ]
+  },
+  {
+    "name": "Dr Julia Carver",
+    "slug": "dr-julia-carver",
+    "orcid": "https://orcid.org/0000-0002-1397-7393",
+    "works": [
+      {
+        "title": "Cybersecurity capacities for the application of UN cyber norms",
+        "year": 2026,
+        "journal": "Journal of Cyber Policy",
+        "doi": "https://doi.org/10.1080/23738871.2026.2649932"
+      },
+      {
+        "title": "Developing digital “peripheries\" for strategic advantage: Capacity building assistance and strategic competition in Africa",
+        "year": 2025,
+        "journal": "Contemporary Security Policy",
+        "doi": "https://doi.org/10.1080/13523260.2024.2430021"
+      },
+      {
+        "title": "Private-public initiatives for cybersecurity: the case of Ukraine",
+        "year": 2024,
+        "journal": "Journal of Cyber Policy",
+        "doi": "https://doi.org/10.1080/23738871.2025.2451256"
+      }
+    ]
+  },
+  {
+    "name": "Dr Marie Robin",
+    "slug": "dr-marie-robin",
+    "orcid": "https://orcid.org/0000-0002-3195-9631",
+    "works": [
+      {
+        "title": "Are propagandists combatants? Analysing the ethical status of propagandists in warfare",
+        "year": 2024,
+        "journal": "Review of International Studies",
+        "doi": "https://doi.org/10.1017/S0260210524000044"
+      },
+      {
+        "title": "European anti-propaganda policies",
+        "year": 2023,
+        "journal": "Fondation Robert Schuman",
+        "doi": null
+      },
+      {
+        "title": "Targeting Ayman al-Zawahiri, a just elimination or just an elimination?",
+        "year": 2023,
+        "journal": "Le Rubicon",
+        "doi": null
+      }
+    ]
+  },
+  {
     "name": "Dr Moritz Weiss",
     "slug": "dr-moritz-weiss",
     "orcid": "https://orcid.org/0000-0001-9311-6480",
@@ -380,6 +505,16 @@
         "year": 2023,
         "journal": null,
         "doi": "https://doi.org/10.61880/MCFN7493"
+        "title": "Book Review of Master Peace. Lebanon’s violence and the politics of expertise, 2024, Philadelphia: University of Pennsylvania Press.",
+        "year": 2025,
+        "journal": null,
+        "doi": "https://doi.org/10.1093/ia/iiaf253"
+      },
+      {
+        "title": "Gender sidestreaming: why women remain scarce in international peace and security",
+        "year": 2025,
+        "journal": null,
+        "doi": "https://doi.org/10.4337/9781803928364.00018"
       }
     ]
   },
@@ -486,6 +621,12 @@
         "year": 2026,
         "journal": "Global Studies Quarterly",
         "doi": "https://doi.org/10.1093/isagsq/ksag005"
+      },
+      {
+        "title": "Terrorism",
+        "year": 2025,
+        "journal": null,
+        "doi": "https://doi.org/10.4337/9781803925189.00035"
       },
       {
         "title": "Un an après le coup d'État au Niger",
