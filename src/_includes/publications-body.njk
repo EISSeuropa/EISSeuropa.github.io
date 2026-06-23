@@ -1,0 +1,42 @@
+{# /publications page body (#718 / #756). The full "Recent publications by our
+   members" feed, grouped by member, drawn from orcidWorks.json (refreshed
+   weekly by sync-orcid from public ORCID records). /initiative shows one work
+   per member and links here for the rest. These are members' OWN external
+   works, kept separate from the Anthology of EISS-conference papers by design.
+   Shared by the three locale pages so the i18n drift checker stays clean;
+   titles, journals and names stay in their original language (lang="en"). #}
+{% from "icons.njk" import icon %}
+{%- set t = i18n[lang or "en"] -%}
+{%- set o = t.outputs -%}
+<section class="section">
+  <div class="container">
+    <p class="eyebrow">{{ o.eyebrow }}</p>
+    <h1>{{ o.membersHeading }}</h1>
+    <p class="lead" style="max-width: 48rem;">{{ o.membersPageLead }}</p>
+
+    {%- set _members = orcidWorks | selectattr("works") | list -%}
+    {%- if _members.length %}
+    <div class="member-pubs">
+      {%- for m in orcidWorks %}
+      {%- if m.works.length %}
+      <section class="member-pub-group">
+        <h2 class="member-pub-name"><a href="/board/{{ m.slug }}.html" lang="en">{{ m.name }}</a></h2>
+        <ul class="member-works" role="list">
+          {%- for w in m.works %}
+          <li class="member-work">
+            <span class="member-work-title" lang="en">{% if w.doi %}<a href="{{ w.doi | extLink }}" target="_blank" rel="noopener">{{ w.title }}</a>{% else %}{{ w.title }}{% endif %}</span>
+            <span class="member-work-meta muted" lang="en">{% if w.journal %}{{ w.journal }}{% endif %}{% if w.journal and w.year %} &middot; {% endif %}{% if w.year %}{{ w.year }}{% endif %}</span>
+          </li>
+          {%- endfor %}
+        </ul>
+      </section>
+      {%- endif %}
+      {%- endfor %}
+    </div>
+    <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--space-6); max-width: 46rem;">{{ o.sourceNote }}</p>
+    {%- endif %}
+
+    {%- set _initiative = "/initiative.html" if (lang or "en") == "en" else "/initiative." + lang + ".html" -%}
+    <p style="margin-top: var(--space-6);"><a href="{{ _initiative }}#outputs">{{ icon("arrow-left") }} {{ o.networkHeading }}</a></p>
+  </div>
+</section>

@@ -1,0 +1,15 @@
+---
+layout: base.njk
+permalink: /publications.de.html
+title: Neueste Veröffentlichungen unserer Mitglieder
+description: "Neueste Veröffentlichungen der Vorstands- und Community-Mitglieder der EISS, automatisch aus ihren öffentlichen ORCID-Datensätzen übernommen — getrennt von der Anthologie der auf EISS-Konferenzen vorgestellten Beiträge."
+navKey: ""
+lang: de
+status: beta
+alternates:
+  en: /publications.html
+  fr: /publications.fr.html
+  de: /publications.de.html
+---
+{%- set t = i18n[lang or "en"] -%}
+{% include "publications-body.njk" %}

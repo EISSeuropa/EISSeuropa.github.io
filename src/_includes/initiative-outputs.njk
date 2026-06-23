@@ -17,34 +17,32 @@
       <p><a href="{{ _spk }}">{{ t.navigator.initiativeLink }} {{ icon("arrow-right") }}</a></p>
     </article>
 
-    {# Aggregate "Recent publications by our members" (#718): members' own
-       works, flattened from orcidWorks.json (refreshed weekly by sync-orcid
-       from public ORCID records), newest first, deduplicated by DOI/title.
-       Distinct from the curated network outputs above. Sparse until more
-       members add an ORCID iD to the join form; grows automatically. Titles,
-       journals and names stay in their original language (lang="en"). #}
-    {%- set _seen = [] -%}
-    {%- set _works = [] -%}
+    {# One latest work per member (#718) as a teaser; the full grouped list is
+       on /publications. Each member's works come newest-first from the ORCID
+       sync, so works[0] is their most recent. Distinct from the curated network
+       outputs above, and from the Anthology of EISS-conference papers. Sparse
+       until more members add an ORCID iD; grows automatically. Titles, journals
+       and names stay in their original language (lang="en"). #}
+    {%- set _latest = [] -%}
     {%- for m in orcidWorks -%}
-      {%- for w in m.works -%}
-        {%- set _key = w.doi or w.title -%}
-        {%- if _key and _key not in _seen -%}
-          {%- set _ = _seen.push(_key) -%}
-          {%- set _ = _works.push({ author: m.name, slug: m.slug, title: w.title, year: w.year, journal: w.journal, doi: w.doi }) -%}
-        {%- endif -%}
-      {%- endfor -%}
+      {%- if m.works.length -%}
+        {%- set w = m.works[0] -%}
+        {%- set _ = _latest.push({ author: m.name, slug: m.slug, title: w.title, year: w.year, journal: w.journal, doi: w.doi }) -%}
+      {%- endif -%}
     {%- endfor -%}
-    {%- if _works.length %}
+    {%- if _latest.length %}
     <h3 id="member-publications" style="margin-top: var(--space-7);">{{ o.membersHeading }}</h3>
     <p class="muted" style="max-width: 46rem;">{{ o.membersIntro }}</p>
     <ul class="member-works" role="list">
-      {%- for w in (_works | sort(true, false, "year")) %}
+      {%- for w in (_latest | sort(true, false, "year")) %}
       <li class="member-work">
         <span class="member-work-title" lang="en">{% if w.doi %}<a href="{{ w.doi | extLink }}" target="_blank" rel="noopener">{{ w.title }}</a>{% else %}{{ w.title }}{% endif %}</span>
         <span class="member-work-meta muted" lang="en"><a href="/board/{{ w.slug }}.html">{{ w.author }}</a>{% if w.journal %} &middot; {{ w.journal }}{% endif %}{% if w.year %} &middot; {{ w.year }}{% endif %}</span>
       </li>
       {%- endfor %}
     </ul>
+    {%- set _pubs = "/publications.html" if (lang or "en") == "en" else "/publications." + lang + ".html" -%}
+    <p style="margin-top: var(--space-4);"><a href="{{ _pubs }}">{{ o.membersAll }} {{ icon("arrow-right") }}</a></p>
     <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--space-3); max-width: 46rem;">{{ o.sourceNote }}</p>
     {%- endif %}
   </div>
