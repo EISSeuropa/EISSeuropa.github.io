@@ -14,7 +14,8 @@
       "links": {
         "website": "https://www.hugomeijer.com/",
         "linkedin": "https://www.hugomeijer.com/",
-        "twitter": "https://x.com/Hg_Meijer"
+        "twitter": "https://x.com/Hg_Meijer",
+        "orcid": "https://orcid.org/0000-0001-6745-9914"
       },
       "workingGroups": "WG1"
     },
@@ -26,7 +27,10 @@
       "themes": "Multilateralism on the ground, Peacekeeping, Civil-military relations, Political sociology, Fieldwork.",
       "country": "France",
       "position": "Professor of Political Science",
-      "institution": "Sciences Po, Center for International Studies (CERI)"
+      "institution": "Sciences Po, Center for International Studies (CERI)",
+      "links": {
+        "orcid": "https://orcid.org/0000-0002-3474-4281"
+      }
     },
     {
       "name": "Dr Moritz Weiss",
@@ -54,7 +58,10 @@
       "themes": "Revenge in international relations, Strategic use of emotions, Evolution of conflictuality, Ethics of war.",
       "country": "Netherlands",
       "position": "Assistant Professor of War Studies",
-      "institution": "Leiden University"
+      "institution": "Leiden University",
+      "links": {
+        "orcid": "https://orcid.org/0000-0002-3195-9631"
+      }
     },
     {
       "name": "Prof. Nicolas Blarel",
@@ -64,7 +71,10 @@
       "themes": "Foreign Policy Analysis, Politics of migration governance, International politics of South Asia.",
       "country": "Netherlands",
       "position": "Associate Professor of International Relations and Director of Studies",
-      "institution": "Leiden University"
+      "institution": "Leiden University",
+      "links": {
+        "orcid": "https://orcid.org/0000-0002-9924-0578"
+      }
     },
     {
       "name": "Prof. Antonio Calcara",
@@ -74,7 +84,10 @@
       "themes": "European Security and Defence, Defence Industry, Political Economy.",
       "country": "Belgium",
       "position": "Professor",
-      "institution": "Vrije Universiteit Brussels"
+      "institution": "Vrije Universiteit Brussels",
+      "links": {
+        "orcid": "https://orcid.org/0000-0001-8636-6465"
+      }
     },
     {
       "name": "Dr Julia Carver",
@@ -84,7 +97,10 @@
       "themes": "Foreign policymaking, Strategic concepts, Emerging digital technologies.",
       "country": "Netherlands",
       "position": "Assistant Professor",
-      "institution": "Leiden University"
+      "institution": "Leiden University",
+      "links": {
+        "orcid": "https://orcid.org/0000-0002-1397-7393"
+      }
     },
     {
       "name": "Prof. Silvia D’Amato",
@@ -94,7 +110,10 @@
       "themes": "Terrorism, Political Violence and War, Peace and Justice.",
       "country": "United States",
       "position": "Associate Professor",
-      "institution": "James Madison University"
+      "institution": "James Madison University",
+      "links": {
+        "orcid": "https://orcid.org/0000-0001-8962-5987"
+      }
     },
     {
       "name": "Prof. Filip Ejdus",
@@ -104,7 +123,10 @@
       "themes": "Identity, memory, and emotions, International interventions, Civil-military relations, Security sector reform.",
       "country": "Serbia",
       "position": "Professor of Security Studies",
-      "institution": "Faculty of Political Science, University of Belgrade"
+      "institution": "Faculty of Political Science, University of Belgrade",
+      "links": {
+        "orcid": "https://orcid.org/0000-0001-7443-1661"
+      }
     },
     {
       "name": "Flavia Gasbarri",
@@ -113,7 +135,10 @@
       "country": "United Kingdom",
       "institution": "King's College London",
       "photoOverride": "/assets/images/gasbarri-4-307x462.jpg",
-      "formerMember": true
+      "formerMember": true,
+      "links": {
+        "orcid": "https://orcid.org/0000-0002-9370-7376"
+      }
     },
     {
       "name": "Dr Eliza Gheorghe",
@@ -155,7 +180,8 @@
       "bio": "John Helferich is a Lecturer in Politics at Hertford College and a researcher with the Oxford Global Security Programme. His research focuses on European security and transformations in international order. He holds a Doctor of Philosophy (DPhil) in International Relations from the University of Oxford and a Master’s degree in International Security (summa cum laude) from Sciences Po. His dissertation on EU defence integration won the PSA Best Dissertation Prize in International Relations. He chairs the Working Group on Transfer of Knowledge within the COST Action Networking European Security Knowledge and serves as a board member of the European Initiative for Security Studies (EISS).",
       "themes": "Foreign Policy Analysis, European Security, Political Psychology, Research Methods",
       "links": {
-        "website": "https://johnhelferich.com"
+        "website": "https://johnhelferich.com",
+        "orcid": "https://orcid.org/0000-0002-9085-846X"
       },
       "workingGroups": "WG1, WG2"
     },
@@ -167,7 +193,10 @@
       "themes": "Intervention decision-making, Nuclear security, U.S. and European Grand Strategy.",
       "country": "Germany",
       "position": "Professor of International Relations and Director of the Centre for International Security",
-      "institution": "Hertie School"
+      "institution": "Hertie School",
+      "links": {
+        "orcid": "https://orcid.org/0009-0009-8737-8447"
+      }
     },
     {
       "name": "Stephanie Hofmann",
@@ -225,7 +254,10 @@
       "themes": "Knowledge production on war, Changing character of war, Impact of technology on the theory and practice of war.",
       "country": "United Kingdom",
       "position": "Lecturer in Strategic Studies",
-      "institution": "King’s College London"
+      "institution": "King’s College London",
+      "links": {
+        "orcid": "https://orcid.org/0000-0001-5775-9630"
+      }
     },
     {
       "name": "Avinash Paliwal",
@@ -243,7 +275,10 @@
       "themes": "International relations of small states, Theories of international relations, International relations and the European Union.",
       "country": "Greece",
       "position": "Associate Professor of International Relations",
-      "institution": "University of Macedonia"
+      "institution": "University of Macedonia",
+      "links": {
+        "orcid": "https://orcid.org/0000-0002-4024-5964"
+      }
     },
     {
       "name": "Prof. Olivier Schmitt",
@@ -253,7 +288,10 @@
       "themes": "Military Operations, Alliances, Transformation.",
       "country": "Denmark",
       "position": "Head of Research",
-      "institution": "Institute for Military Operations, Royal Danish Defence College"
+      "institution": "Institute for Military Operations, Royal Danish Defence College",
+      "links": {
+        "orcid": "https://orcid.org/0000-0003-1366-6621"
+      }
     },
     {
       "name": "Dr Tim Sweijs",
@@ -263,7 +301,10 @@
       "themes": "Warfare (past, present, future), Strategy, Coercion, Deterrence, Emerging technologies.",
       "country": "Netherlands",
       "position": "Director of Research",
-      "institution": "The Hague Centre for Strategic Studies"
+      "institution": "The Hague Centre for Strategic Studies",
+      "links": {
+        "orcid": "https://orcid.org/0000-0001-8018-808X"
+      }
     },
     {
       "name": "Dr Sanne Verschuren",
@@ -273,7 +314,10 @@
       "themes": "Domestic determinants of security policy, Role of ideas, norms, and institutions in national security decision-making.",
       "country": "United States",
       "position": "Assistant Professor of International Security",
-      "institution": "Boston University"
+      "institution": "Boston University",
+      "links": {
+        "orcid": "https://orcid.org/0000-0001-7977-361X"
+      }
     },
     {
       "name": "Prof. Marco Wyss",
