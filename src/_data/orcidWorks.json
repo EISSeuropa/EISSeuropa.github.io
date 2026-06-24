@@ -5,6 +5,12 @@
     "orcid": "https://orcid.org/0000-0002-8642-2671",
     "works": [
       {
+        "title": "Cognitive Warfare: The Case for Disaggregation",
+        "year": 2026,
+        "journal": "Center for Security Studies - ETH Zurich",
+        "doi": "https://doi.org/10.3929/ETHZ-C-000801545"
+      },
+      {
         "title": "Interpreting India's Cyber Statecraft",
         "year": 2025,
         "journal": null,
@@ -27,12 +33,6 @@
         "year": 2021,
         "journal": null,
         "doi": null
-      },
-      {
-        "title": "Mapping the Known Unknowns of Cybersecurity Education",
-        "year": 2021,
-        "journal": "Journal of Political Science Education",
-        "doi": "https://doi.org/10.1080/15512169.2020.1729166"
       }
     ]
   },
