@@ -518,6 +518,11 @@ def build_from_row(row: dict, cols: dict, role_info: dict, prior: dict | None) -
     # The template prefers photoOverride > photo, and the sync never
     # touches this field — so a manual swap survives every future
     # Form-driven update.
+    # `formerMember` is preserved for the same reason: the Form has no field
+    # for it, so a board member moved to the "former" footer by hand-editing
+    # board.json would otherwise be reinstated as active on the next sync while
+    # their Form response still exists. boardSorted.js reads it to drop them
+    # from the active sections immediately (no roleEndDate / grace needed).
     if prior:
         if prior.get("slug"):
             person["slug"] = prior["slug"]
@@ -525,6 +530,8 @@ def build_from_row(row: dict, cols: dict, role_info: dict, prior: dict | None) -
             person["alt"] = prior["alt"]
         if prior.get("photoOverride"):
             person["photoOverride"] = prior["photoOverride"]
+        if prior.get("formerMember"):
+            person["formerMember"] = prior["formerMember"]
 
     return person
 
