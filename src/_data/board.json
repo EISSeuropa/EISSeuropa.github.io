@@ -225,7 +225,8 @@
       "themes": "Norms, Military Interventions, Responsibility to Protect, Human Rights in International Politics.",
       "country": "Czechia",
       "position": "Deputy Head & Assistant Professor",
-      "institution": "Department of International Relations and European Studies, Metropolitan University Prague"
+      "institution": "Department of International Relations and European Studies, Metropolitan University Prague",
+      "formerMember": true
     },
     {
       "name": "Dr Arthur Laudrain",
@@ -327,7 +328,8 @@
       "themes": "Cold War, African and European defence, Neutrality.",
       "country": "United Kingdom",
       "position": "Professor of International History and Security",
-      "institution": "Lancaster University"
+      "institution": "Lancaster University",
+      "formerMember": true
     }
   ],
   "support": [
