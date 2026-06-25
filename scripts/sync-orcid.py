@@ -4,8 +4,9 @@
 For each board / community member in src/_data/board.json who carries an
 ORCID iD (links.orcid), fetch their public works list and write the most
 recent few to src/_data/orcidWorks.json. That sidecar powers the
-"Recent publications by our members" section on /outputs (issue #718) and,
-later, the board-card treatment (#719).
+/publications page and the "Recent publications by our members" teaser on
+/initiative (issue #718), and each member's recent-works list on their
+board profile (#719).
 
 Design notes
 ------------
