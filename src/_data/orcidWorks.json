@@ -1,8 +1,271 @@
 [
   {
+    "name": "Prof. Antonio Calcara",
+    "slug": "prof-antonio-calcara",
+    "orcid": "https://orcid.org/0000-0001-8636-6465",
+    "surname": "Calcara",
+    "letter": "C",
+    "works": [
+      {
+        "title": "European cloud computing policy: failing in Europe to succeed nationally?",
+        "year": 2026,
+        "journal": "West European Politics",
+        "doi": "https://doi.org/10.1080/01402382.2025.2491962"
+      },
+      {
+        "title": "Autonomy or Indispensability? Identifying the EU’s Semiconductor Lodestar",
+        "year": 2025,
+        "journal": null,
+        "doi": null
+      },
+      {
+        "title": "L’Europa nell’era dell’IA rischia di sbagliare priorità",
+        "year": 2025,
+        "journal": null,
+        "doi": null
+      },
+      {
+        "title": "Unpacking the target state response to wedging and binding strategies: The case of 5G",
+        "year": 2025,
+        "journal": "Contemporary Security Policy",
+        "doi": "https://doi.org/10.1080/13523260.2025.2553654"
+      },
+      {
+        "title": "Shifting Grounds? On the Need to Rethink Europe’s AI Ambitions and Competitiveness",
+        "year": 2025,
+        "journal": null,
+        "doi": null
+      }
+    ]
+  },
+  {
+    "name": "Dr Julia Carver",
+    "slug": "dr-julia-carver",
+    "orcid": "https://orcid.org/0000-0002-1397-7393",
+    "surname": "Carver",
+    "letter": "C",
+    "works": [
+      {
+        "title": "Cybersecurity capacities for the application of UN cyber norms",
+        "year": 2026,
+        "journal": "Journal of Cyber Policy",
+        "doi": "https://doi.org/10.1080/23738871.2026.2649932"
+      },
+      {
+        "title": "Developing digital “peripheries\" for strategic advantage: Capacity building assistance and strategic competition in Africa",
+        "year": 2025,
+        "journal": "Contemporary Security Policy",
+        "doi": "https://doi.org/10.1080/13523260.2024.2430021"
+      },
+      {
+        "title": "Private-public initiatives for cybersecurity: the case of Ukraine",
+        "year": 2024,
+        "journal": "Journal of Cyber Policy",
+        "doi": "https://doi.org/10.1080/23738871.2025.2451256"
+      },
+      {
+        "title": "Trafficking Data: How China is Winning the Battle for Digital Sovereignty",
+        "year": 2024,
+        "journal": "The Journal of Development Studies",
+        "doi": "https://doi.org/10.1080/00220388.2024.2302675"
+      },
+      {
+        "title": "More bark than bite? European digital sovereignty discourse and changes to the European Union’s external relations policy",
+        "year": 2024,
+        "journal": "Journal of European Public Policy",
+        "doi": "https://doi.org/10.1080/13501763.2023.2295523"
+      }
+    ]
+  },
+  {
+    "name": "Prof. Silvia D’Amato",
+    "slug": "prof-silvia-d-amato",
+    "orcid": "https://orcid.org/0000-0001-8962-5987",
+    "surname": "D’Amato",
+    "letter": "D",
+    "works": [
+      {
+        "title": "Borderless Interventionism: The International Disaster Response in the Libyan Civil War",
+        "year": 2026,
+        "journal": "Global Studies Quarterly",
+        "doi": "https://doi.org/10.1093/isagsq/ksag005"
+      },
+      {
+        "title": "Un an après le coup d'État au Niger",
+        "year": 2024,
+        "journal": "The Conversation",
+        "doi": null
+      },
+      {
+        "title": "Transnational counterterrorism assemblages: the case of preventing and countering violent extremism in Mali",
+        "year": 2024,
+        "journal": "Territory, Politics, Governance",
+        "doi": "https://doi.org/10.1080/21622671.2023.2268651"
+      },
+      {
+        "title": "Strategic European counterterrorism? An empirical analysis",
+        "year": 2022,
+        "journal": "European Security",
+        "doi": "https://doi.org/10.1080/09662839.2022.2029847"
+      },
+      {
+        "title": "Reaching for allies? The dialectics and overlaps between international relations and area studies in the study of politics, security and conflicts",
+        "year": 2022,
+        "journal": "Italian Political Science Review/Rivista Italiana di Scienza Politica",
+        "doi": "https://doi.org/10.1017/ipo.2022.13"
+      }
+    ]
+  },
+  {
+    "name": "Prof. Filip Ejdus",
+    "slug": "prof-filip-ejdus",
+    "orcid": "https://orcid.org/0000-0001-7443-1661",
+    "surname": "Ejdus",
+    "letter": "E",
+    "works": [
+      {
+        "title": "Case study: The Serbian Regime Fight Against the \"Color Revolution\"",
+        "year": 2026,
+        "journal": "Zenodo",
+        "doi": "https://doi.org/10.5281/zenodo.18595481"
+      },
+      {
+        "title": "Building an international relations journal from scratch and from the margins: the case of Journal of Regional Security",
+        "year": 2025,
+        "journal": "European Political Science",
+        "doi": "https://doi.org/10.1057/s41304-025-00532-w"
+      },
+      {
+        "title": "Catharsis, rearticulation of desire and ontological insecurity: The case of Serbia’s attachment to Kosovo",
+        "year": 2025,
+        "journal": "Review of International Studies",
+        "doi": "https://doi.org/10.1017/S0260210525101058"
+      },
+      {
+        "title": "“In Defence of Europe”: pro-Ukraine activism and civil society mobilisation across Central and Southeast Europe",
+        "year": 2025,
+        "journal": "East European Politics",
+        "doi": "https://doi.org/10.1080/21599165.2025.2578779"
+      },
+      {
+        "title": "Selling Peace: How to Frame a Serbia/Kosovo Deal in a Referendum",
+        "year": 2024,
+        "journal": "Nationalities Papers",
+        "doi": "https://doi.org/10.1017/nps.2022.61"
+      }
+    ]
+  },
+  {
+    "name": "Flavia Gasbarri",
+    "slug": "flavia-gasbarri",
+    "orcid": "https://orcid.org/0000-0002-9370-7376",
+    "surname": "Gasbarri",
+    "letter": "G",
+    "works": [
+      {
+        "title": "US Foreign Policy and the End of the Cold War in Africa",
+        "year": 2020,
+        "journal": "Routledge",
+        "doi": null
+      },
+      {
+        "title": "Revisiting the Linkage: PDD 25, Genocide in Rwanda and the US Peacekeeping Experience of the 1990s",
+        "year": 2018,
+        "journal": "The International History Review",
+        "doi": "https://doi.org/10.1080/07075332.2017.1354311"
+      },
+      {
+        "title": "From the Sands of the Ogaden to Black Hawk Down: The End of the Cold War in the Horn of Africa",
+        "year": 2018,
+        "journal": "Cold War History",
+        "doi": "https://doi.org/10.1080/14682745.2017.1364729"
+      }
+    ]
+  },
+  {
+    "name": "Dr Eliza Gheorghe",
+    "slug": "dr-eliza-gheorghe",
+    "orcid": "https://orcid.org/0000-0003-0849-5397",
+    "surname": "Gheorghe",
+    "letter": "G",
+    "works": [
+      {
+        "title": "The spoilers from within: Allies and export controls",
+        "year": 2025,
+        "journal": "Journal of Strategic Studies",
+        "doi": "https://doi.org/10.1080/01402390.2025.2454706"
+      },
+      {
+        "title": "Nuclear topsy turvy: the security-economics nexus in Turkish-American relations",
+        "year": 2025,
+        "journal": "Middle Eastern Studies",
+        "doi": "https://doi.org/10.1080/00263206.2024.2410357"
+      },
+      {
+        "title": "Playing to the Audience: Responses to Violations of International Order",
+        "year": 2024,
+        "journal": "The Journal of Politics",
+        "doi": "https://doi.org/10.1086/726947"
+      },
+      {
+        "title": "Balance of Power Redux: Nuclear Alliances and the Logic of Extended Deterrence",
+        "year": 2022,
+        "journal": "The Chinese Journal of International Politics",
+        "doi": "https://doi.org/10.1093/cjip/poac003"
+      },
+      {
+        "title": "Proliferation and the Logic of the Nuclear Market",
+        "year": 2019,
+        "journal": "International Security",
+        "doi": "https://doi.org/10.1162/isec_a_00344"
+      }
+    ]
+  },
+  {
+    "name": "Dr John N.T. Helferich",
+    "slug": "dr-john-n-t-helferich",
+    "orcid": "https://orcid.org/0000-0002-9085-846X",
+    "surname": "Helferich",
+    "letter": "H",
+    "works": [
+      {
+        "title": "Trapped in the grey zone: NATO-CSDP relations in a new era of European security governance",
+        "year": 2025,
+        "journal": "International Politics",
+        "doi": "https://doi.org/10.1057/s41311-024-00647-9"
+      },
+      {
+        "title": "Overcoming the Community Dilemma: Defence Integration in a Post-Heroic European Union",
+        "year": 2025,
+        "journal": null,
+        "doi": "https://doi.org/10.5287/ORA-GJXPMZY8W"
+      },
+      {
+        "title": "The (false) promise of Germany’s Zeitenwende",
+        "year": 2023,
+        "journal": "European View",
+        "doi": "https://doi.org/10.1177/17816858231157556"
+      },
+      {
+        "title": "Zero Hour Yet To Come? EU Defence Integration After the Ukraine Invasion",
+        "year": 2022,
+        "journal": "Europe at a Crossroads of the Past and Future",
+        "doi": null
+      },
+      {
+        "title": "Conséquences du Brexit sur l’Otan et les Nations unies",
+        "year": 2022,
+        "journal": "Après-demain",
+        "doi": "https://doi.org/10.3917/apdem.062.0037"
+      }
+    ]
+  },
+  {
     "name": "Dr Arthur Laudrain",
     "slug": "arthur-laudrain",
     "orcid": "https://orcid.org/0000-0002-8642-2671",
+    "surname": "Laudrain",
+    "letter": "L",
     "works": [
       {
         "title": "Cognitive Warfare: The Case for Disaggregation",
@@ -40,6 +303,8 @@
     "name": "Dr Chiara Libiseller",
     "slug": "dr-chiara-libiseller",
     "orcid": "https://orcid.org/0000-0001-5775-9630",
+    "surname": "Libiseller",
+    "letter": "L",
     "works": [
       {
         "title": "Reconceptualizing War",
@@ -68,46 +333,11 @@
     ]
   },
   {
-    "name": "Dr Eliza Gheorghe",
-    "slug": "dr-eliza-gheorghe",
-    "orcid": "https://orcid.org/0000-0003-0849-5397",
-    "works": [
-      {
-        "title": "The spoilers from within: Allies and export controls",
-        "year": 2025,
-        "journal": "Journal of Strategic Studies",
-        "doi": "https://doi.org/10.1080/01402390.2025.2454706"
-      },
-      {
-        "title": "Nuclear topsy turvy: the security-economics nexus in Turkish-American relations",
-        "year": 2025,
-        "journal": "Middle Eastern Studies",
-        "doi": "https://doi.org/10.1080/00263206.2024.2410357"
-      },
-      {
-        "title": "Playing to the Audience: Responses to Violations of International Order",
-        "year": 2024,
-        "journal": "The Journal of Politics",
-        "doi": "https://doi.org/10.1086/726947"
-      },
-      {
-        "title": "Balance of Power Redux: Nuclear Alliances and the Logic of Extended Deterrence",
-        "year": 2022,
-        "journal": "The Chinese Journal of International Politics",
-        "doi": "https://doi.org/10.1093/cjip/poac003"
-      },
-      {
-        "title": "Proliferation and the Logic of the Nuclear Market",
-        "year": 2019,
-        "journal": "International Security",
-        "doi": "https://doi.org/10.1162/isec_a_00344"
-      }
-    ]
-  },
-  {
     "name": "Dr Hugo Meijer",
     "slug": "dr-hugo-meijer",
     "orcid": "https://orcid.org/0000-0001-6745-9914",
+    "surname": "Meijer",
+    "letter": "M",
     "works": [
       {
         "title": "The evolutionary roots of war and peace",
@@ -136,76 +366,23 @@
     ]
   },
   {
-    "name": "Dr John N.T. Helferich",
-    "slug": "dr-john-n-t-helferich",
-    "orcid": "https://orcid.org/0000-0002-9085-846X",
+    "name": "Prof. Revecca Pedi",
+    "slug": "prof-revecca-pedi",
+    "orcid": "https://orcid.org/0000-0002-4024-5964",
+    "surname": "Pedi",
+    "letter": "P",
     "works": [
       {
-        "title": "Trapped in the grey zone: NATO-CSDP relations in a new era of European security governance",
-        "year": 2025,
-        "journal": "International Politics",
-        "doi": "https://doi.org/10.1057/s41311-024-00647-9"
+        "title": "Debating the Yemen conflict: Toward a synthesis of debates and diverse perspectives on causes and actors",
+        "year": 2024,
+        "journal": "Digest of Middle East Studies",
+        "doi": "https://doi.org/10.1111/dome.12337"
       },
       {
-        "title": "Overcoming the Community Dilemma: Defence Integration in a Post-Heroic European Union",
-        "year": 2025,
-        "journal": null,
-        "doi": "https://doi.org/10.5287/ORA-GJXPMZY8W"
-      },
-      {
-        "title": "The (false) promise of Germany’s Zeitenwende",
+        "title": "In-betweenness and Migration Interdependence: Lessons from Georgia, Moldova, and Ukraine",
         "year": 2023,
-        "journal": "European View",
-        "doi": "https://doi.org/10.1177/17816858231157556"
-      },
-      {
-        "title": "Zero Hour Yet To Come? EU Defence Integration After the Ukraine Invasion",
-        "year": 2022,
-        "journal": "Europe at a Crossroads of the Past and Future",
-        "doi": null
-      },
-      {
-        "title": "Conséquences du Brexit sur l’Otan et les Nations unies",
-        "year": 2022,
-        "journal": "Après-demain",
-        "doi": "https://doi.org/10.3917/apdem.062.0037"
-      }
-    ]
-  },
-  {
-    "name": "Dr Julia Carver",
-    "slug": "dr-julia-carver",
-    "orcid": "https://orcid.org/0000-0002-1397-7393",
-    "works": [
-      {
-        "title": "Cybersecurity capacities for the application of UN cyber norms",
-        "year": 2026,
-        "journal": "Journal of Cyber Policy",
-        "doi": "https://doi.org/10.1080/23738871.2026.2649932"
-      },
-      {
-        "title": "Developing digital “peripheries\" for strategic advantage: Capacity building assistance and strategic competition in Africa",
-        "year": 2025,
-        "journal": "Contemporary Security Policy",
-        "doi": "https://doi.org/10.1080/13523260.2024.2430021"
-      },
-      {
-        "title": "Private-public initiatives for cybersecurity: the case of Ukraine",
-        "year": 2024,
-        "journal": "Journal of Cyber Policy",
-        "doi": "https://doi.org/10.1080/23738871.2025.2451256"
-      },
-      {
-        "title": "Trafficking Data: How China is Winning the Battle for Digital Sovereignty",
-        "year": 2024,
-        "journal": "The Journal of Development Studies",
-        "doi": "https://doi.org/10.1080/00220388.2024.2302675"
-      },
-      {
-        "title": "More bark than bite? European digital sovereignty discourse and changes to the European Union’s external relations policy",
-        "year": 2024,
-        "journal": "Journal of European Public Policy",
-        "doi": "https://doi.org/10.1080/13501763.2023.2295523"
+        "journal": "Studia Europejskie - Studies in European Affairs",
+        "doi": "https://doi.org/10.33067/SE.1.2023.6"
       }
     ]
   },
@@ -213,6 +390,8 @@
     "name": "Dr Marie Robin",
     "slug": "dr-marie-robin",
     "orcid": "https://orcid.org/0000-0002-3195-9631",
+    "surname": "Robin",
+    "letter": "R",
     "works": [
       {
         "title": "Are propagandists combatants? Analysing the ethical status of propagandists in warfare",
@@ -247,109 +426,11 @@
     ]
   },
   {
-    "name": "Dr Moritz Weiss",
-    "slug": "dr-moritz-weiss",
-    "orcid": "https://orcid.org/0000-0001-9311-6480",
-    "works": [
-      {
-        "title": "Bringing society (back) in? Defence transformations across Europe in the Zeitenwende",
-        "year": 2026,
-        "journal": "West European Politics",
-        "doi": "https://doi.org/10.1080/01402382.2026.2669961"
-      },
-      {
-        "title": "Beyond the European Army Illusion: A Prudent Strategy for the Real European Zeitenwende",
-        "year": 2026,
-        "journal": "JCMS: Journal of Common Market Studies",
-        "doi": "https://doi.org/10.1111/jcms.70029"
-      },
-      {
-        "title": "Who should be in charge of cyberspace? : the European Union, member states and the constitution of structural power",
-        "year": 2020,
-        "journal": null,
-        "doi": null
-      }
-    ]
-  },
-  {
-    "name": "Dr Sanne Verschuren",
-    "slug": "dr-sanne-verschuren",
-    "orcid": "https://orcid.org/0000-0001-7977-361X",
-    "works": [
-      {
-        "title": "Writing IR after COVID-19: Reassessing Political Possibilities, Good Faith, and Policy-Relevant Scholarship on Climate Change Mitigation and Nuclear Disarmament",
-        "year": 2023,
-        "journal": "Global Studies Quarterly",
-        "doi": "https://doi.org/10.1093/isagsq/ksad006"
-      }
-    ]
-  },
-  {
-    "name": "Flavia Gasbarri",
-    "slug": "flavia-gasbarri",
-    "orcid": "https://orcid.org/0000-0002-9370-7376",
-    "works": [
-      {
-        "title": "US Foreign Policy and the End of the Cold War in Africa",
-        "year": 2020,
-        "journal": "Routledge",
-        "doi": null
-      },
-      {
-        "title": "Revisiting the Linkage: PDD 25, Genocide in Rwanda and the US Peacekeeping Experience of the 1990s",
-        "year": 2018,
-        "journal": "The International History Review",
-        "doi": "https://doi.org/10.1080/07075332.2017.1354311"
-      },
-      {
-        "title": "From the Sands of the Ogaden to Black Hawk Down: The End of the Cold War in the Horn of Africa",
-        "year": 2018,
-        "journal": "Cold War History",
-        "doi": "https://doi.org/10.1080/14682745.2017.1364729"
-      }
-    ]
-  },
-  {
-    "name": "Prof. Antonio Calcara",
-    "slug": "prof-antonio-calcara",
-    "orcid": "https://orcid.org/0000-0001-8636-6465",
-    "works": [
-      {
-        "title": "European cloud computing policy: failing in Europe to succeed nationally?",
-        "year": 2026,
-        "journal": "West European Politics",
-        "doi": "https://doi.org/10.1080/01402382.2025.2491962"
-      },
-      {
-        "title": "Autonomy or Indispensability? Identifying the EU’s Semiconductor Lodestar",
-        "year": 2025,
-        "journal": null,
-        "doi": null
-      },
-      {
-        "title": "L’Europa nell’era dell’IA rischia di sbagliare priorità",
-        "year": 2025,
-        "journal": null,
-        "doi": null
-      },
-      {
-        "title": "Unpacking the target state response to wedging and binding strategies: The case of 5G",
-        "year": 2025,
-        "journal": "Contemporary Security Policy",
-        "doi": "https://doi.org/10.1080/13523260.2025.2553654"
-      },
-      {
-        "title": "Shifting Grounds? On the Need to Rethink Europe’s AI Ambitions and Competitiveness",
-        "year": 2025,
-        "journal": null,
-        "doi": null
-      }
-    ]
-  },
-  {
     "name": "Prof. Chiara Ruffa",
     "slug": "prof-chiara-ruffa",
     "orcid": "https://orcid.org/0000-0002-3474-4281",
+    "surname": "Ruffa",
+    "letter": "R",
     "works": [
       {
         "title": "Rituals without Rapprochement? Managing Hostility at the Tripartite Meetings in the United Nations Mission in Lebanon",
@@ -384,46 +465,11 @@
     ]
   },
   {
-    "name": "Prof. Filip Ejdus",
-    "slug": "prof-filip-ejdus",
-    "orcid": "https://orcid.org/0000-0001-7443-1661",
-    "works": [
-      {
-        "title": "Case study: The Serbian Regime Fight Against the \"Color Revolution\"",
-        "year": 2026,
-        "journal": "Zenodo",
-        "doi": "https://doi.org/10.5281/zenodo.18595481"
-      },
-      {
-        "title": "Building an international relations journal from scratch and from the margins: the case of Journal of Regional Security",
-        "year": 2025,
-        "journal": "European Political Science",
-        "doi": "https://doi.org/10.1057/s41304-025-00532-w"
-      },
-      {
-        "title": "Catharsis, rearticulation of desire and ontological insecurity: The case of Serbia’s attachment to Kosovo",
-        "year": 2025,
-        "journal": "Review of International Studies",
-        "doi": "https://doi.org/10.1017/S0260210525101058"
-      },
-      {
-        "title": "“In Defence of Europe”: pro-Ukraine activism and civil society mobilisation across Central and Southeast Europe",
-        "year": 2025,
-        "journal": "East European Politics",
-        "doi": "https://doi.org/10.1080/21599165.2025.2578779"
-      },
-      {
-        "title": "Selling Peace: How to Frame a Serbia/Kosovo Deal in a Referendum",
-        "year": 2024,
-        "journal": "Nationalities Papers",
-        "doi": "https://doi.org/10.1017/nps.2022.61"
-      }
-    ]
-  },
-  {
     "name": "Prof. Olivier Schmitt",
     "slug": "prof-olivier-schmitt",
     "orcid": "https://orcid.org/0000-0003-1366-6621",
+    "surname": "Schmitt",
+    "letter": "S",
     "works": [
       {
         "title": "'It's Confusing, Insecure, and Messy' -- Mapping the Gaps Between Stakeholders’ Cybersecurity Mental Models in the Danish Defence Sector",
@@ -458,58 +504,44 @@
     ]
   },
   {
-    "name": "Prof. Revecca Pedi",
-    "slug": "prof-revecca-pedi",
-    "orcid": "https://orcid.org/0000-0002-4024-5964",
+    "name": "Dr Sanne Verschuren",
+    "slug": "dr-sanne-verschuren",
+    "orcid": "https://orcid.org/0000-0001-7977-361X",
+    "surname": "Verschuren",
+    "letter": "V",
     "works": [
       {
-        "title": "Debating the Yemen conflict: Toward a synthesis of debates and diverse perspectives on causes and actors",
-        "year": 2024,
-        "journal": "Digest of Middle East Studies",
-        "doi": "https://doi.org/10.1111/dome.12337"
-      },
-      {
-        "title": "In-betweenness and Migration Interdependence: Lessons from Georgia, Moldova, and Ukraine",
+        "title": "Writing IR after COVID-19: Reassessing Political Possibilities, Good Faith, and Policy-Relevant Scholarship on Climate Change Mitigation and Nuclear Disarmament",
         "year": 2023,
-        "journal": "Studia Europejskie - Studies in European Affairs",
-        "doi": "https://doi.org/10.33067/SE.1.2023.6"
+        "journal": "Global Studies Quarterly",
+        "doi": "https://doi.org/10.1093/isagsq/ksad006"
       }
     ]
   },
   {
-    "name": "Prof. Silvia D’Amato",
-    "slug": "prof-silvia-d-amato",
-    "orcid": "https://orcid.org/0000-0001-8962-5987",
+    "name": "Dr Moritz Weiss",
+    "slug": "dr-moritz-weiss",
+    "orcid": "https://orcid.org/0000-0001-9311-6480",
+    "surname": "Weiss",
+    "letter": "W",
     "works": [
       {
-        "title": "Borderless Interventionism: The International Disaster Response in the Libyan Civil War",
+        "title": "Bringing society (back) in? Defence transformations across Europe in the Zeitenwende",
         "year": 2026,
-        "journal": "Global Studies Quarterly",
-        "doi": "https://doi.org/10.1093/isagsq/ksag005"
+        "journal": "West European Politics",
+        "doi": "https://doi.org/10.1080/01402382.2026.2669961"
       },
       {
-        "title": "Un an après le coup d'État au Niger",
-        "year": 2024,
-        "journal": "The Conversation",
+        "title": "Beyond the European Army Illusion: A Prudent Strategy for the Real European Zeitenwende",
+        "year": 2026,
+        "journal": "JCMS: Journal of Common Market Studies",
+        "doi": "https://doi.org/10.1111/jcms.70029"
+      },
+      {
+        "title": "Who should be in charge of cyberspace? : the European Union, member states and the constitution of structural power",
+        "year": 2020,
+        "journal": null,
         "doi": null
-      },
-      {
-        "title": "Transnational counterterrorism assemblages: the case of preventing and countering violent extremism in Mali",
-        "year": 2024,
-        "journal": "Territory, Politics, Governance",
-        "doi": "https://doi.org/10.1080/21622671.2023.2268651"
-      },
-      {
-        "title": "Strategic European counterterrorism? An empirical analysis",
-        "year": 2022,
-        "journal": "European Security",
-        "doi": "https://doi.org/10.1080/09662839.2022.2029847"
-      },
-      {
-        "title": "Reaching for allies? The dialectics and overlaps between international relations and area studies in the study of politics, security and conflicts",
-        "year": 2022,
-        "journal": "Italian Political Science Review/Rivista Italiana di Scienza Politica",
-        "doi": "https://doi.org/10.1017/ipo.2022.13"
       }
     ]
   }

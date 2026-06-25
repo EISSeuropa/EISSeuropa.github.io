@@ -32,9 +32,11 @@
 {%- set _allWorks = [] -%}
 {%- set _members = [] -%}
 {%- set _years = [] -%}
+{%- set _letters = [] -%}
 {%- for m in orcidWorks -%}
   {%- if m.works.length -%}
     {%- set _ = _members.push(m) -%}
+    {%- if m.letter and m.letter not in _letters -%}{%- set _ = _letters.push(m.letter) -%}{%- endif -%}
     {%- for w in m.works -%}
       {%- set _ = _allWorks.push(w) -%}
       {%- if w.year and w.year not in _years -%}{%- set _ = _years.push(w.year) -%}{%- endif -%}
@@ -76,13 +78,23 @@
        data-msg-one="{{ o.filterOne }}"
        data-msg-many="{{ o.filterMany }}"></p>
 
+    {# A–Z jump rail, same design as the Anthology by-person view. Members are
+       surname-sorted (sync-orcid), so the letters run in order. #}
+    <nav class="speaker-az" aria-label="{{ t.speakers.jumpToLetter }}">
+      {%- for L in _letters %}<a href="#ltr-{{ L }}">{{ L }}</a>{% endfor %}
+    </nav>
+
     <div class="member-pubs" data-pub-list>
       {%- for m in orcidWorks %}
       {%- if m.works.length %}
-      <section class="member-pub-group" data-pub-group data-member="{{ m.slug }}">
+      {%- set _prevL = orcidWorks[loop.index0 - 1].letter if not loop.first else "" %}
+      {%- if m.letter != _prevL %}
+      <h2 class="speaker-letter-h" id="ltr-{{ m.letter }}" data-pub-letter="{{ m.letter }}">{{ m.letter }}</h2>
+      {%- endif %}
+      <section class="member-pub-group" data-pub-group data-member="{{ m.slug }}" data-letter="{{ m.letter }}">
         <div class="member-pub-head">
           {{ headshot(m.slug) }}
-          <h2 class="member-pub-name"><a href="/board/{{ m.slug }}.html" lang="en">{{ m.name }}</a></h2>
+          <h3 class="member-pub-name"><a href="/board/{{ m.slug }}.html" lang="en">{{ m.name }}</a></h3>
         </div>
         <ul class="member-works" role="list">
           {%- for w in m.works %}
