@@ -33,7 +33,7 @@ const roadmap = {
   issuesUrl: `${REPO}/issues/new/choose`,
   milestonesUrl: `${REPO}/milestones`,
   releasesUrl: `${REPO}/releases`,
-  updated: { en: "9 June 2026", fr: "9 juin 2026", de: "9. Juni 2026" },
+  updated: { en: "25 June 2026", fr: "25 juin 2026", de: "25. Juni 2026" },
 
   quarters: [
     {
@@ -145,19 +145,19 @@ const roadmap = {
           },
         },
         {
-          status: "planned",
+          status: "shipped",
           version: "v2.26.0",
-          milestone: "v2.26.0",
-          when: { en: "Late June 2026 · v2.26.0", fr: "fin juin 2026 · v2.26.0", de: "Ende Juni 2026 · v2.26.0" },
+          notesUrl: notes("v2.26.0"),
+          when: { en: "25 June 2026 · v2.26.0", fr: "25 juin 2026 · v2.26.0", de: "25. Juni 2026 · v2.26.0" },
           title: {
-            en: "Post-conference: activation, content and feedback",
-            fr: "Après la conférence : activation, contenus et retours",
-            de: "Nach der Konferenz: Aktivierung, Inhalte und Feedback",
+            en: "Introducing the Anthology",
+            fr: "L’Anthologie, désormais publique",
+            de: "Die Anthologie wird vorgestellt",
           },
           desc: {
-            en: "The first release after ESSC 2026, folding in feedback from the conference: new public surfaces (a News surface, an Outputs / Publications page, a Working Groups page, a NetSec co-branding strip), the live programme grid on past conferences with calendar links, and the reliability and accessibility follow-ups carried over from the pre-conference push.",
-            fr: "La première version après l’ESSC 2026, intégrant les retours de la conférence : de nouvelles pages publiques (un espace Actualités, une page Publications, une page Groupes de travail, un bandeau de co-marquage NetSec), la grille du programme en direct sur les conférences passées avec liens calendrier, et les suites de fiabilité et d’accessibilité reportées depuis la préparation d’avant-conférence.",
-            de: "Die erste Version nach der ESSC 2026, die das Feedback der Konferenz aufnimmt: neue öffentliche Seiten (ein Aktuelles-Bereich, eine Publikationen-Seite, eine Arbeitsgruppen-Seite, ein NetSec-Co-Branding-Streifen), das Live-Programmraster auf vergangenen Konferenzen mit Kalenderlinks sowie die Zuverlässigkeits- und Barrierefreiheits-Folgearbeiten aus der Vorbereitung vor der Konferenz.",
+            en: "The European Security Studies Anthology becomes the site's flagship at /anthology, the single home for every paper and every scholar across nine editions, carried in the main navigation and linked out to the NetSec member directory. Members' own published research gains its own page at /publications, and a round of polish runs through the navigation, the share cards, the Initiative page and the board.",
+            fr: "L’Anthologie des études de sécurité européennes devient la vitrine du site à l’adresse /anthology, le point d’accès unique à chaque communication et à chaque chercheur des neuf éditions, intégrée à la navigation principale et reliée à l’annuaire des membres de NetSec. Les publications propres de nos membres disposent désormais de leur page à l’adresse /publications, et une série de finitions touche la navigation, les cartes de partage, la page de l’Initiative et le conseil.",
+            de: "Die Anthologie der Europäischen Sicherheitsstudien wird zum Aushängeschild der Website unter /anthology, dem zentralen Zugang zu jedem Beitrag und jeder Forschenden aus neun Ausgaben, in die Hauptnavigation aufgenommen und mit dem NetSec-Mitgliederverzeichnis verknüpft. Die eigenen Veröffentlichungen unserer Mitglieder erhalten nun eine eigene Seite unter /publications, und eine Reihe von Feinarbeiten betrifft die Navigation, die Sharing-Karten, die Initiative-Seite und den Vorstand.",
           },
         },
       ],
