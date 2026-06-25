@@ -50,7 +50,7 @@ other way round, so this is where a new release first appears.
 | --- | --- | --- | --- |
 | v2.24.0 | 30 May 2026 | **Shipped** | Live programme depth and a print overhaul |
 | v2.25.0 | 9 Jun 2026 | **Shipped** | Ready for Stockholm (pre-conference release) |
-| v2.26.0 | Late Jun 2026 | Planned | Post-conference: activation, content & feedback |
+| v2.26.0 | 25 Jun 2026 | **Shipped** | Introducing the Anthology |
 | v2.27.0 | Sep 2026 | Planned | Polish and ESSC 2027 prep |
 
 (`v2.24.1` was planned as a pre-ESSC patch but the work grew into a feature-rich minor, so it shipped as the **v2.25.0** *Ready for Stockholm* release instead; the `v2.24.1` milestone is closed as superseded.)
@@ -88,49 +88,21 @@ drops. Sequence: legal pages first (highest accuracy bar), then
 rest. Per [`docs/i18n.md`](i18n.md). Each reviewed page can ship in
 any patch.
 
-### v2.26.0 — Post-conference: activation, content and feedback · target late June 2026
+### v2.26.0 — Introducing the Anthology · shipped 25 June 2026
 
-The first release after ESSC 2026. It turns conference-week feedback
-into fixes and builds out the public-content surfaces (a news feed, an
-outputs list, the working groups). The polish and brand-card work that
-the old v2.25.0 plan held moved to v2.27.0, and the Indico-data and
-NetSec-coordination items moved to *Under watch*, so this release stays
-focused. (The Node-24 Actions pin the plan once tracked was resolved
-early by Dependabot, closing #76.) The full, current list
-lives on the
-[v2.26.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/9);
-the headline items:
-
-- **Speaker index across every edition** — a surname-ordered,
-  theme-filterable directory of everyone who has presented at an ESSC,
-  on the new `corpus.js` spine, with summary cards and a locale-aware
-  link-card signpost from the sitemap, the conference programmes and the
-  People page. In EN + FR + DE (interface hand-translated, names and
-  themes stay original). Built early (originally a v2.27.0 item) and
-  already in `[Unreleased]`, so it ships with this release.
-  [#635](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/635), done.
-- **Conference-week QA pass** — work the ESSC 2026 feedback checklist
-  on production and fix what it surfaces.
-  [#655](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/655), M.
-- **News / Latest on the homepage** — a surface for Action news and
-  cross-links to NetSec items relevant to EISS members.
-  [#96](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/96), M.
-- **Atom / RSS feed** — a machine-readable feed alongside the News
-  surface.
-  [#605](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/605), S.
-- **Issue-driven news publishing** — label an issue and have it
-  auto-PR a news post, so an update doesn't need a hand-built page.
-  [#634](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/634), M.
-- **Outputs / Publications page** — list the network's outputs (book
-  series, policy briefs, white papers, survey results, the European
-  Security Studies Prize) on a dedicated page.
-  [#97](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/97), M.
-- **Working Groups page** — render each group's objective and people.
-  The NetSec sister site ships its own, this mirrors it for EISS.
-  [#94](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/94), M.
-- **`/initiative` founding nuance** — reconcile the founding story,
-  the conference numbering and the deferred-2020 edition.
-  [#329](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/329), M.
+Shipped as [v2.26.0 — Introducing the Anthology](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.26.0)
+on 25 June 2026. The European Security Studies Anthology became the
+site's flagship at `/anthology`, the unified home for every paper and
+every scholar across nine editions, carried in the main navigation and
+linked out to the NetSec member directory. Members' own published
+research gained a dedicated `/publications` page, a `/prizes` page
+landed for the European Security Studies Prize, and a round of polish
+ran through the navigation, the share cards, the Initiative page and the
+board. The post-conference content surfaces that did not make this cut
+(the Working Groups page [#94](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/94),
+the RSS feed [#605](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/605),
+issue-driven news publishing [#634](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/634))
+moved on to later milestones. See [`CHANGELOG.md`](../CHANGELOG.md) for the full index of changes.
 
 ### v2.27.0 — Polish and ESSC 2027 prep · target September 2026
 
