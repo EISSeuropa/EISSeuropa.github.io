@@ -95,6 +95,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+_Nothing yet._
+
+## [2.26.0] · 2026-06-25 — Introducing The Anthology
+
 This release introduces the European Security Studies Anthology as the site's flagship: the single home for every paper and every speaker across nine editions of the annual conference. The two separate archive views become one browsable surface, carried in the main navigation and linked outward to the NetSec member directory. Members' own published research gains a page of its own, and a round of polish runs through the navigation, the share cards, the Initiative page and the board.
 
 ### Introducing the Anthology
@@ -1185,7 +1189,8 @@ Preview MCP screenshots of `/index.fr.html`, `/index.de.html`, `/initiative.de.h
 
 *Originally tagged as **v2.0.0**; renumbered to **v2.0.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
 
-[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.25.0...HEAD
+[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.26.0...HEAD
+[2.26.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.25.0...v2.26.0
 [2.25.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.24.0...v2.25.0
 [2.24.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.23.1...v2.24.0
 [2.23.1]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.23.0...v2.23.1
