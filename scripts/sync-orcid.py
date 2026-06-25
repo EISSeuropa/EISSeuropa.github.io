@@ -142,6 +142,20 @@ def parse_works(payload):
     return works[:MAX_WORKS]
 
 
+def _surname(name):
+    """Last whitespace token — the surname, for sorting + the A–Z rail on
+    /publications. Honorific prefixes (Dr, Prof.) don't affect the last token."""
+    toks = str(name or "").split()
+    return toks[-1] if toks else ""
+
+
+def _letter(surname):
+    """First letter of the surname, diacritic-folded + uppercased (the A–Z key)."""
+    s = unicodedata.normalize("NFKD", surname)
+    s = "".join(c for c in s if not unicodedata.combining(c))
+    return (s[:1] or "?").upper()
+
+
 def main():
     entries = []
     failures = 0
@@ -162,6 +176,8 @@ def main():
                 "name": m["name"],
                 "slug": m["slug"],
                 "orcid": f"https://orcid.org/{m['orcid_id']}",
+                "surname": _surname(m["name"]),
+                "letter": _letter(_surname(m["name"])),
                 "works": works,
             }
         )
@@ -171,7 +187,7 @@ def main():
         print("No member works fetched; leaving orcidWorks.json untouched.", file=sys.stderr)
         return 0 if failures == 0 else 1
 
-    entries.sort(key=lambda e: e["name"].lower())
+    entries.sort(key=lambda e: (e["surname"].lower(), e["name"].lower()))
     OUT.write_text(json.dumps(entries, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Wrote {OUT.relative_to(ROOT)}: {len(entries)} members, {failures} skipped.")
     return 0
