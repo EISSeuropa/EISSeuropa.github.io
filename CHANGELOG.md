@@ -95,7 +95,9 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
-_Nothing yet._
+### Added
+
+- **Three more EISS 2026 panel abstracts recovered, lifting 2026 coverage to 65 of 69 papers.** Benoît Pelopidas's "Nuclear Futures, Utopias, and the Case for a Renewed 'Strict Sufficiency'", Emma Rosengren's "Reconceptualizing nuclear deterrence and national identity: the cases of Finland and Sweden", and Matthew Evangelista's "Ritual deterrence, magic strategies, and nuclear war in Europe" now show their abstracts on the 2026 programme grid and their Anthology paper pages. They run as panel subcontributions, which the Indico export API does not expose, so they were hand-added to `src/_data/paperAbstractsManual.json` from the convener's file. A fourth paper on the panel was not available. Part of [#794](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/794). Progresses [#886](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/886).
 
 ## [2.26.0] · 2026-06-25 — Introducing The Anthology
 
