@@ -435,6 +435,14 @@ for (const { slug, slot, c } of iterContributions()) {
     // slot, whose papers the grid does not render, so they have no slot to
     // deep-link to — guard the Anthology deep link off this (#738).
     slotAnchored: slot.kind !== "break",
+    // Eligible for an abstract = a regular paper slot. Posters are modelled as
+    // break slots; keynotes, roundtables and plenaries carry a subtype. The
+    // coverage stat (#abstract-coverage) measures abstracts against this set, so
+    // sessions that never have an abstract don't drag the ratio down. No
+    // `workshop` subtype exists in the data yet; listed for when one appears.
+    abstractEligible:
+      slot.kind !== "break" &&
+      !["keynote", "roundtable", "plenary", "workshop"].includes(slot.subtype || ""),
     sessionTitle,
     themes: themesOf(sessionTitle),
   });

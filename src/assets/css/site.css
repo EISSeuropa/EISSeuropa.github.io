@@ -5081,6 +5081,112 @@ body.search-open { overflow: hidden; }
   font-size: var(--fs-xs);
 }
 
+/* Abstract coverage (#abstract-coverage): the (i) tooltip on the abstracts
+   stat, plus the per-year coverage bars inside a collapsed <details>. Owns the
+   `coverage-` prefix (§15). */
+.coverage-tip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  margin-left: 0.4rem;
+  color: var(--text-muted);
+  cursor: help;
+}
+.coverage-tip .icon {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+.coverage-tip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(2px);
+  width: max-content;
+  max-width: 16rem;
+  background: hsl(222 28% 10%);
+  color: hsl(0 0% 100%);
+  padding: 0.5rem 0.7rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  letter-spacing: normal;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-fast) var(--ease-out),
+              transform var(--motion-fast) var(--ease-out);
+  z-index: 100;
+}
+.coverage-tip:hover::after,
+.coverage-tip:focus-visible::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.coverage-detail {
+  margin-top: var(--space-5);
+  max-width: 32rem;
+}
+.coverage-detail > summary {
+  cursor: pointer;
+  width: max-content;
+  font-size: var(--fs-sm);
+  color: var(--accent);
+}
+.coverage-detail > summary:hover {
+  color: var(--accent-hover);
+}
+.coverage-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: var(--space-4);
+}
+.coverage-row {
+  display: grid;
+  grid-template-columns: 2.6rem 1fr auto 2.6rem;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: var(--fs-sm);
+}
+.coverage-year {
+  color: var(--text-muted);
+}
+.coverage-track {
+  height: 0.5rem;
+  background: var(--accent-soft);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.coverage-fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+}
+.coverage-count {
+  color: var(--text);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.coverage-of {
+  color: var(--text-muted);
+}
+.coverage-pct {
+  color: var(--text-muted);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.coverage-note {
+  margin-top: var(--space-4);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  line-height: var(--lh-snug);
+}
+
 /* Conference Navigator promo panel (navigator-promo.njk): a stats-backed
    entry point used on the homepage and at the head of the /past conferences
    page. Text on the left, the live corpus counts on the right; stacks on

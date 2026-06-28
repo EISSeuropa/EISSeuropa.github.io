@@ -476,6 +476,13 @@ const locales = {
       earlyAccessBadge: "Early access",
       earlyAccessBody: "The Anthology is an early-access preview. We are still filling it in, edition by edition, with abstracts, citation details and links to published versions, so some entries are still sparse. Found a gap or a mistake?",
       earlyAccessCta: "Let us know",
+      // Abstract-coverage stat + the per-year breakdown beneath the header.
+      // {a}/{b} are substituted in the template (abstracts on file / papers
+      // eligible for one).
+      statAbstracts: "abstracts on file",
+      coverageTip: "{a} of {b} eligible papers carry an abstract. Roundtables, keynotes, posters and workshop sessions are not counted.",
+      coverageSummary: "Abstract coverage by year",
+      coverageNote: "Coverage is highest for recent editions, which sync from Indico. Earlier years are being recovered edition by edition.",
     },
 
     speakers: {
@@ -953,6 +960,10 @@ const locales = {
       earlyAccessBadge: "Accès anticipé",
       earlyAccessBody: "L'Anthologie est une version préliminaire en accès anticipé. Nous la complétons édition après édition (résumés, références de citation et liens vers les versions publiées), si bien que certaines entrées restent succinctes. Les pages individuelles des communications sont consultables en anglais. Vous avez repéré un manque ou une erreur ?",
       earlyAccessCta: "Signalez-le-nous",
+      statAbstracts: "résumés disponibles",
+      coverageTip: "{a} des {b} communications éligibles comportent un résumé. Les tables rondes, les conférences plénières, les sessions de posters et les ateliers ne sont pas comptabilisés.",
+      coverageSummary: "Couverture des résumés par année",
+      coverageNote: "La couverture est la plus complète pour les éditions récentes, synchronisées depuis Indico. Les années antérieures sont récupérées édition après édition.",
     },
 
     speakers: {
@@ -1415,6 +1426,10 @@ const locales = {
       earlyAccessBadge: "Vorabversion",
       earlyAccessBody: "Die Anthologie ist eine Vorabversion mit frühem Zugang. Wir vervollständigen sie Konferenz für Konferenz mit Abstracts, Zitationsangaben und Links zu den veröffentlichten Fassungen, sodass einige Einträge noch lückenhaft sind. Die einzelnen Beitragsseiten sind auf Englisch verfügbar. Eine Lücke oder einen Fehler entdeckt?",
       earlyAccessCta: "Sagen Sie uns Bescheid",
+      statAbstracts: "Abstracts vorhanden",
+      coverageTip: "{a} von {b} infrage kommenden Beiträgen tragen ein Abstract. Podiumsdiskussionen, Keynotes, Postersessions und Workshops werden nicht mitgezählt.",
+      coverageSummary: "Abstract-Abdeckung nach Jahr",
+      coverageNote: "Die Abdeckung ist bei den jüngeren Ausgaben am vollständigsten, die aus Indico synchronisiert werden. Frühere Jahre werden Ausgabe für Ausgabe ergänzt.",
     },
 
     speakers: {

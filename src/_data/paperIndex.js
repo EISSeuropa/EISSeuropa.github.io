@@ -88,6 +88,10 @@ for (const p of corpus.papers || []) {
     const row = byKey.get(key);
     for (const name of authors) if (!row.authors.includes(name)) row.authors.push(name);
     for (const aff of affiliationsOf(p.authors)) if (!row.affiliations.includes(aff)) row.affiliations.push(aff);
+    // A paper counts as eligible if any of its merged instances sits in a
+    // paper slot, and as having an abstract if any instance carries one.
+    if (p.abstractEligible) row.abstractEligible = true;
+    if (p.abstract && !row.abstract) row.abstract = p.abstract;
     continue;
   }
   byKey.set(key, {
@@ -102,6 +106,7 @@ for (const p of corpus.papers || []) {
     conferenceUrl: p.conferenceUrl, // bare edition page (base for #panel-/#programme links)
     slug: p.slug, // stable per-paper slug from corpus (anchor + landing page)
     abstract: p.abstract || null,
+    abstractEligible: !!p.abstractEligible,
     abstractUrl: p.abstractUrl || null,
     publishedUrl: p.publishedUrl || null,
     doi: p.doi || null,
@@ -134,13 +139,28 @@ for (const p of papers) {
 
 // ── Facets ───────────────────────────────────────────────────────────────
 // Years: distinct, newest first, with a paper count each.
+// Each carries its paper count plus the abstract-coverage pair (abstracts on
+// file / papers eligible for one), which the Anthology renders as a per-year
+// progress bar (#abstract-coverage).
 const yearMap = new Map();
 for (const p of papers) {
   if (!p.year) continue;
-  yearMap.set(p.year, (yearMap.get(p.year) || 0) + 1);
+  const y = yearMap.get(p.year) || { count: 0, eligible: 0, withAbstract: 0 };
+  y.count += 1;
+  if (p.abstractEligible) {
+    y.eligible += 1;
+    if (p.abstract) y.withAbstract += 1;
+  }
+  yearMap.set(p.year, y);
 }
 const years = [...yearMap.entries()]
-  .map(([year, count]) => ({ year, count }))
+  .map(([year, y]) => ({
+    year,
+    count: y.count,
+    eligible: y.eligible,
+    withAbstract: y.withAbstract,
+    coverage: y.eligible ? Math.round((y.withAbstract / y.eligible) * 100) : 0,
+  }))
   .sort((a, b) => b.year - a.year);
 
 // Themes: each theme that tags at least one paper, in canonical order, with
@@ -162,5 +182,9 @@ module.exports = {
     firstYear: years.length ? Math.min(...years.map((y) => y.year)) : null,
     lastYear: years.length ? Math.max(...years.map((y) => y.year)) : null,
     taggedPapers: papers.filter((p) => p.theme.length).length,
+    // Abstract coverage across papers eligible for one (excludes roundtables,
+    // keynotes, posters and workshop sessions).
+    eligiblePaperCount: papers.filter((p) => p.abstractEligible).length,
+    abstractCount: papers.filter((p) => p.abstractEligible && p.abstract).length,
   },
 };
