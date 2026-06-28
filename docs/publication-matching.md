@@ -86,7 +86,7 @@ to surface it.
 A match you have checked and decided is **wrong** should be rejected, not
 just left alone: `--reject` records the (paper, doi) pair in
 `data/publication-rejects.json`, and the matcher skips it from then on, so
-a validated non-match does not keep coming back in the monthly queue.
+a validated non-match does not keep coming back in the weekly queue.
 Rejection is per pair, not per paper, so a genuinely better match for the
 same paper can still surface later. (A match you simply have not looked at
 yet just stays in the queue.)
@@ -140,13 +140,15 @@ is a prompt to look, not a verdict.
 ## The scheduled refresh
 
 [`.github/workflows/sync-publications.yml`](../.github/workflows/sync-publications.yml)
-runs monthly (and on manual dispatch): it runs the matcher, auto-confirms
-the high band (`--auto-high`), and opens a PR on `publications-sync/auto`
-that it **auto-merges**, so the high-confidence matches go live and the
-queue is refreshed. The PR body lists the auto-confirmed matches for
-information and the review band for a human decision. Auto-merging does
-**not** publish the review band — those stay queue data until confirmed by
-hand.
+runs weekly on Mondays (and on manual dispatch): it runs the matcher,
+auto-confirms the high band (`--auto-high`), and opens a PR on
+`publications-sync/auto` that it **auto-merges**, so the high-confidence
+matches go live and the queue is refreshed. The PR body lists the
+auto-confirmed matches for information and the review band for a human
+decision. When the run leaves any review-band candidates in the queue, the
+PR is tagged `needs-review` so the pending accept/reject call is visible at
+a glance. Auto-merging does **not** publish the review band — those stay
+queue data until confirmed by hand.
 
 ## Known limitation: renamed-title publications need a manual add
 

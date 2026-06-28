@@ -1,4 +1,4 @@
-# Monthly publication-match refresh.
+# Weekly publication-match refresh.
 #
 # What this does
 #   - scripts/match-publications.mjs --all proposes, for each ESSC paper
@@ -20,18 +20,21 @@
 #   - REVIEW band (0.50–0.79) → left in data/publication-candidates.json for
 #     a human to accept (`confirm-publication.mjs <slug>`) or reject
 #     (`--reject <slug>`). Auto-merging the PR does NOT publish these — they
-#     are just queue data until confirmed.
+#     are just queue data until confirmed. When the run leaves any in the
+#     queue, the PR is tagged `needs-review` so the approval call is visible.
 #
-# Monthly (not weekly): published versions appear slowly, and the full
-# OpenAlex sweep is a few hundred polite API calls. The matcher skips
-# papers that already have a confirmed link or a recorded reject, so both
-# the published set grows and the queue shrinks as matches are reviewed.
+# Weekly (Mondays): a paper's published version can appear any week and a
+# title can drift enough on the way to print to land in the review band
+# (the Berthelsen 2025 case), so a monthly sweep left new matches stranded
+# for weeks. The matcher skips papers that already have a confirmed link or
+# a recorded reject, so the OpenAlex sweep stays a few hundred polite API
+# calls and the queue shrinks as matches are reviewed.
 
 name: Sync publication matches
 
 on:
   schedule:
-    - cron: '0 7 1 * *' # 07:00 UTC on the 1st of each month
+    - cron: '0 7 * * 1' # 07:00 UTC every Monday
   workflow_dispatch:
   push:
     branches: [master]
@@ -68,14 +71,19 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Match, then auto-confirm the high-confidence tier
+        id: match
         run: |
           set -o pipefail
           node scripts/match-publications.mjs --all | tee /tmp/match.txt
           node scripts/confirm-publication.mjs --auto-high | tee /tmp/auto.txt
           node scripts/enrich-publications.mjs | tee /tmp/enrich.txt
           node scripts/publication-review-md.mjs > /tmp/review.md
+          # Count the review-band candidates left for a human call, so the PR
+          # step can tag `needs-review` when approval is necessary.
+          review_count=$(node -e 'const fs=require("node:fs");const p="data/publication-candidates.json";const a=fs.existsSync(p)?JSON.parse(fs.readFileSync(p,"utf8")):[];console.log(a.filter(x=>x.band==="review").length)')
+          echo "review_count=$review_count" >> "$GITHUB_OUTPUT"
           {
-            echo "Monthly publication-match sync. **Two parts:**"
+            echo "Weekly publication-match sync. **Two parts:**"
             echo ""
             echo "## ✅ Auto-confirmed — now live"
             echo ""
@@ -125,6 +133,18 @@ jobs:
           labels: |
             automated
             data-sync
+
+      # Tag the PR for a human call when the run left review-band candidates
+      # in the queue. The auto-confirmed matches still merge below; the label
+      # is the signal that an accept/reject decision is waiting (the band is
+      # listed under "👀 To review" in the PR body).
+      - name: Tag needs-review when approval is pending
+        if: steps.create-pr.outputs.pull-request-number && steps.match.outputs.review_count != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr edit "${{ steps.create-pr.outputs.pull-request-number }}" \
+            --repo "${{ github.repository }}" --add-label needs-review
 
       # Auto-merge: publishes the auto-confirmed (high-confidence) matches and
       # refreshes the queue. CodeQL + build + build-sanity + link-check still
