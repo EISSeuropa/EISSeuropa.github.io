@@ -163,6 +163,23 @@ const years = [...yearMap.entries()]
   }))
   .sort((a, b) => b.year - a.year);
 
+// Editions: distinct conferences keyed by their edition URL. The annual EISS /
+// ESSC editions share a year with nothing else, but the joint events (the 2019
+// EISS–NDC Joint Policy Workshop, the 2024 Sciences Po and War-in-Ukraine
+// conferences) sit inside a year alongside the annual conference, so the year
+// facet alone cannot isolate them. This facet gives each its own filter entry.
+const editionMap = new Map();
+for (const p of papers) {
+  const key = p.conferenceUrl;
+  if (!key) continue;
+  const e = editionMap.get(key) || { key, label: p.conferenceLabel, year: p.year, count: 0 };
+  e.count += 1;
+  editionMap.set(key, e);
+}
+const editions = [...editionMap.values()].sort(
+  (a, b) => (b.year || 0) - (a.year || 0) || String(a.label).localeCompare(String(b.label))
+);
+
 // Themes: each theme that tags at least one paper, in canonical order, with
 // its paper count.
 const themes = THEME_ORDER.map((name) => ({
@@ -175,6 +192,7 @@ const themes = THEME_ORDER.map((name) => ({
 module.exports = {
   papers,
   years,
+  editions,
   themes,
   stats: {
     paperCount: papers.length,

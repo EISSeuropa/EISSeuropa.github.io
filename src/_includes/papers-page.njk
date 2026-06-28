@@ -18,11 +18,11 @@
     <input id="paper-find" type="search" data-paper-find placeholder="{{ p18n.findPlaceholder }}" autocomplete="off">
   </div>
   <div class="speaker-field">
-    <label class="speaker-field-label" for="paper-year">{{ p18n.yearLabel }}</label>
-    <select id="paper-year" data-paper-year>
-      <option value="">{{ p18n.allYears }} ({{ paperIndex.stats.paperCount }})</option>
-      {%- for y in paperIndex.years %}
-      <option value="{{ y.year }}">{{ y.year }} ({{ y.count }})</option>
+    <label class="speaker-field-label" for="paper-event">{{ p18n.eventLabel }}</label>
+    <select id="paper-event" data-paper-event>
+      <option value="">{{ p18n.allEvents }} ({{ paperIndex.stats.paperCount }})</option>
+      {%- for ed in paperIndex.editions %}
+      <option value="{{ ed.key }}">{{ ed.label }}{% if ed.year %} {{ ed.year }}{% endif %} ({{ ed.count }})</option>
       {%- endfor %}
     </select>
   </div>
@@ -63,7 +63,7 @@
   {%- for p in paperIndex.papers %}
   <li class="paper-entry" data-paper-entry
       {% if p.slug %}id="paper-{{ p.slug }}"{% endif %}
-      data-year="{{ p.year }}"
+      data-event="{{ p.conferenceUrl }}"
       data-themes="{{ p.theme | join('|') }}"
       data-search="{{ p.title }} {{ p.authors | join(' ') }} {{ p.affiliations | join(' ') }}"
       {% if p.publishedUrl %}data-published="1"{% endif %}
