@@ -3,7 +3,10 @@
  *
  * Progressive enhancement: with JS off the page shows every paper (the
  * controls simply do nothing). With JS on:
- *   - a year <select> narrows to one edition's papers;
+ *   - a year <select> narrows to one year's papers;
+ *   - an event <select> narrows to one edition's papers (the annual EISS /
+ *     ESSC conference, or a joint event such as the 2019 EISS–NDC Joint
+ *     Policy Workshop that shares a year with the annual conference);
  *   - a theme <select> narrows to papers carrying that theme;
  *   - a "Published only" checkbox narrows to papers with a confirmed
  *     published version (data-published="1");
@@ -27,6 +30,7 @@
   "use strict";
   var list = document.querySelector("[data-paper-list]");
   var yearSel = document.querySelector("[data-paper-year]");
+  var eventSel = document.querySelector("[data-paper-event]");
   var themeSel = document.querySelector("[data-paper-theme]");
   if (!list || (!yearSel && !themeSel)) return;
 
@@ -47,6 +51,7 @@
 
   function apply() {
     var year = yearSel ? yearSel.value : "";
+    var event = eventSel ? eventSel.value : "";
     var theme = themeSel ? themeSel.value : "";
     var pub = pubCheck && pubCheck.checked;
     var prize = prizeCheck && prizeCheck.checked;
@@ -54,16 +59,17 @@
     var visible = 0;
     entries.forEach(function (el) {
       var okYear = !year || el.getAttribute("data-year") === year;
+      var okEvent = !event || el.getAttribute("data-event") === event;
       var okTheme = !theme || (el.getAttribute("data-themes") || "").split("|").indexOf(theme) !== -1;
       var okPub = !pub || el.getAttribute("data-published") === "1";
       var okPrize = !prize || el.getAttribute("data-prize") === "1";
       var okText = !q || norm(el.getAttribute("data-search")).indexOf(q) !== -1;
-      var show = okYear && okTheme && okPub && okPrize && okText;
+      var show = okYear && okEvent && okTheme && okPub && okPrize && okText;
       el.hidden = !show;
       if (show) visible++;
     });
 
-    var filtering = !!(year || theme || pub || prize || q);
+    var filtering = !!(year || event || theme || pub || prize || q);
     if (clearEl) clearEl.hidden = !filtering;
     if (statusEl) {
       // Give the "nothing matched" message presence (boxed, centred) so the
@@ -83,6 +89,9 @@
             : (d.msgMany || "{n} papers");
           var bits = [];
           if (year) bits.push(year);
+          if (event && eventSel) {
+            bits.push((eventSel.options[eventSel.selectedIndex].text || "").replace(/\s*\(\d+\)\s*$/, ""));
+          }
           if (theme) bits.push(theme);
           if (pub && pubCheck && pubCheck.dataset.label) bits.push(pubCheck.dataset.label);
           if (prize && prizeCheck && prizeCheck.dataset.label) bits.push(prizeCheck.dataset.label);
@@ -105,6 +114,8 @@
     var url = new URL(window.location.href);
     if (yearSel && yearSel.value) url.searchParams.set("year", yearSel.value);
     else url.searchParams.delete("year");
+    if (eventSel && eventSel.value) url.searchParams.set("event", eventSel.value);
+    else url.searchParams.delete("event");
     if (themeSel && themeSel.value) url.searchParams.set("theme", themeSel.value);
     else url.searchParams.delete("theme");
     if (pubCheck && pubCheck.checked) url.searchParams.set("published", "1");
@@ -115,6 +126,7 @@
   }
 
   if (yearSel) yearSel.addEventListener("change", function () { syncUrl(); apply(); });
+  if (eventSel) eventSel.addEventListener("change", function () { syncUrl(); apply(); });
   if (themeSel) themeSel.addEventListener("change", function () { syncUrl(); apply(); });
   if (pubCheck) pubCheck.addEventListener("change", function () { syncUrl(); apply(); });
   if (prizeCheck) prizeCheck.addEventListener("change", function () { syncUrl(); apply(); });
@@ -122,6 +134,7 @@
   if (clearEl) {
     clearEl.addEventListener("click", function () {
       if (yearSel) yearSel.value = "";
+      if (eventSel) eventSel.value = "";
       if (themeSel) themeSel.value = "";
       if (pubCheck) pubCheck.checked = false;
       if (prizeCheck) prizeCheck.checked = false;
@@ -139,6 +152,7 @@
     if (v && [].some.call(sel.options, function (o) { return o.value === v; })) sel.value = v;
   }
   restore("year", yearSel);
+  restore("event", eventSel);
   restore("theme", themeSel);
   if (pubCheck && new URL(window.location.href).searchParams.get("published") === "1") pubCheck.checked = true;
   if (prizeCheck && new URL(window.location.href).searchParams.get("prize") === "1") prizeCheck.checked = true;

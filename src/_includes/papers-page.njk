@@ -27,6 +27,15 @@
     </select>
   </div>
   <div class="speaker-field">
+    <label class="speaker-field-label" for="paper-event">{{ p18n.eventLabel }}</label>
+    <select id="paper-event" data-paper-event>
+      <option value="">{{ p18n.allEvents }} ({{ paperIndex.stats.paperCount }})</option>
+      {%- for ed in paperIndex.editions %}
+      <option value="{{ ed.key }}">{{ ed.label }}{% if ed.year %} {{ ed.year }}{% endif %} ({{ ed.count }})</option>
+      {%- endfor %}
+    </select>
+  </div>
+  <div class="speaker-field">
     <label class="speaker-field-label" for="paper-theme">{{ p18n.themeLabel }}</label>
     <select id="paper-theme" data-paper-theme>
       <option value="">{{ p18n.allThemes }} ({{ paperIndex.stats.paperCount }})</option>
@@ -64,6 +73,7 @@
   <li class="paper-entry" data-paper-entry
       {% if p.slug %}id="paper-{{ p.slug }}"{% endif %}
       data-year="{{ p.year }}"
+      data-event="{{ p.conferenceUrl }}"
       data-themes="{{ p.theme | join('|') }}"
       data-search="{{ p.title }} {{ p.authors | join(' ') }} {{ p.affiliations | join(' ') }}"
       {% if p.publishedUrl %}data-published="1"{% endif %}
