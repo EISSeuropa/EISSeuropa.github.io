@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Render the publication-match review band (data/publication-candidates.json)
- * as a readable Markdown table for the monthly sync PR body
+ * as a readable Markdown table for the weekly sync PR body
  * (sync-publications.yml). The high-confidence matches are auto-confirmed
  * before this runs, so the queue here is the review band — the part a human
  * actually decides. Prints to stdout.
@@ -18,7 +18,7 @@ const all = existsSync(QUEUE) ? JSON.parse(readFileSync(QUEUE, "utf8")) : [];
 const review = all.filter((x) => x.band === "review").sort((a, b) => b.titleScore - a.titleScore);
 
 if (!review.length) {
-  console.log("**Nothing to review this month** — no mid-confidence candidates in the queue.");
+  console.log("**Nothing to review this week** — no mid-confidence candidates in the queue.");
   process.exit(0);
 }
 
@@ -41,5 +41,5 @@ for (const x of review) {
   out.push(`| ${x.titleScore.toFixed(2)} | ${paper} | ${pub} | \`${x.slug}\` |`);
 }
 out.push("");
-out.push("_Anything you don't act on stays in the queue for next month._");
+out.push("_Anything you don't act on stays in the queue for next week._");
 console.log(out.join("\n"));
