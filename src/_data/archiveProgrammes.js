@@ -4449,7 +4449,7 @@ module.exports = {
                     ]
                   },
                   {
-                    "title": "USA, 'Military Politics on the Battlefield: Strategy and Effectiveness in War'",
+                    "title": "Military Politics on the Battlefield: Strategy and Effectiveness in War",
                     "authors": [
                       {
                         "name": "Carrie Lee",
