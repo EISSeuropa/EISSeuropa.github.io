@@ -8,9 +8,11 @@
    is server-rendered (so the toggle has content) but carries
    data-pagefind-ignore, so each URL contributes only its own view to the
    site search rather than indexing both lists twice. #}
+{% from "icons.njk" import icon %}
 {%- set t = i18n[lang or "en"] -%}
 {%- set n18n = t.navigator -%}
 {%- set defaultView = archiveDefaultView or "people" -%}
+{%- set coverageTip = n18n.coverageTip | replace("{a}", paperIndex.stats.abstractCount) | replace("{b}", paperIndex.stats.eligiblePaperCount) -%}
 
 <header class="page-header">
   <div class="container">
@@ -34,7 +36,29 @@
         <dt>{{ paperIndex.stats.paperCount }}</dt>
         <dd>{{ t.speakers.statPapers }}</dd>
       </div>
+      <div class="stat">
+        <dt>{{ paperIndex.stats.abstractCount }}<span class="coverage-tip" tabindex="0" data-tooltip="{{ coverageTip }}" title="{{ coverageTip }}" aria-label="{{ coverageTip }}">{{ icon("info") }}</span></dt>
+        <dd>{{ n18n.statAbstracts }}</dd>
+      </div>
     </dl>
+
+    {# Per-year abstract coverage, collapsed by default (native <details>, no
+       JS). Bars render from paperIndex.years; coverage = abstracts on file /
+       papers eligible for one. #}
+    <details class="coverage-detail">
+      <summary>{{ n18n.coverageSummary }}</summary>
+      <div class="coverage-bars">
+        {%- for y in paperIndex.years %}
+        <div class="coverage-row">
+          <span class="coverage-year">{{ y.year }}</span>
+          <span class="coverage-track"><span class="coverage-fill" style="width: {{ y.coverage }}%"></span></span>
+          <span class="coverage-count">{{ y.withAbstract }}<span class="coverage-of">/{{ y.eligible }}</span></span>
+          <span class="coverage-pct">{{ y.coverage }}%</span>
+        </div>
+        {%- endfor %}
+      </div>
+      <p class="coverage-note">{{ n18n.coverageNote }}</p>
+    </details>
   </div>
 </header>
 
