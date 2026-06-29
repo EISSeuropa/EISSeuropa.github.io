@@ -1,0 +1,155 @@
+{
+  "_documentation": "Synced abstracts confirmed to never attach to a paper, so they should not count against coverage. Keyed by <year>::<normalised-title>; value is { type, reason }. type 'panel-level' is a panel/session abstract whose title has drifted from the session title stored in archiveProgrammes.js / indico.json (an exact-match panel title is auto-detected by scripts/check-abstract-coverage.mjs and never needs an entry here). type 'absent' is a contribution that does not appear in the final programme at all (withdrawn, or never ran). Only add an entry once confirmed against the actual programme (the live archive page, or — for the live 2026 conference — indico.json itself), not merely 'no near match' in the coverage report, which also catches ordinary title drift and unconfirmed cases. See CLAUDE.md §5.",
+  "2023::intelligence success and failure in historical perspective lessons from elsewhere": {
+    "type": "panel-level",
+    "reason": "drifted title of the session 'Intelligence Success and Failure in Historical Perspective: Lessons from Beyond the Anglo-Sphere' (eiss-europa.com/2023.html)"
+  },
+  "2023::entrepreneurs in eu security policy a comparative study of european peace facility and european defence industry reinforcement through common procurement act": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2023 programme (eiss-europa.com/2023.html)"
+  },
+  "2023::from guarding the fulda gap to addressing a knowledge gap updating our understanding of nato security politics for a new strategic era": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2023 programme (eiss-europa.com/2023.html)"
+  },
+  "2024::actors interests and interdependencies in east asian security competition reassessing the role of regional actors and europe": {
+    "type": "panel-level",
+    "reason": "subtitle variant of the session 'Actors, Interests and Interdependencies in East Asian Security Competition' (eiss-europa.com/2024.html)"
+  },
+  "2024::military intervention through surrogates": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2024 programme (eiss-europa.com/2024.html)"
+  },
+  "2024::strengthening european intelligence cooperation a new interforce intelligence model to overcome trust deficits and cultural barriers": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2024 programme (eiss-europa.com/2024.html)"
+  },
+  "2024::taking advantage of government repression how terrorist groups adapt domestic terrorism target selection to recruit": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2024 programme (eiss-europa.com/2024.html)"
+  },
+  "2024::unveiling russian intelligence failures in the ukraine conflict a strategic culture perspective": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2024 programme (eiss-europa.com/2024.html)"
+  },
+  "2024::algorithmic aversion revisited cross national experimental evidence on public attitudes to killer robots": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2024 programme (eiss-europa.com/2024.html)"
+  },
+  "2024::the strategic adoption of artificial intelligence by ransomware groups": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2024 programme (eiss-europa.com/2024.html)"
+  },
+  "2024::wars of imaginaries sino american strategic competition and u s practices of loitering munition development": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2024 programme (eiss-europa.com/2024.html)"
+  },
+  "2024::will ships finally be safe in the black sea changes in the security and defense policies of the nato riparian states of the black sea since the start of the war in ukraine": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2024 programme (eiss-europa.com/2024.html)"
+  },
+  "2025::building integrity emergence of a norm of fighting corruption in defense sector": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2025 programme (eiss-europa.com/2025.html)"
+  },
+  "2025::central and eastern europe in eu defence cooperation an analysis of participation in permanent structured cooperation and european defence fund projects": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2025 programme (eiss-europa.com/2025.html)"
+  },
+  "2025::cyberpunk warfare expediencies understanding the renovation of old military technologies in 21st century conflict and the russo ukraine war": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2025 programme (eiss-europa.com/2025.html)"
+  },
+  "2025::emerging and disruptive technologies in turkish counter terrorism": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2025 programme (eiss-europa.com/2025.html)"
+  },
+  "2025::the defence diplomacy of greece and its contribution to the enhancement of national security a case study of the greek french strategic partnership for defence security cooperation": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2025 programme (eiss-europa.com/2025.html)"
+  },
+  "2025::the sources of a changing european security architecture the symbolising hedging offsetting and bridging functions of new security guarantees in europe": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2025 programme (eiss-europa.com/2025.html)"
+  },
+  "2025::turkish defense industry as a factor in its foreign policy strategy": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2025 programme (eiss-europa.com/2025.html)"
+  },
+  "2026::warfare the conduct of contemporary and future war": {
+    "type": "panel-level",
+    "reason": "drifted title (leading 'Warfare:') of the session 'The Conduct of Contemporary and Future War' (indico.json / eiss-europa.com/2026.html)"
+  },
+  "2026::a typology of small state agency southeast asian states in us china submarine cable competition": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2026 programme (indico.json)"
+  },
+  "2026::advisors or advocates the european defence industry as a political actor in eu policymaking": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2026 programme (indico.json)"
+  },
+  "2026::are tradwives making social reproduction great again how male supremacist women strengthen far right extremism militarism and war": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2026 programme (indico.json)"
+  },
+  "2026::climate change environmental crime and the governance of non traditional security in europe": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2026 programme (indico.json)"
+  },
+  "2026::cyber as security by other means implications for civil military relations": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2026 programme (indico.json)"
+  },
+  "2026::from failing forward to fearing forward european security and the politics of reassurance": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2026 programme (indico.json)"
+  },
+  "2026::limit to win it a typology of competitive arms control practices": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2026 programme (indico.json)"
+  },
+  "2026::nato military capabilities and the russian threat a difference in differences analysis of the 2014 russian invasion": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2026 programme (indico.json)"
+  },
+  "2026::nato s deterrence posture in the baltic region incentive loopholes and counter escalation": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2026 programme (indico.json)"
+  },
+  "2026::russian methods of reflexive control as scenarios of deception": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2026 programme (indico.json)"
+  },
+  "2026::soft power as deterrence non kinetic strategy and alignment politics in u s china competition": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2026 programme (indico.json)"
+  },
+  "2026::specialising for security assistance trainers operators and the partial diffusion of military practice": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2026 programme (indico.json)"
+  },
+  "2026::strategic alignment explaining iran s integration of offensive cyber operations into its military strategy": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2026 programme (indico.json)"
+  },
+  "2026::technology and labor share in defense technological advancement and capital labor substitution": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2026 programme (indico.json)"
+  },
+  "2026::the eu as a 21st century security state formed by geopolitics and bellicist threat": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2026 programme (indico.json)"
+  },
+  "2026::the geopolitics of security in the middle east exploring the nexus of state and non state actors in the formation of power blocs": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2026 programme (indico.json)"
+  },
+  "2026::the politics of visibility in belarusian digital resistance": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2026 programme (indico.json)"
+  },
+  "2026::winning the battles of innovation and production how russia and ukraine mobilize stem expertise and industry": {
+    "type": "absent",
+    "reason": "confirmed absent from the final 2026 programme (indico.json)"
+  }
+}
