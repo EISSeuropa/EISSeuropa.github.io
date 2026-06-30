@@ -13,9 +13,9 @@
       "themes": "war, peace, diplomacy, biocultural evolution, deep history",
       "links": {
         "website": "https://www.hugomeijer.com/",
+        "orcid": "https://orcid.org/0000-0001-6745-9914",
         "linkedin": "https://www.hugomeijer.com/",
-        "twitter": "https://x.com/Hg_Meijer",
-        "orcid": "https://orcid.org/0000-0001-6745-9914"
+        "twitter": "https://x.com/Hg_Meijer"
       },
       "workingGroups": "WG1"
     },
@@ -308,17 +308,21 @@
       }
     },
     {
-      "name": "Dr Sanne Verschuren",
+      "name": "Prof. Sanne Cornelia J. Verschuren",
       "role": "Board Member",
-      "photo": "/assets/images/picture-sanne-verschuren-sanne-verschuren-348x348.jpg",
       "alt": "Dr Sanne Verschuren",
-      "themes": "Domestic determinants of security policy, Role of ideas, norms, and institutions in national security decision-making.",
+      "photo": "/assets/images/picture-sanne-verschuren-sanne-verschuren-348x348.jpg",
+      "position": "Assistant Professor",
+      "institution": "Pardee School of Global Studies, Boston University",
       "country": "United States",
-      "position": "Assistant Professor of International Security",
-      "institution": "Boston University",
+      "bio": "Sanne Cornelia J. Verschuren is an Assistant Professor of International Security at the Pardee School of Global Studies of Boston University. She is also the founder and co-director of the Global Security Initiative. Her research interests lie at the intersection of international relations, the domestic determinants of security policy, and the role of ideas, norms, and institutions in national security decision-making. She focuses on how states fight war, examining why they construct novel weapon technologies, how they envision fielding such technologies, and why they choose to abandon certain technologies and practices.\n\nSanne is in the process of finishing her first book manuscript, titled \"Imagining the Unimaginable: War, Weapons, and Procurement Politics.\" This book is based on her dissertation, which received APSA’s 2022 Kenneth N. Waltz Outstanding Dissertation Award. In the book, she asks why and how states decide to develop different weapon capabilities within a similar military domain—with the development of missile defenses by the United States, the United Kingdom, France, and India as the central case studies. Other research by Sanne has appeared in Global Studies Quarterly, War on the Rocks, and Inkstick Media, among others.",
+      "themes": "military technology; strategic thinking; nuclear weapons",
       "links": {
+        "publicEmail": "sverschu@bu.edu",
+        "website": "https://www.sanneverschuren.com",
         "orcid": "https://orcid.org/0000-0001-7977-361X"
-      }
+      },
+      "workingGroups": "WG1"
     },
     {
       "name": "Prof. Marco Wyss",
