@@ -175,7 +175,10 @@ function nameSort(name) {
 
 // ── Conference labelling ────────────────────────────────────────────────
 const SPECIAL = {
-  "joint-2024": { label: "Joint Sciences Po–EISS Conference", year: 2024 },
+  // abstractsUnavailable: this joint event never collected Indico-style
+  // abstracts, so its papers shouldn't drag down the #abstract-coverage
+  // ratio for the calendar year it shares with the Annual Conference.
+  "joint-2024": { label: "Joint Sciences Po–EISS Conference", year: 2024, abstractsUnavailable: true },
   Ukraine: { label: "Joint Conference on the War in Ukraine", year: 2024 },
   JPW2019: { label: "Joint Policy Workshop", year: 2019 },
 };
@@ -441,6 +444,7 @@ for (const { slug, slot, c } of iterContributions()) {
     // sessions that never have an abstract don't drag the ratio down. No
     // `workshop` subtype exists in the data yet; listed for when one appears.
     abstractEligible:
+      !conf.abstractsUnavailable &&
       slot.kind !== "break" &&
       !["keynote", "roundtable", "plenary", "workshop"].includes(slot.subtype || ""),
     sessionTitle,
