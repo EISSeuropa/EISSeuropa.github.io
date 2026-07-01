@@ -831,6 +831,19 @@ def summarise_changes(old: dict, new: dict) -> tuple[bool, str, str]:
 
     # Annual conferences (the ESSC programme grids).
     oac, nac = old.get("annualConferences", {}), new.get("annualConferences", {})
+
+    # A year can disappear entirely (its event fell out of the from=today..to
+    # export window once the conference is over). The per-year loop below only
+    # walks nac.keys(), so a wholesale removal would otherwise never surface —
+    # this bit for three weeks after ESSC26 ended, see #1085.
+    dropped = sorted(oac.keys() - nac.keys())
+    if dropped:
+        counter += len(dropped)
+        sections.append(
+            "### Annual conferences no longer in the live window\n"
+            + "\n".join(f"- **− ESSC {year}** (event over, fell out of the export window)" for year in dropped)
+        )
+
     for year in sorted(nac.keys()):
         o, n = oac.get(year, {}), nac[year]
         sec: list[str] = []
