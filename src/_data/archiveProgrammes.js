@@ -9004,6 +9004,18 @@ module.exports = {
                         "isSpeaker": true
                       }
                     ]
+                  },
+                  {
+                    "title": "From National Incident Response to Zero Trust: Bridging Cyber Defence Policy and Technical Implementation in Wartime Ukraine",
+                    "authors": [
+                      {
+                        "name": "Dmytro Uzlov",
+                        "isSpeaker": true
+                      },
+                      {
+                        "name": "Vladyslav Vilihura"
+                      }
+                    ]
                   }
                 ]
               },
