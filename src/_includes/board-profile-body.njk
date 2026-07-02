@@ -12,13 +12,53 @@
 {%- set countryKey = (person.country or '') | lower | trim -%}
 {%- set iso = countryFlags.byName[countryKey] -%}
 {%- set backHref = "/board.html" if (lang or "en") == "en" else "/board." + lang + ".html" -%}
+{%- set photoSrc = person.photoOverride or person.photo -%}
+
+{# Person JSON-LD (#756 phase 3, closes the umbrella issue). String values
+   are `dump`ed so quotes/diacritics in names, roles, or bios can't break
+   the JSON, matching the ScholarlyArticle block in paper-page-body.njk.
+   Every property is populated from board.json fields that actually exist
+   for this person; absent fields are omitted rather than emitted empty.
+   `sameAs` only lists links that identify the person (not a bare mailto),
+   run through the same `extLink` normaliser the visible link icons use so
+   a scheme-less value in board.json can't produce a malformed URL.
+   `memberOf` mirrors the Organization block in base.njk so the two blocks
+   describe the same entity; search engines dedupe on name + url. #}
+{%- set profileUrl = site.url + "/board/" + person.slug + ".html" -%}
+{%- set sameAs = [] -%}
+{%- if person.links %}
+  {%- for key in ["orcid", "website", "linkedin", "twitter", "bluesky", "mastodon"] %}
+    {%- set _href = person.links[key] | extLink -%}
+    {%- if person.links[key] and _href not in sameAs %}{%- set sameAs = (sameAs.push(_href), sameAs) -%}{%- endif %}
+  {%- endfor %}
+{%- endif %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": {{ person.name | dump | safe }},
+  "jobTitle": {{ ((person.isFormer and "Former " or "") + person.role) | dump | safe }},
+  {%- if person.institution %}
+  "affiliation": { "@type": "Organization", "name": {{ person.institution | dump | safe }} },
+  {%- elif person.affiliation %}
+  "affiliation": { "@type": "Organization", "name": {{ person.affiliation | dump | safe }} },
+  {%- endif %}
+  {%- if photoSrc %}
+  "image": {{ (site.url + photoSrc) | dump | safe }},
+  {%- endif %}
+  {%- if sameAs.length %}
+  "sameAs": {{ sameAs | dump | safe }},
+  {%- endif %}
+  "memberOf": { "@type": "Organization", "name": {{ site.fullName | dump | safe }}, "url": {{ (site.url + "/") | dump | safe }} },
+  "url": {{ profileUrl | dump | safe }}
+}
+</script>
 
 <article class="section">
   <div class="container profile-page">
     <p class="profile-back"><a href="{{ backHref }}">&larr; {{ bp.backToPeople }}</a></p>
 
     <header class="profile-head">
-      {%- set photoSrc = person.photoOverride or person.photo -%}
       {%- if photoSrc %}
       <img class="profile-photo" src="{{ photoSrc }}" alt="{{ person.alt or person.name }}" width="140" height="175" loading="lazy">
       {%- else %}
