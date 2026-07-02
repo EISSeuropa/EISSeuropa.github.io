@@ -24,9 +24,20 @@
  *      asserts the stored data is already clean so a hand-edit can't
  *      lean silently on the render-time backstop.
  *
+ *   4. Classes referenced in built markup with no matching selector in
+ *      site.css (#241 / §14: the search modal and press kit both shipped
+ *      with complete markup and zero styles, twice).
+ *
+ *   5. Cross-block class collisions in site.css (#241): a class styled as
+ *      the selector subject in two different component sections, using
+ *      the file's `/* ---------- name ---------- *\/` section headers for
+ *      attribution. This is the failure mode that broke the live /2026
+ *      programme grid in production when the /2021 archive block reused
+ *      `.programme-slot` (#231 -> #239). See checkCssCollisions() below.
+ *
  * Exit 0 when clean, 1 (with a report) on any finding. Run after the
- * build so _site/ exists; the data-key + board-link checks work without
- * a build.
+ * build so _site/ exists; the data-key + board-link + CSS checks work
+ * without a build.
  *
  * Usage: node scripts/check-build-sanity.mjs
  */
@@ -216,7 +227,191 @@ function checkUndefinedClasses() {
   }
 }
 
-// ── 5. People hovercard index present, non-empty, and resolvable ────────
+// ── 5. Cross-block CSS class collisions in site.css (#241) ──────────────
+// site.css is one ~7000-line global stylesheet with no scoping, so two
+// unrelated components can silently fight over the same class name — the
+// last selector in the file wins the cascade. This shipped once: PR #231's
+// /2021 archive block redefined `.programme-slot`/`.programme-day`, the
+// names the live /2026 programme grid already owned, and broke the live
+// grid in production (fixed in #239). CLAUDE.md §15 is the convention (one
+// class prefix per component); this is the enforcement half.
+//
+// site.css is already organised into ~55 component sections delimited by
+// `/* ---------- name ---------- */` (and a few `/* ==== */` banner)
+// comments, so this reuses that structure for attribution rather than
+// requiring new metadata: a class is a collision only when it is the
+// *subject* (rightmost compound) of a selector in two or more DIFFERENT
+// sections. A naive "same class defined twice anywhere" detector flags
+// ~105 classes on this stylesheet, almost all legitimate dark-mode /
+// responsive / print / variant repeats within one component's own section.
+function checkCssCollisions() {
+  const cssFile = "src/assets/css/site.css";
+  if (!existsSync(cssFile)) return;
+  const raw = readFileSync(cssFile, "utf8");
+
+  // Section headers: `/* ---------- name ---------- */`, `/* ==== ... ==== */`,
+  // or `/* ──── ... */` (box-drawing, used for sub-sections within a larger
+  // umbrella section, e.g. "People hovercards"), possibly multi-line. The
+  // first line (minus comment markers and rule characters) is the section
+  // name used for attribution.
+  const headerRe = /\/\*\s*[-=─]{3,}[\s\S]*?\*\//g;
+  const sections = []; // { name, headerEnd }
+  for (const m of raw.matchAll(headerRe)) {
+    const lines = m[0].split("\n");
+    let name = lines[0].replace(/^\/\*+[-=─\s]*/, "").replace(/[-=─\s]+\*?\/?$/, "").trim();
+    // The box-drawing (───) style puts the rule on its own line, with the
+    // section name starting on the next line — fall back to it.
+    if (!name && lines[1]) name = lines[1].replace(/^\s*/, "").split(/[.(]/)[0].trim();
+    if (!name) continue; // a bare `/* ---- */` rule (design-token sub-divider), not a section
+    sections.push({ name, headerEnd: m.index + m[0].length });
+  }
+  const sectionOf = (idx) => {
+    let name = "(preamble)";
+    for (const s of sections) {
+      if (s.headerEnd <= idx) name = s.name;
+      else break;
+    }
+    return name;
+  };
+
+  // Override-sweep sections deliberately restyle other components' classes
+  // wholesale and are never the "owner" of a class for collision purposes.
+  // Identified empirically by reading every candidate this check flagged.
+  const sweepSections = new Set([
+    "print stylesheet", // forces light theme + strips chrome across every component for paper
+    "Mobile tap-target + layout floors", // lifts touch targets across every component at <=480px
+    "reset / base", // global element reset + cross-cutting a11y focus ring (a:focus-visible, button:focus-visible, .btn:focus-visible together)
+    "scroll-driven hero + header treatments", // animation-only: adds a scroll-linked animation to .hero-bg/.site-header/.nav, no property collides with their base definitions
+    "/board — mobile compact card layout", // documented <=36rem responsive collapse of the shared person-card component (see its own header comment)
+    "/board — EISS community alumni", // documented alumni-register variant of the shared person-card component (see its own header comment)
+  ]);
+
+  // Residual legitimate cross-section reuse on the current stylesheet.
+  // Each entry needs a one-line reason; investigate before adding one.
+  const knownException = new Set([
+    "btn:structured grids (programmes, who-are-you)", // `.btn.stretched-link:active` — a compound state variant on the shared .btn, not a redefinition
+    // The four below predate the CLAUDE.md §15 convention (v2.14.2) and sit
+    // bare in a section they don't belong to, but every property is
+    // additive (no conflicting property with the owning section) —
+    // confirmed by reading both definitions side by side. #241 follow-up:
+    // relocating them into their owning section is a separate, purely
+    // cosmetic diff, tracked rather than folded into this lint.
+    "programme-row:Speaker index (/speakers)", // 720px collapse of the shared live-programme-grid row, landed under Speaker index
+    "programme-when-time:Speaker index (/speakers)",
+    "programme-contrib:Speaker index (/speakers)",
+    "programme-contrib-when:Speaker index (/speakers)",
+    "photo-gallery:Public roadmap", // `@media print { display: none }` for the shared photo-gallery component, landed just past the print stylesheet's own section boundary
+    "people-grid:Board card footer + the \"View profile\" link", // `align-items: stretch` on the shared person-card grid, additive
+    "person-themes:Board card footer + the \"View profile\" link", // line-clamp on the shared person-card themes line, additive
+    // .member-pubs / .member-pub-name: the "Speaker index" definition (line
+    // 4104) is DEAD CSS — none of its sibling selectors (.member-pub,
+    // .member-pub-title, .member-pub-works, .member-pub-meta) appear in any
+    // .njk template; the live /publications markup (publications-body.njk)
+    // only ever uses the first definition's classes (.member-pub-head,
+    // .member-pub-group). Allowlisted rather than deleted here to keep this
+    // diff to the lint; flagged to the maintainer for cleanup.
+    "member-pubs:Speaker index (/speakers)",
+    "member-pub-name:Speaker index (/speakers)",
+  ]);
+
+  // Blank out comments (preserving offsets/line numbers) so brace-depth
+  // tracking and selector text never see comment content.
+  const src = raw.replace(/\/\*[\s\S]*?\*\//g, (m) => " ".repeat(m.length));
+  const lineOf = (idx) => raw.slice(0, idx).split("\n").length;
+
+  const splitTopLevel = (str, sep) => {
+    const out = [];
+    let depth = 0, cur = "";
+    for (const ch of str) {
+      if (ch === "(" || ch === "[") depth++;
+      else if (ch === ")" || ch === "]") depth--;
+      if (ch === sep && depth === 0) { out.push(cur); cur = ""; }
+      else cur += ch;
+    }
+    out.push(cur);
+    return out;
+  };
+  // The subject of a selector is its rightmost compound (after the last
+  // combinator outside parens) — the element/class actually being styled,
+  // as opposed to an ancestor scoping it (`.foo .bar` styles `.bar`).
+  // Also reports whether an ancestor combinator was present: `.foo .bar`
+  // (scoped == true) is a legitimate contextual extension of `.bar` from
+  // wherever `.foo` lives — CLAUDE.md §15's "reuse another component's base
+  // class only when you genuinely mean to extend it" — not a competing
+  // definition. Only an UNSCOPED rule (bare `.bar { }`, or a same-element
+  // compound like `.bar.baz { }`) makes a real ownership claim; that's what
+  // the #231 regression looked like (`.programme-slot { color: red }`
+  // landing bare in the wrong section).
+  const rightmostCompound = (sel) => {
+    let depth = 0, splitAt = -1;
+    for (let i = sel.length - 1; i >= 0; i--) {
+      const ch = sel[i];
+      if (ch === ")") depth++;
+      else if (ch === "(") depth--;
+      if (depth === 0 && /[\s>+~]/.test(ch)) { splitAt = i; break; }
+    }
+    return { compound: splitAt === -1 ? sel : sel.slice(splitAt + 1), scoped: splitAt !== -1 };
+  };
+
+  // owner: class -> Map(sectionName -> first line number)
+  const owners = new Map();
+  let i = 0, selectorStart = 0;
+  const atRuleStack = [];
+  while (i < src.length) {
+    const ch = src[i];
+    if (ch === "{") {
+      const sel = src.slice(selectorStart, i).trim();
+      // Attribute by where the selector TEXT starts, not selectorStart
+      // (which includes trailing whitespace/blanked comments from the
+      // previous rule) — a comment sitting right before a rule would
+      // otherwise misattribute that rule to the section above the comment.
+      const selOffset = src.slice(selectorStart, i).search(/\S/);
+      const selIdx = selOffset === -1 ? selectorStart : selectorStart + selOffset;
+      if (sel.startsWith("@")) {
+        atRuleStack.push(sel.match(/^@([a-zA-Z-]+)/)?.[1] ?? "");
+      } else {
+        atRuleStack.push(null);
+        const inSkipBody = atRuleStack.slice(0, -1).some((a) => a === "keyframes" || a === "-webkit-keyframes" || a === "font-face");
+        if (!inSkipBody && sel) {
+          const section = sectionOf(selIdx);
+          for (const part of splitTopLevel(sel, ",")) {
+            const { compound, scoped } = rightmostCompound(part.trim());
+            if (scoped) continue; // contextual extension, not an ownership claim
+            for (const m of compound.matchAll(/\.([A-Za-z0-9_-]+)/g)) {
+              const cls = m[1];
+              if (!owners.has(cls)) owners.set(cls, new Map());
+              const bySection = owners.get(cls);
+              if (!bySection.has(section)) bySection.set(section, lineOf(selIdx));
+            }
+          }
+        }
+      }
+      i++;
+      selectorStart = i;
+      continue;
+    } else if (ch === "}") {
+      atRuleStack.pop();
+      i++;
+      selectorStart = i;
+      continue;
+    }
+    i++;
+  }
+
+  for (const [cls, bySection] of owners) {
+    const realOwners = [...bySection.entries()].filter(([name]) => !sweepSections.has(name));
+    if (realOwners.length < 2) continue;
+    const flagged = realOwners.filter(([name]) => !knownException.has(`${cls}:${name}`));
+    if (flagged.length < 2) continue;
+    const where = flagged.map(([name, line]) => `"${name}" (line ${line})`).join(" and ");
+    problems.push(
+      `${cssFile}: .${cls} is styled as the subject of a selector in two different sections: ${where} — ` +
+        `each component should own a unique class prefix (CLAUDE.md §15); confirm this isn't a #231-class collision`
+    );
+  }
+}
+
+// ── 6. People hovercard index present, non-empty, and resolvable ────────
 // The site-wide hovercard (src/assets/js/people-hovercards.js) fetches
 // /data/people-index.json at runtime; if that file goes missing or empty,
 // every name silently loses its card with no build error. And each entry's
@@ -263,6 +458,7 @@ checkDataKeys();
 checkBoardLinks();
 checkBuiltHtml();
 checkUndefinedClasses();
+checkCssCollisions();
 checkPeopleIndex();
 
 if (problems.length) {
@@ -271,4 +467,4 @@ if (problems.length) {
   console.error("");
   process.exit(1);
 }
-console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, people hovercard index resolvable).");
+console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, no cross-block CSS class collisions, people hovercard index resolvable).");
