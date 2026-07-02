@@ -659,13 +659,13 @@ pick a fresh prefix and confirm it isn't already claimed
 Reuse another component's base class only when you genuinely mean to
 extend that component, not by accident.
 
-The enforcement half (a duplicate-definition CI lint) is the harder
-piece and is deferred: `stylelint`'s `no-duplicate-selectors` flags
-every intentional repeat (dark-mode + responsive overrides), and a
-custom check needs reliable component-block attribution to tell a
-collision from a variant (a naïve "same base class defined twice" pass
-flags ~100 legitimate cases). Tracked in #241; the convention above is
-the guard until it lands.
+The enforcement half shipped in #241: `scripts/check-build-sanity.mjs`
+(already run in CI) attributes every selector to the `/* ---------- name
+---------- */` section it sits in and flags a class styled bare
+(unscoped) as the selector subject in two different sections, which is
+what the #231 regression looked like. Scoped extensions (`.btn .icon`)
+and a short allowlist of cross-cutting sweep sections (print, mobile
+tap-targets, the global reset) don't count as collisions.
 
 ## 16. Ponytail: the lazy ladder, tuned to this repo
 
