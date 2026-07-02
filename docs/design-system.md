@@ -72,6 +72,11 @@ know what exists and where to look before building something new.
   placeholder, role + optional functional-responsibility pill + ESSC-mic,
   affiliation, Read-more bio, themes, social-icon row. `.person`, `.person-*`.
 - **`netsec-leaders.njk`** — EISS people in NetSec roles, on `/initiative`.
+- **`board-profile.njk`** + **`board-profile-body.njk`** — one page per board/community
+  member at `/board/<slug>.html`, paginated from `board.json`. Bio, role, affiliation,
+  their ESSC papers (via `corpus.speakerByProfileUrl`), ORCID works, external links.
+  Emits a `Person` JSON-LD block (name, jobTitle, affiliation, image, `sameAs` identity
+  links, `memberOf` the EISS `Organization`) for search-engine indexing.
 
 ## Media
 

@@ -102,7 +102,7 @@ so supersession is normal). Pure `gh` CLI, no third-party actions
 | `link-check.yml` → `check-links.sh` | Every internal/external link + `#fragment` in `_site/` resolves. |
 | `i18n-drift.yml` → `check-i18n-drift.py` | Every FR/DE page matches its EN source hash (`data/i18n-state.json`). |
 | `i18n-drift.yml` → `check-i18n-keys.js` | EN/FR/DE chrome catalogs have identical key sets. |
-| `sanity-check.yml` → `check-build-sanity.mjs` | No duplicate `_data` object keys, no empty/junk `href`/`src`, no scheme-less `board.json` links, and no markup class left undefined in `site.css` (§14 unstyled-feature guard). |
+| `sanity-check.yml` → `check-build-sanity.mjs` | No duplicate `_data` object keys, no empty/junk `href`/`src`, no scheme-less `board.json` links, no markup class left undefined in `site.css` (§14 unstyled-feature guard), and no class styled bare as the selector subject in two different `site.css` sections (§15 cross-block collision guard, CLAUDE.md issue #241). |
 | `sanity-check.yml` → `a11y_lint.py` | No accessibility findings (missing landmarks / alt / labels, heading-hierarchy gaps, duplicate IDs, accessible-name absence). |
 | CodeQL | Static analysis. |
 
