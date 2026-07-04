@@ -4,7 +4,10 @@
  * as a readable Markdown table for the weekly sync PR body
  * (sync-publications.yml). The high-confidence matches are auto-confirmed
  * before this runs, so the queue here is the review band — the part a human
- * actually decides. Prints to stdout.
+ * actually decides. When judge-publications.mjs (#805 Phase 3) has run, each
+ * row also carries its advisory LLM verdict + one-line rationale — a
+ * pre-assessment only, never a substitute for the human accept/reject call.
+ * Prints to stdout.
  */
 import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -32,14 +35,30 @@ out.push("accept:  node scripts/confirm-publication.mjs <slug>");
 out.push("reject:  node scripts/confirm-publication.mjs --reject <slug>");
 out.push("```");
 out.push("");
-out.push("| Score | ESSC paper | Proposed published version | Slug |");
-out.push("|:--:|---|---|---|");
+const hasVerdicts = review.some((x) => x.llmVerdict);
+if (hasVerdicts) {
+  out.push("| Score | ESSC paper | Proposed published version | LLM verdict | Slug |");
+  out.push("|:--:|---|---|---|---|");
+} else {
+  out.push("| Score | ESSC paper | Proposed published version | Slug |");
+  out.push("|:--:|---|---|---|");
+}
 for (const x of review) {
   const venue = [x.candidateYear, x.journal ? clip(x.journal, 28) : null].filter(Boolean).join(", ");
   const pub = clip(x.candidateTitle, 56) + (venue ? ` *(${venue})*` : "");
   const paper = clip(x.paperTitle, 56) + `<br><sub>${x.conference}</sub>`;
-  out.push(`| ${x.titleScore.toFixed(2)} | ${paper} | ${pub} | \`${x.slug}\` |`);
+  if (hasVerdicts) {
+    const verdict = x.llmVerdict
+      ? `**${x.llmVerdict.verdict}** — ${clip(x.llmVerdict.rationale, 90)}`
+      : "_(not judged)_";
+    out.push(`| ${x.titleScore.toFixed(2)} | ${paper} | ${pub} | ${verdict} | \`${x.slug}\` |`);
+  } else {
+    out.push(`| ${x.titleScore.toFixed(2)} | ${paper} | ${pub} | \`${x.slug}\` |`);
+  }
 }
 out.push("");
+if (hasVerdicts) {
+  out.push("_The LLM verdict is advisory (#805 Phase 3) — a pre-assessment, not a decision. Judge each row on the merits._");
+}
 out.push("_Anything you don't act on stays in the queue for next week._");
 console.log(out.join("\n"));
