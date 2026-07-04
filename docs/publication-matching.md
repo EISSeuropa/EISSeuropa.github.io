@@ -152,6 +152,16 @@ node scripts/judge-publications.mjs
 review-PR body composer; `publication-review-md.mjs` renders the verdict
 in the review table when one is present.
 
+**Operative path: the maintainer's scheduled routine, not the API.** The
+maintainer opted against adding the `ANTHROPIC_API_KEY` secret, so the CI
+step stays a no-op. Instead a weekly Claude Code scheduled task on the
+maintainer's machine (Mondays, after the 07:00 UTC sync) reads the review
+band, judges each unjudged candidate, and lands the same `llmVerdict`
+annotations through a small auto-merged PR. Because the annotation shape is
+identical, `publication-review-md.mjs` renders routine verdicts exactly as
+it would API ones, and the same advisory-only constraints apply. The script
+above remains as the alternative if a secret is ever added.
+
 ## Sanity-checking a match against the published abstract
 
 The matcher scores on title + author, which can't tell a renamed-but-genuine
