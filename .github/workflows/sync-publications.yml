@@ -9,6 +9,10 @@
 #   - scripts/confirm-publication.mjs --auto-high then records the
 #     HIGH-confidence matches (title ≥ 0.80, near-verbatim) into
 #     src/_data/paperLinks.json automatically, and drops them from the queue.
+#   - scripts/judge-publications.mjs (Phase 3, #805) adds an advisory LLM
+#     verdict to each review-band candidate, when the ANTHROPIC_API_KEY
+#     secret is set. It never writes paperLinks.json — a no-op until the
+#     secret is configured. See docs/publication-matching.md.
 #   - Opens a PR on `publications-sync/auto` and auto-merges it, so the
 #     auto-confirmed matches go live and the queue is refreshed.
 #
@@ -72,11 +76,14 @@ jobs:
 
       - name: Match, then auto-confirm the high-confidence tier
         id: match
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           set -o pipefail
           node scripts/match-publications.mjs --all | tee /tmp/match.txt
           node scripts/confirm-publication.mjs --auto-high | tee /tmp/auto.txt
           node scripts/enrich-publications.mjs | tee /tmp/enrich.txt
+          node scripts/judge-publications.mjs | tee /tmp/judge.txt
           node scripts/publication-review-md.mjs > /tmp/review.md
           # Count the review-band candidates left for a human call, so the PR
           # step can tag `needs-review` when approval is necessary.
@@ -96,6 +103,10 @@ jobs:
             grep -iE 'auto-confirmed' /tmp/auto.txt || echo "_(none this run)_"
             echo ""
             echo "## 👀 To review"
+            echo ""
+            echo "Each row carries an advisory LLM verdict when the ANTHROPIC_API_KEY secret"
+            echo "is configured (skipped otherwise — see docs/publication-matching.md). The"
+            echo "verdict is a pre-assessment only; you still decide accept/reject."
             echo ""
             cat /tmp/review.md
             echo ""

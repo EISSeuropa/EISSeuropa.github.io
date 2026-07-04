@@ -110,12 +110,47 @@ it is handled:
   may be inaccurate. Shown to the maintainer for information, who can reject
   any. (Auto-confirmed entries carry `"auto": true` in `paperLinks.json`.)
 - **Review (0.50–0.79)** — titles that drifted on publication. Left in the
-  queue for a human accept/reject. An LLM judge to pre-assess these is a
-  possible later addition (kept off for now).
+  queue for a human accept/reject. An optional LLM judge (Phase 3, below)
+  can annotate these with an advisory verdict.
 
 The threshold is the maintainer's chosen policy: high enough that the
 auto-published set is near-exact, low enough that genuine same-title
 publications are not held up.
+
+## LLM judge (Phase 3): `scripts/judge-publications.mjs`
+
+An optional pre-assessment of the review band, so a human reviewer sees a
+verdict and a one-line rationale alongside each row instead of judging every
+candidate cold. It annotates each review-band candidate with an
+`llmVerdict` (`same_work`, `different_work`, or `uncertain`) plus a
+rationale, weighing author identity, topical overlap, retitle plausibility,
+and the publication-lag window. It looks up the conference abstract when one
+is on file, and always asks the model to answer `uncertain` rather than
+guess.
+
+**Advisory only.** The judge never writes `src/_data/paperLinks.json` and
+never changes a candidate's `band`. `confirm-publication.mjs` stays the only
+path to a confirmed match, and the auto-high tier is untouched. Judge each
+row on the merits, the same way as before, the verdict is a second opinion,
+not a decision.
+
+Gated on a secret:
+
+```bash
+node scripts/judge-publications.mjs
+```
+
+- Requires the `ANTHROPIC_API_KEY` repository secret. **Without it, the step
+  is a silent no-op** (prints one line, exits 0) — the monthly sync keeps
+  running clean either way.
+- Optional `PUBLICATION_JUDGE_MODEL` env var overrides the model (default
+  `claude-opus-4-8`).
+- Idempotent: re-runs skip any candidate that already carries an
+  `llmVerdict`, so it is safe to run more than once against the same queue.
+
+`sync-publications.yml` runs the judge between the matcher and the
+review-PR body composer; `publication-review-md.mjs` renders the verdict
+in the review table when one is present.
 
 ## Sanity-checking a match against the published abstract
 
@@ -181,5 +216,4 @@ of Strategic Studies* (often retitled).
   Form (see [board-bios-setup.md](board-bios-setup.md)).
 - Minting our own DOIs for ESSC papers is a separate, heavier option
   ([#795](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/795)).
-- An optional LLM judge for the ambiguous (review) band is a possible
-  later refinement, noted in #805.
+- The LLM judge (Phase 3, above) shipped in [#805](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/805).
