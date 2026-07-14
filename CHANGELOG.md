@@ -115,6 +115,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 - **The 2024 abstract coverage figure no longer counts the joint Sciences Po–EISS conference, lifting it to 49 of 52.** That one-day symposium on the origins of war and diplomacy shares its calendar year with the EISS 2024 annual conference but never collected Indico-style abstracts, the same as the other pre-Indico and joint events. Its nine papers were previously counted as "eligible" and dragging the 2024 ratio down to 49 of 60; they're now correctly excluded, the same way roundtables and keynotes already are. Progresses [#886](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/886).
 - **Board and community profile pages now carry Schema.org `Person` structured data.** Each `/board/<slug>.html` page emits a JSON-LD block with the member's name, role, affiliation, photo and identifying links (ORCID, personal site, socials), so search engines can index board profiles the same way the site's papers and events already are. Closes [#756](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/756).
 
+### Fixed
+
+- **Sanne Verschuren's board-profile website link now resolves.** Her site serves no working HTTPS (the TLS handshake fails for browsers as well as the link checker), so the `https://` link on the board cards was dead; it now points to `http://www.sanneverschuren.com`, which returns 200. This was tripping the external-link check on every HTML-touching PR.
+
 ## [2.26.0] · 2026-06-25 — Introducing The Anthology
 
 This release introduces the European Security Studies Anthology as the site's flagship: the single home for every paper and every speaker across nine editions of the annual conference. The two separate archive views become one browsable surface, carried in the main navigation and linked outward to the NetSec member directory. Members' own published research gains a page of its own, and a round of polish runs through the navigation, the share cards, the Initiative page and the board.
