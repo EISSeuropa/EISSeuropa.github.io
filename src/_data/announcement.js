@@ -24,9 +24,8 @@
  */
 
 const sharedImage = {
-  src: "/assets/images/2026/essc2026-06-960.jpg",
-  width: 960,
-  height: 721,
+  width: 1200,
+  height: 630,
 };
 
 module.exports = {
@@ -34,59 +33,74 @@ module.exports = {
   visible: true,
 
   en: {
-    eyebrow: "Stockholm, 12 June 2026",
-    headline: "The European Security Studies Conference closes in Stockholm",
+    eyebrow: "Leadership announcement · 13 July 2026",
+    headline: "A new leadership team for the EISS",
     body: [
-      'The annual conference has closed two days of panels and roundtables at Stockholm University. From this 2026 edition it carries a new name, the <strong>European Security Studies Conference</strong> (ESSC), marking its first year jointly organised by the <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">COST Action NetSec</a>, the European Initiative for Security Studies (EISS), and Stockholm University.',
-      'The full programme, the conference film and a photo gallery from the event are now on the <a href="/2026.html">2026 conference page</a>.',
+      'After nine years as its Director, <strong>Hugo Meijer</strong> (CERI, Sciences Po &ndash; CNRS) is stepping down and becomes the <strong>Founding and Honorary Director</strong> of the European Initiative for Security Studies. Since 2017 he has built what is today Europe\'s largest community of security studies scholars.',
+      'The EISS will now be led jointly by <strong>Chiara Ruffa</strong> (CERI, Sciences Po) and <strong>Moritz Weiss</strong> (LMU Munich) as new <strong>Co-Directors</strong>, while longstanding staff <strong>Arthur Laudrain</strong> and <strong>John Helferich</strong> join the Board.',
     ],
+    pullquote: {
+      text: "We extend our deepest gratitude to Hugo, and look forward to building on the strong foundations he has established.",
+      cite: "The European Initiative for Security Studies",
+    },
     cta: {
-      label: "See the 2026 conference",
-      url: "/2026.html",
+      label: "Read the announcement",
+      url: "/leadership-2026.html",
       external: false,
     },
     image: {
       ...sharedImage,
-      alt: "The keynote at the 2026 European Security Studies Conference, Stockholm University.",
-      caption: "Lieutenant General Ulf Thomas Nilsson, Director of Military Intelligence and Security, gives the keynote at Stockholm University.",
+      src: "/assets/images/board-meta.jpg",
+      alt: "The people of the European Initiative for Security Studies.",
+      caption: "Meet the EISS board and leadership.",
     },
   },
 
   fr: {
-    eyebrow: "Stockholm, 12 juin 2026",
-    headline: "La Conférence européenne d'études de sécurité s'achève à Stockholm",
+    eyebrow: "Annonce — direction · 13 juillet 2026",
+    headline: "Une nouvelle direction pour l'EISS",
     body: [
-      'La conférence annuelle vient de clore deux journées de panels et de tables rondes à l\'Université de Stockholm. Depuis cette édition 2026, elle porte un nouveau nom, la <strong>Conférence européenne d\'études de sécurité</strong> (European Security Studies Conference, ESSC), et marque sa première année d\'organisation conjointe par l\'<a href="https://netsec-cost.eu/" target="_blank" rel="noopener">Action COST NetSec</a>, l\'Initiative européenne pour les études de sécurité (EISS) et l\'Université de Stockholm.',
-      'Le programme complet, le film de la conférence et une galerie de photos de l\'événement sont désormais disponibles sur la <a href="/2026.fr.html">page de la conférence 2026</a>.',
+      'Après neuf ans à sa direction, <strong>Hugo Meijer</strong> (CERI, Sciences Po &ndash; CNRS) quitte ses fonctions et devient <strong>Directeur fondateur et honoraire</strong> de l\'Initiative européenne pour les études de sécurité. Depuis 2017, il a bâti la plus grande communauté européenne de chercheuses et chercheurs en études de sécurité.',
+      'L\'EISS sera désormais dirigée conjointement par <strong>Chiara Ruffa</strong> (CERI, Sciences Po) et <strong>Moritz Weiss</strong> (LMU Munich) en qualité de <strong>Co-Directeurs</strong>, tandis que deux membres de longue date, <strong>Arthur Laudrain</strong> et <strong>John Helferich</strong>, rejoignent le Conseil.',
     ],
+    pullquote: {
+      text: "Nous exprimons notre plus profonde gratitude à Hugo et sommes impatients de bâtir sur les solides fondations qu'il a établies.",
+      cite: "L'Initiative européenne pour les études de sécurité",
+    },
     cta: {
-      label: "Voir la conférence 2026",
-      url: "/2026.fr.html",
+      label: "Lire l'annonce",
+      url: "/leadership-2026.fr.html",
       external: false,
     },
     image: {
       ...sharedImage,
-      alt: "La conférence inaugurale de la Conférence européenne d'études de sécurité 2026, Université de Stockholm.",
-      caption: "Le général de corps d'armée Ulf Thomas Nilsson, directeur du renseignement et de la sécurité militaires, prononce la conférence inaugurale à l'Université de Stockholm.",
+      src: "/assets/images/board-meta.fr.jpg",
+      alt: "Les membres de l'Initiative européenne pour les études de sécurité.",
+      caption: "Découvrez le conseil et la direction de l'EISS.",
     },
   },
 
   de: {
-    eyebrow: "Stockholm, 12. Juni 2026",
-    headline: "Die European Security Studies Conference geht in Stockholm zu Ende",
+    eyebrow: "Ankündigung — Leitung · 13. Juli 2026",
+    headline: "Eine neue Leitung für die EISS",
     body: [
-      'Die Jahreskonferenz hat zwei Tage mit Panels und Round Tables an der Universität Stockholm abgeschlossen. Seit dieser Ausgabe 2026 trägt sie einen neuen Namen, die <strong>European Security Studies Conference</strong> (ESSC), und wird erstmals gemeinsam von der <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">COST-Aktion NetSec</a>, der Europäischen Initiative für Sicherheitsstudien (EISS) und der Universität Stockholm ausgerichtet.',
-      'Das vollständige Programm, der Konferenzfilm und eine Fotogalerie der Veranstaltung sind jetzt auf der <a href="/2026.de.html">Seite der Konferenz 2026</a> verfügbar.',
+      'Nach neun Jahren an ihrer Spitze tritt <strong>Hugo Meijer</strong> (CERI, Sciences Po &ndash; CNRS) zurück und wird <strong>Gründungs- und Ehrendirektor</strong> der Europäischen Initiative für Sicherheitsstudien. Seit 2017 hat er die heute größte europäische Gemeinschaft von Sicherheitsforscherinnen und -forschern aufgebaut.',
+      'Die EISS wird künftig gemeinsam von <strong>Chiara Ruffa</strong> (CERI, Sciences Po) und <strong>Moritz Weiss</strong> (LMU München) als neue <strong>Co-Direktoren</strong> geleitet, während mit <strong>Arthur Laudrain</strong> und <strong>John Helferich</strong> zwei langjährige Mitarbeiter dem Vorstand beitreten.',
     ],
+    pullquote: {
+      text: "Wir danken Hugo von Herzen und freuen uns darauf, auf den starken Fundamenten aufzubauen, die er geschaffen hat.",
+      cite: "Die Europäische Initiative für Sicherheitsstudien",
+    },
     cta: {
-      label: "Zur Konferenz 2026",
-      url: "/2026.de.html",
+      label: "Zur Ankündigung",
+      url: "/leadership-2026.de.html",
       external: false,
     },
     image: {
       ...sharedImage,
-      alt: "Die Keynote der European Security Studies Conference 2026, Universität Stockholm.",
-      caption: "Generalleutnant Ulf Thomas Nilsson, Direktor des militärischen Nachrichten- und Sicherheitsdienstes, hält die Keynote an der Universität Stockholm.",
+      src: "/assets/images/board-meta.de.jpg",
+      alt: "Die Menschen der Europäischen Initiative für Sicherheitsstudien.",
+      caption: "Lernen Sie den Vorstand und die Leitung der EISS kennen.",
     },
   },
 };
