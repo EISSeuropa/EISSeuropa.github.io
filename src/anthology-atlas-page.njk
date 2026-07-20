@@ -2,25 +2,57 @@
 layout: base.njk
 permalink: /anthology-atlas.html
 title: Anthology Atlas
-description: A force-directed map of the European Security Studies Anthology — every paper since 2017, drawn to the research themes it touches, coloured by edition.
-navKey: ""
+description: A force-directed map of the European Security Studies Anthology — every paper since 2017, drawn to the research themes it touches, coloured by edition. Read it two ways, by paper or by author, and take the guided tour.
+metaImage: /assets/images/anthology-meta.jpg
+navKey: "navigator"
 lang: en
-noindex: true
-eleventyExcludeFromCollections: true
 ---
-{# Anthology Atlas — proof of concept (#1124). Soft launch: EN only, noindex,
-   unlinked from navigation, excluded from the sitemap (eleventyExcludeFrom
-   Collections drops it from collections.all, which the sitemap iterates) and
-   from site search (data-pagefind-ignore below). The graph is the real
+{# Anthology Atlas (#1124, #1129). Promoted out of soft launch (#1134): now
+   indexed (no noindex), in the sitemap (no eleventyExcludeFromCollections),
+   in site search (no data-pagefind-ignore), and signposted from the Anthology
+   in every locale. Still EN-only. The graph is the real
    /data/anthology-atlas.json, projected from paperIndex.js at build time.
    Sibling of the NetSec Atlas (people); this one maps papers. #}
-<div class="atlas-shell" data-pagefind-ignore="all">
+{# First-visit pre-paint reveal: stamp html.atlas-welcome before the welcome
+   strip is parsed, so it occupies its space from the first frame instead of
+   popping in when the deferred atlas script runs (the anti-CLS trick from the
+   NetSec directory). anthology-atlas.js reconciles the hidden attribute and
+   drops the class once it takes over, and on dismissal. #}
+<script>
+  (function () {
+    try {
+      if (localStorage.getItem('eiss-atlas-tour-seen') !== 'true') {
+        document.documentElement.classList.add('atlas-welcome');
+      }
+    } catch (e) {}
+  })();
+</script>
+<div class="atlas-shell">
   <a class="atlas-back" href="/anthology.html">&larr; The Anthology</a>
   <div class="atlas-masthead">
     <h1>Anthology Atlas</h1>
     <span class="atlas-proto-pill">Prototype</span>
+    <button class="atlas-help" type="button" id="atlas-help" title="Take a tour" aria-label="Take a tour">?</button>
   </div>
-  <p class="atlas-lede">A map of the <strong>European Security Studies Anthology</strong> — every paper presented at an EISS conference or workshop since 2017, drawn toward the <strong>research themes</strong> it touches. Read it two ways: the <strong>Papers</strong> lens draws one dot per paper, coloured by <strong>edition year</strong>, so multi-theme papers settle between hubs and the field's thematic bridges become visible; the <strong>Authors</strong> lens draws one dot per author, sized by their paper count, with <strong>co-author edges</strong> on top so collaboration clusters settle out. Filter by year or spotlight a theme with the chips. Hover for details; click through to the Anthology. Everything here is generated from the same data behind the <a href="/anthology.html">Anthology</a>.</p>
+  <p class="atlas-lede">A map of the <strong>European Security Studies Anthology</strong> — every paper presented at an EISS conference or workshop since 2017, drawn toward the <strong>research themes</strong> it touches. Each labelled <strong>hub is a theme</strong>; each <strong>dot is a paper or an author</strong>. Read it two ways: the <strong>Papers</strong> lens draws one dot per paper, coloured by <strong>edition year</strong>, so multi-theme papers settle between hubs and the field's thematic bridges become visible; the <strong>Authors</strong> lens draws one dot per author, sized by their paper count, with <strong>co-author edges</strong> on top so collaboration clusters settle out. Solid dots are papers with an Anthology page; hollow rings are programme entries without one yet. Filter by year or spotlight a theme with the chips. Hover for details; click through to the Anthology. Everything here is generated from the same data behind the <a href="/anthology.html">Anthology</a>.</p>
+
+  {# First-visit welcome strip (#1134). Rendered hidden; the inline head
+     script above reveals it pre-paint on a first visit, and anthology-
+     atlas.js reconciles the hidden attribute + wires the buttons. #}
+  <aside class="atlas-welcome" id="atlas-welcome" role="region" aria-labelledby="atlas-welcome-title" hidden>
+    <h2 class="atlas-welcome-title" id="atlas-welcome-title">👋 First time on the Atlas?</h2>
+    <p class="atlas-welcome-lede">This is an interactive map of the whole <strong>Anthology</strong> — {{ anthologyAtlas.papers | length }} papers across {{ anthologyAtlas.years | length }} editions, drawn to {{ anthologyAtlas.themes | length }} research themes. Here's how to read it:</p>
+    <ul class="atlas-welcome-tips">
+      <li>🔭 <strong>Two lenses</strong>: switch between Papers and Authors at the top.</li>
+      <li>🎚️ <strong>Filter</strong> by edition year, or spotlight a research theme, with the chips.</li>
+      <li>🟢 <strong>Solid dots</strong> have an Anthology page; hollow rings don't yet.</li>
+      <li>🔗 <strong>Hover</strong> any dot for details, and <strong>click</strong> through to the Anthology.</li>
+    </ul>
+    <div class="atlas-welcome-actions">
+      <button class="tour-btn tour-btn-primary" type="button" id="atlas-welcome-tour">Take the tour</button>
+      <button class="atlas-welcome-dismiss" type="button" id="atlas-welcome-dismiss" aria-controls="atlas-welcome">Got it</button>
+    </div>
+  </aside>
 
   <div class="atlas-controls" id="atlas-lens" role="group" aria-label="Choose a lens">
     <span class="lbl">Lens</span>
@@ -62,4 +94,5 @@ eleventyExcludeFromCollections: true
   </div>
 </div>
 
+<script src="{{ '/assets/js/atlas-tour.js' | bust }}" defer></script>
 <script src="{{ '/assets/js/anthology-atlas.js' | bust }}" defer></script>

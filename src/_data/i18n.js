@@ -485,6 +485,16 @@ const locales = {
       coverageNote: "Coverage is highest for recent editions, which sync from Indico. Earlier years are being recovered edition by edition.",
     },
 
+    // Atlas signpost (src/_includes/atlas-signpost.njk): the link-card at the
+    // foot of the Anthology that points to the force-directed Anthology Atlas.
+    // {p}/{a}/{t} are substituted in the template with data-derived counts
+    // (papers / authors / research themes). The Atlas is EN-only for now
+    // (#1124), so the FR/DE sub-lines flag that with a trailing note.
+    atlasSignpost: {
+      title: "Explore the Anthology Atlas",
+      sub: "{p} papers · {a} authors · {t} research themes, mapped",
+    },
+
     speakers: {
       // /speakers index (EN + FR + DE share one include, this is the
       // chrome). Speaker names, paper titles, affiliations and the theme
@@ -968,6 +978,11 @@ const locales = {
       coverageNote: "La couverture est la plus complète pour les éditions récentes, synchronisées depuis Indico. Les années antérieures sont récupérées édition après édition.",
     },
 
+    atlasSignpost: {
+      title: "Explorez l'Atlas de l'Anthologie",
+      sub: "{p} communications · {a} auteurs · {t} thèmes de recherche, cartographiés · en anglais",
+    },
+
     speakers: {
       eyebrow: "Le corpus de l'ESSC",
       title: "Intervenants",
@@ -1434,6 +1449,11 @@ const locales = {
       coverageTip: "{a} von {b} infrage kommenden Beiträgen tragen ein Abstract. Podiumsdiskussionen, Keynotes, Postersessions und Workshops werden nicht mitgezählt.",
       coverageSummary: "Abstract-Abdeckung nach Jahr",
       coverageNote: "Die Abdeckung ist bei den jüngeren Ausgaben am vollständigsten, die aus Indico synchronisiert werden. Frühere Jahre werden Ausgabe für Ausgabe ergänzt.",
+    },
+
+    atlasSignpost: {
+      title: "Entdecken Sie den Anthologie-Atlas",
+      sub: "{p} Beiträge · {a} Autor:innen · {t} Forschungsthemen, kartiert · auf Englisch",
     },
 
     speakers: {
