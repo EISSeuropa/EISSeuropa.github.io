@@ -20,9 +20,18 @@ eleventyExcludeFromCollections: true
     <h1>Anthology Atlas</h1>
     <span class="atlas-proto-pill">Prototype</span>
   </div>
-  <p class="atlas-lede">A map of the <strong>European Security Studies Anthology</strong> — every paper presented at an EISS conference or workshop since 2017, drawn toward the <strong>research themes</strong> it touches. Papers on more than one theme settle between hubs, so the thematic bridges of the field become visible; each dot is coloured by its <strong>edition year</strong>, so the map doubles as a view of the field over time. Filter by year or spotlight a theme with the chips. Hover a paper for its title, authors and panel; click through to its Anthology page where one exists. Everything here is generated from the same data behind the <a href="/anthology.html">Anthology</a>.</p>
+  <p class="atlas-lede">A map of the <strong>European Security Studies Anthology</strong> — every paper presented at an EISS conference or workshop since 2017, drawn toward the <strong>research themes</strong> it touches. Read it two ways: the <strong>Papers</strong> lens draws one dot per paper, coloured by <strong>edition year</strong>, so multi-theme papers settle between hubs and the field's thematic bridges become visible; the <strong>Authors</strong> lens draws one dot per author, sized by their paper count, with <strong>co-author edges</strong> on top so collaboration clusters settle out. Filter by year or spotlight a theme with the chips. Hover for details; click through to the Anthology. Everything here is generated from the same data behind the <a href="/anthology.html">Anthology</a>.</p>
+
+  <div class="atlas-controls" id="atlas-lens" role="group" aria-label="Choose a lens">
+    <span class="lbl">Lens</span>
+    <!-- lens chips (Papers / Authors) injected by anthology-atlas.js -->
+  </div>
 
   <div class="atlas-stats" id="atlas-stats" aria-label="Anthology statistics"></div>
+
+  <div class="atlas-controls" id="atlas-authoropts" role="group" aria-label="Author options" hidden>
+    <!-- "Collaborators only" chip injected by anthology-atlas.js (Authors lens only) -->
+  </div>
 
   <div class="atlas-controls" id="atlas-years" role="group" aria-label="Filter by edition year">
     <span class="lbl">Editions</span>
@@ -42,6 +51,13 @@ eleventyExcludeFromCollections: true
     <span><span class="sw sw-nopage"></span>programme entry only (no page yet)</span>
     <span><span class="sw sw-ring sw-prize"></span>Best Paper Prize</span>
     <span><span class="sw sw-pub"></span>published version on record</span>
+    <span>drag a theme hub to rearrange the map</span>
+  </div>
+  <div class="atlas-legend" id="atlas-legend-authors" hidden>
+    <span><span class="sw sw-collab"></span>author with a co-author</span>
+    <span><span class="sw sw-solo"></span>solo-only author</span>
+    <span><span class="sw sw-coauthor"></span>co-authored a paper together</span>
+    <span>dot size scales with paper count</span>
     <span>drag a theme hub to rearrange the map</span>
   </div>
 </div>

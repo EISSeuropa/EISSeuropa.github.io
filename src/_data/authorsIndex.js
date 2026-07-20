@@ -29,27 +29,11 @@
  */
 const corpus = require("./corpus.js");
 const site = require("./site.js");
+// NetSec-compatible name key, shared with anthologyAtlas.js (#1129) so the
+// two surfaces that speak NetSec's key can't drift. See src/_data/nameKey.js.
+const nameKey = require("./nameKey.js");
 
 const base = String(site.url || "").replace(/\/$/, "");
-
-// Faithful port of EISSeuropa/netsec.github.io scripts/sync-bios.py::name_key().
-const HONORIFIC_RE = /^(professor|prof|doctor|dr|mr|mrs|ms|mx)(?:\.\s*|\s+)/i;
-const POST_NOMINALS = new Set(["phd", "jr", "sr", "ii", "iii", "iv", "esq"]);
-const PARTICLES = new Set([
-  "de", "del", "della", "di", "da", "das", "dos",
-  "van", "von", "vom", "der", "den", "ter", "ten",
-  "la", "le", "el", "al", "ibn", "bin", "bint",
-  "zu", "auf", "af",
-]);
-function nameKey(name) {
-  let s = String(name || "").normalize("NFKD").replace(/[̀-ͯ]/g, "");
-  s = s.replace(HONORIFIC_RE, "");
-  s = s.replace(/[‘’ʼ'`]/g, ""); // ' ' ʼ ' `
-  let tokens = s.split(/[^A-Za-z]+/).filter(Boolean).map((t) => t.toLowerCase());
-  tokens = tokens.filter((t) => !POST_NOMINALS.has(t) && !PARTICLES.has(t));
-  if (tokens.length < 2) return "";
-  return tokens[0] + " " + tokens[tokens.length - 1];
-}
 
 const authors = (corpus.speakers || [])
   .map((s) => ({

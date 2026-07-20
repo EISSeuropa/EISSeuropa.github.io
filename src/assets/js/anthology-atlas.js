@@ -1,18 +1,22 @@
-/* The Anthology Atlas — proof of concept renderer (#1124).
+/* The Anthology Atlas — proof of concept renderer (#1124, #1129).
    Vanilla, no dependencies. Reads /data/anthology-atlas.json (projected from
    src/_data/paperIndex.js by src/_data/anthologyAtlas.js): one deduplicated
-   paper universe drawn as a bipartite map — papers ↔ the 17 research-theme
-   hubs (+ an UNTAGGED hub). Multi-theme papers settle between hubs, so the
-   thematic bridges of the field are visible; each paper dot is coloured by
-   its edition year, so the map doubles as a field-over-time view.
+   paper universe drawn as a bipartite map — nodes ↔ the 17 research-theme
+   hubs (+ an UNTAGGED hub). Two lenses over the SAME universe:
 
-   Sibling of the NetSec Atlas (atlas-poc.js), which maps *people*; this one
-   maps *papers*, deliberately not a people graph (CLAUDE.md: don't rebuild
+     Papers  — one dot per paper, coloured by edition year; multi-theme
+               papers settle between hubs, so the thematic bridges show.
+     Authors — one dot per deduplicated author (#1129), anchored to the
+               theme hubs their papers touch, with co-author edges drawn on
+               top so collaboration clusters settle out. Dot size = papers.
+
+   Sibling of the NetSec Atlas (atlas-poc.js), which maps *people* across the
+   whole Action; this one maps the Anthology corpus (CLAUDE.md: don't rebuild
    NetSec's systems). Hand-rolled force layout, deterministic seed, DPR-aware
    canvas, dark/light read from EISS CSS variables (re-read on theme flip),
    reduced motion renders the settled layout without animating.
 
-   Markers:
+   Markers (Papers lens):
      · has an Anthology landing page → solid year-coloured dot (315/511);
        papers without a page render as a faint ring, so curation gaps show.
      · Best Paper Prize winner            → gold ring.
@@ -24,6 +28,10 @@
   const statsEl = document.getElementById('atlas-stats');
   const yearsEl = document.getElementById('atlas-years');
   const themesEl = document.getElementById('atlas-themes');
+  const lensEl = document.getElementById('atlas-lens');
+  const authorOptsEl = document.getElementById('atlas-authoropts');
+  const legendPapers = document.getElementById('atlas-legend');
+  const legendAuthors = document.getElementById('atlas-legend-authors');
   if (!canvas || !canvas.getContext) return;
   const ctx = canvas.getContext('2d');
 
@@ -84,18 +92,30 @@
 
   // ── State ──
   let hubs = [], hubById = {};
-  let papers = [];
+  let papers = [], authors = [];
+  let coEdges = [];                // {a, b, weight} — author node refs (#1129)
   let yearsAsc = [];
+  let lens = 'papers';             // 'papers' | 'authors'
+  let collabOnly = false;          // Authors lens: hide solo-only authors
   const activeYears = new Set();   // edition years currently shown
   const activeHubs = new Set();    // theme hubs currently shown
   let hovered = null, draggingHub = null;
   let W = 0, H = 0, dpr = 1;
 
-  function hubColour(h) { return THEME_WHEEL[h.wheel % THEME_WHEEL.length]; }
+  const items = () => (lens === 'authors' ? authors : papers);
 
-  function paperVisible(p) {
-    if (!activeYears.has(p.year)) return false;
-    return p.hubs.some((id) => activeHubs.has(id));
+  function hubColour(h) { return THEME_WHEEL[h.wheel % THEME_WHEEL.length]; }
+  function hubFill(h) { return h.type === 'untagged' ? '#8a94a6' : hubColour(h); }
+
+  function nodeVisible(n) {
+    // Year: a paper falls in one edition; an author in several (#1129) — shown
+    // when ANY of their editions is selected.
+    const yearOk = n.type === 'author'
+      ? n.years.some((y) => activeYears.has(y))
+      : activeYears.has(n.year);
+    if (!yearOk) return false;
+    if (lens === 'authors' && collabOnly && !n.coCount) return false;
+    return n.hubs.some((id) => activeHubs.has(id));
   }
 
   function resize() {
@@ -107,9 +127,19 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
+  // Per-lens hub membership + counts (a hub's dot label shows how many of the
+  // current lens's nodes touch it). Recomputed on every lens switch.
+  function recountHubs() {
+    hubs.forEach((h) => { h.count = 0; h.members = []; });
+    items().forEach((n) => n.hubs.forEach((id) => {
+      const h = hubById[id];
+      if (h) { h.count++; h.members.push(n.id); }
+    }));
+  }
+
   // ── Layout ──
   function seedPositions() {
-    const rand = mulberry32(19172);
+    const rand = mulberry32(lens === 'authors' ? 40517 : 19172);
     const cx = W / 2, cy = H / 2;
     hubs.forEach((h, i) => {
       const ang = (i / hubs.length) * Math.PI * 2 - Math.PI / 2;
@@ -117,32 +147,47 @@
       h.y = cy + Math.sin(ang) * H * 0.38;
       h.r = Math.max(16, Math.sqrt(h.count) * 3.6);
     });
-    papers.forEach((p) => {
-      const linked = p.hubs.map((id) => hubById[id]).filter(Boolean);
-      if (!linked.length) { p.x = -50; p.y = -50; p.vx = p.vy = 0; return; }
+    items().forEach((n) => {
+      const linked = n.hubs.map((id) => hubById[id]).filter(Boolean);
+      if (!linked.length) { n.x = -50; n.y = -50; n.vx = n.vy = 0; return; }
       const mx = linked.reduce((s, h) => s + h.x, 0) / linked.length;
       const my = linked.reduce((s, h) => s + h.y, 0) / linked.length;
-      p.x = mx + (rand() - 0.5) * 120;
-      p.y = my + (rand() - 0.5) * 120;
-      p.vx = 0; p.vy = 0;
+      n.x = mx + (rand() - 0.5) * 120;
+      n.y = my + (rand() - 0.5) * 120;
+      n.vx = 0; n.vy = 0;
     });
   }
 
   function tick() {
-    const visible = papers.filter((p) => p.hubs.length);
-    visible.forEach((p) => {
-      p.hubs.forEach((id) => {
+    const visible = items().filter((n) => n.hubs.length);
+    visible.forEach((n) => {
+      n.hubs.forEach((id) => {
         const h = hubById[id];
-        const dx = h.x - p.x, dy = h.y - p.y;
+        const dx = h.x - n.x, dy = h.y - n.y;
         const d = Math.hypot(dx, dy) || 1;
         const rest = h.r + 46;
         const f = (d - rest) * 0.004;
-        p.vx += (dx / d) * f * 60;
-        p.vy += (dy / d) * f * 60;
+        n.vx += (dx / d) * f * 60;
+        n.vy += (dy / d) * f * 60;
       });
-      p.vx += (W / 2 - p.x) * 0.0004;
-      p.vy += (H / 2 - p.y) * 0.0004;
+      n.vx += (W / 2 - n.x) * 0.0004;
+      n.vy += (H / 2 - n.y) * 0.0004;
     });
+    // Authors lens: a gentle spring along each co-author edge, so the 65
+    // collaboration clusters settle into tight clumps on top of the hub
+    // anchoring (heavier for pairs that share >1 paper). #1129.
+    if (lens === 'authors') {
+      coEdges.forEach((e) => {
+        const a = e.a, b = e.b;
+        if (!nodeVisible(a) || !nodeVisible(b)) return;
+        const dx = b.x - a.x, dy = b.y - a.y;
+        const d = Math.hypot(dx, dy) || 1;
+        const f = (d - 34) * 0.01 * Math.min(2, e.weight);
+        const ux = (dx / d) * f * 60, uy = (dy / d) * f * 60;
+        a.vx += ux; a.vy += uy;
+        b.vx -= ux; b.vy -= uy;
+      });
+    }
     // O(n²) repulsion. ~530 nodes ≈ 140k pairs/tick — acceptable for a PoC.
     // ponytail: if this visibly chugs, bucket nodes into a uniform spatial
     // grid and only test neighbours within the cutoff radius (√4600 ≈ 68px);
@@ -160,17 +205,17 @@
         b.vx += dx * f * 60; b.vy += dy * f * 60;
       }
     }
-    visible.forEach((p) => {
+    visible.forEach((n) => {
       hubs.forEach((h) => {
-        const dx = p.x - h.x, dy = p.y - h.y;
+        const dx = n.x - h.x, dy = n.y - h.y;
         const d = Math.hypot(dx, dy) || 1;
         const min = h.r + 12;
-        if (d < min) { p.x = h.x + (dx / d) * min; p.y = h.y + (dy / d) * min; }
+        if (d < min) { n.x = h.x + (dx / d) * min; n.y = h.y + (dy / d) * min; }
       });
-      p.vx *= 0.82; p.vy *= 0.82;
-      p.x += p.vx * 0.016; p.y += p.vy * 0.016;
-      p.x = Math.max(10, Math.min(W - 10, p.x));
-      p.y = Math.max(10, Math.min(H - 10, p.y));
+      n.vx *= 0.82; n.vy *= 0.82;
+      n.x += n.vx * 0.016; n.y += n.vy * 0.016;
+      n.x = Math.max(10, Math.min(W - 10, n.x));
+      n.y = Math.max(10, Math.min(H - 10, n.y));
     });
   }
 
@@ -179,40 +224,77 @@
     ctx.clearRect(0, 0, W, H);
     const hoverIds = hovered
       ? new Set([hovered.id].concat(
-          hovered.type === 'paper' ? hovered.hubs : (hovered.papers || [])))
+          hovered.type === 'paper' ? hovered.hubs
+            : hovered.type === 'author' ? hovered.hubs.concat(hovered.coPeers || [])
+            : (hovered.members || [])))
       : null;
 
-    // Edges: paper → each of its theme hubs.
-    papers.forEach((p) => {
-      if (!paperVisible(p)) return;
-      const lit = hoverIds && hoverIds.has(p.id);
-      p.hubs.forEach((id) => {
+    // Edges: node → each of its theme hubs.
+    items().forEach((n) => {
+      if (!nodeVisible(n)) return;
+      const lit = hoverIds && hoverIds.has(n.id);
+      n.hubs.forEach((id) => {
         const h = hubById[id];
         if (!activeHubs.has(id)) return;
-        const litEdge = lit && (hovered.type === 'paper' || hovered.id === id);
-        ctx.strokeStyle = hubColour(h);
+        const litEdge = lit && (hovered.type !== 'theme' && hovered.type !== 'untagged' || hovered.id === id);
+        ctx.strokeStyle = hubFill(h);
         ctx.globalAlpha = litEdge ? 0.5 : (hoverIds ? 0.035 : (theme.dark ? 0.14 : 0.11));
         ctx.lineWidth = litEdge ? 1.3 : 1;
         ctx.beginPath();
-        ctx.moveTo(p.x, p.y);
-        ctx.quadraticCurveTo((p.x + h.x) / 2 + (p.y - h.y) * 0.08,
-          (p.y + h.y) / 2 + (h.x - p.x) * 0.08, h.x, h.y);
+        ctx.moveTo(n.x, n.y);
+        ctx.quadraticCurveTo((n.x + h.x) / 2 + (n.y - h.y) * 0.08,
+          (n.y + h.y) / 2 + (h.x - n.x) * 0.08, h.x, h.y);
         ctx.stroke();
       });
     });
     ctx.globalAlpha = 1;
 
-    // Papers.
-    papers.forEach((p) => {
-      if (!paperVisible(p)) return;
-      const dim = hoverIds && !hoverIds.has(p.id);
-      const r = (hovered && hovered.id === p.id) ? p.r + 2 : p.r;
+    // Co-author edges, on top of the hub anchoring (Authors lens). Heavier
+    // stroke for a pair that shares more than one paper. #1129.
+    if (lens === 'authors') {
+      coEdges.forEach((e) => {
+        const a = e.a, b = e.b;
+        if (!nodeVisible(a) || !nodeVisible(b)) return;
+        const lit = hoverIds && hoverIds.has(a.id) && hoverIds.has(b.id);
+        ctx.strokeStyle = theme.dark ? '#5fd4e8' : '#0aa2c0';
+        ctx.globalAlpha = lit ? 0.9 : (hoverIds ? 0.05 : (e.weight > 1 ? 0.6 : 0.4));
+        ctx.lineWidth = e.weight > 1 ? 1.2 + e.weight * 0.7 : 1;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.quadraticCurveTo((a.x + b.x) / 2 + (a.y - b.y) * 0.12,
+          (a.y + b.y) / 2 + (b.x - a.x) * 0.12, b.x, b.y);
+        ctx.stroke();
+      });
+      ctx.globalAlpha = 1;
+    }
+
+    // Nodes.
+    items().forEach((n) => {
+      if (!nodeVisible(n)) return;
+      const dim = hoverIds && !hoverIds.has(n.id);
+      const r = (hovered && hovered.id === n.id) ? n.r + 2 : n.r;
       ctx.globalAlpha = dim ? 0.14 : 1;
-      const col = yearColour[p.year] || theme.muted;
-      if (p.hasPage) {
+
+      if (n.type === 'author') {
+        // Author dot: accent fill, sized by paper count; a collaborator (has a
+        // co-author edge) gets a crisp white rim so clusters read as people.
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = n.coCount ? theme.accent : (theme.dark ? '#7f8ca3' : '#9aa7bd');
+        ctx.fill();
+        if (n.coCount) {
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = theme.dark ? 'rgba(255,255,255,.5)' : 'rgba(255,255,255,.9)';
+          ctx.stroke();
+        }
+        return;
+      }
+
+      const col = yearColour[n.year] || theme.muted;
+      if (n.hasPage) {
         // Curated: solid year-coloured dot with a crisp rim.
         ctx.beginPath();
-        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+        ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
         ctx.fillStyle = col;
         ctx.fill();
         ctx.lineWidth = 1;
@@ -221,7 +303,7 @@
       } else {
         // No page yet: hollow ring, so the gap is legible against solid dots.
         ctx.beginPath();
-        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+        ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
         ctx.fillStyle = theme.dark ? 'rgba(255,255,255,.04)' : 'rgba(255,255,255,.5)';
         ctx.fill();
         ctx.lineWidth = 1.4;
@@ -231,17 +313,17 @@
         ctx.globalAlpha = dim ? 0.14 : 1;
       }
       // Published version on record → subtle inner ring.
-      if (p.published) {
+      if (n.published) {
         ctx.beginPath();
-        ctx.arc(p.x, p.y, Math.max(1.4, r - 2), 0, Math.PI * 2);
+        ctx.arc(n.x, n.y, Math.max(1.4, r - 2), 0, Math.PI * 2);
         ctx.lineWidth = 1;
         ctx.strokeStyle = theme.dark ? 'rgba(10,12,20,.75)' : 'rgba(255,255,255,.95)';
         ctx.stroke();
       }
       // Best Paper Prize → gold ring.
-      if (p.prize) {
+      if (n.prize) {
         ctx.beginPath();
-        ctx.arc(p.x, p.y, r + 3, 0, Math.PI * 2);
+        ctx.arc(n.x, n.y, r + 3, 0, Math.PI * 2);
         ctx.lineWidth = 2;
         ctx.strokeStyle = theme.warning;
         ctx.stroke();
@@ -255,7 +337,7 @@
       ctx.globalAlpha = dim ? 0.22 : 1;
       ctx.beginPath();
       ctx.arc(h.x, h.y, h.r, 0, Math.PI * 2);
-      ctx.fillStyle = h.type === 'untagged' ? '#8a94a6' : hubColour(h);
+      ctx.fillStyle = hubFill(h);
       ctx.fill();
       ctx.textAlign = 'center';
       ctx.font = '700 12px Inter, system-ui, sans-serif';
@@ -273,43 +355,43 @@
   function nodeAt(mx, my) {
     for (const h of hubs) if (Math.hypot(mx - h.x, my - h.y) <= h.r) return h;
     let best = null, bd = 13;
-    for (const p of papers) {
-      if (!paperVisible(p)) continue;
-      const d = Math.hypot(mx - p.x, my - p.y);
-      if (d < bd) { bd = d; best = p; }
+    for (const n of items()) {
+      if (!nodeVisible(n)) continue;
+      const d = Math.hypot(mx - n.x, my - n.y);
+      if (d < bd) { bd = d; best = n; }
     }
     return best;
   }
 
+  function addEl(parent, cls, text) {
+    const el = document.createElement('div');
+    if (cls) el.className = cls;
+    if (text != null) el.textContent = text;
+    parent.append(el);
+    return el;
+  }
+
   function showCard(node, mx, my) {
     if (!node) { card.classList.remove('is-on'); card.setAttribute('aria-hidden', 'true'); return; }
-    if (node.type !== 'paper') {
-      card.replaceChildren();
-      const nm = document.createElement('div'); nm.className = 'nm'; nm.textContent = node.name;
-      const meta = document.createElement('div'); meta.className = 'meta';
-      meta.textContent = node.count + (node.count === 1 ? ' paper' : ' papers');
-      card.append(nm, meta);
-    } else {
-      card.replaceChildren();
-      const nm = document.createElement('div'); nm.className = 'nm'; nm.textContent = node.title;
-      card.append(nm);
-      const meta = document.createElement('div'); meta.className = 'meta';
-      const who = node.authors.length
-        ? node.authors.slice(0, 3).join(', ') + (node.authors.length > 3 ? ' +' + (node.authors.length - 3) : '')
-        : '';
-      meta.textContent = [who, node.year].filter(Boolean).join(' · ');
-      card.append(meta);
-      if (node.panel) {
-        const pn = document.createElement('div'); pn.className = 'panel'; pn.textContent = node.panel;
-        card.append(pn);
-      }
+    card.replaceChildren();
+
+    if (node.type === 'theme' || node.type === 'untagged') {
+      addEl(card, 'nm', node.name);
+      addEl(card, 'meta', node.count + (node.count === 1 ? ' ' : ' ')
+        + (lens === 'authors' ? (node.count === 1 ? 'author' : 'authors')
+                              : (node.count === 1 ? 'paper' : 'papers')));
+    } else if (node.type === 'author') {
+      addEl(card, 'nm', node.name);
+      const bits = [node.paperCount + (node.paperCount === 1 ? ' paper' : ' papers')];
+      if (node.years.length) bits.push(node.years.slice().sort((a, b) => a - b).join(', '));
+      addEl(card, 'meta', bits.join(' · '));
       if (node.hubs.length) {
-        const pills = document.createElement('div'); pills.className = 'pills';
+        const pills = addEl(card, 'pills');
         node.hubs.slice(0, 3).forEach((id) => {
           const h = hubById[id];
           const s = document.createElement('span');
           s.className = 'pill';
-          s.style.background = h.type === 'untagged' ? '#8a94a6' : hubColour(h);
+          s.style.background = hubFill(h);
           s.textContent = h.type === 'untagged' ? 'Untagged' : h.name;
           pills.append(s);
         });
@@ -318,19 +400,44 @@
           s.style.background = theme.subtle; s.textContent = '+' + (node.hubs.length - 3);
           pills.append(s);
         }
-        card.append(pills);
+      }
+      if (node.coCount) {
+        const names = node.coPeerNodes.map((c) => c.name);
+        const shown = names.slice(0, 4).join(', ') + (names.length > 4 ? ', +' + (names.length - 4) : '');
+        addEl(card, 'coauth', 'With ' + shown);
+      }
+      if (node.url) addEl(card, 'go', 'View papers →');
+    } else {
+      addEl(card, 'nm', node.title);
+      const who = node.authors.length
+        ? node.authors.slice(0, 3).join(', ') + (node.authors.length > 3 ? ' +' + (node.authors.length - 3) : '')
+        : '';
+      addEl(card, 'meta', [who, node.year].filter(Boolean).join(' · '));
+      if (node.panel) addEl(card, 'panel', node.panel);
+      if (node.hubs.length) {
+        const pills = addEl(card, 'pills');
+        node.hubs.slice(0, 3).forEach((id) => {
+          const h = hubById[id];
+          const s = document.createElement('span');
+          s.className = 'pill';
+          s.style.background = hubFill(h);
+          s.textContent = h.type === 'untagged' ? 'Untagged' : h.name;
+          pills.append(s);
+        });
+        if (node.hubs.length > 3) {
+          const s = document.createElement('span'); s.className = 'pill';
+          s.style.background = theme.subtle; s.textContent = '+' + (node.hubs.length - 3);
+          pills.append(s);
+        }
       }
       if (node.prize || node.published) {
-        const b = document.createElement('div'); b.className = 'badges';
+        const b = addEl(card, 'badges');
         if (node.prize) { const s = document.createElement('span'); s.className = 'badge-prize'; s.textContent = '★ Best Paper Prize'; b.append(s); }
         if (node.published) { const s = document.createElement('span'); s.className = 'badge-pub'; s.textContent = 'Published version'; b.append(s); }
-        card.append(b);
       }
-      if (node.hasPage) {
-        const go = document.createElement('div'); go.className = 'go'; go.textContent = 'Read more →';
-        card.append(go);
-      }
+      if (node.hasPage) addEl(card, 'go', 'Read more →');
     }
+
     const stage = canvas.parentElement.getBoundingClientRect();
     card.style.left = Math.min(mx + 16, stage.width - 300) + 'px';
     card.style.top = Math.max(8, my - 14) + 'px';
@@ -343,7 +450,7 @@
     const mx = e.clientX - r.left, my = e.clientY - r.top;
     if (draggingHub) { draggingHub.x = mx; draggingHub.y = my; draw(); return; }
     hovered = nodeAt(mx, my);
-    canvas.classList.toggle('is-link', !!(hovered && hovered.type === 'paper' && hovered.url));
+    canvas.classList.toggle('is-link', !!(hovered && (hovered.type === 'paper' || hovered.type === 'author') && hovered.url));
     showCard(hovered, mx, my);
     draw();
   });
@@ -351,13 +458,13 @@
   canvas.addEventListener('pointerdown', (e) => {
     const r = canvas.getBoundingClientRect();
     const n = nodeAt(e.clientX - r.left, e.clientY - r.top);
-    if (n && n.type !== 'paper') { draggingHub = n; canvas.setPointerCapture(e.pointerId); }
+    if (n && (n.type === 'theme' || n.type === 'untagged')) { draggingHub = n; canvas.setPointerCapture(e.pointerId); }
   });
   canvas.addEventListener('pointerup', (e) => {
     if (draggingHub) { draggingHub = null; return; }
     const r = canvas.getBoundingClientRect();
     const n = nodeAt(e.clientX - r.left, e.clientY - r.top);
-    if (n && n.type === 'paper' && n.url) location.href = n.url;
+    if (n && (n.type === 'paper' || n.type === 'author') && n.url) location.href = n.url;
   });
 
   // ── Controls ──
@@ -404,19 +511,61 @@
           b.setAttribute('aria-pressed', activeHubs.has(h.id) ? 'true' : 'false');
           draw();
         },
-        h.type === 'untagged' ? '#8a94a6' : hubColour(h)));
+        hubFill(h)));
     });
   }
 
-  function buildStats(data) {
-    const total = papers.length;
-    const withPage = papers.filter((p) => p.hasPage).length;
-    const rows = [
-      ['' + total, 'papers'],
-      ['' + yearsAsc.length, 'editions, ' + yearsAsc[0] + '–' + yearsAsc[yearsAsc.length - 1]],
-      ['' + data.themes.length, 'research themes'],
-      [withPage + ' / ' + total, 'with an Anthology page'],
-    ];
+  function buildLensChips() {
+    [['papers', 'Papers'], ['authors', 'Authors']].forEach(([v, label]) => {
+      const b = chip(label, v === lens, () => switchLens(v), theme.accent);
+      b.dataset.lens = v;
+      lensEl.appendChild(b);
+    });
+  }
+
+  function buildAuthorOpts() {
+    authorOptsEl.appendChild(chip('Collaborators only', collabOnly, (b) => {
+      collabOnly = !collabOnly;
+      b.setAttribute('aria-pressed', collabOnly ? 'true' : 'false');
+      draw();
+    }));
+  }
+
+  // Connected components over the co-author edges (size ≥ 2) — the headline
+  // "clusters" figure, derived, never hardcoded. #1129.
+  function clusterCount() {
+    const parent = new Map();
+    const find = (x) => { while (parent.get(x) !== x) { parent.set(x, parent.get(parent.get(x))); x = parent.get(x); } return x; };
+    const touched = new Set();
+    coEdges.forEach((e) => {
+      [e.a.id, e.b.id].forEach((id) => { if (!parent.has(id)) parent.set(id, id); touched.add(id); });
+      const ra = find(e.a.id), rb = find(e.b.id);
+      if (ra !== rb) parent.set(ra, rb);
+    });
+    const roots = new Set([...touched].map(find));
+    return roots.size;
+  }
+
+  function buildStats() {
+    statsEl.replaceChildren();
+    let rows;
+    if (lens === 'authors') {
+      const collaborating = authors.filter((a) => a.coCount).length;
+      rows = [
+        ['' + authors.length, 'authors'],
+        ['' + collaborating, 'with a co-author'],
+        ['' + coEdges.length, 'co-author pairs'],
+        ['' + clusterCount(), 'collaboration clusters'],
+      ];
+    } else {
+      const withPage = papers.filter((p) => p.hasPage).length;
+      rows = [
+        ['' + papers.length, 'papers'],
+        ['' + yearsAsc.length, 'editions, ' + yearsAsc[0] + '–' + yearsAsc[yearsAsc.length - 1]],
+        ['' + hubs.filter((h) => h.type === 'theme').length, 'research themes'],
+        [withPage + ' / ' + papers.length, 'with an Anthology page'],
+      ];
+    }
     rows.forEach(([b, s]) => {
       const el = document.createElement('div');
       el.className = 'atlas-stat';
@@ -427,42 +576,74 @@
     });
   }
 
+  function switchLens(next) {
+    if (next === lens) return;
+    lens = next;
+    hovered = null; showCard(null);
+    lensEl.querySelectorAll('button').forEach((b) =>
+      b.setAttribute('aria-pressed', b.dataset.lens === lens ? 'true' : 'false'));
+    const authorMode = lens === 'authors';
+    if (authorOptsEl) authorOptsEl.hidden = !authorMode;
+    if (legendPapers) legendPapers.hidden = authorMode;
+    if (legendAuthors) legendAuthors.hidden = !authorMode;
+    recountHubs();
+    buildStats();
+    seedPositions();
+    reheat(320);
+  }
+
   // ── Boot ──
   fetch('/data/anthology-atlas.json', { cache: 'no-cache' })
     .then((r) => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then((data) => {
       readTheme();
 
-      // Hubs: one per theme (canonical order), plus UNTAGGED if any paper has
-      // no theme. wheel index keys the colour, kept off the theme's position
-      // so the palette is stable as themes are added.
+      // Hubs: one per theme (canonical order), plus UNTAGGED if any paper or
+      // author has no theme. wheel index keys the colour, kept off the theme's
+      // position so the palette is stable as themes are added.
       const themeName = new Set(data.themes);
       data.themes.forEach((name, i) => {
-        const h = { id: 't' + i, type: 'theme', name, wheel: i, count: 0 };
+        const h = { id: 't' + i, type: 'theme', name, wheel: i, count: 0, members: [] };
         hubs.push(h); hubById[h.id] = h;
       });
-      const untaggedHub = { id: 'untagged', type: 'untagged', name: 'Untagged', wheel: 0, count: 0 };
+      const untaggedHub = { id: 'untagged', type: 'untagged', name: 'Untagged', wheel: 0, count: 0, members: [] };
       const idOfTheme = {};
       hubs.forEach((h) => { if (h.type === 'theme') idOfTheme[h.name] = h.id; });
 
       let needUntagged = false;
-      papers = data.papers.map((p, i) => {
-        const hubIds = (p.themes || []).filter((t) => themeName.has(t)).map((t) => idOfTheme[t]);
-        if (!hubIds.length) { hubIds.push('untagged'); needUntagged = true; }
-        return {
-          id: 'p' + i, type: 'paper',
-          title: p.title, authors: p.authors || [], year: p.year, panel: p.panel,
-          url: p.url, hasPage: !!p.hasPage, published: !!p.published, prize: !!p.prize,
-          hubs: hubIds, r: p.hasPage ? 4.6 : 3.6, x: 0, y: 0, vx: 0, vy: 0,
-        };
-      });
+      const hubIdsFor = (themeList) => {
+        const ids = (themeList || []).filter((t) => themeName.has(t)).map((t) => idOfTheme[t]);
+        if (!ids.length) { ids.push('untagged'); needUntagged = true; }
+        return ids;
+      };
+
+      papers = data.papers.map((p, i) => ({
+        id: 'p' + i, type: 'paper',
+        title: p.title, authors: p.authors || [], year: p.year, panel: p.panel,
+        url: p.url, hasPage: !!p.hasPage, published: !!p.published, prize: !!p.prize,
+        hubs: hubIdsFor(p.themes), r: p.hasPage ? 4.6 : 3.6, x: 0, y: 0, vx: 0, vy: 0,
+      }));
+
+      authors = (data.authors || []).map((a, i) => ({
+        id: 'a' + i, type: 'author',
+        name: a.name, url: a.url, years: a.years || [], paperCount: a.paperCount || 0,
+        hubs: hubIdsFor(a.themes),
+        // Dot radius scales with paper count, capped at 7 (floor 3 keeps the
+        // hover/click target usable for one-paper authors). #1129.
+        r: Math.max(3, Math.min(7, 2 + Math.sqrt(a.paperCount || 1) * 1.5)),
+        coCount: 0, coPeers: [], coPeerNodes: [], x: 0, y: 0, vx: 0, vy: 0,
+      }));
       if (needUntagged) { hubs.push(untaggedHub); hubById.untagged = untaggedHub; }
 
-      // Hub counts + reverse membership (for hover spotlight).
-      hubs.forEach((h) => { h.papers = []; });
-      papers.forEach((p) => p.hubs.forEach((id) => {
-        if (hubById[id]) { hubById[id].count++; hubById[id].papers.push(p.id); }
-      }));
+      // Co-author edges: resolve index pairs to author node refs, and record
+      // each author's co-peers for the hover card + collaborators-only filter.
+      coEdges = (data.coauthorEdges || [])
+        .map((e) => ({ a: authors[e.a], b: authors[e.b], weight: e.weight }))
+        .filter((e) => e.a && e.b);
+      coEdges.forEach((e) => {
+        e.a.coPeers.push(e.b.id); e.a.coPeerNodes.push(e.b); e.a.coCount++;
+        e.b.coPeers.push(e.a.id); e.b.coPeerNodes.push(e.a); e.b.coCount++;
+      });
 
       yearsAsc = data.years.slice().sort((a, b) => a - b);
       buildYearColours(yearsAsc);
@@ -470,9 +651,12 @@
       yearsAsc.forEach((y) => activeYears.add(y));
       hubs.forEach((h) => activeHubs.add(h.id));
 
-      buildStats(data);
+      recountHubs();
+      buildStats();
       buildYearChips();
       buildThemeChips();
+      buildLensChips();
+      buildAuthorOpts();
 
       resize();
       seedPositions();
