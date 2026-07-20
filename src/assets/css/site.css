@@ -7015,6 +7015,9 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-stat b { display: block; font-size: var(--fs-xl); color: var(--text); line-height: 1.1; }
 .atlas-stat span { font-size: .76rem; color: var(--text-muted); }
 .atlas-controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 0 0 12px; }
+/* A flex/`display` rule beats the UA [hidden] style, so re-assert it for the
+   lens-toggled control rows + legends (Collaborators-only, Authors legend). */
+.atlas-controls[hidden], .atlas-legend[hidden] { display: none; }
 .atlas-controls .lbl { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); margin-right: 2px; }
 .atlas-chip { font: inherit; font-size: .82rem; font-weight: 600; padding: 6px 13px; border-radius: var(--radius-full); cursor: pointer; border: 1px solid transparent; color: #fff; opacity: .94; transition: opacity var(--motion-fast), transform var(--motion-fast); }
 .atlas-chip:hover { transform: translateY(-1px); }
@@ -7034,6 +7037,7 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-card .badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 7px; font-size: .72rem; font-weight: 600; }
 .atlas-card .badge-prize { color: var(--warning); }
 .atlas-card .badge-pub { color: var(--accent); }
+.atlas-card .coauth { font-size: .76rem; color: var(--text-muted); margin-top: 7px; line-height: var(--lh-snug); }
 .atlas-card .go { font-size: .78rem; color: var(--accent); margin-top: 8px; font-weight: 600; }
 .atlas-legend { display: flex; gap: 16px; flex-wrap: wrap; margin: 14px 2px 0; font-size: .78rem; color: var(--text-muted); align-items: center; }
 .atlas-legend .sw { display: inline-block; width: 11px; height: 11px; border-radius: 50%; vertical-align: -1px; margin-right: 5px; }
@@ -7042,5 +7046,8 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-legend .sw-ring { background: transparent; border: 2px solid; }
 .atlas-legend .sw-prize { border-color: var(--warning); }
 .atlas-legend .sw-pub { background: transparent; box-shadow: inset 0 0 0 2px var(--text-muted); width: 9px; height: 9px; }
+.atlas-legend .sw-collab { background: var(--accent); box-shadow: 0 0 0 1.5px var(--surface-strong); }
+.atlas-legend .sw-solo { background: #9aa7bd; }
+.atlas-legend .sw-coauthor { background: #0aa2c0; width: 16px; height: 3px; border-radius: 2px; vertical-align: 2px; }
 @media (max-width: 640px) { #atlas-canvas { height: 480px; } }
 @media (prefers-reduced-motion: reduce) { .atlas-chip { transition: none; } .atlas-chip:hover { transform: none; } }
