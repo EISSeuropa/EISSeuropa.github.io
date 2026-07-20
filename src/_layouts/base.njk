@@ -34,6 +34,11 @@
     <link rel="canonical" href="{{ site.url }}{{ page.url }}">
   {% endif %}
 
+  {# Opt-out of indexing for unlinked soft-launch / prototype pages that set
+     `noindex: true` in front-matter (e.g. the Anthology Atlas PoC, #1124).
+     The redirect branch above already emits its own noindex,follow. #}
+  {% if noindex and not redirectTo %}<meta name="robots" content="noindex">{% endif %}
+
   {# Google Scholar / Highwire citation metadata for per-paper landing pages
      (#794). `paper` is the pagination alias set by paper.njk; it is undefined
      on every other page, so this block only renders on /papers/<slug>.html.

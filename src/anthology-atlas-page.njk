@@ -1,0 +1,49 @@
+---
+layout: base.njk
+permalink: /anthology-atlas.html
+title: Anthology Atlas
+description: A force-directed map of the European Security Studies Anthology — every paper since 2017, drawn to the research themes it touches, coloured by edition.
+navKey: ""
+lang: en
+noindex: true
+eleventyExcludeFromCollections: true
+---
+{# Anthology Atlas — proof of concept (#1124). Soft launch: EN only, noindex,
+   unlinked from navigation, excluded from the sitemap (eleventyExcludeFrom
+   Collections drops it from collections.all, which the sitemap iterates) and
+   from site search (data-pagefind-ignore below). The graph is the real
+   /data/anthology-atlas.json, projected from paperIndex.js at build time.
+   Sibling of the NetSec Atlas (people); this one maps papers. #}
+<div class="atlas-shell" data-pagefind-ignore="all">
+  <a class="atlas-back" href="/anthology.html">&larr; The Anthology</a>
+  <div class="atlas-masthead">
+    <h1>Anthology Atlas</h1>
+    <span class="atlas-proto-pill">Prototype</span>
+  </div>
+  <p class="atlas-lede">A map of the <strong>European Security Studies Anthology</strong> — every paper presented at an EISS conference or workshop since 2017, drawn toward the <strong>research themes</strong> it touches. Papers on more than one theme settle between hubs, so the thematic bridges of the field become visible; each dot is coloured by its <strong>edition year</strong>, so the map doubles as a view of the field over time. Filter by year or spotlight a theme with the chips. Hover a paper for its title, authors and panel; click through to its Anthology page where one exists. Everything here is generated from the same data behind the <a href="/anthology.html">Anthology</a>.</p>
+
+  <div class="atlas-stats" id="atlas-stats" aria-label="Anthology statistics"></div>
+
+  <div class="atlas-controls" id="atlas-years" role="group" aria-label="Filter by edition year">
+    <span class="lbl">Editions</span>
+    <!-- year chips injected by anthology-atlas.js -->
+  </div>
+  <div class="atlas-controls" id="atlas-themes" role="group" aria-label="Spotlight a research theme">
+    <span class="lbl">Themes</span>
+    <!-- theme hub chips injected by anthology-atlas.js -->
+  </div>
+
+  <div class="atlas-stage">
+    <canvas id="atlas-canvas" aria-label="Force-directed map of the European Security Studies Anthology: every paper drawn toward the research themes it touches, coloured by edition year. The same papers are available as a filterable list on the Anthology page."></canvas>
+    <div class="atlas-card" id="atlas-card" aria-hidden="true"></div>
+  </div>
+  <div class="atlas-legend" id="atlas-legend">
+    <span><span class="sw sw-page"></span>has an Anthology page</span>
+    <span><span class="sw sw-nopage"></span>programme entry only (no page yet)</span>
+    <span><span class="sw sw-ring sw-prize"></span>Best Paper Prize</span>
+    <span><span class="sw sw-pub"></span>published version on record</span>
+    <span>drag a theme hub to rearrange the map</span>
+  </div>
+</div>
+
+<script src="{{ '/assets/js/anthology-atlas.js' | bust }}" defer></script>
