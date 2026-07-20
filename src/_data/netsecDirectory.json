@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-12T17:26:26+00:00",
-  "count": 67,
+  "generated_at": "2026-07-16T14:58:33+00:00",
+  "count": 70,
   "source": "https://netsec-cost.eu/directory-index.json",
   "members": [
     {
@@ -158,6 +158,17 @@
       "photo": null
     },
     {
+      "name": "Dr David Morgan-Owen",
+      "name_key": "david owen",
+      "aliases": [],
+      "slug": "david-morgan-owen",
+      "url": "https://netsec-cost.eu/people/david-morgan-owen.html",
+      "orcid": "0000-0002-0551-2836",
+      "role": null,
+      "affiliation": "University of St Andrews",
+      "photo": null
+    },
+    {
       "name": "Dr Eda KUŞKU SÖNMEZ",
       "name_key": "eda sonmez",
       "aliases": [],
@@ -246,6 +257,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/francesco-canossi.jpg"
     },
     {
+      "name": "Dr Gayane Harutyunyan",
+      "name_key": "gayane harutyunyan",
+      "aliases": [],
+      "slug": "gayane-harutyunyan",
+      "url": "https://netsec-cost.eu/people/gayane-harutyunyan.html",
+      "orcid": "0000-0003-3240-0802",
+      "role": null,
+      "affiliation": "Public Administration Academy of the Republic of Armenia",
+      "photo": "https://netsec-cost.eu/assets/images/people/gayane-harutyunyan.jpg"
+    },
+    {
       "name": "Dr Gesine Weber",
       "name_key": "gesine weber",
       "aliases": [],
@@ -277,6 +299,17 @@
       "role": null,
       "affiliation": "CASD",
       "photo": "https://netsec-cost.eu/assets/images/people/giulia-biselli.jpg"
+    },
+    {
+      "name": "Prof. Huw Bennett",
+      "name_key": "huw bennett",
+      "aliases": [],
+      "slug": "huw-bennett",
+      "url": "https://netsec-cost.eu/people/huw-bennett.html",
+      "orcid": null,
+      "role": null,
+      "affiliation": "Cardiff University",
+      "photo": null
     },
     {
       "name": "Mr Immanuel Rummel",
