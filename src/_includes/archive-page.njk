@@ -94,6 +94,15 @@
       {% include "papers-page.njk" %}
     </div>
 
+    {# Wayfinding to the Anthology Atlas — the force-directed map of the same
+       corpus. Shown under both views (the atlas visualises people and papers
+       alike), in every locale, so /anthology and /papers reach it in ≤2
+       clicks (#1134). data-pagefind-ignore: it's a nav affordance, not
+       content, and it links to a page that indexes itself. #}
+    <div data-pagefind-ignore>
+      {% include "atlas-signpost.njk" %}
+    </div>
+
   </div>
 </section>
 

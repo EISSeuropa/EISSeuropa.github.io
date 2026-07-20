@@ -32,6 +32,11 @@
   const authorOptsEl = document.getElementById('atlas-authoropts');
   const legendPapers = document.getElementById('atlas-legend');
   const legendAuthors = document.getElementById('atlas-legend-authors');
+  // Welcome strip + guided-tour controls (#1134).
+  const welcomeEl = document.getElementById('atlas-welcome');
+  const welcomeDismiss = document.getElementById('atlas-welcome-dismiss');
+  const welcomeTour = document.getElementById('atlas-welcome-tour');
+  const tourTrigger = document.getElementById('atlas-help');
   if (!canvas || !canvas.getContext) return;
   const ctx = canvas.getContext('2d');
 
@@ -677,4 +682,95 @@
     });
     draw();
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  // ── Welcome strip + guided tour (#1134) ──────────────────────────────────
+  // First-visit welcome strip + a coachmark tour, both keyed on the same
+  // localStorage flag. The engine is the reusable window.eissTour (atlas-
+  // tour.js, loaded with defer before this script); we build the step list
+  // lazily at click time — viewport-aware, and filtering steps whose target
+  // is hidden so "Step X of N" stays honest. Ported from the NetSec directory
+  // pattern (people-directory.js). The Atlas is EN-only (#1124), so the step
+  // copy is English inline rather than routed through i18n.
+  const TOUR_KEY = 'eiss-atlas-tour-seen';
+
+  function markSeen() {
+    try { localStorage.setItem(TOUR_KEY, 'true'); } catch (e) {}
+    if (welcomeEl) welcomeEl.hidden = true;
+    // Drop the pre-paint reveal class, or the CSS override would keep the
+    // dismissed strip visible despite the hidden attribute.
+    document.documentElement.classList.remove('atlas-welcome');
+  }
+
+  function startTour() {
+    if (!window.eissTour) return; // engine missing — fail gracefully
+    if (welcomeEl) welcomeEl.hidden = true;
+    // Viewport-aware split (NetSec's isPhone pattern): phones get a shorter
+    // walkthrough that skips the lens-switching Authors step, whose control
+    // row wraps off-screen at 375px.
+    const isPhone = window.matchMedia && window.matchMedia('(max-width: 640px)').matches;
+    const lensStep = { target: '#atlas-lens',
+      title: 'Two lenses over one archive',
+      body: 'Switch between Papers — one dot per paper, coloured by edition year — and Authors — one dot per person, with co-authorship drawn on top.' };
+    const themesStep = { target: '#atlas-themes',
+      title: 'Spotlight a research theme',
+      body: 'Each labelled hub is one research theme. Toggle a chip to fade the rest; drag a hub on the map to pull its cluster apart.' };
+    const stageStep = { target: '.atlas-stage',
+      title: 'Read the map',
+      body: 'Solid dots have an Anthology page; hollow rings are programme entries without one yet. Hover any dot for details, and click through to the Anthology.' };
+    const statsStep = { target: '#atlas-stats',
+      title: 'The corpus at a glance',
+      body: 'These figures are generated from the same data as the Anthology, so they update as the archive grows.' };
+    const desktopSteps = [
+      lensStep,
+      { target: '#atlas-years',
+        title: 'Filter by edition',
+        body: 'Toggle edition years on and off to narrow the map to the periods you want to see.' },
+      themesStep,
+      stageStep,
+      { target: '#atlas-legend',
+        title: 'What the markers mean',
+        body: 'The legend decodes the dot styles: a landing page vs a programme-only entry, a Best Paper Prize ring, and a published version on record.' },
+      statsStep,
+      { target: '#atlas-authoropts', lens: 'authors',
+        title: 'Collaboration, up close',
+        body: '‘Collaborators only’ hides solo authors so the co-authorship clusters stand out. We’ve switched you to the Authors lens to show it.' },
+    ];
+    const mobileSteps = [lensStep, themesStep, stageStep, statsStep];
+    const rawSteps = isPhone ? mobileSteps : desktopSteps;
+    // Drop steps whose target is absent/hidden/zero-size. A lens:'authors'
+    // step is kept (onStep un-hides its row) as long as there are authors.
+    const tourSteps = rawSteps.filter(function (s) {
+      if (s.lens === 'authors') return authors.length > 0 && !!authorOptsEl;
+      const el = document.querySelector(s.target);
+      if (!el || el.hidden) return false;
+      const r = el.getBoundingClientRect();
+      return r.width > 0 || r.height > 0;
+    });
+    window.eissTour({
+      steps: tourSteps.length ? tourSteps : rawSteps,
+      labels: {
+        next: 'Next', prev: 'Back', done: 'Done', skip: 'Skip',
+        stepOf: 'Step %1 of %2', closeLabel: 'Close tour',
+      },
+      // Put the atlas in the lens each step describes, so back/forward keep the
+      // right view and the Authors step's control row is visible.
+      onStep: function (step) { switchLens(step.lens === 'authors' ? 'authors' : 'papers'); },
+      onComplete: function () { markSeen(); switchLens('papers'); },
+    }).start();
+  }
+
+  // Auto-show the strip on first visit. The inline head script already made it
+  // visible pre-paint via html.atlas-welcome (so it never pops in and shifts
+  // the layout); here we reconcile the real hidden attribute and retire the
+  // bridging class.
+  if (welcomeEl && welcomeDismiss) {
+    let seen = false;
+    try { seen = localStorage.getItem(TOUR_KEY) === 'true'; } catch (e) {}
+    if (!seen) welcomeEl.hidden = false;
+    document.documentElement.classList.remove('atlas-welcome');
+    welcomeDismiss.addEventListener('click', markSeen);
+    if (welcomeTour) welcomeTour.addEventListener('click', startTour);
+  }
+  // The `?` button re-opens the tour any time, even after dismissal.
+  if (tourTrigger) tourTrigger.addEventListener('click', startTour);
 })();

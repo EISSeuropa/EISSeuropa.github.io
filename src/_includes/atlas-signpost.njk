@@ -1,0 +1,22 @@
+{# Locale-aware signpost to the Anthology Atlas, as a link-card. Rendered at
+   the foot of the Anthology (archive-page.njk), so it appears on /anthology
+   and its papers view in every locale. Reuses the .speakers-cta link-card
+   pattern (src/_includes/speakers-signpost.njk). The Atlas page is EN-only
+   for now (#1124), so the FR/DE sub-lines flag that via atlasSignpost.sub.
+   Sub-line counts are data-derived from the anthologyAtlas data global
+   (papers / authors / research themes), so they never drift from the map. #}
+{% from "icons.njk" import icon %}
+{%- set t = i18n[lang or "en"] -%}
+{%- set _themeCount = anthologyAtlas.themes | length -%}
+{%- set _sub = t.atlasSignpost.sub
+      | replace("{p}", anthologyAtlas.papers | length)
+      | replace("{a}", anthologyAtlas.authors | length)
+      | replace("{t}", _themeCount) -%}
+<a class="speakers-cta" href="/anthology-atlas.html"{% if (lang or "en") != "en" %} hreflang="en"{% endif %}>
+  <span class="speakers-cta__icon" aria-hidden="true">{{ icon("share-2") }}</span>
+  <span class="speakers-cta__body">
+    <span class="speakers-cta__title">{{ t.atlasSignpost.title }}</span>
+    <span class="speakers-cta__sub muted">{{ _sub }}</span>
+  </span>
+  <span class="speakers-cta__arrow" aria-hidden="true">{{ icon("arrow-right") }}</span>
+</a>

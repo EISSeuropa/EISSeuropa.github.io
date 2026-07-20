@@ -7051,3 +7051,124 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-legend .sw-coauthor { background: #0aa2c0; width: 16px; height: 3px; border-radius: 2px; vertical-align: 2px; }
 @media (max-width: 640px) { #atlas-canvas { height: 480px; } }
 @media (prefers-reduced-motion: reduce) { .atlas-chip { transition: none; } .atlas-chip:hover { transform: none; } }
+
+/* ─── Anthology Atlas — welcome strip + guided tour (#1134) ──────────────
+   The first-visit welcome strip, the `?` re-trigger button in the masthead,
+   and the reusable coachmark tour engine chrome (window.eissTour, src/assets/
+   js/atlas-tour.js). The engine is ported from the NetSec directory's tour
+   and re-tokenised onto the EISS design system so it reads native in both
+   themes. Every class lives here (not inline) so the build-sanity gate can
+   confirm it is styled. */
+.atlas-help {
+  appearance: none; border: 1px solid var(--border); cursor: pointer;
+  width: 30px; height: 30px; border-radius: var(--radius-full);
+  display: inline-grid; place-items: center;
+  background: var(--surface); color: var(--text-muted);
+  font: inherit; font-size: var(--fs-sm); font-weight: 700; align-self: center;
+  transition: background var(--motion-fast) var(--ease-out),
+              color var(--motion-fast) var(--ease-out),
+              border-color var(--motion-fast) var(--ease-out);
+}
+.atlas-help:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+.atlas-help:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.atlas-welcome {
+  position: relative; margin: 0 0 20px; padding: 18px 22px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border); border-left: 3px solid var(--accent);
+  background: linear-gradient(180deg, var(--accent-soft), transparent);
+}
+.atlas-welcome[hidden] { display: none; }
+/* First-visit pre-paint reveal: the inline head script stamps html.atlas-
+   welcome before the strip is parsed, so it holds its space from the first
+   frame; anthology-atlas.js reconciles the hidden attribute + drops the class. */
+html.atlas-welcome .atlas-welcome[hidden] { display: block; }
+.atlas-welcome-title {
+  font-size: var(--fs-lg); font-weight: 700; letter-spacing: -.01em;
+  margin: 0 0 4px; color: var(--text); line-height: var(--lh-tight);
+}
+.atlas-welcome-lede {
+  margin: 0 0 10px; color: var(--text-muted); font-size: var(--fs-sm);
+  line-height: var(--lh-normal); max-width: 68ch;
+}
+.atlas-welcome-tips {
+  list-style: none; margin: 0; padding: 0; display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 4px 18px;
+  font-size: var(--fs-sm); color: var(--text-muted); line-height: var(--lh-snug);
+}
+.atlas-welcome-tips li { margin: 0; padding: 0; }
+.atlas-welcome-tips strong { color: var(--text); font-weight: 600; }
+.atlas-welcome-actions {
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 14px;
+}
+.atlas-welcome-dismiss {
+  appearance: none; border: 0; cursor: pointer; background: transparent;
+  color: var(--text-muted); font: inherit; font-size: var(--fs-sm); font-weight: 600;
+  padding: 7px 14px; border-radius: var(--radius-full);
+  transition: background var(--motion-fast) var(--ease-out),
+              color var(--motion-fast) var(--ease-out);
+}
+.atlas-welcome-dismiss:hover, .atlas-welcome-dismiss:focus-visible {
+  background: var(--surface-strong); color: var(--text); outline: none;
+}
+
+/* Tour engine chrome — backdrop, spotlight ring, tooltip card, buttons.
+   Positioned above every other layer (search modal is z-index 1000). */
+.tour-backdrop {
+  position: fixed; inset: 0; z-index: 1100;
+  background: hsl(222 30% 6% / .55); opacity: 0; pointer-events: none;
+  transition: opacity .25s var(--ease-out);
+}
+.tour-backdrop.tour-visible { opacity: 1; pointer-events: auto; }
+.tour-spotlight {
+  position: fixed; z-index: 1101; border-radius: var(--radius-md);
+  pointer-events: none;
+  box-shadow: 0 0 0 3px hsl(203 100% 45% / .9),
+              0 0 0 10px hsl(203 100% 45% / .35),
+              0 0 30px 4px hsl(203 100% 45% / .45);
+  transition: top .28s var(--ease-out), left .28s var(--ease-out),
+              width .28s var(--ease-out), height .28s var(--ease-out);
+}
+.tour-tooltip {
+  position: fixed; z-index: 1102;
+  background: var(--bg-elev); color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 18px 22px 16px; box-shadow: var(--shadow-3);
+  max-width: 360px; font-size: var(--fs-sm); line-height: var(--lh-normal);
+}
+.tour-title {
+  font-size: var(--fs-lg); font-weight: 700; letter-spacing: -.01em;
+  margin: 0 0 6px; color: var(--text); line-height: var(--lh-tight);
+}
+.tour-body { margin: 0 0 14px; color: var(--text-muted); }
+.tour-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 10px; flex-wrap: wrap;
+}
+.tour-progress {
+  font-size: .72rem; color: var(--text-subtle); letter-spacing: .04em;
+  text-transform: uppercase; font-weight: 700;
+}
+.tour-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.tour-btn {
+  appearance: none; border: 0; cursor: pointer; font: inherit;
+  font-size: var(--fs-sm); font-weight: 600; padding: 7px 14px;
+  border-radius: var(--radius-full);
+  transition: background var(--motion-fast) var(--ease-out),
+              color var(--motion-fast) var(--ease-out);
+}
+.tour-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tour-btn-primary { background: var(--accent); color: #fff; }
+.tour-btn-primary:hover { background: var(--accent-hover); }
+.tour-btn-ghost { background: transparent; color: var(--text-muted); }
+.tour-btn-ghost:hover { background: var(--surface-strong); color: var(--text); }
+
+@media (max-width: 640px) {
+  .tour-tooltip {
+    max-width: none; width: calc(100vw - 24px) !important;
+    left: 12px !important; right: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tour-backdrop, .tour-spotlight { transition: none; }
+}
