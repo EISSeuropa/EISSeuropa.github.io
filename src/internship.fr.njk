@@ -1,0 +1,88 @@
+---
+layout: base.njk
+permalink: /internship.fr.html
+title: Stage
+description: Rejoignez l'EISS comme stagiaire à distance dans le cadre d'une convention de stage. Un stage de deux mois maximum en appui aux événements du réseau, dont la Conférence annuelle, ouvert aux étudiants inscrits. Les candidatures pour le premier semestre sont privilégiées.
+navKey: internship
+lang: fr
+status: beta
+alternates:
+  en: /internship.html
+  fr: /internship.fr.html
+  de: /internship.de.html
+---
+{% from "icons.njk" import icon %}
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">Rejoignez-nous</span>
+    <h1>Stage</h1>
+    <p class="page-lead">
+      Impliquez-vous dans l'Initiative européenne pour les études de sécurité. Notre stage est un
+      poste à distance de deux mois maximum, encadré par une <em>convention de stage</em>, en appui
+      à la vie du réseau &mdash; en premier lieu notre Conférence annuelle.
+    </p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <h2>Le stage en bref</h2>
+
+    <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-block: var(--space-6);">
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("calendar") }}</div>
+        <h3>Deux mois maximum, à distance</h3>
+        <p>
+          Un stage de deux mois maximum, réalisé entièrement à distance. Il n'est pas rémunéré, dans
+          les limites fixées par votre <em>convention de stage</em>.
+        </p>
+      </article>
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("users") }}</div>
+        <h3>En appui à nos événements</h3>
+        <p>
+          Dans le cadre de vos études, vous assistez l'équipe qui prépare et organise les événements
+          de l'initiative &mdash; avant tout la Conférence annuelle.
+        </p>
+      </article>
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("graduation-cap") }}</div>
+        <h3>Pour les étudiants inscrits</h3>
+        <p>
+          Ouvert aux étudiants pouvant fournir une <em>convention de stage</em> délivrée par leur
+          établissement d'enseignement supérieur français (ou européen compatible).
+        </p>
+      </article>
+    </div>
+
+    <p class="muted" style="max-width: 44rem; margin-top: var(--space-5);">
+      La loi française impose que tout stage s'inscrive dans un cursus pédagogique, encadré par une
+      <em>convention de stage</em> tripartite entre vous, votre établissement et l'EISS. Nous ne
+      pouvons accueillir un stage sans convention, et celle-ci doit être signée avant le début du
+      stage.
+    </p>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="container">
+    <article class="card" style="display: grid; gap: var(--space-5); grid-template-columns: 1fr; padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div>
+        <div class="featured-eyebrow">Comment postuler</div>
+        <h2 style="margin-bottom: var(--space-3);">Envoyez votre candidature</h2>
+        <p class="muted">
+          Envoyez un CV et une courte lettre de motivation à
+          <a href="mailto:{{ site.contactEmail }}?subject=Candidature%20de%20stage">{{ site.contactEmail }}</a>,
+          en précisant votre établissement et les dates que votre <em>convention de stage</em> peut
+          couvrir. Les candidatures pour le premier semestre (janvier&ndash;juin) sont privilégiées.
+        </p>
+        <p style="margin-top: var(--space-4);">
+          <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}?subject=Candidature%20de%20stage">
+            {{ icon("mail") }} Postuler par e-mail
+          </a>
+        </p>
+      </div>
+    </article>
+  </div>
+</section>

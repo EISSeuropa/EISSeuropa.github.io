@@ -1,0 +1,86 @@
+---
+layout: base.njk
+permalink: /internship.html
+title: Internship
+description: Join the EISS as a remote intern under a convention de stage. A placement of up to two months supporting the network's events, including the Annual Conference, open to enrolled students. Applications for the first half of the year are preferred.
+navKey: internship
+lang: en
+alternates:
+  en: /internship.html
+  fr: /internship.fr.html
+  de: /internship.de.html
+---
+{% from "icons.njk" import icon %}
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">Join us</span>
+    <h1>Internship</h1>
+    <p class="page-lead">
+      Get involved with the European Initiative for Security Studies. Our internship is a remote
+      placement of up to two months, run under a French <em>convention de stage</em>, supporting
+      the life of the network &mdash; above all our Annual Conference.
+    </p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <h2>The placement at a glance</h2>
+
+    <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-block: var(--space-6);">
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("calendar") }}</div>
+        <h3>Up to two months, remote</h3>
+        <p>
+          A placement of up to two months, carried out entirely remotely. It is unpaid, within the
+          limits set by your <em>convention de stage</em>.
+        </p>
+      </article>
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("users") }}</div>
+        <h3>Supporting our events</h3>
+        <p>
+          As part of your studies, you assist the team preparing and delivering the initiative's
+          events &mdash; first and foremost the Annual Conference.
+        </p>
+      </article>
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("graduation-cap") }}</div>
+        <h3>For enrolled students</h3>
+        <p>
+          Open to students who can provide a <em>convention de stage</em> from their French (or
+          convention-compatible European) higher-education institution.
+        </p>
+      </article>
+    </div>
+
+    <p class="muted" style="max-width: 44rem; margin-top: var(--space-5);">
+      French law requires every internship to be part of a course of study, covered by a tripartite
+      <em>convention de stage</em> between you, your institution and the EISS. We cannot host an
+      internship without one, and it must be signed before the placement begins.
+    </p>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="container">
+    <article class="card" style="display: grid; gap: var(--space-5); grid-template-columns: 1fr; padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div>
+        <div class="featured-eyebrow">How to apply</div>
+        <h2 style="margin-bottom: var(--space-3);">Send us your application</h2>
+        <p class="muted">
+          Send a CV and a short cover letter to
+          <a href="mailto:{{ site.contactEmail }}?subject=Internship%20application">{{ site.contactEmail }}</a>,
+          telling us your institution and the dates your <em>convention de stage</em> can cover.
+          Applications for the first half of the year (January&ndash;June) are preferred.
+        </p>
+        <p style="margin-top: var(--space-4);">
+          <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}?subject=Internship%20application">
+            {{ icon("mail") }} Apply by email
+          </a>
+        </p>
+      </div>
+    </article>
+  </div>
+</section>
