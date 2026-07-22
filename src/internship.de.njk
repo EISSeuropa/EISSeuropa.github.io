@@ -1,0 +1,89 @@
+---
+layout: base.njk
+permalink: /internship.de.html
+title: Praktikum
+description: Werden Sie Praktikant:in der EISS im Remote-Format im Rahmen einer französischen convention de stage. Ein Praktikum von höchstens zwei Monaten zur Unterstützung der Veranstaltungen des Netzwerks, einschließlich der Jahreskonferenz, offen für eingeschriebene Studierende. Bewerbungen für das erste Halbjahr werden bevorzugt.
+navKey: internship
+lang: de
+status: beta
+alternates:
+  en: /internship.html
+  fr: /internship.fr.html
+  de: /internship.de.html
+---
+{% from "icons.njk" import icon %}
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">Machen Sie mit</span>
+    <h1>Praktikum</h1>
+    <p class="page-lead">
+      Engagieren Sie sich bei der European Initiative for Security Studies. Unser Praktikum ist ein
+      Remote-Einsatz von höchstens zwei Monaten, geregelt durch eine französische
+      <em>convention de stage</em>, zur Unterstützung des Netzwerks &mdash; allen voran unserer
+      Jahreskonferenz.
+    </p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <h2>Das Praktikum auf einen Blick</h2>
+
+    <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-block: var(--space-6);">
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("calendar") }}</div>
+        <h3>Höchstens zwei Monate, remote</h3>
+        <p>
+          Ein Praktikum von höchstens zwei Monaten, vollständig remote. Es ist unbezahlt, im Rahmen
+          der Grenzen Ihrer <em>convention de stage</em>.
+        </p>
+      </article>
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("users") }}</div>
+        <h3>Unterstützung unserer Veranstaltungen</h3>
+        <p>
+          Im Rahmen Ihres Studiums unterstützen Sie das Team bei der Vorbereitung und Durchführung
+          der Veranstaltungen der Initiative &mdash; allen voran der Jahreskonferenz.
+        </p>
+      </article>
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("graduation-cap") }}</div>
+        <h3>Für eingeschriebene Studierende</h3>
+        <p>
+          Offen für Studierende, die eine <em>convention de stage</em> ihrer französischen (oder
+          kompatiblen europäischen) Hochschule vorlegen können.
+        </p>
+      </article>
+    </div>
+
+    <p class="muted" style="max-width: 44rem; margin-top: var(--space-5);">
+      Das französische Recht verlangt, dass jedes Praktikum Teil eines Studiengangs ist und durch
+      eine dreiseitige <em>convention de stage</em> zwischen Ihnen, Ihrer Hochschule und der EISS
+      geregelt wird. Ohne eine solche Konvention können wir kein Praktikum anbieten, und sie muss
+      vor Beginn des Praktikums unterzeichnet sein.
+    </p>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="container">
+    <article class="card" style="display: grid; gap: var(--space-5); grid-template-columns: 1fr; padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div>
+        <div class="featured-eyebrow">So bewerben Sie sich</div>
+        <h2 style="margin-bottom: var(--space-3);">Senden Sie Ihre Bewerbung</h2>
+        <p class="muted">
+          Senden Sie einen Lebenslauf und ein kurzes Motivationsschreiben an
+          <a href="mailto:{{ site.contactEmail }}?subject=Bewerbung%20Praktikum">{{ site.contactEmail }}</a>
+          und nennen Sie Ihre Hochschule sowie die Daten, die Ihre <em>convention de stage</em>
+          abdecken kann. Bewerbungen für das erste Halbjahr (Januar&ndash;Juni) werden bevorzugt.
+        </p>
+        <p style="margin-top: var(--space-4);">
+          <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}?subject=Bewerbung%20Praktikum">
+            {{ icon("mail") }} Per E-Mail bewerben
+          </a>
+        </p>
+      </div>
+    </article>
+  </div>
+</section>

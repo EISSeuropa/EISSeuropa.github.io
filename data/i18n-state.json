@@ -18,14 +18,14 @@
     "src/initiative.njk": {
       "fr": {
         "file": "src/initiative.fr.njk",
-        "source_sha1": "6c60cc23d8225818d711e369473bec9a906ac015",
-        "translated_on": "2026-06-19",
+        "source_sha1": "aeb3f5bda8a761856cfbba782549cc520cb45443",
+        "translated_on": "2026-07-22",
         "status": "beta"
       },
       "de": {
         "file": "src/initiative.de.njk",
-        "source_sha1": "6c60cc23d8225818d711e369473bec9a906ac015",
-        "translated_on": "2026-06-19",
+        "source_sha1": "aeb3f5bda8a761856cfbba782549cc520cb45443",
+        "translated_on": "2026-07-22",
         "status": "beta"
       }
     },
@@ -102,14 +102,14 @@
     "src/sitemap.njk": {
       "fr": {
         "file": "src/sitemap.fr.njk",
-        "source_sha1": "81a1e6300e4d677950cfcf5c670d9158dae95153",
-        "translated_on": "2026-06-23",
+        "source_sha1": "faa17536b34179462aaba80c3e4ec0e2c72e010b",
+        "translated_on": "2026-07-22",
         "status": "beta"
       },
       "de": {
         "file": "src/sitemap.de.njk",
-        "source_sha1": "81a1e6300e4d677950cfcf5c670d9158dae95153",
-        "translated_on": "2026-06-23",
+        "source_sha1": "faa17536b34179462aaba80c3e4ec0e2c72e010b",
+        "translated_on": "2026-07-22",
         "status": "beta"
       }
     },
@@ -208,6 +208,20 @@
         "file": "src/press-kit.de.njk",
         "source_sha1": "e6f6280c56f5aebb0d1a6e30de75648b115badcf",
         "translated_on": "2026-06-03",
+        "status": "beta"
+      }
+    },
+    "src/internship.njk": {
+      "fr": {
+        "file": "src/internship.fr.njk",
+        "source_sha1": "ad2064b0d00928ca3dcbe261e6ec3fce7b77e2a9",
+        "translated_on": "2026-07-22",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/internship.de.njk",
+        "source_sha1": "ad2064b0d00928ca3dcbe261e6ec3fce7b77e2a9",
+        "translated_on": "2026-07-22",
         "status": "beta"
       }
     }
