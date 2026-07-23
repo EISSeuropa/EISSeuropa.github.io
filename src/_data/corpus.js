@@ -641,6 +641,7 @@ const speakers = [...speakerMap.values()]
       surname: n.surname,
       sortKey: n.sortKey,
       letter: n.letter,
+      key: s.key, // canonical dedup key, exposed for the co-author join (#1150)
       slug, // stable anchor / deep-link id, unique across the corpus (#966)
       affiliation,
       themes, // permanent + derived themes, in canonical order
