@@ -111,6 +111,15 @@ alternates:
           révisions ; des légendes significatives et le contexte environnant fournissent la même
           information aux utilisateurs de lecteurs d'écran.
         </li>
+        <li>
+          <strong>Le canevas de l'Atlas de l'Anthologie.</strong> La carte interactive à l'adresse
+          <code>/anthology-atlas.html</code> est dessinée dans un élément <code>&lt;canvas&gt;</code>,
+          dont les technologies d'assistance ne peuvent pas lire le contenu.
+          <em>Atténuation :</em> le canevas porte un <code>aria-label</code> descriptif, un lien
+          visible sous la carte mène au même corpus sous forme de listes filtrables sur la page de
+          l'Anthologie, et les filtres et statistiques autour de la carte sont des contrôles HTML
+          classiques avec un état <code>aria-pressed</code>.
+        </li>
       </ol>
 
       <h2>4. Fonctionnalités d'accessibilité mises en œuvre</h2>

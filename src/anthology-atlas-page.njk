@@ -79,9 +79,14 @@ lang: en
   </div>
 
   <div class="atlas-stage">
-    <canvas id="atlas-canvas" aria-label="Force-directed map of the European Security Studies Anthology: every paper drawn toward the research themes it touches, coloured by edition year. The same papers are available as a filterable list on the Anthology page."></canvas>
+    <canvas id="atlas-canvas" aria-label="Force-directed map of the European Security Studies Anthology: every paper drawn toward the research themes it touches, coloured by edition year, with an Authors lens mapping co-authorship between the same people. The same papers and authors are available as filterable lists on the Anthology page."></canvas>
     <div class="atlas-card" id="atlas-card" aria-hidden="true"></div>
   </div>
+  {# Visible list alternative (#1155): the canvas is opaque to assistive
+     technologies, and a plain list suits plenty of sighted readers too. #}
+  <p class="muted" style="margin: var(--space-3) 0 0; font-size: var(--fs-sm);">
+    Prefer a list? Every paper and author on this map is browsable in <a href="/anthology.html">the Anthology</a>.
+  </p>
   <div class="atlas-legend" id="atlas-legend">
     <span><span class="sw sw-page"></span>has an Anthology page</span>
     <span><span class="sw sw-nopage"></span>programme entry only (no page yet)</span>

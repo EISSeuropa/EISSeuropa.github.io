@@ -114,6 +114,15 @@ alternates:
           aussagekräftige Bildunterschriften und der umgebende Kontext liefern dieselben Informationen
           für Nutzer von Bildschirmlesern.
         </li>
+        <li>
+          <strong>Der Canvas des Anthologie-Atlas.</strong> Die interaktive Karte unter
+          <code>/anthology-atlas.html</code> wird auf einem <code>&lt;canvas&gt;</code> gezeichnet,
+          dessen Inhalt assistive Technologien nicht auslesen können.
+          <em>Abhilfe:</em> Der Canvas trägt ein beschreibendes <code>aria-label</code>, ein sichtbarer
+          Link unter der Karte führt zu demselben Korpus als filterbare Listen auf der
+          Anthologie-Seite, und die Filter-Chips und Statistiken rund um die Karte sind reguläre
+          HTML-Steuerelemente mit <code>aria-pressed</code>-Zustand.
+        </li>
       </ol>
 
       <h2>4. Implementierte Barrierefreiheitsfunktionen</h2>

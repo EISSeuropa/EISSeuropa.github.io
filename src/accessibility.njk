@@ -106,6 +106,15 @@ alternates:
           <em>Mitigation:</em> we tighten alt text on each archive page as we revisit it. Meaningful
           captions and surrounding context provide the same information for screen reader users.
         </li>
+        <li>
+          <strong>The Anthology Atlas canvas.</strong> The interactive map at
+          <code>/anthology-atlas.html</code> is drawn on a <code>&lt;canvas&gt;</code>, which
+          assistive technologies cannot read into.
+          <em>Mitigation:</em> the canvas carries a descriptive <code>aria-label</code>, a visible
+          link beneath the map leads to the same corpus as filterable lists on the Anthology page,
+          and the filter chips and statistics around the map are regular HTML controls with
+          <code>aria-pressed</code> state.
+        </li>
       </ol>
 
       <h2>4. Accessibility features implemented</h2>
