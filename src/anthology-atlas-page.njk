@@ -69,6 +69,12 @@ lang: en
     <!-- "Abstract on file" chip injected by anthology-atlas.js (Papers lens only, #1152) -->
   </div>
 
+  <div class="atlas-controls" role="search" aria-label="Find an author or paper on the map">
+    <label class="lbl" for="atlas-find">Find</label>
+    <input class="atlas-find" id="atlas-find" type="search" list="atlas-find-list" placeholder="Author or paper title" autocomplete="off" spellcheck="false">
+    <datalist id="atlas-find-list"><!-- options injected by anthology-atlas.js (#1154) --></datalist>
+  </div>
+
   <div class="atlas-controls" id="atlas-years" role="group" aria-label="Filter by edition year">
     <span class="lbl">Editions</span>
     <!-- year chips injected by anthology-atlas.js -->
