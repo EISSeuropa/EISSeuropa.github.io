@@ -7,7 +7,7 @@ public [`/roadmap.html`](https://eiss-europa.com/roadmap.html).
 **Last update: 23 July 2026 (v2.27.0 prose resync).**
 
 <!-- AUTOSTAMP:BEGIN -->
-> _Auto-tracked: **30 entries** in [`[Unreleased]`](../CHANGELOG.md#unreleased) since **v2.26.0** (28 Added, 1 Changed, 1 Fixed). Last refresh by `scripts/sync-roadmap.py`: 23 Jul 2026. Prose in the timeline below may lag; the maintainer resynthesises on release-time §5 sweep._
+> _Auto-tracked: **31 entries** in [`[Unreleased]`](../CHANGELOG.md#unreleased) since **v2.26.0** (29 Added, 1 Changed, 1 Fixed). Last refresh by `scripts/sync-roadmap.py`: 23 Jul 2026. Prose in the timeline below may lag; the maintainer resynthesises on release-time §5 sweep._
 <!-- AUTOSTAMP:END -->
 
 > **Sync convention.** This file is the authoritative planning source.
