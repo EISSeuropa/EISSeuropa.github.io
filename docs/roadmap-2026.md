@@ -4,10 +4,10 @@ A planning document to help the maintainer think through what's worth
 doing next, in what order, and at what effort. Organised by **release
 version** (SemVer), the same axis as the GitHub milestones and the
 public [`/roadmap.html`](https://eiss-europa.com/roadmap.html).
-**Last update: 3 June 2026 (v2.24.1 milestone resync).**
+**Last update: 23 July 2026 (v2.27.0 prose resync).**
 
 <!-- AUTOSTAMP:BEGIN -->
-> _Auto-tracked: **24 entries** in [`[Unreleased]`](../CHANGELOG.md#unreleased) since **v2.26.0** (23 Added, 1 Fixed). Last refresh by `scripts/sync-roadmap.py`: 22 Jul 2026. Prose in the timeline below may lag; the maintainer resynthesises on release-time §5 sweep._
+> _Auto-tracked: **25 entries** in [`[Unreleased]`](../CHANGELOG.md#unreleased) since **v2.26.0** (23 Added, 1 Changed, 1 Fixed). Last refresh by `scripts/sync-roadmap.py`: 23 Jul 2026. Prose in the timeline below may lag; the maintainer resynthesises on release-time §5 sweep._
 <!-- AUTOSTAMP:END -->
 
 > **Sync convention.** This file is the authoritative planning source.
@@ -51,7 +51,7 @@ other way round, so this is where a new release first appears.
 | v2.24.0 | 30 May 2026 | **Shipped** | Live programme depth and a print overhaul |
 | v2.25.0 | 9 Jun 2026 | **Shipped** | Ready for Stockholm (pre-conference release) |
 | v2.26.0 | 25 Jun 2026 | **Shipped** | Introducing the Anthology |
-| v2.27.0 | Sep 2026 | Planned | Polish and ESSC 2027 prep |
+| v2.27.0 | Sep 2026 | In progress | The Anthology Atlas and the recovered back catalogue |
 
 (`v2.24.1` was planned as a pre-ESSC patch but the work grew into a feature-rich minor, so it shipped as the **v2.25.0** *Ready for Stockholm* release instead; the `v2.24.1` milestone is closed as superseded.)
 
@@ -104,15 +104,47 @@ the RSS feed [#605](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/60
 issue-driven news publishing [#634](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/634))
 moved on to later milestones. See [`CHANGELOG.md`](../CHANGELOG.md) for the full index of changes.
 
-### v2.27.0 — Polish and ESSC 2027 prep · target September 2026
+### v2.27.0 — The Anthology Atlas and the recovered back catalogue · target September 2026
 
-- **CSS class-collision guard** — a build check so an archive
-  component can never again override the live grid (the regression
-  fixed in v2.24.0).
-  [#241](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/241), S.
-- **Expand the open-panel examples on `/initiative`** — more recent
-  open-panel titles from the conference programmes.
-  [#249](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/249), S.
+The cycle outgrew its original "polish" framing. Landed so far,
+sitting in `[Unreleased]`:
+
+- **The Anthology Atlas** — a force-directed map of the corpus at
+  `/anthology-atlas.html`, with a Papers lens (511 papers pulled toward
+  the 17 research-theme hubs) and an Authors lens (co-authorship
+  clusters across 496 deduplicated authors). Indexed, signposted from
+  the Anthology header, with a first-visit welcome strip and a guided
+  tour.
+  [#1124](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1124),
+  [#1129](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1129),
+  [#1134](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1134).
+- **The abstract back catalogue** — EISS 2026 coverage complete (69 of
+  69), and the pre-Indico recovery well under way from the organisers'
+  archives (2019, 2018, 2021, 2022, 2023 and the 2019 Joint Policy
+  Workshop all gained abstracts). The Anthology header now shows
+  per-year coverage at a glance.
+  [#794](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/794),
+  [#886](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/886),
+  [#1040](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1040).
+- **New pages and refreshed content** — the internship page
+  (`/internship.html`, EN/FR/DE), the Global Risks 2026 survey wave on
+  `/GlobalRisks`, the leadership announcement at
+  `/leadership-2026.html`, and an Event filter on the Anthology's
+  by-paper view.
+- **From the original polish list, already shipped in-cycle** — the CSS
+  class-collision guard
+  ([#241](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/241)),
+  expanded open-panel examples
+  ([#249](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/249)),
+  responsive images
+  ([#554](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/554)),
+  the brand-palette gradient re-tune
+  ([#519](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/519)),
+  and the legacy Mobirise redirects
+  ([#607](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/607)).
+
+Still open for the cut:
+
 - **ESSC 2027 announcement** — drop one entry into
   `src/_data/conferences.js` per [`docs/new-conference.md`](new-conference.md)
   once the date and venue firm up. S.
@@ -122,19 +154,9 @@ moved on to later milestones. See [`CHANGELOG.md`](../CHANGELOG.md) for the full
   ([#272](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/272))
   and the `/2017`, `/2018`, `/joint-2024` archive pages
   ([#474](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/474)). S each.
-- **Responsive images** — finish the `srcset` / `sizes` rollout so
-  phones stop downloading full-resolution JPGs (the hero slice shipped
-  in the v2.26.0 run-up).
-  [#554](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/554), M.
-- **Brand-palette polish** — re-tune the off-palette hero gradient
-  blobs onto the brand blue.
-  [#519](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/519), S.
 - **Branch-protection Phase 3** — enforce required status checks on
   `master`.
   [#501](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/501), S.
-- **Legacy Mobirise alias pages to true redirects** — finish the
-  migration so old URLs 301 instead of serving alias pages.
-  [#607](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/607), M.
 
 Candidates without committed scope yet, pulled in if a release has
 room: a conference countdown widget, View Transitions API page
