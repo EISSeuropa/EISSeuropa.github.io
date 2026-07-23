@@ -121,6 +121,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 - **The 2024 abstract coverage figure no longer counts the joint Sciences Po–EISS conference, lifting it to 49 of 52.** That one-day symposium on the origins of war and diplomacy shares its calendar year with the EISS 2024 annual conference but never collected Indico-style abstracts, the same as the other pre-Indico and joint events. Its nine papers were previously counted as "eligible" and dragging the 2024 ratio down to 49 of 60; they're now correctly excluded, the same way roundtables and keynotes already are. Progresses [#886](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/886).
 - **Board and community profile pages now carry Schema.org `Person` structured data.** Each `/board/<slug>.html` page emits a JSON-LD block with the member's name, role, affiliation, photo and identifying links (ORCID, personal site, socials), so search engines can index board profiles the same way the site's papers and events already are. Closes [#756](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/756).
 
+### Changed
+
+- **The public roadmap's v2.27.0 card now describes the release as it is actually shaping up.** The card kept the "Polish and ESSC 2027 prep" framing from June, while the cycle's real headline became the Anthology Atlas and the recovered abstract back catalogue. The card title and description now say so, in all three locales, and the internal `docs/roadmap-2026.md` timeline is resynthesised to match (shipped items marked, open items kept).
+
 ### Fixed
 
 - **Sanne Verschuren's board-profile website link now resolves.** Her site serves no working HTTPS (the TLS handshake fails for browsers as well as the link checker), so the `https://` link on the board cards was dead; it now points to `http://www.sanneverschuren.com`, which returns 200. This was tripping the external-link check on every HTML-touching PR.
