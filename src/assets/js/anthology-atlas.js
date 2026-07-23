@@ -30,6 +30,7 @@
   const themesEl = document.getElementById('atlas-themes');
   const lensEl = document.getElementById('atlas-lens');
   const authorOptsEl = document.getElementById('atlas-authoropts');
+  const paperOptsEl = document.getElementById('atlas-paperopts');
   const legendPapers = document.getElementById('atlas-legend');
   const legendAuthors = document.getElementById('atlas-legend-authors');
   // Welcome strip + guided-tour controls (#1134).
@@ -102,6 +103,7 @@
   let yearsAsc = [];
   let lens = 'papers';             // 'papers' | 'authors'
   let collabOnly = false;          // Authors lens: hide solo-only authors
+  let abstractsOnly = false;       // Papers lens: dim papers without an abstract (#1152)
   const activeYears = new Set();   // edition years currently shown
   const activeHubs = new Set();    // theme hubs currently shown
   let hovered = null, draggingHub = null;
@@ -276,7 +278,13 @@
     // Nodes.
     items().forEach((n) => {
       if (!nodeVisible(n)) return;
-      const dim = hoverIds && !hoverIds.has(n.id);
+      // Coverage overlay (#1152): with "Abstract on file" on, papers without
+      // one fade to background so the recovery gaps show spatially. A hovered
+      // node stays bright either way.
+      const noAbstract = abstractsOnly && lens === 'papers'
+        && n.type === 'paper' && !n.hasAbstract
+        && !(hovered && hovered.id === n.id);
+      const dim = (hoverIds && !hoverIds.has(n.id)) || noAbstract;
       const r = (hovered && hovered.id === n.id) ? n.r + 2 : n.r;
       ctx.globalAlpha = dim ? 0.14 : 1;
 
@@ -513,6 +521,7 @@
       sp.set('themes', hubs.filter((h) => activeHubs.has(h.id)).map((h) => h.name).join(','));
     } else sp.delete('themes');
     if (collabOnly) sp.set('collab', '1'); else sp.delete('collab');
+    if (abstractsOnly) sp.set('abstracts', '1'); else sp.delete('abstracts');
     history.replaceState(null, '', url.pathname + url.search + url.hash);
   }
 
@@ -530,6 +539,7 @@
     const ids = hubs.filter((h) => wanted.indexOf(h.name) !== -1).map((h) => h.id);
     if (ids.length) { activeHubs.clear(); ids.forEach((id) => activeHubs.add(id)); }
     collabOnly = sp.get('collab') === '1';
+    abstractsOnly = sp.get('abstracts') === '1';
     return sp.get('lens') === 'authors' ? 'authors' : null;
   }
 
@@ -571,6 +581,19 @@
     authorOptsEl.appendChild(chip('Collaborators only', collabOnly, (b) => {
       collabOnly = !collabOnly;
       b.setAttribute('aria-pressed', collabOnly ? 'true' : 'false');
+      syncUrl();
+      draw();
+    }));
+  }
+
+  // Coverage overlay (#1152): dim papers without an abstract on file, so the
+  // recovery work's remaining gaps show WHERE they sit — which themes and
+  // editions are still dark — not just when (the per-year bars on /anthology).
+  function buildPaperOpts() {
+    if (!paperOptsEl) return;
+    paperOptsEl.appendChild(chip('Abstract on file', abstractsOnly, (b) => {
+      abstractsOnly = !abstractsOnly;
+      b.setAttribute('aria-pressed', abstractsOnly ? 'true' : 'false');
       syncUrl();
       draw();
     }));
@@ -630,6 +653,7 @@
       b.setAttribute('aria-pressed', b.dataset.lens === lens ? 'true' : 'false'));
     const authorMode = lens === 'authors';
     if (authorOptsEl) authorOptsEl.hidden = !authorMode;
+    if (paperOptsEl) paperOptsEl.hidden = authorMode;
     if (legendPapers) legendPapers.hidden = authorMode;
     if (legendAuthors) legendAuthors.hidden = !authorMode;
     recountHubs();
@@ -666,7 +690,8 @@
       papers = data.papers.map((p, i) => ({
         id: 'p' + i, type: 'paper',
         title: p.title, authors: p.authors || [], year: p.year, panel: p.panel,
-        url: p.url, hasPage: !!p.hasPage, published: !!p.published, prize: !!p.prize,
+        url: p.url, hasPage: !!p.hasPage, hasAbstract: !!p.hasAbstract,
+        published: !!p.published, prize: !!p.prize,
         hubs: hubIdsFor(p.themes), r: p.hasPage ? 4.6 : 3.6, x: 0, y: 0, vx: 0, vy: 0,
       }));
 
@@ -706,6 +731,7 @@
       buildThemeChips();
       buildLensChips();
       buildAuthorOpts();
+      buildPaperOpts();
 
       resize();
       seedPositions();
