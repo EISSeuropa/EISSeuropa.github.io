@@ -101,10 +101,11 @@
   let papers = [], authors = [];
   let coEdges = [];                // {a, b, weight} — author node refs (#1129)
   let yearsAsc = [];
+  let editions = [];               // {key, label, short, year, count}, newest first (#1153)
   let lens = 'papers';             // 'papers' | 'authors'
   let collabOnly = false;          // Authors lens: hide solo-only authors
   let abstractsOnly = false;       // Papers lens: dim papers without an abstract (#1152)
-  const activeYears = new Set();   // edition years currently shown
+  const activeEditions = new Set(); // edition keys currently shown (#1153)
   const activeHubs = new Set();    // theme hubs currently shown
   let hovered = null, draggingHub = null;
   let W = 0, H = 0, dpr = 1;
@@ -115,12 +116,13 @@
   function hubFill(h) { return h.type === 'untagged' ? '#8a94a6' : hubColour(h); }
 
   function nodeVisible(n) {
-    // Year: a paper falls in one edition; an author in several (#1129) — shown
-    // when ANY of their editions is selected.
-    const yearOk = n.type === 'author'
-      ? n.years.some((y) => activeYears.has(y))
-      : activeYears.has(n.year);
-    if (!yearOk) return false;
+    // Edition (#1153): a paper falls in one edition; an author in several
+    // (#1129) — shown when ANY of their editions is selected. Joint events
+    // are their own chips rather than lumped into their calendar year.
+    const edOk = n.type === 'author'
+      ? n.editions.some((k) => activeEditions.has(k))
+      : activeEditions.has(n.edition);
+    if (!edOk) return false;
     if (lens === 'authors' && collabOnly && !n.coCount) return false;
     return n.hubs.some((id) => activeHubs.has(id));
   }
@@ -514,9 +516,9 @@
     const url = new URL(location.href);
     const sp = url.searchParams;
     if (lens !== 'papers') sp.set('lens', lens); else sp.delete('lens');
-    if (activeYears.size && activeYears.size !== yearsAsc.length) {
-      sp.set('years', yearsAsc.filter((y) => activeYears.has(y)).join(','));
-    } else sp.delete('years');
+    if (activeEditions.size && activeEditions.size !== editions.length) {
+      sp.set('editions', editions.filter((e) => activeEditions.has(e.key)).map((e) => e.key).join(','));
+    } else sp.delete('editions');
     if (activeHubs.size && activeHubs.size !== hubs.length) {
       sp.set('themes', hubs.filter((h) => activeHubs.has(h.id)).map((h) => h.name).join(','));
     } else sp.delete('themes');
@@ -532,9 +534,14 @@
   function applyUrlState() {
     let sp;
     try { sp = new URL(location.href).searchParams; } catch (e) { return null; }
-    const years = (sp.get('years') || '').split(',').map(Number)
-      .filter((y) => yearsAsc.indexOf(y) !== -1);
-    if (years.length) { activeYears.clear(); years.forEach((y) => activeYears.add(y)); }
+    // `editions=` is the native param; a bare `years=` from an older link is
+    // honoured by expanding each year to every edition inside it.
+    const known = new Set(editions.map((e) => e.key));
+    const wantedEds = (sp.get('editions') || '').split(',').filter((k) => known.has(k));
+    (sp.get('years') || '').split(',').map(Number).forEach((y) => {
+      editions.forEach((e) => { if (e.year === y) wantedEds.push(e.key); });
+    });
+    if (wantedEds.length) { activeEditions.clear(); wantedEds.forEach((k) => activeEditions.add(k)); }
     const wanted = (sp.get('themes') || '').split(',').map((s) => s.trim()).filter(Boolean);
     const ids = hubs.filter((h) => wanted.indexOf(h.name) !== -1).map((h) => h.id);
     if (ids.length) { activeHubs.clear(); ids.forEach((id) => activeHubs.add(id)); }
@@ -543,14 +550,19 @@
     return sp.get('lens') === 'authors' ? 'authors' : null;
   }
 
-  function buildYearChips() {
-    yearsAsc.slice().reverse().forEach((y) => {
-      yearsEl.appendChild(chip(String(y), activeYears.has(y), (b) => {
-        if (activeYears.has(y)) activeYears.delete(y); else activeYears.add(y);
-        b.setAttribute('aria-pressed', activeYears.has(y) ? 'true' : 'false');
+  function buildEditionChips() {
+    // One chip per edition (#1153), newest first, coloured by its calendar
+    // year (node colour stays on the year ramp, so a joint event's chip
+    // shares its year's hue). The full edition name rides on the tooltip.
+    editions.forEach((e) => {
+      const b = chip(e.short, activeEditions.has(e.key), (bb) => {
+        if (activeEditions.has(e.key)) activeEditions.delete(e.key); else activeEditions.add(e.key);
+        bb.setAttribute('aria-pressed', activeEditions.has(e.key) ? 'true' : 'false');
         syncUrl();
         draw();
-      }, yearColour[y]));
+      }, yearColour[e.year]);
+      b.title = e.label + ' · ' + e.count + ' papers';
+      yearsEl.appendChild(b);
     });
   }
 
@@ -629,7 +641,7 @@
       const withPage = papers.filter((p) => p.hasPage).length;
       rows = [
         ['' + papers.length, 'papers'],
-        ['' + yearsAsc.length, 'editions, ' + yearsAsc[0] + '–' + yearsAsc[yearsAsc.length - 1]],
+        ['' + editions.length, 'editions, ' + yearsAsc[0] + '–' + yearsAsc[yearsAsc.length - 1]],
         ['' + hubs.filter((h) => h.type === 'theme').length, 'research themes'],
         [withPage + ' / ' + papers.length, 'with an Anthology page'],
       ];
@@ -690,14 +702,15 @@
       papers = data.papers.map((p, i) => ({
         id: 'p' + i, type: 'paper',
         title: p.title, authors: p.authors || [], year: p.year, panel: p.panel,
-        url: p.url, hasPage: !!p.hasPage, hasAbstract: !!p.hasAbstract,
+        edition: p.edition, url: p.url, hasPage: !!p.hasPage, hasAbstract: !!p.hasAbstract,
         published: !!p.published, prize: !!p.prize,
         hubs: hubIdsFor(p.themes), r: p.hasPage ? 4.6 : 3.6, x: 0, y: 0, vx: 0, vy: 0,
       }));
 
       authors = (data.authors || []).map((a, i) => ({
         id: 'a' + i, type: 'author',
-        name: a.name, url: a.url, years: a.years || [], paperCount: a.paperCount || 0,
+        name: a.name, url: a.url, years: a.years || [], editions: a.editions || [],
+        paperCount: a.paperCount || 0,
         hubs: hubIdsFor(a.themes),
         // Dot radius scales with paper count, capped at 7 (floor 3 keeps the
         // hover/click target usable for one-paper authors). #1129.
@@ -717,9 +730,10 @@
       });
 
       yearsAsc = data.years.slice().sort((a, b) => a - b);
+      editions = data.editions || [];
       buildYearColours(yearsAsc);
 
-      yearsAsc.forEach((y) => activeYears.add(y));
+      editions.forEach((e) => activeEditions.add(e.key));
       hubs.forEach((h) => activeHubs.add(h.id));
       // Deep link (#1151): restore lens/years/themes/collab from the URL
       // before the chips render, so their pressed state matches.
@@ -727,7 +741,7 @@
 
       recountHubs();
       buildStats();
-      buildYearChips();
+      buildEditionChips();
       buildThemeChips();
       buildLensChips();
       buildAuthorOpts();
@@ -746,10 +760,10 @@
   // colours depend on light/dark, so rebuild the ramp too.
   new MutationObserver(() => {
     readTheme(); buildYearColours(yearsAsc);
-    // Recolour the year chips in place to match the new ramp.
+    // Recolour the edition chips in place to match the new ramp.
     Array.prototype.forEach.call(yearsEl.querySelectorAll('.atlas-chip'), (b, i) => {
-      const y = yearsAsc.slice().reverse()[i];
-      if (y != null) b.style.background = yearColour[y];
+      const e = editions[i];
+      if (e && e.year != null) b.style.background = yearColour[e.year];
     });
     draw();
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
@@ -795,7 +809,7 @@
       lensStep,
       { target: '#atlas-years',
         title: 'Filter by edition',
-        body: 'Toggle edition years on and off to narrow the map to the periods you want to see.' },
+        body: 'Toggle editions on and off to narrow the map — the annual conferences by year, and the joint events on their own chips.' },
       themesStep,
       stageStep,
       { target: '#atlas-legend',
