@@ -4183,6 +4183,12 @@ a.speaker-paper-title:hover {
   gap: 0.3rem;
   margin: 0.35rem 0 0;
 }
+/* Co-author line (#1150): names anchor to their own entries on this page. */
+.speaker-coauthors {
+  margin: 0.35rem 0 0;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
 .speaker-theme-chip {
   font-size: var(--fs-xs);
   color: var(--text-muted);

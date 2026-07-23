@@ -104,6 +104,13 @@
         {%- for th in s.themes %}<span class="speaker-theme-chip">{{ corpus.themeLabels[th][lang or "en"] or corpus.themeLabels[th].en }}</span>{% endfor %}
       </p>
       {%- endif %}
+      {%- if coauthorsIndex[s.key] %}
+      {# Co-authors (#1150): the Atlas's co-authorship relation joined back
+         onto the entry. Each name anchors to that person's own entry. #}
+      <p class="speaker-coauthors">{{ s18n.coauthorsLabel }}
+        {%- for c in coauthorsIndex[s.key] %} <a href="#person-{{ c.slug }}" lang="en">{{ c.name }}</a>{% if not loop.last %},{% endif %}{% endfor %}
+      </p>
+      {%- endif %}
       <details class="speaker-papers">
         <summary>{{ s.count }} {{ s18n.contributionOne if s.count == 1 else s18n.contributionMany }}{% if s.firstYear %} · {{ s.firstYear }}{% if s.lastYear != s.firstYear %}–{{ s.lastYear }}{% endif %}{% endif %}</summary>
         <ul role="list">

@@ -529,6 +529,7 @@ const locales = {
       eventLabel: "Event",
       allEvents: "All events",
       attendedLabel: "Editions attended",
+      coauthorsLabel: "Co-authored with",
     },
 
     papers: {
@@ -1013,6 +1014,7 @@ const locales = {
       eventLabel: "Événement",
       allEvents: "Tous les événements",
       attendedLabel: "Éditions",
+      coauthorsLabel: "A co-signé avec",
     },
 
     papers: {
@@ -1487,6 +1489,7 @@ const locales = {
       eventLabel: "Veranstaltung",
       allEvents: "Alle Veranstaltungen",
       attendedLabel: "Ausgaben",
+      coauthorsLabel: "Gemeinsam verfasst mit",
     },
 
     papers: {
