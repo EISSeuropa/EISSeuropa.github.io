@@ -1693,6 +1693,48 @@ h4 { font-size: var(--fs-lg); }
   }
 }
 
+/* Related papers on paper pages (#1148): a short list of corpus-adjacent
+   papers (shared authors, panel-mates, shared themes), above the prev/next
+   nav. */
+.paper-related {
+  margin-top: var(--space-7);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border);
+}
+.paper-related__title {
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin: 0 0 var(--space-3);
+}
+.paper-related__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+.paper-related__link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+}
+.paper-related__link:hover,
+.paper-related__link:focus-visible { border-color: var(--accent); }
+.paper-related__paper {
+  color: var(--text);
+  font-weight: 600;
+}
+.paper-related__meta {
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+}
+
 /* Within-edition prev/next nav on paper pages (#889, item 3). Two link-cards;
    the title clamps to two lines so it can't blow out the row. */
 .paper-prevnext {
@@ -4220,6 +4262,11 @@ a.speaker-paper-title:hover {
   padding: 0.05rem 0.5rem;
   line-height: 1.5;
 }
+/* Anchor variant (#1149): the paper landing page renders the same chips as
+   links into the by-paper theme filter. */
+a.paper-theme-chip { text-decoration: none; }
+a.paper-theme-chip:hover,
+a.paper-theme-chip:focus-visible { border-color: var(--accent); color: var(--accent); }
 .paper-pub-chip {
   display: inline-block;
   vertical-align: middle;
