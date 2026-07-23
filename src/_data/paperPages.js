@@ -15,6 +15,42 @@
 const paperIndex = require("./paperIndex.js");
 const paperLinks = require("./paperLinks.json"); // confirmed publication matches, keyed by slug
 const site = require("./site.js");
+const nameKey = require("./nameKey.js"); // shared author dedup key (Atlas + authorsIndex)
+
+// Related papers (#1148): the Atlas adjacency (shared authors, panel-mates,
+// shared themes) rendered as a short static list on each landing page, so a
+// paper page is no longer a dead end. Scored, not clustered: shared author 5,
+// same panel 3, each shared theme 2. Ties break toward the nearer edition.
+// ponytail: O(n²) pairwise scan over ~560 pages at build time, fine at this
+// corpus size; precompute a theme->papers index if the corpus ever 10×es.
+const RELATED_MAX = 4;
+function computeRelated(pages) {
+  const meta = pages.map((p) => ({
+    authorKeys: new Set((p.authors || []).map(nameKey).filter(Boolean)),
+    themes: new Set(p.theme || []),
+  }));
+  return pages.map((p, i) => {
+    const scored = [];
+    for (let j = 0; j < pages.length; j++) {
+      if (j === i) continue;
+      const q = pages[j];
+      let sharedAuthors = 0;
+      for (const k of meta[j].authorKeys) if (meta[i].authorKeys.has(k)) sharedAuthors++;
+      let sharedThemes = 0;
+      for (const t of meta[j].themes) if (meta[i].themes.has(t)) sharedThemes++;
+      const samePanel = p.panel && q.panel === p.panel && q.year === p.year;
+      const score = sharedAuthors * 5 + (samePanel ? 3 : 0) + sharedThemes * 2;
+      if (score > 0) scored.push({ q, score, dist: Math.abs((q.year || 0) - (p.year || 0)) });
+    }
+    scored.sort((a, b) => b.score - a.score || a.dist - b.dist || a.q.title.localeCompare(b.q.title));
+    return scored.slice(0, RELATED_MAX).map(({ q }) => ({
+      slug: q.slug,
+      title: q.title,
+      year: q.year,
+      conferenceLabel: q.conferenceLabel,
+    }));
+  });
+}
 
 // Every paper page offers a citation export (#805). When a confirmed
 // publication exists, the citation describes the PUBLISHED work (title,
@@ -110,13 +146,20 @@ module.exports = function () {
     (byYear[p.year] = byYear[p.year] || []).push(p);
   });
   const linkOf = (p) => (p ? { slug: p.slug, title: p.title } : null);
+  const relatedOf = computeRelated(pages);
 
   return pages
-    .map((p) => {
+    .map((p, idx) => {
       const grp = byYear[p.year];
       const i = grp.indexOf(p);
       const link = paperLinks[p.slug] || {};
+      // Drop related entries the prev/next nav already shows, so the two
+      // blocks never repeat a link.
+      const prevNextSlugs = [i > 0 ? grp[i - 1].slug : null, i < grp.length - 1 ? grp[i + 1].slug : null];
+      const related = relatedOf[idx].filter((r) => !prevNextSlugs.includes(r.slug));
       return {
+        themes: p.theme || [], // research-theme tags (#1149)
+        related, // { slug, title, year, conferenceLabel } (#1148)
         // { slug, title } | null — previous / next paper in this edition.
         editionPrev: linkOf(i > 0 ? grp[i - 1] : null),
         editionNext: linkOf(i < grp.length - 1 ? grp[i + 1] : null),

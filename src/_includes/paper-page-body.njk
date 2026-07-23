@@ -46,6 +46,14 @@
     {%- if paper.affiliations and paper.affiliations.length %}
     <p class="muted" lang="en">{{ paper.affiliations | join(' · ') }}</p>
     {%- endif %}
+    {%- if paper.themes and paper.themes.length %}
+    {# Research-theme tags (#1149). Each links to the by-paper view filtered to
+       that theme (paper-filter.js restores it from the URL). Reuses the
+       list view's chip styling; the anchor variant is styled alongside it. #}
+    <p class="paper-themes">
+      {%- for th in paper.themes %}<a class="paper-theme-chip" lang="en" href="/anthology.html?view=papers&theme={{ th | urlencode }}">{{ th }}</a>{% endfor %}
+    </p>
+    {%- endif %}
   </div>
 </header>
 
@@ -132,6 +140,25 @@
         <h2 class="paper-cite-title" id="cite-h-{{ paper.slug }}">Cite this presentation</h2>
         {% include "paper-cite-block.njk" %}
       </section>
+      {%- endif %}
+      {# Related papers (#1148): the corpus adjacency (shared authors,
+         panel-mates, shared themes) as a short static list, computed in
+         paperPages.js, so the page browses onward instead of dead-ending.
+         Entries the prev/next nav below already shows are filtered out. #}
+      {%- if paper.related and paper.related.length %}
+      <nav class="paper-related" aria-labelledby="related-h-{{ paper.slug }}">
+        <h2 class="paper-related__title" id="related-h-{{ paper.slug }}">Related in the Anthology</h2>
+        <ul class="paper-related__list">
+          {%- for r in paper.related %}
+          <li class="paper-related__item">
+            <a class="paper-related__link" href="/papers/{{ r.slug }}.html">
+              <span class="paper-related__paper" lang="en">{{ r.title }}</span>
+              <span class="paper-related__meta">{{ r.conferenceLabel }} {{ r.year }}</span>
+            </a>
+          </li>
+          {%- endfor %}
+        </ul>
+      </nav>
       {%- endif %}
       {# Within-edition prev/next (#889, item 3): page through this edition's
          papers in the Anthology's by-paper order, without returning to the index. #}
