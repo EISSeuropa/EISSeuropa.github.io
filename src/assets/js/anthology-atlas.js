@@ -31,6 +31,8 @@
   const lensEl = document.getElementById('atlas-lens');
   const authorOptsEl = document.getElementById('atlas-authoropts');
   const paperOptsEl = document.getElementById('atlas-paperopts');
+  const findEl = document.getElementById('atlas-find');
+  const findListEl = document.getElementById('atlas-find-list');
   const legendPapers = document.getElementById('atlas-legend');
   const legendAuthors = document.getElementById('atlas-legend-authors');
   // Welcome strip + guided-tour controls (#1134).
@@ -108,6 +110,7 @@
   const activeEditions = new Set(); // edition keys currently shown (#1153)
   const activeHubs = new Set();    // theme hubs currently shown
   let hovered = null, draggingHub = null;
+  let spotlight = null;            // node pinned by the Find control (#1154)
   let W = 0, H = 0, dpr = 1;
 
   const items = () => (lens === 'authors' ? authors : papers);
@@ -231,11 +234,14 @@
   // ── Paint ──
   function draw() {
     ctx.clearRect(0, 0, W, H);
-    const hoverIds = hovered
-      ? new Set([hovered.id].concat(
-          hovered.type === 'paper' ? hovered.hubs
-            : hovered.type === 'author' ? hovered.hubs.concat(hovered.coPeers || [])
-            : (hovered.members || [])))
+    // Focus = the hovered node, falling back to the Find spotlight (#1154):
+    // both light the same neighbourhood and dim the rest.
+    const focus = hovered || spotlight;
+    const hoverIds = focus
+      ? new Set([focus.id].concat(
+          focus.type === 'paper' ? focus.hubs
+            : focus.type === 'author' ? focus.hubs.concat(focus.coPeers || [])
+            : (focus.members || [])))
       : null;
 
     // Edges: node → each of its theme hubs.
@@ -245,7 +251,7 @@
       n.hubs.forEach((id) => {
         const h = hubById[id];
         if (!activeHubs.has(id)) return;
-        const litEdge = lit && (hovered.type !== 'theme' && hovered.type !== 'untagged' || hovered.id === id);
+        const litEdge = lit && (focus.type !== 'theme' && focus.type !== 'untagged' || focus.id === id);
         ctx.strokeStyle = hubFill(h);
         ctx.globalAlpha = litEdge ? 0.5 : (hoverIds ? 0.035 : (theme.dark ? 0.14 : 0.11));
         ctx.lineWidth = litEdge ? 1.3 : 1;
@@ -285,9 +291,9 @@
       // node stays bright either way.
       const noAbstract = abstractsOnly && lens === 'papers'
         && n.type === 'paper' && !n.hasAbstract
-        && !(hovered && hovered.id === n.id);
+        && !(focus && focus.id === n.id);
       const dim = (hoverIds && !hoverIds.has(n.id)) || noAbstract;
-      const r = (hovered && hovered.id === n.id) ? n.r + 2 : n.r;
+      const r = (focus && focus.id === n.id) ? n.r + 2 : n.r;
       ctx.globalAlpha = dim ? 0.14 : 1;
 
       if (n.type === 'author') {
@@ -345,6 +351,17 @@
       }
     });
     ctx.globalAlpha = 1;
+
+    // Find spotlight (#1154): a steady accent halo on the found node, in
+    // whichever lens carries it.
+    if (spotlight && spotlight.type === (lens === 'authors' ? 'author' : 'paper')
+        && nodeVisible(spotlight)) {
+      ctx.beginPath();
+      ctx.arc(spotlight.x, spotlight.y, spotlight.r + 6, 0, Math.PI * 2);
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = theme.accent;
+      ctx.stroke();
+    }
 
     // Hubs on top.
     hubs.forEach((h) => {
@@ -524,6 +541,8 @@
     } else sp.delete('themes');
     if (collabOnly) sp.set('collab', '1'); else sp.delete('collab');
     if (abstractsOnly) sp.set('abstracts', '1'); else sp.delete('abstracts');
+    if (spotlight && findEl && findEl.value.trim()) sp.set('find', findEl.value.trim());
+    else sp.delete('find');
     history.replaceState(null, '', url.pathname + url.search + url.hash);
   }
 
@@ -587,6 +606,48 @@
       b.dataset.lens = v;
       lensEl.appendChild(b);
     });
+  }
+
+  // ── Find and spotlight (#1154) ───────────────────────────────────────────
+  // A native datalist over every author name and paper title (both are
+  // already client-side in the atlas JSON). Picking or typing a match pins a
+  // spotlight: the node gets an accent halo, its neighbourhood lights the
+  // same way hover does, and the query mirrors into the URL (find=) so a
+  // found node is shareable. Clearing the field clears the spotlight.
+  function buildFindOptions() {
+    if (!findListEl) return;
+    const frag = document.createDocumentFragment();
+    const seen = new Set();
+    authors.concat(papers).forEach((n) => {
+      const label = n.type === 'author' ? n.name : n.title;
+      if (!label || seen.has(label)) return;
+      seen.add(label);
+      const o = document.createElement('option');
+      o.value = label;
+      frag.appendChild(o);
+    });
+    findListEl.appendChild(frag);
+  }
+
+  function resolveFind(q) {
+    const s = String(q || '').trim().toLowerCase();
+    if (!s) return null;
+    const eq = (v) => String(v || '').toLowerCase() === s;
+    const has = (v) => String(v || '').toLowerCase().indexOf(s) !== -1;
+    return authors.find((a) => eq(a.name)) || papers.find((p) => eq(p.title))
+      || authors.find((a) => has(a.name)) || papers.find((p) => has(p.title))
+      || null;
+  }
+
+  function applyFind(q) {
+    const node = resolveFind(q);
+    spotlight = node;
+    if (node) {
+      const wantLens = node.type === 'author' ? 'authors' : 'papers';
+      if (lens !== wantLens) { switchLens(wantLens); return; } // switchLens syncs + draws
+    }
+    syncUrl();
+    draw();
   }
 
   function buildAuthorOpts() {
@@ -751,6 +812,18 @@
       seedPositions();
       reheat(320);
       if (urlLens) switchLens(urlLens);
+
+      // Find control (#1154): options, events, and the find= deep link.
+      buildFindOptions();
+      if (findEl) {
+        findEl.addEventListener('change', () => applyFind(findEl.value));
+        findEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') applyFind(findEl.value); });
+        findEl.addEventListener('input', () => {
+          if (!findEl.value.trim() && spotlight) { spotlight = null; syncUrl(); draw(); }
+        });
+        const urlFind = new URL(location.href).searchParams.get('find');
+        if (urlFind) { findEl.value = urlFind; applyFind(urlFind); }
+      }
     })
     .catch(() => { statsEl.textContent = 'The atlas data could not be loaded.'; });
 

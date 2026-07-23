@@ -7077,6 +7077,18 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-chip[aria-pressed="false"] { opacity: .3; }
 .atlas-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .atlas-chip.is-plain { background: var(--border-strong); color: var(--text); }
+/* Find-and-spotlight input (#1154), shaped like the chips beside it. */
+.atlas-find {
+  font: inherit;
+  font-size: .85rem;
+  padding: 6px 13px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-strong);
+  background: var(--bg);
+  color: var(--text);
+  min-width: min(260px, 100%);
+}
+.atlas-find:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .atlas-stage { position: relative; border-radius: var(--radius-lg); overflow: hidden; background: radial-gradient(120% 90% at 50% 0%, var(--accent-soft), transparent 60%), var(--bg-elev); border: 1px solid var(--border); }
 #atlas-canvas { display: block; width: 100%; height: 640px; cursor: default; touch-action: none; }
 #atlas-canvas.is-link { cursor: pointer; }
