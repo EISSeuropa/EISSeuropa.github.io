@@ -496,11 +496,49 @@
     })();
   }
 
+  // ── URL state (#1151) ────────────────────────────────────────────────────
+  // lens / years / themes / collab mirrored into the query string (same
+  // pattern as the by-paper Event filter), so the Anthology and anyone
+  // sharing a link can deep-link a filtered view of the map. Only
+  // non-default state is written, so the bare URL stays canonical.
+  function syncUrl() {
+    if (!window.history || !history.replaceState) return;
+    const url = new URL(location.href);
+    const sp = url.searchParams;
+    if (lens !== 'papers') sp.set('lens', lens); else sp.delete('lens');
+    if (activeYears.size && activeYears.size !== yearsAsc.length) {
+      sp.set('years', yearsAsc.filter((y) => activeYears.has(y)).join(','));
+    } else sp.delete('years');
+    if (activeHubs.size && activeHubs.size !== hubs.length) {
+      sp.set('themes', hubs.filter((h) => activeHubs.has(h.id)).map((h) => h.name).join(','));
+    } else sp.delete('themes');
+    if (collabOnly) sp.set('collab', '1'); else sp.delete('collab');
+    history.replaceState(null, '', url.pathname + url.search + url.hash);
+  }
+
+  // Restore filters from the URL on load. Unknown years/themes are ignored;
+  // an empty match leaves the default (everything shown). Returns 'authors'
+  // when the lens param asks for the Authors lens, so boot can switch after
+  // the initial build.
+  function applyUrlState() {
+    let sp;
+    try { sp = new URL(location.href).searchParams; } catch (e) { return null; }
+    const years = (sp.get('years') || '').split(',').map(Number)
+      .filter((y) => yearsAsc.indexOf(y) !== -1);
+    if (years.length) { activeYears.clear(); years.forEach((y) => activeYears.add(y)); }
+    const wanted = (sp.get('themes') || '').split(',').map((s) => s.trim()).filter(Boolean);
+    const ids = hubs.filter((h) => wanted.indexOf(h.name) !== -1).map((h) => h.id);
+    if (ids.length) { activeHubs.clear(); ids.forEach((id) => activeHubs.add(id)); }
+    collabOnly = sp.get('collab') === '1';
+    return sp.get('lens') === 'authors' ? 'authors' : null;
+  }
+
   function buildYearChips() {
     yearsAsc.slice().reverse().forEach((y) => {
       yearsEl.appendChild(chip(String(y), activeYears.has(y), (b) => {
         if (activeYears.has(y)) activeYears.delete(y); else activeYears.add(y);
         b.setAttribute('aria-pressed', activeYears.has(y) ? 'true' : 'false');
+        syncUrl();
         draw();
       }, yearColour[y]));
     });
@@ -514,6 +552,7 @@
         (b) => {
           if (activeHubs.has(h.id)) activeHubs.delete(h.id); else activeHubs.add(h.id);
           b.setAttribute('aria-pressed', activeHubs.has(h.id) ? 'true' : 'false');
+          syncUrl();
           draw();
         },
         hubFill(h)));
@@ -532,6 +571,7 @@
     authorOptsEl.appendChild(chip('Collaborators only', collabOnly, (b) => {
       collabOnly = !collabOnly;
       b.setAttribute('aria-pressed', collabOnly ? 'true' : 'false');
+      syncUrl();
       draw();
     }));
   }
@@ -584,6 +624,7 @@
   function switchLens(next) {
     if (next === lens) return;
     lens = next;
+    syncUrl();
     hovered = null; showCard(null);
     lensEl.querySelectorAll('button').forEach((b) =>
       b.setAttribute('aria-pressed', b.dataset.lens === lens ? 'true' : 'false'));
@@ -655,6 +696,9 @@
 
       yearsAsc.forEach((y) => activeYears.add(y));
       hubs.forEach((h) => activeHubs.add(h.id));
+      // Deep link (#1151): restore lens/years/themes/collab from the URL
+      // before the chips render, so their pressed state matches.
+      const urlLens = applyUrlState();
 
       recountHubs();
       buildStats();
@@ -666,6 +710,7 @@
       resize();
       seedPositions();
       reheat(320);
+      if (urlLens) switchLens(urlLens);
     })
     .catch(() => { statsEl.textContent = 'The atlas data could not be loaded.'; });
 
