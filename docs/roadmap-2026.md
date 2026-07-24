@@ -4,7 +4,7 @@ A planning document to help the maintainer think through what's worth
 doing next, in what order, and at what effort. Organised by **release
 version** (SemVer), the same axis as the GitHub milestones and the
 public [`/roadmap.html`](https://eiss-europa.com/roadmap.html).
-**Last update: 23 July 2026 (v2.27.0 prose resync).**
+**Last update: 25 July 2026 (Atlas follow-on items folded in).**
 
 <!-- AUTOSTAMP:BEGIN -->
 > _Auto-tracked: **34 entries** in [`[Unreleased]`](../CHANGELOG.md#unreleased) since **v2.26.0** (32 Added, 1 Changed, 1 Fixed). Last refresh by `scripts/sync-roadmap.py`: 23 Jul 2026. Prose in the timeline below may lag; the maintainer resynthesises on release-time §5 sweep._
@@ -112,12 +112,28 @@ sitting in `[Unreleased]`:
 - **The Anthology Atlas** — a force-directed map of the corpus at
   `/anthology-atlas.html`, with a Papers lens (511 papers pulled toward
   the 17 research-theme hubs) and an Authors lens (co-authorship
-  clusters across 496 deduplicated authors). Indexed, signposted from
+  clusters across 494 deduplicated authors). Indexed, signposted from
   the Anthology header, with a first-visit welcome strip and a guided
   tour.
   [#1124](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1124),
   [#1129](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1129),
   [#1134](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1134).
+- **The Anthology and the Atlas, wired together** — the map stopped
+  being a standalone artefact. Paper pages gained related-paper
+  suggestions and theme-tag links, the by-person view gained a
+  co-author line, and the Atlas gained deep-linkable filter state, an
+  abstract-coverage overlay, edition chips that separate the joint
+  events from their calendar year, find-and-spotlight search, a
+  visible list alternative for its canvas, and its own share card.
+  [#1148](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1148),
+  [#1149](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1149),
+  [#1150](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1150),
+  [#1151](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1151),
+  [#1152](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1152),
+  [#1153](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1153),
+  [#1154](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1154),
+  [#1155](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1155),
+  [#1156](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1156).
 - **The abstract back catalogue** — EISS 2026 coverage complete (69 of
   69), and the pre-Indico recovery well under way from the organisers'
   archives (2019, 2018, 2021, 2022, 2023 and the 2019 Joint Policy
@@ -143,8 +159,31 @@ sitting in `[Unreleased]`:
   and the legacy Mobirise redirects
   ([#607](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/607)).
 
-Still open for the cut:
+Still open for the cut. This is the shaping work, not the full list:
+the [v2.27.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/10)
+is the queryable commitment (rule §10) and currently holds 20 open
+issues, most of them small enough not to need prose here.
 
+- **Per-paper theme derivation** — themes are currently matched against
+  a paper's *panel* title, so every paper in a panel inherits the same
+  set: 511 papers occupy just 30 distinct theme signatures, and the
+  Atlas's Papers lens therefore has 30 distinct positions to place them
+  in. Deriving themes from abstract text, now on file for 294 papers,
+  is what would let the map show more than the by-paper filter already
+  does. The threshold matters more than the coverage gain (the
+  "confidence over coverage" principle in `paperIndex.js`).
+  [#1186](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1186), M.
+- **Atlas follow-ons** — paper-to-paper edges reusing the adjacency
+  #1148 already computes
+  ([#1188](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1188),
+  M, best taken after #1186), reciprocal "See this on the Atlas" links
+  from paper pages and author entries
+  ([#1189](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1189), S),
+  an author's papers shown in place on the Papers lens rather than
+  navigating away
+  ([#1190](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1190), S),
+  and a collapsed filter stack on phones
+  ([#1191](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1191), S).
 - **ESSC 2027 announcement** — drop one entry into
   `src/_data/conferences.js` per [`docs/new-conference.md`](new-conference.md)
   once the date and venue firm up. S.
@@ -194,6 +233,13 @@ mirrored in the *Under watch* section of `/roadmap.html`.
 - **Google Forms file-upload edit lock**
   ([#102](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/102)) —
   upstream Google limitation, no fix path; a documented known issue.
+- **Atlas edition scrubber**
+  ([#1192](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1192)) —
+  reading the corpus across 2017-2026 rather than as a snapshot.
+  Parked behind
+  [#1186](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1186):
+  with 30 theme signatures across the whole corpus a scrub would
+  animate almost nothing, and the feature would read as a demo toy.
 
 **Deferred to 2027+** (won't schedule without a specific trigger):
 custom-domain board emails, a self-hosted newsletter replacing
