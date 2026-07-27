@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-16T14:58:33+00:00",
-  "count": 70,
+  "generated_at": "2026-07-24T07:42:22+00:00",
+  "count": 72,
   "source": "https://netsec-cost.eu/directory-index.json",
   "members": [
     {
@@ -356,6 +356,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/ivan-zaccagnini.jpg"
     },
     {
+      "name": "Mr Johannes Lucht",
+      "name_key": "johannes lucht",
+      "aliases": [],
+      "slug": "johannes-lucht",
+      "url": "https://netsec-cost.eu/people/johannes-lucht.html",
+      "orcid": null,
+      "role": null,
+      "affiliation": "ETH Zurich",
+      "photo": null
+    },
+    {
       "name": "Dr John N.T. Helferich",
       "name_key": "john helferich",
       "aliases": [],
@@ -552,6 +563,17 @@
       "role": "Action Chair",
       "affiliation": "LMU Munich",
       "photo": "https://netsec-cost.eu/assets/images/people/moritz-weiss.jpg"
+    },
+    {
+      "name": "Dr Niklas Karlén",
+      "name_key": "niklas karlen",
+      "aliases": [],
+      "slug": "niklas-karlen",
+      "url": "https://netsec-cost.eu/people/niklas-karlen.html",
+      "orcid": "0000-0001-8428-4861",
+      "role": null,
+      "affiliation": "Swedish Defence University",
+      "photo": "https://netsec-cost.eu/assets/images/people/niklas-karlen.jpg"
     },
     {
       "name": "Prof. Nikolaos Tzifakis",
