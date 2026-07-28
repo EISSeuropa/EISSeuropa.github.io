@@ -454,12 +454,66 @@ function checkPeopleIndex() {
   }
 }
 
+// Theme spread (#1186). Themes are now derived from abstract prose as well
+// as the panel title, which is a keyword heuristic: widening one pattern can
+// silently make its hub swallow the corpus, or a lost abstract pass can
+// silently collapse every paper back to one theme. Neither breaks the build,
+// both wreck the Atlas and the theme filter, so assert the shape here.
+const THEME_MAX_SHARE = 0.25; // no single theme may tag more than a quarter
+const THEME_AVG_MIN = 1.05;   // below this, abstract derivation isn't running
+const THEME_AVG_MAX = 2.5;    // above this, patterns have gone to tag soup
+function checkThemeSpread() {
+  const file = "_site/data/anthology-atlas.json";
+  if (!existsSync(file)) {
+    if (htmlFiles("_site").length) problems.push(`${file}: missing — the Atlas data was not built`);
+    return;
+  }
+  let data;
+  try {
+    data = JSON.parse(readFileSync(file, "utf8"));
+  } catch (e) {
+    problems.push(`${file}: could not parse (${e.message})`);
+    return;
+  }
+  const papers = data.papers || [];
+  if (!papers.length) {
+    problems.push(`${file}: no papers in the Atlas projection`);
+    return;
+  }
+  const counts = new Map();
+  let total = 0;
+  for (const p of papers) {
+    for (const t of p.themes || []) counts.set(t, (counts.get(t) || 0) + 1);
+    total += (p.themes || []).length;
+  }
+  for (const [name, n] of counts) {
+    const share = n / papers.length;
+    if (share > THEME_MAX_SHARE) {
+      problems.push(
+        `theme "${name}" tags ${n} of ${papers.length} papers (${Math.round(share * 100)}%, ` +
+          `limit ${THEME_MAX_SHARE * 100}%) — a THEME_MATCH or ABSTRACT_OVERRIDE pattern in ` +
+          `paperIndex.js is matching ambient vocabulary rather than subject matter`
+      );
+    }
+  }
+  const avg = total / papers.length;
+  if (avg < THEME_AVG_MIN || avg > THEME_AVG_MAX) {
+    problems.push(
+      `average themes per paper is ${avg.toFixed(2)}, outside ${THEME_AVG_MIN}-${THEME_AVG_MAX} — ` +
+        (avg < THEME_AVG_MIN
+          ? "abstract-derived themes (#1186) look to have stopped applying"
+          : "theme patterns have widened into tag soup")
+    );
+  }
+}
+
 checkDataKeys();
 checkBoardLinks();
 checkBuiltHtml();
 checkUndefinedClasses();
 checkCssCollisions();
 checkPeopleIndex();
+checkThemeSpread();
 
 if (problems.length) {
   console.error(`\n✗ build-sanity check failed (${problems.length} problem${problems.length > 1 ? "s" : ""}):\n`);
@@ -467,4 +521,4 @@ if (problems.length) {
   console.error("");
   process.exit(1);
 }
-console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, no cross-block CSS class collisions, people hovercard index resolvable).");
+console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, no cross-block CSS class collisions, people hovercard index resolvable, theme spread within bounds).");

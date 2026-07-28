@@ -54,6 +54,63 @@ function themesOf(sessionTitle) {
   return THEME_MATCH.filter(([, re]) => re.test(t)).map(([n]) => n);
 }
 
+// ── Abstract-derived themes (#1186) ──────────────────────────────────────
+// The panel title alone is a coarse signal: every paper in a panel inherits
+// the same themes, so the whole corpus collapsed into ~30 distinct theme
+// signatures and the Atlas had 30 positions to place 500+ papers in. With
+// abstracts now on file for most papers (#794 / #886 / #1040), a paper can
+// carry the themes ITS OWN text is about.
+//
+// The panel-title match stays the prior and is always kept: it is
+// editorially curated, so it is trusted even when the abstract is silent.
+// Abstract matches are additive and must clear ABSTRACT_MIN_HITS, because
+// a single passing mention is not what a paper is about.
+const ABSTRACT_MIN_HITS = 2;
+
+// Matching curated panel titles and matching free prose are different jobs,
+// so three themes carry a prose-only pattern. Each drops vocabulary that is
+// AMBIENT in this literature rather than topical — measured over the 294
+// abstracts on file, these branches fire in 9-27% of all abstracts
+// regardless of subject, which made their hubs swallow the corpus:
+//   "theor"      — 27% of abstracts ("theoretical framework" is boilerplate)
+//   "\bnato\b"   — 19%, "\balliance" — 15% (ambient in European security)
+//   "\balignment"— generic in prose ("alignment of interests"); the distinct
+//                  "realignment" branch is kept
+//   "\bspace\b"  — a false friend ("policy space"); "outer space" is kept
+// Everything else stays: "cyber", "deterrence" and "warfare" run hot too,
+// but there they are the subject, not the wallpaper. This map is the
+// curation lever for prose matching, the same way THEME_MATCH is for panels.
+const ABSTRACT_OVERRIDE = {
+  "Emerging domains: cyber and technology": /cyber|digital|\bAI\b|artificial intelligence|information operation|outer space|autonom|drone|disruptive machine|hybrid (threat|war|domain)/i,
+  "Defence cooperation and military assistance": /defen[cs]e cooperation|military assistance|security assistance|burden.?sharing|interoperab|coalition|realignment/i,
+  "Theoretical developments in security studies": /conceptuali[sz]|knowledge production|epistem|ontolog|methodolog|origins of war|peace.?violence/i,
+};
+
+// Global-flag counterparts, so occurrences can be counted rather than just
+// detected. Built once: a /g regex carries lastIndex state, so each is reset
+// before use.
+const abstractRe = new Map(
+  THEME_MATCH.map(([name, re]) => {
+    const src = (ABSTRACT_OVERRIDE[name] || re).source;
+    return [name, new RegExp(src, "gi")];
+  })
+);
+
+// Themes the abstract argues for, excluding any the panel title already gave.
+function themesFromAbstract(abstract, already) {
+  const text = String(abstract || "");
+  if (!text) return [];
+  const out = [];
+  for (const name of THEME_ORDER) {
+    if (already.has(name)) continue;
+    const re = abstractRe.get(name);
+    re.lastIndex = 0;
+    const m = text.match(re);
+    if (m && m.length >= ABSTRACT_MIN_HITS) out.push(name);
+  }
+  return out;
+}
+
 // Compact author/affiliation strings for display + search. Authors keep
 // their original spelling (lang="en" on render). The affiliation line is
 // the distinct set of affiliations across the paper's authors, comma-joined.
@@ -117,6 +174,17 @@ for (const p of corpus.papers || []) {
 const papers = [...byKey.values()].sort(
   (a, b) => (b.year || 0) - (a.year || 0) || a.title.localeCompare(b.title)
 );
+
+// Fold in the abstract-derived themes (#1186). This runs AFTER the dedup
+// merge, not inside it: a later duplicate row can supply an abstract the
+// first occurrence lacked, and only the merged record knows the full text.
+// Result stays in canonical THEME_ORDER, which the facet and the Atlas hubs
+// both rely on.
+for (const p of papers) {
+  const merged = new Set(p.theme);
+  for (const name of themesFromAbstract(p.abstract, merged)) merged.add(name);
+  p.theme = [...merged].sort((a, b) => themeRank.get(a) - themeRank.get(b));
+}
 
 // A paper gets its own landing page (#794) only when there is something to
 // land on: an abstract or an external published-version link. The rest are
