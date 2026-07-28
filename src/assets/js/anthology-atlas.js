@@ -102,11 +102,13 @@
   let hubs = [], hubById = {};
   let papers = [], authors = [];
   let coEdges = [];                // {a, b, weight} — author node refs (#1129)
+  let paperEdges = [];             // {a, b, weight} — paper node refs (#1188)
   let yearsAsc = [];
   let editions = [];               // {key, label, short, year, count}, newest first (#1153)
   let lens = 'papers';             // 'papers' | 'authors'
   let collabOnly = false;          // Authors lens: hide solo-only authors
   let abstractsOnly = false;       // Papers lens: dim papers without an abstract (#1152)
+  let paperEdgesOn = false;        // Papers lens: draw paper-to-paper adjacency (#1188)
   const activeEditions = new Set(); // edition keys currently shown (#1153)
   const activeHubs = new Set();    // theme hubs currently shown
   let hovered = null, draggingHub = null;
@@ -263,6 +265,27 @@
       });
     });
     ctx.globalAlpha = 1;
+
+    // Paper-to-paper edges (#1188, Papers lens, opt-in). The corpus adjacency
+    // the landing pages list as "Related in the Anthology": shared authors,
+    // panel-mates, shared themes. Drawn under the nodes in a neutral ink so it
+    // reads as structure behind the year-coloured dots rather than competing
+    // with them, with a heavier stroke for a stronger relationship.
+    if (lens === 'papers' && paperEdgesOn) {
+      ctx.strokeStyle = theme.subtle;
+      paperEdges.forEach((e) => {
+        const a = e.a, b = e.b;
+        if (!nodeVisible(a) || !nodeVisible(b)) return;
+        const lit = hoverIds && hoverIds.has(a.id) && hoverIds.has(b.id);
+        ctx.globalAlpha = lit ? 0.85 : (hoverIds ? 0.04 : Math.min(0.42, 0.12 + e.weight * 0.03));
+        ctx.lineWidth = e.weight >= 10 ? 1.6 : 1;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+      });
+      ctx.globalAlpha = 1;
+    }
 
     // Co-author edges, on top of the hub anchoring (Authors lens). Heavier
     // stroke for a pair that shares more than one paper. #1129.
@@ -541,6 +564,7 @@
     } else sp.delete('themes');
     if (collabOnly) sp.set('collab', '1'); else sp.delete('collab');
     if (abstractsOnly) sp.set('abstracts', '1'); else sp.delete('abstracts');
+    if (paperEdgesOn) sp.set('links', '1'); else sp.delete('links');
     if (spotlight && findEl && findEl.value.trim()) sp.set('find', findEl.value.trim());
     else sp.delete('find');
     history.replaceState(null, '', url.pathname + url.search + url.hash);
@@ -566,6 +590,7 @@
     if (ids.length) { activeHubs.clear(); ids.forEach((id) => activeHubs.add(id)); }
     collabOnly = sp.get('collab') === '1';
     abstractsOnly = sp.get('abstracts') === '1';
+    paperEdgesOn = sp.get('links') === '1';
     return sp.get('lens') === 'authors' ? 'authors' : null;
   }
 
@@ -667,6 +692,14 @@
     paperOptsEl.appendChild(chip('Abstract on file', abstractsOnly, (b) => {
       abstractsOnly = !abstractsOnly;
       b.setAttribute('aria-pressed', abstractsOnly ? 'true' : 'false');
+      syncUrl();
+      draw();
+    }));
+    // Paper-to-paper adjacency (#1188), off by default: 890 edges is a lot of
+    // ink, and the hub anchoring is the primary reading of this lens.
+    paperOptsEl.appendChild(chip('Link related papers', paperEdgesOn, (b) => {
+      paperEdgesOn = !paperEdgesOn;
+      b.setAttribute('aria-pressed', paperEdgesOn ? 'true' : 'false');
       syncUrl();
       draw();
     }));
@@ -789,6 +822,11 @@
         e.a.coPeers.push(e.b.id); e.a.coPeerNodes.push(e.b); e.a.coCount++;
         e.b.coPeers.push(e.a.id); e.b.coPeerNodes.push(e.a); e.b.coCount++;
       });
+
+      // Paper-to-paper edges (#1188): resolve index pairs to paper node refs.
+      paperEdges = (data.paperEdges || [])
+        .map((e) => ({ a: papers[e.a], b: papers[e.b], weight: e.weight }))
+        .filter((e) => e.a && e.b);
 
       yearsAsc = data.years.slice().sort((a, b) => a - b);
       editions = data.editions || [];
