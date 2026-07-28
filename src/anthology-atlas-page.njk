@@ -81,14 +81,22 @@ lang: en
     <datalist id="atlas-find-list"><!-- options injected by anthology-atlas.js (#1154) --></datalist>
   </div>
 
-  <div class="atlas-controls" id="atlas-years" role="group" aria-label="Filter by edition year">
-    <span class="lbl">Editions</span>
-    <!-- year chips injected by anthology-atlas.js -->
-  </div>
-  <div class="atlas-controls" id="atlas-themes" role="group" aria-label="Spotlight a research theme">
-    <span class="lbl">Themes</span>
-    <!-- theme hub chips injected by anthology-atlas.js -->
-  </div>
+  {# Filter rows (#1191). A native <details>, open in the markup so the
+     no-JS and desktop cases simply show everything; anthology-atlas.js
+     collapses it on phones, where 12 edition chips plus 18 theme chips
+     otherwise push the map below the fold. The summary is hidden on
+     desktop by CSS. #}
+  <details class="atlas-filters" id="atlas-filters" open>
+    <summary class="atlas-filters__summary" id="atlas-filters-summary">Filters</summary>
+    <div class="atlas-controls" id="atlas-years" role="group" aria-label="Filter by edition year">
+      <span class="lbl">Editions</span>
+      <!-- year chips injected by anthology-atlas.js -->
+    </div>
+    <div class="atlas-controls" id="atlas-themes" role="group" aria-label="Spotlight a research theme">
+      <span class="lbl">Themes</span>
+      <!-- theme hub chips injected by anthology-atlas.js -->
+    </div>
+  </details>
 
   <div class="atlas-stage">
     <canvas id="atlas-canvas" aria-label="Force-directed map of the European Security Studies Anthology: every paper drawn toward the research themes it touches, coloured by edition year, with an Authors lens mapping co-authorship between the same people. The same papers and authors are available as filterable lists on the Anthology page."></canvas>
