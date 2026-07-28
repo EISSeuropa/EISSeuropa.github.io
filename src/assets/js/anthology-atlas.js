@@ -33,6 +33,8 @@
   const paperOptsEl = document.getElementById('atlas-paperopts');
   const findEl = document.getElementById('atlas-find');
   const findListEl = document.getElementById('atlas-find-list');
+  const filtersEl = document.getElementById('atlas-filters');
+  const filtersSummaryEl = document.getElementById('atlas-filters-summary');
   const legendPapers = document.getElementById('atlas-legend');
   const legendAuthors = document.getElementById('atlas-legend-authors');
   // Welcome strip + guided-tour controls (#1134).
@@ -572,7 +574,19 @@
   // pattern as the by-paper Event filter), so the Anthology and anyone
   // sharing a link can deep-link a filtered view of the map. Only
   // non-default state is written, so the bare URL stays canonical.
+  // Filter disclosure summary (#1191): on phones the rows are collapsed, so
+  // the summary has to say whether anything is filtering.
+  function updateFilterSummary() {
+    if (!filtersSummaryEl) return;
+    const eds = activeEditions.size, ths = activeHubs.size;
+    const all = eds === editions.length && ths === hubs.length;
+    filtersSummaryEl.textContent = all
+      ? 'Filters'
+      : 'Filters · ' + eds + '/' + editions.length + ' editions, ' + ths + '/' + hubs.length + ' themes';
+  }
+
   function syncUrl() {
+    updateFilterSummary();
     if (!window.history || !history.replaceState) return;
     const url = new URL(location.href);
     const sp = url.searchParams;
@@ -882,6 +896,13 @@
       buildLensChips();
       buildAuthorOpts();
       buildPaperOpts();
+
+      // Phones: collapse the filter rows so the map is not pushed below the
+      // fold (#1191). Desktop and the no-JS case keep the markup's `open`.
+      if (filtersEl && window.matchMedia && window.matchMedia('(max-width: 640px)').matches) {
+        filtersEl.open = false;
+      }
+      updateFilterSummary();
 
       resize();
       seedPositions();

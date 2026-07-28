@@ -7082,6 +7082,26 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-chip[aria-pressed="false"] { opacity: .3; }
 .atlas-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .atlas-chip.is-plain { background: var(--border-strong); color: var(--text); }
+/* Filter disclosure (#1191). Desktop shows the rows outright, so the summary
+   is hidden and <details> is a transparent wrapper; phones get a real
+   collapsible, closed by anthology-atlas.js on load. */
+.atlas-filters { margin: 0; }
+.atlas-filters__summary { display: none; }
+@media (max-width: 640px) {
+  .atlas-filters__summary {
+    display: block;
+    cursor: pointer;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 8px 0;
+    margin: 0 0 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .atlas-filters__summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+}
 /* Find-and-spotlight input (#1154), shaped like the chips beside it. */
 .atlas-find {
   font: inherit;
