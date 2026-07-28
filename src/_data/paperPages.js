@@ -15,41 +15,21 @@
 const paperIndex = require("./paperIndex.js");
 const paperLinks = require("./paperLinks.json"); // confirmed publication matches, keyed by slug
 const site = require("./site.js");
-const nameKey = require("./nameKey.js"); // shared author dedup key (Atlas + authorsIndex)
+const { neighbours } = require("./paperAdjacency.js"); // shared corpus adjacency (#1148/#1188)
 
-// Related papers (#1148): the Atlas adjacency (shared authors, panel-mates,
-// shared themes) rendered as a short static list on each landing page, so a
-// paper page is no longer a dead end. Scored, not clustered: shared author 5,
-// same panel 3, each shared theme 2. Ties break toward the nearer edition.
-// ponytail: O(n²) pairwise scan over ~560 pages at build time, fine at this
-// corpus size; precompute a theme->papers index if the corpus ever 10×es.
+// Related papers (#1148): the corpus adjacency rendered as a short static
+// list on each landing page, so a paper page is no longer a dead end. The
+// scoring lives in paperAdjacency.js, shared with the Atlas edge layer.
 const RELATED_MAX = 4;
 function computeRelated(pages) {
-  const meta = pages.map((p) => ({
-    authorKeys: new Set((p.authors || []).map(nameKey).filter(Boolean)),
-    themes: new Set(p.theme || []),
-  }));
-  return pages.map((p, i) => {
-    const scored = [];
-    for (let j = 0; j < pages.length; j++) {
-      if (j === i) continue;
-      const q = pages[j];
-      let sharedAuthors = 0;
-      for (const k of meta[j].authorKeys) if (meta[i].authorKeys.has(k)) sharedAuthors++;
-      let sharedThemes = 0;
-      for (const t of meta[j].themes) if (meta[i].themes.has(t)) sharedThemes++;
-      const samePanel = p.panel && q.panel === p.panel && q.year === p.year;
-      const score = sharedAuthors * 5 + (samePanel ? 3 : 0) + sharedThemes * 2;
-      if (score > 0) scored.push({ q, score, dist: Math.abs((q.year || 0) - (p.year || 0)) });
-    }
-    scored.sort((a, b) => b.score - a.score || a.dist - b.dist || a.q.title.localeCompare(b.q.title));
-    return scored.slice(0, RELATED_MAX).map(({ q }) => ({
-      slug: q.slug,
-      title: q.title,
-      year: q.year,
-      conferenceLabel: q.conferenceLabel,
-    }));
-  });
+  return neighbours(pages, RELATED_MAX).map((list) =>
+    list.map(({ index }) => ({
+      slug: pages[index].slug,
+      title: pages[index].title,
+      year: pages[index].year,
+      conferenceLabel: pages[index].conferenceLabel,
+    }))
+  );
 }
 
 // Every paper page offers a citation export (#805). When a confirmed
