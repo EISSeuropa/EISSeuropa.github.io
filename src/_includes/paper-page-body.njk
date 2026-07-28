@@ -130,8 +130,12 @@
         {%- if paper.abstractUrl %}<a class="btn btn-secondary btn-sm" href="{{ paper.abstractUrl }}" target="_blank" rel="noopener">{{ icon("external-link") }} View on Indico</a>{% endif %}
         <a class="btn btn-secondary btn-sm" href="{{ paper.conferenceUrl }}#programme">{{ icon("file-text") }} {{ paper.conferenceLabel }} {{ paper.year }} programme</a>
         {# Reciprocal Atlas link (#1189): the map spotlights this paper via the
-           ?find= deep link the Find control reads (#1154). #}
-        <a class="btn btn-secondary btn-sm" href="/anthology-atlas.html?find={{ paper.title | urlencode }}">{{ icon("share-2") }} See this on the Atlas</a>
+           ?find= deep link the Find control reads (#1154). The apostrophe is
+           percent-encoded by hand: `urlencode` follows encodeURIComponent,
+           which deliberately leaves ' alone, and autoescaping then emits it
+           as &#39; — a literal # in the attribute, which the link checker
+           reads as an anchor. Browsers cope, the checker rightly does not. #}
+        <a class="btn btn-secondary btn-sm" href="/anthology-atlas.html?find={{ paper.title | urlencode | replace("'", "%27") }}">{{ icon("share-2") }} See this on the Atlas</a>
       </p>
       {# Cite this paper (#805). When the paper has a confirmed publication the
          cite controls live in the published-version card above (the citation is

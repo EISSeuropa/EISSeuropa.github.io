@@ -108,7 +108,7 @@
       {# Reciprocal Atlas link (#1189). The map pins this person's papers via
          the ?author= deep link (#1190). EN-only page, hence hreflang. #}
       <p class="speaker-atlas">
-        <a href="/anthology-atlas.html?author={{ s.name | urlencode }}"{% if (lang or "en") != "en" %} hreflang="en"{% endif %}>{{ s18n.atlasLink }}</a>
+        <a href="/anthology-atlas.html?author={{ s.name | urlencode | replace("'", "%27") }}"{% if (lang or "en") != "en" %} hreflang="en"{% endif %}>{{ s18n.atlasLink }}</a>
       </p>
       {%- endif %}
       {%- if coauthorsIndex[s.key] %}
