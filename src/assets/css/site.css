@@ -4183,6 +4183,11 @@ a.speaker-paper-title:hover {
   gap: 0.3rem;
   margin: 0.35rem 0 0;
 }
+/* Reciprocal Atlas link (#1189) on each by-person entry. */
+.speaker-atlas {
+  margin: 0.35rem 0 0;
+  font-size: var(--fs-xs);
+}
 /* Co-author line (#1150): names anchor to their own entries on this page. */
 .speaker-coauthors {
   margin: 0.35rem 0 0;

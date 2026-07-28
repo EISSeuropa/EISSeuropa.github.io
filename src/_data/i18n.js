@@ -530,6 +530,7 @@ const locales = {
       allEvents: "All events",
       attendedLabel: "Editions attended",
       coauthorsLabel: "Co-authored with",
+      atlasLink: "See their papers on the Atlas",
     },
 
     papers: {
@@ -1015,6 +1016,7 @@ const locales = {
       allEvents: "Tous les événements",
       attendedLabel: "Éditions",
       coauthorsLabel: "A co-signé avec",
+      atlasLink: "Voir ses communications sur l'Atlas",
     },
 
     papers: {
@@ -1490,6 +1492,7 @@ const locales = {
       allEvents: "Alle Veranstaltungen",
       attendedLabel: "Ausgaben",
       coauthorsLabel: "Gemeinsam verfasst mit",
+      atlasLink: "Ihre Beiträge im Atlas ansehen",
     },
 
     papers: {

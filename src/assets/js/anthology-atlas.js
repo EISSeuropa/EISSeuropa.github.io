@@ -113,6 +113,7 @@
   const activeHubs = new Set();    // theme hubs currently shown
   let hovered = null, draggingHub = null;
   let spotlight = null;            // node pinned by the Find control (#1154)
+  let spotlightSet = null;         // {ids:Set, label:string} pinned by an author click (#1190)
   let W = 0, H = 0, dpr = 1;
 
   const items = () => (lens === 'authors' ? authors : papers);
@@ -244,7 +245,7 @@
           focus.type === 'paper' ? focus.hubs
             : focus.type === 'author' ? focus.hubs.concat(focus.coPeers || [])
             : (focus.members || [])))
-      : null;
+      : (spotlightSet ? spotlightSet.ids : null);
 
     // Edges: node → each of its theme hubs.
     items().forEach((n) => {
@@ -385,6 +386,17 @@
       ctx.strokeStyle = theme.accent;
       ctx.stroke();
     }
+    // An author's papers, pinned by clicking their dot on the Authors lens.
+    if (spotlightSet && !hovered && lens === 'papers') {
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = theme.accent;
+      items().forEach((n) => {
+        if (!spotlightSet.ids.has(n.id) || !nodeVisible(n)) return;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r + 5, 0, Math.PI * 2);
+        ctx.stroke();
+      });
+    }
 
     // Hubs on top.
     hubs.forEach((h) => {
@@ -461,7 +473,7 @@
         const shown = names.slice(0, 4).join(', ') + (names.length > 4 ? ', +' + (names.length - 4) : '');
         addEl(card, 'coauth', 'With ' + shown);
       }
-      if (node.url) addEl(card, 'go', 'View papers →');
+      if (node.paperIdx && node.paperIdx.length) addEl(card, 'go', 'Click to map their papers →');
     } else {
       addEl(card, 'nm', node.title);
       const who = node.authors.length
@@ -519,7 +531,16 @@
     if (draggingHub) { draggingHub = null; return; }
     const r = canvas.getBoundingClientRect();
     const n = nodeAt(e.clientX - r.left, e.clientY - r.top);
-    if (n && (n.type === 'paper' || n.type === 'author') && n.url) location.href = n.url;
+    // Author (#1190): stay on the map and show their papers, rather than
+    // navigating away. Papers still follow their link.
+    if (n && n.type === 'author' && n.paperIdx && n.paperIdx.length) { showAuthorPapers(n); return; }
+    if (n && n.type === 'paper' && n.url) { location.href = n.url; return; }
+    // Clicking empty canvas clears a pinned spotlight.
+    if (!n && (spotlightSet || spotlight)) {
+      spotlightSet = null; spotlight = null;
+      if (findEl) findEl.value = '';
+      syncUrl(); draw();
+    }
   });
 
   // ── Controls ──
@@ -565,8 +586,9 @@
     if (collabOnly) sp.set('collab', '1'); else sp.delete('collab');
     if (abstractsOnly) sp.set('abstracts', '1'); else sp.delete('abstracts');
     if (paperEdgesOn) sp.set('links', '1'); else sp.delete('links');
-    if (spotlight && findEl && findEl.value.trim()) sp.set('find', findEl.value.trim());
-    else sp.delete('find');
+    if (spotlightSet) { sp.set('author', spotlightSet.label); sp.delete('find'); }
+    else if (spotlight && findEl && findEl.value.trim()) { sp.set('find', findEl.value.trim()); sp.delete('author'); }
+    else { sp.delete('find'); sp.delete('author'); }
     history.replaceState(null, '', url.pathname + url.search + url.hash);
   }
 
@@ -667,12 +689,26 @@
   function applyFind(q) {
     const node = resolveFind(q);
     spotlight = node;
+    spotlightSet = null; // an explicit Find supersedes a pinned author
     if (node) {
       const wantLens = node.type === 'author' ? 'authors' : 'papers';
       if (lens !== wantLens) { switchLens(wantLens); return; } // switchLens syncs + draws
     }
     syncUrl();
     draw();
+  }
+
+  // Cross-lens jump (#1190): pin an author's papers on the Papers lens. The
+  // author's name goes into the Find field so it is visible WHY the view
+  // changed, and into the URL as author= so the state is shareable.
+  function showAuthorPapers(node) {
+    const ids = new Set(node.paperIdx.map((i) => papers[i] && papers[i].id).filter(Boolean));
+    if (!ids.size) return;
+    spotlight = null;
+    spotlightSet = { ids, label: node.name };
+    if (findEl) findEl.value = node.name;
+    hovered = null; showCard(null);
+    if (lens !== 'papers') switchLens('papers'); else { syncUrl(); draw(); }
   }
 
   function buildAuthorOpts() {
@@ -804,6 +840,7 @@
       authors = (data.authors || []).map((a, i) => ({
         id: 'a' + i, type: 'author',
         name: a.name, url: a.url, years: a.years || [], editions: a.editions || [],
+        paperIdx: a.paperIdx || [],
         paperCount: a.paperCount || 0,
         hubs: hubIdsFor(a.themes),
         // Dot radius scales with paper count, capped at 7 (floor 3 keeps the
@@ -857,10 +894,18 @@
         findEl.addEventListener('change', () => applyFind(findEl.value));
         findEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') applyFind(findEl.value); });
         findEl.addEventListener('input', () => {
-          if (!findEl.value.trim() && spotlight) { spotlight = null; syncUrl(); draw(); }
+          if (!findEl.value.trim() && (spotlight || spotlightSet)) {
+            spotlight = null; spotlightSet = null; syncUrl(); draw();
+          }
         });
-        const urlFind = new URL(location.href).searchParams.get('find');
-        if (urlFind) { findEl.value = urlFind; applyFind(urlFind); }
+        const sp = new URL(location.href).searchParams;
+        const urlAuthor = sp.get('author');
+        const urlFind = sp.get('find');
+        if (urlAuthor) {
+          const a = authors.find((x) => x.name === urlAuthor)
+            || authors.find((x) => x.name.toLowerCase() === urlAuthor.toLowerCase());
+          if (a) showAuthorPapers(a);
+        } else if (urlFind) { findEl.value = urlFind; applyFind(urlFind); }
       }
     })
     .catch(() => { statsEl.textContent = 'The atlas data could not be loaded.'; });
