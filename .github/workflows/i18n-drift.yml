@@ -26,6 +26,9 @@ jobs:
   drift:
     name: Verify translations match their English sources
     runs-on: ubuntu-latest
+    # Caps a hung job at minutes rather than the 6-hour default. Real runs
+    # finish in about one minute; this is headroom, not a target.
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
