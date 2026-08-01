@@ -30,6 +30,13 @@
       "percent": 82,
       "state": "open",
       "due": "2026-09-30"
+    },
+    "v2.28.0": {
+      "closed": 0,
+      "total": 6,
+      "percent": 0,
+      "state": "open",
+      "due": "2026-12-08"
     }
   }
 }
