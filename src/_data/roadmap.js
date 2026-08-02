@@ -33,7 +33,7 @@ const roadmap = {
   issuesUrl: `${REPO}/issues/new/choose`,
   milestonesUrl: `${REPO}/milestones`,
   releasesUrl: `${REPO}/releases`,
-  updated: { en: "25 June 2026", fr: "25 juin 2026", de: "25. Juni 2026" },
+  updated: { en: "1 August 2026", fr: "1er août 2026", de: "1. August 2026" },
 
   quarters: [
     {
@@ -184,6 +184,32 @@ const roadmap = {
             en: "The Anthology Atlas maps the whole conference corpus as an interactive graph, by paper and by co-authorship. Abstract recovery reaches back into the pre-Indico editions and the Anthology now shows coverage per year. Also in this cycle: the internship page, the Global Risks 2026 survey wave, the leadership announcement, and the ESSC 2027 announcement once date and venue firm up.",
             fr: "L’Atlas de l’Anthologie cartographie tout le corpus des conférences sous forme de graphe interactif, par communication et par co-signature. La récupération des résumés remonte jusqu’aux éditions d’avant Indico, et l’Anthologie affiche désormais la couverture par année. Également dans ce cycle : la page consacrée aux stages, l’édition 2026 de l’enquête Global Risks, l’annonce de la nouvelle direction, et l’annonce de l’ESSC 2027 dès que la date et le lieu seront arrêtés.",
             de: "Der Anthologie-Atlas kartiert das gesamte Konferenzkorpus als interaktiven Graphen, nach Beitrag und nach Ko-Autorschaft. Die Wiedergewinnung der Abstracts reicht bis in die Ausgaben vor Indico zurück, und die Anthologie zeigt nun die Abdeckung pro Jahr. Ebenfalls in diesem Zyklus: die Praktikumsseite, die Global-Risks-Umfrage 2026, die Ankündigung der neuen Leitung und die Ankündigung der ESSC 2027, sobald Datum und Ort feststehen.",
+          },
+        },
+      ],
+    },
+    {
+      label: { en: "Q4 2026", fr: "T4 2026", de: "Q4 2026" },
+      sub: {
+        en: "October · November · December",
+        fr: "octobre · novembre · décembre",
+        de: "Oktober · November · Dezember",
+      },
+      entries: [
+        {
+          status: "planned",
+          version: "v2.28.0",
+          milestone: "v2.28.0",
+          when: { en: "8 December 2026 · v2.28.0", fr: "8 décembre 2026 · v2.28.0", de: "8. Dezember 2026 · v2.28.0" },
+          title: {
+            en: "Persistent identifiers and the corpus in French",
+            fr: "Identifiants pérennes et le corpus en français",
+            de: "Dauerhafte Kennungen und das Korpus auf Französisch",
+          },
+          desc: {
+            en: "The conference corpus gets identifiers that outlast the website: a DOI on Zenodo, deposit in a HAL collection, and the source code archived in Software Heritage, each shown on the site so the Anthology can be cited properly. In parallel the French Anthology leaves beta on a declared scope, per-theme annotated bibliographies are published in French for teaching use, and the corpus gains an analytical export of affiliations, themes and co-authorship.",
+            fr: "Le corpus des conférences reçoit des identifiants qui lui survivront : un DOI sur Zenodo, un dépôt dans une collection HAL, et le code source archivé dans Software Heritage, chacun affiché sur le site afin que l’Anthologie puisse être citée correctement. En parallèle, l’Anthologie en français sort de sa version bêta sur un périmètre déclaré, des bibliographies commentées par thème sont publiées en français pour un usage pédagogique, et le corpus reçoit un export analytique des affiliations, des thèmes et des co-signatures.",
+            de: "Das Konferenzkorpus erhält Kennungen, die die Website überdauern: einen DOI auf Zenodo, eine Hinterlegung in einer HAL-Sammlung und den in Software Heritage archivierten Quellcode, jeweils auf der Website ausgewiesen, damit die Anthologie ordentlich zitiert werden kann. Parallel dazu verlässt die französische Anthologie für einen erklärten Umfang den Beta-Status, thematische kommentierte Bibliographien erscheinen auf Französisch für die Lehre, und das Korpus erhält einen analytischen Export zu Zugehörigkeiten, Themen und Ko-Autorschaft.",
           },
         },
       ],

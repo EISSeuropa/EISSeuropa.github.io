@@ -52,6 +52,7 @@ other way round, so this is where a new release first appears.
 | v2.25.0 | 9 Jun 2026 | **Shipped** | Ready for Stockholm (pre-conference release) |
 | v2.26.0 | 25 Jun 2026 | **Shipped** | Introducing the Anthology |
 | v2.27.0 | Sep 2026 | In progress | The Anthology Atlas and the recovered back catalogue |
+| v2.28.0 | 8 Dec 2026 | Planned | Persistent identifiers and the corpus in French |
 
 (`v2.24.1` was planned as a pre-ESSC patch but the work grew into a feature-rich minor, so it shipped as the **v2.25.0** *Ready for Stockholm* release instead; the `v2.24.1` milestone is closed as superseded.)
 
@@ -202,6 +203,50 @@ room: a conference countdown widget, View Transitions API page
 crossfades, an acknowledgments / contributors page, a newsletter
 archive page, `rel="me"` verification if EISS gets a Mastodon or
 Bluesky account.
+
+### v2.28.0 — Persistent identifiers and the corpus in French · target 8 December 2026
+
+Two strands, both about making the corpus outlast the website. The
+first gives it identifiers and archives that are not GitHub. The
+second makes it usable in French, which is where a large part of the
+network reads.
+
+Nothing has landed yet. The
+[v2.28.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/11)
+is the queryable commitment (rule §10).
+
+- **Persistent identifiers and long-term archiving** — a Zenodo
+  community for the association, with the corpus deposited as a
+  *dataset* under a concept DOI plus one DOI per annual edition, and a
+  "Cite this corpus" block on the Anthology
+  ([#1221](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1221), M).
+  A HAL collection alongside it, once the CCSD confirms whether a
+  *loi 1901* association is eligible at all
+  ([#1222](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1222), M,
+  blocked on that answer). The source archived in Software Heritage,
+  with the SWHIDs shown in `README.md` and on `/licensing`
+  ([#1223](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1223), S).
+  This is the cheap path: #795 weighs the Crossref per-paper
+  alternative, which carries a recurring membership cost and stays
+  undecided.
+- **The corpus, readable in French** — the French Anthology comes out
+  of beta on a finite declared scope (the interface, the seventeen
+  theme labels, and the abstracts of papers with at least one
+  French-affiliated author), with a CI check that fails when an
+  in-scope entry loses its translation
+  ([#1224](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1224), L).
+  Per-theme annotated bibliographies in French follow, generated from
+  the corpus, printable, and licensed for teaching use
+  ([#1226](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1226), L).
+- **The corpus as data** — an analytical export layered on the raw
+  open-data export (#641): per edition, affiliation shares by country
+  and thematic distribution, plus co-authorship edges, versioned with
+  the corpus and documented in `docs/`
+  ([#1227](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1227), M).
+
+Both L items depend on a French reviewer's time, which is the main
+risk to the date. If that slips, the identifier strand still stands on
+its own.
 
 ---
 
