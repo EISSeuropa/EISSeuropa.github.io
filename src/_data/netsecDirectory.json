@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-24T07:42:22+00:00",
-  "count": 72,
+  "generated_at": "2026-07-29T07:52:50+00:00",
+  "count": 74,
   "source": "https://netsec-cost.eu/directory-index.json",
   "members": [
     {
@@ -90,6 +90,17 @@
       "role": "Management Committee · Switzerland",
       "affiliation": "ETH Zürich, Center for Security Studies",
       "photo": "https://netsec-cost.eu/assets/images/people/arthur-laudrain.jpg"
+    },
+    {
+      "name": "Dr Athanasios Skraparlis",
+      "name_key": "athanasios skraparlis",
+      "aliases": [],
+      "slug": "athanasios-skraparlis",
+      "url": "https://netsec-cost.eu/people/athanasios-skraparlis.html",
+      "orcid": "0000-0002-8248-4883",
+      "role": null,
+      "affiliation": "University of West Attica",
+      "photo": "https://netsec-cost.eu/assets/images/people/athanasios-skraparlis.jpg"
     },
     {
       "name": "Dr Chiara Libiseller",
@@ -794,6 +805,17 @@
       "role": null,
       "affiliation": "Free University of Berlin",
       "photo": null
+    },
+    {
+      "name": "Dr Zane Šime",
+      "name_key": "zane sime",
+      "aliases": [],
+      "slug": "zane-sime",
+      "url": "https://netsec-cost.eu/people/zane-sime.html",
+      "orcid": "0000-0002-4690-3243",
+      "role": null,
+      "affiliation": "Rīga Stradiņš University, RSU",
+      "photo": "https://netsec-cost.eu/assets/images/people/zane-sime.jpg"
     }
   ]
 }
