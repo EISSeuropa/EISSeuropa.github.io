@@ -5,18 +5,50 @@ Corpus state: 5 August 2026. Data: <https://doi.org/10.5281/zenodo.21776209>. Li
 
 ---
 
-## Summary
+## Abstract
 
 The Anthology is a structured record of every paper presented at a
 conference or workshop of the European Initiative for Security Studies
-(EISS) since the association's first meeting in 2017. It currently holds
+(EISS) since the association's first meeting in January 2017. It holds
 **511 papers** by **494 authors** across **12 editions**, each paper
 tagged against a controlled vocabulary of **17 research themes**, with an
 abstract on file for **292 of the 492 papers eligible for one**.
 
-This note describes what the corpus contains, how it is assembled, what
-its known limits are, and how to cite it. The data itself is deposited
+One feature of the corpus governs how it can be used, and I put it first
+rather than in a footnote. Documentation is not uniform across the
+period. Abstract coverage runs at 100 per cent for the 2026 and 2025
+editions and at zero for 2017, and that discontinuity tracks a change of
+conference management system rather than any change in scholarly
+activity. A reader who treats the corpus as an evenly documented series
+will mistake an artefact of record-keeping for a finding about the field.
+
+In what follows I describe what the corpus contains, how I assemble it,
+what it cannot support, and how to cite it. The data itself is deposited
 separately as a dataset under CC BY 4.0.
+
+## Résumé
+
+L'Anthologie est le relevé structuré de chaque communication présentée
+lors d'une conférence ou d'un atelier de l'Initiative européenne pour les
+études de sécurité (EISS) depuis la première rencontre de l'association
+en janvier 2017. Elle rassemble **511 communications** de **494 auteurs**
+réparties sur **12 éditions**, chacune indexée selon un vocabulaire
+contrôlé de **17 thèmes de recherche**, un résumé étant disponible pour
+**292 des 492 communications qui peuvent en comporter un**.
+
+Une caractéristique du corpus détermine l'usage que l'on peut en faire,
+et je la place en tête plutôt qu'en note. La documentation n'est pas
+homogène sur la période. La couverture des résumés atteint 100 pour cent
+pour les éditions 2026 et 2025 et zéro pour 2017, et cette discontinuité
+suit un changement de système de gestion des conférences, non une
+évolution de l'activité scientifique. Qui tiendrait le corpus pour une
+série uniformément documentée prendrait un artefact d'archivage pour un
+résultat sur la discipline.
+
+Je décris dans ce qui suit le contenu du corpus, la manière dont je le
+constitue, ce qu'il ne permet pas d'établir, et comment le citer. Les
+données elles-mêmes font l'objet d'un dépôt distinct, sous licence
+CC BY 4.0.
 
 ## 1. What the corpus is, and is not
 
@@ -62,12 +94,13 @@ European Security Studies Conference.
 
 ## 3. How the corpus is assembled
 
-The corpus is generated at build time from the conference programmes. It
-is not maintained by hand as a separate database, so a correction to a
-programme propagates to every view of it.
+I generate the corpus at build time from the conference programmes
+themselves. I do not maintain it by hand as a separate database, so a
+correction to a programme propagates to every view of it and the record
+cannot silently drift away from the source it claims to describe.
 
-Sources differ by era, which is the single most important thing to know
-about the data:
+Sources differ by era. This is the single most important thing to know
+about the data, and it explains the coverage pattern in section 6:
 
 - **2023 onwards** synchronise from Indico, the conference management
   system the association uses. Titles, authors, affiliations, panels and
@@ -114,18 +147,25 @@ English, French and German.
 | Climate and security | 10 |
 | Gender and security | 6 |
 
-**How a paper gets its themes, and why this matters.** Themes are matched
+**How a paper gets its themes, and why this matters.** I match themes
 against the title of the *panel* a paper sat in, not against the paper's
 own title or abstract. Every paper on a panel therefore inherits that
 panel's themes. A paper may carry more than one: **131 papers** do.
 
-The rule set is deliberately conservative. A panel whose title matches no
-rule leaves its papers untagged rather than forcing them into an
-approximate bucket, which is why **32 papers** carry no theme at all. The
-counts above should be read as a reliable floor on each theme's presence,
-not as a measurement of what the corpus is about. Panel-level inheritance
-also means the tagging is coarser than abstract-level classification
-would be, and the 511 papers resolve to 91 distinct theme combinations.
+I have kept the rule set deliberately conservative. Where a panel title
+matches no rule, I leave its papers untagged rather than force them into
+an approximate bucket, which is why **32 papers** carry no theme at all.
+I would rather under-claim than tag confidently and wrongly.
+
+This has a consequence I want to state plainly, because the table above
+invites the opposite reading. These counts are a reliable floor on each
+theme's presence in the corpus. They are not a measurement of what
+European security studies is about, and they should not be cited as one.
+Panel-level inheritance makes the tagging coarser than abstract-level
+classification would be, and the 511 papers resolve to only 91 distinct
+theme combinations. A finer-grained classification drawn from abstract
+text is possible for the 294 papers that now carry an abstract, and I
+have not attempted it here.
 
 ## 5. Authors and co-authorship
 
@@ -146,11 +186,13 @@ with no co-author in the corpus. Those pairs resolve into **64 separate
 clusters**, the largest containing 17 authors and the second 12. Only
 **10 pairs** co-wrote more than once.
 
-Affiliations are recorded as free text exactly as given on the programme,
-producing **389 distinct affiliation strings** across the corpus. They
-have not been reconciled to a controlled list of institutions, and no
-country has been inferred from them. Any analysis by institution or by
-country therefore requires normalisation the corpus does not yet provide.
+I record affiliations as free text exactly as given on the programme,
+which produces **389 distinct affiliation strings** across 511 papers. I
+have not reconciled them to a controlled list of institutions, and I have
+inferred no country from them. Any analysis by institution or by country
+therefore requires a normalisation step the corpus does not yet provide,
+and I would treat any such figure derived from these strings as
+unreliable until it does.
 
 ## 6. Abstract coverage
 
@@ -175,20 +217,26 @@ exactly:
 | 2017 | 36 | 0 | 0% |
 
 The recent editions are effectively complete. The earlier ones are an
-active recovery effort, and the 2017 edition currently has no abstracts
-at all. Anyone using abstract text as an analytical input should treat
-the corpus as covering 2023 onwards, and treat the earlier years as a
-programme-level record.
+active recovery effort, and the 2017 edition holds no abstracts at all.
+The 2022 and 2019 figures, at 40 and 39 per cent, are the current
+frontier of that work rather than a settled state.
+
+My recommendation follows directly. Anyone using abstract text as an
+analytical input should treat the corpus as covering 2023 onwards and
+treat the earlier editions as a programme-level record of who presented
+what. Mixing the two produces a series in which the apparent volume of
+scholarship on any theme rises sharply after 2022, and that rise would be
+an artefact of the sources described in section 3.
 
 ## 7. Known limitations
 
-Stated plainly, because they bound what the data can support:
+I state these plainly, because they bound what the data can support:
 
-1. **Author matching is conservative.** Names are normalised to a
-   comparison key. A person who appears under noticeably different
-   spellings across editions may still appear as two authors. The
-   deduplication errs towards splitting rather than wrongly merging two
-   different people.
+1. **Author matching is conservative.** I normalise names to a comparison
+   key. A person appearing under noticeably different spellings across
+   editions may still surface as two authors. The deduplication errs
+   towards splitting rather than wrongly merging two different people,
+   which means the count of 494 authors is an upper bound.
 2. **Themes are panel-level**, as described in section 4.
 3. **Affiliations are unnormalised free text**, as described in section 5.
 4. **Abstract coverage is uneven by design of the sources**, as described
@@ -221,13 +269,32 @@ Abstracts are reproduced as submitted by their authors. Rights in the
 papers and in their published versions rest with the authors and their
 publishers, and are not covered by the licence on the dataset.
 
-## 9. Versioning
+## 9. Versioning, and what comes next
 
 The corpus grows as each edition is added and as the recovery of earlier
-abstracts continues, so any figure in this note is a statement about one
-version. The figures here describe the corpus as of 5 August 2026: 511
-papers, 494 authors, 12 editions, 292 abstracts.
+abstracts continues, so every figure in this note is a statement about
+one version. The figures here describe the corpus as of 5 August 2026:
+511 papers, 494 authors, 12 editions, 292 abstracts. I cut a new
+deposited version as the corpus reaches a stable state, and the concept
+DOI resolves to the most recent one.
 
-Four papers in the corpus carry the European Security Studies Prize,
-awarded with the *Journal of Strategic Studies*, across the 2024, 2025
-and 2026 editions.
+Three lines of work will change what the corpus can support, and I set
+them out so that a reader can judge when to return to it.
+
+The first is the recovery of the pre-2023 abstracts, which is the
+binding constraint on everything else. Until 2017 to 2022 are documented
+at something approaching the 2023 to 2026 level, the corpus supports
+descriptive work on the full period and analytical work only on the
+recent editions. The second is the normalisation of the 389 affiliation
+strings to institutions and countries, which is what would make questions
+about the geography of the field answerable at all. The third is a
+thematic classification drawn from abstract text rather than panel
+titles, which would replace a floor with a measurement.
+
+Two smaller notes for anyone using the data. Four papers carry the
+European Security Studies Prize, awarded with the *Journal of Strategic
+Studies*, across the 2024, 2025 and 2026 editions. Fifty-one papers link
+to a published version with a DOI, which is a lower bound on how much of
+this scholarship reached print rather than a count of it: I add those
+links as I find them, and I have not searched systematically for the
+earlier editions.

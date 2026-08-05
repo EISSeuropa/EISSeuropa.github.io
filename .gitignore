@@ -12,6 +12,7 @@ __pycache__/
 # demand when a Zenodo version is cut, so it is never committed — the corpus
 # it is derived from already is.
 data/anthology-corpus.json
+data/anthology-corpus-note.pdf
 
 # Finder/iCloud-style duplicate files ("name 2.ext", "name 3.ext", …).
 # These get created on the maintainer's Mac and were twice swept into
