@@ -8,6 +8,11 @@ npm-debug.log*
 __pycache__/
 *.pyc
 
+# Generated deposit artefact from scripts/export-corpus-json.mjs. Rebuilt on
+# demand when a Zenodo version is cut, so it is never committed — the corpus
+# it is derived from already is.
+data/anthology-corpus.json
+
 # Finder/iCloud-style duplicate files ("name 2.ext", "name 3.ext", …).
 # These get created on the maintainer's Mac and were twice swept into
 # commits by `git add -A` (the 20 MB essc-2025 2.mp4 and a stray
