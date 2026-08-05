@@ -2,6 +2,8 @@
 
 Static site for the **European Initiative for Security Studies**, served at <https://eiss-europa.com>.
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21776210.svg)](https://doi.org/10.5281/zenodo.21776210)
+
 ## Stack
 
 - [Eleventy 3](https://www.11ty.dev/) static site generator with Nunjucks templates.
