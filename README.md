@@ -2,7 +2,9 @@
 
 Static site for the **European Initiative for Security Studies**, served at <https://eiss-europa.com>.
 
-<a href="https://doi.org/10.5281/zenodo.21776210"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.21776210.svg" alt="DOI"></a>
+[![DOI](https://shields.io)](https://doi.org/10.5281/zenodo.21776210)
+
+
 
 ## Stack
 
