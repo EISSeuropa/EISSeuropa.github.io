@@ -1,7 +1,6 @@
 # eiss-europa.com
 
-Static site for the **European Initiative for Security Studies**, served at <https://eiss-europa.com>.
-
+Static site for the **European Initiative for Security Studies**, served at <https://eiss-europa.com>, including the European Security Studies Anthology, available at:
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21776209.svg)](https://doi.org/10.5281/zenodo.21776209)
 
 
