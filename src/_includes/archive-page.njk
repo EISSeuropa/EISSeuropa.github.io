@@ -69,6 +69,28 @@
       </div>
       <p class="coverage-note">{{ n18n.coverageNote }}</p>
     </details>
+
+    {# "Cite this corpus" (#1221). The Anthology is deposited as a dataset on
+       Zenodo, so it can be cited like any other source. Collapsed by default
+       (native <details>, same treatment as the coverage bars) so it sits
+       beside the stats without competing with them. In the header rather than
+       the foot: #1134 learnt that hard, a footer block here lands ~87,000px
+       down, below the whole list.
+       The DOI is the concept DOI, resolving to the newest version — see the
+       note on site.corpus in _data/site.js.
+       ponytail: no copy-to-clipboard button. The reference sits in a <code>
+       block the browser already lets you select and copy, and a button would
+       be the only JS on this header. Add one if readers ask. #}
+    <details class="cite-corpus">
+      <summary>{{ n18n.citeSummary }}</summary>
+      <p class="cite-corpus-note">{{ n18n.citeBody }}</p>
+      <p class="cite-corpus-label">{{ n18n.citeLabel }}</p>
+      <code class="cite-corpus-ref">{{ site.corpus.citation }}</code>
+      <p class="cite-corpus-doi">
+        <span class="cite-corpus-doi-label">{{ n18n.citeDoiLabel }}</span>
+        <a href="{{ site.corpus.doiUrl }}">{{ site.corpus.doi }}</a>
+      </p>
+    </details>
   </div>
 </header>
 

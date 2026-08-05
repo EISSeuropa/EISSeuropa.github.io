@@ -484,6 +484,13 @@ const locales = {
       coverageTip: "{a} of {b} eligible papers carry an abstract. Roundtables, keynotes, posters and workshop sessions are not counted.",
       coverageSummary: "Abstract coverage by year",
       coverageNote: "Coverage is highest for recent editions, which sync from Indico. Earlier years are being recovered edition by edition.",
+      // "Cite this corpus" disclosure (#1221). The reference itself lives in
+      // site.js and stays in English in every locale; only this chrome is
+      // translated.
+      citeSummary: "Cite this corpus",
+      citeBody: "The Anthology is deposited as a dataset on Zenodo under CC BY 4.0. This DOI always resolves to the latest version.",
+      citeLabel: "Reference",
+      citeDoiLabel: "DOI",
     },
 
     // Atlas signpost (src/_includes/atlas-signpost.njk): the link-card at the
@@ -980,6 +987,10 @@ const locales = {
       coverageTip: "{a} des {b} communications éligibles comportent un résumé. Les tables rondes, les conférences plénières, les sessions de posters et les ateliers ne sont pas comptabilisés.",
       coverageSummary: "Couverture des résumés par année",
       coverageNote: "La couverture est la plus complète pour les éditions récentes, synchronisées depuis Indico. Les années antérieures sont récupérées édition après édition.",
+      citeSummary: "Citer ce corpus",
+      citeBody: "L'Anthologie est déposée comme jeu de données sur Zenodo sous licence CC BY 4.0. Ce DOI renvoie toujours vers la version la plus récente.",
+      citeLabel: "Référence",
+      citeDoiLabel: "DOI",
     },
 
     atlasSignpost: {
@@ -1456,6 +1467,10 @@ const locales = {
       coverageTip: "{a} von {b} infrage kommenden Beiträgen tragen ein Abstract. Podiumsdiskussionen, Keynotes, Postersessions und Workshops werden nicht mitgezählt.",
       coverageSummary: "Abstract-Abdeckung nach Jahr",
       coverageNote: "Die Abdeckung ist bei den jüngeren Ausgaben am vollständigsten, die aus Indico synchronisiert werden. Frühere Jahre werden Ausgabe für Ausgabe ergänzt.",
+      citeSummary: "Dieses Korpus zitieren",
+      citeBody: "Die Anthologie ist als Datensatz unter CC BY 4.0 auf Zenodo hinterlegt. Dieser DOI verweist stets auf die neueste Fassung.",
+      citeLabel: "Literaturangabe",
+      citeDoiLabel: "DOI",
     },
 
     atlasSignpost: {

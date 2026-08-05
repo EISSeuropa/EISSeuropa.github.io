@@ -1816,6 +1816,66 @@ h4 { font-size: var(--fs-lg); }
 }
 .anthology-notice-text a { color: var(--accent); }
 
+/* "Cite this corpus" disclosure on the Anthology header (#1221). Deliberately
+   matches .coverage-detail's summary treatment — they are siblings in the
+   header and should read as one pair of affordances, not two designs. Own
+   prefix per rule §15; it extends nothing. */
+.cite-corpus {
+  margin-top: var(--space-4);
+  max-width: 32rem;
+}
+.cite-corpus > summary {
+  cursor: pointer;
+  width: max-content;
+  font-size: var(--fs-sm);
+  color: var(--accent);
+}
+.cite-corpus > summary:hover {
+  color: var(--accent-hover);
+}
+.cite-corpus-note {
+  margin: var(--space-4) 0 0;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+.cite-corpus-label {
+  margin: var(--space-3) 0 0.35rem;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+/* display:block so the reference wraps as a paragraph rather than an inline
+   run, and user-select:all so one click selects the whole citation. */
+.cite-corpus-ref {
+  display: block;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-elev);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  user-select: all;
+}
+.cite-corpus-doi {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin: var(--space-3) 0 0;
+  font-size: var(--fs-sm);
+}
+.cite-corpus-doi-label {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.cite-corpus-doi a {
+  color: var(--accent);
+  overflow-wrap: anywhere;
+}
+
 /* /initiative hero brand banner — small full lockup (constellation +
    EiSS + tagline) above the eyebrow as a tasteful brand cue, NOT a
    poster. Width is set directly on the SVG (rather than on the

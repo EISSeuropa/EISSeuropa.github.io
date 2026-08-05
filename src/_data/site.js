@@ -12,6 +12,25 @@ module.exports = {
   // at src/assets/images/index-meta.jpg.
   defaultMetaImage: "/assets/images/index-meta.jpg",
 
+  // The Anthology corpus as a citable dataset on Zenodo (#1221).
+  //
+  // `doi` is the CONCEPT DOI, not a version DOI. Zenodo mints both: the
+  // concept DOI (…209) always resolves to the newest deposited version,
+  // the version DOI (…210 for v2.26.0) pins to one snapshot forever.
+  // Citations must use the concept one, or every reference we mint goes
+  // stale at the next deposit. See docs/corpus-archiving.md.
+  //
+  // `citation` is deliberately English in every locale: a bibliographic
+  // reference is reproduced as-is, not translated. Only the surrounding
+  // chrome is localised (i18n.js → navigator.cite*).
+  corpus: {
+    doi: "10.5281/zenodo.21776209",
+    doiUrl: "https://doi.org/10.5281/zenodo.21776209",
+    citation:
+      "Laudrain, A. (2026). The European Security Studies Anthology [Data set]. " +
+      "European Initiative for Security Studies. https://doi.org/10.5281/zenodo.21776209",
+  },
+
   social: {
     youtube: "https://www.youtube.com/channel/UCfdVczE8X2iDPsIaadtP57Q",
     twitter: "https://twitter.com/EISSnetwork",
