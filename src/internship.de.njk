@@ -2,7 +2,7 @@
 layout: base.njk
 permalink: /internship.de.html
 title: Ehrenamt und Praktika
-description: Wirken Sie remote an der EISS mit, etwa einen Tag pro Woche, an der Anthologie und am Leben des Netzwerks. Offen für Studierende wie für Absolventinnen und Absolventen. Für ein Ehrenamt ist keine convention de stage nötig, und wir können eine abschließen, wenn Ihr Studiengang sie verlangt.
+description: Wirken Sie remote an der EISS mit, etwa einen Tag pro Woche, an der Anthologie und an der Jahreskonferenz. Offen für Studierende wie für Absolventinnen und Absolventen. Eine convention de stage ist möglich, wenn Ihr Studiengang sie verlangt.
 navKey: internship
 lang: de
 status: beta
@@ -18,9 +18,9 @@ alternates:
     <span class="eyebrow">Mitmachen</span>
     <h1>Ehrenamt und Praktika</h1>
     <p class="page-lead">
-      Die EISS wird ausschließlich von Ehrenamtlichen getragen. Wir freuen uns über alle, die remote
-      zur Arbeit des Netzwerks beitragen möchten, etwa einen Tag pro Woche, an der Anthologie und am
-      Leben der Initiative. Eine Einschreibung an einer Hochschule ist dafür nicht erforderlich.
+      Die EISS wird ausschließlich von Ehrenamtlichen getragen. Wirken Sie remote an der Arbeit des
+      Netzwerks mit, etwa einen Tag pro Woche, an der Anthologie und an der Jahreskonferenz. Offen
+      für Studierende ebenso wie für frisch Graduierte.
     </p>
   </div>
 </header>
@@ -42,54 +42,63 @@ alternates:
         <div class="tile-icon" aria-hidden="true">{{ icon("book-open") }}</div>
         <h3>Arbeit, die Ihren Namen trägt</h3>
         <p>
-          Wirken Sie an der <a href="{{ '/anthology.html' | localizedHref(lang) }}">Anthologie</a>
-          mit, unserem Verzeichnis aller seit 2017 vorgestellten Beiträge, und schreiben Sie für den
-          Blog der EISS, wenn Sie möchten. Beiträge werden namentlich ausgewiesen.
+          Beiträge zur <a href="{{ '/anthology.html' | localizedHref(lang) }}">Anthologie</a> werden
+          namentlich ausgewiesen, und wenn Sie einen Kurzbeitrag schreiben, erscheint er unter Ihrem
+          eigenen Namen.
         </p>
       </article>
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("graduation-cap") }}</div>
-        <h3>Studierende wie Absolvierende</h3>
+        <h3>Studierende und Graduierte</h3>
         <p>
-          Das Ehrenamt verlangt weder Formalitäten noch eine Einschreibung und steht Ihnen daher
-          offen, ob Sie mitten im Studium, zwischen zwei Abschlüssen oder bereits fertig sind.
-          Verlangt Ihr Studiengang ein Praktikum, siehe unten.
+          Für ein Ehrenamt bei uns ist keine Einschreibung nötig. Verlangt Ihr Studiengang ein
+          Praktikum, können wir eine <em lang="fr">convention de stage</em> abschließen: sagen Sie
+          uns früh Bescheid.
         </p>
       </article>
     </div>
 
-    <h2>Zwei Wege</h2>
-
-    <h3>Das Ehrenamt</h3>
-    <p style="max-width: 44rem;">
-      Dies ist der übliche und einfachste Weg. Ehrenamtliche Mitarbeit in einem französischen Verein
-      ist unentgeltlich und freiwillig: Sie wählen selbst, was Sie übernehmen und wie viel Zeit Sie
-      einbringen, und Sie können jederzeit aufhören. Sie kämen zu einem Vorstand und einer
-      Gemeinschaft, die selbst vollständig ehrenamtlich arbeiten, denn so arbeiten hier fast alle.
-    </p>
-
-    <h3>Ein Praktikum unter einer <span lang="fr">convention de stage</span></h3>
-    <p style="max-width: 44rem;">
-      Verlangt Ihr Studium ein formelles Praktikum, können wir eines anbieten. Das französische Recht
-      lässt ein Praktikum nur zu, wenn es Teil eines Studiengangs ist und durch eine dreiseitige
-      <em lang="fr">convention de stage</em> abgedeckt wird, die Sie, Ihre Hochschule und die EISS
-      unterzeichnen. Diese Vereinbarung muss vor Beginn vorliegen. Sagen Sie uns früh Bescheid, denn
-      die Formalitäten laufen über Ihre Hochschule und nicht über uns.
-    </p>
-    <p class="muted" style="max-width: 44rem;">
-      Solche Praktika sind im Rahmen des französischen Rechts unbezahlt. Das heißt in der Praxis,
-      dass wir deutlich unter der Schwelle bleiben, ab der eine Vergütung verpflichtend wird. Wir
-      legen Ihnen und Ihrer Hochschule den Stundenumfang offen, bevor etwas unterschrieben wird.
-    </p>
-
     <h2>Woran Sie arbeiten würden</h2>
     <p style="max-width: 44rem;">
-      Wir richten das an Ihren Interessen aus, statt Ihnen eine feste Aufgabe zuzuweisen. Zuletzt
-      gebraucht wurden etwa: das Wiederauffinden von Abstracts früherer Konferenzausgaben, die
-      Übersetzung von Teilen der Website ins Französische, ein kurzer Blogbeitrag auf Grundlage der
-      Anthologie, und die Pflege der Daten hinter dem Korpus. Die Unterstützung der Jahreskonferenz
-      gehört für alle zum Jahr, uns eingeschlossen.
+      Wir richten das an Ihren Interessen aus, statt Ihnen eine feste Aufgabe zuzuweisen. Die
+      meisten Ehrenamtlichen übernehmen einen dieser Bereiche, viele wechseln zwischen ihnen.
     </p>
+
+    <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-block: var(--space-6);">
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("search") }}</div>
+        <h3>Erschließung von Korpus und Abstracts</h3>
+        <p>
+          Abstracts von Beiträgen früherer Konferenzen aufspüren, sie am Programm prüfen und in die
+          Anthologie einpflegen, damit das Verzeichnis vollständig wird.
+        </p>
+      </article>
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("file-text") }}</div>
+        <h3>Recherche und Verfassen eines thematischen Kurzbeitrags</h3>
+        <p>
+          Ein kurzer Text zu einem der Forschungsthemen der Anthologie, gestützt auf die bereits im
+          Korpus vorhandenen Beiträge und in unserem Blog unter Ihrem Namen veröffentlicht.
+        </p>
+      </article>
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("settings") }}</div>
+        <h3>Verbesserung der Datenbank</h3>
+        <p>
+          Die Daten hinter der Anthologie festigen: Namen und Zugehörigkeiten der Autorinnen und
+          Autoren, Verweise auf veröffentlichte Fassungen und die Verbindungen, die der Atlas
+          zwischen Beiträgen und Personen zeichnet.
+        </p>
+      </article>
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("users") }}</div>
+        <h3>Vorbereitung der Jahreskonferenz</h3>
+        <p>
+          Das Team dabei unterstützen, unsere wichtigste Veranstaltung vorzubereiten, vom Call for
+          Papers bis zum Programm. Das gehört für alle zum Jahr, uns eingeschlossen.
+        </p>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -102,9 +111,8 @@ alternates:
         <p class="muted">
           Senden Sie eine kurze Nachricht und einen Lebenslauf an
           <a href="mailto:{{ site.contactEmail }}?subject=Ehrenamt">{{ site.contactEmail }}</a> und
-          sagen Sie uns, woran Sie gern arbeiten würden und wie viel Zeit Sie ungefähr haben.
-          Brauchen Sie eine <em lang="fr">convention de stage</em>, erwähnen Sie das bitte und nennen
-          Sie Ihre Hochschule sowie den Zeitraum, den sie abdecken würde.
+          sagen Sie uns, welcher der vier Bereiche Sie anspricht und wie viel Zeit Sie ungefähr
+          haben. Erwähnen Sie es, wenn Sie eine <em lang="fr">convention de stage</em> brauchen.
         </p>
         <p style="margin-top: var(--space-4);">
           <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}?subject=Ehrenamt">
