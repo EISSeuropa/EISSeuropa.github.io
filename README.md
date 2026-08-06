@@ -1,9 +1,10 @@
 # eiss-europa.com
 
-Static site for the **European Initiative for Security Studies**, served at <https://eiss-europa.com>, including the European Security Studies Anthology, available at:
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21776209.svg)](https://doi.org/10.5281/zenodo.21776209)
+Static site for the **European Initiative for Security Studies**, served at <https://eiss-europa.com>, including the European Security Studies Anthology.
 
+The [European Security Studies Anthology](https://eiss-europa.com/anthology.html) is the public repository of the organisation's research. It brings together every paper presented at an EISS annual conference or workshop since 2017, and everyone who presented it. While still a work-in-progress, many entries now carry an abstract, citation details and a link to the published version where we have one.
 
+You can browse by person or by paper, and filter by year or theme. A dynamic visualisation, the [Atlas](https://eiss-europa.com/anthology-atlas.html), allows you to easily identify communities and connections between papers, authors, or themes.
 
 ## Stack
 
