@@ -1,8 +1,8 @@
 ---
 layout: base.njk
 permalink: /internship.html
-title: Internship
-description: Join the EISS as a remote intern under a convention de stage. A placement of up to two months supporting the network's events, including the Annual Conference, open to enrolled students. Applications for the first half of the year are preferred.
+title: Volunteering and internships
+description: Volunteer with the EISS remotely, around a day a week, on the Anthology and the life of the network. Open to students and to recent graduates. No convention de stage needed to volunteer, and we can host one where your programme requires it.
 navKey: internship
 lang: en
 alternates:
@@ -15,50 +15,80 @@ alternates:
 <header class="page-header">
   <div class="container">
     <span class="eyebrow">Join us</span>
-    <h1>Internship</h1>
+    <h1>Volunteering and internships</h1>
     <p class="page-lead">
-      Get involved with the European Initiative for Security Studies. Our internship is a remote
-      placement of up to two months, run under a French <em>convention de stage</em>, supporting
-      the life of the network &mdash; above all our Annual Conference.
+      The EISS is run entirely by volunteers. We welcome people who want to contribute to the work
+      of the network remotely, at around a day a week, on the Anthology and on the life of the
+      initiative. You do not need to be enrolled anywhere to take part.
     </p>
   </div>
 </header>
 
 <section class="section">
   <div class="container">
-    <h2>The placement at a glance</h2>
+    <h2>What this looks like</h2>
 
     <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-block: var(--space-6);">
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("calendar") }}</div>
-        <h3>Up to two months, remote</h3>
+        <h3>Remote, about a day a week</h3>
         <p>
-          A placement of up to two months, carried out entirely remotely. It is unpaid, within the
-          limits set by your <em>convention de stage</em>.
+          Entirely remote, at a rhythm we agree together and that you can change as your term or
+          your job demands. There are no fixed hours and no set end date.
         </p>
       </article>
       <article class="tile">
-        <div class="tile-icon" aria-hidden="true">{{ icon("users") }}</div>
-        <h3>Supporting our events</h3>
+        <div class="tile-icon" aria-hidden="true">{{ icon("book-open") }}</div>
+        <h3>Work that carries your name</h3>
         <p>
-          As part of your studies, you assist the team preparing and delivering the initiative's
-          events &mdash; first and foremost the Annual Conference.
+          Contribute to the <a href="{{ '/anthology.html' | localizedHref(lang) }}">Anthology</a>,
+          our record of every paper presented since 2017, and write for the EISS blog if you would
+          like to. Contributions are credited by name.
         </p>
       </article>
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("graduation-cap") }}</div>
-        <h3>For enrolled students</h3>
+        <h3>Students and graduates alike</h3>
         <p>
-          Open to students who can provide a <em>convention de stage</em> from their French (or
-          convention-compatible European) higher-education institution.
+          Volunteering asks for no paperwork and no enrolment, so it is open to you whether you are
+          mid-degree, between degrees, or finished. If your programme requires a formal placement,
+          see below.
         </p>
       </article>
     </div>
 
-    <p class="muted" style="max-width: 44rem; margin-top: var(--space-5);">
-      French law requires every internship to be part of a course of study, covered by a tripartite
-      <em>convention de stage</em> between you, your institution and the EISS. We cannot host an
-      internship without one, and it must be signed before the placement begins.
+    <h2>Two ways in</h2>
+
+    <h3>Volunteering</h3>
+    <p style="max-width: 44rem;">
+      This is the usual route, and the simplest. Volunteering with a French association is unpaid
+      and freely given: you choose what you take on and how much time you give, and you are free to
+      stop whenever you wish. You would be joining a board and a community who are all volunteers
+      themselves, so this is how nearly everyone here works.
+    </p>
+
+    <h3>An internship under a <span lang="fr">convention de stage</span></h3>
+    <p style="max-width: 44rem;">
+      If your degree requires a formal placement, we can host one. French law only allows an
+      internship that forms part of a course of study, covered by a tripartite
+      <em lang="fr">convention de stage</em> signed by you, your institution and the EISS, so we
+      need that agreement in place before the placement begins. Tell us early, because the paperwork
+      runs through your institution rather than through us.
+    </p>
+    <p class="muted" style="max-width: 44rem;">
+      Placements of this kind are unpaid within the limits French law sets, which in practice means
+      we keep them well inside the threshold above which an internship must be paid. We will be
+      explicit with you and with your institution about the hours involved before anything is
+      signed.
+    </p>
+
+    <h2>What you would work on</h2>
+    <p style="max-width: 44rem;">
+      We will match this to what interests you rather than hand you a fixed job. Recent needs
+      include recovering paper abstracts from earlier conference editions, translating parts of the
+      site into French, writing a short piece for the blog drawn from the Anthology, and tidying
+      the data behind the corpus. Supporting the Annual Conference is part of the year for
+      everyone, ourselves included.
     </p>
   </div>
 </section>
@@ -67,17 +97,18 @@ alternates:
   <div class="container">
     <article class="card" style="display: grid; gap: var(--space-5); grid-template-columns: 1fr; padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
       <div>
-        <div class="featured-eyebrow">How to apply</div>
-        <h2 style="margin-bottom: var(--space-3);">Send us your application</h2>
+        <div class="featured-eyebrow">Get in touch</div>
+        <h2 style="margin-bottom: var(--space-3);">Write to us</h2>
         <p class="muted">
-          Send a CV and a short cover letter to
-          <a href="mailto:{{ site.contactEmail }}?subject=Internship%20application">{{ site.contactEmail }}</a>,
-          telling us your institution and the dates your <em>convention de stage</em> can cover.
-          Applications for the first half of the year (January&ndash;June) are preferred.
+          Send a short note and a CV to
+          <a href="mailto:{{ site.contactEmail }}?subject=Volunteering">{{ site.contactEmail }}</a>,
+          telling us what you would like to work on and roughly how much time you have. If you need
+          a <em lang="fr">convention de stage</em>, say so and give us your institution and the
+          dates it would cover.
         </p>
         <p style="margin-top: var(--space-4);">
-          <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}?subject=Internship%20application">
-            {{ icon("mail") }} Apply by email
+          <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}?subject=Volunteering">
+            {{ icon("mail") }} Write to us
           </a>
         </p>
       </div>
