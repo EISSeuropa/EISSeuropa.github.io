@@ -29,6 +29,11 @@ module.exports = {
     citation:
       "Laudrain, A. (2026). The European Security Studies Anthology [Data set]. " +
       "European Initiative for Security Studies. https://doi.org/10.5281/zenodo.21776209",
+    // The corpus-description note in HAL, typed Research report. A separate
+    // object from the dataset: HAL holds the readable description, Zenodo
+    // holds the data. See docs/corpus-archiving.md.
+    halId: "hal-05711925",
+    halUrl: "https://hal.science/hal-05711925",
   },
 
   social: {

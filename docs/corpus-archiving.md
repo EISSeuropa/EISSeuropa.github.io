@@ -35,8 +35,15 @@ licensed CC BY 4.0.
   a bibliographic reference is reproduced, not translated. Only the
   surrounding chrome is in `i18n.js` → `navigator.cite*`.
 
+- `/licensing.html` (+ FR + DE) — a "Citing the Anthology" section with the
+  same reference, the concept DOI, and a pointer to the HAL record. It
+  renders from `site.corpus` too, so it cannot drift from the Anthology
+  block.
+
 One place to edit when the DOI changes: `site.corpus` in
 `src/_data/site.js`, plus the README badge (markdown, not templated).
+`site.corpus` also holds `halId` and `halUrl`, so the HAL reference has
+a single source in the same way.
 
 ## Cutting a new version: the procedure
 
