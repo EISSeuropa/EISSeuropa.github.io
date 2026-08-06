@@ -172,13 +172,13 @@
     "src/licensing.njk": {
       "fr": {
         "file": "src/licensing.fr.njk",
-        "source_sha1": "3f8e6e599c758ad2914ff644c1d78d985843ca4e",
+        "source_sha1": "417c31e3491a616da3006256c6cb3e50bb58933e",
         "translated_on": "2026-08-06",
         "status": "beta"
       },
       "de": {
         "file": "src/licensing.de.njk",
-        "source_sha1": "3f8e6e599c758ad2914ff644c1d78d985843ca4e",
+        "source_sha1": "417c31e3491a616da3006256c6cb3e50bb58933e",
         "translated_on": "2026-08-06",
         "status": "beta"
       }

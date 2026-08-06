@@ -11,6 +11,8 @@ You can browse by person or by paper, and filter by year or theme. A dynamic vis
 [![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/EISSeuropa/EISSeuropa.github.io/)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/EISSeuropa/EISSeuropa.github.io)
 [![SWH](https://archive.softwareheritage.org/badge/swh:1:dir:482a1c89d5fa36abcd5719d994c1261ce31c602e/)](https://archive.softwareheritage.org/swh:1:dir:482a1c89d5fa36abcd5719d994c1261ce31c602e;origin=https://github.com/EISSeuropa/EISSeuropa.github.io;visit=swh:1:snp:fe6fce477add39ff7d70595c1dc8c6788f2e235e;anchor=swh:1:rev:1a8ca570193389c2ac9a603accfe4db1765f4898)
 
+The corpus is deposited as a CC BY 4.0 **dataset** on Zenodo under the concept DOI above, which always resolves to the newest version. Its description, covering scope, sources, the theme vocabulary and the known limitations, is deposited in HAL as a research report at [hal-05711925](https://hal.science/hal-05711925). The **source code** is archived separately in Software Heritage, identified by the SWHID badge above. See [`docs/corpus-archiving.md`](docs/corpus-archiving.md) for which identifier to cite and when to refresh them.
+
 ## Stack
 
 - [Eleventy 3](https://www.11ty.dev/) static site generator with Nunjucks templates.
