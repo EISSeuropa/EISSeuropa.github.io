@@ -6,6 +6,11 @@ The [European Security Studies Anthology](https://eiss-europa.com/anthology.html
 
 You can browse by person or by paper, and filter by year or theme. A dynamic visualisation, the [Atlas](https://eiss-europa.com/anthology-atlas.html), allows you to easily identify communities and connections between papers, authors, or themes.
 
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21776209.svg)](https://doi.org/10.5281/zenodo.21776209)
+[![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/EISSeuropa/EISSeuropa.github.io/)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/EISSeuropa/EISSeuropa.github.io)
+[![SWH](https://archive.softwareheritage.org/badge/swh:1:dir:482a1c89d5fa36abcd5719d994c1261ce31c602e/)](https://archive.softwareheritage.org/swh:1:dir:482a1c89d5fa36abcd5719d994c1261ce31c602e;origin=https://github.com/EISSeuropa/EISSeuropa.github.io;visit=swh:1:snp:fe6fce477add39ff7d70595c1dc8c6788f2e235e;anchor=swh:1:rev:1a8ca570193389c2ac9a603accfe4db1765f4898)
+
 ## Stack
 
 - [Eleventy 3](https://www.11ty.dev/) static site generator with Nunjucks templates.
