@@ -38,10 +38,86 @@ licensed CC BY 4.0.
 One place to edit when the DOI changes: `site.corpus` in
 `src/_data/site.js`, plus the README badge (markdown, not templated).
 
-## Cutting a new version
+## Cutting a new version: the procedure
 
-Zenodo's "New version" button on the record, which keeps the concept
-DOI and mints a fresh version DOI.
+**Start here whenever the dataset is updated.** The single step most
+easily forgotten is the first one: the files on Zenodo are a *generated*
+export, not the live corpus, so they do not update themselves when the
+site does. Depositing without regenerating ships the previous edition's
+numbers under a new version label.
+
+1. **Regenerate the export.**
+
+   ```bash
+   node scripts/export-corpus-json.mjs
+   ```
+
+   Writes `data/anthology-corpus.json` (gitignored) and prints the
+   headline counts. Check them against the previous deposit before going
+   further: if the paper, author or abstract counts have not moved, there
+   may be nothing to deposit.
+
+2. **Regenerate the corpus-description note's figures.** Every number in
+   [anthology-corpus-note.md](anthology-corpus-note.md) is a statement
+   about one version, and the note says so. Update the counts, the three
+   tables (editions, themes, per-year coverage) and the "Corpus state"
+   date in the header from the export. Do not hand-edit a figure without
+   checking it against `data/anthology-corpus.json`.
+
+3. **Rebuild the note PDF** for the HAL deposit.
+
+   ```bash
+   ./scripts/build-corpus-note-pdf.sh
+   ```
+
+4. **Cut the Zenodo version.** Use the record's "New version" button,
+   which keeps the concept DOI and mints a fresh version DOI. Attach the
+   regenerated JSON. Files cannot be changed on an already-published
+   version, so any file correction requires a new version.
+
+5. **Set the version metadata.** See the cadence question below, plus a
+   `Collected` date range covering the corpus span and an `Updated` date
+   for the deposit itself.
+
+6. **Update the HAL record** with the new note PDF, keeping the concept
+   DOI as the related identifier.
+
+7. **Check whether the DOI changed.** It should not: the concept DOI is
+   stable across versions. If it ever does, `site.corpus` in
+   `src/_data/site.js` and the README badge are the two places to edit.
+
+### What the export contains
+
+One self-describing JSON file, so a reuser needs no interpreter:
+
+| Key | Holds |
+|---|---|
+| `meta` | DOI, licence, canonical attribution, generation date, coverage years, headline counts, and the four caveats a reader has to know. |
+| `editions` | One row per edition: key, label, year, paper count. |
+| `themes` | The 17 themes: stable key, per-locale labels (EN/FR/DE), paper count, speaker count. |
+| `coverageByYear` | Per year: papers, papers eligible for an abstract, papers with one, percentage. |
+| `papers` | 511 rows. Title, authors, affiliations, year, panel, theme keys, abstract, published URL and DOI, prize, URLs. |
+| `authors` | 494 rows, deduplicated. Name, affiliation, theme keys, paper count, first and last year, profile URL. |
+
+Theme references are the **stable keys**, not display labels, so
+`papers[].themeKeys` joins to `themes[].key` and survives a label being
+retranslated.
+
+**One trap the script deliberately avoids.** It does not use
+`paperIndex.stats.editions`. That field counts distinct `programmeUrl`,
+and the string carries a per-paper `#anchor`, so it reports 509
+"editions" for 511 papers. `corpus.stats.editions` (12) is the real
+count, which is why the site renders that one. Anything else deriving
+edition counts should do the same.
+
+The script is **not** wired into the Eleventy build. Deposits happen by
+hand a couple of times a year, so a build step firing on every commit
+would be waste. The published, build-time export with its data
+dictionary and licence note on `/licensing` is a separate piece of work,
+tracked in
+[#641](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/641).
+
+### The cadence
 
 **Open question, not yet settled.** The current deposit is versioned
 `v2.26.0` and dated 25 June 2026, which follows this repo's SemVer

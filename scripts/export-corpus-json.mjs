@@ -132,3 +132,18 @@ console.log(
     `${counts.editions} editions, ${counts.themes} themes ` +
     `(${counts.papersWithAbstract}/${counts.papersEligibleForAbstract} abstracts)`
 );
+
+// The rest of the deposit procedure, printed here because this is the step
+// people actually run. Forgetting step 2 is the expensive one: the note's
+// figures are a statement about one version, so a deposit with stale numbers
+// misdescribes the data it ships with. Full procedure in
+// docs/corpus-archiving.md.
+console.log(`
+Depositing this? The remaining steps (docs/corpus-archiving.md):
+  1. Compare the counts above against the last deposit. Unchanged means
+     there may be nothing to deposit.
+  2. Refresh the figures, the three tables and the "Corpus state" date in
+     docs/anthology-corpus-note.md from this file.
+  3. ./scripts/build-corpus-note-pdf.sh
+  4. Zenodo "New version" (keeps the concept DOI), attach the JSON above.
+  5. Update the HAL record with the new PDF.`);
