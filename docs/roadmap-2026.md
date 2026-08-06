@@ -211,24 +211,33 @@ first gives it identifiers and archives that are not GitHub. The
 second makes it usable in French, which is where a large part of the
 network reads.
 
-Nothing has landed yet. The
+The identifier strand is largely landed. The
 [v2.28.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/11)
 is the queryable commitment (rule §10).
 
-- **Persistent identifiers and long-term archiving** — a Zenodo
-  community for the association, with the corpus deposited as a
-  *dataset* under a concept DOI plus one DOI per annual edition, and a
-  "Cite this corpus" block on the Anthology
-  ([#1221](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1221), M).
-  A HAL collection alongside it, once the CCSD confirms whether a
-  *loi 1901* association is eligible at all
-  ([#1222](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1222), M,
-  blocked on that answer). The source archived in Software Heritage,
-  with the SWHIDs shown in `README.md` and on `/licensing`
+- **Persistent identifiers and long-term archiving** — the corpus is
+  deposited on Zenodo as a *dataset* in the `eiss` community, under the
+  concept DOI [10.5281/zenodo.21776209](https://doi.org/10.5281/zenodo.21776209),
+  and `/anthology` carries a "Cite this corpus" block in all three
+  locales. What remains on
+  [#1221](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1221)
+  is the deposited payload: the record still attaches the raw `.js` data
+  modules rather than the JSON export, which arrives with #641. On HAL,
+  the corpus-description note is deposited at
+  [hal-05711925](https://hal.science/hal-05711925) as a **Research
+  report**, which also placed it in LARA, HAL's report portal. A
+  dedicated EISS collection needs a structure registered in AuréHAL and
+  is **deferred, not refused**
+  ([#1222](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1222), M).
+  Still open there: the record cites the version DOI rather than the
+  concept DOI, and carries no licence. The source archived in Software
+  Heritage, with the SWHIDs shown in `README.md` and on `/licensing`,
+  has not started
   ([#1223](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1223), S).
   This is the cheap path: #795 weighs the Crossref per-paper
   alternative, which carries a recurring membership cost and stays
-  undecided.
+  undecided. The Zenodo GitHub integration was deliberately left off, to
+  avoid minting a competing software DOI on every release.
 - **The corpus, readable in French** — the French Anthology comes out
   of beta on a finite declared scope (the interface, the seventeen
   theme labels, and the abstracts of papers with at least one
