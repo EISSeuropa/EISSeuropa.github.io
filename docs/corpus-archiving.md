@@ -194,3 +194,50 @@ surface the record.
 The reverse link is also missing: the Zenodo record carries no related
 identifier pointing back at the HAL record, so the pairing is currently
 visible from one side only.
+
+## Software Heritage: the code, not the corpus
+
+The **source code** is archived separately from the corpus, in
+[Software Heritage](https://www.softwareheritage.org/), the universal
+archive of software source code. This is a different object from the
+dataset and carries a different kind of identifier.
+
+SWHIDs are *intrinsic*: computed from the content itself rather than
+assigned by a registry, so they can be verified offline and survive the
+repository being renamed, transferred or deleted.
+
+| SWHID | What it pins |
+|---|---|
+| `swh:1:dir:482a1c89d5fa36abcd5719d994c1261ce31c602e` | The **directory**, the file tree as archived. This is the one displayed. |
+| `swh:1:rev:1a8ca570193389c2ac9a603accfe4db1765f4898` | The **revision**, the specific commit. |
+| `swh:1:snp:fe6fce477add39ff7d70595c1dc8c6788f2e235e` | The **snapshot**, the state of all branches at visit time. |
+
+Archived from `https://github.com/EISSeuropa/EISSeuropa.github.io`.
+
+### Where the SWHID surfaces
+
+- `README.md`, as a badge next to the DOI badge.
+- `/licensing.html` (+ FR + DE), in the MIT code section, with a sentence
+  explaining what it identifies.
+
+### When to refresh it
+
+**Re-collect the directory SWHID at each release**, not on every commit.
+Software Heritage re-visits the repository on its own schedule, so the
+archive keeps up without being asked. What ages is the *published*
+identifier: leave it and `/licensing` will keep pointing at a 2026 file
+tree indefinitely.
+
+Practically, this belongs in the release-time §5 sweep. Load the origin
+in Software Heritage, take the current directory SWHID, and update the
+two places above if it has moved. An identifier that silently ages is
+worse than none, because a reader has no way of telling.
+
+### Not the same as the Zenodo GitHub integration
+
+Zenodo's GitHub integration is deliberately **off**. It would mint a
+separate software DOI on every release, competing with the corpus DOI
+and producing a permanent record per release from a 117 MB repository,
+with default metadata. Software Heritage archives continuously, mints no
+DOI, and is the identifier HAL accepts for a software deposit. That is
+why this is the route taken.

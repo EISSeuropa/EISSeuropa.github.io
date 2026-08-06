@@ -18,14 +18,14 @@
     "src/initiative.njk": {
       "fr": {
         "file": "src/initiative.fr.njk",
-        "source_sha1": "aeb3f5bda8a761856cfbba782549cc520cb45443",
-        "translated_on": "2026-07-22",
+        "source_sha1": "09878b6f2cca94fa0f130931606ca394786ae3b9",
+        "translated_on": "2026-08-06",
         "status": "beta"
       },
       "de": {
         "file": "src/initiative.de.njk",
-        "source_sha1": "aeb3f5bda8a761856cfbba782549cc520cb45443",
-        "translated_on": "2026-07-22",
+        "source_sha1": "09878b6f2cca94fa0f130931606ca394786ae3b9",
+        "translated_on": "2026-08-06",
         "status": "beta"
       }
     },
@@ -102,14 +102,14 @@
     "src/sitemap.njk": {
       "fr": {
         "file": "src/sitemap.fr.njk",
-        "source_sha1": "faa17536b34179462aaba80c3e4ec0e2c72e010b",
-        "translated_on": "2026-07-22",
+        "source_sha1": "482d91f224ef5b4c4254c86da1626caade4def30",
+        "translated_on": "2026-08-06",
         "status": "beta"
       },
       "de": {
         "file": "src/sitemap.de.njk",
-        "source_sha1": "faa17536b34179462aaba80c3e4ec0e2c72e010b",
-        "translated_on": "2026-07-22",
+        "source_sha1": "482d91f224ef5b4c4254c86da1626caade4def30",
+        "translated_on": "2026-08-06",
         "status": "beta"
       }
     },
@@ -172,14 +172,14 @@
     "src/licensing.njk": {
       "fr": {
         "file": "src/licensing.fr.njk",
-        "source_sha1": "1f3d521e0c5932493a561efcc9cd00b47f2e5592",
-        "translated_on": "2026-05-31",
+        "source_sha1": "3f8e6e599c758ad2914ff644c1d78d985843ca4e",
+        "translated_on": "2026-08-06",
         "status": "beta"
       },
       "de": {
         "file": "src/licensing.de.njk",
-        "source_sha1": "1f3d521e0c5932493a561efcc9cd00b47f2e5592",
-        "translated_on": "2026-05-31",
+        "source_sha1": "3f8e6e599c758ad2914ff644c1d78d985843ca4e",
+        "translated_on": "2026-08-06",
         "status": "beta"
       }
     },
@@ -214,14 +214,14 @@
     "src/internship.njk": {
       "fr": {
         "file": "src/internship.fr.njk",
-        "source_sha1": "ad2064b0d00928ca3dcbe261e6ec3fce7b77e2a9",
-        "translated_on": "2026-07-22",
+        "source_sha1": "91b863ddd93499e0d3060395cbbf57b2e9c72916",
+        "translated_on": "2026-08-06",
         "status": "beta"
       },
       "de": {
         "file": "src/internship.de.njk",
-        "source_sha1": "ad2064b0d00928ca3dcbe261e6ec3fce7b77e2a9",
-        "translated_on": "2026-07-22",
+        "source_sha1": "91b863ddd93499e0d3060395cbbf57b2e9c72916",
+        "translated_on": "2026-08-06",
         "status": "beta"
       }
     }
