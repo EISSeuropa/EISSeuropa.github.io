@@ -76,9 +76,45 @@ yet reusable.
 
 ## HAL
 
-The corpus is also deposited at
-[hal-05711925](https://hal.science/hal-05711925), which references the
-Zenodo DOI. It is a standalone deposit, **not** a HAL collection: a
-collection needs a registered structure, which is not available to the
-association at the moment (#1222). The document type on that record is
-under review — see the discussion in #1222.
+[hal-05711925](https://hal.science/hal-05711925) holds the
+**corpus-description note** ([anthology-corpus-note.md](anthology-corpus-note.md)),
+typed **Research report** (`REPORT`). The data itself stays on Zenodo.
+That split is deliberate: HAL takes the readable description, Zenodo
+takes the dataset, and the two reference each other. It is the standard
+data-paper arrangement for an archive that does not accept datasets.
+
+The record was first deposited as conference *proceedings* and retyped
+to Research report on 6 August 2026. Proceedings was the wrong claim:
+it asserts an edited volume of conference papers that does not exist,
+and it implies EISS published papers whose rights sit with their authors
+and their journals.
+
+**Collections.** The record sits in eight HAL collections, all assigned
+automatically from its type and its subject domains: `SHS`, `LARA`
+(HAL's portal for scientific and technical reports, which the Research
+report typing earned it), `AO-SCIENCEPOLITIQUE`, `AO-HISTOIRE`,
+`AO-ECONOMIE`, `AO-SOCIOLOGIE`, `HISTOIRE` and `SOCIOLOGIE`.
+
+None of those is a **dedicated EISS collection**, which is what #1222
+originally asked for. A collection of that kind needs a structure
+registered in AuréHAL, and that is not available to the association at
+present. The door is not permanently shut: an association can in
+principle be registered as an organisation rather than a laboratory, so
+this is deferred rather than refused.
+
+Worth an occasional check: the economics, sociology and history domains
+came from the subject classification at deposit time. If those are
+broader than intended, narrowing them changes which disciplinary portals
+surface the record.
+
+**Two things still wrong on that record**, both small:
+
+1. It cites `10.5281/zenodo.21776210`, the **version** DOI. It should
+   cite the concept DOI, `10.5281/zenodo.21776209`, for the reason given
+   at the top of this document.
+2. No licence is set. The note is CC BY 4.0, like everything else in the
+   deposit chain, and the record should say so.
+
+The reverse link is also missing: the Zenodo record carries no related
+identifier pointing back at the HAL record, so the pairing is currently
+visible from one side only.
