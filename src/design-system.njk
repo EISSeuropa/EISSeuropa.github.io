@@ -152,6 +152,48 @@ eleventyExcludeFromCollections: true
       {%- endif %}{% endfor %}
     </div>
 
+    <h2>Brand marks</h2>
+    <p class="ds-note">
+      The three brand variants at the sizes they are actually used, on a light and a dark surface.
+      This exists to make identity decisions checkable rather than asserted: whether a mark survives
+      favicon size, and whether it recolours per surface without forking the asset, are questions you
+      answer by looking at this row.
+    </p>
+    <p class="ds-note">
+      Two behaviours to expect, both deliberate. The <strong>wordmark</strong> is
+      <code>currentColor</code> via <code>.logo-text</code>, so it follows the surface it sits on.
+      The <strong>constellation</strong> is <code>var(--brand-network)</code> via
+      <code>.logo-network</code> and stays the same blue on every surface, which is what lets one
+      asset sit on a light header and a dark hero. See <code>BRAND.md</code>.
+    </p>
+
+    {%- set marks = [
+      { file: "assets/images/brand/logo-mark.svg", name: "logo-mark.svg", use: "Mobile header, favicon source" },
+      { file: "assets/images/brand/logo-lockup.svg", name: "logo-lockup.svg", use: "Desktop site header" },
+      { file: "assets/images/brand/logo-full.svg", name: "logo-full.svg", use: "Initiative hero, press kit, OG cards" }
+    ] %}
+
+    {%- for surface in ["light", "dark"] %}
+    <div class="ds-marks" data-surface="{{ surface }}" {% if surface == "dark" %}data-theme="dark"{% endif %}>
+      <p class="ds-marks-label">{{ "On a light surface" if surface == "light" else "On a dark surface" }}</p>
+      {%- for m in marks %}
+      <figure class="ds-mark">
+        <figcaption><code>{{ m.name }}</code> <span class="ds-swatch-value">{{ m.use }}</span></figcaption>
+        <div class="ds-mark-sizes">
+          {%- for px in [128, 64, 32, 16] %}
+          <span class="ds-mark-size">
+            <span class="ds-mark-art" style="width: {{ px }}px;" data-mark="{{ m.name }}" data-px="{{ px }}">
+              {% inlineSvg m.file %}
+            </span>
+            <span class="ds-swatch-value">{{ px }}px</span>
+          </span>
+          {%- endfor %}
+        </div>
+      </figure>
+      {%- endfor %}
+    </div>
+    {%- endfor %}
+
     <h2>Components</h2>
     <p class="ds-note">
       A partial selection, each labelled with the class prefix that owns it (rule §15: one prefix

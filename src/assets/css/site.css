@@ -106,6 +106,15 @@
   --text: hsl(222 28% 12%);
   --text-muted: hsl(222 16% 34%);
   --text-subtle: hsl(222 13% 40%);
+  /* The constellation blue from the brand mark. Tokenised so the identity
+     is inspectable and assertable alongside every other colour, rather than
+     living only as a literal inside the logo SVGs.
+     Deliberately has NO dark-mode override: the constellation keeps this
+     value on every surface (BRAND.md), which is what lets one asset sit on
+     a light header and a dark hero without forking. Kept as the hex sampled
+     from the brand source rather than converted to hsl(), so the rendered
+     colour is provably unchanged. */
+  --brand-network: #73caff;
   --accent: hsl(203 100% 39%);
   --accent-hover: hsl(203 100% 33%);
   --accent-soft: hsl(203 100% 39% / 0.1);
@@ -7431,3 +7440,51 @@ html.atlas-welcome .atlas-welcome[hidden] { display: block; }
   .ds-row { grid-template-columns: 1fr auto; }
   .ds-specimen { grid-column: 1 / -1; }
 }
+/* Brand-marks row on the style guide. Part of the `ds-` prefix (§15). The
+   dark variant sets data-theme on a wrapper, which works because the dark
+   token block is a bare attribute selector rather than being pinned to :root. */
+.ds-marks {
+  padding: var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  color: var(--text);
+  margin-bottom: var(--space-4);
+}
+/* The light panel has to pin its own surface tokens. `[data-theme="dark"]`
+   works on any element, but the light values live only in `:root` and are
+   overridden there under `prefers-color-scheme: dark`, so a nested element
+   has no way to ask for them back. Without this the "light" panel renders
+   dark for any visitor in dark mode and the side-by-side proves nothing.
+   These three values mirror the `:root` block above and are the one place
+   in this stylesheet that duplication is deliberate: keep them in step. */
+.ds-marks[data-surface="light"] {
+  --bg: hsl(0 0% 100%);
+  --text: hsl(222 28% 12%);
+  --border: hsl(220 20% 88%);
+}
+.ds-marks-label {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  margin: 0 0 var(--space-4);
+}
+.ds-mark { margin: 0 0 var(--space-5); }
+.ds-mark:last-child { margin-bottom: 0; }
+.ds-mark figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+.ds-mark-sizes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-5);
+}
+.ds-mark-size { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+/* The inlined SVG carries its own width; override it so one asset can be
+   shown at several sizes in the same row. */
+.ds-mark-art { display: block; }
+.ds-mark-art svg { width: 100%; height: auto; display: block; }
