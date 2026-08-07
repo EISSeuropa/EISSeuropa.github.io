@@ -13,6 +13,21 @@
 # 5` shows no run at the timestamp of the merge. Cure: push any commit
 # manually (an empty commit works) or run this workflow via
 # `gh workflow run deploy.yml --ref master` from a real user account.
+#
+# Second known gotcha, same symptom, different cause (#1261). This
+# workflow used to put every run in one `pages` concurrency group with
+# `cancel-in-progress: false`, including `pull_request` runs that can
+# never deploy anything (both the artifact upload and the deploy job are
+# gated on `github.event_name != 'pull_request'`). So a PR validation
+# build and a real production deploy queued against each other. When a
+# run on a bot branch stalled at `action_required` — the roadmap-progress
+# auto-PR does this, and nobody ever approves those runs — it held the
+# group and later runs stacked up behind it with zero jobs scheduled,
+# uncancellable (the API returns 409 on both cancel and force-cancel).
+# Cure, now in place: PR runs get their own per-branch group and
+# supersede themselves; only real deploys use `pages`, and those still
+# never cancel in flight, because two concurrent Pages deployments must
+# not race.
 
 name: Build and deploy site
 
@@ -29,8 +44,12 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  # Real deploys (push, workflow_dispatch) share the single `pages` group and
+  # never cancel in flight. PR validation builds get a group per head branch
+  # and do cancel, so a second push to a branch supersedes the first instead
+  # of queueing behind it. Keeping the two apart is the fix for #1261.
+  group: ${{ github.event_name == 'pull_request' && format('pages-pr-{0}', github.head_ref) || 'pages' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
