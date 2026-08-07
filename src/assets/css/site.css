@@ -7356,7 +7356,6 @@ html.atlas-welcome .atlas-welcome[hidden] { display: block; }
    under the text rather than under the glyph. */
 .atlas-welcome-tips li { margin: 0; padding: 0 0 0 1.6em; text-indent: -1.6em; }
 .atlas-welcome-tips li svg { color: var(--accent); }
-.atlas-welcome-tips strong { color: var(--text); font-weight: 600; }
 .atlas-welcome-actions {
   display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 14px;
 }
