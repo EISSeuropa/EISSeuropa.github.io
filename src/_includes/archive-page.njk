@@ -16,12 +16,10 @@
 
 <header class="page-header">
   <div class="container">
-    {# The Anthology/Atlas sub-brand constellation, the same asset the Atlas
-       masthead and the signpost below use. Standalone above the eyebrow rather
-       than inline beside the H1, because this title wraps to two lines at most
-       widths and a mark hung off the first line reads as a stray glyph.
-       Decorative: the H1 underneath names the page, so it is aria-hidden. #}
-    <span class="anthology-mark" aria-hidden="true">{% inlineSvg "assets/images/brand/anthology-mark.svg" %}</span>
+    {# No sub-brand mark above the eyebrow: the page header reads better without
+       it, and the constellation still appears on this page in the Atlas signpost
+       below (and on the Atlas page itself), which is where it does wayfinding
+       work rather than decoration. #}
     <span class="eyebrow">{{ n18n.eyebrow }}</span>
     <h1>{{ n18n.title }}</h1>
     <p class="page-lead">{{ n18n.lead }}</p>

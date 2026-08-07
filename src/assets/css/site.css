@@ -7172,20 +7172,6 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-mark { flex: 0 0 auto; align-self: center; display: block; color: var(--accent); }
 .atlas-mark svg { width: 2.75rem; height: 2.75rem; display: block; }
 @media (max-width: 640px) { .atlas-mark svg { width: 2.25rem; height: 2.25rem; } }
-
-/* Same mark on the Anthology page header, standalone above the eyebrow. Sized
-   a touch larger than the Atlas masthead's because it stands alone here rather
-   than sitting next to a display-size title. */
-.anthology-mark {
-  display: block;
-  /* Hug the mark rather than stretching the full container width, so the
-     wrapper never becomes a page-wide invisible box. */
-  width: max-content;
-  margin-bottom: var(--space-4);
-  color: var(--accent);
-}
-.anthology-mark svg { width: 3.25rem; height: 3.25rem; display: block; }
-@media (max-width: 640px) { .anthology-mark svg { width: 2.5rem; height: 2.5rem; } }
 .atlas-masthead h1 { font-size: var(--fs-2xl); margin: 0; color: var(--text); letter-spacing: -.02em; line-height: var(--lh-tight); }
 .atlas-proto-pill { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 4px 11px; border-radius: var(--radius-full); background: var(--accent-soft); border: 1px solid var(--accent); color: var(--accent); }
 .atlas-lede { color: var(--text-muted); max-width: 74ch; margin: 0 0 20px; font-size: var(--fs-base); line-height: var(--lh-normal); }
