@@ -59,6 +59,11 @@ jobs:
       - name: Run build-sanity check
         run: node scripts/check-build-sanity.mjs
 
+      # A malformed .bib does not fail the build, it fails in a reader's LaTeX
+      # compile weeks later, so it needs its own gate (#1254).
+      - name: Run citation-export check
+        run: node scripts/check-citations.mjs
+
       # Static a11y lint over the built site (duplicate ids, missing
       # alt/labels/landmarks, heading gaps — see scripts/a11y_lint.py).
       # Stdlib-only Python, no pip install needed. Gating: the script

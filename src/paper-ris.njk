@@ -1,0 +1,13 @@
+---
+pagination:
+  data: paperPages
+  size: 1
+  alias: paper
+permalink: "/papers/{{ paper.slug }}.ris"
+eleventyExcludeFromCollections: true
+---
+{#- Per-paper RIS sibling of /papers/<slug>.html (#1254). Companion to
+    paper-bib.njk; see that file for why `| safe` and the collections
+    exclusion are needed. RIS carries CRLF line endings from paperPages.js,
+    which the spec requires and which Zotero and EndNote both expect. -#}
+{{ paper.ris | safe }}

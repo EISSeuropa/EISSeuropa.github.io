@@ -1,0 +1,18 @@
+---
+pagination:
+  data: paperPages
+  size: 1
+  alias: paper
+permalink: "/papers/{{ paper.slug }}.bib"
+eleventyExcludeFromCollections: true
+---
+{#- Per-paper BibTeX sibling of /papers/<slug>.html (#1254). The string itself
+    is built once in paperPages.js, so this template only writes it out: the
+    .bib file, the download button on the paper page and the bulk export on the
+    by-paper view all render the same bytes.
+
+    No layout and no trailing newline juggling: `| safe` is required because
+    Nunjucks would otherwise HTML-escape the braces and ampersands that make
+    the file valid BibTeX. Excluded from collections so it stays out of the
+    sitemap and the feed. -#}
+{{ paper.bibtex | safe }}

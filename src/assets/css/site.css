@@ -4297,6 +4297,31 @@ a.speaker-paper-title:hover {
   .speaker-paper-conf { flex: none; }
 }
 
+/* Bulk citation export above the paper list (#1254). Own prefix per rule §15.
+   Ships hidden and is revealed by paper-export.js, so a no-JS reader is never
+   shown a control that cannot work for them. */
+.paper-export {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+}
+.paper-export[hidden] { display: none; }
+.paper-export__label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-right: var(--space-1);
+}
+/* The hint takes the whole row below the buttons rather than squeezing between
+   them, so the two controls stay side by side at narrow widths. */
+.paper-export__hint {
+  flex: 1 1 100%;
+  font-size: var(--fs-xs);
+}
+.paper-export button[disabled] { opacity: 0.5; cursor: default; }
+
 /* /papers — the cross-year paper index (#632). The filter chrome reuses
    the .speaker-filters / .speaker-field / .speaker-clear / .speaker-status
    panel above; the list below is a one-card-per-paper stack. */
