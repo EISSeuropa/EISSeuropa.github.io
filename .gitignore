@@ -21,3 +21,10 @@ data/anthology-corpus-note.pdf
 # — no legitimate repo file uses a " <digit>.ext" suffix. (Still eyeball
 # `git status` before committing, per CLAUDE.md §8.)
 * [0-9].*
+
+# Candidate marks from scripts/derive-anthology-mark.mjs (#1253). The script is
+# a design instrument, not a build step: it emits a batch of candidates at
+# several node counts and seeds plus a review page, a person picks one, and the
+# winner is frozen as a committed SVG in src/assets/images/brand/. Only the
+# frozen mark belongs in the repo. Regenerate the rest freely.
+data/mark-candidates/

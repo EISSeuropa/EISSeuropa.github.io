@@ -465,7 +465,7 @@ const locales = {
       // reuse the speakers.* and papers.* blocks below.
       eyebrow: "EISS conferences & workshops",
       title: "The European Security Studies Anthology",
-      lead: "Every paper presented at an EISS annual conference or workshop since 2017, and everyone who presented it. Many now carry an abstract, citation details and a link to the published version where we have one. Browse by person or by paper, and filter by year or theme.",
+      lead: "Every paper presented at an EISS conference or workshop since 2017, and everyone who presented it. Many carry an abstract, citation details and a link to the published version. Browse by person or by paper, and filter by year or theme.",
       byPerson: "By person",
       byPaper: "By paper",
       promoBody: "The full record of EISS scholarship: every speaker and every paper from our annual conferences and workshops since 2017, with abstracts, citation details and links to the published versions. Browse by person or by paper.",
@@ -974,7 +974,7 @@ const locales = {
     navigator: {
       eyebrow: "Conférences et ateliers de l'EISS",
       title: "L'Anthologie des études de sécurité européennes",
-      lead: "Chaque communication présentée lors d'une conférence annuelle ou d'un atelier de l'EISS depuis 2017, et toutes les personnes qui les ont présentées. Beaucoup comportent désormais un résumé, des références de citation et un lien vers la version publiée lorsque nous en disposons. Parcourez par personne ou par communication, et filtrez par année ou par thème.",
+      lead: "Chaque communication présentée lors d'une conférence ou d'un atelier de l'EISS depuis 2017, et toutes les personnes qui les ont présentées. Beaucoup comportent un résumé, des références de citation et un lien vers la version publiée. Parcourez par personne ou par communication, et filtrez par année ou par thème.",
       byPerson: "Par personne",
       byPaper: "Par communication",
       promoBody: "Le relevé complet des travaux de l'EISS : chaque intervenant et chaque communication de nos conférences annuelles et ateliers depuis 2017, avec les résumés, les références de citation et des liens vers les versions publiées. Parcourez par personne ou par communication.",
@@ -1454,7 +1454,7 @@ const locales = {
     navigator: {
       eyebrow: "EISS-Konferenzen und -Workshops",
       title: "Die Anthologie der europäischen Sicherheitsstudien",
-      lead: "Jeder Beitrag, der seit 2017 auf einer EISS-Jahreskonferenz oder einem Workshop vorgestellt wurde, und alle, die ihn vorgestellt haben. Viele tragen inzwischen ein Abstract, Zitationsangaben und einen Link zur veröffentlichten Fassung, soweit vorhanden. Durchsuchen Sie nach Person oder nach Beitrag und filtern Sie nach Jahr oder Thema.",
+      lead: "Jeder Beitrag, der seit 2017 auf einer EISS-Konferenz oder einem Workshop vorgestellt wurde, und alle, die ihn vorgestellt haben. Viele tragen ein Abstract, Zitationsangaben und einen Link zur veröffentlichten Fassung. Durchsuchen Sie nach Person oder nach Beitrag und filtern Sie nach Jahr oder Thema.",
       byPerson: "Nach Person",
       byPaper: "Nach Beitrag",
       promoBody: "Die vollständige Aufzeichnung der EISS-Arbeiten: jeder Vortragende und jeder Beitrag unserer Jahreskonferenzen und Workshops seit 2017, mit Abstracts, Zitationsangaben und Links zu den veröffentlichten Fassungen. Durchsuchen Sie nach Person oder nach Beitrag.",

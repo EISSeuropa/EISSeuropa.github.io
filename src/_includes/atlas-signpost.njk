@@ -13,7 +13,12 @@
       | replace("{a}", anthologyAtlas.authors | length)
       | replace("{t}", _themeCount) -%}
 <a class="speakers-cta" href="/anthology-atlas.html"{% if (lang or "en") != "en" %} hreflang="en"{% endif %}>
-  <span class="speakers-cta__icon" aria-hidden="true">{{ icon("share-2") }}</span>
+  {# The Anthology/Atlas constellation, not a generic glyph: the iconmark is
+     already a constellation and the Atlas is a network map of the field, so
+     the sub-brand shows that rather than inventing a second language
+     (BRAND.md). The hub follows currentColor from .speakers-cta__icon, the
+     network keeps --brand-network. #}
+  <span class="speakers-cta__icon speakers-cta__icon--mark" aria-hidden="true">{% inlineSvg "assets/images/brand/anthology-mark.svg" %}</span>
   <span class="speakers-cta__body">
     <span class="speakers-cta__title">{{ t.atlasSignpost.title }}</span>
     <span class="speakers-cta__sub muted">{{ _sub }}</span>
