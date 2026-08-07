@@ -568,6 +568,10 @@ const locales = {
       resultsMany: "{n} papers",
       noMatch: "No papers match.",
       matching: 'matching "{q}"',
+      exportLabel: "Export these references",
+      exportBib: "Download .bib",
+      exportRis: "Download .ris",
+      exportHint: "Downloads the references currently listed, in the order shown."
     },
 
     outputs: {
@@ -1053,6 +1057,10 @@ const locales = {
       resultsMany: "{n} communications",
       noMatch: "Aucune communication ne correspond.",
       matching: 'correspondant à « {q} »',
+      exportLabel: "Exporter ces références",
+      exportBib: "Télécharger .bib",
+      exportRis: "Télécharger .ris",
+      exportHint: "Télécharge les références actuellement affichées, dans l'ordre indiqué."
     },
 
     outputs: {
@@ -1533,6 +1541,10 @@ const locales = {
       resultsMany: "{n} Beiträge",
       noMatch: "Keine Beiträge gefunden.",
       matching: 'passend zu „{q}“',
+      exportLabel: "Diese Literaturangaben exportieren",
+      exportBib: ".bib herunterladen",
+      exportRis: ".ris herunterladen",
+      exportHint: "Lädt die derzeit angezeigten Literaturangaben in der dargestellten Reihenfolge herunter."
     },
 
     outputs: {

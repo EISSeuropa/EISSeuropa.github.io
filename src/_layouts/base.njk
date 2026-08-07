@@ -49,7 +49,7 @@
   <meta name="citation_author" content="{{ a }}">
   {%- endfor %}
   <meta name="citation_publication_date" content="{{ paper.year }}">
-  <meta name="citation_conference_title" content="European Security Studies Conference {{ paper.year }}">
+  <meta name="citation_conference_title" content="{{ paper.conferenceName }}">
   {%- if paper.doi %}<meta name="citation_doi" content="{{ paper.doi }}">{% endif %}
   {%- if paper.publishedUrl %}<meta name="citation_fulltext_world_readable" content="">{% endif %}
   {%- endif %}

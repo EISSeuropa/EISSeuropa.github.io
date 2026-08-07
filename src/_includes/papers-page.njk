@@ -59,6 +59,18 @@
    data-msg-many="{{ p18n.resultsMany }}"
    data-msg-matching="{{ p18n.matching }}"></p>
 
+{# Bulk citation export (#1254). Hidden until the JS enables it: without
+   scripting there is no filtering either, so the honest fallback is the
+   per-paper /papers/<slug>.bib and .ris siblings linked from each paper page,
+   not a control that would export the unfiltered 511. The button labels carry
+   the count, which paper-export.js keeps in step with the filter. #}
+<div class="paper-export" data-paper-export hidden>
+  <span class="paper-export__label">{{ p18n.exportLabel }}</span>
+  <button type="button" class="btn btn-secondary btn-sm" data-export-format="bib">{{ icon("download") }} <span data-export-text>{{ p18n.exportBib }}</span></button>
+  <button type="button" class="btn btn-secondary btn-sm" data-export-format="ris">{{ icon("download") }} <span data-export-text>{{ p18n.exportRis }}</span></button>
+  <span class="paper-export__hint muted">{{ p18n.exportHint }}</span>
+</div>
+
 <ol class="paper-index" role="list" data-paper-list>
   {%- for p in paperIndex.papers %}
   <li class="paper-entry" data-paper-entry
@@ -101,3 +113,4 @@
 </p>
 
 <script src="{{ '/assets/js/paper-filter.js' | bust }}" defer></script>
+<script src="{{ '/assets/js/paper-export.js' | bust }}" defer></script>

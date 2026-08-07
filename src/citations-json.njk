@@ -1,0 +1,13 @@
+---
+permalink: /data/citations.json
+eleventyExcludeFromCollections: true
+---
+{#- Citation strings for every paper in the corpus, keyed by slug (#1254).
+    Fetched lazily by the bulk-export control on the by-paper view, on first
+    click and never on page load: the by-paper view already renders 500+ rows,
+    so embedding these as data attributes would add real weight to a page most
+    readers never export from.
+
+    Built from citations.js, the same module behind the .bib/.ris siblings and
+    the per-paper cite block, so the bulk file cannot drift from the singles. -#}
+{{ citationsBySlug | dump | safe }}
