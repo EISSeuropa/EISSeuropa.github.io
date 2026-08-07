@@ -22,6 +22,9 @@ data/anthology-corpus-note.pdf
 # `git status` before committing, per CLAUDE.md §8.)
 * [0-9].*
 
+# ROR API response cache (scripts/match-ror.mjs). Regenerate rather than commit.
+data/ror-cache.json
+
 # Candidate marks from scripts/derive-anthology-mark.mjs (#1253). The script is
 # a design instrument, not a build step: it emits a batch of candidates at
 # several node counts and seeds plus a review page, a person picks one, and the

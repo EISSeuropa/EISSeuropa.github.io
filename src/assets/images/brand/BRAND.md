@@ -50,7 +50,16 @@ Tracked in [#1253](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/125
 
 Sampled from the source PDF:
 
-- **`#73caff`** — network blue (the constellation dots + connecting lines)
+- **`#73caff`** — network blue (the constellation dots + connecting lines).
+  Now also a design token, **`--brand-network`**, declared in `site.css`'s
+  `:root`. The SVGs carry `fill="var(--brand-network, #73caff)"`, so the
+  identity is inspectable alongside every other colour and assertable in a
+  build check, while the fallback keeps the literal for any context that
+  cannot resolve a custom property. **It deliberately has no dark-mode
+  override**: the constellation holds this value on every surface, which is
+  what lets one asset sit on a light header and a dark hero without forking.
+  Verified on `/design-system.html`, which renders each mark on a light and a
+  dark panel side by side.
 - **`#007bc6`** — brand blue (EiSS wordmark + tagline)
 
 The site's `--accent` design token is the brand blue: light mode is
