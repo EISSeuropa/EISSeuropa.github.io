@@ -4,7 +4,13 @@ npm-debug.log*
 .DS_Store
 .cache/
 .eleventy-cache/
-.claude/
+# Machine-local Claude state (settings.local.json, worktrees, caches) stays out
+# of the repo, but `.claude/skills/` is shared project guidance: three
+# task-specific procedures that used to live in CLAUDE.md and were moved out so
+# they load on invocation instead of costing context every session. They are
+# checked in for the same reason CLAUDE.md is, and CLAUDE.md points at them.
+.claude/*
+!.claude/skills/
 __pycache__/
 *.pyc
 
