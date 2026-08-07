@@ -17,6 +17,34 @@ from the source PDF if the brand kit changes (the script needs only
 | `logo-full.svg` | Constellation + EiSS + tagline — `/initiative` page hero, press kit, OG card watermark | ~19 KB |
 | `logo-full-1024.png` | High-res raster — Schema.org `logo` URL (Google Knowledge Panel), OG card overlays | ~63 KB |
 | `logo-lockup-512.png` | Header raster fallback for any context that can't use SVG | ~17 KB |
+| `anthology-mark.svg` | Anthology / Atlas sub-brand constellation — the Atlas signpost on `/anthology` (all locales) and the `/anthology-atlas` masthead | ~1.5 KB |
+
+### The Anthology and Atlas mark
+
+The EISS iconmark is already a constellation, and the Atlas is a network map
+of the field. They are one visual idea at two scales, so the sub-brand makes
+that explicit rather than inventing a second language: one central hub linked
+out to the discipline's research themes, the corpus as an ego network.
+
+**One mark serves both.** The Anthology and the Atlas share `anthology-mark.svg`
+rather than carrying separate assets. The design-system handoff ships
+`anthology-mark.svg` and `atlas-mark.svg` as byte-identical files for semantic
+clarity in that pack, which in a repository is just duplication.
+
+It follows the same recolouring contract as the parent mark (see *Recolouring
+via CSS*): the hub circle is `class="logo-text" fill="currentColor"` so it
+follows its surface, and the network nodes and lines are
+`class="logo-network" fill="var(--brand-network, #73caff)"` so the constellation
+blue holds on every surface. That is what lets one asset sit on a light card
+and a dark masthead without forking.
+
+**Provenance.** Derived from the corpus co-authorship graph by
+`scripts/derive-anthology-mark.mjs`, which emits candidates at several node
+counts and seeds for a person to choose from. This frozen mark is the pack's
+eight-node cut at pinned seed 2017. The script is a design instrument, not a
+build step: it never runs during a site build, and the committed mark does not
+change when the corpus does. Its `data/mark-candidates/` output is gitignored.
+Tracked in [#1253](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1253).
 
 ## Colours
 

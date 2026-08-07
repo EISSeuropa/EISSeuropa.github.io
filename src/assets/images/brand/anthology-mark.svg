@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-labelledby="t-anth d-anth">
+<title id="t-anth">EISS Anthology · Atlas</title>
+<desc id="d-anth">A network map of the security-studies corpus: one central node linked out to the field's research themes. The EISS constellation at corpus scale. Pinned seed 2017.</desc>
+<g class="logo-network" fill="none" stroke="var(--brand-network, #73caff)" stroke-width="1.6" stroke-linecap="round" opacity="0.9"><line x1="50.00" y1="50.00" x2="55.74" y2="21.52"></line><line x1="50.00" y1="50.00" x2="75.93" y2="33.65"></line><line x1="50.00" y1="50.00" x2="81.39" y2="53.15"></line><line x1="50.00" y1="50.00" x2="67.29" y2="75.92"></line><line x1="50.00" y1="50.00" x2="45.52" y2="80.94"></line><line x1="50.00" y1="50.00" x2="24.75" y2="70.52"></line><line x1="50.00" y1="50.00" x2="19.64" y2="42.77"></line><line x1="50.00" y1="50.00" x2="30.58" y2="26.01"></line></g>
+<g class="logo-network" fill="var(--brand-network, #73caff)"><circle cx="55.74" cy="21.52" r="5.20"></circle><circle cx="75.93" cy="33.65" r="3.60"></circle><circle cx="81.39" cy="53.15" r="4.60"></circle><circle cx="67.29" cy="75.92" r="3.20"></circle><circle cx="45.52" cy="80.94" r="5.00"></circle><circle cx="24.75" cy="70.52" r="3.40"></circle><circle cx="19.64" cy="42.77" r="4.20"></circle><circle cx="30.58" cy="26.01" r="3.00"></circle></g>
+<g class="logo-text" fill="currentColor"><circle cx="50.00" cy="50.00" r="7.20"></circle></g>
+</svg>

@@ -120,6 +120,15 @@
   --accent-soft: hsl(203 100% 39% / 0.1);
   --accent-text: hsl(0 0% 100%);
   --warning: hsl(36 95% 50%);
+  /* Anthology Atlas co-author edge. An edge is the constellation line at map
+     scale, so it sits on the brand hue rather than the stray cyan it used to
+     carry. --brand-network itself is too pale to hold a hairline on white, so
+     light mode deepens it. */
+  --atlas-edge: hsl(203 76% 52%);
+  /* Anthology Atlas absence marker: a paper with no Anthology page, or an
+     author with no co-author. A blue-grey on the neutral hue, so it reads as
+     "nothing here yet" rather than as a category of its own. */
+  --atlas-inactive: hsl(220 14% 64%);
   --hero-overlay: linear-gradient(180deg, hsl(220 50% 8% / 0.32) 0%, hsl(220 50% 8% / 0.7) 100%);
 
   --gradient-mesh-1: radial-gradient(800px circle at 12% 8%, hsl(203 88% 70% / 0.22), transparent 55%);
@@ -155,6 +164,8 @@
     --accent-soft: hsl(203 100% 66% / 0.18);
     --accent-text: hsl(222 30% 8%);
     --warning: hsl(36 95% 60%);
+    --atlas-edge: hsl(203 90% 70%);
+    --atlas-inactive: hsl(220 12% 52%);
     --hero-overlay: linear-gradient(180deg, hsl(220 50% 4% / 0.45) 0%, hsl(220 50% 4% / 0.75) 100%);
 
     --shadow-1: 0 1px 2px hsl(0 0% 0% / 0.4), 0 1px 3px hsl(0 0% 0% / 0.3);
@@ -185,6 +196,8 @@
   --accent-soft: hsl(203 100% 66% / 0.18);
   --accent-text: hsl(222 30% 8%);
   --warning: hsl(36 95% 60%);
+  --atlas-edge: hsl(203 90% 70%);
+  --atlas-inactive: hsl(220 12% 52%);
   --hero-overlay: linear-gradient(180deg, hsl(220 50% 4% / 0.45) 0%, hsl(220 50% 4% / 0.75) 100%);
 
   --shadow-1: 0 1px 2px hsl(0 0% 0% / 0.4), 0 1px 3px hsl(0 0% 0% / 0.3);
@@ -260,7 +273,14 @@ a:hover {
 
 a:focus-visible,
 button:focus-visible,
-.btn:focus-visible {
+.btn:focus-visible,
+/* Form controls were falling through to the default browser ring, which is the
+   one thing BRAND.md rules out. They take the same treatment as anchors and
+   buttons so keyboard focus looks identical wherever it lands. */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: var(--radius-xs);
@@ -4613,6 +4633,18 @@ a.paper-theme-chip:focus-visible { border-color: var(--accent); color: var(--acc
   width: 1.25rem;
   height: 1.25rem;
 }
+/* Anthology/Atlas constellation variant. A nine-node mark turns to mush inside
+   a 20px tinted disc, so it drops the disc and renders at the full slot size.
+   Keeps `color` so the central hub still follows the accent via currentColor. */
+.speakers-cta__icon--mark {
+  background: none;
+  width: 3rem;
+  height: 3rem;
+}
+.speakers-cta__icon--mark svg {
+  width: 3rem;
+  height: 3rem;
+}
 .speakers-cta__body {
   display: flex;
   flex-direction: column;
@@ -7133,12 +7165,43 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-back { display: inline-block; margin-bottom: 6px; font-size: var(--fs-sm); color: var(--accent); text-decoration: none; }
 .atlas-back:hover { text-decoration: underline; }
 .atlas-masthead { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin: 8px 0 6px; }
+/* The shared Anthology/Atlas constellation beside the title. `align-self:
+   center` opts out of the baseline alignment the rest of the row uses, since a
+   square mark has no meaningful baseline. The hub follows --accent through
+   currentColor, the network holds --brand-network on every surface. */
+.atlas-mark { flex: 0 0 auto; align-self: center; display: block; color: var(--accent); }
+.atlas-mark svg { width: 2.75rem; height: 2.75rem; display: block; }
+@media (max-width: 640px) { .atlas-mark svg { width: 2.25rem; height: 2.25rem; } }
+
+/* Same mark on the Anthology page header, standalone above the eyebrow. Sized
+   a touch larger than the Atlas masthead's because it stands alone here rather
+   than sitting next to a display-size title. */
+.anthology-mark {
+  display: block;
+  /* Hug the mark rather than stretching the full container width, so the
+     wrapper never becomes a page-wide invisible box. */
+  width: max-content;
+  margin-bottom: var(--space-4);
+  color: var(--accent);
+}
+.anthology-mark svg { width: 3.25rem; height: 3.25rem; display: block; }
+@media (max-width: 640px) { .anthology-mark svg { width: 2.5rem; height: 2.5rem; } }
 .atlas-masthead h1 { font-size: var(--fs-2xl); margin: 0; color: var(--text); letter-spacing: -.02em; line-height: var(--lh-tight); }
 .atlas-proto-pill { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 4px 11px; border-radius: var(--radius-full); background: var(--accent-soft); border: 1px solid var(--accent); color: var(--accent); }
 .atlas-lede { color: var(--text-muted); max-width: 74ch; margin: 0 0 20px; font-size: var(--fs-base); line-height: var(--lh-normal); }
 .atlas-lede a { color: var(--accent); }
 .atlas-stats { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 18px; }
-.atlas-stat { padding: 10px 16px; border-radius: var(--radius-md); background: var(--surface); border: 1px solid var(--border); }
+/* `--surface` is the frosted-glass fill and is only ever correct alongside the
+   blur + shadow that make it read as glass. These tiles carried the fill on its
+   own, which rendered as a flat murky box: the one place on the site using the
+   glass colour without the glass. */
+.atlas-stat {
+  padding: 10px 16px; border-radius: var(--radius-md);
+  background: var(--surface); border: 1px solid var(--border-glass);
+  -webkit-backdrop-filter: saturate(var(--saturate)) blur(var(--blur-card));
+  backdrop-filter: saturate(var(--saturate)) blur(var(--blur-card));
+  box-shadow: var(--shadow-2);
+}
 .atlas-stat b { display: block; font-size: var(--fs-xl); color: var(--text); line-height: 1.1; }
 .atlas-stat span { font-size: .76rem; color: var(--text-muted); }
 .atlas-controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 0 0 12px; }
@@ -7146,11 +7209,38 @@ a.profile-pub-title:hover { text-decoration: underline; }
    lens-toggled control rows + legends (Collaborators-only, Authors legend). */
 .atlas-controls[hidden], .atlas-legend[hidden] { display: none; }
 .atlas-controls .lbl { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); margin-right: 2px; }
-.atlas-chip { font: inherit; font-size: .82rem; font-weight: 600; padding: 6px 13px; border-radius: var(--radius-full); cursor: pointer; border: 1px solid transparent; color: #fff; opacity: .94; transition: opacity var(--motion-fast), transform var(--motion-fast); }
-.atlas-chip:hover { transform: translateY(-1px); }
-.atlas-chip[aria-pressed="false"] { opacity: .3; }
+/* Filter chip. The series colour rides on a dot, never on the fill: chips used
+   to be a saturated fill with white text, which failed WCAG AA on 27 of 35
+   chips in dark mode and 21 of 35 in light (worst 1.63:1, against a 4.5:1
+   floor at this 13px/600 size). Text now wears the surface's own ink token and
+   the dot carries identity, which is also what stops two full-spectrum scales
+   (17 themes, 12 editions) reading as one undifferentiated rainbow wall above
+   the map. `--chip-dot` is set per chip by anthology-atlas.js. */
+.atlas-chip {
+  font: inherit; font-size: .82rem; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 6px 14px; border-radius: var(--radius-full); cursor: pointer;
+  background: var(--bg-elev); color: var(--text);
+  border: 1px solid var(--border);
+  transition: background var(--motion-fast) var(--ease-out),
+              border-color var(--motion-fast) var(--ease-out),
+              color var(--motion-fast) var(--ease-out),
+              transform var(--motion-fast) var(--ease-out);
+}
+.atlas-chip::before {
+  content: ""; flex: none; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--chip-dot, var(--text-subtle));
+}
+/* Boolean toggles (Collaborators only, Abstract on file) name no series, so
+   they carry no dot. */
+.atlas-chip.is-plain::before { display: none; }
+.atlas-chip:hover { transform: translateY(-1px); border-color: var(--border-strong); }
+/* Pressed reads as an accent-tinted pill rather than a full-opacity fill, so
+   the on/off signal survives at readable contrast in both themes. */
+.atlas-chip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); }
+.atlas-chip[aria-pressed="false"] { background: transparent; color: var(--text-muted); }
+.atlas-chip[aria-pressed="false"]::before { opacity: .4; }
 .atlas-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.atlas-chip.is-plain { background: var(--border-strong); color: var(--text); }
 /* Filter disclosure (#1191). Desktop shows the rows outright, so the summary
    is hidden and <details> is a transparent wrapper; phones get a real
    collapsible, closed by anthology-atlas.js on load. */
@@ -7192,7 +7282,20 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-card .meta { font-size: .8rem; color: var(--text-muted); margin-top: 3px; }
 .atlas-card .panel { font-size: .76rem; color: var(--text-subtle); margin-top: 4px; font-style: italic; }
 .atlas-card .pills { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; }
-.atlas-card .pill { font-size: .68rem; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-full); color: #fff; }
+/* Theme pills in the hover card follow the filter-chip rule: dot carries the
+   theme, label wears the card's ink token. */
+.atlas-card .pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: .68rem; font-weight: 700; padding: 2px 9px;
+  border-radius: var(--radius-full);
+  background: var(--bg-tinted); color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.atlas-card .pill::before {
+  content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--chip-dot, var(--text-subtle));
+}
+.atlas-card .pill.is-plain::before { display: none; }
 .atlas-card .badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 7px; font-size: .72rem; font-weight: 600; }
 .atlas-card .badge-prize { color: var(--warning); }
 .atlas-card .badge-pub { color: var(--accent); }
@@ -7200,14 +7303,18 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-card .go { font-size: .78rem; color: var(--accent); margin-top: 8px; font-weight: 600; }
 .atlas-legend { display: flex; gap: 16px; flex-wrap: wrap; margin: 14px 2px 0; font-size: .78rem; color: var(--text-muted); align-items: center; }
 .atlas-legend .sw { display: inline-block; width: 11px; height: 11px; border-radius: 50%; vertical-align: -1px; margin-right: 5px; }
-.atlas-legend .sw-page { background: var(--accent); }
-.atlas-legend .sw-nopage { background: #9aa7bd; }
+/* Solid-vs-hollow is what encodes curation state, so the two swatches differ by
+   fill and not by hue: a paper's colour is its research theme. The theme
+   swatch carries a fixed sample hue purely to say "this channel means theme". */
+.atlas-legend .sw-theme { background: var(--accent); }
+.atlas-legend .sw-page { background: var(--text-muted); }
+.atlas-legend .sw-nopage { background: transparent; box-shadow: inset 0 0 0 2px var(--text-muted); }
 .atlas-legend .sw-ring { background: transparent; border: 2px solid; }
 .atlas-legend .sw-prize { border-color: var(--warning); }
 .atlas-legend .sw-pub { background: transparent; box-shadow: inset 0 0 0 2px var(--text-muted); width: 9px; height: 9px; }
 .atlas-legend .sw-collab { background: var(--accent); box-shadow: 0 0 0 1.5px var(--surface-strong); }
-.atlas-legend .sw-solo { background: #9aa7bd; }
-.atlas-legend .sw-coauthor { background: #0aa2c0; width: 16px; height: 3px; border-radius: 2px; vertical-align: 2px; }
+.atlas-legend .sw-solo { background: var(--atlas-inactive); }
+.atlas-legend .sw-coauthor { background: var(--atlas-edge); width: 16px; height: 3px; border-radius: 2px; vertical-align: 2px; }
 @media (max-width: 640px) { #atlas-canvas { height: 480px; } }
 @media (prefers-reduced-motion: reduce) { .atlas-chip { transition: none; } .atlas-chip:hover { transform: none; } }
 
@@ -7255,8 +7362,11 @@ html.atlas-welcome .atlas-welcome[hidden] { display: block; }
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 4px 18px;
   font-size: var(--fs-sm); color: var(--text-muted); line-height: var(--lh-snug);
 }
-.atlas-welcome-tips li { margin: 0; padding: 0; }
-.atlas-welcome-tips strong { color: var(--text); font-weight: 600; }
+/* Tips led by a Lucide glyph rather than an emoji (BRAND.md: no emoji, meaning
+   is carried by the icon set). Hanging indent so a wrapped second line aligns
+   under the text rather than under the glyph. */
+.atlas-welcome-tips li { margin: 0; padding: 0 0 0 1.6em; text-indent: -1.6em; }
+.atlas-welcome-tips li svg { color: var(--accent); }
 .atlas-welcome-actions {
   display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 14px;
 }
