@@ -1,0 +1,211 @@
+---
+layout: base.njk
+permalink: /design-system.html
+title: Design system
+description: The EISS design tokens and component vocabulary, rendered from the stylesheet that defines them. A maintainer reference.
+navKey: ""
+lang: en
+noindex: true
+eleventyExcludeFromCollections: true
+---
+{#
+  design-system.njk — the living style guide (#1271).
+
+  Reads: designTokens (src/_data/designTokens.js), which parses site.css's
+         :root block at build time.
+  Requires: nothing else. Every scale below renders from that data, so adding
+         a token to site.css makes it appear here with no edit to this file.
+
+  Why it exists: rule §14. A green build is not "it works", and the press kit
+  and search modal both shipped with complete markup and no CSS. This is the
+  surface where a component can be looked at on its own, at any width, and
+  where a11y_lint.py sweeps it in isolation rather than only inside a page
+  that happens to use it.
+
+  Not indexed, not in the nav, not in site search: it is a maintainer surface
+  first. Promoting it to a public style guide is a decision, not a default.
+
+  ponytail: the component examples below are hand-written and deliberately
+  partial. A CSS section is not a component with markup, so there is nothing
+  to enumerate automatically. Honest partial coverage beats 51 stubs. Add an
+  example when a component earns one.
+#}
+{% from "icons.njk" import icon %}
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">Maintainer reference</span>
+    <h1>Design system</h1>
+    <p class="page-lead">
+      The tokens and components this site is built from. Every scale on this page is
+      rendered from <code>site.css</code>'s own <code>:root</code> block, so it cannot
+      drift from what the browser actually uses.
+    </p>
+    <p class="muted">
+      {{ designTokens.count }} tokens across {{ designTokens.familyCount }} families, parsed from
+      <code>{{ designTokens.source }}</code>. Not indexed and not in the navigation.
+      See <code>docs/design-system.md</code> for the component and interaction reference.
+    </p>
+  </div>
+</header>
+
+<section class="section" data-pagefind-ignore>
+  <div class="container">
+
+    <h2>Colour</h2>
+    <p class="ds-note">
+      The accent family sits on hue 203, matching the brand blue in <code>BRAND.md</code>, so the
+      logo and the interface read as one colour. Anything off that hue is a functional signal
+      (warning amber, live red) rather than a brand colour. Dark mode re-declares the same token
+      names at different values, so a component built on tokens gets it for free.
+    </p>
+    <div class="ds-swatches">
+      {%- for t in designTokens.tokens %}
+      {%- if t.isColour and not t.isGradient %}
+      <figure class="ds-swatch">
+        <span class="ds-swatch-chip" style="background: var({{ t.name }});"></span>
+        <figcaption>
+          <code>{{ t.name }}</code>
+          <span class="ds-swatch-value">{{ t.value }}</span>
+        </figcaption>
+      </figure>
+      {%- endif %}
+      {%- endfor %}
+    </div>
+
+    {%- set gradients = [] %}
+    {%- for t in designTokens.tokens %}{% if t.isGradient %}{% set gradients = (gradients.push(t), gradients) %}{% endif %}{% endfor %}
+    {%- if gradients.length %}
+    <h3>Gradients</h3>
+    <div class="ds-swatches">
+      {%- for t in gradients %}
+      <figure class="ds-swatch">
+        <span class="ds-swatch-chip ds-swatch-wide" style="background: var({{ t.name }});"></span>
+        <figcaption><code>{{ t.name }}</code></figcaption>
+      </figure>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+
+    <h2>Type scale</h2>
+    <div class="ds-stack">
+      {%- for g in designTokens.groups %}{% if g.family == "fs" %}
+      {%- for t in g.tokens %}
+      <div class="ds-row">
+        <code class="ds-row-name">{{ t.name }}</code>
+        <span class="ds-row-value">{{ t.value }}</span>
+        <span class="ds-specimen" style="font-size: var({{ t.name }});">European security studies</span>
+      </div>
+      {%- endfor %}
+      {%- endif %}{% endfor %}
+    </div>
+
+    <h2>Spacing</h2>
+    <p class="ds-note">Used for padding, margins and grid gaps. Prefer a step over a literal.</p>
+    <div class="ds-stack">
+      {%- for g in designTokens.groups %}{% if g.family == "space" %}
+      {%- for t in g.tokens %}
+      <div class="ds-row">
+        <code class="ds-row-name">{{ t.name }}</code>
+        <span class="ds-row-value">{{ t.value }}</span>
+        <span class="ds-bar" style="width: var({{ t.name }});"></span>
+      </div>
+      {%- endfor %}
+      {%- endif %}{% endfor %}
+    </div>
+
+    <h2>Radii and shadows</h2>
+    <div class="ds-tiles">
+      {%- for g in designTokens.groups %}{% if g.family == "radius" %}
+      {%- for t in g.tokens %}
+      <figure class="ds-tile">
+        <span class="ds-box" style="border-radius: var({{ t.name }});"></span>
+        <figcaption><code>{{ t.name }}</code><span class="ds-swatch-value">{{ t.value }}</span></figcaption>
+      </figure>
+      {%- endfor %}
+      {%- endif %}{% endfor %}
+    </div>
+    <div class="ds-tiles">
+      {%- for g in designTokens.groups %}{% if g.family == "shadow" %}
+      {%- for t in g.tokens %}
+      <figure class="ds-tile">
+        <span class="ds-box ds-box-plain" style="box-shadow: var({{ t.name }});"></span>
+        <figcaption><code>{{ t.name }}</code></figcaption>
+      </figure>
+      {%- endfor %}
+      {%- endif %}{% endfor %}
+    </div>
+
+    <h2>Motion</h2>
+    <p class="ds-note">
+      All motion is gated on <code>prefers-reduced-motion</code>. These are the durations and
+      easings available; a component should not invent its own.
+    </p>
+    <div class="ds-stack">
+      {%- for g in designTokens.groups %}{% if g.family == "motion" or g.family == "ease" %}
+      {%- for t in g.tokens %}
+      <div class="ds-row">
+        <code class="ds-row-name">{{ t.name }}</code>
+        <span class="ds-row-value">{{ t.value }}</span>
+      </div>
+      {%- endfor %}
+      {%- endif %}{% endfor %}
+    </div>
+
+    <h2>Components</h2>
+    <p class="ds-note">
+      A partial selection, each labelled with the class prefix that owns it (rule §15: one prefix
+      per component, never reuse another's). This is deliberately not all 51 sections in
+      <code>site.css</code>. Add an example here when a component earns one.
+    </p>
+
+    <article class="ds-example">
+      <h3>Buttons <code class="ds-prefix">.btn-*</code></h3>
+      <div class="ds-demo">
+        <a class="btn btn-primary" href="#components">{{ icon("mail") }} Primary</a>
+        <a class="btn btn-secondary" href="#components">Secondary</a>
+      </div>
+    </article>
+
+    <article class="ds-example">
+      <h3>Tiles <code class="ds-prefix">.tile-*</code></h3>
+      <div class="ds-demo">
+        <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));">
+          <article class="tile">
+            <div class="tile-icon" aria-hidden="true">{{ icon("calendar") }}</div>
+            <h4>Tile heading</h4>
+            <p>Used on the internship and initiative pages for a short labelled block.</p>
+          </article>
+          <article class="tile">
+            <div class="tile-icon" aria-hidden="true">{{ icon("book-open") }}</div>
+            <h4>Second tile</h4>
+            <p>Tiles sit in a <code>.tile-grid</code>, which sets its own columns.</p>
+          </article>
+        </div>
+      </div>
+    </article>
+
+    <article class="ds-example">
+      <h3>Notice <code class="ds-prefix">.anthology-notice-*</code></h3>
+      <div class="ds-demo">
+        <aside class="anthology-notice" role="note">
+          <span class="anthology-notice-badge">Early access</span>
+          <p class="anthology-notice-text">An amber-left callout for module-level status. <a href="#components">With a link</a>.</p>
+        </aside>
+      </div>
+    </article>
+
+    <article class="ds-example">
+      <h3>Cite block <code class="ds-prefix">.cite-corpus-*</code></h3>
+      <div class="ds-demo">
+        <details class="cite-corpus" open>
+          <summary>Cite this corpus</summary>
+          <p class="cite-corpus-note">A native <code>&lt;details&gt;</code> disclosure, no JavaScript.</p>
+          <p class="cite-corpus-label">Reference</p>
+          <code class="cite-corpus-ref">{{ site.corpus.citation }}</code>
+        </details>
+      </div>
+    </article>
+
+  </div>
+</section>
