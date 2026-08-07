@@ -28,9 +28,45 @@ const BEGIN = "<!-- TOKENS:BEGIN -->";
 const END = "<!-- TOKENS:END -->";
 
 const check = process.argv.includes("--check");
-const data = designTokens();
+const selfCheck = process.argv.includes("--self-check");
 
-const escape = (s) => String(s).replace(/\|/g, "\\|");
+// Escape for a Markdown table cell. Backslashes MUST go first: escaping only
+// pipes turns an input of `a\|b` into `a\\|b`, which Markdown reads as a
+// literal backslash followed by an *unescaped* pipe, and the row breaks.
+// CSS values can legitimately carry backslashes (`content: "\201C"`), so this
+// is reachable, not theoretical. Newlines collapse because a cell cannot hold
+// one; nothing in `:root` is multi-line today, but a generator should not
+// depend on that.
+const escape = (s) =>
+  String(s)
+    .replace(/\\/g, "\\\\")
+    .replace(/\|/g, "\\|")
+    .replace(/\s*\n\s*/g, " ");
+
+// ponytail: one runnable check, no framework. `--self-check` asserts the
+// escaper against the cases that matter, including the backslash ordering
+// CodeQL caught. Run it if you touch `escape`.
+if (selfCheck) {
+  const cases = [
+    ["a|b", "a\\|b"],
+    ["a\\|b", "a\\\\\\|b"],
+    ["\\201C", "\\\\201C"],
+    ["x\ny", "x y"],
+    ["plain", "plain"],
+  ];
+  let failed = 0;
+  for (const [input, want] of cases) {
+    const got = escape(input);
+    if (got !== want) {
+      console.error(`FAIL ${JSON.stringify(input)} -> ${JSON.stringify(got)}, want ${JSON.stringify(want)}`);
+      failed++;
+    }
+  }
+  console.log(failed ? `${failed} escape case(s) failed` : `escape: ${cases.length} cases pass`);
+  process.exit(failed ? 1 : 0);
+}
+
+const data = designTokens();
 
 const lines = [
   BEGIN,
