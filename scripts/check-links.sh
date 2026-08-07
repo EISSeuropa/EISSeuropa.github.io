@@ -72,7 +72,7 @@ fi
 "$PY3" - "$SITE_ROOT" $INTERNAL_ONLY $QUIET <<'PY'
 """Inline-Python link checker. Avoids extra deps; portable across
 the maintainer's macOS laptop and Ubuntu CI."""
-import os, re, sys, urllib.parse, urllib.request, urllib.error, ssl
+import os, re, sys, time, urllib.parse, urllib.request, urllib.error, ssl
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -297,7 +297,7 @@ def _make_ssl_ctx(verify=True):
     return ssl.create_default_context()
 
 
-def check_external(url):
+def check_external(url, _retry=True):
     parsed = urllib.parse.urlparse(url)
     host = parsed.hostname or ""
     if host in SKIP_HOSTS or any(host == d or host.endswith("." + d) for d in SKIP_DOMAINS):
@@ -323,6 +323,18 @@ def check_external(url):
                 return (url, _do("GET", _make_ssl_ctx(verify=True)))
             except Exception as e2:
                 return (url, f"err: {e2}")
+        # A 5xx is the server faltering, not the link being wrong. Academic
+        # and institutional hosts routinely 503 under automated load while
+        # serving visitors perfectly well, and with no retry a single blip
+        # turns into a hard CI red on an unrelated PR. That is how the
+        # SKIP_HOSTS list above accumulated gess.ethz.ch and www.cnil.fr:
+        # neither is broken, both just flaked once. Retry once after a pause
+        # and take the second answer, so a genuine outage still fails (both
+        # attempts 5xx) while a blip does not. Preferred over adding hosts to
+        # the skip list, which trades a false red for a permanent blind spot.
+        if 500 <= e.code < 600 and _retry:
+            time.sleep(3)
+            return check_external(url, _retry=False)
         return (url, f"HTTP {e.code}")
     except urllib.error.URLError as e:
         # On macOS the default Python install often ships with an
