@@ -21,3 +21,6 @@ data/anthology-corpus-note.pdf
 # — no legitimate repo file uses a " <digit>.ext" suffix. (Still eyeball
 # `git status` before committing, per CLAUDE.md §8.)
 * [0-9].*
+
+# ROR API response cache (scripts/match-ror.mjs). Regenerate rather than commit.
+data/ror-cache.json
