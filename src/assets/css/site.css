@@ -120,12 +120,14 @@
   --accent-soft: hsl(203 100% 39% / 0.1);
   --accent-text: hsl(0 0% 100%);
   --warning: hsl(36 95% 50%);
-  /* Anthology Atlas graph chrome. A co-author edge is the constellation line
-     at map scale, so it sits on the brand hue rather than the stray cyan it
-     used to carry; --brand-network itself is too pale to hold a hairline on
-     white, so light mode deepens it. --atlas-inactive marks absence (no
-     Anthology page, no co-author) and is a blue-grey on the neutral hue. */
+  /* Anthology Atlas co-author edge. An edge is the constellation line at map
+     scale, so it sits on the brand hue rather than the stray cyan it used to
+     carry. --brand-network itself is too pale to hold a hairline on white, so
+     light mode deepens it. */
   --atlas-edge: hsl(203 76% 52%);
+  /* Anthology Atlas absence marker: a paper with no Anthology page, or an
+     author with no co-author. A blue-grey on the neutral hue, so it reads as
+     "nothing here yet" rather than as a category of its own. */
   --atlas-inactive: hsl(220 14% 64%);
   --hero-overlay: linear-gradient(180deg, hsl(220 50% 8% / 0.32) 0%, hsl(220 50% 8% / 0.7) 100%);
 
