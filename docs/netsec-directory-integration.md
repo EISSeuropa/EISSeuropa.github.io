@@ -5,7 +5,8 @@ directory link to each other, in both directions, and how those links
 stay correct as either side grows. It's the companion to
 `indico-programme-integration.md` and `publication-matching.md`: another
 case of two EISS-family static sites exchanging small, stable JSON
-contracts rather than coupling to each other's internals (CLAUDE.md §13).
+contracts rather than coupling to each other's internals (the
+`cross-repo-project` skill in `.claude/skills/`).
 Tracked in [#966](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/966).
 
 ## The problem

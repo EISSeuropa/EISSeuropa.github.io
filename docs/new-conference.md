@@ -187,7 +187,7 @@ drift, map the synced title to the programme title in
 `src/_data/paperAbstractAliases.json` (when the programme title is the
 one to keep, e.g. correct British spelling) or fix the typo in
 `archiveProgrammes.js` (when the programme is the wrong one). This is
-also a release-time cross-check (rule §5), and the
+also a release-time cross-check (the `release-cross-check` skill), and the
 `abstract-coverage.yml` workflow runs the same check every four months.
 
 If you want to keep the just-past year visible in the homepage hero
