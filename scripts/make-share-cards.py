@@ -189,6 +189,14 @@ CARDS = [
         "de": {"eyebrow": "Aktuelles", "title": "Aktuelles",
                "subtitle": "Konferenzen · Publikationen · Preise · Partnerschaften"},
     }},
+    {"slug": "roadmap", "i18n": {
+        "en": {"eyebrow": "Development", "title": "Roadmap",
+               "subtitle": "Shipped · in progress · planned"},
+        "fr": {"eyebrow": "Développement", "title": "Feuille de route",
+               "subtitle": "Publié · en cours · prévu"},
+        "de": {"eyebrow": "Entwicklung", "title": "Roadmap",
+               "subtitle": "Veröffentlicht · in Arbeit · geplant"},
+    }},
     # NOTE: the `anthology` card lives in scripts/make-anthology-social.py — a
     # bespoke, marketing-oriented card (+ square/story social images). Do not
     # add an `anthology` entry here, or the two would fight over the same file.

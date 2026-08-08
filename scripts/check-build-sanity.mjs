@@ -564,6 +564,42 @@ function checkNoDuplicateInputs() {
   }
 }
 
+// ---------------------------------------------------------------------------
+// No orphaned share cards (#474 follow-up).
+//
+// docs/new-conference.md tells the maintainer to delete a year's <year>-meta.*
+// files when the edition rolls over, and says an orphan check will flag it if
+// they forget. No such check existed, which is how 2022-meta.jpg and
+// 2023-meta.jpg sat unreferenced.
+//
+// "Referenced" is read from the BUILT og:image tags, not from metaImage in the
+// templates. Several pages compute it (atlas-theme.njk builds the filename from
+// the theme slug), so a literal-filename grep over src/ reports seventeen real
+// cards as orphans. The built HTML has every reference already resolved, which
+// is what the question actually is.
+function checkOrphanShareCards() {
+  const dir = join("src", "assets", "images");
+  if (!existsSync(dir)) return;
+  const files = htmlFiles("_site");
+  if (!files.length) return; // no build to read; other checks already warn
+  const referenced = new Set();
+  for (const f of files) {
+    for (const m of readFileSync(f, "utf8").matchAll(/og:image"\s+content="[^"]*\/([^"/]+\.jpg)"/g)) {
+      referenced.add(m[1]);
+    }
+  }
+  const orphans = readdirSync(dir)
+    .filter((f) => /-meta(\.[a-z]{2})?\.jpg$/.test(f))
+    .filter((f) => !referenced.has(f));
+  if (orphans.length) {
+    problems.push(
+      `${orphans.length} share card(s) that no built page points at: ${orphans.slice(0, 6).join(", ")}` +
+        `${orphans.length > 6 ? `, … (+${orphans.length - 6})` : ""}. ` +
+        "Delete them, or wire a page's metaImage to them (docs/new-conference.md, rollover step)."
+    );
+  }
+}
+
 checkDataKeys();
 checkBoardLinks();
 checkBuiltHtml();
@@ -573,6 +609,7 @@ checkPeopleIndex();
 checkThemeSpread();
 checkSitemapCoverage();
 checkNoDuplicateInputs();
+checkOrphanShareCards();
 
 if (problems.length) {
   console.error(`\n✗ build-sanity check failed (${problems.length} problem${problems.length > 1 ? "s" : ""}):\n`);
@@ -580,4 +617,4 @@ if (problems.length) {
   console.error("");
   process.exit(1);
 }
-console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, no cross-block CSS class collisions, people hovercard index resolvable, theme spread within bounds, every paper page in the sitemap, no duplicate build inputs).");
+console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, no cross-block CSS class collisions, people hovercard index resolvable, theme spread within bounds, every paper page in the sitemap, no duplicate build inputs, no orphaned share cards).");
