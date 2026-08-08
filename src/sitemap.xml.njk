@@ -15,7 +15,11 @@ eleventyExcludeFromCollections: true
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {%- for entry in collections.all -%}
   {%- if not entry.data.redirectTo and entry.url != "/sitemap.xml" %}
-  {%- set lastmod = sitemapDates[entry.url] %}
+  {#- Papers take the corpus ledger's date, everything else its source file's
+      last commit. The ledger is the better signal where it exists: it records
+      when the paper or its abstract actually landed, whereas a git date would
+      track edits to the data module that happens to contain it. -#}
+  {%- set lastmod = sitemapDates[entry.url] or (entry.page.inputPath | gitLastmod) %}
   <url><loc>{{ site.url }}{{ entry.url }}</loc>{% if lastmod %}<lastmod>{{ lastmod }}</lastmod>{% endif %}</url>
   {%- endif -%}
 {%- endfor %}

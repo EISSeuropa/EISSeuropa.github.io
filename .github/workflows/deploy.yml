@@ -59,6 +59,14 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Full history, so the sitemap can carry a real per-page <lastmod>
+          # (#620). The default shallow checkout makes `git log` report the
+          # checkout commit for every file, so every page would claim to have
+          # changed today, on every build. The build detects shallowness and
+          # omits the element rather than emitting that, so without this line
+          # the feature silently does nothing rather than lying.
+          fetch-depth: 0
 
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v6
         with:
