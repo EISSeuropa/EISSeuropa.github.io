@@ -2,11 +2,21 @@
 permalink: /sitemap.xml
 eleventyExcludeFromCollections: true
 ---
+{#- The machine-readable sitemap, for crawlers. The human-readable one is the
+    hand-curated /sitemap.html, which carries a single line for the whole
+    Anthology and is deliberately NOT generated from this list: 315 paper URLs
+    are what a crawler wants and the last thing a reader wants (#1293).
+
+    <lastmod> comes from the corpus ledger and is emitted only for pages that
+    have a trustworthy date. Build time would be a lie that changes on every
+    scheduled rebuild, so pages without a real date omit the element, which the
+    protocol allows per URL. -#}
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {%- for entry in collections.all -%}
   {%- if not entry.data.redirectTo and entry.url != "/sitemap.xml" %}
-  <url><loc>{{ site.url }}{{ entry.url }}</loc></url>
+  {%- set lastmod = sitemapDates[entry.url] %}
+  <url><loc>{{ site.url }}{{ entry.url }}</loc>{% if lastmod %}<lastmod>{{ lastmod }}</lastmod>{% endif %}</url>
   {%- endif -%}
 {%- endfor %}
 </urlset>

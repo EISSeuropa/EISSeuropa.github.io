@@ -168,10 +168,36 @@ itself a network map says what the page is without words.
 > what `sitemap.xml.njk` walks. Sixteen of the seventeen theme pages would have
 > been silently absent. `atlas-theme.njk` opts in explicitly.
 >
-> The same default is why **314 of the 315 paper pages are missing from the
-> sitemap**, tracked in
+> The same default hid **314 of the 315 paper pages** from the sitemap until
 > [#1293](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1293).
 > `.bib` and `.ris` must stay out, and do, via `eleventyExcludeFromCollections`.
+
+### The two sitemaps are different surfaces
+
+Worth stating, because conflating them leads to the wrong fix:
+
+| | `/sitemap.xml` | `/sitemap.html` |
+|---|---|---|
+| Audience | Crawlers | People |
+| Built from | `collections.all` | **Hand-written**, `src/sitemap.njk` (+ FR + DE) |
+| Anthology coverage | all 315 paper pages | one line for the whole corpus |
+
+`/sitemap.html` is deliberately NOT generated from the same list. 315 paper URLs
+are what a crawler wants and the last thing a reader wants. Adding papers to the
+XML does not touch it, and it should stay that way.
+
+`<lastmod>` on the paper URLs comes from the corpus ledger via
+`src/_data/sitemapDates.js`, so 315 URLs carry real change dates rather than
+reading as undifferentiated bulk. Pages with no trustworthy date omit the
+element, which the protocol allows per URL: build time would be a lie that
+changes on every scheduled rebuild.
+
+`board-profile.njk` (138 pages) hits the same pagination default and is
+deliberately still out, pending a decision on whether every historical and
+per-locale profile variant belongs in a sitemap.
+
+`scripts/check-build-sanity.mjs` now asserts the paper-page count on disk equals
+the count in the built sitemap, since this class of failure is invisible.
 
 ---
 
@@ -266,3 +292,35 @@ per-page alternate link. Runs in `sanity-check.yml`.
 | `scripts/sync-corpus-ledger.mjs` | Maintains the ledger. |
 | `scripts/check-citations.mjs` | CI gate for the citation exports. |
 | `scripts/check-feeds.py` | CI gate for the feeds. |
+
+
+---
+
+## Finder / iCloud duplicate files
+
+`~/Documents` is iCloud-synced, and iCloud silently produces `name 2.ext` copies
+of files while they are being edited. Forty-one appeared during one session on
+this repo. They never reach git — `.gitignore` pins `* [0-9].*` — but **Eleventy
+does not apply that pattern**, so they do affect a local build. Three classes,
+and they fail very differently:
+
+| Duplicate of | What happens | Caught by |
+|---|---|---|
+| A template (`.njk`) | Build **fails fatally**: Eleventy's `DuplicatePermalinkOutputError` | Eleventy itself |
+| A data file (`_data/*.js`) | **Silent.** Build succeeds, an extra data global is loaded | `check-build-sanity.mjs` |
+| An asset (`.jpg`, `.svg`, `.js`) | **Silent.** Copied straight into `_site/` | `check-build-sanity.mjs` |
+
+The silent two are the dangerous ones, because rule §14 leans on rendering and
+verifying locally, and a build with doubled inputs cannot be trusted to prove
+anything. `check-build-sanity.mjs` fails on any `name 2.ext` under `src/` or
+`scripts/` and names the offenders.
+
+An `.eleventyignore` entry was tried and **does not work**: its glob syntax does
+not match the pattern, and assets are copied through a passthrough rather than
+templated. The sanity check is the working guard.
+
+Clean-up, when the check fires:
+
+```bash
+find src scripts -name '* [0-9].*' -delete
+```
