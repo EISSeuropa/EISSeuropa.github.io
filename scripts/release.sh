@@ -219,16 +219,37 @@ if [[ "$DRY_RUN" != "--dry-run" ]]; then
   # For minor / major releases (X.Y.Z where Z == 0), print the
   # cross-check reminder before the prompt. Skipped for patch
   # releases — they're scoped to small fixes.
+  ROADMAP_FLIPPED=0
   PATCH_PART="${VERSION##*.}"
   if [[ "$PATCH_PART" == "0" ]]; then
     printf '  Minor / major release — cross-check before publishing:\n'
     printf '    1. Roadmap       — docs/roadmap-2026.md release-history section up to date?\n'
+    printf '                       Public card: node scripts/flip-roadmap-card.mjs %s --write\n' "$VERSION"
     printf '    2. Sitemap       — sitemap.xml + /sitemap.html include any new pages?\n'
     printf '    3. Translations  — python3 scripts/check-i18n-drift.py reports zero drift?\n'
     printf '    4. README        — Versioning section reflects any convention change?\n'
     printf '\n'
     printf '  Land any edits in the same release, or open tracking issues.\n'
     printf '  ──────────────────────────────────────────────────────────────\n\n'
+
+    # The public roadmap card is the one cross-check item that is a mechanical
+    # edit rather than a judgement, so offer to make it (#280). Shown as a diff
+    # first and applied only on an explicit "y": this rewrites hand-translated
+    # data during a release, which is the wrong moment to be surprised.
+    if node scripts/flip-roadmap-card.mjs "$VERSION" 2>/dev/null | grep -q 'would flip'; then
+      printf '  The public /roadmap card for v%s is still unshipped:\n\n' "$VERSION"
+      node scripts/flip-roadmap-card.mjs "$VERSION" | sed 's/^/  /'
+      printf '\n  Apply this now? Type "y" to flip it, anything else to skip: '
+      read -r FLIP
+      case "$FLIP" in
+        [yY]|[yY][eE][sS])
+          node scripts/flip-roadmap-card.mjs "$VERSION" --write | sed 's/^/  /'
+          ROADMAP_FLIPPED=1
+          printf '\n  Roadmap card flipped. It goes into the release commit below.\n\n'
+          ;;
+        *) printf '\n  Skipped. Flip it by hand, or re-run the command above later.\n\n' ;;
+      esac
+    fi
   fi
 
   printf '  Publish v%s — %s with the title + notes above?\n' "$VERSION" "$TITLE"
@@ -304,6 +325,12 @@ fi
 step "Commit, tag, push"
 
 run git add CHANGELOG.md
+# The roadmap card, when the offer above was accepted. Staged explicitly rather
+# than with `git add -A`, so a release never sweeps in unrelated working-tree
+# changes (rule §8).
+if [[ "${ROADMAP_FLIPPED:-0}" == "1" ]]; then
+  run git add src/_data/roadmap.js
+fi
 run git commit -m \"Release v$VERSION — $TITLE\" \
        -m \"Promotes the CHANGELOG.md [Unreleased] section to [$VERSION] · $TODAY — $TITLE and resets [Unreleased].\"
 run git tag -a \"v$VERSION\" \
