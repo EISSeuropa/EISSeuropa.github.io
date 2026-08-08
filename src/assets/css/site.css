@@ -7657,3 +7657,22 @@ html.atlas-welcome .atlas-welcome[hidden] { display: block; }
    shown at several sizes in the same row. */
 .ds-mark-art { display: block; }
 .ds-mark-art svg { width: 100%; height: auto; display: block; }
+
+/* The catch-all token table (#1271). Wide content scrolls inside its own
+   container rather than widening the page. */
+.ds-token-table-wrap { overflow-x: auto; }
+.ds-token-table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+.ds-token-table th,
+.ds-token-table td {
+  text-align: left;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.ds-token-table th {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-subtle);
+}
+.ds-token-table code { font-size: var(--fs-xs); }
