@@ -179,5 +179,19 @@
   </nav>
 </div>
 
+{# Design credit (#1228), on the canonical Atlas only. The 17 theme pages are
+   the same Atlas pre-filtered, so repeating it there would be eighteen credits
+   for one piece of work. EN-only, like the rest of this page. #}
+{%- if not atlasTheme %}
+{#- This include never sets `t` (archive-page.njk does, but the Atlas page does
+    not), so read the catalog directly. The Atlas is EN-only, so `en` is not a
+    fallback here, it is the only locale this page has. -#}
+{%- set _c = i18n.en.footer.credit -%}
+<p class="page-credit" data-pagefind-ignore>
+  {{ _c.atlas }}
+  <a href="/board.html#{{ _c.authorSlug }}">{{ _c.authorName }}</a>
+</p>
+{%- endif %}
+
 <script src="{{ '/assets/js/atlas-tour.js' | bust }}" defer></script>
 <script src="{{ '/assets/js/anthology-atlas.js' | bust }}" defer></script>

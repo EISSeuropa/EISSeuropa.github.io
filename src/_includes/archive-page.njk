@@ -133,4 +133,14 @@
   </div>
 </section>
 
+{# Design credit (#1228). The site-wide footer credit is at the level nobody
+   reads it at, and someone citing or writing about the Anthology has nothing
+   to attribute the design to. Same name, slug and register as
+   footer.authorship, so the two read as one claim rather than competing ones.
+   data-pagefind-ignore: a credit line is not page content to search. #}
+<p class="page-credit" data-pagefind-ignore>
+  {{ t.footer.credit.anthology }}
+  <a href="{{ '/board.html' | localizedHref(lang) }}#{{ t.footer.credit.authorSlug }}">{{ t.footer.credit.authorName }}</a>
+</p>
+
 <script src="{{ '/assets/js/archive.js' | bust }}" defer></script>

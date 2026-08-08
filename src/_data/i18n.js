@@ -242,6 +242,17 @@ const locales = {
         authorName: "Dr Arthur PB Laudrain",
         authorSlug: "arthur-laudrain",
       },
+      // Design credit for the Anthology and the Atlas (#1228). Deliberately
+      // the same name and slug as footer.authorship: it is the same person and
+      // the same convention, and two different names would read as competing
+      // claims. Kept on the pages themselves because the site-wide footer
+      // credit is at the level nobody reads it at.
+      credit: {
+        anthology: "Anthology designed and built by",
+        atlas: "Atlas designed and built by",
+        authorName: "Dr Arthur PB Laudrain",
+        authorSlug: "arthur-laudrain",
+      },
     },
 
     betaRibbon: {
@@ -825,6 +836,12 @@ const locales = {
         authorName: "Dr Arthur PB Laudrain",
         authorSlug: "arthur-laudrain",
       },
+      credit: {
+        anthology: "Anthologie conçue et développée par",
+        atlas: "Atlas conçu et développé par",
+        authorName: "Dr Arthur PB Laudrain",
+        authorSlug: "arthur-laudrain",
+      },
     },
 
     betaRibbon: {
@@ -1306,6 +1323,12 @@ const locales = {
       },
       authorship: {
         prefix: "Website konzipiert und entwickelt von",
+        authorName: "Dr Arthur PB Laudrain",
+        authorSlug: "arthur-laudrain",
+      },
+      credit: {
+        anthology: "Anthologie konzipiert und entwickelt von",
+        atlas: "Atlas konzipiert und entwickelt von",
         authorName: "Dr Arthur PB Laudrain",
         authorSlug: "arthur-laudrain",
       },

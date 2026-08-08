@@ -6,6 +6,8 @@ The [European Security Studies Anthology](https://eiss-europa.com/anthology.html
 
 You can browse by person or by paper, and filter by year or theme. A dynamic visualisation, the [Atlas](https://eiss-europa.com/anthology-atlas.html), allows you to easily identify communities and connections between papers, authors, or themes.
 
+The Anthology and the Atlas were designed and built by [Dr Arthur PB Laudrain](https://eiss-europa.com/board.html#arthur-laudrain).
+
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21776209.svg)](https://doi.org/10.5281/zenodo.21776209)
 [![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/EISSeuropa/EISSeuropa.github.io/)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/EISSeuropa/EISSeuropa.github.io)
