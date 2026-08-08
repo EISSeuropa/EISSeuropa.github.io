@@ -290,28 +290,8 @@ function checkCssCollisions() {
   // Each entry needs a one-line reason; investigate before adding one.
   const knownException = new Set([
     "btn:structured grids (programmes, who-are-you)", // `.btn.stretched-link:active` — a compound state variant on the shared .btn, not a redefinition
-    // The four below predate the CLAUDE.md §15 convention (v2.14.2) and sit
-    // bare in a section they don't belong to, but every property is
-    // additive (no conflicting property with the owning section) —
-    // confirmed by reading both definitions side by side. #241 follow-up:
-    // relocating them into their owning section is a separate, purely
-    // cosmetic diff, tracked rather than folded into this lint.
-    "programme-row:Speaker index (/speakers)", // 720px collapse of the shared live-programme-grid row, landed under Speaker index
-    "programme-when-time:Speaker index (/speakers)",
-    "programme-contrib:Speaker index (/speakers)",
-    "programme-contrib-when:Speaker index (/speakers)",
-    "photo-gallery:Public roadmap", // `@media print { display: none }` for the shared photo-gallery component, landed just past the print stylesheet's own section boundary
-    "people-grid:Board card footer + the \"View profile\" link", // `align-items: stretch` on the shared person-card grid, additive
-    "person-themes:Board card footer + the \"View profile\" link", // line-clamp on the shared person-card themes line, additive
-    // .member-pubs / .member-pub-name: the "Speaker index" definition (line
-    // 4104) is DEAD CSS — none of its sibling selectors (.member-pub,
-    // .member-pub-title, .member-pub-works, .member-pub-meta) appear in any
-    // .njk template; the live /publications markup (publications-body.njk)
-    // only ever uses the first definition's classes (.member-pub-head,
-    // .member-pub-group). Allowlisted rather than deleted here to keep this
-    // diff to the lint; flagged to the maintainer for cleanup.
-    "member-pubs:Speaker index (/speakers)",
-    "member-pub-name:Speaker index (/speakers)",
+    // (#1092 cleared the rest: the rules were relocated into their owning
+    // sections and the dead /outputs block deleted.)
   ]);
 
   // Blank out comments (preserving offsets/line numbers) so brace-depth

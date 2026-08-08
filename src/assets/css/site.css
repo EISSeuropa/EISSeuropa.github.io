@@ -2770,6 +2770,28 @@ h4 { font-size: var(--fs-lg); }
   height: 1rem;
 }
 
+/* Board-card footer alignment (#719 / #756 phase 2). Moved here from the
+   "Board card footer" section, which is a later addition to this same
+   component rather than a component of its own, so these sat allowlisted
+   as §15 exceptions instead of living with what they style (#1092).
+   Both are additive over the base definitions above. */
+/* Cards in a row share one height (uniform boxes), and the footer pins to the
+   bottom (see .person-foot) so View profile / links align across the row. Safe
+   now that deep content lives in a modal: no inline expansion can blow a card
+   out, which is why the grid briefly used align-items: start. */
+.people-grid,
+.people-grid--compact {
+  align-items: stretch;
+}
+
+/* Clamp the research-themes line so a long list doesn't make cards uneven. */
+.person-themes {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* ---------- /board — mobile compact card layout --------------------
    At narrow widths (≤ 36 rem, ~576 px) the default vertical card
    becomes too tall to scroll through comfortably — a 4:5 photo at
@@ -3836,6 +3858,29 @@ a.programme-live-tag:focus-visible {
   .pub-type-chip { margin-left: 0; }
 }
 
+/* Phone collapse for the programme rows. Moved here from the Speaker
+   index section, where it had sat since v2.14.2 and was allowlisted as a
+   §15 cross-block exception rather than fixed (#1092). Nothing else in the
+   file redefines these classes at this breakpoint, so the move is
+   position-neutral. */
+@media (max-width: 720px) {
+  /* Collapse the time gutter so cards take the full width on phones. */
+  .programme-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+  .programme-when-time {
+    font-size: var(--fs-sm);
+  }
+  .programme-contrib {
+    grid-template-columns: 1fr;
+  }
+  .programme-contrib-when {
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+}
+
 /* ---------- Speaker index (/speakers) ----------------------------------
    Alphabetical list of everyone who has presented across ESSC editions,
    built from the corpus.js data spine. */
@@ -4231,40 +4276,6 @@ a.speaker-paper-title:hover {
   line-height: 1.5;
 }
 
-/* /outputs — "Recent publications by our members" (ORCID sidecar). */
-.member-pubs {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: var(--space-5);
-  max-width: 48rem;
-}
-.member-pub {
-  break-inside: avoid;
-}
-.member-pub-name {
-  margin: 0 0 0.3rem;
-  font-weight: 600;
-}
-.member-pub-title {
-  font-weight: 500;
-}
-.member-pub-works {
-  list-style: none;
-  margin: 0;
-  padding: 0 0 0 var(--space-3);
-  border-left: 2px solid var(--border);
-  display: grid;
-  gap: 0.4rem;
-}
-.member-pub-works li {
-  font-size: var(--fs-sm);
-}
-.member-pub-meta {
-  font-size: var(--fs-xs);
-}
-
 /* Per-speaker theme chips (also the text Pagefind indexes for theme search). */
 .speaker-themes {
   display: flex;
@@ -4450,24 +4461,6 @@ a.paper-theme-chip:focus-visible { border-color: var(--accent); color: var(--acc
   vertical-align: -0.2em;
   margin-right: 0.4em;
   color: hsl(40 85% 42%);
-}
-
-@media (max-width: 720px) {
-  /* Collapse the time gutter so cards take the full width on phones. */
-  .programme-row {
-    grid-template-columns: 1fr;
-    gap: var(--space-2);
-  }
-  .programme-when-time {
-    font-size: var(--fs-sm);
-  }
-  .programme-contrib {
-    grid-template-columns: 1fr;
-  }
-  .programme-contrib-when {
-    font-weight: 600;
-    color: var(--text-muted);
-  }
 }
 
 /* ---------- registration-status badge --------------------------------
@@ -6798,6 +6791,13 @@ a.joint-orgs-card:hover .joint-orgs-name {
   }
 }
 
+/* Photo galleries are decorative; don't waste pages or colour ink on them.
+   Moved into this section from the Public roadmap block below, where it had
+   drifted past the boundary and was allowlisted as a §15 exception (#1092). */
+@media print {
+  .photo-gallery { display: none; }
+}
+
 /* ============================================================
    Public roadmap (/roadmap.html + FR + DE) — status timeline,
    pills, and JS-injected milestone progress bars. Mirrors the
@@ -6952,11 +6952,6 @@ a.joint-orgs-card:hover .joint-orgs-name {
   text-decoration: none;
 }
 
-@media print {
-  /* Photo galleries are decorative; don't waste pages or colour ink on them. */
-  .photo-gallery { display: none; }
-}
-
 /* ---------- Mobile tap-target + layout floors ----------
    From the June 2026 mobile-UX audit (live-verified at 375/320px). Lift
    standalone touch controls to the 44px comfort target and clear two
@@ -7042,23 +7037,6 @@ a.joint-orgs-card:hover .joint-orgs-name {
    Card faces stay compact, uniform identity with a clamped themes line and a
    pinned "View profile" link to the member's profile page; the recent-
    publications styles below are reused on that page. */
-
-/* Cards in a row share one height (uniform boxes), and the footer pins to the
-   bottom (see .person-foot) so View profile / links align across the row. Safe
-   now that deep content lives in a modal: no inline expansion can blow a card
-   out, which is why the grid briefly used align-items: start. */
-.people-grid,
-.people-grid--compact {
-  align-items: stretch;
-}
-
-/* Clamp the research-themes line so a long list doesn't make cards uneven. */
-.person-themes {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
 
 /* "View profile" trigger, pinned under the card body. */
 .person-more {
