@@ -168,6 +168,13 @@
        indexed, so the theme page points at its equivalent rather than replacing
        it (#1255 step 6). #}
     <p class="atlas-themes__alt muted"><a href="/anthology-atlas.html?themes={{ atlasTheme.name | urlencode }}">Open this theme on the full Atlas</a></p>
+    {# Visible subscribe affordance (#1256 step 4): an unadvertised feed is a
+       feed nobody uses, and the <link rel="alternate"> in the head is invisible
+       to anyone whose browser stopped surfacing feeds. #}
+    <p class="atlas-themes__feed">
+      <a href="/feeds/themes/{{ atlasTheme.slug }}.xml" type="application/atom+xml">{{ icon("bell") }} Follow this theme</a>
+      <span class="muted">Atom feed. New papers and newly recovered abstracts, newest first.</span>
+    </p>
     {%- endif %}
   </nav>
 </div>

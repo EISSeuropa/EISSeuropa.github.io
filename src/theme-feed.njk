@@ -1,0 +1,41 @@
+---
+pagination:
+  data: themeFeeds
+  size: 1
+  alias: feed
+permalink: "/feeds/themes/{{ feed.slug }}.xml"
+eleventyExcludeFromCollections: true
+---
+{#- Per-theme Atom feed (#1256). Excluded from collections, so out of the
+    sitemap; a feed is a subscription endpoint rather than a page to index.
+
+    <updated> comes from the newest entry, never from the build. This repo has
+    a scheduled rebuild workflow, so a build-time timestamp would tell every
+    subscriber that everything changed, on a timer. -#}
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  <title>EISS Anthology — {{ feed.name }}</title>
+  <subtitle>Papers on {{ feed.name | lower }} presented at EISS conferences and workshops, newest first.</subtitle>
+  <link href="{{ feed.feedUrl }}" rel="self" type="application/atom+xml"/>
+  <link href="{{ feed.pageUrl }}"/>
+  <updated>{{ feed.updated }}</updated>
+  <id>{{ feed.feedUrl }}</id>
+  <author><name>European Initiative for Security Studies</name></author>
+  {%- for e in feed.entries %}
+  <entry>
+    <title>{{ e.title }}</title>
+    <link href="{{ e.url }}"/>
+    <id>{{ e.id }}</id>
+    <updated>{{ e.updated }}</updated>
+    <published>{{ e.updated }}</published>
+    <category term="{{ feed.name }}"/>
+    {%- for a in e.authors %}
+    <author><name>{{ a }}</name></author>
+    {%- endfor %}
+    {#- The abstract where one exists. Where none does, the summary still says
+        what the entry is rather than being empty, so a reader's feed app shows
+        something useful either way. -#}
+    <summary>{% if e.isNewAbstract %}Abstract now on file. {% endif %}{% if e.abstract %}{{ e.abstract | striptags }}{% else %}Presented at {{ e.conferenceLabel }} {{ e.year }}. No abstract on file yet.{% endif %}</summary>
+  </entry>
+  {%- endfor %}
+</feed>
