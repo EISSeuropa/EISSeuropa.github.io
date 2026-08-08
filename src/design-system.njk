@@ -249,5 +249,36 @@ eleventyExcludeFromCollections: true
       </div>
     </article>
 
+    {# ── Everything the sections above do not render ──────────────────────
+       Each family is rendered in the shape it deserves: colour swatches, a type
+       ramp, spacing bars. That hand-authoring is what makes the page readable,
+       and it was also a hole. A token whose family had no bespoke block was
+       silently absent, and thirteen were: the font stacks, every line-height,
+       both tracking values, the layout maxima, both blurs and --saturate, while
+       the page claimed to render the whole token layer.
+
+       This table is the backstop, so adding a token to site.css always makes it
+       appear somewhere. A family that grows enough to deserve its own block gets
+       one, and drops out of here on its own. #}
+    {%- set _rendered = ["fs", "space", "radius", "shadow", "motion", "ease"] -%}
+    <h2 id="other">Other tokens</h2>
+    <p class="ds-note">
+      Tokens with no bespoke block above. They are still part of the system, and listing
+      them is what stops one going missing when it is added.
+    </p>
+    <div class="ds-token-table-wrap">
+      <table class="ds-token-table">
+        <thead><tr><th>Token</th><th>Value</th><th>Family</th></tr></thead>
+        <tbody>
+          {%- for tok in designTokens.tokens %}
+          {%- if tok.family not in _rendered and not tok.isColour and not tok.isGradient %}
+          <tr><td><code>{{ tok.name }}</code></td><td><code>{{ tok.value }}</code></td><td>{{ tok.family }}</td></tr>
+          {%- endif %}
+          {%- endfor %}
+        </tbody>
+      </table>
+    </div>
+
   </div>
 </section>
+
