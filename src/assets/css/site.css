@@ -7676,3 +7676,19 @@ html.atlas-welcome .atlas-welcome[hidden] { display: block; }
   color: var(--text-subtle);
 }
 .ds-token-table code { font-size: var(--fs-xs); }
+
+/* ---------- page-level design credit (#1228) ----------
+   A named credit for the Anthology and for the Atlas, on the pages themselves.
+   Deliberately quiet: the site-wide footer credit already exists, and this must
+   read as the same claim at a more useful level rather than competing with EISS
+   branding. Same discreet register as .footer-authorship. */
+.page-credit {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--space-5) var(--space-7);
+  font-size: var(--fs-xs);
+  color: var(--text-subtle);
+}
+.page-credit a { color: var(--text-muted); }
+.page-credit a:hover,
+.page-credit a:focus-visible { color: var(--accent); }
