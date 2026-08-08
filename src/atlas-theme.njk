@@ -1,0 +1,36 @@
+---
+pagination:
+  data: atlasThemePages
+  size: 1
+  alias: atlasTheme
+  # Eleventy adds only a paginated template's FIRST page to collections.all
+  # unless asked otherwise, and collections.all is what sitemap.xml.njk walks.
+  # Without this, sixteen of the seventeen theme pages would be absent from the
+  # sitemap, which defeats the point: these pages exist so a crawler can see a
+  # filtered view of the Atlas (#1255). The same default is why 314 of the 315
+  # paper pages are missing from the sitemap today, tracked separately.
+  addAllPagesToCollections: true
+layout: base.njk
+permalink: "/anthology-atlas/theme/{{ atlasTheme.slug }}.html"
+navKey: "navigator"
+lang: en
+eleventyComputed:
+  title: "{{ atlasTheme.name }} — Anthology Atlas"
+  description: "{{ atlasTheme.count }} papers on {{ atlasTheme.name | lower }}, presented at EISS conferences and workshops from {{ atlasTheme.yearRange }}, mapped as a network with the authors who wrote them and the themes they connect to."
+  metaImage: "/assets/images/atlas-theme-{{ atlasTheme.slug }}-meta.jpg"
+---
+{# One page per research theme (#1255). A query string cannot carry Open Graph
+   tags, so a shared ?themes= link produced the generic Atlas card and the one
+   thing making the link interesting was invisible to a crawler. These are real
+   URLs with their own title, description and card.
+
+   The body is the same include the canonical /anthology-atlas.html uses; the
+   `atlasTheme` alias above is what switches it into pre-filtered mode.
+
+   data-pagefind-ignore: these are 17 near-identical pages by body content, and
+   #1255 asks that they not flood site search. They stay in the sitemap, because
+   the whole point is that a crawler can see them. Self-canonical for the same
+   reason: they are genuinely distinct views, not duplicates of the bare Atlas. #}
+<div data-pagefind-ignore>
+  {% include "atlas-body.njk" %}
+</div>

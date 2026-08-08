@@ -31,6 +31,7 @@ Usage
 from __future__ import annotations
 
 import base64
+import json
 import re
 import shutil
 import subprocess
@@ -193,6 +194,39 @@ CARDS = [
     # add an `anthology` entry here, or the two would fight over the same file.
 ]
 
+
+def atlas_theme_cards() -> list[dict]:
+    """One card per Atlas research theme (#1255), EN-only because the theme
+    pages are.
+
+    The themes come from src/_data/atlasThemePages.js via node, rather than
+    being retyped here: that module is what the pages paginate over, so a theme
+    added to the corpus produces a page and a card from one source. Retyping
+    seventeen names into this file would be a drift bug waiting to happen."""
+    try:
+        out = subprocess.run(
+            ["node", "-e",
+             "const m=require('./src/_data/atlasThemePages.js');"
+             "process.stdout.write(JSON.stringify(m()))"],
+            cwd=ROOT, capture_output=True, text=True, timeout=60, check=True,
+        ).stdout
+        themes = json.loads(out)
+    except Exception as exc:  # node missing, module broken, malformed JSON
+        print(f"  ! skipping Atlas theme cards: {exc}", file=sys.stderr)
+        return []
+    return [
+        {
+            "slug": f"atlas-theme-{t['slug']}",
+            "motif": "anthology-mark.svg",
+            "i18n": {"en": {
+                "eyebrow": "Anthology Atlas",
+                "title": t["name"],
+                "subtitle": f"{t['count']} papers · {t['yearRange']}",
+            }},
+        }
+        for t in themes
+    ]
+
 # 1200×1200 square share card SVG template.
 #
 # Why square (1:1) and not 1200×630 (1.91:1):
@@ -348,12 +382,27 @@ def build_lockup() -> str:
     )
 
 
-def build_motif() -> str:
+def build_motif(name: str = "logo-mark.svg") -> str:
     """The constellation mark, large and bleeding off the top-right of the
-    visible band, used at low opacity as a background texture."""
-    view_box, inner = brand_svg_inner("logo-mark.svg")
+    visible band, used at low opacity as a background texture.
+
+    The Atlas theme cards (#1255) pass anthology-mark.svg instead: that mark IS
+    a network map of the corpus, so on a card about one research theme it says
+    what the page is without words. It is square where logo-mark is wide, so it
+    gets its own box rather than being letterboxed into the wide one."""
+    view_box, inner = brand_svg_inner(name)
+    box = (
+        'x="800" y="120" width="400" height="400"'
+        if name == "anthology-mark.svg"
+        else 'x="610" y="150" width="760" height="341"'
+    )
+    # anthology-mark.svg paints its hub with fill="currentColor" so one asset
+    # can recolour per surface. Inside this card there is nothing to inherit
+    # from, so the hub rendered grey against a blue network. Pin it to the
+    # brand blue, which is what the mark shows everywhere else on the site.
+    colour = ' color="#007bc6"' if name == "anthology-mark.svg" else ""
     return (
-        f'<svg x="610" y="150" width="760" height="341" viewBox="{view_box}" '
+        f'<svg {box} viewBox="{view_box}"{colour} '
         f'preserveAspectRatio="xMidYMid meet">{inner}</svg>'
     )
 
@@ -447,11 +496,14 @@ def main() -> None:
     lockup = build_lockup()
     motif = build_motif()
     font_face = inter_face()
-    for card in CARDS:
+    # Atlas theme cards are appended rather than written into CARDS, since they
+    # are derived from the corpus rather than authored here (#1255).
+    for card in CARDS + atlas_theme_cards():
         if only and card["slug"] not in only:
             continue
+        card_motif = build_motif(card["motif"]) if card.get("motif") else motif
         for lang, strings in card["i18n"].items():
-            svg = render(strings, lockup, motif, font_face)
+            svg = render(strings, lockup, card_motif, font_face)
             try:
                 out = rasterize(svg, dest_filename(card["slug"], lang))
                 size_kb = out.stat().st_size // 1024
