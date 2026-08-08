@@ -186,11 +186,27 @@ Worth stating, because conflating them leads to the wrong fix:
 are what a crawler wants and the last thing a reader wants. Adding papers to the
 XML does not touch it, and it should stay that way.
 
-`<lastmod>` on the paper URLs comes from the corpus ledger via
-`src/_data/sitemapDates.js`, so 315 URLs carry real change dates rather than
-reading as undifferentiated bulk. Pages with no trustworthy date omit the
-element, which the protocol allows per URL: build time would be a lie that
-changes on every scheduled rebuild.
+`<lastmod>` covers all 418 URLs, from two sources (#620):
+
+| Pages | Source | Why |
+|---|---|---|
+| The 315 paper pages | `corpusLedger.json` via `src/_data/sitemapDates.js` | Records when the paper or its abstract actually landed |
+| Everything else | Last git commit of the source file, via the `gitLastmod` filter | The only honest date a template has |
+
+The ledger wins where it exists, because a git date would track edits to the
+data module that happens to contain a paper rather than the paper itself.
+
+> **The shallow-clone trap, and why the feature can silently do nothing.**
+> `git log` in a depth-1 checkout reports the checkout commit for *every* file,
+> so all 418 pages would claim to have changed today, on every build. That is
+> worse than no `lastmod`: it teaches crawlers to ignore the signal. The filter
+> calls `git rev-parse --is-shallow-repository` and returns `""` when shallow,
+> so the element is omitted rather than faked. `deploy.yml`'s checkout sets
+> `fetch-depth: 0` to make the real dates available; other workflows do not need
+> it and legitimately produce a dateless sitemap.
+>
+> `check-build-sanity.mjs` asserts the dates are not all identical, which is the
+> shape this mistake takes.
 
 `board-profile.njk` (138 pages) hits the same pagination default and is
 deliberately still out, pending a decision on whether every historical and

@@ -532,6 +532,19 @@ function checkSitemapCoverage() {
         "A paginated template needs `addAllPagesToCollections: true` or only its first page reaches collections.all (#1293)."
     );
   }
+  // <lastmod> coverage (#620). Not asserted as "all URLs", because a shallow
+  // clone legitimately produces none: CI checks out at depth 1 outside the
+  // deploy job, and the filter omits rather than stamping every page with the
+  // checkout date. What IS asserted is that the dates are not all identical
+  // when there are any, which is the shape that mistake takes.
+  const stamps = xml.match(/<lastmod>([^<]+)<\/lastmod>/g) || [];
+  if (stamps.length > 20 && new Set(stamps).size === 1) {
+    problems.push(
+      `sitemap.xml gives all ${stamps.length} dated URLs the same <lastmod> ${stamps[0]}. ` +
+        "That is what a shallow clone looks like; the git filter should have omitted them instead (#620)."
+    );
+  }
+
   // Citation files and feeds are endpoints, not pages, and must never appear.
   for (const ext of [".bib", ".ris"]) {
     const leaked = (xml.match(new RegExp(`<loc>[^<]*\\${ext}</loc>`, "g")) || []).length;

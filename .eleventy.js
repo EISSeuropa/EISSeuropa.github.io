@@ -2,8 +2,62 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 
+const { execSync } = require("node:child_process");
+
 module.exports = function (eleventyConfig) {
   eleventyConfig.setQuietMode(true);
+
+  // ── sitemap <lastmod> from git history (#620) ────────────────────────────
+  //
+  // The date a source file was last committed, as `YYYY-MM-DD`, for the
+  // sitemap. Search engines use lastmod to decide what is worth re-fetching,
+  // and the site was forgoing the signal entirely.
+  //
+  // ONE git pass, not one per file. `git log --name-only` over the whole
+  // history costs ~0.2s and yields every path's most recent commit date;
+  // shelling out per template would be ~100 processes for the same answer.
+  // Memoised, so the cost is paid once per build.
+  //
+  // A SHALLOW CLONE MUST NOT PRODUCE DATES. CI checks out at depth 1 unless
+  // told otherwise, and `git log` then reports the checkout commit for every
+  // file, so every page would claim to have changed today, on every build.
+  // That is worse than no lastmod: it trains crawlers to ignore the signal.
+  // So shallowness is detected and the filter returns "" — the template omits
+  // the element, which the sitemap protocol allows per URL.
+  let _gitDates = null;
+  const gitDateMap = () => {
+    if (_gitDates) return _gitDates;
+    _gitDates = new Map();
+    try {
+      if (
+        execSync("git rev-parse --is-shallow-repository", { encoding: "utf8" }).trim() === "true"
+      ) {
+        console.warn(
+          "note: shallow git clone — sitemap <lastmod> omitted (set fetch-depth: 0 in the deploy checkout to enable it)."
+        );
+        return _gitDates;
+      }
+      const out = execSync("git log --name-only --format=%cs --no-merges", {
+        encoding: "utf8",
+        maxBuffer: 64 * 1024 * 1024,
+      });
+      let date = "";
+      for (const line of out.split("\n")) {
+        if (/^\d{4}-\d{2}-\d{2}$/.test(line)) date = line;
+        // git log is newest-first, so the FIRST date seen for a path is its
+        // most recent commit. Later (older) mentions must not overwrite it.
+        else if (line && date && !_gitDates.has(line)) _gitDates.set(line, date);
+      }
+    } catch (e) {
+      console.warn(`note: sitemap <lastmod> unavailable (${e.message.split("\n")[0]})`);
+    }
+    return _gitDates;
+  };
+  eleventyConfig.addFilter("gitLastmod", (inputPath) => {
+    if (!inputPath) return "";
+    // Eleventy hands paths as "./src/foo.njk"; git indexes them as "src/foo.njk".
+    return gitDateMap().get(String(inputPath).replace(/^\.\//, "")) || "";
+  });
 
   eleventyConfig.addFilter("year", () => new Date().getUTCFullYear());
 
