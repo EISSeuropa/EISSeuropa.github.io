@@ -72,7 +72,7 @@ fi
 "$PY3" - "$SITE_ROOT" $INTERNAL_ONLY $QUIET <<'PY'
 """Inline-Python link checker. Avoids extra deps; portable across
 the maintainer's macOS laptop and Ubuntu CI."""
-import os, re, sys, time, urllib.parse, urllib.request, urllib.error, ssl
+import os, re, socket, sys, time, urllib.parse, urllib.request, urllib.error, ssl
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -359,7 +359,27 @@ def check_external(url, _retry=True):
                 return (url, _do(method, _make_ssl_ctx(verify=False)))
             except Exception as e2:
                 return (url, f"err: {e2.__class__.__name__}: {e2}")
+        # A connect timeout arrives wrapped in URLError; a read timeout does
+        # not (see the TimeoutError branch below). Both retry.
+        if _retry and isinstance(getattr(e, "reason", None), (TimeoutError, socket.timeout)):
+            time.sleep(3)
+            return check_external(url, _retry=False)
         return (url, f"err: {e.__class__.__name__}: {e}")
+    except (TimeoutError, socket.timeout):
+        # A timeout is the same class of flake as a 5xx: the host is reachable,
+        # it just did not answer inside 15s under a burst. #1282 added the 5xx
+        # retry and stopped there, so a timeout still failed a PR outright —
+        # which is what took #1291 red on hal.science, a link with nothing to
+        # do with that PR.
+        #
+        # This needs its own branch: urlopen raises a bare socket.timeout on a
+        # read timeout rather than wrapping it in URLError, so it lands in the
+        # generic handler below. Verified against a server that hangs past the
+        # client timeout — without this branch, no retry fires at all.
+        if _retry:
+            time.sleep(3)
+            return check_external(url, _retry=False)
+        return (url, "err: timed out twice")
     except Exception as e:
         return (url, f"err: {e.__class__.__name__}: {e}")
 
