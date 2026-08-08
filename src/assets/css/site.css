@@ -7327,6 +7327,39 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-legend .sw-solo { background: var(--atlas-inactive); }
 .atlas-legend .sw-coauthor { background: var(--atlas-edge); width: 16px; height: 3px; border-radius: 2px; vertical-align: 2px; }
 @media (max-width: 640px) { #atlas-canvas { height: 480px; } }
+
+/* Theme wayfinding under the map (#1255). Own prefix per rule §15. */
+.atlas-themes { margin: var(--space-6) 0 0; }
+.atlas-themes__h {
+  font-size: var(--fs-md);
+  margin: 0 0 var(--space-3);
+  color: var(--text);
+}
+.atlas-themes__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.atlas-themes__list a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: var(--fs-sm);
+  color: var(--text);
+  text-decoration: none;
+  background: var(--bg-elev);
+  transition: border-color var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
+}
+.atlas-themes__list a:hover,
+.atlas-themes__list a:focus-visible { border-color: var(--accent); color: var(--accent); }
+.atlas-themes__n { font-size: var(--fs-xs); font-variant-numeric: tabular-nums; }
+.atlas-themes__alt { margin: var(--space-4) 0 0; font-size: var(--fs-sm); }
 @media (prefers-reduced-motion: reduce) { .atlas-chip { transition: none; } .atlas-chip:hover { transform: none; } }
 
 /* ─── Anthology Atlas — welcome strip + guided tour (#1134) ──────────────

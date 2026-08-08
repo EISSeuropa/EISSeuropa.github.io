@@ -631,7 +631,14 @@
       editions.forEach((e) => { if (e.year === y) wantedEds.push(e.key); });
     });
     if (wantedEds.length) { activeEditions.clear(); wantedEds.forEach((k) => activeEditions.add(k)); }
-    const wanted = (sp.get('themes') || '').split(',').map((s) => s.trim()).filter(Boolean);
+    // Theme pages (#1255) pre-filter from the page itself rather than the URL,
+    // so /anthology-atlas/theme/<slug>.html arrives already filtered instead of
+    // flashing the whole corpus first. A ?themes= param still wins, so a link
+    // shared off a theme page with extra filtering behaves as the sharer left it.
+    const shell = document.querySelector('.atlas-shell[data-atlas-theme]');
+    const pageTheme = shell ? shell.getAttribute('data-atlas-theme') : '';
+    const wantedParam = (sp.get('themes') || '').split(',').map((s) => s.trim()).filter(Boolean);
+    const wanted = wantedParam.length ? wantedParam : (pageTheme ? [pageTheme] : []);
     const ids = hubs.filter((h) => wanted.indexOf(h.name) !== -1).map((h) => h.id);
     if (ids.length) { activeHubs.clear(); ids.forEach((id) => activeHubs.add(id)); }
     collabOnly = sp.get('collab') === '1';
