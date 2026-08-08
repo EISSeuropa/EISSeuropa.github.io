@@ -64,6 +64,17 @@ jobs:
       - name: Run citation-export check
         run: node scripts/check-citations.mjs
 
+      # Feeds fail silently too: a reader's app just stops updating. This also
+      # guards the rule that a feed's <updated> comes from its content, so the
+      # scheduled rebuild cannot notify every subscriber on a timer (#1256).
+      - name: Run Atom feed check
+        run: python3 scripts/check-feeds.py
+
+      # The ledger is the only record of when a paper or its abstract landed,
+      # so drift means the feeds are dating new material wrongly (#1256).
+      - name: Check the corpus ledger is current
+        run: node scripts/sync-corpus-ledger.mjs --check
+
       # Static a11y lint over the built site (duplicate ids, missing
       # alt/labels/landmarks, heading gaps — see scripts/a11y_lint.py).
       # Stdlib-only Python, no pip install needed. Gating: the script

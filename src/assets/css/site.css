@@ -7360,6 +7360,21 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-themes__list a:focus-visible { border-color: var(--accent); color: var(--accent); }
 .atlas-themes__n { font-size: var(--fs-xs); font-variant-numeric: tabular-nums; }
 .atlas-themes__alt { margin: var(--space-4) 0 0; font-size: var(--fs-sm); }
+.atlas-themes__feed {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  font-size: var(--fs-sm);
+}
+.atlas-themes__feed a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+.atlas-themes__feed .muted { font-size: var(--fs-xs); }
 @media (prefers-reduced-motion: reduce) { .atlas-chip { transition: none; } .atlas-chip:hover { transform: none; } }
 
 /* ─── Anthology Atlas — welcome strip + guided tour (#1134) ──────────────

@@ -79,6 +79,18 @@
   <link rel="manifest" href="/assets/manifest.webmanifest">
   {# Atom feed for the News surface (#605). One feed for the whole site. #}
   <link rel="alternate" type="application/atom+xml" title="EISS news" href="/feed.xml">
+  {#- A page that has a corpus feed of its own advertises it too (#1256), so a
+      reader's browser or feed app offers it without hunting.
+
+      Built from the page's own theme rather than looked up. Nunjucks has no
+      `selectattr` (that is Jinja2), so a filter chain using it does not narrow
+      anything and `| first` silently returns the first feed in the list: every
+      theme page advertised the same wrong feed while its visible link was
+      correct. The permalink pattern lives in theme-feed.njk and is mirrored
+      here; scripts/check-feeds.py asserts the two agree. -#}
+  {%- if atlasTheme %}
+  <link rel="alternate" type="application/atom+xml" title="EISS Anthology — {{ atlasTheme.name }}" href="{{ site.url }}/feeds/themes/{{ atlasTheme.slug }}.xml">
+  {%- endif %}
   {# theme-color drives Android Chrome's address-bar tint + the iOS PWA
      status bar, so the browser chrome around the page matches the page
      itself. A media-scoped pair: the canonical EISS brand blue (sampled
