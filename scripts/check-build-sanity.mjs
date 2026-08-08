@@ -507,6 +507,70 @@ function checkThemeSpread() {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Every paper page is in the sitemap (#1293).
+//
+// This failed silently for months. Eleventy adds only a paginated template's
+// FIRST page to collections.all, which is what sitemap.xml.njk walks, so 314 of
+// the 315 paper pages were absent from the sitemap the site submits to search
+// engines, while the build stayed green and the pages themselves were perfect.
+// A count comparison is the cheapest thing that would have caught it.
+function checkSitemapCoverage() {
+  const sitemap = join("_site", "sitemap.xml");
+  if (!existsSync(sitemap)) {
+    problems.push("_site/sitemap.xml: missing — the sitemap was not built");
+    return;
+  }
+  const xml = readFileSync(sitemap, "utf8");
+  const papersDir = join("_site", "papers");
+  if (!existsSync(papersDir)) return;
+  const onDisk = readdirSync(papersDir).filter((f) => f.endsWith(".html")).length;
+  const inSitemap = (xml.match(/<loc>[^<]*\/papers\/[^<]*\.html<\/loc>/g) || []).length;
+  if (onDisk !== inSitemap) {
+    problems.push(
+      `sitemap.xml lists ${inSitemap} of the ${onDisk} paper pages on disk. ` +
+        "A paginated template needs `addAllPagesToCollections: true` or only its first page reaches collections.all (#1293)."
+    );
+  }
+  // Citation files and feeds are endpoints, not pages, and must never appear.
+  for (const ext of [".bib", ".ris"]) {
+    const leaked = (xml.match(new RegExp(`<loc>[^<]*\\${ext}</loc>`, "g")) || []).length;
+    if (leaked) problems.push(`sitemap.xml lists ${leaked} ${ext} file(s); citation files are not pages`);
+  }
+  if (/<loc>[^<]*\/feeds\//.test(xml)) problems.push("sitemap.xml lists an Atom feed; a subscription endpoint is not a page");
+}
+
+// ---------------------------------------------------------------------------
+// No Finder / iCloud duplicate files in the build input.
+//
+// `Documents` is iCloud-synced, and iCloud silently produces "name 2.ext"
+// copies of files being edited. 41 appeared during one session on this repo.
+// .gitignore pins `* [0-9].*` so they never reach git, but ELEVENTY DOES NOT
+// APPLY THAT PATTERN: it built every duplicate, emitting 22 Atlas theme pages
+// instead of 17 and 1065 .bib files instead of 315. The output is wrong in a
+// way that makes local verification untrustworthy, which is what rule §14
+// leans on. .eleventyignore now excludes them too; this check is the alarm, so
+// a stray copy is a loud failure rather than a silently doubled build.
+const DUP_RE = / \d+\.[A-Za-z0-9]+$/;
+function checkNoDuplicateInputs() {
+  const roots = ["src", "scripts"];
+  const found = [];
+  const walk = (dir) => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, e.name);
+      if (e.isDirectory()) walk(full);
+      else if (DUP_RE.test(e.name)) found.push(full);
+    }
+  };
+  for (const r of roots) if (existsSync(r)) walk(r);
+  if (found.length) {
+    problems.push(
+      `${found.length} Finder/iCloud duplicate file(s) in the build input — Eleventy builds these, so the output is doubled. ` +
+        `Delete them: ${found.slice(0, 3).join(", ")}${found.length > 3 ? ", …" : ""}`
+    );
+  }
+}
+
 checkDataKeys();
 checkBoardLinks();
 checkBuiltHtml();
@@ -514,6 +578,8 @@ checkUndefinedClasses();
 checkCssCollisions();
 checkPeopleIndex();
 checkThemeSpread();
+checkSitemapCoverage();
+checkNoDuplicateInputs();
 
 if (problems.length) {
   console.error(`\n✗ build-sanity check failed (${problems.length} problem${problems.length > 1 ? "s" : ""}):\n`);
@@ -521,4 +587,4 @@ if (problems.length) {
   console.error("");
   process.exit(1);
 }
-console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, no cross-block CSS class collisions, people hovercard index resolvable, theme spread within bounds).");
+console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, no cross-block CSS class collisions, people hovercard index resolvable, theme spread within bounds, every paper page in the sitemap, no duplicate build inputs).");

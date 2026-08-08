@@ -3,6 +3,13 @@ pagination:
   data: paperPages
   size: 1
   alias: paper
+  # Eleventy adds only a paginated template's FIRST page to collections.all,
+  # which is what sitemap.xml.njk walks, so 314 of these 315 pages were absent
+  # from the sitemap the site submits to search engines (#1293). These pages
+  # exist to be indexed: they carry the citation_* meta, the ScholarlyArticle
+  # JSON-LD and now the .bib/.ris siblings. The .bib and .ris templates stay
+  # out via eleventyExcludeFromCollections, since a citation file is not a page.
+  addAllPagesToCollections: true
 layout: base.njk
 permalink: "/papers/{{ paper.slug }}.html"
 navKey: "navigator"
