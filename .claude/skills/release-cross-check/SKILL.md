@@ -26,6 +26,22 @@ same release. If yes but too big to fit, open a tracking issue
   its date, add the release-notes link, and drop the `data-milestone`
   attribute so it no longer renders a progress bar. The next planned
   card is auto-promoted to *In progress* by `roadmap-progress.js`.
+
+  **`scripts/release.sh` now offers to do this**, showing the diff and
+  applying it only on an explicit `y` (#280). To do it outside a
+  release, or to check what it would change:
+
+  ```bash
+  node scripts/flip-roadmap-card.mjs v2.27.0            # dry run
+  node scripts/flip-roadmap-card.mjs v2.27.0 --write
+  ```
+
+  It edits `src/_data/roadmap.js`, which the three locale pages render
+  from, so one command covers EN, FR and DE. The dates come from the
+  same `Intl` formatter the news surface uses, so a flipped card reads
+  identically to a hand-written one. Still eyeball the rendered page:
+  the script guarantees the data is right, not that the prose around
+  it still is.
 - Anything in the *Under watch* section ready to promote to a dated
   release row (and its own milestone)?
 - The autostamp on `docs/roadmap-2026.md` (rule §11) keeps the
