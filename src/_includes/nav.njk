@@ -92,20 +92,52 @@
       {% endfor %}
     </ul>
 
+    {# One set of language links, rendered in two shapes. On untranslated
+       pages the FR/DE target falls back to the language homepage (the
+       `alternates` lookup handles the difference). #}
+    {% macro langLinks(cls) %}
+      {% for L in i18n._order %}
+        {%- set href = alternates[L] if alternates and alternates[L] else ('/' if L == 'en' else '/index.' + L + '.html') -%}
+        <a class="{{ cls }}"
+           href="{{ href }}"
+           hreflang="{{ L }}"
+           {% if L == lang %}aria-current="true"{% endif %}
+           title="{{ t.langSwitcher[L + 'Title'] }}">{{ t.langSwitcher[L] }}</a>
+      {% endfor %}
+    {% endmacro %}
+
     <div class="nav-actions">
-      {# Language switcher chips. Always shows all 3; on untranslated
-         pages the FR/DE chip falls back to the language homepage
-         (the `alternates` lookup handles the difference). #}
+      {# Above 480 px the three chips sit inline in the bar. Below it there
+         is no room for them beside the brand iconmark, which is what made
+         the mark collapse to nothing (#1322): an inline SVG has no
+         intrinsic size, so its min-content width is 0 and it absorbed the
+         whole shortfall while the text beside it kept its own floor. So on
+         narrow phones the same three links collapse behind a disclosure
+         showing the current language. Dropping the switcher outright is
+         not an option — #137 tried that and it stranded FR/DE readers on
+         whichever locale they landed in.
+
+         Both shapes are rendered and CSS picks one per breakpoint, so the
+         branch that loses is `display: none` and leaves the accessibility
+         tree rather than duplicating the links for a screen reader. #}
       <div class="lang-switcher" role="group" aria-label="{{ t.langSwitcher.label }}">
-        {% for L in i18n._order %}
-          {%- set href = alternates[L] if alternates and alternates[L] else ('/' if L == 'en' else '/index.' + L + '.html') -%}
-          <a class="lang-chip"
-             href="{{ href }}"
-             hreflang="{{ L }}"
-             {% if L == lang %}aria-current="true"{% endif %}
-             title="{{ t.langSwitcher[L + 'Title'] }}">{{ t.langSwitcher[L] }}</a>
-        {% endfor %}
+        {{ langLinks("lang-chip") }}
       </div>
+
+      {# `data-nav-group` opts this into the same disclosure behaviour as
+         the nav dropdowns in theme.js: siblings close, Escape closes,
+         clicking away closes. #}
+      <details class="lang-menu" data-nav-group>
+        <summary class="lang-menu-summary" aria-label="{{ t.langSwitcher.label }}">
+          {{ t.langSwitcher[lang] }}
+          <svg class="lang-menu-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </summary>
+        <div class="lang-menu-panel" role="group" aria-label="{{ t.langSwitcher.label }}">
+          {{ langLinks("lang-menu-link") }}
+        </div>
+      </details>
 
       {# Search trigger. Opens the site-search modal (search-modal.njk).
          Icon-only, so the accessible name comes from aria-label. The

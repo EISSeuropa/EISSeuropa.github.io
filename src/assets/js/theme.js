@@ -60,6 +60,9 @@
 
     const menuBtn = document.querySelector("[data-menu-toggle]");
     const menu = document.querySelector("[data-nav-menu]");
+    // Assigned below when the drawer exists, so the group code further
+    // down can shut the drawer before opening a dropdown over it.
+    let closeMenu = null;
     if (menuBtn && menu) {
       const setOpen = (open) => {
         menu.setAttribute("data-open", String(open));
@@ -69,7 +72,7 @@
         // for the search modal). June 2026 mobile-UX audit.
         document.body.classList.toggle("nav-open", open);
       };
-      const closeMenu = () => setOpen(false);
+      closeMenu = () => setOpen(false);
       menuBtn.addEventListener("click", () => {
         setOpen(menu.getAttribute("data-open") !== "true");
       });
@@ -88,36 +91,40 @@
        usable with JS off. What follows adds only what a native disclosure
        has no opinion about on a menu bar: opening one group closes its
        siblings, and a click outside or Escape closes the open one.
-       Below the drawer breakpoint the groups are accordions inside the
-       menu, where auto-closing siblings would fight the reader, so both
-       behaviours are gated on the desktop bar. */
+       The exception is a group that is currently an accordion inside the
+       mobile drawer, where auto-closing siblings would fight the reader.
+       That is a per-element test, not a breakpoint one (#1322): the
+       language menu is also a `[data-nav-group]` but lives in the bar,
+       not the drawer, so on a phone it still needs Escape and
+       outside-click while the nav groups beside it do not. */
     const groups = Array.from(document.querySelectorAll("[data-nav-group]"));
     if (groups.length) {
       const drawerBp = matchMedia("(max-width: 880px)");
+      const isAccordion = (g) => drawerBp.matches && menu !== null && menu.contains(g);
       const closeGroups = (except) => {
         groups.forEach((g) => {
-          if (g !== except) g.open = false;
+          if (g !== except && !isAccordion(g)) g.open = false;
         });
       };
 
       groups.forEach((g) => {
         g.addEventListener("toggle", () => {
-          if (g.open && !drawerBp.matches) closeGroups(g);
+          if (!g.open || isAccordion(g)) return;
+          closeGroups(g);
+          // A bar dropdown and the drawer both hang off the header, so an
+          // open drawer would sit underneath this panel. Shut it.
+          if (closeMenu && menu.getAttribute("data-open") === "true") closeMenu();
         });
       });
 
       document.addEventListener("click", (e) => {
-        if (drawerBp.matches) return;
         if (!(e.target instanceof Element)) return;
         if (!e.target.closest("[data-nav-group]")) closeGroups(null);
       });
 
       document.addEventListener("keydown", (e) => {
         if (e.key !== "Escape") return;
-        // The drawer's own Escape handler above owns the key while the
-        // mobile menu is open, so don't also collapse a group under it.
-        if (menu && menu.getAttribute("data-open") === "true") return;
-        const open = groups.find((g) => g.open);
+        const open = groups.find((g) => g.open && !isAccordion(g));
         if (open) {
           open.open = false;
           open.querySelector("summary").focus();
