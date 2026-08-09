@@ -248,8 +248,19 @@ the rendered style guide cannot disagree.
 
 ## Chrome (every page, via `base.njk`)
 
-- **`nav.njk`** — primary nav. Items come from `site.js` `nav[]`; labels
-  resolve from `t.nav[key]`. Collapses behind `.menu-toggle` (hamburger)
+- **`nav.njk`** — primary nav. Items come from `site.js` `nav[]`, labels
+  resolve from `t.nav[key]`, for children too. An item carrying
+  `children` renders as a `.nav-group`: a native `<details>` disclosure
+  whose `<summary>` reuses `.nav-link` and whose panel is
+  `.nav-group-panel`, absolutely positioned on desktop and an indented
+  accordion inside the mobile drawer. `theme.js` adds only sibling
+  closing, Escape and outside-click, so the groups still work with
+  JavaScript off. The item flagged `editions: true` (Conference)
+  prepends `conferences.navEditions`, so the yearly rollover moves the
+  menu without a nav edit. `withMatchKeys()` in `site.js` gives each item
+  the set of `navKey` values that light it up, and the group summary
+  carries `data-section-current` rather than `aria-current`, which stays
+  on the exact child link. Collapses behind `.menu-toggle` (hamburger)
   on mobile. Carries the theme toggle, the language switcher (EN/FR/DE
   `.lang-chip`s led by a decorative `.lang-switcher-globe` so the group
   reads as a language control), and the search trigger

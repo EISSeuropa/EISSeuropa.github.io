@@ -60,14 +60,14 @@
     "src/events.njk": {
       "fr": {
         "file": "src/events.fr.njk",
-        "source_sha1": "fcbd0d50da0a672a0da685e9e06d553344c8014e",
-        "translated_on": "2026-06-16",
+        "source_sha1": "60775b72193c0d79bf23fcdf051fca5c12d9c48d",
+        "translated_on": "2026-08-09",
         "status": "beta"
       },
       "de": {
         "file": "src/events.de.njk",
-        "source_sha1": "fcbd0d50da0a672a0da685e9e06d553344c8014e",
-        "translated_on": "2026-06-16",
+        "source_sha1": "60775b72193c0d79bf23fcdf051fca5c12d9c48d",
+        "translated_on": "2026-08-09",
         "status": "beta"
       }
     },
@@ -102,14 +102,14 @@
     "src/sitemap.njk": {
       "fr": {
         "file": "src/sitemap.fr.njk",
-        "source_sha1": "482d91f224ef5b4c4254c86da1626caade4def30",
-        "translated_on": "2026-08-06",
+        "source_sha1": "bb9eaccf22f93165fad3da37195a8a0d92283e46",
+        "translated_on": "2026-08-09",
         "status": "beta"
       },
       "de": {
         "file": "src/sitemap.de.njk",
-        "source_sha1": "482d91f224ef5b4c4254c86da1626caade4def30",
-        "translated_on": "2026-08-06",
+        "source_sha1": "bb9eaccf22f93165fad3da37195a8a0d92283e46",
+        "translated_on": "2026-08-09",
         "status": "beta"
       }
     },
@@ -200,14 +200,14 @@
     "src/press-kit.njk": {
       "fr": {
         "file": "src/press-kit.fr.njk",
-        "source_sha1": "e6f6280c56f5aebb0d1a6e30de75648b115badcf",
-        "translated_on": "2026-06-03",
+        "source_sha1": "8792c6f331a912b730f0686e22baeadb42af543d",
+        "translated_on": "2026-08-09",
         "status": "beta"
       },
       "de": {
         "file": "src/press-kit.de.njk",
-        "source_sha1": "e6f6280c56f5aebb0d1a6e30de75648b115badcf",
-        "translated_on": "2026-06-03",
+        "source_sha1": "8792c6f331a912b730f0686e22baeadb42af543d",
+        "translated_on": "2026-08-09",
         "status": "beta"
       }
     },
