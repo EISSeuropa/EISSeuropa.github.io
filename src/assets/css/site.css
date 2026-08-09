@@ -429,6 +429,11 @@ h4 { font-size: var(--fs-lg); }
    locale they landed on. Closes #137. */
 @media (max-width: 480px) {
   .lang-switcher {
+    /* Below 480 px the chips give way to the collapsed `.lang-menu`
+       control (#1322), which carries the same three links and keeps
+       language switching in the bar as #137 requires. The chip styles
+       below stay for the 480-600 px band, where the row still fits. */
+    display: none;
     /* Drop the right margin so the switcher hugs the theme toggle
        (the nav-actions container has its own gap). */
     margin-right: 0;
@@ -447,6 +452,108 @@ h4 { font-size: var(--fs-lg); }
     align-items: center;
     font-size: 11px;
   }
+}
+
+/* ---------- lang menu ----------
+   The phone shape of the language switcher (#1322): one control showing
+   the current language, the other two behind a native `<details>`. Only
+   rendered below 480 px, where the three inline chips cost 114 px the
+   header does not have. It carries `data-nav-group`, so theme.js gives
+   it the same close-on-Escape, close-on-outside-click and close-siblings
+   behaviour as the nav dropdowns, and it works without JS regardless.
+   Sits above the drawer (z-index 61) since both drop from the same bar. */
+.lang-menu {
+  display: none;
+  position: relative;
+}
+
+@media (max-width: 480px) {
+  .lang-menu {
+    display: block;
+  }
+}
+
+.lang-menu-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  /* 44 px to match the .icon-btn circles beside it, which the mobile
+     tap-target sweep lifts to 44 below 480 px. This control only exists
+     below that breakpoint, so it takes the lifted size directly rather
+     than a base size plus an override. */
+  min-block-size: 44px;
+  padding-inline: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--bg-elev);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+.lang-menu-summary::-webkit-details-marker {
+  display: none;
+}
+
+.lang-menu-chevron {
+  inline-size: 12px;
+  block-size: 12px;
+  opacity: 0.6;
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+
+.lang-menu[open] > .lang-menu-summary .lang-menu-chevron {
+  transform: rotate(180deg);
+}
+
+.lang-menu-panel {
+  position: absolute;
+  inset-block-start: calc(100% + var(--space-2));
+  /* Anchored to the trailing edge: the control sits near the right of the
+     bar, so a leading-edge panel would hang off the screen. */
+  inset-inline-end: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-2);
+  min-inline-size: 9rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-3);
+  z-index: 61;
+}
+
+.lang-menu-link {
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.lang-menu-link:hover {
+  color: var(--text);
+  background: var(--accent-soft);
+  text-decoration: none;
+}
+
+/* The current language is tinted rather than filled. `.lang-chip`'s
+   filled pill puts white on `--accent`, which measures 2.08:1 in dark
+   mode, and a new component should not inherit that. `--accent-hover`
+   rather than plain `--accent` for the text: at 15px/600 this is normal
+   text, so it needs 4.5:1, and `--accent` on `--accent-soft` reaches
+   only 3.96:1 in light mode. The darker step clears it in both themes.
+   The chips' own contrast is tracked separately. */
+.lang-menu-link[aria-current="true"] {
+  color: var(--accent-hover);
+  background: var(--accent-soft);
 }
 
 /* ---------- What's New banner ---------- */
@@ -712,6 +819,16 @@ h4 { font-size: var(--fs-lg); }
   padding-block: var(--space-3);
 }
 
+/* Phones close the row up: the brand iconmark, the collapsed language
+   control and three 44 px buttons leave no slack at 320 px (#1322).
+   Lives here rather than beside the brand rules so `.nav` keeps a single
+   owning section (CLAUDE.md §15). */
+@media (max-width: 480px) {
+  .nav {
+    gap: var(--space-3);
+  }
+}
+
 .nav-brand {
   display: inline-flex;
   align-items: center;
@@ -748,6 +865,15 @@ h4 { font-size: var(--fs-lg); }
   align-items: center;
   color: #007bc6;
   line-height: 0;
+  /* Never let the mark be squeezed (#1322). An inline SVG carries an
+     aspect ratio but no intrinsic size, so its min-content width is 0:
+     as a flex item in a header that has run out of room it collapses to
+     nothing while the text beside it keeps its own min-content floor.
+     That is exactly what happened on phones, where the iconmark rendered
+     0.3 px wide and the header showed a bare "EISS". Making the logo
+     unshrinkable turns a silent disappearance into a visible overflow,
+     which is why the breakpoints below also have to free up the room. */
+  flex: none;
 }
 
 .brand-logo svg {
@@ -794,6 +920,19 @@ h4 { font-size: var(--fs-lg); }
   .brand-logo--lockup { display: none; }
   .brand-logo--mark { display: inline-flex; }
   .nav-brand-label { display: inline; }
+}
+
+/* Second brand step, for phones proper (#1322). The constellation is a
+   wide 2.23:1 graphic, so at 24 px tall it needs ~54 px of width, and
+   below 480 px the bar cannot carry the mark, the word "EISS" and the
+   full actions cluster at once. The word goes: the mark is the stronger
+   asset and the brand link already carries its own `aria-label`, so the
+   accessible name is unaffected. The three language chips collapse to a
+   single control over in the lang-menu section, and the row closes up
+   here. Together these free ~120 px, which fits the mark down to 320 px
+   with room to spare. */
+@media (max-width: 480px) {
+  .nav-brand-label { display: none; }
 }
 
 .nav-links {
