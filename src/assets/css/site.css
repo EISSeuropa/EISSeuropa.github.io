@@ -865,14 +865,15 @@ h4 { font-size: var(--fs-lg); }
   align-items: center;
   color: #007bc6;
   line-height: 0;
-  /* Never let the mark be squeezed (#1322). An inline SVG carries an
+  /* Never let the logo be squeezed (#1322). An inline SVG carries an
      aspect ratio but no intrinsic size, so its min-content width is 0:
      as a flex item in a header that has run out of room it collapses to
-     nothing while the text beside it keeps its own min-content floor.
-     That is exactly what happened on phones, where the iconmark rendered
-     0.3 px wide and the header showed a bare "EISS". Making the logo
-     unshrinkable turns a silent disappearance into a visible overflow,
-     which is why the breakpoints below also have to free up the room. */
+     nothing rather than pushing back. That is what happened on phones,
+     where the header logo rendered 0.3 px wide and effectively vanished.
+     Keeping it unshrinkable turns a silent disappearance into a visible
+     overflow, which is the failure you can actually see and fix. The
+     room it needs is freed in the nav and lang-menu sections, where the
+     language chips collapse to one control below 480 px. */
   flex: none;
 }
 
@@ -882,20 +883,15 @@ h4 { font-size: var(--fs-lg); }
   height: 100%;
 }
 
-/* Desktop header: show the constellation + EiSS wordmark lockup. The
-   28 px height matches the prior .nav-brand-mark footprint so the
-   surrounding nav layout doesn't shift on the swap. */
+/* Header: the constellation + EiSS wordmark lockup, at every width.
+   There is no separate phone treatment, because there is nothing to
+   gain from one: `logo-mark.svg` and `logo-lockup.svg` share the
+   viewBox `26.87 43.23 212.42 95.18`, the lockup adding the four
+   wordmark paths inside the same box, so at a given height the mark is
+   exactly as wide as the lockup and the swap only removed the letters.
+   62 px at 28 px tall, and the row fits it down to 320 px. */
 .brand-logo--lockup {
   height: 28px;
-}
-
-/* Mobile header: show just the constellation iconmark. Visible only
-   below the 600 px breakpoint via the media query at the end of this
-   block; the small text label (`.nav-brand-label`) renders alongside
-   so the brand name still appears on phones. */
-.brand-logo--mark {
-  display: none;
-  height: 24px;
 }
 
 /* Footer: the full lockup (constellation + EiSS + tagline) — wider,
@@ -904,35 +900,6 @@ h4 { font-size: var(--fs-lg); }
    tagline at readable size. */
 .brand-logo--footer {
   height: 56px;
-}
-
-/* The localised brand-label text used on mobile (hidden on desktop
-   where the lockup's wordmark already carries the name). Sits to the
-   right of the iconmark with the existing nav-brand gap. */
-.nav-brand-label {
-  display: none;
-}
-
-/* Mobile breakpoint — collapse the lockup to iconmark + text label.
-   600 px chosen to match the nav's natural reflow point (the menu
-   button + lang switcher start crowding the brand around here). */
-@media (max-width: 600px) {
-  .brand-logo--lockup { display: none; }
-  .brand-logo--mark { display: inline-flex; }
-  .nav-brand-label { display: inline; }
-}
-
-/* Second brand step, for phones proper (#1322). The constellation is a
-   wide 2.23:1 graphic, so at 24 px tall it needs ~54 px of width, and
-   below 480 px the bar cannot carry the mark, the word "EISS" and the
-   full actions cluster at once. The word goes: the mark is the stronger
-   asset and the brand link already carries its own `aria-label`, so the
-   accessible name is unaffected. The three language chips collapse to a
-   single control over in the lang-menu section, and the row closes up
-   here. Together these free ~120 px, which fits the mark down to 320 px
-   with room to spare. */
-@media (max-width: 480px) {
-  .nav-brand-label { display: none; }
 }
 
 .nav-links {

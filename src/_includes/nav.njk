@@ -3,13 +3,20 @@
    only the visible text label is looked up from `t.nav.<key>`. #}
 <header class="site-header">
   <nav class="container nav" aria-label="Primary">
-    {# Brand link. The `<a>` carries the accessible name; SVGs inside
-       are aria-hidden so screen readers don't double-announce "EISS".
-       Two visual variants are inlined and CSS swaps them at the 600 px
-       breakpoint — desktop shows the constellation + EiSS wordmark
-       lockup, mobile collapses to the iconmark + the localised brand
-       label text so the link always carries a name (the lockup SVG's
-       EiSS wordmark is decorative, not text).
+    {# Brand link. The `<a>` carries the accessible name; the SVG inside
+       is aria-hidden so screen readers don't double-announce "EISS".
+
+       One lockup at every width. The header used to swap to a bare
+       iconmark plus a separate "EISS" text span below 600 px, on the
+       assumption that the lockup was too wide for a phone. It isn't:
+       the mark and the lockup share a viewBox (26.87 43.23 212.42
+       95.18), the lockup simply adding the four wordmark paths inside
+       the same box, so at a given height the two are exactly as wide as
+       each other. The swap was therefore costing width rather than
+       saving it, mark plus gap plus label being 102 px against the
+       lockup's 62 px, and it bought a phone header whose logo had no
+       letters in it.
+
        Inlining (rather than <img src=...>) lets `currentColor` cascade
        from the header's `--text` token, so the wordmark adapts to
        light/dark while the constellation keeps its literal brand
@@ -18,10 +25,6 @@
       <span class="brand-logo brand-logo--lockup" aria-hidden="true">
         {% inlineSvg "assets/images/brand/logo-lockup.svg" %}
       </span>
-      <span class="brand-logo brand-logo--mark" aria-hidden="true">
-        {% inlineSvg "assets/images/brand/logo-mark.svg" %}
-      </span>
-      <span class="nav-brand-label">{{ t.nav.brandLabel }}</span>
     </a>
 
     {# Two shapes of nav item live in this list. A leaf is a plain
