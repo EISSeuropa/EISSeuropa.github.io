@@ -415,7 +415,11 @@ h4 { font-size: var(--fs-lg); }
 }
 
 .lang-chip[aria-current="true"] {
-  color: white;
+  /* `--accent-text`, not a literal white: `--accent` is a light blue in
+     dark mode, where white text on it measures 2.08:1. The token is
+     white in light and near-black in dark, which is the pairing
+     `.btn-primary` has always used (#1326). */
+  color: var(--accent-text);
   background: var(--accent);
 }
 
@@ -459,7 +463,9 @@ h4 { font-size: var(--fs-lg); }
   flex-wrap: wrap;
   padding: 11px 22px 11px 18px;
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2, var(--accent)) 100%);
-  color: #fff;
+  /* See the note on .lang-chip: white burns out against the dark-mode
+     accent, so the banner takes the same theme-aware ink (#1326). */
+  color: var(--accent-text);
   font-size: .92rem;
   line-height: 1.35;
   border-bottom: 1px solid rgba(0, 0, 0, .12);
@@ -1573,7 +1579,7 @@ h4 { font-size: var(--fs-lg); }
 .footer-social-link:hover,
 .footer-social-link:focus-visible {
   background: var(--accent);
-  color: white;
+  color: var(--accent-text);
   transform: translateY(-1px);
 }
 
@@ -7500,7 +7506,7 @@ a.profile-pub-title:hover { text-decoration: underline; }
               color var(--motion-fast) var(--ease-out),
               border-color var(--motion-fast) var(--ease-out);
 }
-.atlas-help:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+.atlas-help:hover { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
 .atlas-help:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .atlas-welcome {
@@ -7592,7 +7598,7 @@ html.atlas-welcome .atlas-welcome[hidden] { display: block; }
               color var(--motion-fast) var(--ease-out);
 }
 .tour-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.tour-btn-primary { background: var(--accent); color: #fff; }
+.tour-btn-primary { background: var(--accent); color: var(--accent-text); }
 .tour-btn-primary:hover { background: var(--accent-hover); }
 .tour-btn-ghost { background: transparent; color: var(--text-muted); }
 .tour-btn-ghost:hover { background: var(--surface-strong); color: var(--text); }
