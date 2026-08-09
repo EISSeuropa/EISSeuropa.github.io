@@ -24,6 +24,14 @@
       <span class="nav-brand-label">{{ t.nav.brandLabel }}</span>
     </a>
 
+    {# Two shapes of nav item live in this list. A leaf is a plain
+       `.nav-link` anchor. A group (any item with `children` in
+       site.nav) is a native `<details>` disclosure: `<summary>` is the
+       trigger, the panel is a nested `<ul>`. Native disclosure carries
+       the keyboard and screen-reader behaviour for free and stays
+       usable with JS off (the groups just sit closed and open on
+       click). theme.js adds the niceties on top: closing siblings,
+       Escape, outside-click. See #1319. #}
     <ul class="nav-links" id="primary-nav" data-nav-menu>
       {% for item in site.nav %}
         {% if item.key != "home" %}
@@ -33,13 +41,52 @@
              External URLs and the home "/" pass through unchanged.
              See .eleventy.js for the full filter contract (#162). #}
           {%- set itemHref = item.href if item.external else (item.href | localizedHref(lang)) -%}
+          {%- set sectionCurrent = navKey and (navKey in item.match) -%}
           <li>
-            <a class="nav-link"
-               href="{{ itemHref }}"
-               {% if item.external %}target="_blank" rel="noopener"{% endif %}
-               {% if item.key == navKey %}aria-current="page"{% endif %}>
-              {{ t.nav[item.key] }}
-            </a>
+            {% if item.children %}
+              <details class="nav-group" data-nav-group>
+                <summary class="nav-link nav-group-summary"
+                         {% if sectionCurrent %}data-section-current="true"{% endif %}>
+                  {{ t.nav[item.key] }}
+                  <svg class="nav-group-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </summary>
+                <ul class="nav-group-panel">
+                  {# The Conference group leads with the editions, built in
+                     conferences.js (`navEditions`) so the yearly rollover
+                     moves the nav without a data edit here. Between
+                     editions there is no upcoming one, and the list is
+                     simply the most recent completed conferences. #}
+                  {% for edition in conferences.navEditions if item.editions %}
+                    <li>
+                      <a class="nav-group-link" href="{{ ('/' + edition.slug + '.html') | localizedHref(lang) }}">
+                        {{ edition.label[lang] }}
+                        {% if edition.isNext %}<span class="nav-group-badge">{{ t.nav.nextEdition }}</span>{% endif %}
+                      </a>
+                    </li>
+                  {% endfor %}
+                  {% for child in item.children %}
+                    {%- set childHref = child.href if child.external else (child.href | localizedHref(lang)) -%}
+                    <li>
+                      <a class="nav-group-link"
+                         href="{{ childHref }}"
+                         {% if child.external %}target="_blank" rel="noopener"{% endif %}
+                         {% if child.key == navKey %}aria-current="page"{% endif %}>
+                        {{ t.nav[child.key] }}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </details>
+            {% else %}
+              <a class="nav-link"
+                 href="{{ itemHref }}"
+                 {% if item.external %}target="_blank" rel="noopener"{% endif %}
+                 {% if sectionCurrent %}aria-current="page"{% endif %}>
+                {{ t.nav[item.key] }}
+              </a>
+            {% endif %}
           </li>
         {% endif %}
       {% endfor %}

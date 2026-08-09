@@ -63,16 +63,35 @@ const locales = {
     },
     htmlNameInOwnLang: "English",
 
+    // Nav labels, keyed to `key` in site.nav. Top-level items first, then
+    // the group children in the order they appear in the panels (#1319).
     nav: {
       home: "Home",
-      conferences: "Annual Conference",
-      navigator: "Navigator",
-      programmes: "Activities",
-      initiative: "The Initiative",
-      people: "People",
-      anthology: "Anthology",
-      events: "Events",
       brandLabel: "EISS",
+
+      conferences: "Conference",
+      anthology: "Anthology",
+      activities: "Activities",
+      about: "About",
+      getInvolved: "Get involved",
+
+      nextEdition: "Next edition",
+      allPast: "All past conferences",
+      events: "All activities",
+      netsec: "NetSec Summer School",
+      euroswamos: "Euro-SWAMOS",
+      coercion: "Coercive Statecraft",
+      globalRisks: "Global Risks Survey",
+      proposeEvent: "Propose an event",
+      initiative: "The Initiative",
+      people: "The People",
+      news: "News",
+      prizes: "European Security Studies Prize",
+      publications: "Members' publications",
+      pressKit: "Press kit",
+      membership: "Membership",
+      internship: "Volunteering and internships",
+      newsletter: "Newsletter",
     },
     skipLink: "Skip to content",
 
@@ -192,7 +211,7 @@ const locales = {
     footer: {
       tagline: "The largest and most diverse European gathering of scholars and practitioners on security issues.",
       conferencesHeading: "Conferences",
-      programmesHeading: "Programmes",
+      programmesHeading: "Activities",
       aboutHeading: "About",
       conferencesItems: {
         c2026: "2026 — Stockholm",
@@ -663,14 +682,32 @@ const locales = {
 
     nav: {
       home: "Accueil",
-      conferences: "Conférence annuelle",
-      navigator: "Navigateur",
-      programmes: "Activités",
+      brandLabel: "EISS",
+
+      conferences: "Conférence",
+      anthology: "Anthologie",
+      activities: "Activités",
+      about: "À propos",
+      getInvolved: "Participer",
+
+      nextEdition: "Prochaine édition",
+      allPast: "Toutes les conférences passées",
+      events: "Toutes les activités",
+      netsec: "École d'été NetSec",
+      euroswamos: "Euro-SWAMOS",
+      coercion: "Coercition étatique",
+      globalRisks: "Sondage Global Risks",
+      proposeEvent: "Proposer un événement",
       initiative: "L'Initiative",
       people: "L'équipe",
-      anthology: "Anthologie",
-      events: "Événements",
-      brandLabel: "EISS",
+      news: "Actualités",
+      // Le nom du prix n'est pas traduit : c'est son intitulé officiel.
+      prizes: "European Security Studies Prize",
+      publications: "Publications des membres",
+      pressKit: "Kit presse",
+      membership: "Adhésion",
+      internship: "Bénévolat et stages",
+      newsletter: "Lettre d'information",
     },
     skipLink: "Aller au contenu",
 
@@ -790,7 +827,7 @@ const locales = {
     footer: {
       tagline: "Le plus grand et le plus divers rassemblement européen de chercheurs et praticiens sur les questions de sécurité.",
       conferencesHeading: "Conférences",
-      programmesHeading: "Programmes",
+      programmesHeading: "Activités",
       aboutHeading: "À propos",
       conferencesItems: {
         c2026: "2026 — Stockholm",
@@ -1153,14 +1190,32 @@ const locales = {
 
     nav: {
       home: "Startseite",
-      conferences: "Jahreskonferenz",
-      navigator: "Navigator",
-      programmes: "Aktivitäten",
-      initiative: "Die Initiative",
-      people: "Personen",
-      anthology: "Anthologie",
-      events: "Veranstaltungen",
       brandLabel: "EISS",
+
+      conferences: "Konferenz",
+      anthology: "Anthologie",
+      activities: "Aktivitäten",
+      about: "Über uns",
+      getInvolved: "Mitmachen",
+
+      nextEdition: "Nächste Ausgabe",
+      allPast: "Alle vergangenen Konferenzen",
+      events: "Alle Aktivitäten",
+      netsec: "NetSec Sommerschule",
+      euroswamos: "Euro-SWAMOS",
+      coercion: "Coercive Statecraft",
+      globalRisks: "Global Risks-Umfrage",
+      proposeEvent: "Veranstaltung vorschlagen",
+      initiative: "Die Initiative",
+      people: "Die Personen",
+      news: "Aktuelles",
+      // Der Name des Preises bleibt unübersetzt: das ist seine offizielle Bezeichnung.
+      prizes: "European Security Studies Prize",
+      publications: "Publikationen der Mitglieder",
+      pressKit: "Pressekit",
+      membership: "Mitgliedschaft",
+      internship: "Ehrenamt und Praktika",
+      newsletter: "Newsletter",
     },
     skipLink: "Zum Inhalt springen",
 
@@ -1280,7 +1335,7 @@ const locales = {
     footer: {
       tagline: "Die größte und vielfältigste europäische Versammlung von Wissenschaftlern und Praktikern zu Sicherheitsfragen.",
       conferencesHeading: "Konferenzen",
-      programmesHeading: "Programme",
+      programmesHeading: "Aktivitäten",
       aboutHeading: "Über uns",
       conferencesItems: {
         c2026: "2026 — Stockholm",

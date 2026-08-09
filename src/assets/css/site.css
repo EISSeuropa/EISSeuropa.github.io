@@ -952,6 +952,134 @@ h4 { font-size: var(--fs-lg); }
   }
 }
 
+/* ---------- nav group ----------
+   A dropdown in the primary nav, built on a native `<details>` so the
+   keyboard and screen-reader behaviour comes from the platform rather
+   than from JS (#1319). `.nav-group-summary` reuses `.nav-link` for its
+   pill styling and adds the chevron; the panel is absolutely positioned
+   against `.nav-group` on desktop and collapses into an indented
+   accordion inside the mobile drawer at the 880 px breakpoint below.
+
+   `data-section-current` (not `aria-current`) marks the group whose
+   section is open: the summary is a disclosure trigger, not a link to
+   the current page, so `aria-current="page"` would be a lie. The exact
+   child link inside the panel carries the real `aria-current`. */
+.nav-group {
+  position: relative;
+}
+
+.nav-group-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  cursor: pointer;
+  user-select: none;
+  /* Both are needed: `list-style` kills the marker in Firefox and
+     Chrome, the pseudo-element in older WebKit. */
+  list-style: none;
+}
+
+.nav-group-summary::-webkit-details-marker {
+  display: none;
+}
+
+.nav-group-summary[data-section-current="true"] {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.nav-group-chevron {
+  inline-size: 14px;
+  block-size: 14px;
+  opacity: 0.6;
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+
+.nav-group[open] > .nav-group-summary .nav-group-chevron {
+  transform: rotate(180deg);
+}
+
+.nav-group-panel {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-2);
+  position: absolute;
+  inset-block-start: calc(100% + var(--space-2));
+  inset-inline-start: 0;
+  min-inline-size: 15rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-3);
+  z-index: 60;
+}
+
+.nav-group-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: background var(--motion-fast) var(--ease-out),
+              color var(--motion-fast) var(--ease-out);
+}
+
+.nav-group-link:hover {
+  color: var(--text);
+  background: var(--accent-soft);
+  text-decoration: none;
+}
+
+.nav-group-link[aria-current="page"] {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* "Next edition" tag on the upcoming conference in the Conference
+   panel. Pushed to the trailing edge so the year lines stay aligned. */
+.nav-group-badge {
+  margin-inline-start: auto;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+
+@media (max-width: 880px) {
+  /* Inside the drawer a group is an accordion, not a dropdown: the panel
+     goes back into the flow and indents behind a rule, so an open group
+     pushes the rest of the menu down instead of floating over it. The
+     drawer already has `overflow-y: auto`, so a tall open group scrolls. */
+  .nav-group-summary {
+    justify-content: space-between;
+  }
+
+  .nav-group-panel {
+    position: static;
+    min-inline-size: 0;
+    margin-block-start: var(--space-1);
+    margin-inline-start: var(--space-4);
+    padding: 0 0 var(--space-2);
+    background: none;
+    border: 0;
+    border-inline-start: 1px solid var(--border);
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .nav-group-link {
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--fs-base);
+    white-space: normal;
+  }
+}
+
 /* ---------- hero ---------- */
 .hero {
   position: relative;

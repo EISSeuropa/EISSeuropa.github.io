@@ -141,6 +141,7 @@ const conferences = [
     startDate: "2025-06-26",
     endDate: "2025-06-27",
     city: "Thessaloniki",
+    cityLabel: { fr: "Thessalonique", de: "Thessaloniki" },
     country: "Greece",
     venue: {
       en: "University of Macedonia",
@@ -163,6 +164,7 @@ const conferences = [
     startDate: "2024-06-27",
     endDate: "2024-06-28",
     city: "Prague",
+    cityLabel: { fr: "Prague", de: "Prag" },
     country: "Czech Republic",
     venue: {
       en: "Charles University",
@@ -187,6 +189,7 @@ const conferences = [
     startDate: "2023-06-22",
     endDate: "2023-06-23",
     city: "Barcelona",
+    cityLabel: { fr: "Barcelone", de: "Barcelona" },
     country: "Spain",
     venue: {
       en: "Barcelona, Spain",
@@ -232,6 +235,7 @@ const conferences = [
     startDate: "2021-09-03",
     endDate: "2021-09-04",
     city: "Lisbon",
+    cityLabel: { fr: "Lisbonne", de: "Lissabon" },
     country: "Portugal",
     venue: {
       en: "Lisbon, Portugal",
@@ -331,12 +335,37 @@ const byYear = Object.fromEntries(conferences.map((c) => [String(c.year), c]));
 // array. Today: 2017, 2018, 2019, 2021, 2022, 2023, 2024, 2025, 2026 = 9.
 const editionCount = conferences.filter((c) => !c.deferred).length + 2;
 
+// The editions listed in the Conference dropdown of the primary nav
+// (#1319): the upcoming one when there is one, then the two most recent
+// completed editions. Assembled here rather than in nav.njk so the
+// template stays a plain loop, and so the yearly rollover moves the nav
+// on its own. The deferred 2020 entry is skipped — it has no city and no
+// page of its own.
+const navEditions = [
+  ...(upcomingOrCurrent[0] ? [{ ...upcomingOrCurrent[0], isNext: true }] : []),
+  ...past.filter((c) => !c.deferred).slice(0, 2),
+].map((c) => ({
+  slug: c.slug,
+  // Keyed by locale, because a handful of host cities are spelled
+  // differently across the three (Thessalonique, Prag, Lisbonne). Entries
+  // whose name is the same everywhere carry no `cityLabel` and fall back
+  // to `city`.
+  label: Object.fromEntries(
+    ["en", "fr", "de"].map((L) => [
+      L,
+      `${c.year} · ${(c.cityLabel && c.cityLabel[L]) || c.city}`,
+    ]),
+  ),
+  isNext: Boolean(c.isNext),
+}));
+
 module.exports = {
   all: conferences,
   byYear,
   next: upcomingOrCurrent[0] || null,   // closest upcoming (or in-progress)
   upcoming: upcomingOrCurrent,
   past,
+  navEditions,
   editionCount,
   today,
 };

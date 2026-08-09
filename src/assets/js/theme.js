@@ -82,6 +82,48 @@
         }
       });
     }
+
+    /* Nav dropdown groups (#1319). The `<details>` elements already open,
+       close, and announce themselves without any of this — the page is
+       usable with JS off. What follows adds only what a native disclosure
+       has no opinion about on a menu bar: opening one group closes its
+       siblings, and a click outside or Escape closes the open one.
+       Below the drawer breakpoint the groups are accordions inside the
+       menu, where auto-closing siblings would fight the reader, so both
+       behaviours are gated on the desktop bar. */
+    const groups = Array.from(document.querySelectorAll("[data-nav-group]"));
+    if (groups.length) {
+      const drawerBp = matchMedia("(max-width: 880px)");
+      const closeGroups = (except) => {
+        groups.forEach((g) => {
+          if (g !== except) g.open = false;
+        });
+      };
+
+      groups.forEach((g) => {
+        g.addEventListener("toggle", () => {
+          if (g.open && !drawerBp.matches) closeGroups(g);
+        });
+      });
+
+      document.addEventListener("click", (e) => {
+        if (drawerBp.matches) return;
+        if (!(e.target instanceof Element)) return;
+        if (!e.target.closest("[data-nav-group]")) closeGroups(null);
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key !== "Escape") return;
+        // The drawer's own Escape handler above owns the key while the
+        // mobile menu is open, so don't also collapse a group under it.
+        if (menu && menu.getAttribute("data-open") === "true") return;
+        const open = groups.find((g) => g.open);
+        if (open) {
+          open.open = false;
+          open.querySelector("summary").focus();
+        }
+      });
+    }
   };
 
   if (document.readyState === "loading") {
