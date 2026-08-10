@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-29T07:52:50+00:00",
-  "count": 74,
+  "generated_at": "2026-08-08T07:30:20+00:00",
+  "count": 79,
   "source": "https://netsec-cost.eu/directory-index.json",
   "members": [
     {
@@ -46,6 +46,17 @@
       "role": "Management Committee · Netherlands",
       "affiliation": "University of Amsterdam",
       "photo": "https://netsec-cost.eu/assets/images/people/alisa-kerschbaum.jpeg"
+    },
+    {
+      "name": "Dr Andriy Tyushka",
+      "name_key": "andriy tyushka",
+      "aliases": [],
+      "slug": "andriy-tyushka",
+      "url": "https://netsec-cost.eu/people/andriy-tyushka.html",
+      "orcid": "0000-0003-1876-5338",
+      "role": null,
+      "affiliation": "College of Europe (Natolin)",
+      "photo": "https://netsec-cost.eu/assets/images/people/andriy-tyushka.jpg"
     },
     {
       "name": "Anna Pagnacco",
@@ -101,6 +112,17 @@
       "role": null,
       "affiliation": "University of West Attica",
       "photo": "https://netsec-cost.eu/assets/images/people/athanasios-skraparlis.jpg"
+    },
+    {
+      "name": "Carla Sofia Ferreira Fernandes",
+      "name_key": "carla fernandes",
+      "aliases": [],
+      "slug": "carla-sofia-ferreira-fernandes",
+      "url": "https://netsec-cost.eu/people/carla-sofia-ferreira-fernandes.html",
+      "orcid": "0000-0002-2650-9759",
+      "role": null,
+      "affiliation": "Centre for Functional Ecology",
+      "photo": null
     },
     {
       "name": "Dr Chiara Libiseller",
@@ -268,6 +290,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/francesco-canossi.jpg"
     },
     {
+      "name": "Mr Francisco Javier Montilla Aguilera",
+      "name_key": "francisco aguilera",
+      "aliases": [],
+      "slug": "francisco-javier-montilla-aguilera",
+      "url": "https://netsec-cost.eu/people/francisco-javier-montilla-aguilera.html",
+      "orcid": "0009-0007-8027-5838",
+      "role": null,
+      "affiliation": "Universidad de Granada",
+      "photo": "https://netsec-cost.eu/assets/images/people/francisco-javier-montilla-aguilera.jpg"
+    },
+    {
       "name": "Dr Gayane Harutyunyan",
       "name_key": "gayane harutyunyan",
       "aliases": [],
@@ -367,6 +400,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/ivan-zaccagnini.jpg"
     },
     {
+      "name": "Prof. Joe Burton",
+      "name_key": "joe burton",
+      "aliases": [],
+      "slug": "joe-burton",
+      "url": "https://netsec-cost.eu/people/joe-burton.html",
+      "orcid": null,
+      "role": null,
+      "affiliation": "Lancaster University",
+      "photo": "https://netsec-cost.eu/assets/images/people/joe-burton.jpg"
+    },
+    {
       "name": "Mr Johannes Lucht",
       "name_key": "johannes lucht",
       "aliases": [],
@@ -409,6 +453,17 @@
       "role": null,
       "affiliation": "UNESCO",
       "photo": "https://netsec-cost.eu/assets/images/people/kara-schneider.jpg"
+    },
+    {
+      "name": "Dr Ken McDonagh",
+      "name_key": "ken mcdonagh",
+      "aliases": [],
+      "slug": "ken-mcdonagh",
+      "url": "https://netsec-cost.eu/people/ken-mcdonagh.html",
+      "orcid": "0000-0003-1811-3081",
+      "role": null,
+      "affiliation": "Dublin City University",
+      "photo": "https://netsec-cost.eu/assets/images/people/ken-mcdonagh.jpg"
     },
     {
       "name": "Dr Kire Babanoski",
