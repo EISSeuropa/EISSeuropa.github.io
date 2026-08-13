@@ -18,16 +18,19 @@
 # per CLAUDE.md §2.
 name: Build sanity
 
+# Deliberately unfiltered (#1343). This used to gate on `paths: [src/**,
+# ...]`, which meant 11 of any 40 merged PRs never ran it — mostly the
+# bot's own docs/roadmap-2026.md refreshes, but also hand-written PRs
+# touching only scripts/ or .claude/. Two reasons it now runs on
+# everything. It is the repo's main lint (duplicate data keys, empty and
+# junk href/src, the §15 class-collision check, sitemap completeness),
+# and tooling outside src/ can break the built output while matching no
+# filter. And #501 plans to make checks required on master: a required
+# check that never runs sits `pending` forever and blocks the merge
+# outright, so every roadmap-auto PR would become unmergeable. The whole
+# job takes about a minute, so the filter was not buying anything.
 on:
   pull_request:
-    paths:
-      - 'src/**'
-      - 'scripts/check-build-sanity.mjs'
-      - 'scripts/a11y_lint.py'
-      - '.github/workflows/sanity-check.yml'
-      - 'package.json'
-      - 'package-lock.json'
-      - '.eleventy.js'
   workflow_dispatch:
 
 permissions:
