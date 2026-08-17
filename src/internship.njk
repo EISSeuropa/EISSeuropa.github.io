@@ -224,6 +224,32 @@ alternates:
   </div>
 </section>
 
+{# ponytail: renders nothing until src/_data/contributors.js holds a name.
+   No empty state on purpose: a "nobody yet" heading advertises the opposite
+   of what the section is for. Add a name and it appears. (#1354) #}
+{% if contributors.length %}
+<section class="section">
+  <div class="container">
+    <h2 id="contributors">Who has done this</h2>
+    <p style="max-width: 44rem;">
+      Volunteers and interns who have worked on the Anthology and the conference, and what each of
+      them did. Names appear here with the person's agreement.
+    </p>
+
+    <dl class="definition-list">
+      {% for person in contributors %}
+      <div>
+        <dt>{{ person.name }}</dt>
+        <dd>
+          {{ person.did }}{% if person.url %} <a href="{{ person.url }}">See the work</a>.{% endif %}
+        </dd>
+      </div>
+      {% endfor %}
+    </dl>
+  </div>
+</section>
+{% endif %}
+
 <section class="section-tight">
   <div class="container">
     <article class="card" style="display: grid; gap: var(--space-5); grid-template-columns: 1fr; padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">

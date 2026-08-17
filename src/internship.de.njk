@@ -236,6 +236,31 @@ alternates:
   </div>
 </section>
 
+{# ponytail: siehe internship.njk. Rendert nichts, solange contributors.js leer ist. #}
+{% if contributors.length %}
+<section class="section">
+  <div class="container">
+    <h2 id="contributors">Wer das gemacht hat</h2>
+    <p style="max-width: 44rem;">
+      Ehrenamtliche und Praktikantinnen und Praktikanten, die an der Anthologie und an der Konferenz
+      gearbeitet haben, und was sie jeweils getan haben. Namen stehen hier nur mit Einverständnis
+      der betreffenden Person.
+    </p>
+
+    <dl class="definition-list">
+      {% for person in contributors %}
+      <div>
+        <dt>{{ person.name }}</dt>
+        <dd>
+          {{ person.didDe or person.did }}{% if person.url %} <a href="{{ person.url }}">Die Arbeit ansehen</a>.{% endif %}
+        </dd>
+      </div>
+      {% endfor %}
+    </dl>
+  </div>
+</section>
+{% endif %}
+
 <section class="section-tight">
   <div class="container">
     <article class="card" style="display: grid; gap: var(--space-5); grid-template-columns: 1fr; padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
