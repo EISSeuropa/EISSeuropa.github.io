@@ -202,6 +202,15 @@ SKIP_HOSTS = {
                                 # recurring-flake class as the academic hosts
                                 # above; flaked PR #1007's link-check. Skipping
                                 # stops the false-red on every src-touching PR.
+    "www.sanneverschuren.com",  # Board member Sanne Verschuren's personal site,
+                                # linked from her board profile (`/board/...` +
+                                # FR/DE). Identical case to www.hugomeijer.com
+                                # directly above: HTTP 429 to the checker under
+                                # automated load, opens fine for visitors, and
+                                # `curl` gets 200 from a normal machine. Failed
+                                # two of three consecutive runs on PR #1365,
+                                # which is the same false-red this list exists
+                                # to stop.
 }
 
 # Domains skipped together with ALL their subdomains. SKIP_HOSTS matches an
