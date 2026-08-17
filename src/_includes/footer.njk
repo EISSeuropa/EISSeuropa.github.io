@@ -52,6 +52,9 @@
           <li><a href="{{ '/board.html' | localizedHref(lang) }}">{{ t.footer.aboutItems.people }}</a></li>
           <li><a href="{{ '/membership.html' | localizedHref(lang) }}">{{ t.footer.aboutItems.membership }}</a></li>
           <li><a href="{{ '/internship.html' | localizedHref(lang) }}">{{ t.footer.aboutItems.internship }}</a></li>
+          {#- English-only surface (#1259): no localizedHref, and the label is
+              the same word in all three locales. -#}
+          <li><a href="/blog.html">{{ t.footer.aboutItems.blog }}</a></li>
           <li><a href="{{ site.newsletterUrl }}" target="_blank" rel="noopener">{{ t.footer.aboutItems.newsletter }}</a></li>
           <li><a href="mailto:{{ site.contactEmail }}">{{ t.footer.aboutItems.contact }}</a></li>
         </ul>

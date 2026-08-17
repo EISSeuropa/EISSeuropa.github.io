@@ -1,0 +1,34 @@
+---
+layout: base.njk
+lang: en
+---
+{# One blog post (#1259). Front matter and the shared defaults come from
+   src/blog/blog.11tydata.js, so a post is one Markdown file.
+
+   The byline is a name and a line, not a profile link: authors here are
+   volunteers and interns with no board.json entry, and building an author-page
+   system for a byline would be the wrong size of solution. #}
+{% from "icons.njk" import icon %}
+
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow"><a href="/blog.html">Blog</a></span>
+    <h1>{{ title }}</h1>
+    <p class="blog-byline">
+      By {{ author }}{% if authorNote %}, {{ authorNote }}{% endif %}.
+      <time datetime="{{ page.date.toISOString().slice(0, 10) }}">{{ page.date.toISOString() | newsDate("en") }}</time>
+    </p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <div class="prose">
+      {{ content | safe }}
+    </div>
+
+    <p class="blog-back">
+      <a href="/blog.html">{{ icon("arrow-left") }} All posts</a>
+    </p>
+  </div>
+</section>
