@@ -20,6 +20,7 @@ Maintainer-facing docs for [eiss-europa.com](https://eiss-europa.com)
 | [corpus-archiving.md](corpus-archiving.md) | Depositing the Anthology outside the repo: the Zenodo concept vs version DOI, where the DOI surfaces, the versioning cadence, HAL. |
 | [anthology-machine-readable.md](anthology-machine-readable.md) | What the corpus emits for machines: `.bib`/`.ris` exports and the bulk control, the per-theme Atlas pages and their generated cards, the per-theme Atom feeds and the committed date ledger behind them. |
 | [netsec-directory-integration.md](netsec-directory-integration.md) | Anthology authors ↔ NetSec member directory cross-links (both directions): the two JSON contracts, the name-key join, the sync, per-author addressability. |
+| [internship-handbook.md](internship-handbook.md) | For volunteers and interns: first week, claiming a task, the two review jobs in detail, house style, how writing gets published. The operational half of `/internship.html`. |
 | [roadmap-2026.md](roadmap-2026.md) | The internal roadmap (autostamped from the CHANGELOG). |
 | [branch-protection.md](branch-protection.md) | The `master` rulesets (force-push/deletion/linear + PR gate), the bypass design, and the deferred required-checks plan. |
 
