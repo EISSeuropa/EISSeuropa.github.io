@@ -28,6 +28,17 @@ module.exports = {
   url: "https://eiss-europa.com",
   contactEmail: "contact@eiss-europa.com",
 
+  // Volunteer-facing GitHub surfaces, linked from /internship.html in all
+  // three locales (#1352). Kept here so the three hand-maintained language
+  // variants cannot drift apart on a URL.
+  //
+  // The label page, not `/issues?q=`: `help wanted` currently sits on pull
+  // requests rather than issues, and the issues search hides PRs.
+  helpWantedUrl:
+    "https://github.com/EISSeuropa/EISSeuropa.github.io/labels/help%20wanted",
+  handbookUrl:
+    "https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/internship-handbook.md",
+
   // Default Open Graph / Twitter Card image, used whenever a page
   // doesn't set its own `metaImage` in front-matter. 1200×630, lives
   // at src/assets/images/index-meta.jpg.
