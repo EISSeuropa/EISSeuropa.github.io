@@ -298,6 +298,30 @@ mirrored in the *Under watch* section of `/roadmap.html`.
   with 30 theme signatures across the whole corpus a scrub would
   animate almost nothing, and the feature would read as a demo toy.
 
+- **Reslipped from v2.27.0** (August 2026), each with its reason on the
+  issue: branch-protection Phase 3
+  ([#501](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/501))
+  behind CodeQL's cancellation behaviour
+  ([#1341](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1341),
+  GitHub default setup, no workflow of ours to tune); the governance page
+  ([#638](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/638))
+  and the Working Groups page
+  ([#94](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/94)),
+  both waiting on source material that does not exist yet (`board.json`
+  names only WG1 and WG2, for 5 of 25 members); the year-round CfP surface
+  ([#797](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/797)),
+  the happening-now view
+  ([#636](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/636))
+  and the personal programme builder
+  ([#637](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/637)),
+  all of which need an ESSC 2027 programme that is still a scaffold in
+  `.eleventyignore`; the recordings thread
+  ([#798](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/798)),
+  which needs films that may not exist for the older editions; and the
+  per-edition share cards
+  ([#474](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/474)),
+  whose premise was wrong.
+
 **Deferred to 2027+** (won't schedule without a specific trigger):
 custom-domain board emails, a self-hosted newsletter replacing
 Mailchimp, a multi-author CMS, analytics (the privacy notice's
