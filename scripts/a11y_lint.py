@@ -23,6 +23,7 @@ import os
 import re
 import sys
 from html.parser import HTMLParser
+import pathlib
 from collections import defaultdict, Counter
 
 
@@ -183,10 +184,19 @@ def main():
     bucketed = defaultdict(list)
     pages_with_issues = 0
 
-    for fn in sorted(os.listdir(site_dir)):
-        if not fn.endswith(".html"):
-            continue
+    # Walk the whole tree, not just the top level (#1366). os.listdir stopped
+    # at `_site/*.html`, so the 315 paper pages, the 17 Atlas theme pages and
+    # anything else rendered into a subdirectory were never scanned, while the
+    # summary still read like coverage of the site.
+    nested = 0
+    for fn in sorted(
+        str(q.relative_to(site_dir))
+        for q in pathlib.Path(site_dir).rglob("*.html")
+        if q.is_file()
+    ):
         path = os.path.join(site_dir, fn)
+        if os.sep in fn:
+            nested += 1
         html = open(path, "r", encoding="utf-8", errors="ignore").read()
         total += 1
         if not is_modernised(html):
@@ -243,9 +253,9 @@ def main():
             bucketed["clean"].append(fn)
 
     print(f"\n=== Lint summary ===")
-    print(f"  Total HTML files:       {total}")
+    print(f"  Total HTML files:       {total}  ({total - nested} top level, {nested} nested)")
     print(f"  Modernised (scanned):   {modernised}")
-    print(f"  Legacy (skipped):       {len(bucketed['legacy_skipped'])}")
+    print(f"  Skipped, no chrome:     {len(bucketed['legacy_skipped'])}")
     print(f"  Pages with issues:      {pages_with_issues}")
     print(f"  Pages clean:            {len(bucketed['clean'])}")
 
@@ -256,7 +266,7 @@ def main():
             for i in issues:
                 print(f"    - {i}")
     if bucketed["legacy_skipped"]:
-        print(f"\nLegacy passthroughs skipped:")
+        print(f"\nSkipped, no site chrome (Pagefind stubs, legacy passthroughs):")
         for f in bucketed["legacy_skipped"]:
             print(f"  - {f}")
 
