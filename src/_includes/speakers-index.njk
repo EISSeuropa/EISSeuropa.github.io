@@ -56,7 +56,7 @@
   {%- for s in corpus.speakers %}
   {%- set prevLetter = corpus.speakers[loop.index0 - 1].letter if not loop.first else "" %}
   {%- if s.letter != prevLetter %}
-  <li class="speaker-letter" role="presentation" data-speaker-letter="{{ s.letter }}">
+  <li class="speaker-letter" data-speaker-letter="{{ s.letter }}">
     <h2 id="ltr-{{ s.letter }}" class="speaker-letter-h">{{ s.letter }}</h2>
   </li>
   {%- endif %}
