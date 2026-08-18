@@ -102,13 +102,13 @@
     "src/sitemap.njk": {
       "fr": {
         "file": "src/sitemap.fr.njk",
-        "source_sha1": "59c77c86206d3a2cef52293a6ad78c7d9e9ef8b1",
+        "source_sha1": "2394508be9655402a2b4135ee473f3e3294e6964",
         "translated_on": "2026-08-18",
         "status": "beta"
       },
       "de": {
         "file": "src/sitemap.de.njk",
-        "source_sha1": "59c77c86206d3a2cef52293a6ad78c7d9e9ef8b1",
+        "source_sha1": "2394508be9655402a2b4135ee473f3e3294e6964",
         "translated_on": "2026-08-18",
         "status": "beta"
       }
@@ -208,6 +208,20 @@
         "file": "src/press-kit.de.njk",
         "source_sha1": "8792c6f331a912b730f0686e22baeadb42af543d",
         "translated_on": "2026-08-09",
+        "status": "beta"
+      }
+    },
+    "src/funding.njk": {
+      "fr": {
+        "file": "src/funding.fr.njk",
+        "source_sha1": "7a0a922735d8095e851802badeb2b0f33db7201d",
+        "translated_on": "2026-08-18",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/funding.de.njk",
+        "source_sha1": "7a0a922735d8095e851802badeb2b0f33db7201d",
+        "translated_on": "2026-08-18",
         "status": "beta"
       }
     },
