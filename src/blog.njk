@@ -19,10 +19,9 @@ lang: en
     <span class="eyebrow">Blog</span>
     <h1>Blog</h1>
     <p class="page-lead">
-      Writing from the network on European security studies. Volunteers and interns publish here
-      under their own names, drawing on the
-      <a href="/anthology.html">Anthology</a>, which puts nine editions of conference papers behind
-      a piece before its author writes a word.
+      Writing from the network on European security studies, drawn from the
+      <a href="/anthology.html">Anthology</a>. Volunteers and interns publish here under their own
+      names.
     </p>
     <p style="margin-top: var(--space-4);">
       <a class="btn btn-secondary btn-sm" href="/feed.xml">{{ icon("rss") }} Subscribe by feed</a>
@@ -49,7 +48,11 @@ lang: en
       {%- endfor %}
     </ul>
     {%- else %}
-    <p class="muted">No posts yet.</p>
+    {#- Live state until the first piece lands. -#}
+    <p class="muted" style="max-width: 44rem;">
+      Nothing published here yet. The first pieces will come from the volunteers and interns
+      joining us in the new year.
+    </p>
     {%- endif %}
   </div>
 </section>
@@ -60,20 +63,15 @@ lang: en
       <div class="prose" style="margin-inline: 0;">
         <h2>Writing for us</h2>
         <p>
-          Volunteers and interns are offered a piece here as a defined part of their placement, not
-          as something we fit in at the end. If that is why you are reading this, the
-          <a href="/internship.html">volunteering page</a> covers how a placement works.
+          Volunteers and interns are offered a piece here as part of their placement. The
+          <a href="/internship.html">volunteering page</a> covers how that works.
         </p>
         <p>
-          Posts are read before they go up and we may decide not to publish one. Anything here
-          carries the EISS name and a permanent address, so it cannot be quietly withdrawn later.
-          That decision is a judgement about a text and nothing else.
+          Posts are edited before publication, and we may decline one.
         </p>
         <p>
-          <strong>The blog is in English only.</strong> The rest of the site is translated into
-          French and German by hand, and we do not machine-translate anything. Committing to three
-          languages for every post would mean fewer posts rather than more readers, so we would
-          rather publish and say plainly that this part of the site is not translated.
+          <strong>The blog is in English only.</strong> French and German elsewhere on the site are
+          translated by hand, and we do not machine-translate.
         </p>
       </div>
     </article>
