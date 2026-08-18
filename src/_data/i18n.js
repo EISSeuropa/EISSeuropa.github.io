@@ -244,7 +244,7 @@ const locales = {
       },
       copyright: "© Copyright 2018 — {{year}} European Initiative for Security Studies — All rights reserved | Tous droits réservés. Any third-party image and content remains the property of its owners as indicated in their respective description, unless specified otherwise below.",
       imageCredits: "Euro-SWAMOS images © Marine Nationale, EEAS, État-Major des Armées, NATO CCDCOE. Prague image cc-by-2.0 Moyan Brenn. Barcelona image royalty-free stock photo (ID: 1795930126 Pajor Pawel).",
-      legalStatus: "EISS is a registered charity (W751263001) under French law. | L'EISS est une association loi 1901 enregistrée sous le numéro W751263001 au Répertoire National des Associations, et appartenant au champ de l'économie sociale et solidaire.",
+      legalStatus: "EISS is a non-profit association under the French law of 1901, registered as W751263001. | L'EISS est une association loi 1901 enregistrée sous le numéro W751263001 au Répertoire National des Associations, et appartenant au champ de l'économie sociale et solidaire.",
       legalLinks: {
         terms: "Terms and Conditions",
         privacy: "Privacy Policy",
@@ -862,7 +862,7 @@ const locales = {
       },
       copyright: "© Copyright 2018 — {{year}} European Initiative for Security Studies — All rights reserved | Tous droits réservés. Toute image et tout contenu tiers restent la propriété de leurs détenteurs respectifs comme indiqué dans leur description, sauf mention contraire ci-dessous.",
       imageCredits: "Images Euro-SWAMOS © Marine Nationale, EEAS, État-Major des Armées, OTAN CCDCOE. Image de Prague cc-by-2.0 Moyan Brenn. Image de Barcelone photo de stock libre de droits (ID : 1795930126 Pajor Pawel).",
-      legalStatus: "EISS is a registered charity (W751263001) under French law. | L'EISS est une association loi 1901 enregistrée sous le numéro W751263001 au Répertoire National des Associations, et appartenant au champ de l'économie sociale et solidaire.",
+      legalStatus: "EISS is a non-profit association under the French law of 1901, registered as W751263001. | L'EISS est une association loi 1901 enregistrée sous le numéro W751263001 au Répertoire National des Associations, et appartenant au champ de l'économie sociale et solidaire.",
       legalLinks: {
         terms: "Conditions générales",
         privacy: "Politique de confidentialité",
@@ -1372,7 +1372,7 @@ const locales = {
       },
       copyright: "© Copyright 2018 — {{year}} European Initiative for Security Studies — All rights reserved | Tous droits réservés. Alle Drittanbieter-Bilder und -Inhalte bleiben das Eigentum ihrer jeweiligen Besitzer, wie in ihrer Beschreibung angegeben, sofern nicht anders unten vermerkt.",
       imageCredits: "Euro-SWAMOS Bilder © Marine Nationale, EEAS, État-Major des Armées, NATO CCDCOE. Prag-Bild cc-by-2.0 Moyan Brenn. Barcelona-Bild lizenzfreies Stockfoto (ID: 1795930126 Pajor Pawel).",
-      legalStatus: "EISS is a registered charity (W751263001) under French law. | L'EISS est une association loi 1901 enregistrée sous le numéro W751263001 au Répertoire National des Associations, et appartenant au champ de l'économie sociale et solidaire.",
+      legalStatus: "EISS is a non-profit association under the French law of 1901, registered as W751263001. | L'EISS est une association loi 1901 enregistrée sous le numéro W751263001 au Répertoire National des Associations, et appartenant au champ de l'économie sociale et solidaire.",
       legalLinks: {
         terms: "Allgemeine Geschäftsbedingungen",
         privacy: "Datenschutzerklärung",
