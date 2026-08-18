@@ -6,7 +6,7 @@
      - `t` — chrome catalog for the current locale
      - `alternates.en` — URL of the English source (for the "view original" link)
 #}
-<div class="beta-ribbon" role="note" aria-label="{{ t.betaRibbon.text }}">
+<aside class="beta-ribbon" aria-label="{{ t.betaRibbon.text }}">
   <div class="container beta-ribbon-inner">
     <span class="beta-ribbon-badge" aria-hidden="true">β</span>
     <span class="beta-ribbon-text">{{ t.betaRibbon.text }}</span>
@@ -14,4 +14,4 @@
       <a class="beta-ribbon-link" href="{{ alternates.en }}" hreflang="en">{{ t.betaRibbon.goToEnglish }}</a>
     {% endif %}
   </div>
-</div>
+</aside>
