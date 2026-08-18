@@ -271,6 +271,19 @@ across consecutive sentences. Writing "the script" then "the sync"
 then "the workflow" for the same thing in three sentences is an AI
 tell, even when each label is technically accurate.
 
+**Don't justify the fact you just stated.** State it and stop. The
+tell is a trailing clause arguing for the decision the sentence has
+already described: "because our reviewing capacity is the real
+limit", "it exists so that working alone does not mean working in
+silence", "not favours we extend if there is time". Cut it, headings
+included: "Unpaid, and we say so plainly" is "Unpaid". **Site pages
+only.** The CHANGELOG, PR bodies and maintainer docs are where
+reasoning belongs. Grep a page you are editing for `because`, `so
+that`, `rather than`, `which is why`: each hit is a question, not a
+verdict, since some are real cause ("Because NetSec is COST-funded,
+all its..."). #1370 and #1372 cut `/blog.html` and `/internship.html`
+by about a fifth this way, with no fact removed.
+
 The rules are forward-looking. They apply to prose authored from the
 PR that introduces them onwards. Pre-existing em dashes and semicolons
 in the repo aren't retroactively scrubbed unless the surrounding text
