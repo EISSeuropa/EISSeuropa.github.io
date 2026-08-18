@@ -160,10 +160,14 @@ sitting in `[Unreleased]`:
   and the legacy Mobirise redirects
   ([#607](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/607)).
 
-Still open for the cut. This is the shaping work, not the full list:
-the [v2.27.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/10)
-is the queryable commitment (rule §10) and currently holds 20 open
-issues, most of them small enough not to need prose here.
+Still open for the cut. The
+[v2.27.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/10)
+is the queryable commitment (rule §10) and now holds **3** open issues,
+down from twenty. Nine were reslipped to *Under watch* in one pass: each
+was blocked on something outside the release (repo settings, a statutes
+PDF, working-group names nobody has written down), premature (attendee
+features that need an ESSC 2027 programme that does not exist yet), or
+resting on a premise that had gone stale. Reasons are recorded per issue.
 
 - **Per-paper theme derivation** — themes are currently matched against
   a paper's *panel* title, so every paper in a panel inherits the same
@@ -189,14 +193,13 @@ issues, most of them small enough not to need prose here.
   `src/_data/conferences.js` per [`docs/new-conference.md`](new-conference.md)
   once the date and venue firm up. S.
 - **Social-card polish** — keep the EISS iconmark on every OG card
-  ([#157](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/157)),
-  and add bespoke cards for `/roadmap`
-  ([#272](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/272))
-  and the `/2017`, `/2018`, `/joint-2024` archive pages
-  ([#474](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/474)). S each.
-- **Branch-protection Phase 3** — enforce required status checks on
-  `master`.
-  [#501](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/501), S.
+  ([#157](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/157))
+  and add a bespoke card for `/roadmap`
+  ([#272](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/272)). S each.
+  The per-edition archive cards
+  ([#474](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/474))
+  moved to *Under watch*: no per-edition card exists anywhere, so the job
+  is eleven pages or a close, not the three the issue assumed.
 
 Candidates without committed scope yet, pulled in if a release has
 room: a conference countdown widget, View Transitions API page
