@@ -305,9 +305,48 @@ const conferences = [
     programmePdf: "Programme2019.pdf",
     hasOwnPage: true,
   },
-  // The 2017 and 2018 conferences are kept in the historical-image
-  // section at the bottom of past.html — they predate the standalone
-  // /YYYY.html convention. Not listed here.
+  {
+    slug: "2018",
+    year: 2018,
+    ordinal: 2,
+    startDate: "2018-06-21",
+    endDate: "2018-06-22",
+    city: "Paris",
+    country: "France",
+    venue: {
+      en: "University Panthéon-Assas (Paris 2), Paris",
+      fr: "Université Panthéon-Assas (Paris 2), Paris",
+      de: "Université Panthéon-Assas (Paris 2), Paris",
+    },
+    archiveMeta: {
+      en: "2nd Annual Conference · University Panthéon-Assas (Paris 2)",
+      fr: "2e conférence annuelle · Université Panthéon-Assas (Paris 2)",
+      de: "2. Jahreskonferenz · Université Panthéon-Assas (Paris 2)",
+    },
+    displayCity: { en: "Paris", fr: "Paris", de: "Paris" },
+    hasOwnPage: true,
+  },
+  {
+    slug: "2017",
+    year: 2017,
+    ordinal: 1,
+    startDate: "2017-01-13",
+    endDate: "2017-01-14",
+    city: "Paris",
+    country: "France",
+    venue: {
+      en: "University Panthéon-Assas (Paris 2), Paris",
+      fr: "Université Panthéon-Assas (Paris 2), Paris",
+      de: "Université Panthéon-Assas (Paris 2), Paris",
+    },
+    archiveMeta: {
+      en: "Inaugural Conference · University Panthéon-Assas (Paris 2)",
+      fr: "Conférence inaugurale · Université Panthéon-Assas (Paris 2)",
+      de: "Auftaktkonferenz · Université Panthéon-Assas (Paris 2)",
+    },
+    displayCity: { en: "Paris", fr: "Paris", de: "Paris" },
+    hasOwnPage: true,
+  },
 ];
 
 // Build-time cut-off. Eleventy re-runs this whenever the build runs;
@@ -329,11 +368,14 @@ const past = conferences
 const byYear = Object.fromEntries(conferences.map((c) => [String(c.year), c]));
 
 // Distinct numbered editions, for display counts like /initiative's
-// "N annual conferences" stat. Excludes the deferred 2020 (folded into
-// the 2021 edition, `deferred: true`) and adds the two founding-era
-// editions (2017, 2018) that have their own pages but predate this
-// array. Today: 2017, 2018, 2019, 2021, 2022, 2023, 2024, 2025, 2026 = 9.
-const editionCount = conferences.filter((c) => !c.deferred).length + 2;
+// "N annual conferences" stat. Excludes only the deferred 2020, folded
+// into the 2021 edition (`deferred: true`).
+//
+// This used to carry a `+ 2` for the founding-era 2017 and 2018 editions,
+// which had their own pages but sat outside this array. They are entries
+// now, so the offset would double-count them.
+// Today: 2017, 2018, 2019, 2021, 2022, 2023, 2024, 2025, 2026 = 9.
+const editionCount = conferences.filter((c) => !c.deferred).length;
 
 // The editions listed in the Conference dropdown of the primary nav
 // (#1319): the upcoming one when there is one, then the two most recent

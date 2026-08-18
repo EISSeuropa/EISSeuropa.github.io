@@ -13,9 +13,8 @@ alternates:
 ---
 {% from "icons.njk" import icon %}
 
-{#- Conference count: data-driven (conferences.js) + the 2 historical
-    editions (2017 + 2018) that pre-date the standalone-page convention.
-    Bump the "+ 2" if more historical editions are added to past.njk. -#}
+{#- Total distinct editions, from conferences.js. 2020 was deferred into
+    the 2021 edition and is not counted. -#}
 {%- set confCount = conferences.editionCount -%}
 {#- Corpus-scale totals for the impact strip (#800), from corpus.js so they
     stay accurate as editions land. Scholars rounded down to the nearest ten
