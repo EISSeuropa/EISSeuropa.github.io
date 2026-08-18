@@ -8,6 +8,7 @@ Maintainer-facing docs for [eiss-europa.com](https://eiss-europa.com)
 |---|---|
 | [architecture.md](architecture.md) | Build pipeline, data sources, sync jobs, CI gates, deploy — the data-flow map. |
 | [design-system.md](design-system.md) | UI components and interaction patterns (the `.njk` partials + their CSS/JS). |
+| [a11y-audit-2026-08.md](a11y-audit-2026-08.md) | The August 2026 accessibility audit for #1225: method, the five defect classes found, what the tooling could not check, and what declaring conformance would take. |
 | [qa-checklist.md](qa-checklist.md) | Release / pre-conference Go/No-Go audit using the repo's own tooling. |
 | [i18n.md](i18n.md) | Translation model (EN source + FR/DE), the drift checker, the beta ribbon. |
 | [search.md](search.md) | Pagefind search: deploy-time index, bio stubs, why local search is "unavailable". |
