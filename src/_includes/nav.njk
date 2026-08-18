@@ -3,13 +3,20 @@
    only the visible text label is looked up from `t.nav.<key>`. #}
 <header class="site-header">
   <nav class="container nav" aria-label="Primary">
-    {# Brand link. The `<a>` carries the accessible name; SVGs inside
-       are aria-hidden so screen readers don't double-announce "EISS".
-       Two visual variants are inlined and CSS swaps them at the 600 px
-       breakpoint — desktop shows the constellation + EiSS wordmark
-       lockup, mobile collapses to the iconmark + the localised brand
-       label text so the link always carries a name (the lockup SVG's
-       EiSS wordmark is decorative, not text).
+    {# Brand link. The `<a>` carries the accessible name; the SVG inside
+       is aria-hidden so screen readers don't double-announce "EISS".
+
+       One lockup at every width. The header used to swap to a bare
+       iconmark plus a separate "EISS" text span below 600 px, on the
+       assumption that the lockup was too wide for a phone. It isn't:
+       the mark and the lockup share a viewBox (26.87 43.23 212.42
+       95.18), the lockup simply adding the four wordmark paths inside
+       the same box, so at a given height the two are exactly as wide as
+       each other. The swap was therefore costing width rather than
+       saving it, mark plus gap plus label being 102 px against the
+       lockup's 62 px, and it bought a phone header whose logo had no
+       letters in it.
+
        Inlining (rather than <img src=...>) lets `currentColor` cascade
        from the header's `--text` token, so the wordmark adapts to
        light/dark while the constellation keeps its literal brand
@@ -18,12 +25,16 @@
       <span class="brand-logo brand-logo--lockup" aria-hidden="true">
         {% inlineSvg "assets/images/brand/logo-lockup.svg" %}
       </span>
-      <span class="brand-logo brand-logo--mark" aria-hidden="true">
-        {% inlineSvg "assets/images/brand/logo-mark.svg" %}
-      </span>
-      <span class="nav-brand-label">{{ t.nav.brandLabel }}</span>
     </a>
 
+    {# Two shapes of nav item live in this list. A leaf is a plain
+       `.nav-link` anchor. A group (any item with `children` in
+       site.nav) is a native `<details>` disclosure: `<summary>` is the
+       trigger, the panel is a nested `<ul>`. Native disclosure carries
+       the keyboard and screen-reader behaviour for free and stays
+       usable with JS off (the groups just sit closed and open on
+       click). theme.js adds the niceties on top: closing siblings,
+       Escape, outside-click. See #1319. #}
     <ul class="nav-links" id="primary-nav" data-nav-menu>
       {% for item in site.nav %}
         {% if item.key != "home" %}
@@ -33,32 +44,103 @@
              External URLs and the home "/" pass through unchanged.
              See .eleventy.js for the full filter contract (#162). #}
           {%- set itemHref = item.href if item.external else (item.href | localizedHref(lang)) -%}
+          {%- set sectionCurrent = navKey and (navKey in item.match) -%}
           <li>
-            <a class="nav-link"
-               href="{{ itemHref }}"
-               {% if item.external %}target="_blank" rel="noopener"{% endif %}
-               {% if item.key == navKey %}aria-current="page"{% endif %}>
-              {{ t.nav[item.key] }}
-            </a>
+            {% if item.children %}
+              <details class="nav-group" data-nav-group>
+                <summary class="nav-link nav-group-summary"
+                         {% if sectionCurrent %}data-section-current="true"{% endif %}>
+                  {{ t.nav[item.key] }}
+                  <svg class="nav-group-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </summary>
+                <ul class="nav-group-panel">
+                  {# The Conference group leads with the editions, built in
+                     conferences.js (`navEditions`) so the yearly rollover
+                     moves the nav without a data edit here. Between
+                     editions there is no upcoming one, and the list is
+                     simply the most recent completed conferences. #}
+                  {% for edition in conferences.navEditions if item.editions %}
+                    <li>
+                      <a class="nav-group-link" href="{{ ('/' + edition.slug + '.html') | localizedHref(lang) }}">
+                        {{ edition.label[lang] }}
+                        {% if edition.isNext %}<span class="nav-group-badge">{{ t.nav.nextEdition }}</span>{% endif %}
+                      </a>
+                    </li>
+                  {% endfor %}
+                  {% for child in item.children %}
+                    {%- set childHref = child.href if child.external else (child.href | localizedHref(lang)) -%}
+                    <li>
+                      <a class="nav-group-link"
+                         href="{{ childHref }}"
+                         {% if child.external %}target="_blank" rel="noopener"{% endif %}
+                         {% if child.key == navKey %}aria-current="page"{% endif %}>
+                        {{ t.nav[child.key] }}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </details>
+            {% else %}
+              <a class="nav-link"
+                 href="{{ itemHref }}"
+                 {% if item.external %}target="_blank" rel="noopener"{% endif %}
+                 {% if sectionCurrent %}aria-current="page"{% endif %}>
+                {{ t.nav[item.key] }}
+              </a>
+            {% endif %}
           </li>
         {% endif %}
       {% endfor %}
     </ul>
 
+    {# One set of language links, rendered in two shapes. On untranslated
+       pages the FR/DE target falls back to the language homepage (the
+       `alternates` lookup handles the difference). #}
+    {% macro langLinks(cls) %}
+      {% for L in i18n._order %}
+        {%- set href = alternates[L] if alternates and alternates[L] else ('/' if L == 'en' else '/index.' + L + '.html') -%}
+        <a class="{{ cls }}"
+           href="{{ href }}"
+           hreflang="{{ L }}"
+           {% if L == lang %}aria-current="true"{% endif %}
+           title="{{ t.langSwitcher[L + 'Title'] }}">{{ t.langSwitcher[L] }}</a>
+      {% endfor %}
+    {% endmacro %}
+
     <div class="nav-actions">
-      {# Language switcher chips. Always shows all 3; on untranslated
-         pages the FR/DE chip falls back to the language homepage
-         (the `alternates` lookup handles the difference). #}
+      {# Above 480 px the three chips sit inline in the bar. Below it there
+         is no room for them beside the brand iconmark, which is what made
+         the mark collapse to nothing (#1322): an inline SVG has no
+         intrinsic size, so its min-content width is 0 and it absorbed the
+         whole shortfall while the text beside it kept its own floor. So on
+         narrow phones the same three links collapse behind a disclosure
+         showing the current language. Dropping the switcher outright is
+         not an option — #137 tried that and it stranded FR/DE readers on
+         whichever locale they landed in.
+
+         Both shapes are rendered and CSS picks one per breakpoint, so the
+         branch that loses is `display: none` and leaves the accessibility
+         tree rather than duplicating the links for a screen reader. #}
       <div class="lang-switcher" role="group" aria-label="{{ t.langSwitcher.label }}">
-        {% for L in i18n._order %}
-          {%- set href = alternates[L] if alternates and alternates[L] else ('/' if L == 'en' else '/index.' + L + '.html') -%}
-          <a class="lang-chip"
-             href="{{ href }}"
-             hreflang="{{ L }}"
-             {% if L == lang %}aria-current="true"{% endif %}
-             title="{{ t.langSwitcher[L + 'Title'] }}">{{ t.langSwitcher[L] }}</a>
-        {% endfor %}
+        {{ langLinks("lang-chip") }}
       </div>
+
+      {# `data-nav-group` opts this into the same disclosure behaviour as
+         the nav dropdowns in theme.js: siblings close, Escape closes,
+         clicking away closes. #}
+      <details class="lang-menu" data-nav-group>
+        <summary class="lang-menu-summary" aria-label="{{ t.langSwitcher.label }}">
+          {{ t.langSwitcher[lang] }}
+          <svg class="lang-menu-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </summary>
+        <div class="lang-menu-panel" role="group" aria-label="{{ t.langSwitcher.label }}">
+          {{ langLinks("lang-menu-link") }}
+        </div>
+      </details>
 
       {# Search trigger. Opens the site-search modal (search-modal.njk).
          Icon-only, so the accessible name comes from aria-label. The

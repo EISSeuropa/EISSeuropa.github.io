@@ -2,7 +2,7 @@
 layout: base.njk
 permalink: /internship.fr.html
 title: Bénévolat et stages
-description: Contribuez à l'EISS à distance, environ un jour par semaine, à l'Anthologie et à la Conférence annuelle. Ouvert aux étudiants comme aux jeunes diplômés. Une convention de stage est possible si votre formation l'exige.
+description: Contribuez à l'EISS à distance, environ un jour par semaine sur deux mois, et repartez avec une publication qui porte votre nom. Ouvert aux étudiants comme aux jeunes diplômés. Une convention de stage est possible si votre formation l'exige.
 navKey: internship
 lang: fr
 status: beta
@@ -18,49 +18,62 @@ alternates:
     <span class="eyebrow">Nous rejoindre</span>
     <h1>Bénévolat et stages</h1>
     <p class="page-lead">
-      L'EISS fonctionne entièrement grâce à des bénévoles. Contribuez au travail du réseau à
-      distance, à raison d'environ un jour par semaine, à l'Anthologie et à la Conférence annuelle.
-      Ouvert aussi bien aux étudiants qu'aux jeunes diplômés.
+      L'EISS fonctionne entièrement grâce à des bénévoles. Contribuez à distance, à raison d'environ
+      un jour par semaine sur deux mois, et repartez avec un travail qui porte votre nom : une note
+      sous votre signature, ou une contribution créditée à l'Anthologie. Ouvert aussi bien aux
+      étudiants qu'aux jeunes diplômés.
     </p>
   </div>
 </header>
 
 <section class="section">
   <div class="container">
-    <h2>Concrètement</h2>
+    <h2>Ce que vous y gagnez</h2>
+    <p style="max-width: 44rem;">
+      Ces quatre points sont convenus dès le départ et inscrits dans vos objectifs.
+    </p>
 
     <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-block: var(--space-6);">
       <article class="tile">
-        <div class="tile-icon" aria-hidden="true">{{ icon("calendar") }}</div>
-        <h3>À distance, environ un jour par semaine</h3>
+        <div class="tile-icon" aria-hidden="true">{{ icon("file-text") }}</div>
+        <h3>Une publication qui porte votre nom</h3>
         <p>
-          Entièrement à distance, à un rythme convenu ensemble et que vous pouvez modifier selon vos
-          cours ou votre emploi. Il n'y a ni horaires fixes ni date de fin imposée.
+          Si votre axe donne lieu à une note, elle paraît sous votre propre signature, comme
+          composante définie du stage.
         </p>
       </article>
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("book-open") }}</div>
-        <h3>Un travail qui porte votre nom</h3>
+        <h3>Crédité nominativement dans tous les cas</h3>
         <p>
-          Les contributions à l'<a href="{{ '/anthology.html' | localizedHref(lang) }}">Anthologie</a>
-          sont créditées nominativement, et si vous rédigez une note, elle paraît sous votre
-          signature.
+          L'indexation et le travail sur les données ne donnent lieu à aucune signature. Ils sont
+          crédités nominativement sur cette page et dans le journal des modifications du projet,
+          avec un lien vers ce que vous avez fait.
         </p>
       </article>
       <article class="tile">
-        <div class="tile-icon" aria-hidden="true">{{ icon("graduation-cap") }}</div>
-        <h3>Étudiants et diplômés</h3>
+        <div class="tile-icon" aria-hidden="true">{{ icon("users") }}</div>
+        <h3>Un échange avec le bureau</h3>
         <p>
-          Aucune inscription n'est nécessaire pour être bénévole chez nous. Si votre formation exige
-          un stage, nous pouvons signer une <em>convention de stage</em> : dites-le-nous tôt.
+          Une demi-heure avec un membre du bureau, consacrée à vos propres intérêts de recherche,
+          programmée dans vos premières semaines.
+        </p>
+      </article>
+      <article class="tile">
+        <div class="tile-icon" aria-hidden="true">{{ icon("calendar") }}</div>
+        <h3>Un point hebdomadaire avec les autres</h3>
+        <p>
+          Le groupe se retrouve chaque semaine pour un échange bref. En manquer un ne pose aucun
+          problème.
         </p>
       </article>
     </div>
 
     <h2>Sur quoi vous travailleriez</h2>
     <p style="max-width: 44rem;">
-      Nous adaptons cela à ce qui vous intéresse plutôt que de vous confier une tâche figée. La
-      plupart des bénévoles choisissent l'un de ces axes, et beaucoup passent de l'un à l'autre.
+      Nous adaptons cela à ce qui vous intéresse. La plupart des bénévoles choisissent l'un de ces
+      axes, et beaucoup passent de l'un à l'autre. Tout ce qui est ouvert figure sur la
+      <a href="{{ site.helpWantedUrl }}">liste « help wanted »</a>.
     </p>
 
     <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-block: var(--space-6);">
@@ -71,14 +84,17 @@ alternates:
           Retrouver les résumés des communications présentées lors des éditions antérieures, les
           vérifier au regard du programme et les intégrer à l'Anthologie pour compléter le relevé.
         </p>
+        <p class="muted"><strong>Vous produisez :</strong> un lot de résumés retrouvés, crédité à votre nom.</p>
       </article>
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("file-text") }}</div>
         <h3>Recherche et rédaction d'une note thématique</h3>
         <p>
           Un texte court sur l'un des thèmes de recherche de l'Anthologie, à partir des
-          communications déjà présentes dans le corpus, publié sur notre blog sous votre nom.
+          communications déjà présentes dans le corpus. Une note sur la dissuasion part de 46
+          communications déjà indexées et de leurs auteurs.
         </p>
+        <p class="muted"><strong>Vous produisez :</strong> une note sur le <a href="/blog.html">blog</a>, sous votre propre signature.</p>
       </article>
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("settings") }}</div>
@@ -87,18 +103,143 @@ alternates:
           Consolider les données de l'Anthologie : noms et affiliations des auteurs, liens vers les
           versions publiées, et les liens que l'Atlas trace entre communications et personnes.
         </p>
+        <p class="muted"><strong>Vous produisez :</strong> un jeu de données vérifié dont le site se sert, crédité à votre nom.</p>
       </article>
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("users") }}</div>
         <h3>Préparation de la Conférence annuelle</h3>
         <p>
           Aider l'équipe à préparer notre événement phare, de l'appel à communications jusqu'au
-          programme. Cela fait partie de l'année pour tout le monde, nous y compris.
+          programme. Tout le monde ici en prend sa part.
         </p>
+        <p class="muted"><strong>Vous produisez :</strong> une conférence qui a eu lieu. Saisonnier, et plus intense au printemps.</p>
       </article>
     </div>
   </div>
 </section>
+
+<section class="section">
+  <div class="container">
+    <h2>Comment le stage se déroule</h2>
+    <p style="max-width: 44rem;">
+      Les conditions, annoncées à l'avance.
+    </p>
+
+    <dl class="definition-list">
+      <div>
+        <dt>Environ un jour par semaine, sur deux mois</dt>
+        <dd>
+          Nous convenons du rythme au départ, et vous pouvez le modifier selon vos cours ou votre
+          emploi. Vous ne nous devez aucun minimum et vous êtes libre d'arrêter plus tôt.
+        </dd>
+      </div>
+      <div>
+        <dt>Non rémunéré</dt>
+        <dd>
+          L'EISS n'a aucun personnel salarié. Tout le monde ici est bénévole, le bureau compris. Les
+          frais convenus avec nous au préalable sont remboursés sur justificatifs, et rien d'autre
+          n'est versé.
+        </dd>
+      </div>
+      <div>
+        <dt>Le bénévolat par défaut</dt>
+        <dd>
+          La plupart des personnes nous rejoignent comme bénévoles. Il n'y a pas de contrat, vous
+          choisissez votre axe, vous fixez votre propre rythme, et vous pouvez arrêter à tout moment
+          sans avoir à vous en expliquer.
+        </dd>
+      </div>
+      <div>
+        <dt>Une convention de stage si votre formation l'exige</dt>
+        <dd>
+          Le droit français ne qualifie de stage qu'une période intégrée à un cursus comportant au
+          moins 200 heures d'enseignement par an. Si c'est le cas du vôtre, nous signons la
+          convention tripartite avec vous et votre établissement, et nous désignons un tuteur de
+          stage. Dites-le-nous tôt : les démarches passent par votre université.
+        </dd>
+      </div>
+      <div>
+        <dt>Quelqu'un à qui demander</dt>
+        <dd>
+          Vous disposez d'un interlocuteur désigné dès le premier jour, ainsi que du point
+          hebdomadaire. Entre les deux, personne ici ne comptabilise vos heures ni ne réclame de
+          compte rendu.
+        </dd>
+      </div>
+      <div>
+        <dt>Une publication</dt>
+        <dd>
+          Une production publiable par personne. Elle est relue avant parution, et nous pouvons
+          décider de ne pas la publier. Cela ne retire rien au crédit de vos autres travaux.
+        </dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>L'année en bref</h2>
+    <p style="max-width: 44rem;">
+      Les stages débutant en janvier s'accordent le mieux au cycle. La conférence a lieu en juin.
+    </p>
+
+    <dl class="definition-list">
+      <div>
+        <dt>Janvier · Accueil</dt>
+        <dd>
+          Une prise en main commune et brève du corpus, du style de la maison et du niveau auquel
+          nous publions. Vous choisissez votre axe et nous convenons de votre production unique.
+        </dd>
+      </div>
+      <div>
+        <dt>De février à avril · La période de fond</dt>
+        <dd>
+          La période protégée. Travail sur l'axe, point hebdomadaire, et un premier jet attendu
+          avant avril.
+        </dd>
+      </div>
+      <div>
+        <dt>D'avril à juin · La conférence annuelle</dt>
+        <dd>
+          L'organisation pèse le plus lourd à ce moment-là et chacun en prend sa part, nous y
+          compris. Attendez-vous à ce que la rédaction ralentisse.
+        </dd>
+      </div>
+      <div>
+        <dt>Juillet · Publication et crédit</dt>
+        <dd>
+          Les notes paraissent, les contributeurs sont ajoutés à cette page, et nous demandons au
+          groupe ce qui valait la peine et ce qui n'était que du remplissage.
+        </dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+{# ponytail : voir internship.njk. Ne rend rien tant que contributors.js est vide. #}
+{% if contributors.length %}
+<section class="section">
+  <div class="container">
+    <h2 id="contributors">Celles et ceux qui l'ont fait</h2>
+    <p style="max-width: 44rem;">
+      Les bénévoles et stagiaires ayant travaillé sur l'Anthologie et sur la conférence, et ce que
+      chacun a fait. Les noms ne figurent ici qu'avec l'accord des personnes concernées.
+    </p>
+
+    <dl class="definition-list">
+      {% for person in contributors %}
+      <div>
+        <dt>{{ person.name }}</dt>
+        <dd>
+          {{ person.didFr or person.did }}{% if person.url %} <a href="{{ person.url }}">Voir le travail</a>.{% endif %}
+        </dd>
+      </div>
+      {% endfor %}
+    </dl>
+  </div>
+</section>
+{% endif %}
 
 <section class="section-tight">
   <div class="container">
@@ -117,6 +258,52 @@ alternates:
             {{ icon("mail") }} Écrivez-nous
           </a>
         </p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="container">
+    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div class="prose" style="margin-inline: 0;">
+        <div class="featured-eyebrow">Vous avez déjà commencé ?</div>
+        <h2>Commencez ici</h2>
+        <p>
+          Six points pour votre première semaine, et rien ici n'est un test. Si une étape ne
+          fonctionne pas, dites-le-nous et nous la réglerons.
+        </p>
+        <ol>
+          <li>
+            <strong>Vous avez un interlocuteur désigné.</strong> Il vous a écrit à votre arrivée.
+            Posez-lui toutes vos questions, y compris celle de savoir si une tâche vaut la peine
+            d'être faite.
+          </li>
+          <li>
+            <strong>Envoyez-nous votre identifiant GitHub</strong>, pour que nous vous ajoutions au
+            dépôt. Vous n'avez jamais utilisé GitHub ? Dites-le. Nous le mettons en place avec
+            vous, et ce n'est un prérequis pour rien.
+          </li>
+          <li>
+            <strong>Inscrivez le point hebdomadaire à votre agenda.</strong> Il est bref, et en
+            manquer un n'appelle aucune explication.
+          </li>
+          <li>
+            <strong>Choisissez une tâche sur la
+            <a href="{{ site.helpWantedUrl }}">liste « help wanted »</a>.</strong> Signalez en
+            commentaire que vous la prenez. La rendre plus tard ne pose aucun problème et ne compte
+            contre rien.
+          </li>
+          <li>
+            <strong>Lisez <a href="{{ site.handbookUrl }}">le guide</a> avant votre première
+            tâche.</strong> Il précise ce que chaque travail demande réellement, et où se situent
+            les jugements à porter. Il n'existe qu'en anglais.
+          </li>
+          <li>
+            <strong>Lisez le style de la maison avant d'écrire.</strong> Un anglais britannique, et
+            la concision plutôt que l'ornement.
+          </li>
+        </ol>
       </div>
     </article>
   </div>

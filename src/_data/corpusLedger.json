@@ -1,0 +1,1833 @@
+{
+  "_doc": "When each paper entered the Anthology (firstSeen) and when its abstract first attached (abstractSeen). Feed entries take the later of the two, so a recovered abstract surfaces as a fresh item. COMMITTED and authoritative: regenerating from scratch would fire a false update to every subscriber. Maintained by scripts/sync-corpus-ledger.mjs. See #1256.",
+  "updated": "2026-08-08",
+  "papers": {
+    "2017-a-science-and-technology-studies-approach-to-drone-politics-in-europe": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-american-military-technological-superiority-in-the-age-of-cyber-espionage-global": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-arms-procurement-in-the-gulf-region-evolving-trends-and-implications-for-the-cli": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-banning-nuclear-weapons-the-dilemma-for-the-nato-non-nuclear-weapon-states": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-barefoot-soldiers-and-skiing-nations-incoherence-coping-strategies-and-the-makin": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-bridging-the-academic-practitioner-divide-in-counter-terrorism": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-continuity-and-change-in-terrorist-strategies": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-cyber-compellence-applying-coercion-in-the-information-age": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-cybersecurity-and-the-public-sector-the-italian-case": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-do-you-hear-me-major-tom-media-narratives-and-contemporary-military-operations-t": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-dynamics-of-security-privatization-and-the-evolution-of-the-regulatory-state-in": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-empathetic-practices-in-international-security": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-france-s-colonial-wars-in-the-xix-and-xx-centuries-and-its-military-intervention": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-global-nuclear-order-hegemony-and-resistance": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-grey-zones-deterrence-and-signaling-the-case-of-the-us-japan-alliance": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-issues-and-frames-explaining-coercion-in-cyberspace": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-keynote-speech": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-military-cooperation-in-unstable-places-explaining-american-failures-in-the-saha": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-military-interventionism-and-the-responsibility-to-protect-the-crisis-in-syria": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-nato-perceptions-and-assessments-of-international-terrorism-1978-1983": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-new-wine-in-old-bottles-united-kingdom-defence-procurement-and-defence-industrie": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-private-military-and-security-companies-on-twitter-hiding-in-plain-sight": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-private-security-logos-a-visual-analysis-of-pmsc-s-legitimation-strategies": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-scholarly-responsibility-non-proliferation-and-deterrence-the-effects-of-self-ce": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-states-vs-markets-in-rising-powers-functional-and-political-sources-of-instituti": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-the-book-that-leaves-nothing-to-chance-how-the-strategy-of-conflict-and-its-lega": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-the-co-evolution-of-the-private-military-and-security-companies-and-their-enviro": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-the-future-in-the-past-victory-defeat-and-comparative-grand-strategy": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-the-future-of-american-power-in-europe-and-european-strategic-cooperation": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-the-origins-of-transnational-terrorist-waves": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-the-procurement-and-adoption-of-innovations-in-modern-naval-warfare": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-the-trouble-with-internationally-proclaimed-safe-areas": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-tools-concepts-and-weapons-intellectual-history-and-strategic-studies": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-towards-nodal-defense-us-strategy-and-european-security": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-transatlantic-defence-cooperation-after-brexit-and-trump": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-transnational-terrorism-and-strategic-culture-a-new-understanding-of-state-count": {
+      "firstSeen": "2017-06-15"
+    },
+    "2017-why-a-nuclear-weapons-ban-treaty-is-a-bad-idea": {
+      "firstSeen": "2017-06-15"
+    },
+    "2018-a-public-and-private-norm-for-force-authorities-assemblages-and-re-specification": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-a-weapon-of-the-weak-cyberwarfare-and-china-s-threat-perception": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-all-options-on-the-latency-table-the-impact-of-carrots-and-sticks-on-nuclear-lat": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-an-eu-inspired-cloud-of-multilateral-antipathy-the-british-public-and-foreign-po": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-analyzing-private-military-and-security-contractors-power-in-multi-stakeholder-i": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-arms-procurement-transfers-and-defense-industries-as-a-means-of-gaining-autonomy": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-ballot-boxes-and-surgical-strikes-indian-national-security-choices-in-electoral": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-breathing-new-life-into-npt-likely-impact-of-the-ban-treaty-on-the-npt-review-pr": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-brexit-and-the-future-of-european-military-coalitions": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-can-and-want-but-how-russia-s-approaches-to-use-of-military-force-in-internation": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-chinese-perspectives-on-security-in-cyberspace": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-consequences-of-military-technology-evolutions-on-the-rare-metal-needs-assessmen": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-consistent-inconsistency-the-unintended-consequences-of-the-us-spoiling-a-region": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-cooperation-and-non-cooperation-in-european-defense-procurement-the-italian-job": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-coping-with-grey-zone-situations-japan-s-strategy-in-the-east-china-sea": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-criminal-networks-in-africa-a-new-door-of-latin-america-traffics": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-cyber-action-russia-and-intelligence": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-cyber-attacks-as-a-threat-to-international-peace-and-security-the-action-of-the": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-cyberspace-and-the-recourse-to-offensive-actions": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-defining-labelling-listing-the-construction-of-the-terrorist-other-since-the-end": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-envisaging-alternatives-for-europe-s-nuclear-order": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-european-military-capability-needs-in-an-age-of-american-restraint": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-how-foreign-state-support-affects-rebel-groups-evidence-from-angola": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-how-to-think-about-nuclear-crises": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-hunting-terrorist-suspects-the-role-of-police-intelligence-in-fighting-terrorism": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-hybrid-threats-terrorism-transnational-organized-crime-and-a-new-concept-of-secu": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-influencing-the-feeling-of-security": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-informal-institutions-trust-and-the-design-of-privatization": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-intelligence-failure-and-the-2004-madrid-train-bombings": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-international-legality-of-cyberweapons": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-into-the-vacuum-how-the-kurdistan-workers-party-and-islamic-state-insurgencies-e": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-it-s-the-americans-stupid-is-it-understanding-the-french-suspect-plebiscite-for": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-italian-military-transformation-defense-industry-trends-and-national-leadership": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-japan-s-defense-partnerships-in-the-asia-pacific-motivations-constituent-compone": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-keeping-secrets-surveying-the-factors-affecting-professional-discretion": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-migrant-rescuing-as-organized-hypocrisy-eu-maritime-missions-offshore-libya-betw": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-military-intelligence-and-top-secret-interrogation-centers-in-the-second-world-w": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-military-interventions-liberal-militarism-and-republican-restraints-on-power": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-nordic-and-nordic-baltic-defense-cooperation-after-the-ukraine-crisis": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-now-end-of-history-ruptures-and-tectonic-shifts": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-nuclear-alliances-strategies-of-extended-nuclear-deterrence-and-the-pursuit-of-h": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-organized-crime-in-latin-america-how-brazilian-organizations-are-changing-the-ru": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-party-political-contestation-of-military-interventions": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-policy-mood-and-policy-responsiveness-on-the-eu-s-common-foreign-and-security-po": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-producing-airpower-neo-liberalism-and-complex-weaponry": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-prompt-global-strike-and-the-new-fog-of-war": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-protege-panic-alliance-fears-and-the-trump-administration": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-quo-vadimus-u-s-eu-counter-terrorism-cooperation-in-an-age-of-uncertainty": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-reconceptualizing-the-military-assistance-evaluating-norwegian-support-to-buildi": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-redefining-statehood-in-conflict-local-militias-transnational-actors-and-securit": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-rethinking-counter-terrorism-the-enemy-within-cyber-strategies-and-construction": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-russia-s-military-intervention-in-georgia-ukraine-and-syria-an-analysis-of-russi": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-schrodinger-s-panda-quantum-technology-in-china": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-security-studies-in-europe-an-agenda": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-short-presentation-on-the-iafie-s-research-activities-and-initiatives": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-small-state-big-impact-iceland-s-first-national-security-policy": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-spacepower-in-the-international-system-measuring-power-in-heaven": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-strategies-for-obtaining-united-nations-security-council-approval": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-technological-singularity-and-war-artificial-intelligence-and-the-radical-transf": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-testing-traditional-alliances-ability-to-contain-china-s-rise": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-the-2017-treaty-on-the-prohibition-of-nuclear-weapons-moral-idealism-or-transfor": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-the-anti-mercenary-norm-and-united-nations-use-of-private-military-and-security": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-the-atlantic-alliance-s-cohesion-at-risk-current-euro-atlantic-challenges-seen-t": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-the-blurred-line-between-insurgency-and-organized-crime-in-afghanistan": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-the-british-army-modern-fire-and-basic-military-training-1871-1918": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-the-crime-terror-nexus-in-europe-initial-results-from-a-multi-method-approach": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-the-evolution-of-us-alliances-in-northeast-asia-japan-and-south-korea": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-the-impact-of-academic-research-on-states-approach-and-practice-on-the-internati": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-the-insurgents-right-to-surrender-and-new-military-technologies-the-risk-of-lawf": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-the-international-systemic-impact-of-terrorism-from-sarajevo-to-9-11": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-the-metamorphosis-of-capability-british-defense-equipment-support-policy-since-2": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-the-recurring-logic-of-french-military-interventions-in-africa-and-their-implica": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-the-resurgence-of-european-insecurity-lessons-learned-and-forgotten-from-the-eur": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-towards-a-european-offset-strategy-procurement-and-emerging-technologies": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-u-s-end-and-nuclear-use-finally-a-bipolar-problem": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-understanding-and-countering-violent-extremism-exploring-the-discursive-construc": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-us-chinese-maritime-security-and-the-consequences-for-europe-s-relations-with-wa": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-what-are-the-eu-s-grand-strategic-options-in-response-to-american-restraint": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-what-european-women-really-want-a-critical-feminist-approach-to-understanding-ge": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-what-political-forces-shape-european-security-on-the-world-stage": {
+      "firstSeen": "2018-06-15",
+      "abstractSeen": "2018-06-15"
+    },
+    "2018-why-is-spin-in-not-yet-a-win-win-obstacles-to-technology-transfer-of-autonomy-fr": {
+      "firstSeen": "2018-06-15"
+    },
+    "2018-words-matter-donald-trump-and-the-credibility-of-us-extended-nuclear-deterrence": {
+      "firstSeen": "2018-06-15"
+    },
+    "2019-a-case-study-russia-s-special-operations-command-in-military-interventions": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-al-baghdadi-s-revenge-identifying-the-strategic-value-of-vengeance-narratives-in": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-analyzing-the-individual-strategic-practices-of-deployed-officers-in-multilatera": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-between-power-and-plenty-the-new-eu-defense-industrial-initiatives-and-the-trans": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-china-s-efforts-in-civil-military-integration-and-international-implications": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-climate-change-and-the-us-military-changes-and-continuities-under-the-trump-admi": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "2019-converging-and-conflicting-dynamics-of-cooperation-european-security-efforts-in": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-debating-military-interventions-party-political-patterns-of-justifications-for-u": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "2019-discursive-practices-and-the-construction-of-mercenaries-as-illegitimate-fighter": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-european-perceptions-of-nuclear-deterrence-in-the-era-of-trump-and-putin-and-the": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "2019-exports-of-second-hand-arms-increasing-the-competition-for-arms-producing-firms": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-failing-to-succeed-the-kpz-70-and-german-innovation-in-armored-warfare-1963-71": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "2019-france-european-defense-and-deterrence-since-the-end-of-the-cold-war": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "2019-german-view-on-a-european-deterrent-the-cold-war-and-prospects": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-globalized-authoritarianism-intelligence-cooperation-and-transnational-repressio": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-hostages-and-counter-terrorism-the-fallacies-of-the-realist-approach": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-implications-of-the-current-frictions-within-the-alliance-and-the-further-build": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-inhibition-or-control-european-autonomy-and-us-grand-strategy": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "2019-introductory-remarks": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-is-pessimism-well-founded-intelligence-analysis-and-the-intentions-of-competitor": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-keeping-pace-technological-change-and-military-innovation-in-the-italian-armed-f": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "2019-libyan-covert-actions-in-europe-the-palestinian-armed-struggle-and-western-intel": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-lifting-pooling-and-sharing-to-a-higher-level-the-european-air-transport-command": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-little-ado-about-something-a-gender-perspective-of-eu-and-un-counter-terrorism-s": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-local-state-society-transformations-and-everyday-security-provisioning-in-san-sa": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-making-the-u-s-defense-innovation-base-more-effective-in-the-digital-arms-race-w": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-masculine-cultures-exclusion-mechanisms-and-retention-of-female-personnel-in-the": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-modelling-the-role-of-hype-in-the-development-trajectory-of-long-fuse-defense-te": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "2019-money-rather-than-muscles-china-s-approach-to-post-polar-arctic-security": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-nato-emerging-technologies-and-future-warfare-overcoming-the-alliance-s-strategi": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-negotiations-with-terrorist-groups-and-the-no-talks-paradigm": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-neoliberal-governmentality-and-military-recruitment-governing-the-working-class": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-norway-and-the-arctic-climate-policy-and-energy-paradigm": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "2019-not-whether-but-when-the-influence-of-leaders-on-foreign-policy": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "2019-of-ticking-bombs-intelligence-in-the-counter-terrorism-domain-1970-present": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-offshore-balancing-special-operations-forces-sof-and-the-hybrid-agencies-of-demo": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-parties-exit-and-european-security-and-defense": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "2019-planning-to-escalate-to-deescalate-military-alliances-and-innovation-during-fran": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "2019-private-diplomacy-and-transatlantic-burden-sharing-during-detente-a-view-from-th": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "2019-pulling-back-or-staying-in-us-grand-strategic-options-and-their-implications-for": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-regionalization-of-environmental-security-and-the-role-of-the-military-south-asi": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-reluctant-to-intervene-the-ambiguous-politics-of-peacekeeping-in-the-case-of-eme": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-stronger-together-austria-s-strategy-of-defense-cooperation": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-the-discreet-evolution-of-collective-defense-within-the-european-union": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-the-franco-german-security-dialogue-as-a-first-step-for-a-deeper-french-european": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "2019-the-future-of-european-security-architecture-back-to-lady-thatcher-and-her-enten": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "2019-the-military-entrepreneurial-complex-commercial-innovation-and-state-access": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-the-normative-limits-on-counter-violence-by-discretionary-states": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-the-political-economy-of-drones-on-the-european-defense-market": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-the-politics-of-the-nuclear-fuel-cycle-the-carter-administration-the-infce-progr": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-the-sino-russian-rapprochement-and-its-implications-for-europe": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-the-violation-that-strengthens-the-norm-india-s-1974-nuclear-explosion-and-the-g": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-the-visuality-of-military-recruitment-us-and-uk-militaries-and-pmscs-compared": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "2019-theories-of-balancing-and-us-grand-strategy-unpacking-the-europe-vs-east-asia-tr": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "2019-understanding-the-politics-of-european-naval-procurement-always-just-beyond-the": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-uninsured-allies-when-do-states-divest-from-nuclear-latency": {
+      "firstSeen": "2019-06-13"
+    },
+    "2019-we-are-army-after-all-military-recruitment-in-the-netherlands-and-germany": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "2019-when-do-legislatures-matter-in-civil-military-relations": {
+      "firstSeen": "2019-06-13"
+    },
+    "2021-a-post-liberal-age-of-security-authoritarian-interventionism-in-the-middle-east": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-american-strategies-of-retrenchment-versus-inhibition": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-an-indian-perspective-on-security-and-the-use-of-force-the-case-of-the-responsib": {
+      "firstSeen": "2021-09-03",
+      "abstractSeen": "2021-09-03"
+    },
+    "2021-analyzing-small-states-use-of-military-power-from-ends-ways-means-to-objectives": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-arms-without-influence-defense-industrial-policy-and-burden-sharing-in-the-trans": {
+      "firstSeen": "2021-09-03",
+      "abstractSeen": "2021-09-03"
+    },
+    "2021-autonomous-weapons-systems-in-international-law": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-breaking-the-one-the-evolution-of-the-national-intelligence-estimate-production": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-building-the-best-tank-institutions-and-the-choice-to-embrace-radical-change": {
+      "firstSeen": "2021-09-03",
+      "abstractSeen": "2021-09-03"
+    },
+    "2021-comparative-analysis-of-north-atlantic-treaty-organization-nato-and-shanghai-coo": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-crisis-management-and-partnership-peacekeeping-coordination-between-the-eu-au-an": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-downgrading-or-upsizing-strategies-how-rebels-learn-about-the-right-repertoire-o": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-dynamics-of-cyber-proliferation": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-eu-military-capabilities-in-the-post-cold-war-a-response-to-systemic-pressures": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-european-naval-procurement-under-global-competition-why-so-underwhelming-and-sho": {
+      "firstSeen": "2021-09-03",
+      "abstractSeen": "2021-09-03"
+    },
+    "2021-france-and-the-united-states-interventionism-in-north-africa-and-in-the-middle-e": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-from-confrontation-to-cooperation-non-state-armed-group-un-interactions-in-peace": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-how-minilateralism-shapes-nato-s-decision-making-process": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-how-terror-evolves-the-emergence-and-spread-of-terrorist-techniques": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-india-s-new-security-approach-to-the-european-union": {
+      "firstSeen": "2021-09-03",
+      "abstractSeen": "2021-09-03"
+    },
+    "2021-integration-of-technical-exploitation-in-military-organisations": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-intelligence-services-and-hybrid-warfare-the-case-of-ukraine": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-live-streaming-of-terrorism-context-potential-effects-and-challenges": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-managing-assurance-and-deterrence-demands-in-heterogeneous-alliances-the-case-of": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-nato-as-a-nuclear-alliance": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-offsetting-brexit-in-defence-cooperation-trust-matters": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-opening-the-black-box-of-defence-procurement-and-planning-processes-what-drives": {
+      "firstSeen": "2021-09-03",
+      "abstractSeen": "2021-09-03"
+    },
+    "2021-peacock-in-a-coal-mine-european-understanding-of-environmental-loss-in-india": {
+      "firstSeen": "2021-09-03",
+      "abstractSeen": "2021-09-03"
+    },
+    "2021-plans-are-worthless-but-planning-is-everything": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-power-projection-deterrence-strategies-and-escalation-dynamics-from-near-crisis": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-rethinking-intelligence-services-learning-from-society-towards-a-project-of-shar": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-security-studies-2020-blindsided-by-brexit": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-slowly-moving-towards-a-european-defense-the-feasible-compromise-between-france": {
+      "firstSeen": "2021-09-03",
+      "abstractSeen": "2021-09-03"
+    },
+    "2021-strategic-autonomy-european-dtib-and-technological-complexity": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-strategic-consequences-of-tactical-alliances-the-case-of-the-us-led-coalition-ag": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-the-dilemma-of-security-force-assistance-the-fight-against-boko-haram-military-a": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-the-proliferation-of-military-drones-in-europe-not-so-easy-not-so-cheap-but-nato": {
+      "firstSeen": "2021-09-03",
+      "abstractSeen": "2021-09-03"
+    },
+    "2021-the-rise-of-cybersecurity-warriors": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-the-state-monopoly-of-violence-as-organized-hypocrisy-the-privatization-of-un-pe": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-to-what-extent-eu-s-effective-multilateralism-is-an-adequate-mean-to-counter-hyb": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-what-are-they-t-asked-to-do-introducing-the-peace-operations-mandates-pom-datase": {
+      "firstSeen": "2021-09-03"
+    },
+    "2021-what-do-we-talk-about-when-we-talk-about-dual-use-goods": {
+      "firstSeen": "2021-09-03",
+      "abstractSeen": "2021-09-03"
+    },
+    "2022-a-source-of-escalation-or-a-source-of-restraint-whether-and-how-civil-society-af": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-aiding-and-assisting-atrocity-crimes-britain-s-prevention-paradox-in-yemen": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-between-the-scylla-of-ontological-lethargy-and-the-charybdis-of-epistemological": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-blurring-the-lines-sovereignty-and-consent-in-the-fight-against-terrorism": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-business-as-usual-or-new-forms-of-collaboration-non-state-actors-in-un-cybercrim": {
+      "firstSeen": "2022-06-30",
+      "abstractSeen": "2022-06-30"
+    },
+    "2022-carpe-diem-when-foreign-sponsors-intervene-directly-in-civil-war": {
+      "firstSeen": "2022-06-30",
+      "abstractSeen": "2022-06-30"
+    },
+    "2022-cyber-arms-transfer-meaning-limits-and-implications": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-deciphering-international-punishment-literary-legal-and-political-insights-from": {
+      "firstSeen": "2022-06-30",
+      "abstractSeen": "2022-06-30"
+    },
+    "2022-does-russian-antagonistic-strategic-narration-trigger-destabilising-psychologica": {
+      "firstSeen": "2022-06-30",
+      "abstractSeen": "2022-06-30"
+    },
+    "2022-domestic-operations-and-outsourcing-of-security-what-implications-for-the-milita": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-drone-use-in-ukraine-claims-and-implications": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-european-arms-collaboration-all-at-sea-competition-and-co-operation-over-global": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-how-rt-and-sputnik-cover-the-news-in-mali-a-textual-analysis-of-russia-s-informa": {
+      "firstSeen": "2022-06-30",
+      "abstractSeen": "2022-06-30"
+    },
+    "2022-ideology-and-risk-the-neuroscience-of-nuclear-reversal": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-if-you-can-t-beat-em-join-em-conceptualizing-non-state-armed-group-interaction": {
+      "firstSeen": "2022-06-30",
+      "abstractSeen": "2022-06-30"
+    },
+    "2022-military-assistance-and-national-security": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-military-expenditure-external-threats-and-fiscal-consolidation-a-survey-experime": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-military-politics-on-the-battlefield-strategy-and-effectiveness-in-war": {
+      "firstSeen": "2022-06-30",
+      "abstractSeen": "2022-06-30"
+    },
+    "2022-military-professionalism-under-political-polarization": {
+      "firstSeen": "2022-06-30",
+      "abstractSeen": "2022-06-30"
+    },
+    "2022-news-media-and-in-security-in-ukrainian-border-regions-an-assessment-of-threats": {
+      "firstSeen": "2022-06-30",
+      "abstractSeen": "2022-06-30"
+    },
+    "2022-norm-violations-and-punishment-beyond-the-nation-state-normative-orders-authorit": {
+      "firstSeen": "2022-06-30",
+      "abstractSeen": "2022-06-30"
+    },
+    "2022-on-the-peace-and-security-implications-of-cybercrime-the-need-for-an-integrated": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-punishment-panopticum-and-the-contingency-of-legal-norms-a-legal-philosophical-p": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-rules-expertise-and-the-rise-of-the-regulatory-security-state": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-russia-s-way-of-war-comparing-russian-strategy-and-operations-in-ukraine-and-syr": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-sanctions-and-the-authority-of-legitimate-punishment-in-international-politics": {
+      "firstSeen": "2022-06-30",
+      "abstractSeen": "2022-06-30"
+    },
+    "2022-technology-as-status-anchor-how-russia-perceives-artificial-intelligence": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-the-adaptation-cascade-the-global-diffusion-of-all-female-military-units-in-mili": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-the-democratic-military-in-internal-missions-professionalism-in-an-era-of-climat": {
+      "firstSeen": "2022-06-30",
+      "abstractSeen": "2022-06-30"
+    },
+    "2022-the-human-dignity-case-against-administrative-detention": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-the-impact-of-commercial-military-actors-on-armed-conflict-termination-1980-2010": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-the-lesser-evil-experimental-evidence-on-nuclear-and-chemical-weapon-taboos": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-the-logic-of-diaspora-sponsorship-to-rebel-organizations": {
+      "firstSeen": "2022-06-30",
+      "abstractSeen": "2022-06-30"
+    },
+    "2022-the-migration-defence-nexus-unravelling-the-effect-of-migration-on-defence-effor": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-the-online-reception-of-russia-and-chinese-news-coverage-of-the-us-2020-election": {
+      "firstSeen": "2022-06-30",
+      "abstractSeen": "2022-06-30"
+    },
+    "2022-the-possible-impact-of-sole-purpose-policy-on-the-nato-alliance": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-the-un-cybercrime-negotiations-harmonisation-and-universality-or-polarisation-an": {
+      "firstSeen": "2022-06-30",
+      "abstractSeen": "2022-06-30"
+    },
+    "2022-the-uneasy-relation-of-proxy-war-and-states-interests-pursuing-strategic-opportu": {
+      "firstSeen": "2022-06-30",
+      "abstractSeen": "2022-06-30"
+    },
+    "2022-the-us-rebalancing-from-europe-to-the-indo-pacific-risks-for-deterrence-failure": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-trade-offs-in-the-use-of-military-power-lessons-learned-from-french-military-ope": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-un-hyping-hypersonic-weapons": {
+      "firstSeen": "2022-06-30",
+      "abstractSeen": "2022-06-30"
+    },
+    "2022-understanding-nato-entanglement-in-non-member-conflicts-evidence-from-bosnia-199": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-unpacking-cyber-affordances-in-the-context-of-state-cybercrime-a-criminological": {
+      "firstSeen": "2022-06-30",
+      "abstractSeen": "2022-06-30"
+    },
+    "2022-veterans-novices-and-patterns-of-rebel-recruitment": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-visualizing-american-military-interventions-abroad": {
+      "firstSeen": "2022-06-30"
+    },
+    "2022-what-does-military-professionalism-mean-a-contested-concept-in-the-post-heroic-s": {
+      "firstSeen": "2022-06-30",
+      "abstractSeen": "2022-06-30"
+    },
+    "2022-why-states-arm-and-why-they-sometimes-do-so-together": {
+      "firstSeen": "2022-06-30"
+    },
+    "2023-a-lesser-evil-why-democracies-struggle-to-respond-to-cyber-enabled-election-inte": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-a-quiet-place-assessing-ssbn-vulnerability-in-the-arctic-ocean": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-alliance-cohesion-and-military-manoeuvres-a-signal-of-deterrence-or-assurance": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-alliance-formation-and-rebel-co-governance-in-north-east-syria-the-case-of-the-p": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-apartheid-south-africa-s-intelligence-failures-angola-1975-and-beyond": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-arms-purchases-in-the-baltic-states-and-transfers-to-ukraine-balancing-national": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-between-manipulation-and-failed-adaptation-the-italian-intelligence-and-the-rise": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-bringing-the-troops-back-home-a-strategy-adaptation-under-adverse-conditions": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-can-passions-help-to-justify-war-the-case-of-revenge-and-fear": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-changing-threat-perceptions-and-american-grand-strategy-evidence-from-maritime-m": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-civilian-control-of-the-military-performance-management-reforms-and-its-effects": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-cognitive-warfare-as-part-of-society-a-never-ending-battle-for-minds": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-credibility-in-crises-how-patrons-reassure-in-crises": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-criminal-governance-amid-the-covid-19-pandemic-in-mexico": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-development-aid-humanitarian-assistance-and-criminal-violence-a-triple-nexus-for": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-effects-of-open-source-satellite-imagery-on-nuclear-verification": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-engine-or-brake-the-franco-german-couple-and-the-future-of-the-european-defence": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-eu-arms-collaboration-and-procurement-the-impact-of-the-war-in-ukraine": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-european-approaches-to-chinese-foreign-policy-a-text-as-data-approach": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-from-the-bottom-up-ai-and-military-officers-in-defence-alliances": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-how-russia-s-war-on-ukraine-has-an-impact-on-the-eu-s-nuclear-disarmament-policy": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-in-the-crevices-of-the-state-criminal-governance-in-uruguay": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-industries-of-sovereignty-strategic-autonomy-defence-industrial-interests-and-th": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-intelligence-under-dictatorship-and-democracy": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-mightier-yet-explaining-british-military-underconfidence-in-reference-to-anglo-a": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-military-assistance-within-the-framework-of-the-defence-of-the-liberal-internati": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-must-the-drone-always-get-through-coercion-and-one-way-attack-uavs-in-ukraine-an": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-nato-and-multi-domain-operations-between-deterrence-and-conflict": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-nato-s-nordic-neophytes-sweden-and-finland-s-accession-to-nato": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-ngo-military-cooperation-and-civilian-protection-policies": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-not-war-nor-peace-regulating-the-use-of-force-in-the-context-of-large-scale-crim": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-numbers-prediction-and-cyberwar-why-integrating-the-cyber-domain-in-kinetic-warg": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-on-the-institutional-battlefield-of-intelligence-oversight-the-case-of-questione": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-outsourcing-security-managing-risk-national-security-states-and-the-privatisatio": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-overcoming-obstacles-reflections-on-creating-a-cross-national-experimental-cyber": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-parliamentary-acceptance-of-eu-military-operations-in-member-states-beyond-rubbe": {
+      "firstSeen": "2023-06-22"
+    },
+    "2023-populist-publics-and-nuclear-weapons-does-populism-predict-higher-nuclear-use-wi": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-proliferation-related-legislation-in-the-eu-is-there-a-need-for-further-converge": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-re-bordering-nato-the-strategic-dilemmas-of-yesterday-and-tomorrow": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-rebel-governance-as-self-legitimation-the-farc-s-justifications-of-governance": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-resident-resistance-the-territorial-logic-of-denouncing-organized-crime-groups-i": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-the-allied-defence-dilemma-balancing-between-autonomy-and-alliance-cohesion": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-the-approach-avoidance-tension-a-fundamental-question-of-military": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-the-complexity-of-the-grey-zone-the-experience-of-military-intelligence-on-nato": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-the-failure-before-1973-israel-s-intelligence-failure-in-1967": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-the-intelligence-community-as-a-normative-actor-under-international-law": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-the-normative-power-of-the-factual-how-state-practice-shapes-understandings-abou": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-the-politics-of-sympathy-among-nato-member-states": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-the-psychological-social-and-strategic-value-of-care-during-crises-and-its-limit": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-the-role-of-national-secondments-for-intelligence-support-to-eu-foreign-policyma": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-the-russian-invasion-and-the-changing-character-of-proxy-war-toward-a-comprehens": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-the-shock-of-the-old-in-the-russo-ukraine-war-misunderstanding-continuity-change": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-the-united-states-and-the-eternal-dream-of-missile-defence": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-the-us-hegemony-dilemma-and-european-missile-production": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-us-preponderance-in-nato-the-role-of-logistics-intelligence-training-cyber-and-c": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-violent-and-non-violent-mobilization-in-criminal-wars-current-determinants-and-h": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-what-are-defence-agencies-supposed-to-do-oversee-or-protect-the-armed-force": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2023-who-supports-policy-interventions-to-terminate-civil-wars-survey-evidence-from-t": {
+      "firstSeen": "2023-06-22"
+    },
+    "2023-winning-by-adapting-battlefield-adaptation-in-the-long-russo-ukrainian-war": {
+      "firstSeen": "2023-06-22",
+      "abstractSeen": "2023-06-22"
+    },
+    "2024-ai-private-corporate-experts-and-the-competence-control-dilemma-in-military-inno": {
+      "firstSeen": "2024-06-27"
+    },
+    "2024-artificial-intelligence-and-non-linearity-an-analysis-of-the-limitations-of-stat": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-business-power-and-the-quiet-politics-of-military-innovation-in-cyberspace": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-can-there-be-a-responsible-nuclear-weapon-state-understanding-the-agency-and-mor": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-changing-expertise-knowledge-production-through-artificial-intelligence-in-the-m": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-contesting-zeitenwende-political-contestation-and-partisan-entrapment": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-defence-offsets-and-the-global-arms-trade-explaining-cross-national-variations": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-developing-digital-peripheries-for-strategic-advantage-competitive-cyber-capacit": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-envisioning-critical-strategic-studies": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-eu-s-use-of-private-military-and-security-companies-services-filling-the-capabil": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-european-defence-policy-changes-in-response-to-russia-s-2022-invasion-of-ukraine": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-exploring-how-the-emotion-of-interest-shapes-strategic-studies-scholarship-and-h": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-exploring-the-cybersecurity-policy-design-space-in-the-eu-a-mixed-methods-approa": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-getting-the-revolution-in-intelligence-affairs-right-technological-innovation-or": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-guarding-the-maritime-highways-europe-s-role-in-the-indo-pacific": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-hybrid-axis-of-evil-policing-of-organised-crime-and-state-threats-in-global-port": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-in-the-mind-of-the-beholder-a-study-on-coercion-and-the-choice-of-coercive-instr": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-inter-alliance-security-dilemmas-korean-counterforce-systems-and-their-effect-on": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-international-military-assistance-a-historical-and-conceptual-genealogy": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-investigating-perspectives-of-in-security-of-affected-individuals-in-afghanistan": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-military-intervention-in-foreign-policy-making-principal-agent-analysis-of-us-tr": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-multilateral-maritime-exercises-and-strategic-change-the-american-case-and-beyon": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-navigating-the-indo-pacific-a-comparative-analysis-of-asean-and-quad-frameworks": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-organizational-lineage-and-the-diffusion-of-lethal-and-non-lethal-information-be": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-predicting-east-asian-security-competition-in-the-21st-century-a-regional-approa": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-proliferation-not-democratization-open-source-intelligence-and-the-war-in-ukrain": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-public-support-for-arms-control-in-the-third-nuclear-age-new-evidence-from-nato": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-russian-nuclear-roulette-elites-and-public-debates-on-nuclear-weapons-in-moscow": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-sino-russian-joint-military-exercises-in-focus-new-strategic-confluences-in-the": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-small-islands-big-potential-a-taiwan-contingency-alliance-politics-and-the-defen": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-stigmatizing-state-sponsors-of-terrorism-an-evaluation-of-feasibility": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-strategic-sensemaking-scanning-the-military-technological-edge": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-structuring-the-use-of-securitization-by-violent-non-state-actors": {
+      "firstSeen": "2024-06-27"
+    },
+    "2024-technocratic-view-of-nuclear-sharing": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-technological-innovation-and-national-security-variations-in-public-private-rela": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-temporal-disparities-in-intergenerational-justice-a-comparative-analysis-of-nucl": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-the-eternal-promise-of-missile-defense": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-the-eu-in-the-indo-pacific-a-security-actor-sui-generis": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-the-eu-s-naval-signalling-in-the-indo-pacific": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-the-evolutionary-anthropology-of-war": {
+      "firstSeen": "2024-06-27"
+    },
+    "2024-the-financing-of-contemporary-mercenarism-resources-routes-and-regulation": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-the-inadmissibility-of-nuclear-threats-norm-or-empty-promise": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-the-re-emergence-of-nuclear-weapons-free-zones-in-an-era-of-heightened-conflict": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-the-resilient-body-of-the-state-imaginary-of-cohesive-society-in-pve-and-counter": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-the-role-of-narratives-in-radicalisation-a-critical-examination-of-causality-and": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-the-utility-of-foreign-volunteers-in-ukraine": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-toward-a-novel-conception-of-naval-strategy-for-small-countries": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-trapped-in-the-strategic-trilemma-ukraine-s-role-in-the-black-sea-region-2014-20": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-virtually-inconceivable-foregrounding-the-ontological-dimension-to-cyber-strateg": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-when-does-vladimir-putin-send-troops-to-fight-abroad": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-winning-the-battle-for-hearts-and-minds-u-s-reassurance-during-the-russo-ukraini": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-winning-the-battle-of-adaptation": {
+      "firstSeen": "2024-06-27",
+      "abstractSeen": "2024-06-27"
+    },
+    "2024-zachariah-parcels-michel-wyss-contribution": {
+      "firstSeen": "2024-06-27"
+    },
+    "2025-advancing-authoritarian-alignment-a-systematic-mapping-of-defense-diplomacy-betw": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-assisting-to-win-military-assistance-and-coercion-in-war": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-belgium-s-defence-policy-after-the-invasion-of-ukraine-a-free-rider-s-business-a": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-beyond-exit-examining-proteges-intra-alliance-bargaining-strategies": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-big-tech-at-war-the-infrastructural-politics-of-public-private-relations": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-can-european-defence-cooperation-build-european-deterrence": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-changing-pathways-to-the-bomb": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-common-threat-diverging-responses-explaining-european-states-military-spending-a": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-competitive-cyber-statecraft-of-the-middle-ground-a-neoclassical-realist-model": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-digital-influence-as-a-continuum-how-russia-shapes-georgia-s-information-environ": {
+      "firstSeen": "2025-06-26"
+    },
+    "2025-do-principles-become-agents-security-assistance-between-cooptation-and-orchestra": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-does-preeminence-in-emerging-and-military-technologies-matter-for-international": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-dynamics-of-defense-indigenization-state-private-relations-in-india-s-quest-for": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-examining-the-factors-behind-the-eu-s-defence-innovation-system": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-following-the-algorithmic-path-to-extremism-how-social-network-analysis-can-help": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-from-revolt-to-rule-insurgency-as-proto-state-formation": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-geopolitical-europe-the-european-union-as-a-signaling-actor-in-the-russia-ukrain": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-helping-your-friends-in-need-military-interventions-and-the-reliability-of-defen": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-informal-is-the-new-normal-command-and-control-as-the-choice-for-the-functional": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-infrastructural-frontlines-of-dis-information-data-territoriality-in-the-russian": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-innovation-and-engineering-at-the-front-the-ukrainian-case-of-unmanned-systems": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-negotiation-of-front-ends-and-back-ends-in-nato-military-advisory-missions": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-online-military-influencers-in-a-social-media-age": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-overlapping-ownership-and-foreign-competition-in-early-stage-innovation-evidence": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-paradigm-paradox-how-emerging-cybersecurity-communities-moderate-eu-governance": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-private-military-companies-as-proxy-forces-in-international-politics-with-specia": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-reanimating-grand-strategy-in-volatile-times": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-reassessing-european-security-the-drivers-of-nato-s-response-to-hybrid-threats-s": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-regulatory-asymmetries-in-cryptocurrency-governance-implications-for-sanctions-e": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-russian-countertrade-as-a-mechanism-for-promoting-arms-sales-and-diplomatic-infl": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-small-state-defense-cooperation-and-security-strategies-in-a-changing-global-ord": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-strategic-stability-without-arms-control": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-sweden-and-the-league-of-nations-the-partisan-contestation-of-national-identity": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-the-delegation-of-defense-and-security-responsibilities-at-sea-in-historical-per": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-the-erosion-of-traditional-deterrence-space-as-a-case-study-in-military-transfor": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-the-eu-s-collective-defence-framework-a-law-in-context-analysis-of-article-42-7": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-the-resistance-operating-concept-s-deterrent-to-impress-distinct-causal-theories": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-the-soviet-union-russia-and-the-spread-of-the-bomb": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-the-strategy-of-subversion-national-security-between-warfare-and-diplomacy": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-the-transparent-battlefield-and-its-implications-for-western-movement-and-maneuv": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-the-universalization-of-the-treaty-on-the-prohibition-of-nuclear-weapons-lessons": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-total-defence-and-transformations-in-the-making-of-european-security": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-we-are-peers-now-states-relations-with-violent-non-state-actors-that-became-stat": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2025-what-s-got-you-so-worried-the-replicator-initiative-and-us-techno-anxieties-in-a": {
+      "firstSeen": "2025-06-26",
+      "abstractSeen": "2025-06-26"
+    },
+    "2026-a-nuclear-war-cannot-be-won-and-must-never-be-fought-analyzing-the-u-s-response": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-a-shadow-in-the-clouds-where-is-germany-s-missile-posture-heading": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-ai-driven-cloud-monitoring-and-cyber-situational-awareness-in-european-digital-i": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-anticipated-failure-why-states-go-to-war-un-der-prepared": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-artistic-resilience-building-in-lithuania-s-local-security-policy": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-beyond-the-state-voluntary-civilian-pro-defence-organisations-and-security-gover": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-bosnia-and-herzegovina-on-the-edge-of-european-stability": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-classical-geopolitics-in-cyberspace-explaining-cyber-state-behaviour-with-power": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-conceptual-inquiry-into-military-deep-operations-a-framework-for-analysis": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-conceptualizing-nuclear-umbrellas": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-cooperation-under-stress-organisational-compatibility-and-nato-eu-cooperation-in": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-criminalising-solidarity-border-securitisation-non-state-actors-and-vernacular-h": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-cyber-risk-logics-and-their-implications-for-cybersecurity": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-cybercrime-ai-resilience-by-design-in-the-information-age-tabletop-evidence-on-a": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-disclosure-and-duplicity-how-technology-influences-international-competition": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-do-parliaments-dream-of-cyber-power-parliamentary-scrutiny-in-the-strategic-doma": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-domestic-politics-and-military-aid-to-ukraine-explaining-disclosure-policies-in": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-eu-s-ontological-security-and-geopolitical-enlargement": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-europe-is-not-a-country-nuclear-patronage-and-eurodeterrence-concerns-in-the-fro": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-explaining-heterogeneity-in-public-support-for-collective-defense-in-nato-eviden": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-filling-the-eu-s-identity-void-from-without-and-within-forging-a-geopolitics-of": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-financial-in-security-tiktok-and-the-far-right-pipeline": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-fortifying-the-eastern-flank-leveraging-historical-lessons-to-create-effective-d": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-fragile-control-how-de-facto-states-degrade-nuclear-security-in-the-donbas": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-from-national-incident-response-to-zero-trust-bridging-cyber-defence-policy-and": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-from-normalisation-to-strategic-stabilisation-geopolitisation-of-the-pristina-be": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-from-platforms-to-networks-the-political-hurdles-of-transitioning-to-data-centri": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-from-precision-to-existential-risk-hypersonic-weapons-and-the-erosion-of-the-con": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-from-privateers-to-private-maritime-security-irregular-maritime-actors-and-the-l": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-from-rebels-to-state-s-justice-post-conflict-justice-choices-in-2026-syria": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-from-rogue-states-to-russia-how-threat-perceptions-drove-congressional-support-f": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-gendering-non-traditional-security-a-comparative-analysis-of-sexual-violence-rec": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-geopoliticisation-of-eu-enlargement-in-the-western-balkans-and-eastern-partnersh": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-governing-cybersecurity-and-the-politics-of-state-control-in-the-digital-age": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-influence-as-strategic-infrastructure-china-nato-and-competition-below-the-thres": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-interpreting-counterterrorism-in-african-conflict-management": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-knowing-cybersecurity-the-epistemic-infrastructural-power-of-big-tech": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-learning-from-ukraine-the-west-must-be-prepared-for-positional-warfare": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-legitimating-the-bomb-us-efforts-to-manage-public-information-about-nuclear-weap": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-living-with-the-nuclear-spatio-temporal-entanglements-nuclear-cultures-and-the-a": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-mapping-plural-visions-of-peace-the-peace-cube-as-an-analytical-framework": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-narrative-amplification-plot-structures-and-emotions-on-vkontakte-tsargrad-s-pop": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-nato-as-an-innovation-hub-how-emerging-and-disruptive-technologies-are-reshaping": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-no-woman-s-land-securitisation-of-female-forced-migration-in-afghanistan": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-nuclear-futures-utopias-and-the-case-for-a-renewed-strict-sufficiency": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-patterns-of-foreign-nuclear-deployment-understanding-host-state-refusal-in-nato": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-peace-as-stalemate-bosnia-and-herzegovina-forever-missions-and-the-strategic-log": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-pitfalls-of-transitional-justice-and-in-security-in-the-western-balkans-case-stu": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-plus-ca-change-continuity-in-the-french-nuclear-approach": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-quantum-resilient-satin-and-european-digital-sovereignty": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-reconceptualizing-nuclear-deterrence-and-national-identity-the-cases-of-finland": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-revisiting-multi-domain-operations-a-historical-reflection-on-the-respective-rol": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-ritual-deterrence-magic-strategies-and-nuclear-war-in-europe": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-selling-the-future-of-war-discursive-power-and-military-innovation": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-sending-the-wrong-signals-when-armaments-worry-allies": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-small-states-in-the-current-international-war-agenda-between-shelter-seeking-and": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-socialized-to-cooperate-foreign-military-training-and-coordination-in-un-peaceke": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-speak-through-the-nocturne-navigating-strategic-interest-in-intelligence-diploma": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-state-fragility-power-sharing-institutions-and-group-inequalities": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-telegram-in-russia-s-information-strategy-evidence-from-serbia": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-the-confidence-trap-leader-advisor-deliberations-and-the-making-of-in-credible-t": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-the-gender-politics-of-lio-contestation-a-research-agenda": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-the-self-reliance-dilemma-in-conventional-weapons-when-does-india-innovate-inste": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-the-strategic-logic-of-violence-during-negotiations": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-upload-pending-tradeoffs-uncertainty-and-damage-limitation-in-a-multipolar-age": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-vectorial-analysis-of-hybrid-warfare-directionality-interaction-and-systemic-eff": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-water-in-security-and-climate-migration-in-iraq-analyzing-socio-economic-threats": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-western-balkan-criminal-groups-and-the-transformation-of-regional-security": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-what-are-tactical-nuclear-weapons-for-the-multiple-logics-of-nato-s-theater-nucl": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "2026-working-in-the-margins-can-small-state-special-operations-contribute-to-deterren": {
+      "firstSeen": "2026-06-11",
+      "abstractSeen": "2026-06-11"
+    },
+    "JPW2019-a-critical-appraisal-of-visegrad-4-security-potential": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "JPW2019-change-in-burden-sharing-mind-set-in-nato": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "JPW2019-citizens-attitudes-to-edc-in-uk-france-and-germany": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "JPW2019-collaborative-arms-procurement": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "JPW2019-european-allies-response-to-the-trump-presidency": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "JPW2019-explaining-the-us-decision-to-enlarge-nato": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "JPW2019-nato-disagreement-on-threat-perception-and-strategic-priorities": {
+      "firstSeen": "2019-06-13"
+    },
+    "JPW2019-nato-s-360o-approach-reflective-of-internal-division": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "JPW2019-the-british-and-german-attitudes-to-russia": {
+      "firstSeen": "2019-06-13",
+      "abstractSeen": "2019-06-13"
+    },
+    "JPW2019-the-rise-of-illiberalism-and-potential-paths-to-nato-s-disintegration": {
+      "firstSeen": "2019-06-13"
+    },
+    "Ukraine-keynote-address": {
+      "firstSeen": "2024-06-27"
+    },
+    "Ukraine-roundtable-contribution": {
+      "firstSeen": "2024-06-27"
+    },
+    "joint-2024-bioarchaeological-approaches-to-gendered-violence-in-prehistoric-europe": {
+      "firstSeen": "2024-06-27"
+    },
+    "joint-2024-chimpanzee-communication-in-conflict-and-cooperation-implications-for-the-evolut": {
+      "firstSeen": "2024-06-27"
+    },
+    "joint-2024-clothing-and-deception-in-forager-warfare": {
+      "firstSeen": "2024-06-27"
+    },
+    "joint-2024-cooperation-and-conflict-in-chimpanzees-and-bonobos": {
+      "firstSeen": "2024-06-27"
+    },
+    "joint-2024-foreign-policy-before-the-state-diplomatic-practices-in-prehistory": {
+      "firstSeen": "2024-06-27"
+    },
+    "joint-2024-intergroup-conflict-in-humans-and-other-species": {
+      "firstSeen": "2024-06-27"
+    },
+    "joint-2024-the-peace-violence-paradox-in-the-human-species-implications-for-international-r": {
+      "firstSeen": "2024-06-27"
+    },
+    "joint-2024-unwritten-testimony-from-the-past-uncovering-evidence-of-prehistoric-violence-an": {
+      "firstSeen": "2024-06-27"
+    }
+  }
+}

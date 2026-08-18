@@ -72,7 +72,7 @@ fi
 "$PY3" - "$SITE_ROOT" $INTERNAL_ONLY $QUIET <<'PY'
 """Inline-Python link checker. Avoids extra deps; portable across
 the maintainer's macOS laptop and Ubuntu CI."""
-import os, re, sys, urllib.parse, urllib.request, urllib.error, ssl
+import os, re, socket, sys, time, urllib.parse, urllib.request, urllib.error, ssl
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -202,6 +202,15 @@ SKIP_HOSTS = {
                                 # recurring-flake class as the academic hosts
                                 # above; flaked PR #1007's link-check. Skipping
                                 # stops the false-red on every src-touching PR.
+    "www.sanneverschuren.com",  # Board member Sanne Verschuren's personal site,
+                                # linked from her board profile (`/board/...` +
+                                # FR/DE). Identical case to www.hugomeijer.com
+                                # directly above: HTTP 429 to the checker under
+                                # automated load, opens fine for visitors, and
+                                # `curl` gets 200 from a normal machine. Failed
+                                # two of three consecutive runs on PR #1365,
+                                # which is the same false-red this list exists
+                                # to stop.
 }
 
 # Domains skipped together with ALL their subdomains. SKIP_HOSTS matches an
@@ -297,7 +306,7 @@ def _make_ssl_ctx(verify=True):
     return ssl.create_default_context()
 
 
-def check_external(url):
+def check_external(url, _retry=True):
     parsed = urllib.parse.urlparse(url)
     host = parsed.hostname or ""
     if host in SKIP_HOSTS or any(host == d or host.endswith("." + d) for d in SKIP_DOMAINS):
@@ -323,6 +332,18 @@ def check_external(url):
                 return (url, _do("GET", _make_ssl_ctx(verify=True)))
             except Exception as e2:
                 return (url, f"err: {e2}")
+        # A 5xx is the server faltering, not the link being wrong. Academic
+        # and institutional hosts routinely 503 under automated load while
+        # serving visitors perfectly well, and with no retry a single blip
+        # turns into a hard CI red on an unrelated PR. That is how the
+        # SKIP_HOSTS list above accumulated gess.ethz.ch and www.cnil.fr:
+        # neither is broken, both just flaked once. Retry once after a pause
+        # and take the second answer, so a genuine outage still fails (both
+        # attempts 5xx) while a blip does not. Preferred over adding hosts to
+        # the skip list, which trades a false red for a permanent blind spot.
+        if 500 <= e.code < 600 and _retry:
+            time.sleep(3)
+            return check_external(url, _retry=False)
         return (url, f"HTTP {e.code}")
     except urllib.error.URLError as e:
         # On macOS the default Python install often ships with an
@@ -347,7 +368,27 @@ def check_external(url):
                 return (url, _do(method, _make_ssl_ctx(verify=False)))
             except Exception as e2:
                 return (url, f"err: {e2.__class__.__name__}: {e2}")
+        # A connect timeout arrives wrapped in URLError; a read timeout does
+        # not (see the TimeoutError branch below). Both retry.
+        if _retry and isinstance(getattr(e, "reason", None), (TimeoutError, socket.timeout)):
+            time.sleep(3)
+            return check_external(url, _retry=False)
         return (url, f"err: {e.__class__.__name__}: {e}")
+    except (TimeoutError, socket.timeout):
+        # A timeout is the same class of flake as a 5xx: the host is reachable,
+        # it just did not answer inside 15s under a burst. #1282 added the 5xx
+        # retry and stopped there, so a timeout still failed a PR outright —
+        # which is what took #1291 red on hal.science, a link with nothing to
+        # do with that PR.
+        #
+        # This needs its own branch: urlopen raises a bare socket.timeout on a
+        # read timeout rather than wrapping it in URLError, so it lands in the
+        # generic handler below. Verified against a server that hangs past the
+        # client timeout — without this branch, no retry fires at all.
+        if _retry:
+            time.sleep(3)
+            return check_external(url, _retry=False)
+        return (url, "err: timed out twice")
     except Exception as e:
         return (url, f"err: {e.__class__.__name__}: {e}")
 

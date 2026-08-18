@@ -141,6 +141,7 @@ const conferences = [
     startDate: "2025-06-26",
     endDate: "2025-06-27",
     city: "Thessaloniki",
+    cityLabel: { fr: "Thessalonique", de: "Thessaloniki" },
     country: "Greece",
     venue: {
       en: "University of Macedonia",
@@ -163,6 +164,7 @@ const conferences = [
     startDate: "2024-06-27",
     endDate: "2024-06-28",
     city: "Prague",
+    cityLabel: { fr: "Prague", de: "Prag" },
     country: "Czech Republic",
     venue: {
       en: "Charles University",
@@ -187,6 +189,7 @@ const conferences = [
     startDate: "2023-06-22",
     endDate: "2023-06-23",
     city: "Barcelona",
+    cityLabel: { fr: "Barcelone", de: "Barcelona" },
     country: "Spain",
     venue: {
       en: "Barcelona, Spain",
@@ -232,6 +235,7 @@ const conferences = [
     startDate: "2021-09-03",
     endDate: "2021-09-04",
     city: "Lisbon",
+    cityLabel: { fr: "Lisbonne", de: "Lissabon" },
     country: "Portugal",
     venue: {
       en: "Lisbon, Portugal",
@@ -301,9 +305,48 @@ const conferences = [
     programmePdf: "Programme2019.pdf",
     hasOwnPage: true,
   },
-  // The 2017 and 2018 conferences are kept in the historical-image
-  // section at the bottom of past.html — they predate the standalone
-  // /YYYY.html convention. Not listed here.
+  {
+    slug: "2018",
+    year: 2018,
+    ordinal: 2,
+    startDate: "2018-06-21",
+    endDate: "2018-06-22",
+    city: "Paris",
+    country: "France",
+    venue: {
+      en: "University Panthéon-Assas (Paris 2), Paris",
+      fr: "Université Panthéon-Assas (Paris 2), Paris",
+      de: "Université Panthéon-Assas (Paris 2), Paris",
+    },
+    archiveMeta: {
+      en: "2nd Annual Conference · University Panthéon-Assas (Paris 2)",
+      fr: "2e conférence annuelle · Université Panthéon-Assas (Paris 2)",
+      de: "2. Jahreskonferenz · Université Panthéon-Assas (Paris 2)",
+    },
+    displayCity: { en: "Paris", fr: "Paris", de: "Paris" },
+    hasOwnPage: true,
+  },
+  {
+    slug: "2017",
+    year: 2017,
+    ordinal: 1,
+    startDate: "2017-01-13",
+    endDate: "2017-01-14",
+    city: "Paris",
+    country: "France",
+    venue: {
+      en: "University Panthéon-Assas (Paris 2), Paris",
+      fr: "Université Panthéon-Assas (Paris 2), Paris",
+      de: "Université Panthéon-Assas (Paris 2), Paris",
+    },
+    archiveMeta: {
+      en: "Inaugural Conference · University Panthéon-Assas (Paris 2)",
+      fr: "Conférence inaugurale · Université Panthéon-Assas (Paris 2)",
+      de: "Auftaktkonferenz · Université Panthéon-Assas (Paris 2)",
+    },
+    displayCity: { en: "Paris", fr: "Paris", de: "Paris" },
+    hasOwnPage: true,
+  },
 ];
 
 // Build-time cut-off. Eleventy re-runs this whenever the build runs;
@@ -325,11 +368,38 @@ const past = conferences
 const byYear = Object.fromEntries(conferences.map((c) => [String(c.year), c]));
 
 // Distinct numbered editions, for display counts like /initiative's
-// "N annual conferences" stat. Excludes the deferred 2020 (folded into
-// the 2021 edition, `deferred: true`) and adds the two founding-era
-// editions (2017, 2018) that have their own pages but predate this
-// array. Today: 2017, 2018, 2019, 2021, 2022, 2023, 2024, 2025, 2026 = 9.
-const editionCount = conferences.filter((c) => !c.deferred).length + 2;
+// "N annual conferences" stat. Excludes only the deferred 2020, folded
+// into the 2021 edition (`deferred: true`).
+//
+// This used to carry a `+ 2` for the founding-era 2017 and 2018 editions,
+// which had their own pages but sat outside this array. They are entries
+// now, so the offset would double-count them.
+// Today: 2017, 2018, 2019, 2021, 2022, 2023, 2024, 2025, 2026 = 9.
+const editionCount = conferences.filter((c) => !c.deferred).length;
+
+// The editions listed in the Conference dropdown of the primary nav
+// (#1319): the upcoming one when there is one, then the two most recent
+// completed editions. Assembled here rather than in nav.njk so the
+// template stays a plain loop, and so the yearly rollover moves the nav
+// on its own. The deferred 2020 entry is skipped — it has no city and no
+// page of its own.
+const navEditions = [
+  ...(upcomingOrCurrent[0] ? [{ ...upcomingOrCurrent[0], isNext: true }] : []),
+  ...past.filter((c) => !c.deferred).slice(0, 2),
+].map((c) => ({
+  slug: c.slug,
+  // Keyed by locale, because a handful of host cities are spelled
+  // differently across the three (Thessalonique, Prag, Lisbonne). Entries
+  // whose name is the same everywhere carry no `cityLabel` and fall back
+  // to `city`.
+  label: Object.fromEntries(
+    ["en", "fr", "de"].map((L) => [
+      L,
+      `${c.year} · ${(c.cityLabel && c.cityLabel[L]) || c.city}`,
+    ]),
+  ),
+  isNext: Boolean(c.isNext),
+}));
 
 module.exports = {
   all: conferences,
@@ -337,6 +407,7 @@ module.exports = {
   next: upcomingOrCurrent[0] || null,   // closest upcoming (or in-progress)
   upcoming: upcomingOrCurrent,
   past,
+  navEditions,
   editionCount,
   today,
 };

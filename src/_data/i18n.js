@@ -63,16 +63,35 @@ const locales = {
     },
     htmlNameInOwnLang: "English",
 
+    // Nav labels, keyed to `key` in site.nav. Top-level items first, then
+    // the group children in the order they appear in the panels (#1319).
     nav: {
       home: "Home",
-      conferences: "Annual Conference",
-      navigator: "Navigator",
-      programmes: "Activities",
-      initiative: "The Initiative",
-      people: "People",
-      anthology: "Anthology",
-      events: "Events",
       brandLabel: "EISS",
+
+      conferences: "Conference",
+      anthology: "Anthology",
+      activities: "Activities",
+      about: "About",
+      getInvolved: "Get involved",
+
+      nextEdition: "Next edition",
+      allPast: "All past conferences",
+      events: "All activities",
+      netsec: "NetSec Summer School",
+      euroswamos: "Euro-SWAMOS",
+      coercion: "Coercive Statecraft",
+      globalRisks: "Global Risks Survey",
+      proposeEvent: "Propose an event",
+      initiative: "The Initiative",
+      people: "The People",
+      news: "News",
+      prizes: "European Security Studies Prize",
+      publications: "Members' publications",
+      pressKit: "Press kit",
+      membership: "Membership",
+      internship: "Volunteering and internships",
+      newsletter: "Newsletter",
     },
     skipLink: "Skip to content",
 
@@ -192,7 +211,7 @@ const locales = {
     footer: {
       tagline: "The largest and most diverse European gathering of scholars and practitioners on security issues.",
       conferencesHeading: "Conferences",
-      programmesHeading: "Programmes",
+      programmesHeading: "Activities",
       aboutHeading: "About",
       conferencesItems: {
         c2026: "2026 — Stockholm",
@@ -211,7 +230,9 @@ const locales = {
         initiative: "The Initiative",
         people: "The People",
         membership: "Membership",
+        funding: "Funding",
         internship: "Volunteering",
+        blog: "Blog",
         newsletter: "Newsletter",
         contact: "Contact",
       },
@@ -223,7 +244,7 @@ const locales = {
       },
       copyright: "© Copyright 2018 — {{year}} European Initiative for Security Studies — All rights reserved | Tous droits réservés. Any third-party image and content remains the property of its owners as indicated in their respective description, unless specified otherwise below.",
       imageCredits: "Euro-SWAMOS images © Marine Nationale, EEAS, État-Major des Armées, NATO CCDCOE. Prague image cc-by-2.0 Moyan Brenn. Barcelona image royalty-free stock photo (ID: 1795930126 Pajor Pawel).",
-      legalStatus: "EISS is a registered charity (W751263001) under French law. | L'EISS est une association loi 1901 enregistrée sous le numéro W751263001 au Répertoire National des Associations, et appartenant au champ de l'économie sociale et solidaire.",
+      legalStatus: "EISS is a non-profit association under the French law of 1901, registered as W751263001. | L'EISS est une association loi 1901 enregistrée sous le numéro W751263001 au Répertoire National des Associations, et appartenant au champ de l'économie sociale et solidaire.",
       legalLinks: {
         terms: "Terms and Conditions",
         privacy: "Privacy Policy",
@@ -239,6 +260,17 @@ const locales = {
       // name; the linked label is constant.
       authorship: {
         prefix: "Site designed and built by",
+        authorName: "Dr Arthur PB Laudrain",
+        authorSlug: "arthur-laudrain",
+      },
+      // Design credit for the Anthology and the Atlas (#1228). Deliberately
+      // the same name and slug as footer.authorship: it is the same person and
+      // the same convention, and two different names would read as competing
+      // claims. Kept on the pages themselves because the site-wide footer
+      // credit is at the level nobody reads it at.
+      credit: {
+        anthology: "Anthology designed and built by",
+        atlas: "Atlas designed and built by",
         authorName: "Dr Arthur PB Laudrain",
         authorSlug: "arthur-laudrain",
       },
@@ -465,7 +497,7 @@ const locales = {
       // reuse the speakers.* and papers.* blocks below.
       eyebrow: "EISS conferences & workshops",
       title: "The European Security Studies Anthology",
-      lead: "Every paper presented at an EISS annual conference or workshop since 2017, and everyone who presented it. Many now carry an abstract, citation details and a link to the published version where we have one. Browse by person or by paper, and filter by year or theme.",
+      lead: "Every paper presented at an EISS conference or workshop since 2017, and everyone who presented it. Many carry an abstract, citation details and a link to the published version. Browse by person or by paper, and filter by year or theme.",
       byPerson: "By person",
       byPaper: "By paper",
       promoBody: "The full record of EISS scholarship: every speaker and every paper from our annual conferences and workshops since 2017, with abstracts, citation details and links to the published versions. Browse by person or by paper.",
@@ -568,6 +600,10 @@ const locales = {
       resultsMany: "{n} papers",
       noMatch: "No papers match.",
       matching: 'matching "{q}"',
+      exportLabel: "Export these references",
+      exportBib: "Download .bib",
+      exportRis: "Download .ris",
+      exportHint: "Downloads the references currently listed, in the order shown."
     },
 
     outputs: {
@@ -648,14 +684,32 @@ const locales = {
 
     nav: {
       home: "Accueil",
-      conferences: "Conférence annuelle",
-      navigator: "Navigateur",
-      programmes: "Activités",
+      brandLabel: "EISS",
+
+      conferences: "Conférence",
+      anthology: "Anthologie",
+      activities: "Activités",
+      about: "À propos",
+      getInvolved: "Participer",
+
+      nextEdition: "Prochaine édition",
+      allPast: "Toutes les conférences passées",
+      events: "Toutes les activités",
+      netsec: "École d'été NetSec",
+      euroswamos: "Euro-SWAMOS",
+      coercion: "Coercition étatique",
+      globalRisks: "Sondage Global Risks",
+      proposeEvent: "Proposer un événement",
       initiative: "L'Initiative",
       people: "L'équipe",
-      anthology: "Anthologie",
-      events: "Événements",
-      brandLabel: "EISS",
+      news: "Actualités",
+      // Le nom du prix n'est pas traduit : c'est son intitulé officiel.
+      prizes: "European Security Studies Prize",
+      publications: "Publications des membres",
+      pressKit: "Kit presse",
+      membership: "Adhésion",
+      internship: "Bénévolat et stages",
+      newsletter: "Lettre d'information",
     },
     skipLink: "Aller au contenu",
 
@@ -775,7 +829,7 @@ const locales = {
     footer: {
       tagline: "Le plus grand et le plus divers rassemblement européen de chercheurs et praticiens sur les questions de sécurité.",
       conferencesHeading: "Conférences",
-      programmesHeading: "Programmes",
+      programmesHeading: "Activités",
       aboutHeading: "À propos",
       conferencesItems: {
         c2026: "2026 — Stockholm",
@@ -794,7 +848,9 @@ const locales = {
         initiative: "L'Initiative",
         people: "L'équipe",
         membership: "Adhésion",
+        funding: "Financement",
         internship: "Bénévolat",
+        blog: "Blog",
         newsletter: "Lettre d'information",
         contact: "Contact",
       },
@@ -806,7 +862,7 @@ const locales = {
       },
       copyright: "© Copyright 2018 — {{year}} European Initiative for Security Studies — All rights reserved | Tous droits réservés. Toute image et tout contenu tiers restent la propriété de leurs détenteurs respectifs comme indiqué dans leur description, sauf mention contraire ci-dessous.",
       imageCredits: "Images Euro-SWAMOS © Marine Nationale, EEAS, État-Major des Armées, OTAN CCDCOE. Image de Prague cc-by-2.0 Moyan Brenn. Image de Barcelone photo de stock libre de droits (ID : 1795930126 Pajor Pawel).",
-      legalStatus: "EISS is a registered charity (W751263001) under French law. | L'EISS est une association loi 1901 enregistrée sous le numéro W751263001 au Répertoire National des Associations, et appartenant au champ de l'économie sociale et solidaire.",
+      legalStatus: "EISS is a non-profit association under the French law of 1901, registered as W751263001. | L'EISS est une association loi 1901 enregistrée sous le numéro W751263001 au Répertoire National des Associations, et appartenant au champ de l'économie sociale et solidaire.",
       legalLinks: {
         terms: "Conditions générales",
         privacy: "Politique de confidentialité",
@@ -818,6 +874,12 @@ const locales = {
       },
       authorship: {
         prefix: "Site conçu et développé par",
+        authorName: "Dr Arthur PB Laudrain",
+        authorSlug: "arthur-laudrain",
+      },
+      credit: {
+        anthology: "Anthologie conçue et développée par",
+        atlas: "Atlas conçu et développé par",
         authorName: "Dr Arthur PB Laudrain",
         authorSlug: "arthur-laudrain",
       },
@@ -974,7 +1036,7 @@ const locales = {
     navigator: {
       eyebrow: "Conférences et ateliers de l'EISS",
       title: "L'Anthologie des études de sécurité européennes",
-      lead: "Chaque communication présentée lors d'une conférence annuelle ou d'un atelier de l'EISS depuis 2017, et toutes les personnes qui les ont présentées. Beaucoup comportent désormais un résumé, des références de citation et un lien vers la version publiée lorsque nous en disposons. Parcourez par personne ou par communication, et filtrez par année ou par thème.",
+      lead: "Chaque communication présentée lors d'une conférence ou d'un atelier de l'EISS depuis 2017, et toutes les personnes qui les ont présentées. Beaucoup comportent un résumé, des références de citation et un lien vers la version publiée. Parcourez par personne ou par communication, et filtrez par année ou par thème.",
       byPerson: "Par personne",
       byPaper: "Par communication",
       promoBody: "Le relevé complet des travaux de l'EISS : chaque intervenant et chaque communication de nos conférences annuelles et ateliers depuis 2017, avec les résumés, les références de citation et des liens vers les versions publiées. Parcourez par personne ou par communication.",
@@ -1053,6 +1115,10 @@ const locales = {
       resultsMany: "{n} communications",
       noMatch: "Aucune communication ne correspond.",
       matching: 'correspondant à « {q} »',
+      exportLabel: "Exporter ces références",
+      exportBib: "Télécharger .bib",
+      exportRis: "Télécharger .ris",
+      exportHint: "Télécharge les références actuellement affichées, dans l'ordre indiqué."
     },
 
     outputs: {
@@ -1128,14 +1194,32 @@ const locales = {
 
     nav: {
       home: "Startseite",
-      conferences: "Jahreskonferenz",
-      navigator: "Navigator",
-      programmes: "Aktivitäten",
-      initiative: "Die Initiative",
-      people: "Personen",
-      anthology: "Anthologie",
-      events: "Veranstaltungen",
       brandLabel: "EISS",
+
+      conferences: "Konferenz",
+      anthology: "Anthologie",
+      activities: "Aktivitäten",
+      about: "Über uns",
+      getInvolved: "Mitmachen",
+
+      nextEdition: "Nächste Ausgabe",
+      allPast: "Alle vergangenen Konferenzen",
+      events: "Alle Aktivitäten",
+      netsec: "NetSec Sommerschule",
+      euroswamos: "Euro-SWAMOS",
+      coercion: "Coercive Statecraft",
+      globalRisks: "Global Risks-Umfrage",
+      proposeEvent: "Veranstaltung vorschlagen",
+      initiative: "Die Initiative",
+      people: "Die Personen",
+      news: "Aktuelles",
+      // Der Name des Preises bleibt unübersetzt: das ist seine offizielle Bezeichnung.
+      prizes: "European Security Studies Prize",
+      publications: "Publikationen der Mitglieder",
+      pressKit: "Pressekit",
+      membership: "Mitgliedschaft",
+      internship: "Ehrenamt und Praktika",
+      newsletter: "Newsletter",
     },
     skipLink: "Zum Inhalt springen",
 
@@ -1255,7 +1339,7 @@ const locales = {
     footer: {
       tagline: "Die größte und vielfältigste europäische Versammlung von Wissenschaftlern und Praktikern zu Sicherheitsfragen.",
       conferencesHeading: "Konferenzen",
-      programmesHeading: "Programme",
+      programmesHeading: "Aktivitäten",
       aboutHeading: "Über uns",
       conferencesItems: {
         c2026: "2026 — Stockholm",
@@ -1274,7 +1358,9 @@ const locales = {
         initiative: "Die Initiative",
         people: "Die Personen",
         membership: "Mitgliedschaft",
+        funding: "Finanzierung",
         internship: "Ehrenamt",
+        blog: "Blog",
         newsletter: "Newsletter",
         contact: "Kontakt",
       },
@@ -1286,7 +1372,7 @@ const locales = {
       },
       copyright: "© Copyright 2018 — {{year}} European Initiative for Security Studies — All rights reserved | Tous droits réservés. Alle Drittanbieter-Bilder und -Inhalte bleiben das Eigentum ihrer jeweiligen Besitzer, wie in ihrer Beschreibung angegeben, sofern nicht anders unten vermerkt.",
       imageCredits: "Euro-SWAMOS Bilder © Marine Nationale, EEAS, État-Major des Armées, NATO CCDCOE. Prag-Bild cc-by-2.0 Moyan Brenn. Barcelona-Bild lizenzfreies Stockfoto (ID: 1795930126 Pajor Pawel).",
-      legalStatus: "EISS is a registered charity (W751263001) under French law. | L'EISS est une association loi 1901 enregistrée sous le numéro W751263001 au Répertoire National des Associations, et appartenant au champ de l'économie sociale et solidaire.",
+      legalStatus: "EISS is a non-profit association under the French law of 1901, registered as W751263001. | L'EISS est une association loi 1901 enregistrée sous le numéro W751263001 au Répertoire National des Associations, et appartenant au champ de l'économie sociale et solidaire.",
       legalLinks: {
         terms: "Allgemeine Geschäftsbedingungen",
         privacy: "Datenschutzerklärung",
@@ -1298,6 +1384,12 @@ const locales = {
       },
       authorship: {
         prefix: "Website konzipiert und entwickelt von",
+        authorName: "Dr Arthur PB Laudrain",
+        authorSlug: "arthur-laudrain",
+      },
+      credit: {
+        anthology: "Anthologie konzipiert und entwickelt von",
+        atlas: "Atlas konzipiert und entwickelt von",
         authorName: "Dr Arthur PB Laudrain",
         authorSlug: "arthur-laudrain",
       },
@@ -1454,7 +1546,7 @@ const locales = {
     navigator: {
       eyebrow: "EISS-Konferenzen und -Workshops",
       title: "Die Anthologie der europäischen Sicherheitsstudien",
-      lead: "Jeder Beitrag, der seit 2017 auf einer EISS-Jahreskonferenz oder einem Workshop vorgestellt wurde, und alle, die ihn vorgestellt haben. Viele tragen inzwischen ein Abstract, Zitationsangaben und einen Link zur veröffentlichten Fassung, soweit vorhanden. Durchsuchen Sie nach Person oder nach Beitrag und filtern Sie nach Jahr oder Thema.",
+      lead: "Jeder Beitrag, der seit 2017 auf einer EISS-Konferenz oder einem Workshop vorgestellt wurde, und alle, die ihn vorgestellt haben. Viele tragen ein Abstract, Zitationsangaben und einen Link zur veröffentlichten Fassung. Durchsuchen Sie nach Person oder nach Beitrag und filtern Sie nach Jahr oder Thema.",
       byPerson: "Nach Person",
       byPaper: "Nach Beitrag",
       promoBody: "Die vollständige Aufzeichnung der EISS-Arbeiten: jeder Vortragende und jeder Beitrag unserer Jahreskonferenzen und Workshops seit 2017, mit Abstracts, Zitationsangaben und Links zu den veröffentlichten Fassungen. Durchsuchen Sie nach Person oder nach Beitrag.",
@@ -1533,6 +1625,10 @@ const locales = {
       resultsMany: "{n} Beiträge",
       noMatch: "Keine Beiträge gefunden.",
       matching: 'passend zu „{q}“',
+      exportLabel: "Diese Literaturangaben exportieren",
+      exportBib: ".bib herunterladen",
+      exportRis: ".ris herunterladen",
+      exportHint: "Lädt die derzeit angezeigten Literaturangaben in der dargestellten Reihenfolge herunter."
     },
 
     outputs: {

@@ -106,11 +106,29 @@
   --text: hsl(222 28% 12%);
   --text-muted: hsl(222 16% 34%);
   --text-subtle: hsl(222 13% 40%);
+  /* The constellation blue from the brand mark. Tokenised so the identity
+     is inspectable and assertable alongside every other colour, rather than
+     living only as a literal inside the logo SVGs.
+     Deliberately has NO dark-mode override: the constellation keeps this
+     value on every surface (BRAND.md), which is what lets one asset sit on
+     a light header and a dark hero without forking. Kept as the hex sampled
+     from the brand source rather than converted to hsl(), so the rendered
+     colour is provably unchanged. */
+  --brand-network: #73caff;
   --accent: hsl(203 100% 39%);
   --accent-hover: hsl(203 100% 33%);
   --accent-soft: hsl(203 100% 39% / 0.1);
   --accent-text: hsl(0 0% 100%);
   --warning: hsl(36 95% 50%);
+  /* Anthology Atlas co-author edge. An edge is the constellation line at map
+     scale, so it sits on the brand hue rather than the stray cyan it used to
+     carry. --brand-network itself is too pale to hold a hairline on white, so
+     light mode deepens it. */
+  --atlas-edge: hsl(203 76% 52%);
+  /* Anthology Atlas absence marker: a paper with no Anthology page, or an
+     author with no co-author. A blue-grey on the neutral hue, so it reads as
+     "nothing here yet" rather than as a category of its own. */
+  --atlas-inactive: hsl(220 14% 64%);
   --hero-overlay: linear-gradient(180deg, hsl(220 50% 8% / 0.32) 0%, hsl(220 50% 8% / 0.7) 100%);
 
   --gradient-mesh-1: radial-gradient(800px circle at 12% 8%, hsl(203 88% 70% / 0.22), transparent 55%);
@@ -146,6 +164,8 @@
     --accent-soft: hsl(203 100% 66% / 0.18);
     --accent-text: hsl(222 30% 8%);
     --warning: hsl(36 95% 60%);
+    --atlas-edge: hsl(203 90% 70%);
+    --atlas-inactive: hsl(220 12% 52%);
     --hero-overlay: linear-gradient(180deg, hsl(220 50% 4% / 0.45) 0%, hsl(220 50% 4% / 0.75) 100%);
 
     --shadow-1: 0 1px 2px hsl(0 0% 0% / 0.4), 0 1px 3px hsl(0 0% 0% / 0.3);
@@ -176,6 +196,8 @@
   --accent-soft: hsl(203 100% 66% / 0.18);
   --accent-text: hsl(222 30% 8%);
   --warning: hsl(36 95% 60%);
+  --atlas-edge: hsl(203 90% 70%);
+  --atlas-inactive: hsl(220 12% 52%);
   --hero-overlay: linear-gradient(180deg, hsl(220 50% 4% / 0.45) 0%, hsl(220 50% 4% / 0.75) 100%);
 
   --shadow-1: 0 1px 2px hsl(0 0% 0% / 0.4), 0 1px 3px hsl(0 0% 0% / 0.3);
@@ -251,7 +273,14 @@ a:hover {
 
 a:focus-visible,
 button:focus-visible,
-.btn:focus-visible {
+.btn:focus-visible,
+/* Form controls were falling through to the default browser ring, which is the
+   one thing BRAND.md rules out. They take the same treatment as anchors and
+   buttons so keyboard focus looks identical wherever it lands. */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: var(--radius-xs);
@@ -386,7 +415,11 @@ h4 { font-size: var(--fs-lg); }
 }
 
 .lang-chip[aria-current="true"] {
-  color: white;
+  /* `--accent-text`, not a literal white: `--accent` is a light blue in
+     dark mode, where white text on it measures 2.08:1. The token is
+     white in light and near-black in dark, which is the pairing
+     `.btn-primary` has always used (#1326). */
+  color: var(--accent-text);
   background: var(--accent);
 }
 
@@ -396,6 +429,11 @@ h4 { font-size: var(--fs-lg); }
    locale they landed on. Closes #137. */
 @media (max-width: 480px) {
   .lang-switcher {
+    /* Below 480 px the chips give way to the collapsed `.lang-menu`
+       control (#1322), which carries the same three links and keeps
+       language switching in the bar as #137 requires. The chip styles
+       below stay for the 480-600 px band, where the row still fits. */
+    display: none;
     /* Drop the right margin so the switcher hugs the theme toggle
        (the nav-actions container has its own gap). */
     margin-right: 0;
@@ -416,6 +454,108 @@ h4 { font-size: var(--fs-lg); }
   }
 }
 
+/* ---------- lang menu ----------
+   The phone shape of the language switcher (#1322): one control showing
+   the current language, the other two behind a native `<details>`. Only
+   rendered below 480 px, where the three inline chips cost 114 px the
+   header does not have. It carries `data-nav-group`, so theme.js gives
+   it the same close-on-Escape, close-on-outside-click and close-siblings
+   behaviour as the nav dropdowns, and it works without JS regardless.
+   Sits above the drawer (z-index 61) since both drop from the same bar. */
+.lang-menu {
+  display: none;
+  position: relative;
+}
+
+@media (max-width: 480px) {
+  .lang-menu {
+    display: block;
+  }
+}
+
+.lang-menu-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  /* 44 px to match the .icon-btn circles beside it, which the mobile
+     tap-target sweep lifts to 44 below 480 px. This control only exists
+     below that breakpoint, so it takes the lifted size directly rather
+     than a base size plus an override. */
+  min-block-size: 44px;
+  padding-inline: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--bg-elev);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+.lang-menu-summary::-webkit-details-marker {
+  display: none;
+}
+
+.lang-menu-chevron {
+  inline-size: 12px;
+  block-size: 12px;
+  opacity: 0.6;
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+
+.lang-menu[open] > .lang-menu-summary .lang-menu-chevron {
+  transform: rotate(180deg);
+}
+
+.lang-menu-panel {
+  position: absolute;
+  inset-block-start: calc(100% + var(--space-2));
+  /* Anchored to the trailing edge: the control sits near the right of the
+     bar, so a leading-edge panel would hang off the screen. */
+  inset-inline-end: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-2);
+  min-inline-size: 9rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-3);
+  z-index: 61;
+}
+
+.lang-menu-link {
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.lang-menu-link:hover {
+  color: var(--text);
+  background: var(--accent-soft);
+  text-decoration: none;
+}
+
+/* The current language is tinted rather than filled. `.lang-chip`'s
+   filled pill puts white on `--accent`, which measures 2.08:1 in dark
+   mode, and a new component should not inherit that. `--accent-hover`
+   rather than plain `--accent` for the text: at 15px/600 this is normal
+   text, so it needs 4.5:1, and `--accent` on `--accent-soft` reaches
+   only 3.96:1 in light mode. The darker step clears it in both themes.
+   The chips' own contrast is tracked separately. */
+.lang-menu-link[aria-current="true"] {
+  color: var(--accent-hover);
+  background: var(--accent-soft);
+}
+
 /* ---------- What's New banner ---------- */
 /* Sparingly-used site-wide announcement, driven by
    src/_data/whats-new.json (CLAUDE.md §12). Rendered by JS into
@@ -430,7 +570,9 @@ h4 { font-size: var(--fs-lg); }
   flex-wrap: wrap;
   padding: 11px 22px 11px 18px;
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2, var(--accent)) 100%);
-  color: #fff;
+  /* See the note on .lang-chip: white burns out against the dark-mode
+     accent, so the banner takes the same theme-aware ink (#1326). */
+  color: var(--accent-text);
   font-size: .92rem;
   line-height: 1.35;
   border-bottom: 1px solid rgba(0, 0, 0, .12);
@@ -677,6 +819,16 @@ h4 { font-size: var(--fs-lg); }
   padding-block: var(--space-3);
 }
 
+/* Phones close the row up: the brand iconmark, the collapsed language
+   control and three 44 px buttons leave no slack at 320 px (#1322).
+   Lives here rather than beside the brand rules so `.nav` keeps a single
+   owning section (CLAUDE.md §15). */
+@media (max-width: 480px) {
+  .nav {
+    gap: var(--space-3);
+  }
+}
+
 .nav-brand {
   display: inline-flex;
   align-items: center;
@@ -713,6 +865,16 @@ h4 { font-size: var(--fs-lg); }
   align-items: center;
   color: #007bc6;
   line-height: 0;
+  /* Never let the logo be squeezed (#1322). An inline SVG carries an
+     aspect ratio but no intrinsic size, so its min-content width is 0:
+     as a flex item in a header that has run out of room it collapses to
+     nothing rather than pushing back. That is what happened on phones,
+     where the header logo rendered 0.3 px wide and effectively vanished.
+     Keeping it unshrinkable turns a silent disappearance into a visible
+     overflow, which is the failure you can actually see and fix. The
+     room it needs is freed in the nav and lang-menu sections, where the
+     language chips collapse to one control below 480 px. */
+  flex: none;
 }
 
 .brand-logo svg {
@@ -721,20 +883,15 @@ h4 { font-size: var(--fs-lg); }
   height: 100%;
 }
 
-/* Desktop header: show the constellation + EiSS wordmark lockup. The
-   28 px height matches the prior .nav-brand-mark footprint so the
-   surrounding nav layout doesn't shift on the swap. */
+/* Header: the constellation + EiSS wordmark lockup, at every width.
+   There is no separate phone treatment, because there is nothing to
+   gain from one: `logo-mark.svg` and `logo-lockup.svg` share the
+   viewBox `26.87 43.23 212.42 95.18`, the lockup adding the four
+   wordmark paths inside the same box, so at a given height the mark is
+   exactly as wide as the lockup and the swap only removed the letters.
+   62 px at 28 px tall, and the row fits it down to 320 px. */
 .brand-logo--lockup {
   height: 28px;
-}
-
-/* Mobile header: show just the constellation iconmark. Visible only
-   below the 600 px breakpoint via the media query at the end of this
-   block; the small text label (`.nav-brand-label`) renders alongside
-   so the brand name still appears on phones. */
-.brand-logo--mark {
-  display: none;
-  height: 24px;
 }
 
 /* Footer: the full lockup (constellation + EiSS + tagline) — wider,
@@ -743,22 +900,6 @@ h4 { font-size: var(--fs-lg); }
    tagline at readable size. */
 .brand-logo--footer {
   height: 56px;
-}
-
-/* The localised brand-label text used on mobile (hidden on desktop
-   where the lockup's wordmark already carries the name). Sits to the
-   right of the iconmark with the existing nav-brand gap. */
-.nav-brand-label {
-  display: none;
-}
-
-/* Mobile breakpoint — collapse the lockup to iconmark + text label.
-   600 px chosen to match the nav's natural reflow point (the menu
-   button + lang switcher start crowding the brand around here). */
-@media (max-width: 600px) {
-  .brand-logo--lockup { display: none; }
-  .brand-logo--mark { display: inline-flex; }
-  .nav-brand-label { display: inline; }
 }
 
 .nav-links {
@@ -920,6 +1061,134 @@ h4 { font-size: var(--fs-lg); }
      bar has. Closes #137. */
   .nav-actions {
     margin-inline-start: auto;
+  }
+}
+
+/* ---------- nav group ----------
+   A dropdown in the primary nav, built on a native `<details>` so the
+   keyboard and screen-reader behaviour comes from the platform rather
+   than from JS (#1319). `.nav-group-summary` reuses `.nav-link` for its
+   pill styling and adds the chevron; the panel is absolutely positioned
+   against `.nav-group` on desktop and collapses into an indented
+   accordion inside the mobile drawer at the 880 px breakpoint below.
+
+   `data-section-current` (not `aria-current`) marks the group whose
+   section is open: the summary is a disclosure trigger, not a link to
+   the current page, so `aria-current="page"` would be a lie. The exact
+   child link inside the panel carries the real `aria-current`. */
+.nav-group {
+  position: relative;
+}
+
+.nav-group-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  cursor: pointer;
+  user-select: none;
+  /* Both are needed: `list-style` kills the marker in Firefox and
+     Chrome, the pseudo-element in older WebKit. */
+  list-style: none;
+}
+
+.nav-group-summary::-webkit-details-marker {
+  display: none;
+}
+
+.nav-group-summary[data-section-current="true"] {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.nav-group-chevron {
+  inline-size: 14px;
+  block-size: 14px;
+  opacity: 0.6;
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+
+.nav-group[open] > .nav-group-summary .nav-group-chevron {
+  transform: rotate(180deg);
+}
+
+.nav-group-panel {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-2);
+  position: absolute;
+  inset-block-start: calc(100% + var(--space-2));
+  inset-inline-start: 0;
+  min-inline-size: 15rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-3);
+  z-index: 60;
+}
+
+.nav-group-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: background var(--motion-fast) var(--ease-out),
+              color var(--motion-fast) var(--ease-out);
+}
+
+.nav-group-link:hover {
+  color: var(--text);
+  background: var(--accent-soft);
+  text-decoration: none;
+}
+
+.nav-group-link[aria-current="page"] {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* "Next edition" tag on the upcoming conference in the Conference
+   panel. Pushed to the trailing edge so the year lines stay aligned. */
+.nav-group-badge {
+  margin-inline-start: auto;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+
+@media (max-width: 880px) {
+  /* Inside the drawer a group is an accordion, not a dropdown: the panel
+     goes back into the flow and indents behind a rule, so an open group
+     pushes the rest of the menu down instead of floating over it. The
+     drawer already has `overflow-y: auto`, so a tall open group scrolls. */
+  .nav-group-summary {
+    justify-content: space-between;
+  }
+
+  .nav-group-panel {
+    position: static;
+    min-inline-size: 0;
+    margin-block-start: var(--space-1);
+    margin-inline-start: var(--space-4);
+    padding: 0 0 var(--space-2);
+    background: none;
+    border: 0;
+    border-inline-start: 1px solid var(--border);
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .nav-group-link {
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--fs-base);
+    white-space: normal;
   }
 }
 
@@ -1416,7 +1685,7 @@ h4 { font-size: var(--fs-lg); }
 .footer-social-link:hover,
 .footer-social-link:focus-visible {
   background: var(--accent);
-  color: white;
+  color: var(--accent-text);
   transform: translateY(-1px);
 }
 
@@ -2741,6 +3010,28 @@ h4 { font-size: var(--fs-lg); }
   height: 1rem;
 }
 
+/* Board-card footer alignment (#719 / #756 phase 2). Moved here from the
+   "Board card footer" section, which is a later addition to this same
+   component rather than a component of its own, so these sat allowlisted
+   as §15 exceptions instead of living with what they style (#1092).
+   Both are additive over the base definitions above. */
+/* Cards in a row share one height (uniform boxes), and the footer pins to the
+   bottom (see .person-foot) so View profile / links align across the row. Safe
+   now that deep content lives in a modal: no inline expansion can blow a card
+   out, which is why the grid briefly used align-items: start. */
+.people-grid,
+.people-grid--compact {
+  align-items: stretch;
+}
+
+/* Clamp the research-themes line so a long list doesn't make cards uneven. */
+.person-themes {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* ---------- /board — mobile compact card layout --------------------
    At narrow widths (≤ 36 rem, ~576 px) the default vertical card
    becomes too tall to scroll through comfortably — a 4:5 photo at
@@ -3807,6 +4098,29 @@ a.programme-live-tag:focus-visible {
   .pub-type-chip { margin-left: 0; }
 }
 
+/* Phone collapse for the programme rows. Moved here from the Speaker
+   index section, where it had sat since v2.14.2 and was allowlisted as a
+   §15 cross-block exception rather than fixed (#1092). Nothing else in the
+   file redefines these classes at this breakpoint, so the move is
+   position-neutral. */
+@media (max-width: 720px) {
+  /* Collapse the time gutter so cards take the full width on phones. */
+  .programme-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+  .programme-when-time {
+    font-size: var(--fs-sm);
+  }
+  .programme-contrib {
+    grid-template-columns: 1fr;
+  }
+  .programme-contrib-when {
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+}
+
 /* ---------- Speaker index (/speakers) ----------------------------------
    Alphabetical list of everyone who has presented across ESSC editions,
    built from the corpus.js data spine. */
@@ -4202,40 +4516,6 @@ a.speaker-paper-title:hover {
   line-height: 1.5;
 }
 
-/* /outputs — "Recent publications by our members" (ORCID sidecar). */
-.member-pubs {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: var(--space-5);
-  max-width: 48rem;
-}
-.member-pub {
-  break-inside: avoid;
-}
-.member-pub-name {
-  margin: 0 0 0.3rem;
-  font-weight: 600;
-}
-.member-pub-title {
-  font-weight: 500;
-}
-.member-pub-works {
-  list-style: none;
-  margin: 0;
-  padding: 0 0 0 var(--space-3);
-  border-left: 2px solid var(--border);
-  display: grid;
-  gap: 0.4rem;
-}
-.member-pub-works li {
-  font-size: var(--fs-sm);
-}
-.member-pub-meta {
-  font-size: var(--fs-xs);
-}
-
 /* Per-speaker theme chips (also the text Pagefind indexes for theme search). */
 .speaker-themes {
   display: flex;
@@ -4267,6 +4547,31 @@ a.speaker-paper-title:hover {
   .speaker-papers li { flex-direction: column; gap: 0.1rem; }
   .speaker-paper-conf { flex: none; }
 }
+
+/* Bulk citation export above the paper list (#1254). Own prefix per rule §15.
+   Ships hidden and is revealed by paper-export.js, so a no-JS reader is never
+   shown a control that cannot work for them. */
+.paper-export {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+}
+.paper-export[hidden] { display: none; }
+.paper-export__label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-right: var(--space-1);
+}
+/* The hint takes the whole row below the buttons rather than squeezing between
+   them, so the two controls stay side by side at narrow widths. */
+.paper-export__hint {
+  flex: 1 1 100%;
+  font-size: var(--fs-xs);
+}
+.paper-export button[disabled] { opacity: 0.5; cursor: default; }
 
 /* /papers — the cross-year paper index (#632). The filter chrome reuses
    the .speaker-filters / .speaker-field / .speaker-clear / .speaker-status
@@ -4396,24 +4701,6 @@ a.paper-theme-chip:focus-visible { border-color: var(--accent); color: var(--acc
   vertical-align: -0.2em;
   margin-right: 0.4em;
   color: hsl(40 85% 42%);
-}
-
-@media (max-width: 720px) {
-  /* Collapse the time gutter so cards take the full width on phones. */
-  .programme-row {
-    grid-template-columns: 1fr;
-    gap: var(--space-2);
-  }
-  .programme-when-time {
-    font-size: var(--fs-sm);
-  }
-  .programme-contrib {
-    grid-template-columns: 1fr;
-  }
-  .programme-contrib-when {
-    font-weight: 600;
-    color: var(--text-muted);
-  }
 }
 
 /* ---------- registration-status badge --------------------------------
@@ -4603,6 +4890,18 @@ a.paper-theme-chip:focus-visible { border-color: var(--accent); color: var(--acc
 .speakers-cta__icon svg {
   width: 1.25rem;
   height: 1.25rem;
+}
+/* Anthology/Atlas constellation variant. A nine-node mark turns to mush inside
+   a 20px tinted disc, so it drops the disc and renders at the full slot size.
+   Keeps `color` so the central hub still follows the accent via currentColor. */
+.speakers-cta__icon--mark {
+  background: none;
+  width: 3rem;
+  height: 3rem;
+}
+.speakers-cta__icon--mark svg {
+  width: 3rem;
+  height: 3rem;
 }
 .speakers-cta__body {
   display: flex;
@@ -6732,6 +7031,13 @@ a.joint-orgs-card:hover .joint-orgs-name {
   }
 }
 
+/* Photo galleries are decorative; don't waste pages or colour ink on them.
+   Moved into this section from the Public roadmap block below, where it had
+   drifted past the boundary and was allowlisted as a §15 exception (#1092). */
+@media print {
+  .photo-gallery { display: none; }
+}
+
 /* ============================================================
    Public roadmap (/roadmap.html + FR + DE) — status timeline,
    pills, and JS-injected milestone progress bars. Mirrors the
@@ -6886,11 +7192,6 @@ a.joint-orgs-card:hover .joint-orgs-name {
   text-decoration: none;
 }
 
-@media print {
-  /* Photo galleries are decorative; don't waste pages or colour ink on them. */
-  .photo-gallery { display: none; }
-}
-
 /* ---------- Mobile tap-target + layout floors ----------
    From the June 2026 mobile-UX audit (live-verified at 375/320px). Lift
    standalone touch controls to the 44px comfort target and clear two
@@ -6976,23 +7277,6 @@ a.joint-orgs-card:hover .joint-orgs-name {
    Card faces stay compact, uniform identity with a clamped themes line and a
    pinned "View profile" link to the member's profile page; the recent-
    publications styles below are reused on that page. */
-
-/* Cards in a row share one height (uniform boxes), and the footer pins to the
-   bottom (see .person-foot) so View profile / links align across the row. Safe
-   now that deep content lives in a modal: no inline expansion can blow a card
-   out, which is why the grid briefly used align-items: start. */
-.people-grid,
-.people-grid--compact {
-  align-items: stretch;
-}
-
-/* Clamp the research-themes line so a long list doesn't make cards uneven. */
-.person-themes {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
 
 /* "View profile" trigger, pinned under the card body. */
 .person-more {
@@ -7124,12 +7408,29 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-back { display: inline-block; margin-bottom: 6px; font-size: var(--fs-sm); color: var(--accent); text-decoration: none; }
 .atlas-back:hover { text-decoration: underline; }
 .atlas-masthead { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin: 8px 0 6px; }
+/* The shared Anthology/Atlas constellation beside the title. `align-self:
+   center` opts out of the baseline alignment the rest of the row uses, since a
+   square mark has no meaningful baseline. The hub follows --accent through
+   currentColor, the network holds --brand-network on every surface. */
+.atlas-mark { flex: 0 0 auto; align-self: center; display: block; color: var(--accent); }
+.atlas-mark svg { width: 2.75rem; height: 2.75rem; display: block; }
+@media (max-width: 640px) { .atlas-mark svg { width: 2.25rem; height: 2.25rem; } }
 .atlas-masthead h1 { font-size: var(--fs-2xl); margin: 0; color: var(--text); letter-spacing: -.02em; line-height: var(--lh-tight); }
 .atlas-proto-pill { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 4px 11px; border-radius: var(--radius-full); background: var(--accent-soft); border: 1px solid var(--accent); color: var(--accent); }
 .atlas-lede { color: var(--text-muted); max-width: 74ch; margin: 0 0 20px; font-size: var(--fs-base); line-height: var(--lh-normal); }
 .atlas-lede a { color: var(--accent); }
 .atlas-stats { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 18px; }
-.atlas-stat { padding: 10px 16px; border-radius: var(--radius-md); background: var(--surface); border: 1px solid var(--border); }
+/* `--surface` is the frosted-glass fill and is only ever correct alongside the
+   blur + shadow that make it read as glass. These tiles carried the fill on its
+   own, which rendered as a flat murky box: the one place on the site using the
+   glass colour without the glass. */
+.atlas-stat {
+  padding: 10px 16px; border-radius: var(--radius-md);
+  background: var(--surface); border: 1px solid var(--border-glass);
+  -webkit-backdrop-filter: saturate(var(--saturate)) blur(var(--blur-card));
+  backdrop-filter: saturate(var(--saturate)) blur(var(--blur-card));
+  box-shadow: var(--shadow-2);
+}
 .atlas-stat b { display: block; font-size: var(--fs-xl); color: var(--text); line-height: 1.1; }
 .atlas-stat span { font-size: .76rem; color: var(--text-muted); }
 .atlas-controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 0 0 12px; }
@@ -7137,11 +7438,38 @@ a.profile-pub-title:hover { text-decoration: underline; }
    lens-toggled control rows + legends (Collaborators-only, Authors legend). */
 .atlas-controls[hidden], .atlas-legend[hidden] { display: none; }
 .atlas-controls .lbl { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); margin-right: 2px; }
-.atlas-chip { font: inherit; font-size: .82rem; font-weight: 600; padding: 6px 13px; border-radius: var(--radius-full); cursor: pointer; border: 1px solid transparent; color: #fff; opacity: .94; transition: opacity var(--motion-fast), transform var(--motion-fast); }
-.atlas-chip:hover { transform: translateY(-1px); }
-.atlas-chip[aria-pressed="false"] { opacity: .3; }
+/* Filter chip. The series colour rides on a dot, never on the fill: chips used
+   to be a saturated fill with white text, which failed WCAG AA on 27 of 35
+   chips in dark mode and 21 of 35 in light (worst 1.63:1, against a 4.5:1
+   floor at this 13px/600 size). Text now wears the surface's own ink token and
+   the dot carries identity, which is also what stops two full-spectrum scales
+   (17 themes, 12 editions) reading as one undifferentiated rainbow wall above
+   the map. `--chip-dot` is set per chip by anthology-atlas.js. */
+.atlas-chip {
+  font: inherit; font-size: .82rem; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 6px 14px; border-radius: var(--radius-full); cursor: pointer;
+  background: var(--bg-elev); color: var(--text);
+  border: 1px solid var(--border);
+  transition: background var(--motion-fast) var(--ease-out),
+              border-color var(--motion-fast) var(--ease-out),
+              color var(--motion-fast) var(--ease-out),
+              transform var(--motion-fast) var(--ease-out);
+}
+.atlas-chip::before {
+  content: ""; flex: none; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--chip-dot, var(--text-subtle));
+}
+/* Boolean toggles (Collaborators only, Abstract on file) name no series, so
+   they carry no dot. */
+.atlas-chip.is-plain::before { display: none; }
+.atlas-chip:hover { transform: translateY(-1px); border-color: var(--border-strong); }
+/* Pressed reads as an accent-tinted pill rather than a full-opacity fill, so
+   the on/off signal survives at readable contrast in both themes. */
+.atlas-chip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); }
+.atlas-chip[aria-pressed="false"] { background: transparent; color: var(--text-muted); }
+.atlas-chip[aria-pressed="false"]::before { opacity: .4; }
 .atlas-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.atlas-chip.is-plain { background: var(--border-strong); color: var(--text); }
 /* Filter disclosure (#1191). Desktop shows the rows outright, so the summary
    is hidden and <details> is a transparent wrapper; phones get a real
    collapsible, closed by anthology-atlas.js on load. */
@@ -7183,7 +7511,20 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-card .meta { font-size: .8rem; color: var(--text-muted); margin-top: 3px; }
 .atlas-card .panel { font-size: .76rem; color: var(--text-subtle); margin-top: 4px; font-style: italic; }
 .atlas-card .pills { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; }
-.atlas-card .pill { font-size: .68rem; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-full); color: #fff; }
+/* Theme pills in the hover card follow the filter-chip rule: dot carries the
+   theme, label wears the card's ink token. */
+.atlas-card .pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: .68rem; font-weight: 700; padding: 2px 9px;
+  border-radius: var(--radius-full);
+  background: var(--bg-tinted); color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.atlas-card .pill::before {
+  content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--chip-dot, var(--text-subtle));
+}
+.atlas-card .pill.is-plain::before { display: none; }
 .atlas-card .badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 7px; font-size: .72rem; font-weight: 600; }
 .atlas-card .badge-prize { color: var(--warning); }
 .atlas-card .badge-pub { color: var(--accent); }
@@ -7191,15 +7532,67 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-card .go { font-size: .78rem; color: var(--accent); margin-top: 8px; font-weight: 600; }
 .atlas-legend { display: flex; gap: 16px; flex-wrap: wrap; margin: 14px 2px 0; font-size: .78rem; color: var(--text-muted); align-items: center; }
 .atlas-legend .sw { display: inline-block; width: 11px; height: 11px; border-radius: 50%; vertical-align: -1px; margin-right: 5px; }
-.atlas-legend .sw-page { background: var(--accent); }
-.atlas-legend .sw-nopage { background: #9aa7bd; }
+/* Solid-vs-hollow is what encodes curation state, so the two swatches differ by
+   fill and not by hue: a paper's colour is its research theme. The theme
+   swatch carries a fixed sample hue purely to say "this channel means theme". */
+.atlas-legend .sw-theme { background: var(--accent); }
+.atlas-legend .sw-page { background: var(--text-muted); }
+.atlas-legend .sw-nopage { background: transparent; box-shadow: inset 0 0 0 2px var(--text-muted); }
 .atlas-legend .sw-ring { background: transparent; border: 2px solid; }
 .atlas-legend .sw-prize { border-color: var(--warning); }
 .atlas-legend .sw-pub { background: transparent; box-shadow: inset 0 0 0 2px var(--text-muted); width: 9px; height: 9px; }
 .atlas-legend .sw-collab { background: var(--accent); box-shadow: 0 0 0 1.5px var(--surface-strong); }
-.atlas-legend .sw-solo { background: #9aa7bd; }
-.atlas-legend .sw-coauthor { background: #0aa2c0; width: 16px; height: 3px; border-radius: 2px; vertical-align: 2px; }
+.atlas-legend .sw-solo { background: var(--atlas-inactive); }
+.atlas-legend .sw-coauthor { background: var(--atlas-edge); width: 16px; height: 3px; border-radius: 2px; vertical-align: 2px; }
 @media (max-width: 640px) { #atlas-canvas { height: 480px; } }
+
+/* Theme wayfinding under the map (#1255). Own prefix per rule §15. */
+.atlas-themes { margin: var(--space-6) 0 0; }
+.atlas-themes__h {
+  font-size: var(--fs-md);
+  margin: 0 0 var(--space-3);
+  color: var(--text);
+}
+.atlas-themes__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.atlas-themes__list a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: var(--fs-sm);
+  color: var(--text);
+  text-decoration: none;
+  background: var(--bg-elev);
+  transition: border-color var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
+}
+.atlas-themes__list a:hover,
+.atlas-themes__list a:focus-visible { border-color: var(--accent); color: var(--accent); }
+.atlas-themes__n { font-size: var(--fs-xs); font-variant-numeric: tabular-nums; }
+.atlas-themes__alt { margin: var(--space-4) 0 0; font-size: var(--fs-sm); }
+.atlas-themes__feed {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  font-size: var(--fs-sm);
+}
+.atlas-themes__feed a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+.atlas-themes__feed .muted { font-size: var(--fs-xs); }
 @media (prefers-reduced-motion: reduce) { .atlas-chip { transition: none; } .atlas-chip:hover { transform: none; } }
 
 /* ─── Anthology Atlas — welcome strip + guided tour (#1134) ──────────────
@@ -7219,7 +7612,7 @@ a.profile-pub-title:hover { text-decoration: underline; }
               color var(--motion-fast) var(--ease-out),
               border-color var(--motion-fast) var(--ease-out);
 }
-.atlas-help:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+.atlas-help:hover { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
 .atlas-help:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .atlas-welcome {
@@ -7246,8 +7639,11 @@ html.atlas-welcome .atlas-welcome[hidden] { display: block; }
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 4px 18px;
   font-size: var(--fs-sm); color: var(--text-muted); line-height: var(--lh-snug);
 }
-.atlas-welcome-tips li { margin: 0; padding: 0; }
-.atlas-welcome-tips strong { color: var(--text); font-weight: 600; }
+/* Tips led by a Lucide glyph rather than an emoji (BRAND.md: no emoji, meaning
+   is carried by the icon set). Hanging indent so a wrapped second line aligns
+   under the text rather than under the glyph. */
+.atlas-welcome-tips li { margin: 0; padding: 0 0 0 1.6em; text-indent: -1.6em; }
+.atlas-welcome-tips li svg { color: var(--accent); }
 .atlas-welcome-actions {
   display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 14px;
 }
@@ -7308,7 +7704,7 @@ html.atlas-welcome .atlas-welcome[hidden] { display: block; }
               color var(--motion-fast) var(--ease-out);
 }
 .tour-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.tour-btn-primary { background: var(--accent); color: #fff; }
+.tour-btn-primary { background: var(--accent); color: var(--accent-text); }
 .tour-btn-primary:hover { background: var(--accent-hover); }
 .tour-btn-ghost { background: transparent; color: var(--text-muted); }
 .tour-btn-ghost:hover { background: var(--surface-strong); color: var(--text); }
@@ -7321,4 +7717,275 @@ html.atlas-welcome .atlas-welcome[hidden] { display: block; }
 }
 @media (prefers-reduced-motion: reduce) {
   .tour-backdrop, .tour-spotlight { transition: none; }
+}
+
+/* ---------- /design-system style guide (#1271) ------------------------
+   The living style guide's own layout. Owns the `ds-` prefix per rule §15
+   and reuses nothing: this page has to style ITSELF without touching the
+   components it is displaying, or the guide stops being a fair witness. */
+.ds-note {
+  max-width: 46rem;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-5);
+}
+.ds-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+.ds-swatch { margin: 0; }
+.ds-swatch-chip {
+  display: block;
+  height: 3.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.4rem;
+}
+.ds-swatch-wide { height: 4.5rem; }
+.ds-swatch figcaption { display: flex; flex-direction: column; gap: 0.15rem; }
+.ds-swatch-value {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+.ds-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-bottom: var(--space-6);
+}
+.ds-row {
+  display: grid;
+  grid-template-columns: 10rem 6rem 1fr;
+  align-items: center;
+  gap: var(--space-4);
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid var(--border);
+}
+.ds-row-name { font-size: var(--fs-xs); }
+.ds-row-value { font-size: var(--fs-xs); color: var(--text-muted); }
+/* The specimen carries the token being demonstrated as an inline font-size,
+   so it must not wrap to a second line at large steps. */
+.ds-specimen { line-height: var(--lh-tight); overflow: hidden; }
+.ds-bar {
+  display: block;
+  height: 0.85rem;
+  background: var(--accent);
+  border-radius: var(--radius-xs);
+}
+.ds-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+.ds-tile { margin: 0; text-align: center; }
+.ds-box {
+  display: block;
+  height: 4.5rem;
+  background: var(--gradient-accent, var(--accent));
+  margin-bottom: 0.4rem;
+}
+.ds-box-plain {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.ds-tile figcaption { display: flex; flex-direction: column; gap: 0.15rem; font-size: var(--fs-xs); }
+.ds-example {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+.ds-example h3 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-top: 0;
+}
+.ds-prefix {
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  color: var(--text-muted);
+}
+.ds-demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: flex-start;
+  padding: var(--space-4);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elev);
+}
+.ds-demo > * { min-width: 0; }
+.ds-demo .tile-grid, .ds-demo .anthology-notice, .ds-demo .cite-corpus { flex: 1 1 100%; }
+@media (max-width: 40rem) {
+  .ds-row { grid-template-columns: 1fr auto; }
+  .ds-specimen { grid-column: 1 / -1; }
+}
+/* Brand-marks row on the style guide. Part of the `ds-` prefix (§15). The
+   dark variant sets data-theme on a wrapper, which works because the dark
+   token block is a bare attribute selector rather than being pinned to :root. */
+.ds-marks {
+  padding: var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  color: var(--text);
+  margin-bottom: var(--space-4);
+}
+/* The light panel has to pin its own surface tokens. `[data-theme="dark"]`
+   works on any element, but the light values live only in `:root` and are
+   overridden there under `prefers-color-scheme: dark`, so a nested element
+   has no way to ask for them back. Without this the "light" panel renders
+   dark for any visitor in dark mode and the side-by-side proves nothing.
+   These three values mirror the `:root` block above and are the one place
+   in this stylesheet that duplication is deliberate: keep them in step. */
+.ds-marks[data-surface="light"] {
+  --bg: hsl(0 0% 100%);
+  --text: hsl(222 28% 12%);
+  --border: hsl(220 20% 88%);
+}
+.ds-marks-label {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  margin: 0 0 var(--space-4);
+}
+.ds-mark { margin: 0 0 var(--space-5); }
+.ds-mark:last-child { margin-bottom: 0; }
+.ds-mark figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+.ds-mark-sizes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-5);
+}
+.ds-mark-size { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+/* The inlined SVG carries its own width; override it so one asset can be
+   shown at several sizes in the same row. */
+.ds-mark-art { display: block; }
+.ds-mark-art svg { width: 100%; height: auto; display: block; }
+
+/* The catch-all token table (#1271). Wide content scrolls inside its own
+   container rather than widening the page. */
+.ds-token-table-wrap { overflow-x: auto; }
+.ds-token-table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+.ds-token-table th,
+.ds-token-table td {
+  text-align: left;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.ds-token-table th {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-subtle);
+}
+.ds-token-table code { font-size: var(--fs-xs); }
+
+/* ---------- page-level design credit (#1228) ----------
+   A named credit for the Anthology and for the Atlas, on the pages themselves.
+   Deliberately quiet: the site-wide footer credit already exists, and this must
+   read as the same claim at a more useful level rather than competing with EISS
+   branding. Same discreet register as .footer-authorship. */
+.page-credit {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--space-5) var(--space-7);
+  font-size: var(--fs-xs);
+  color: var(--text-subtle);
+}
+.page-credit a { color: var(--text-muted); }
+.page-credit a:hover,
+.page-credit a:focus-visible { color: var(--accent); }
+
+/* ---------- blog (index list + post byline) ---------- */
+/* Owns the `blog-` prefix (§15). The news archive owns `news-`; these are
+   two different components and deliberately share no class. */
+.blog-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-6);
+}
+
+.blog-item {
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border);
+}
+
+.blog-list .blog-item:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.blog-date {
+  display: block;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-2);
+}
+
+.blog-item-title {
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-xl);
+  line-height: var(--lh-snug);
+}
+
+.blog-item-title a { text-decoration: none; }
+.blog-item-title a:hover,
+.blog-item-title a:focus-visible { text-decoration: underline; }
+
+.blog-item-byline {
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.blog-summary {
+  margin: 0;
+  color: var(--text-muted);
+  max-width: 62ch;
+}
+
+/* Post page: the byline under the title, and the return link. */
+.blog-byline {
+  margin: var(--space-3) 0 0;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.blog-back {
+  max-width: var(--prose-max);
+  margin: var(--space-8) auto 0;
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border);
+}
+
+.blog-back a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.blog-back a:hover,
+.blog-back a:focus-visible {
+  color: var(--accent);
+  text-decoration: underline;
 }

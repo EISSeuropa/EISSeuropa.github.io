@@ -226,103 +226,6 @@ escalate to per-PR changelog fragments (`changelog.d/`, one file per PR,
 collated by `release.sh`), which removes the shared-file conflict
 entirely.
 
-## 5. Release-time five-point cross-check (minor / major only)
-
-Every **minor (`X.Y.0` where `Y > prev`) or major (`X.0.0`)
-release** should trigger a deliberate check across five surfaces
-before `scripts/release.sh` runs. Skip the cross-check on **patch
-releases** (`X.Y.Z` where `Z > 0`); they're scoped to small fixes
-and the overhead isn't justified. The release script's
-*self-policing tier* mirrors this: patches ship the index only.
-
-For each surface, the question is the same: *"Did anything in this
-release change what this surface documents?"* If yes, edit in the
-same release. If yes but too big to fit, open a tracking issue
-(rule §3) and reference it from the surface itself.
-
-### 1. Roadmap (`/roadmap.html` + FR + DE + `docs/roadmap-2026.md`)
-
-- Is the next planned release on the *At a glance* timeline still
-  accurate? Do the version milestones and their due dates match it?
-- On the public `/roadmap.html` (+ FR + DE), flip the card for the
-  release just cut from *Planned* / *In progress* to *Shipped*: set
-  its date, add the release-notes link, and drop the `data-milestone`
-  attribute so it no longer renders a progress bar. The next planned
-  card is auto-promoted to *In progress* by `roadmap-progress.js`.
-- Anything in the *Under watch* section ready to promote to a dated
-  release row (and its own milestone)?
-- The autostamp on `docs/roadmap-2026.md` (rule §11) keeps the
-  `[Unreleased]` bullet count fresh automatically. The prose timeline
-  rows and the public cards stay maintainer-edited.
-
-### 2. Sitemap (`src/sitemap.xml.njk` + `src/sitemap.njk` + FR + DE)
-
-- New pages added in this release? Confirm they show up in
-  `src/sitemap.xml.njk` (the XML index for search engines) and in
-  the visual `src/sitemap.njk` inventory + its FR / DE siblings.
-- The visual sitemap is hand-edited; confirm new pages land in the
-  correct branch (*About* / *Programmes* / *Conferences* / etc.).
-
-### 3. Translations (FR + DE variants)
-
-- Run `python3 scripts/check-i18n-drift.py` locally. CI catches drift
-  on HTML-touching PRs, but a release moment is the right place to
-  confirm zero drift before stamping a version.
-- Did any EN copy change in this release? FR / DE need manual updates
-  (no machine translation per rule §1).
-- The `status: beta` ribbon on `*.fr.njk` / `*.de.njk` carries the
-  manual-translation framing; if a translation has been re-verified
-  against current EN, consider whether the *beta* marker still applies.
-
-### 4. Repo docs
-
-- Maintainer-facing markdown docs under `docs/`
-  (`board-bios-setup.md`, `i18n.md`, `indico-api-token.md`,
-  `indico-programme-integration.md`, `new-conference.md`,
-  `roadmap-2026.md`): does anything in this release contradict what's
-  documented?
-- `BRAND.md` and the brand SVGs under `src/assets/images/brand/`:
-  refresh if the visual identity changes.
-
-### 5. Abstract coverage (Anthology)
-
-- Run `node scripts/check-abstract-coverage.mjs`. It lists every paper
-  abstract that fails to attach to an Anthology paper, by year, with the
-  closest programme title and a similarity score. A high score is title
-  drift; a low score means the paper is absent from the programme (or is a
-  panel-level abstract, which correctly matches nothing). Informational, not
-  a gate. The `abstract-coverage.yml` workflow also runs it every four months
-  and files a tracking issue if it finds likely drift, so this is a backstop
-  more than a chore.
-- Reconcile drift one of two ways. If the **programme** title is the one to
-  keep (correct British spelling, or a clean version of a garbled Indico
-  title), add the synced→programme mapping to
-  `src/_data/paperAbstractAliases.json`. If the **programme** has the typo,
-  fix it in `src/_data/archiveProgrammes.js`.
-- Abstracts the sync can't pull live in `src/_data/paperAbstractsManual.json`,
-  never in `paperAbstracts.json` (the sync overwrites the latter wholesale, so
-  anything hand-added there is silently dropped on the next run). Two cases:
-  pre-Indico editions (2022 and earlier), and **subcontribution-level
-  abstracts** — papers run as subcontributions of a panel. Indico's export API
-  does not expose subcontribution descriptions at any detail level or auth
-  (confirmed by `scripts/probe-indico-subcontribs.py`), so those paper
-  abstracts must be hand-added here from the organisers' files.
-
-### 6. Milestone hygiene (gate, not a surface)
-
-- Every issue closed by this release carries the matching milestone.
-- Every issue still open and tagged with a milestone that just shipped
-  has either been ticked off in the release notes or moved to the
-  next milestone with a one-line reason in the issue thread.
-- The release should not ship with its own milestone holding open work.
-  See rule §10.
-
-This is a deliberate friction-point: cutting a minor release here is
-**slightly more work than running release.sh**, by design. The
-release script's confirmation prompt is the last moment to bail if
-the cross-check surfaces something that needs to land in the same
-release.
-
 ## 6. Voice for public-facing copy
 
 Public-facing copy means anything that appears on `eiss-europa.com`
@@ -367,6 +270,19 @@ the most reliable AI tell.
 across consecutive sentences. Writing "the script" then "the sync"
 then "the workflow" for the same thing in three sentences is an AI
 tell, even when each label is technically accurate.
+
+**Don't justify the fact you just stated.** State it and stop. The
+tell is a trailing clause arguing for the decision the sentence has
+already described: "because our reviewing capacity is the real
+limit", "it exists so that working alone does not mean working in
+silence", "not favours we extend if there is time". Cut it, headings
+included: "Unpaid, and we say so plainly" is "Unpaid". **Site pages
+only.** The CHANGELOG, PR bodies and maintainer docs are where
+reasoning belongs. Grep a page you are editing for `because`, `so
+that`, `rather than`, `which is why`: each hit is a question, not a
+verdict, since some are real cause ("Because NetSec is COST-funded,
+all its..."). #1370 and #1372 cut `/blog.html` and `/internship.html`
+by about a fifth this way, with no fact removed.
 
 The rules are forward-looking. They apply to prose authored from the
 PR that introduces them onwards. Pre-existing em dashes and semicolons
@@ -491,87 +407,6 @@ diverges from what the prose says is in flight, the maintainer
 resynthesises by hand (also a §5 cross-check item at release time).
 The autostamp is the staleness alarm; humans write the synthesis.
 
-## 12. "What's New" banner discipline
-
-The site carries a sparingly-used site-wide announcement banner driven
-by `src/_data/whats-new.json`. When `active: true`, every page shows a
-small dismissible bar above the sticky-chrome. Each visitor sees a given
-banner at most once (dismissed state lives in `localStorage` keyed by
-`version`). The JS render lives at the bottom of `src/assets/js/theme.js`.
-
-### When to activate
-
-High bar. Reasonable activation cases:
-
-- A new section visitors would want to find without reading the CHANGELOG
-  (e.g. a live conference programme, a founding-contributors page).
-- A major feature visible above the fold.
-- A content milestone (e.g. a deliverable ships, a key partnership is
-  announced).
-
-### When NOT to activate
-
-- Quality patches, structural refactors, or infra changes.
-- Content additions or copy edits that don't change the visitor experience
-  meaningfully.
-- Anything that would only interest someone already reading the CHANGELOG.
-
-### Cadence
-
-At most 3-4 activations per year. The on-state should run no longer than
-4-6 weeks before `active` flips back to `false`. Leaving it on permanently
-trains visitors to ignore it.
-
-### How to update
-
-1. Edit `src/_data/whats-new.json` — set `active`, `version`, `headline`
-   (EN/FR/DE), and `cta`.
-2. The `version` string is the dismissal key. Bump it for each new
-   activation so returning visitors see the new banner even if they
-   dismissed the previous one.
-3. Flip `active` back to `false` when the announcement is stale.
-
-No automation touches this file. The friction is intentional.
-
-## 13. Cross-repo Project
-
-A private GitHub Project at <https://github.com/users/EISSeuropa/projects/1>
-("NetSec + EISS websites") spans open enhancement issues from both this
-repo and the NetSec sister site.
-
-### Scope
-
-Open `enhancement` issues from both repos. Bugs stay in their own
-per-repo tracker unless they cross-cut both sites structurally.
-
-### Boundary against milestones
-
-Rule §10 milestones remain the source of truth for release planning. The
-Project is a view across the two repos, not a replacement for milestones.
-Avoid double-bookkeeping: milestone a release, don't version-track in the
-Project.
-
-### Single custom field
-
-`Effort: S / M / L`. Adding more fields requires a recurring need; the
-anti-creep clause keeps the Project from becoming a second backlog.
-
-### Not part of the release-time §5 cross-check
-
-The Project is ambient awareness between cycles, not a release gate.
-
-### Auto-add limitation
-
-GitHub Projects v2 auto-add workflows (automatically adding issues with
-a given label) need UI configuration under each repo's *Projects* tab;
-the CLI does not expose this. Issues are added manually via
-`gh project item-add`.
-
-### Retirement threshold
-
-If more than ~20% of items in any view are `Done`, or new entries stop
-getting Effort tags, archive the Project rather than letting it drift.
-
 ## 14. Ship-completeness: a green build is not "it works"
 
 `npx @11ty/eleventy` succeeding proves the templates *compile*, not that
@@ -692,7 +527,8 @@ Eleventy sites it reads:
    real and has bitten: `conference-media.njk` replaced three near-identical
    per-year sections (#358).
 5. **Reuse the cross-repo JSON contract, don't rebuild a NetSec system**
-   (rule §13, and the "don't duplicate NetSec-unique systems" memory). The
+   (the `cross-repo-project` skill, and the "don't duplicate NetSec-unique
+   systems" memory). The
    directory and Anthology link by published index files, not scraping.
 6. **Then** the shortest diff: one CSS prefix per component (§15), delete
    over add.
@@ -703,6 +539,20 @@ computed-style read at desktop and phone width, not a screenshot. And no
 machine translation as a shortcut (§1): FR/DE are hand-translated or they
 do not ship. Mark deliberate simplifications with a `ponytail:` comment
 (fits the existing one-line `# label` comment style).
+
+---
+
+## Lazy-loaded procedures
+
+Three task-specific procedures live as skills rather than in this file, so they
+load when invoked instead of costing context every session. Invoke by name.
+
+- `release-cross-check` — the five-point cross-check before cutting a minor or
+  major release, plus milestone hygiene (was §5).
+- `whats-new-banner` — when to activate the site-wide announcement banner, and
+  how (was §12).
+- `cross-repo-project` — the EISS + NetSec GitHub Project, its scope and its
+  boundary against milestones (was §13).
 
 ---
 

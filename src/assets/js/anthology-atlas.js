@@ -4,8 +4,8 @@
    paper universe drawn as a bipartite map — nodes ↔ the 17 research-theme
    hubs (+ an UNTAGGED hub). Two lenses over the SAME universe:
 
-     Papers  — one dot per paper, coloured by edition year; multi-theme
-               papers settle between hubs, so the thematic bridges show.
+     Papers  — one dot per paper, coloured by the research theme it is drawn
+               to; multi-theme papers settle between hubs, so the bridges show.
      Authors — one dot per deduplicated author (#1129), anchored to the
                theme hubs their papers touch, with co-author edges drawn on
                top so collaboration clusters settle out. Dot size = papers.
@@ -17,7 +17,7 @@
    reduced motion renders the settled layout without animating.
 
    Markers (Papers lens):
-     · has an Anthology landing page → solid year-coloured dot (315/511);
+     · has an Anthology landing page → solid theme-coloured dot (315/511);
        papers without a page render as a faint ring, so curation gaps show.
      · Best Paper Prize winner            → gold ring.
      · published version on record (DOI)  → subtle inner ring. */
@@ -83,21 +83,24 @@
       accent: cssVar('--accent') || '#0a84ff',
       ink: cssVar('--text') || '#0b1220',
       warning: cssVar('--warning') || '#f59e0b',
+      // Graph chrome, read from the same tokens the legend swatches use, so
+      // the map and its key cannot drift apart.
+      edge: cssVar('--atlas-edge') || '#2f9fe0',
+      inactive: cssVar('--atlas-inactive') || '#9aa7bd',
     };
   }
 
-  // Stable year→colour ramp: evenly spaced hues around the wheel, keyed by the
-  // year's position in the ascending edition list, so it is deterministic and
-  // survives a new edition being added. Lightness lifts a touch in dark mode.
-  let yearColour = {};
-  function buildYearColours(yearsAsc) {
-    const dark = theme.dark;
-    const L = dark ? 62 : 48, S = dark ? 62 : 66;
-    yearColour = {};
-    yearsAsc.forEach((y, i) => {
-      const hue = (205 + i * 40) % 360;
-      yearColour[y] = `hsl(${hue} ${S}% ${L}%)`;
-    });
+  // A paper takes the colour of the theme hub it is drawn to, so hue means one
+  // thing on this page. Papers used to be coloured by edition year off a second
+  // full-spectrum wheel, which put twelve edition hues and seventeen theme hues
+  // in the same visual field with no way to tell which scale a colour belonged
+  // to. Edition now lives in the chips, the hover card and the URL, where it is
+  // read as a label rather than guessed from a hue. Multi-theme papers take
+  // their first hub and settle between hubs by position, which is what makes
+  // the thematic bridges legible.
+  function paperColour(n) {
+    const h = n.hubs && n.hubs.length ? hubById[n.hubs[0]] : null;
+    return h ? hubFill(h) : theme.muted;
   }
 
   // ── State ──
@@ -121,7 +124,7 @@
   const items = () => (lens === 'authors' ? authors : papers);
 
   function hubColour(h) { return THEME_WHEEL[h.wheel % THEME_WHEEL.length]; }
-  function hubFill(h) { return h.type === 'untagged' ? '#8a94a6' : hubColour(h); }
+  function hubFill(h) { return h.type === 'untagged' ? theme.inactive : hubColour(h); }
 
   function nodeVisible(n) {
     // Edition (#1153): a paper falls in one edition; an author in several
@@ -297,7 +300,7 @@
         const a = e.a, b = e.b;
         if (!nodeVisible(a) || !nodeVisible(b)) return;
         const lit = hoverIds && hoverIds.has(a.id) && hoverIds.has(b.id);
-        ctx.strokeStyle = theme.dark ? '#5fd4e8' : '#0aa2c0';
+        ctx.strokeStyle = theme.edge;
         ctx.globalAlpha = lit ? 0.9 : (hoverIds ? 0.05 : (e.weight > 1 ? 0.6 : 0.4));
         ctx.lineWidth = e.weight > 1 ? 1.2 + e.weight * 0.7 : 1;
         ctx.beginPath();
@@ -327,7 +330,7 @@
         // co-author edge) gets a crisp white rim so clusters read as people.
         ctx.beginPath();
         ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
-        ctx.fillStyle = n.coCount ? theme.accent : (theme.dark ? '#7f8ca3' : '#9aa7bd');
+        ctx.fillStyle = n.coCount ? theme.accent : theme.inactive;
         ctx.fill();
         if (n.coCount) {
           ctx.lineWidth = 1;
@@ -337,9 +340,9 @@
         return;
       }
 
-      const col = yearColour[n.year] || theme.muted;
+      const col = paperColour(n);
       if (n.hasPage) {
-        // Curated: solid year-coloured dot with a crisp rim.
+        // Curated: solid theme-coloured dot with a crisp rim.
         ctx.beginPath();
         ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
         ctx.fillStyle = col;
@@ -460,13 +463,15 @@
           const h = hubById[id];
           const s = document.createElement('span');
           s.className = 'pill';
-          s.style.background = hubFill(h);
+          // Same rule as the filter chips: theme colour on the dot, label on
+          // the card's own ink token.
+          s.style.setProperty('--chip-dot', hubFill(h));
           s.textContent = h.type === 'untagged' ? 'Untagged' : h.name;
           pills.append(s);
         });
         if (node.hubs.length > 3) {
-          const s = document.createElement('span'); s.className = 'pill';
-          s.style.background = theme.subtle; s.textContent = '+' + (node.hubs.length - 3);
+          const s = document.createElement('span'); s.className = 'pill is-plain';
+          s.textContent = '+' + (node.hubs.length - 3);
           pills.append(s);
         }
       }
@@ -489,13 +494,15 @@
           const h = hubById[id];
           const s = document.createElement('span');
           s.className = 'pill';
-          s.style.background = hubFill(h);
+          // Same rule as the filter chips: theme colour on the dot, label on
+          // the card's own ink token.
+          s.style.setProperty('--chip-dot', hubFill(h));
           s.textContent = h.type === 'untagged' ? 'Untagged' : h.name;
           pills.append(s);
         });
         if (node.hubs.length > 3) {
-          const s = document.createElement('span'); s.className = 'pill';
-          s.style.background = theme.subtle; s.textContent = '+' + (node.hubs.length - 3);
+          const s = document.createElement('span'); s.className = 'pill is-plain';
+          s.textContent = '+' + (node.hubs.length - 3);
           pills.append(s);
         }
       }
@@ -550,7 +557,10 @@
     const b = document.createElement('button');
     b.type = 'button';
     b.className = 'atlas-chip';
-    if (bg) b.style.background = bg; else b.classList.add('is-plain');
+    // The series colour goes on the chip's dot, not its fill. A saturated fill
+    // with white text failed WCAG AA on most chips in both themes; the label
+    // now wears the surface ink token and the dot carries identity.
+    if (bg) b.style.setProperty('--chip-dot', bg); else b.classList.add('is-plain');
     b.textContent = label;
     b.setAttribute('aria-pressed', pressed ? 'true' : 'false');
     b.addEventListener('click', () => onClick(b));
@@ -621,7 +631,14 @@
       editions.forEach((e) => { if (e.year === y) wantedEds.push(e.key); });
     });
     if (wantedEds.length) { activeEditions.clear(); wantedEds.forEach((k) => activeEditions.add(k)); }
-    const wanted = (sp.get('themes') || '').split(',').map((s) => s.trim()).filter(Boolean);
+    // Theme pages (#1255) pre-filter from the page itself rather than the URL,
+    // so /anthology-atlas/theme/<slug>.html arrives already filtered instead of
+    // flashing the whole corpus first. A ?themes= param still wins, so a link
+    // shared off a theme page with extra filtering behaves as the sharer left it.
+    const shell = document.querySelector('.atlas-shell[data-atlas-theme]');
+    const pageTheme = shell ? shell.getAttribute('data-atlas-theme') : '';
+    const wantedParam = (sp.get('themes') || '').split(',').map((s) => s.trim()).filter(Boolean);
+    const wanted = wantedParam.length ? wantedParam : (pageTheme ? [pageTheme] : []);
     const ids = hubs.filter((h) => wanted.indexOf(h.name) !== -1).map((h) => h.id);
     if (ids.length) { activeHubs.clear(); ids.forEach((id) => activeHubs.add(id)); }
     collabOnly = sp.get('collab') === '1';
@@ -640,7 +657,7 @@
         bb.setAttribute('aria-pressed', activeEditions.has(e.key) ? 'true' : 'false');
         syncUrl();
         draw();
-      }, yearColour[e.year]);
+      });
       b.title = e.label + ' · ' + e.count + ' papers';
       yearsEl.appendChild(b);
     });
@@ -663,7 +680,9 @@
 
   function buildLensChips() {
     [['papers', 'Papers'], ['authors', 'Authors']].forEach(([v, label]) => {
-      const b = chip(label, v === lens, () => switchLens(v), theme.accent);
+      // No dot: the lens pair is a mode switch, not a series, so it reads as a
+      // plain segmented control and the pressed state carries the selection.
+      const b = chip(label, v === lens, () => switchLens(v));
       b.dataset.lens = v;
       lensEl.appendChild(b);
     });
@@ -881,7 +900,6 @@
 
       yearsAsc = data.years.slice().sort((a, b) => a - b);
       editions = data.editions || [];
-      buildYearColours(yearsAsc);
 
       editions.forEach((e) => activeEditions.add(e.key));
       hubs.forEach((h) => activeHubs.add(h.id));
@@ -936,12 +954,8 @@
   // Re-read colours on a manual theme flip (data-theme) and repaint. Year
   // colours depend on light/dark, so rebuild the ramp too.
   new MutationObserver(() => {
-    readTheme(); buildYearColours(yearsAsc);
-    // Recolour the edition chips in place to match the new ramp.
-    Array.prototype.forEach.call(yearsEl.querySelectorAll('.atlas-chip'), (b, i) => {
-      const e = editions[i];
-      if (e && e.year != null) b.style.background = yearColour[e.year];
-    });
+    readTheme();
+    // Theme hub colours are fixed hexes, so only the ink/chrome tokens change.
     draw();
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 

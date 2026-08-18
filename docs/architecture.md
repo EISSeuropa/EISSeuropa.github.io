@@ -102,8 +102,11 @@ so supersession is normal). Pure `gh` CLI, no third-party actions
 | `link-check.yml` → `check-links.sh` | Every internal/external link + `#fragment` in `_site/` resolves. |
 | `i18n-drift.yml` → `check-i18n-drift.py` | Every FR/DE page matches its EN source hash (`data/i18n-state.json`). |
 | `i18n-drift.yml` → `check-i18n-keys.js` | EN/FR/DE chrome catalogs have identical key sets. |
-| `sanity-check.yml` → `check-build-sanity.mjs` | No duplicate `_data` object keys, no empty/junk `href`/`src`, no scheme-less `board.json` links, no markup class left undefined in `site.css` (§14 unstyled-feature guard), and no class styled bare as the selector subject in two different `site.css` sections (§15 cross-block collision guard, CLAUDE.md issue #241). |
+| `sanity-check.yml` → `check-build-sanity.mjs` | Every paper page present in `sitemap.xml` (§#1293 guard: a paginated template silently contributes only its first page), no Finder/iCloud `name 2.ext` duplicates in the build input, no duplicate `_data` object keys, no empty/junk `href`/`src`, no scheme-less `board.json` links, no markup class left undefined in `site.css` (§14 unstyled-feature guard), and no class styled bare as the selector subject in two different `site.css` sections (§15 cross-block collision guard, CLAUDE.md issue #241). |
 | `sanity-check.yml` → `a11y_lint.py` | No accessibility findings (missing landmarks / alt / labels, heading-hierarchy gaps, duplicate IDs, accessible-name absence). |
+| `sanity-check.yml` → `check-citations.mjs` | Every paper's BibTeX/RIS export is well-formed: braces balance, LaTeX specials escaped (`doi`/`url` deliberately verbatim), RIS carries `TY`/`ER` and CRLF, acronyms brace-protected. A broken `.bib` fails in a reader's LaTeX compile, never in the build. |
+| `sanity-check.yml` → `check-feeds.py` | Every Atom feed under `_site/` validates: required elements, RFC 3339 dates, unique entry ids, the 50-entry cap, newest-first order, `<updated>` derived from content rather than build time (the scheduled rebuild must not notify subscribers), and each Atlas theme page advertising its own feed. |
+| `sanity-check.yml` → `sync-corpus-ledger.mjs --check` | `corpusLedger.json` covers every paper, so the per-theme feeds date new material correctly. |
 | CodeQL | Static analysis. |
 
 `CHANGELOG.md` is pinned `merge=union` in `.gitattributes` so concurrent

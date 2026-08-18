@@ -2,28 +2,63 @@
 permalink: /feed.xml
 eleventyExcludeFromCollections: true
 ---
+{#- One feed for both surfaces (#1259). News items and blog posts are
+    normalised into a single list, then sorted newest-first, so a subscriber
+    gets both without a second subscription.
+
+    Dates come from each item's own front matter or news.json entry, never
+    from build time: this repo rebuilds on a schedule, and a build-time
+    timestamp would re-notify every subscriber on a timer.
+
+    ponytail: the merge is a couple of pushes into a Nunjucks array rather
+    than a new Eleventy filter. The template already had the loop. -#}
+{%- set entries = [] -%}
+{%- for item in news.feed -%}
+  {%- set link = item.url or ("/news.html#news-" + item.slug) -%}
+  {%- if "://" not in link %}{% set link = site.url + link %}{% endif -%}
+  {%- set _ = entries.push({
+    title: item.title,
+    link: link,
+    id: site.url + "/news.html#news-" + item.slug,
+    iso: item.isoDate,
+    category: item.type,
+    summary: item.excerpt
+  }) -%}
+{%- endfor -%}
+{%- for post in collections.blog -%}
+  {%- set _ = entries.push({
+    title: post.data.title,
+    link: site.url + post.url,
+    id: site.url + post.url,
+    iso: post.date.toISOString(),
+    category: "blog",
+    summary: post.data.summary,
+    author: post.data.author
+  }) -%}
+{%- endfor -%}
+{%- set entries = entries | sort(true, false, "iso") -%}
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <title>EISS news</title>
-  <subtitle>News from the European Initiative for Security Studies</subtitle>
+  <subtitle>News and writing from the European Initiative for Security Studies</subtitle>
   <link href="{{ site.url }}/feed.xml" rel="self" type="application/atom+xml"/>
   <link href="{{ site.url }}/news.html"/>
-  <updated>{{ news.updated }}</updated>
+  <updated>{{ entries[0].iso if entries.length else news.updated }}</updated>
   <id>{{ site.url }}/feed.xml</id>
   <author><name>European Initiative for Security Studies</name></author>
-  {%- for item in news.feed %}
-  {%- set id = site.url + "/news.html#news-" + item.slug -%}
-  {%- set link = item.url or ("/news.html#news-" + item.slug) -%}
-  {%- if "://" not in link %}{% set link = site.url + link %}{% endif -%}
+  {%- for item in entries %}
   <entry>
     <title>{{ item.title }}</title>
-    <link href="{{ link }}"/>
-    <id>{{ id }}</id>
-    <updated>{{ item.isoDate }}</updated>
-    <published>{{ item.isoDate }}</published>
-    <category term="{{ item.type }}"/>
-    {%- if item.excerpt %}
-    <summary>{{ item.excerpt }}</summary>
+    <link href="{{ item.link }}"/>
+    <id>{{ item.id }}</id>
+    <updated>{{ item.iso }}</updated>
+    <published>{{ item.iso }}</published>
+    <category term="{{ item.category }}"/>
+    {%- if item.author %}
+    <author><name>{{ item.author }}</name></author>
+    {%- endif %}
+    {%- if item.summary %}
+    <summary>{{ item.summary }}</summary>
     {%- endif %}
   </entry>
   {%- endfor %}

@@ -18,16 +18,19 @@
 # per CLAUDE.md §2.
 name: Build sanity
 
+# Deliberately unfiltered (#1343). This used to gate on `paths: [src/**,
+# ...]`, which meant 11 of any 40 merged PRs never ran it — mostly the
+# bot's own docs/roadmap-2026.md refreshes, but also hand-written PRs
+# touching only scripts/ or .claude/. Two reasons it now runs on
+# everything. It is the repo's main lint (duplicate data keys, empty and
+# junk href/src, the §15 class-collision check, sitemap completeness),
+# and tooling outside src/ can break the built output while matching no
+# filter. And #501 plans to make checks required on master: a required
+# check that never runs sits `pending` forever and blocks the merge
+# outright, so every roadmap-auto PR would become unmergeable. The whole
+# job takes about a minute, so the filter was not buying anything.
 on:
   pull_request:
-    paths:
-      - 'src/**'
-      - 'scripts/check-build-sanity.mjs'
-      - 'scripts/a11y_lint.py'
-      - '.github/workflows/sanity-check.yml'
-      - 'package.json'
-      - 'package-lock.json'
-      - '.eleventy.js'
   workflow_dispatch:
 
 permissions:
@@ -58,6 +61,22 @@ jobs:
 
       - name: Run build-sanity check
         run: node scripts/check-build-sanity.mjs
+
+      # A malformed .bib does not fail the build, it fails in a reader's LaTeX
+      # compile weeks later, so it needs its own gate (#1254).
+      - name: Run citation-export check
+        run: node scripts/check-citations.mjs
+
+      # Feeds fail silently too: a reader's app just stops updating. This also
+      # guards the rule that a feed's <updated> comes from its content, so the
+      # scheduled rebuild cannot notify every subscriber on a timer (#1256).
+      - name: Run Atom feed check
+        run: python3 scripts/check-feeds.py
+
+      # The ledger is the only record of when a paper or its abstract landed,
+      # so drift means the feeds are dating new material wrongly (#1256).
+      - name: Check the corpus ledger is current
+        run: node scripts/sync-corpus-ledger.mjs --check
 
       # Static a11y lint over the built site (duplicate ids, missing
       # alt/labels/landmarks, heading gaps — see scripts/a11y_lint.py).

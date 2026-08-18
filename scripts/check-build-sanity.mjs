@@ -290,28 +290,8 @@ function checkCssCollisions() {
   // Each entry needs a one-line reason; investigate before adding one.
   const knownException = new Set([
     "btn:structured grids (programmes, who-are-you)", // `.btn.stretched-link:active` — a compound state variant on the shared .btn, not a redefinition
-    // The four below predate the CLAUDE.md §15 convention (v2.14.2) and sit
-    // bare in a section they don't belong to, but every property is
-    // additive (no conflicting property with the owning section) —
-    // confirmed by reading both definitions side by side. #241 follow-up:
-    // relocating them into their owning section is a separate, purely
-    // cosmetic diff, tracked rather than folded into this lint.
-    "programme-row:Speaker index (/speakers)", // 720px collapse of the shared live-programme-grid row, landed under Speaker index
-    "programme-when-time:Speaker index (/speakers)",
-    "programme-contrib:Speaker index (/speakers)",
-    "programme-contrib-when:Speaker index (/speakers)",
-    "photo-gallery:Public roadmap", // `@media print { display: none }` for the shared photo-gallery component, landed just past the print stylesheet's own section boundary
-    "people-grid:Board card footer + the \"View profile\" link", // `align-items: stretch` on the shared person-card grid, additive
-    "person-themes:Board card footer + the \"View profile\" link", // line-clamp on the shared person-card themes line, additive
-    // .member-pubs / .member-pub-name: the "Speaker index" definition (line
-    // 4104) is DEAD CSS — none of its sibling selectors (.member-pub,
-    // .member-pub-title, .member-pub-works, .member-pub-meta) appear in any
-    // .njk template; the live /publications markup (publications-body.njk)
-    // only ever uses the first definition's classes (.member-pub-head,
-    // .member-pub-group). Allowlisted rather than deleted here to keep this
-    // diff to the lint; flagged to the maintainer for cleanup.
-    "member-pubs:Speaker index (/speakers)",
-    "member-pub-name:Speaker index (/speakers)",
+    // (#1092 cleared the rest: the rules were relocated into their owning
+    // sections and the dead /outputs block deleted.)
   ]);
 
   // Blank out comments (preserving offsets/line numbers) so brace-depth
@@ -507,6 +487,119 @@ function checkThemeSpread() {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Every paper page is in the sitemap (#1293).
+//
+// This failed silently for months. Eleventy adds only a paginated template's
+// FIRST page to collections.all, which is what sitemap.xml.njk walks, so 314 of
+// the 315 paper pages were absent from the sitemap the site submits to search
+// engines, while the build stayed green and the pages themselves were perfect.
+// A count comparison is the cheapest thing that would have caught it.
+function checkSitemapCoverage() {
+  const sitemap = join("_site", "sitemap.xml");
+  if (!existsSync(sitemap)) {
+    problems.push("_site/sitemap.xml: missing — the sitemap was not built");
+    return;
+  }
+  const xml = readFileSync(sitemap, "utf8");
+  const papersDir = join("_site", "papers");
+  if (!existsSync(papersDir)) return;
+  const onDisk = readdirSync(papersDir).filter((f) => f.endsWith(".html")).length;
+  const inSitemap = (xml.match(/<loc>[^<]*\/papers\/[^<]*\.html<\/loc>/g) || []).length;
+  if (onDisk !== inSitemap) {
+    problems.push(
+      `sitemap.xml lists ${inSitemap} of the ${onDisk} paper pages on disk. ` +
+        "A paginated template needs `addAllPagesToCollections: true` or only its first page reaches collections.all (#1293)."
+    );
+  }
+  // <lastmod> coverage (#620). Not asserted as "all URLs", because a shallow
+  // clone legitimately produces none: CI checks out at depth 1 outside the
+  // deploy job, and the filter omits rather than stamping every page with the
+  // checkout date. What IS asserted is that the dates are not all identical
+  // when there are any, which is the shape that mistake takes.
+  const stamps = xml.match(/<lastmod>([^<]+)<\/lastmod>/g) || [];
+  if (stamps.length > 20 && new Set(stamps).size === 1) {
+    problems.push(
+      `sitemap.xml gives all ${stamps.length} dated URLs the same <lastmod> ${stamps[0]}. ` +
+        "That is what a shallow clone looks like; the git filter should have omitted them instead (#620)."
+    );
+  }
+
+  // Citation files and feeds are endpoints, not pages, and must never appear.
+  for (const ext of [".bib", ".ris"]) {
+    const leaked = (xml.match(new RegExp(`<loc>[^<]*\\${ext}</loc>`, "g")) || []).length;
+    if (leaked) problems.push(`sitemap.xml lists ${leaked} ${ext} file(s); citation files are not pages`);
+  }
+  if (/<loc>[^<]*\/feeds\//.test(xml)) problems.push("sitemap.xml lists an Atom feed; a subscription endpoint is not a page");
+}
+
+// ---------------------------------------------------------------------------
+// No Finder / iCloud duplicate files in the build input.
+//
+// `Documents` is iCloud-synced, and iCloud silently produces "name 2.ext"
+// copies of files being edited. 41 appeared during one session on this repo.
+// .gitignore pins `* [0-9].*` so they never reach git, but ELEVENTY DOES NOT
+// APPLY THAT PATTERN: it built every duplicate, emitting 22 Atlas theme pages
+// instead of 17 and 1065 .bib files instead of 315. The output is wrong in a
+// way that makes local verification untrustworthy, which is what rule §14
+// leans on. .eleventyignore now excludes them too; this check is the alarm, so
+// a stray copy is a loud failure rather than a silently doubled build.
+const DUP_RE = / \d+\.[A-Za-z0-9]+$/;
+function checkNoDuplicateInputs() {
+  const roots = ["src", "scripts"];
+  const found = [];
+  const walk = (dir) => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, e.name);
+      if (e.isDirectory()) walk(full);
+      else if (DUP_RE.test(e.name)) found.push(full);
+    }
+  };
+  for (const r of roots) if (existsSync(r)) walk(r);
+  if (found.length) {
+    problems.push(
+      `${found.length} Finder/iCloud duplicate file(s) in the build input — Eleventy builds these, so the output is doubled. ` +
+        `Delete them: ${found.slice(0, 3).join(", ")}${found.length > 3 ? ", …" : ""}`
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// No orphaned share cards (#474 follow-up).
+//
+// docs/new-conference.md tells the maintainer to delete a year's <year>-meta.*
+// files when the edition rolls over, and says an orphan check will flag it if
+// they forget. No such check existed, which is how 2022-meta.jpg and
+// 2023-meta.jpg sat unreferenced.
+//
+// "Referenced" is read from the BUILT og:image tags, not from metaImage in the
+// templates. Several pages compute it (atlas-theme.njk builds the filename from
+// the theme slug), so a literal-filename grep over src/ reports seventeen real
+// cards as orphans. The built HTML has every reference already resolved, which
+// is what the question actually is.
+function checkOrphanShareCards() {
+  const dir = join("src", "assets", "images");
+  if (!existsSync(dir)) return;
+  const files = htmlFiles("_site");
+  if (!files.length) return; // no build to read; other checks already warn
+  const referenced = new Set();
+  for (const f of files) {
+    for (const m of readFileSync(f, "utf8").matchAll(/og:image"\s+content="[^"]*\/([^"/]+\.jpg)"/g)) {
+      referenced.add(m[1]);
+    }
+  }
+  const orphans = readdirSync(dir)
+    .filter((f) => /-meta(\.[a-z]{2})?\.jpg$/.test(f))
+    .filter((f) => !referenced.has(f));
+  if (orphans.length) {
+    problems.push(
+      `${orphans.length} share card(s) that no built page points at: ${orphans.slice(0, 6).join(", ")}` +
+        `${orphans.length > 6 ? `, … (+${orphans.length - 6})` : ""}. ` +
+        "Delete them, or wire a page's metaImage to them (docs/new-conference.md, rollover step)."
+    );
+  }
+}
+
 checkDataKeys();
 checkBoardLinks();
 checkBuiltHtml();
@@ -514,6 +607,9 @@ checkUndefinedClasses();
 checkCssCollisions();
 checkPeopleIndex();
 checkThemeSpread();
+checkSitemapCoverage();
+checkNoDuplicateInputs();
+checkOrphanShareCards();
 
 if (problems.length) {
   console.error(`\n✗ build-sanity check failed (${problems.length} problem${problems.length > 1 ? "s" : ""}):\n`);
@@ -521,4 +617,4 @@ if (problems.length) {
   console.error("");
   process.exit(1);
 }
-console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, no cross-block CSS class collisions, people hovercard index resolvable, theme spread within bounds).");
+console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, no cross-block CSS class collisions, people hovercard index resolvable, theme spread within bounds, every paper page in the sitemap, no duplicate build inputs, no orphaned share cards).");
