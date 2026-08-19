@@ -51,8 +51,8 @@ other way round, so this is where a new release first appears.
 | v2.24.0 | 30 May 2026 | **Shipped** | Live programme depth and a print overhaul |
 | v2.25.0 | 9 Jun 2026 | **Shipped** | Ready for Stockholm (pre-conference release) |
 | v2.26.0 | 25 Jun 2026 | **Shipped** | Introducing the Anthology |
-| v2.27.0 | Sep 2026 | In progress | The Anthology Atlas and the recovered back catalogue |
-| v2.28.0 | 8 Dec 2026 | Planned | Persistent identifiers and the corpus in French |
+| v2.27.0 | 19 Aug 2026 | **Shipped** | The Anthology Atlas and the recovered back catalogue |
+| v2.28.0 | 8 Dec 2026 | Planned | The corpus in French, and the data behind it |
 
 (`v2.24.1` was planned as a pre-ESSC patch but the work grew into a feature-rich minor, so it shipped as the **v2.25.0** *Ready for Stockholm* release instead; the `v2.24.1` milestone is closed as superseded.)
 
@@ -207,18 +207,20 @@ crossfades, an acknowledgments / contributors page, a newsletter
 archive page, `rel="me"` verification if EISS gets a Mastodon or
 Bluesky account.
 
-### v2.28.0 — Persistent identifiers and the corpus in French · target 8 December 2026
+### v2.28.0 — The corpus in French, and the data behind it · target 8 December 2026
 
-Two strands, both about making the corpus outlast the website. The
-first gives it identifiers and archives that are not GitHub. The
-second makes it usable in French, which is where a large part of the
-network reads.
+The identifier strand that gave this release its old name shipped early,
+inside v2.27.0: the Zenodo DOI, the HAL note and the Software Heritage
+archive are all live and shown on the site. What remains here is the
+second strand, making the corpus usable in French, which is where a
+large part of the network reads, together with the metadata work that
+turns the corpus into something other projects can analyse and cite.
 
-The identifier strand is largely landed. The
+The
 [v2.28.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/11)
 is the queryable commitment (rule §10).
 
-- **Persistent identifiers and long-term archiving** — the corpus is
+- **Persistent identifiers and long-term archiving (shipped in v2.27.0)** — the corpus is
   deposited on Zenodo as a *dataset* in the `eiss` community, under the
   concept DOI [10.5281/zenodo.21776209](https://doi.org/10.5281/zenodo.21776209),
   and `/anthology` carries a "Cite this corpus" block in all three
@@ -233,10 +235,13 @@ is the queryable commitment (rule §10).
   is **deferred, not refused**
   ([#1222](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1222), M).
   Still open there: the record cites the version DOI rather than the
-  concept DOI, and carries no licence. The source archived in Software
-  Heritage, with the SWHIDs shown in `README.md` and on `/licensing`,
-  has not started
-  ([#1223](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1223), S).
+  concept DOI, and carries no licence. The source is archived in Software
+  Heritage, with the SWHID shown in `README.md`, on `/licensing` and
+  beside the DOI on `/anthology`, and the per-release refresh rule
+  written down in `docs/corpus-archiving.md`. What keeps
+  [#1223](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1223)
+  open is its last criterion, the HAL software deposit by SWHID, which
+  waits on #1222.
   This is the cheap path: #795 weighs the Crossref per-paper
   alternative, which carries a recurring membership cost and stays
   undecided. The Zenodo GitHub integration was deliberately left off, to
