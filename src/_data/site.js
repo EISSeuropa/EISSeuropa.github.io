@@ -84,6 +84,12 @@ module.exports = {
     // the origin / visit / anchor qualifiers that let the archive resolve it
     // in context. Cited on /licensing and beside the DOI on the Anthology.
     swhid: "swh:1:dir:482a1c89d5fa36abcd5719d994c1261ce31c602e",
+    // The archive's landing page for the repository as a whole, as opposed
+    // to the pinned directory above. Behind the "archived software
+    // repository" badge.
+    swhOriginUrl:
+      "https://archive.softwareheritage.org/browse/origin/?origin_url=" +
+      "https://github.com/EISSeuropa/EISSeuropa.github.io",
     swhidUrl:
       "https://archive.softwareheritage.org/swh:1:dir:482a1c89d5fa36abcd5719d994c1261ce31c602e" +
       ";origin=https://github.com/EISSeuropa/EISSeuropa.github.io" +

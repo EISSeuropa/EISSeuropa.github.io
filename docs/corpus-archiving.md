@@ -276,6 +276,27 @@ Both pages render it from `site.corpus.swhid` / `site.corpus.swhidUrl`, so
 refreshing the identifier is one edit in `src/_data/site.js` plus the README
 badge.
 
+### The badges are checked-in copies
+
+The three stickers on the README and at the foot of the "Cite this corpus"
+panel (Zenodo DOI, archived repository, archived source tree) are static
+SVGs in `src/assets/images/badges/`, not hotlinks. Zenodo rate-limits
+GitHub's image proxy, which returned 429 often enough that the DOI badge
+rendered as a broken image on the README, and hotlinking on the site would
+have added a third-party request for every visitor on top of that.
+
+The cost is that they no longer refresh themselves. Re-fetch them in the
+same release-time pass that re-collects the SWHID:
+
+```bash
+cd src/assets/images/badges
+curl -sSo zenodo-doi.svg "https://zenodo.org/badge/DOI/<concept DOI>.svg"
+curl -sSo swh-origin.svg "https://archive.softwareheritage.org/badge/origin/https://github.com/EISSeuropa/EISSeuropa.github.io/"
+curl -sSo swh-dir.svg "https://archive.softwareheritage.org/badge/<SWHID>/"
+```
+
+Zenodo answers an empty user agent with a 403, so keep curl's default one.
+
 ### When to refresh it
 
 **Re-collect the directory SWHID at each release**, not on every commit.
