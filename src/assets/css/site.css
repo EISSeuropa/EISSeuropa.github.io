@@ -5531,15 +5531,21 @@ body.search-open { overflow: hidden; }
   line-height: 1.45;
   text-align: left;
   letter-spacing: normal;
-  opacity: 0;
   pointer-events: none;
-  transition: opacity var(--motion-fast) var(--ease-out),
-              transform var(--motion-fast) var(--ease-out);
   z-index: 100;
+  /* display:none, not opacity:0. An absolutely-positioned box still counts
+     toward its ancestors' scrollable overflow while it is merely transparent,
+     and this one is up to 16rem wide, centred on an icon near the right edge.
+     On a 375px viewport that pushed the document to 401px, so /anthology
+     scrolled sideways and failed WCAG 1.4.10 Reflow, which is measured at
+     320px (#1225). visibility:hidden does not help: it was measured and left
+     the same 26px. The fade went with it, since a transition cannot run on an
+     element that did not exist in the previous frame. */
+  display: none;
 }
 .coverage-tip:hover::after,
 .coverage-tip:focus-visible::after {
-  opacity: 1;
+  display: block;
   transform: translateX(-50%) translateY(0);
 }
 
