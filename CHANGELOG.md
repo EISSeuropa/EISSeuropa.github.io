@@ -97,6 +97,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+_Nothing yet._
+
+## [2.27.0] · 2026-08-19 — The Anthology Atlas and the recovered back catalogue
+
 This release turns the Anthology from a list you read into a corpus you can explore, cite and download. The Atlas maps the whole thing as a network you can filter, search and link into, each of the 17 research themes gains a page and a feed of its own, and the corpus is now deposited with a DOI, described in HAL and archived in Software Heritage. Alongside that, EISS 2026 abstract coverage reaches every paper, recovery of the pre-Indico back catalogue begins, and volunteers get somewhere to publish under their own names.
 
 ### The Anthology Atlas
@@ -1300,7 +1304,8 @@ Preview MCP screenshots of `/index.fr.html`, `/index.de.html`, `/initiative.de.h
 
 *Originally tagged as **v2.0.0**; renumbered to **v2.0.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
 
-[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.26.0...HEAD
+[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.27.0...HEAD
+[2.27.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.26.0...v2.27.0
 [2.26.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.25.0...v2.26.0
 [2.25.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.24.0...v2.25.0
 [2.24.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.23.1...v2.24.0

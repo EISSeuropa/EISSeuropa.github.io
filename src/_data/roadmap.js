@@ -171,10 +171,11 @@ const roadmap = {
       },
       entries: [
         {
-          status: "planned",
+          status: "shipped",
           version: "v2.27.0",
-          milestone: "v2.27.0",
-          when: { en: "September 2026 · v2.27.0", fr: "septembre 2026 · v2.27.0", de: "September 2026 · v2.27.0" },
+          notesUrl: notes("v2.27.0"),
+          changes: 83,
+          when: { en: "19 August 2026 · v2.27.0", fr: "19 août 2026 · v2.27.0", de: "19. August 2026 · v2.27.0" },
           title: {
             en: "The Anthology Atlas and the recovered back catalogue",
             fr: "L’Atlas de l’Anthologie et les résumés retrouvés",
