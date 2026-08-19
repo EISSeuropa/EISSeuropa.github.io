@@ -160,6 +160,8 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- **The Anthology Atlas is listed on the site map.** `/sitemap.html` and its French and German siblings carried a line for the Anthology and none for the map of it, so the one page in this release a reader is most likely to want to find was reachable from the navigation and the Anthology header but not from the inventory that claims to list everything. The French and German entries flag that the Atlas itself is in English.
+
 - **The Atlas card on the Anthology says what the map is for, instead of repeating the stats above it.** Its sub-line read "511 papers · 494 authors · 17 research themes, mapped", three numbers the stats row directly above already shows. It now reads "Visualise the data and identify connections between authors and clusters", which is what the Atlas actually offers a reader deciding whether to open it. The French and German lines are hand-translated and both keep the note that the Atlas itself is in English, and both are a line shorter on a phone than the counts they replace.
 
 - **The Anthology's "Cite this corpus" panel now carries all three deposits, not just the DOI.** Beside the Zenodo DOI it lists the corpus-description note in HAL (`hal-05711925`) and the Software Heritage archive of the code that builds the corpus (`swh:1:dir:482a1c8…`), each on the same row treatment so the three read as one list. The SWHID moved into `site.corpus` in `_data/site.js`, where the DOI and the HAL identifier already live, so `/licensing` and the Anthology now quote one recorded value rather than a literal repeated in four templates.
