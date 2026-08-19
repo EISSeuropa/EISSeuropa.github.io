@@ -3,15 +3,11 @@
    maps, so it appears on /anthology and its papers view in every locale. Reuses the .speakers-cta link-card
    pattern (src/_includes/speakers-signpost.njk). The Atlas page is EN-only
    for now (#1124), so the FR/DE sub-lines flag that via atlasSignpost.sub.
-   Sub-line counts are data-derived from the anthologyAtlas data global
-   (papers / authors / research themes), so they never drift from the map. #}
+   The sub-line used to carry the paper / author / theme counts, which the
+   stats row directly above it already shows. It says what the map is for
+   instead. #}
 {% from "icons.njk" import icon %}
 {%- set t = i18n[lang or "en"] -%}
-{%- set _themeCount = anthologyAtlas.themes | length -%}
-{%- set _sub = t.atlasSignpost.sub
-      | replace("{p}", anthologyAtlas.papers | length)
-      | replace("{a}", anthologyAtlas.authors | length)
-      | replace("{t}", _themeCount) -%}
 <a class="speakers-cta" href="/anthology-atlas.html"{% if (lang or "en") != "en" %} hreflang="en"{% endif %}>
   {# The Anthology/Atlas constellation, not a generic glyph: the iconmark is
      already a constellation and the Atlas is a network map of the field, so
@@ -21,7 +17,7 @@
   <span class="speakers-cta__icon speakers-cta__icon--mark" aria-hidden="true">{% inlineSvg "assets/images/brand/anthology-mark.svg" %}</span>
   <span class="speakers-cta__body">
     <span class="speakers-cta__title">{{ t.atlasSignpost.title }}</span>
-    <span class="speakers-cta__sub muted">{{ _sub }}</span>
+    <span class="speakers-cta__sub muted">{{ t.atlasSignpost.sub }}</span>
   </span>
   <span class="speakers-cta__arrow" aria-hidden="true">{{ icon("arrow-right") }}</span>
 </a>

@@ -531,7 +531,7 @@ const locales = {
     // (#1124), so the FR/DE sub-lines flag that with a trailing note.
     atlasSignpost: {
       title: "Explore the Anthology Atlas",
-      sub: "{p} papers · {a} authors · {t} research themes, mapped",
+      sub: "See how the field clusters, and which papers bridge one research theme to another.",
     },
 
     speakers: {
@@ -1055,7 +1055,7 @@ const locales = {
 
     atlasSignpost: {
       title: "Explorez l'Atlas de l'Anthologie",
-      sub: "{p} communications · {a} auteurs · {t} thèmes de recherche, cartographiés · en anglais",
+      sub: "Découvrez les pôles qui structurent le champ, et les communications qui relient un thème de recherche à un autre. · en anglais",
     },
 
     speakers: {
@@ -1564,7 +1564,7 @@ const locales = {
 
     atlasSignpost: {
       title: "Entdecken Sie den Anthologie-Atlas",
-      sub: "{p} Beiträge · {a} Autor:innen · {t} Forschungsthemen, kartiert · auf Englisch",
+      sub: "Entdecken Sie, wie sich das Feld zu Schwerpunkten bündelt und welche Beiträge ein Forschungsthema mit einem anderen verbinden. · auf Englisch",
     },
 
     speakers: {
