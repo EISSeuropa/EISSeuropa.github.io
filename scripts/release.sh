@@ -249,6 +249,12 @@ if [[ "$DRY_RUN" != "--dry-run" ]]; then
           ;;
         *) printf '\n  Skipped. Flip it by hand, or re-run the command above later.\n\n' ;;
       esac
+    else
+      # Say so rather than skipping in silence. The guard above missing is
+      # usually benign (the card is already shipped), but when it was the
+      # version format that misfired, a silent skip meant nobody noticed the
+      # offer had been dead since #280 (#1415).
+      printf '  Roadmap card: nothing to flip for v%s (already shipped, or no card).\n\n' "$VERSION"
     fi
   fi
 
