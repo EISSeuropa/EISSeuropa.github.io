@@ -295,7 +295,22 @@ def _make_ssl_ctx(verify=True):
     return ssl.create_default_context()
 
 
-def check_external(url, _retry=True):
+# A timeout is not an answer, so it earns more patience than a 5xx before the
+# checker calls a link broken. Three attempts on a widening clock, with a
+# widening pause between them.
+#
+# hal.science is what forced this (#1417). It carries the Anthology's
+# corpus-description note, is cited from /licensing, the cite panel and
+# site.corpus, and answers in about half a second from a laptop, but it timed
+# out twice in a row from GitHub's runners and took two unrelated PRs red. One
+# retry at the same 15s clock was not enough, and the alternative on offer was
+# SKIP_HOSTS, which trades a false red for a permanent blind spot on a link we
+# very much want checked.
+TIMEOUT_SCHEDULE = (15, 30, 45)  # client timeout, seconds, per attempt
+TIMEOUT_PAUSES = (3, 10)         # pause before attempts 2 and 3
+
+
+def check_external(url, _retry=True, _attempt=1):
     parsed = urllib.parse.urlparse(url)
     host = parsed.hostname or ""
     if host in SKIP_HOSTS or any(host == d or host.endswith("." + d) for d in SKIP_DOMAINS):
@@ -306,10 +321,19 @@ def check_external(url, _retry=True):
         "Accept": "*/*",
     }
 
+    timeout = TIMEOUT_SCHEDULE[min(_attempt, len(TIMEOUT_SCHEDULE)) - 1]
+
     def _do(method, ctx):
         req = urllib.request.Request(url, headers=headers, method=method)
-        with urllib.request.urlopen(req, timeout=15, context=ctx) as resp:
+        with urllib.request.urlopen(req, timeout=timeout, context=ctx) as resp:
             return resp.status
+
+    def _again():
+        """Next timeout attempt, or the verdict once patience runs out."""
+        if _attempt < len(TIMEOUT_SCHEDULE):
+            time.sleep(TIMEOUT_PAUSES[_attempt - 1])
+            return check_external(url, _retry=_retry, _attempt=_attempt + 1)
+        return (url, "timeout")
 
     try:
         return (url, _do(method, _make_ssl_ctx(verify=True)))
@@ -365,10 +389,13 @@ def check_external(url, _retry=True):
             except Exception as e2:
                 return (url, f"err: {e2.__class__.__name__}: {e2}")
         # A connect timeout arrives wrapped in URLError; a read timeout does
-        # not (see the TimeoutError branch below). Both retry.
-        if _retry and isinstance(getattr(e, "reason", None), (TimeoutError, socket.timeout)):
-            time.sleep(3)
-            return check_external(url, _retry=False)
+        # not (see the TimeoutError branch below). Both go to the schedule.
+        # Matched on the message as well as the type: urllib does not promise
+        # the reason is a TimeoutError instance, and a reason that stringifies
+        # to "timed out" is a timeout whatever its class.
+        reason = getattr(e, "reason", None)
+        if isinstance(reason, (TimeoutError, socket.timeout)) or "timed out" in str(reason).lower():
+            return _again()
         # "Network is unreachable" (errno 101) is the runner's own networking
         # hiccuping, not the destination being wrong. Seen once mid-run on
         # PR #1365 against a host that answered on the retry. Same treatment
@@ -389,10 +416,7 @@ def check_external(url, _retry=True):
         # read timeout rather than wrapping it in URLError, so it lands in the
         # generic handler below. Verified against a server that hangs past the
         # client timeout — without this branch, no retry fires at all.
-        if _retry:
-            time.sleep(3)
-            return check_external(url, _retry=False)
-        return (url, "err: timed out twice")
+        return _again()
     except Exception as e:
         return (url, f"err: {e.__class__.__name__}: {e}")
 
@@ -416,6 +440,16 @@ if not internal_only and external_links:
             elif status == 429:
                 # Not broken: the host answered, it just wants fewer requests.
                 print(f"  ⚠ {url}  (429 rate-limited — host is up, not counted as broken)")
+            elif status == "timeout":
+                # Not broken either, on the same reasoning as the skip list it
+                # replaces: a host that will not answer inside 45s under a
+                # burst is slow, and calling that a broken link fails unrelated
+                # PRs. Printed unconditionally so a host that does this every
+                # run stays visible rather than quietly excused (#1417).
+                print(
+                    f"  ⚠ {url}  (timed out on {len(TIMEOUT_SCHEDULE)} attempts, "
+                    f"last at {TIMEOUT_SCHEDULE[-1]}s — slow host, not counted as broken)"
+                )
             elif isinstance(status, int) and 200 <= status < 400:
                 if not quiet:
                     print(f"  ✓ {url}  ({status})")
