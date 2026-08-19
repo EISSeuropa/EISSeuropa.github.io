@@ -66,6 +66,16 @@ module.exports = {
     // holds the data. See docs/corpus-archiving.md.
     halId: "hal-05711925",
     halUrl: "https://hal.science/hal-05711925",
+    // The site source code archived in Software Heritage. The SWHID is the
+    // bare directory identifier, computed from the content; the URL carries
+    // the origin / visit / anchor qualifiers that let the archive resolve it
+    // in context. Cited on /licensing and beside the DOI on the Anthology.
+    swhid: "swh:1:dir:482a1c89d5fa36abcd5719d994c1261ce31c602e",
+    swhidUrl:
+      "https://archive.softwareheritage.org/swh:1:dir:482a1c89d5fa36abcd5719d994c1261ce31c602e" +
+      ";origin=https://github.com/EISSeuropa/EISSeuropa.github.io" +
+      ";visit=swh:1:snp:fe6fce477add39ff7d70595c1dc8c6788f2e235e" +
+      ";anchor=swh:1:rev:1a8ca570193389c2ac9a603accfe4db1765f4898",
   },
 
   social: {

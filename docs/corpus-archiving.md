@@ -40,6 +40,11 @@ licensed CC BY 4.0.
   renders from `site.corpus` too, so it cannot drift from the Anthology
   block.
 
+The "Cite this corpus" disclosure lists all three deposits, one row each:
+the Zenodo DOI, the HAL note, and the Software Heritage SWHID of the code
+that builds the corpus. They share the `.cite-corpus-doi` row so the panel
+reads as one list.
+
 One place to edit when the DOI changes: `site.corpus` in
 `src/_data/site.js`, plus the README badge (markdown, not templated).
 `site.corpus` also holds `halId` and `halUrl`, so the HAL reference has
@@ -226,18 +231,24 @@ Archived from `https://github.com/EISSeuropa/EISSeuropa.github.io`.
 - `README.md`, as a badge next to the DOI badge.
 - `/licensing.html` (+ FR + DE), in the MIT code section, with a sentence
   explaining what it identifies.
+- `/anthology.html` (+ FR + DE), as the third row of the "Cite this corpus"
+  disclosure.
+
+Both pages render it from `site.corpus.swhid` / `site.corpus.swhidUrl`, so
+refreshing the identifier is one edit in `src/_data/site.js` plus the README
+badge.
 
 ### When to refresh it
 
 **Re-collect the directory SWHID at each release**, not on every commit.
 Software Heritage re-visits the repository on its own schedule, so the
 archive keeps up without being asked. What ages is the *published*
-identifier: leave it and `/licensing` will keep pointing at a 2026 file
-tree indefinitely.
+identifier: leave it and the site will keep pointing at a 2026 file tree
+indefinitely.
 
 Practically, this belongs in the release-time §5 sweep. Load the origin
-in Software Heritage, take the current directory SWHID, and update the
-two places above if it has moved. An identifier that silently ages is
+in Software Heritage, take the current directory SWHID, and update
+`site.corpus` plus the README badge if it has moved. An identifier that silently ages is
 worse than none, because a reader has no way of telling.
 
 ### Not the same as the Zenodo GitHub integration
