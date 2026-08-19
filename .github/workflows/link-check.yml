@@ -36,6 +36,7 @@ on:
       - 'docs/**'
       - '**.md'
       - 'scripts/check-links.sh'
+      - 'scripts/test-check-links.py'
       - '.github/workflows/link-check.yml'
       - 'package.json'
       - 'package-lock.json'
@@ -77,6 +78,13 @@ jobs:
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
+
+      # The checker's own self-check, before it is trusted to judge 700-odd
+      # links. Two seconds, no dependencies, and it pins the behaviours that
+      # would otherwise be re-derived by growing SKIP_HOSTS: a 429 and a
+      # hanging host are reported, a 404 still fails.
+      - name: Self-check the link checker
+        run: python3 scripts/test-check-links.py
 
       - name: Run link check
         run: ./scripts/check-links.sh --quiet

@@ -9,6 +9,8 @@ SKIP_HOSTS are pinned:
     200            -> passes
     404            -> still broken (the fix must not swallow real failures)
     ENETUNREACH    -> retried once, then takes the second answer
+    hanging host   -> every attempt in TIMEOUT_SCHEDULE is made, then reported
+                      as slow rather than broken (#1417)
 
 No framework and no dependencies. Run it directly:
 
@@ -60,6 +62,28 @@ urllib.request.urlopen = ns['urllib'].request.urlopen = real
 print(f'  ENETUNREACH then 200 -> {st!r} after {calls["n"]} attempt(s)')
 fails += [] if (st == 200 and calls['n'] == 2) else ['ENETUNREACH should be retried once and then succeed']
 
+# A host that accepts the connection and never answers must exhaust the
+# schedule and come back as the "timeout" sentinel, which the report prints as
+# a slow host rather than counting as broken (#1417). The clock is shrunk here
+# so the case runs in about a second; the shape is what is being pinned.
+ns['TIMEOUT_SCHEDULE'], ns['TIMEOUT_PAUSES'] = (0.3, 0.3, 0.3), (0, 0)
+hangs, connections = socket.socket(), []
+hangs.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+hangs.bind(('127.0.0.1', 0))
+hangs.listen(8)
+def hang():
+    while True:
+        try:
+            connections.append(hangs.accept()[0])   # connected, then no reply
+        except OSError:
+            return
+threading.Thread(target=hang, daemon=True).start()
+u, st = check_external(f'http://127.0.0.1:{hangs.getsockname()[1]}/hangs')
+hangs.close()
+print(f'  hanging host -> {st!r} after {len(connections)} attempt(s)')
+fails += [] if (st == 'timeout' and len(connections) == 3) else \
+    ['a hanging host should exhaust TIMEOUT_SCHEDULE and report "timeout", not broken']
+
 srv.shutdown()
-print('\nFAIL: ' + '; '.join(fails) if fails else '\nall four behaviours correct')
+print('\nFAIL: ' + '; '.join(fails) if fails else '\nall five behaviours correct')
 sys.exit(1 if fails else 0)
