@@ -600,6 +600,60 @@ function checkOrphanShareCards() {
   }
 }
 
+// Corpus citation metadata on the Anthology pages (§14: the failure is silent
+// and invisible in the browser). A reference manager saving /anthology.html
+// should record the deposited dataset. Zotero picks the item type from, in
+// order: a type-forcing Highwire tag, eprints.type, og:type, DC.type. og:type
+// is "website" sitewide, so the dataset typing rests on eprints.type being
+// present and on no forcing tag appearing. Adding, say, citation_journal_title
+// to that head block would retype every save as a journal article with a green
+// build and no visible change. This asserts both halves.
+const CORPUS_META_PAGES = ["anthology.html", "anthology.fr.html", "anthology.de.html"];
+const CORPUS_META_REQUIRED = [
+  "citation_title",
+  "citation_author",
+  "citation_publication_date",
+  "citation_doi",
+  "citation_public_url",
+];
+const CORPUS_META_FORBIDDEN = [
+  "citation_journal_title",
+  "citation_conference_title",
+  "citation_conference",
+  "citation_technical_report_institution",
+  "citation_book_title",
+  "citation_inbook_title",
+  "citation_dissertation_institution",
+];
+function checkCorpusCitationMeta() {
+  for (const name of CORPUS_META_PAGES) {
+    const f = join("_site", name);
+    if (!existsSync(f)) continue; // no build to read; other checks already warn
+    const html = readFileSync(f, "utf8");
+    const has = (tag) => html.includes(`<meta name="${tag}" content=`);
+    const missing = CORPUS_META_REQUIRED.filter((tag) => !has(tag));
+    if (missing.length) {
+      problems.push(
+        `/${name} is missing corpus citation metadata: ${missing.join(", ")}. ` +
+          "Set `corpusMeta: true` in its front matter (src/_layouts/base.njk emits the block)."
+      );
+    }
+    if (!html.includes('<meta name="eprints.type" content="dataset">')) {
+      problems.push(
+        `/${name} has no \`eprints.type\` dataset tag, so Zotero will file a save of it as a web page ` +
+          "rather than a dataset (og:type=website outranks DC.type). See the block in src/_layouts/base.njk."
+      );
+    }
+    const forcing = CORPUS_META_FORBIDDEN.filter((tag) => has(tag));
+    if (forcing.length) {
+      problems.push(
+        `/${name} emits ${forcing.join(", ")}, which overrides the dataset item type on save. ` +
+          "Drop the tag, or retype the deposit deliberately in src/_data/site.js + base.njk."
+      );
+    }
+  }
+}
+
 checkDataKeys();
 checkBoardLinks();
 checkBuiltHtml();
@@ -610,6 +664,7 @@ checkThemeSpread();
 checkSitemapCoverage();
 checkNoDuplicateInputs();
 checkOrphanShareCards();
+checkCorpusCitationMeta();
 
 if (problems.length) {
   console.error(`\n✗ build-sanity check failed (${problems.length} problem${problems.length > 1 ? "s" : ""}):\n`);
@@ -617,4 +672,4 @@ if (problems.length) {
   console.error("");
   process.exit(1);
 }
-console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, no cross-block CSS class collisions, people hovercard index resolvable, theme spread within bounds, every paper page in the sitemap, no duplicate build inputs, no orphaned share cards).");
+console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, no cross-block CSS class collisions, people hovercard index resolvable, theme spread within bounds, every paper page in the sitemap, no duplicate build inputs, no orphaned share cards, Anthology corpus citation metadata intact).");

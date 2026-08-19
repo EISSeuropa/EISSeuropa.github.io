@@ -56,6 +56,19 @@ module.exports = {
   // reference is reproduced as-is, not translated. Only the surrounding
   // chrome is localised (i18n.js → navigator.cite*).
   corpus: {
+    // The same reference in fields rather than prose, for the citation
+    // metadata in base.njk. A reference manager saving /anthology.html
+    // should record what `citation` below prints, so these two must agree.
+    title: "The European Security Studies Anthology",
+    author: "Laudrain, Arthur",
+    year: "2026",
+    publisher: "European Initiative for Security Studies",
+    rights: "CC BY 4.0",
+    abstract:
+      "Every paper presented at a European Initiative for Security Studies " +
+      "conference or workshop since 2017, and everyone who presented it, with " +
+      "abstracts, research themes and citation details where they are on file. " +
+      "Compiled from the conference programmes, and from Indico for recent editions.",
     doi: "10.5281/zenodo.21776209",
     doiUrl: "https://doi.org/10.5281/zenodo.21776209",
     citation:
@@ -66,6 +79,16 @@ module.exports = {
     // holds the data. See docs/corpus-archiving.md.
     halId: "hal-05711925",
     halUrl: "https://hal.science/hal-05711925",
+    // The site source code archived in Software Heritage. The SWHID is the
+    // bare directory identifier, computed from the content. The URL carries
+    // the origin / visit / anchor qualifiers that let the archive resolve it
+    // in context. Cited on /licensing and beside the DOI on the Anthology.
+    swhid: "swh:1:dir:482a1c89d5fa36abcd5719d994c1261ce31c602e",
+    swhidUrl:
+      "https://archive.softwareheritage.org/swh:1:dir:482a1c89d5fa36abcd5719d994c1261ce31c602e" +
+      ";origin=https://github.com/EISSeuropa/EISSeuropa.github.io" +
+      ";visit=swh:1:snp:fe6fce477add39ff7d70595c1dc8c6788f2e235e" +
+      ";anchor=swh:1:rev:1a8ca570193389c2ac9a603accfe4db1765f4898",
   },
 
   social: {

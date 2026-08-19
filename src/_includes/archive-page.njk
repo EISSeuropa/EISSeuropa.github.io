@@ -94,6 +94,18 @@
         <span class="cite-corpus-doi-label">{{ n18n.citeDoiLabel }}</span>
         <a href="{{ site.corpus.doiUrl }}">{{ site.corpus.doi }}</a>
       </p>
+      {# The two companion deposits: the corpus note in HAL (what the dataset
+         contains, how it is built, where it stops) and the site source code in
+         Software Heritage. Same row shape as the DOI, so the three references
+         read as one list rather than three treatments. #}
+      <p class="cite-corpus-doi">
+        <span class="cite-corpus-doi-label">{{ n18n.citeHalLabel }}</span>
+        <a href="{{ site.corpus.halUrl }}">{{ site.corpus.halId }}</a>
+      </p>
+      <p class="cite-corpus-doi">
+        <span class="cite-corpus-doi-label">{{ n18n.citeSwhidLabel }}</span>
+        <a href="{{ site.corpus.swhidUrl }}">{{ site.corpus.swhid }}</a>
+      </p>
     </details>
   </div>
 </header>

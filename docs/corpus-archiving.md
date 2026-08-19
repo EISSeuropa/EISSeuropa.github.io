@@ -40,10 +40,53 @@ licensed CC BY 4.0.
   renders from `site.corpus` too, so it cannot drift from the Anthology
   block.
 
+The "Cite this corpus" disclosure lists all three deposits, one row each:
+the Zenodo DOI, the HAL note, and the Software Heritage SWHID of the code
+that builds the corpus. They share the `.cite-corpus-doi` row so the panel
+reads as one list.
+
 One place to edit when the DOI changes: `site.corpus` in
 `src/_data/site.js`, plus the README badge (markdown, not templated).
 `site.corpus` also holds `halId` and `halUrl`, so the HAL reference has
 a single source in the same way.
+
+## Citation metadata: saving the page into a reference manager
+
+The three Anthology pages set `corpusMeta: true` in their front matter,
+which makes `src/_layouts/base.njk` emit a Highwire `citation_*` block
+plus two Dublin Core tags in the head. A reader who clicks the Zotero
+connector on `/anthology.html` gets the deposited dataset, with the
+title, author, year, publisher, DOI, abstract, language and rights the
+"Cite this corpus" panel prints, rather than a bare web-page record.
+The fields come from `site.corpus`, so they cannot drift from the
+reference string beside them. They stay in English on the FR and DE
+pages: what is described is one English-language dataset, whichever
+page you save it from.
+
+**The item type is the fragile part.** Zotero resolves it in the
+Embedded Metadata translator, then the RDF one, in this order:
+
+1. a type-forcing Highwire tag (`citation_journal_title`,
+   `citation_conference_title`, `citation_technical_report_institution`,
+   `citation_book_title`, `citation_inbook_title`,
+   `citation_dissertation_institution`),
+2. `eprints.type`,
+3. `og:type`,
+4. `DC.type`.
+
+This site emits `og:type=website` on every page, which on its own files
+the save as a web page and loses the `[Data set]` framing and the DOI.
+`eprints.type=dataset` outranks it, and is the reason a save comes back
+typed as a dataset. `DC.type=Dataset` says the same in the vocabulary
+everything else reads. Zotero 6 has no dataset type and lands the save
+as a document instead, which is the intended fallback.
+
+Adding a forcing tag to that block would silently retype every save
+with a green build and no visible change on the page, so
+`scripts/check-build-sanity.mjs` asserts the forcing tags stay absent
+and `eprints.type` stays present. If the deposit is ever retyped, for
+instance to a report, change it there deliberately rather than by
+adding a tag.
 
 ## Cutting a new version: the procedure
 
@@ -226,18 +269,24 @@ Archived from `https://github.com/EISSeuropa/EISSeuropa.github.io`.
 - `README.md`, as a badge next to the DOI badge.
 - `/licensing.html` (+ FR + DE), in the MIT code section, with a sentence
   explaining what it identifies.
+- `/anthology.html` (+ FR + DE), as the third row of the "Cite this corpus"
+  disclosure.
+
+Both pages render it from `site.corpus.swhid` / `site.corpus.swhidUrl`, so
+refreshing the identifier is one edit in `src/_data/site.js` plus the README
+badge.
 
 ### When to refresh it
 
 **Re-collect the directory SWHID at each release**, not on every commit.
 Software Heritage re-visits the repository on its own schedule, so the
 archive keeps up without being asked. What ages is the *published*
-identifier: leave it and `/licensing` will keep pointing at a 2026 file
-tree indefinitely.
+identifier: leave it and the site will keep pointing at a 2026 file tree
+indefinitely.
 
 Practically, this belongs in the release-time §5 sweep. Load the origin
-in Software Heritage, take the current directory SWHID, and update the
-two places above if it has moved. An identifier that silently ages is
+in Software Heritage, take the current directory SWHID, and update
+`site.corpus` plus the README badge if it has moved. An identifier that silently ages is
 worse than none, because a reader has no way of telling.
 
 ### Not the same as the Zenodo GitHub integration
