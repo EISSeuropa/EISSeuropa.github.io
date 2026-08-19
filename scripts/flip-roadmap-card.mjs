@@ -41,7 +41,13 @@ const FILE = new URL("../src/_data/roadmap.js", import.meta.url);
 const PATH = "src/_data/roadmap.js";
 
 const argv = process.argv.slice(2);
-const version = argv.find((a) => /^v\d+\.\d+\.\d+$/.test(a));
+// Accept "v2.27.0" and "2.27.0" alike. scripts/release.sh holds the version in
+// the bare form its own usage documents and passed it straight through, so the
+// guard that offers this flip mid-release got a usage message instead of a
+// diff and skipped the offer without a word, for every release since #280
+// (#1415). Normalising here fixes every caller at once, including the command
+// the release script prints for the maintainer to run by hand.
+const version = (argv.find((a) => /^v?\d+\.\d+\.\d+$/.test(a)) || "").replace(/^v?/, "v") || undefined;
 const flag = (name) => {
   const i = argv.indexOf(`--${name}`);
   return i === -1 ? null : argv[i + 1];
@@ -50,7 +56,7 @@ const write = argv.includes("--write");
 const date = flag("date") || new Date().toISOString().slice(0, 10);
 
 if (!version) {
-  console.error("usage: node scripts/flip-roadmap-card.mjs vX.Y.Z [--write] [--date YYYY-MM-DD] [--changes N]");
+  console.error("usage: node scripts/flip-roadmap-card.mjs [v]X.Y.Z [--write] [--date YYYY-MM-DD] [--changes N]");
   process.exit(2);
 }
 if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
@@ -58,17 +64,30 @@ if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
   process.exit(2);
 }
 
-// Change count for the card. Defaults to the number of bullets under
-// [Unreleased] in the CHANGELOG, which is what the card is reporting, but stays
-// overridable because the release commit may add or fold bullets afterwards.
+// Change count for the card. Counts the bullets the card is reporting, and
+// stays overridable because the release commit may add or fold bullets
+// afterwards.
+//
+// Two headings, in order, because the flip happens on either side of the
+// promotion. Run before the release commit and [Unreleased] holds the batch.
+// Run after it, which is what scripts/release.sh does, and [Unreleased] is an
+// empty shell while the bullets sit under [X.Y.Z]. Reading only the first
+// wrote `changes: 0` onto the v2.27.0 card until the count was passed by hand
+// (#1415).
 function changeCount() {
   const explicit = flag("changes");
   if (explicit) return Number(explicit);
   try {
     const md = readFileSync(new URL("../CHANGELOG.md", import.meta.url), "utf8");
-    const block = md.slice(md.indexOf("## [Unreleased]"));
-    const next = block.indexOf("\n## [", 1);
-    return (block.slice(0, next === -1 ? undefined : next).match(/^- /gm) || []).length;
+    for (const heading of ["## [Unreleased]", `## [${version.slice(1)}]`]) {
+      const start = md.indexOf(heading);
+      if (start === -1) continue;
+      const block = md.slice(start);
+      const next = block.indexOf("\n## [", 1);
+      const bullets = (block.slice(0, next === -1 ? undefined : next).match(/^- /gm) || []).length;
+      if (bullets > 0) return bullets;
+    }
+    return null;
   } catch {
     return null;
   }
