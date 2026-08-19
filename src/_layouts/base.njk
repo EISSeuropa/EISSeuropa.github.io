@@ -54,6 +54,42 @@
   {%- if paper.publishedUrl %}<meta name="citation_fulltext_world_readable" content="">{% endif %}
   {%- endif %}
 
+  {# Citation metadata for the deposited corpus, on pages that set
+     `corpusMeta: true` (the Anthology, all three locales). Those pages
+     describe the dataset rather than themselves, so a reference manager
+     saving one should record the corpus, in the same shape as the reference
+     the "Cite this corpus" panel prints. Highwire `citation_*` is what
+     Zotero, Scholar and Mendeley read first. The two Dublin Core tags carry
+     what Highwire has no field for.
+
+     The item type is the fragile part. Zotero (Embedded Metadata, then RDF)
+     resolves it in this order: a type-forcing Highwire tag wins outright,
+     then eprints.type, then og:type, then DC.type. `og:type` is "website"
+     sitewide, which on its own files the save as a web page, so
+     `eprints.type` is what makes it a dataset and `DC.type` states the same
+     thing in the vocabulary everything else reads. The forcing tags are
+     citation_journal_title, citation_conference_title,
+     citation_technical_report_institution, citation_book_title,
+     citation_inbook_title and citation_dissertation_institution: emitting
+     any of them here would silently retype the save.
+     scripts/check-build-sanity.mjs asserts they stay absent.
+
+     English in every locale, like the reference itself: what is described is
+     one English-language dataset, whichever page you save it from. #}
+  {%- if corpusMeta %}
+  <meta name="citation_title" content="{{ site.corpus.title }}">
+  <meta name="citation_author" content="{{ site.corpus.author }}">
+  <meta name="citation_publication_date" content="{{ site.corpus.year }}">
+  <meta name="citation_publisher" content="{{ site.corpus.publisher }}">
+  <meta name="citation_doi" content="{{ site.corpus.doi }}">
+  <meta name="citation_abstract" content="{{ site.corpus.abstract }}">
+  <meta name="citation_public_url" content="{{ site.url }}{{ page.url }}">
+  <meta name="citation_language" content="en">
+  <meta name="eprints.type" content="dataset">
+  <meta name="DC.type" content="Dataset">
+  <meta name="DC.rights" content="{{ site.corpus.rights }}">
+  {%- endif %}
+
   {# hreflang alternates. Only emitted when the page declares `alternates`
      in its front-matter — most pages currently don't, and that's fine
      (English-only pages don't need alternates). The shape is:

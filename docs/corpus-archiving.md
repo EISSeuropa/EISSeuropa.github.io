@@ -50,6 +50,44 @@ One place to edit when the DOI changes: `site.corpus` in
 `site.corpus` also holds `halId` and `halUrl`, so the HAL reference has
 a single source in the same way.
 
+## Citation metadata: saving the page into a reference manager
+
+The three Anthology pages set `corpusMeta: true` in their front matter,
+which makes `src/_layouts/base.njk` emit a Highwire `citation_*` block
+plus two Dublin Core tags in the head. A reader who clicks the Zotero
+connector on `/anthology.html` gets the deposited dataset, with the
+title, author, year, publisher, DOI, abstract, language and rights the
+"Cite this corpus" panel prints, rather than a bare web-page record.
+The fields come from `site.corpus`, so they cannot drift from the
+reference string beside them. They stay in English on the FR and DE
+pages: what is described is one English-language dataset, whichever
+page you save it from.
+
+**The item type is the fragile part.** Zotero resolves it in the
+Embedded Metadata translator, then the RDF one, in this order:
+
+1. a type-forcing Highwire tag (`citation_journal_title`,
+   `citation_conference_title`, `citation_technical_report_institution`,
+   `citation_book_title`, `citation_inbook_title`,
+   `citation_dissertation_institution`),
+2. `eprints.type`,
+3. `og:type`,
+4. `DC.type`.
+
+This site emits `og:type=website` on every page, which on its own files
+the save as a web page and loses the `[Data set]` framing and the DOI.
+`eprints.type=dataset` outranks it, and is the reason a save comes back
+typed as a dataset. `DC.type=Dataset` says the same in the vocabulary
+everything else reads. Zotero 6 has no dataset type and lands the save
+as a document instead, which is the intended fallback.
+
+Adding a forcing tag to that block would silently retype every save
+with a green build and no visible change on the page, so
+`scripts/check-build-sanity.mjs` asserts the forcing tags stay absent
+and `eprints.type` stays present. If the deposit is ever retyped, for
+instance to a report, change it there deliberately rather than by
+adding a tag.
+
 ## Cutting a new version: the procedure
 
 **Start here whenever the dataset is updated.** The single step most
