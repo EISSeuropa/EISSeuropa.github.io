@@ -7,15 +7,18 @@ Maintainer-facing docs for [eiss-europa.com](https://eiss-europa.com)
 | Doc | What it covers |
 |---|---|
 | [architecture.md](architecture.md) | Build pipeline, data sources, sync jobs, CI gates, deploy — the data-flow map. |
+| [admin-guide.md](admin-guide.md) | Operator and handover guide: who holds what access, what runs unattended, and what a successor needs on day one. |
 | [design-system.md](design-system.md) | UI components and interaction patterns (the `.njk` partials + their CSS/JS). |
 | [a11y-audit-2026-08.md](a11y-audit-2026-08.md) | The August 2026 accessibility audit for #1225: method, the five defect classes found, what the tooling could not check, and what declaring conformance would take. |
 | [qa-checklist.md](qa-checklist.md) | Release / pre-conference Go/No-Go audit using the repo's own tooling. |
+| [qa-audit-2026-06.md](qa-audit-2026-06.md) | The June 2026 site-wide QA audit across seven dimensions: method, the 19 confirmed findings, and what each one turned into. |
 | [i18n.md](i18n.md) | Translation model (EN source + FR/DE), the drift checker, the beta ribbon. |
 | [search.md](search.md) | Pagefind search: deploy-time index, bio stubs, why local search is "unavailable". |
 | [board-bios-setup.md](board-bios-setup.md) | The Form → `board.json` → board page bios pipeline. |
 | [indico-programme-integration.md](indico-programme-integration.md) | The live ESSC programme grid from the Indico sync. |
 | [indico-api-token.md](indico-api-token.md) | Indico API token setup for the authenticated sync. |
 | [new-conference.md](new-conference.md) | Per-year-page rollover procedure for a new ESSC. |
+| [news-publishing.md](news-publishing.md) | The News surface: the homepage "Latest" section, the `/news` archive, the Atom feed, and how an item gets added. |
 | [publication-matching.md](publication-matching.md) | Linking ESSC papers to their later-published versions: the matcher, the review queue, the confirm step, the monthly sync. |
 | [anthology-corpus-note.md](anthology-corpus-note.md) | The public corpus-description note: scope, sources, the theme vocabulary, co-authorship, coverage, limitations. Drafted for deposit. |
 | [corpus-archiving.md](corpus-archiving.md) | Depositing the Anthology outside the repo: the Zenodo concept vs version DOI, where the DOI surfaces, the versioning cadence, HAL. |
