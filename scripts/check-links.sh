@@ -72,7 +72,7 @@ fi
 "$PY3" - "$SITE_ROOT" $INTERNAL_ONLY $QUIET <<'PY'
 """Inline-Python link checker. Avoids extra deps; portable across
 the maintainer's macOS laptop and Ubuntu CI."""
-import os, re, socket, sys, time, urllib.parse, urllib.request, urllib.error, ssl
+import errno, os, re, socket, sys, time, urllib.parse, urllib.request, urllib.error, ssl
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -194,24 +194,13 @@ SKIP_HOSTS = {
                                 # anonymous HEAD/GET, same academic-publisher
                                 # anti-bot class as doi.org / shs.cairn.info.
                                 # The journal page opens fine in a browser.
-    "www.hugomeijer.com",       # Founding-and-Honorary-Director Hugo Meijer's
-                                # personal site, linked from his board profile
-                                # (`/board/...` + FR/DE). Returns HTTP 429
-                                # (rate-limited) to the checker under automated
-                                # load while loading fine for visitors. Same
-                                # recurring-flake class as the academic hosts
-                                # above; flaked PR #1007's link-check. Skipping
-                                # stops the false-red on every src-touching PR.
-    "www.sanneverschuren.com",  # Board member Sanne Verschuren's personal site,
-                                # linked from her board profile (`/board/...` +
-                                # FR/DE). Identical case to www.hugomeijer.com
-                                # directly above: HTTP 429 to the checker under
-                                # automated load, opens fine for visitors, and
-                                # `curl` gets 200 from a normal machine. Failed
-                                # two of three consecutive runs on PR #1365,
-                                # which is the same false-red this list exists
-                                # to stop.
 }
+
+# Board members' personal sites used to accumulate here, one entry per member,
+# whenever small hosting rate-limited the runner. www.hugomeijer.com (PR #1007)
+# and www.sanneverschuren.com (PR #1365) are both gone now: a 429 is handled in
+# check_external() as the "alive" answer it is, so the skip is no longer needed
+# and their links are checked again like everyone else (#1367).
 
 # Domains skipped together with ALL their subdomains. SKIP_HOSTS matches an
 # exact hostname, which misses country subdomains. LinkedIn serves member
@@ -344,6 +333,13 @@ def check_external(url, _retry=True):
         if 500 <= e.code < 600 and _retry:
             time.sleep(3)
             return check_external(url, _retry=False)
+        # 429 is the server saying "you are asking too often", which is
+        # affirmative evidence that the host is up and answering. It is never
+        # a broken link, and treating it as one is what grew the SKIP_HOSTS
+        # list a board member at a time (#1367). Reported, not silent, so a
+        # host that rate-limits every run is still visible.
+        if e.code == 429:
+            return (url, 429)
         return (url, f"HTTP {e.code}")
     except urllib.error.URLError as e:
         # On macOS the default Python install often ships with an
@@ -371,6 +367,14 @@ def check_external(url, _retry=True):
         # A connect timeout arrives wrapped in URLError; a read timeout does
         # not (see the TimeoutError branch below). Both retry.
         if _retry and isinstance(getattr(e, "reason", None), (TimeoutError, socket.timeout)):
+            time.sleep(3)
+            return check_external(url, _retry=False)
+        # "Network is unreachable" (errno 101) is the runner's own networking
+        # hiccuping, not the destination being wrong. Seen once mid-run on
+        # PR #1365 against a host that answered on the retry. Same treatment
+        # as a 5xx: try again and take the second answer.
+        if _retry and isinstance(getattr(e, "reason", None), OSError) \
+                and getattr(e.reason, "errno", None) == errno.ENETUNREACH:
             time.sleep(3)
             return check_external(url, _retry=False)
         return (url, f"err: {e.__class__.__name__}: {e}")
@@ -409,6 +413,9 @@ if not internal_only and external_links:
             if status == "skip":
                 if not quiet:
                     print(f"  - {url}  (skipped: auth-gated)")
+            elif status == 429:
+                # Not broken: the host answered, it just wants fewer requests.
+                print(f"  ⚠ {url}  (429 rate-limited — host is up, not counted as broken)")
             elif isinstance(status, int) and 200 <= status < 400:
                 if not quiet:
                     print(f"  ✓ {url}  ({status})")
