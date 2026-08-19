@@ -92,6 +92,13 @@ class A11yScan(HTMLParser):
             alt = attrs.get("alt")
             if alt is None:
                 self.images_no_alt.append(attrs.get("src", "?"))
+            elif alt and self._in_link:
+                # An image inside a link contributes its alt text to the
+                # link's accessible name, so a link whose only content is
+                # <img alt="..."> is named. Without this the rule below
+                # reports every image-only link (the deposit badges on the
+                # Anthology) as nameless.
+                self._link_text += alt
             elif alt == "" and attrs.get("role"):
                 # alt="" is fine; flag if also has role that doesn't match decorative
                 pass

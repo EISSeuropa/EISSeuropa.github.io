@@ -106,6 +106,18 @@
         <span class="cite-corpus-doi-label">{{ n18n.citeSwhidLabel }}</span>
         <a href="{{ site.corpus.swhidUrl }}">{{ site.corpus.swhid }}</a>
       </p>
+      {# The same three stickers the repository README carries, served from
+         our own assets rather than hotlinked. Zenodo throttles GitHub's
+         image proxy, which is why the DOI badge intermittently renders
+         broken on the README, and hotlinking would move that flakiness onto
+         the site along with a third-party request per visitor. They are
+         static SVGs, so refresh them when the DOI or the SWHID moves. The
+         curl commands are in docs/corpus-archiving.md. #}
+      <p class="cite-corpus-badges">
+        <a href="{{ site.corpus.doiUrl }}"><img src="/assets/images/badges/zenodo-doi.svg" alt="DOI {{ site.corpus.doi }}, deposited on Zenodo" width="191" height="20"></a>
+        <a href="{{ site.corpus.swhOriginUrl }}"><img src="/assets/images/badges/swh-origin.svg" alt="Software repository archived in Software Heritage" width="140" height="20"></a>
+        <a href="{{ site.corpus.swhidUrl }}"><img src="/assets/images/badges/swh-dir.svg" alt="Source tree archived in Software Heritage as {{ site.corpus.swhid }}" width="410" height="20"></a>
+      </p>
     </details>
   </div>
 </header>

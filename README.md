@@ -9,9 +9,14 @@ You can browse by person or by paper, and filter by year or theme. A dynamic vis
 The Anthology and the Atlas were designed and built by [Dr Arthur PB Laudrain](https://eiss-europa.com/board.html#arthur-laudrain).
 
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21776209.svg)](https://doi.org/10.5281/zenodo.21776209)
-[![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/EISSeuropa/EISSeuropa.github.io/)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/EISSeuropa/EISSeuropa.github.io)
-[![SWH](https://archive.softwareheritage.org/badge/swh:1:dir:482a1c89d5fa36abcd5719d994c1261ce31c602e/)](https://archive.softwareheritage.org/swh:1:dir:482a1c89d5fa36abcd5719d994c1261ce31c602e;origin=https://github.com/EISSeuropa/EISSeuropa.github.io;visit=swh:1:snp:fe6fce477add39ff7d70595c1dc8c6788f2e235e;anchor=swh:1:rev:1a8ca570193389c2ac9a603accfe4db1765f4898)
+[![DOI 10.5281/zenodo.21776209, deposited on Zenodo](src/assets/images/badges/zenodo-doi.svg)](https://doi.org/10.5281/zenodo.21776209)
+[![Software repository archived in Software Heritage](src/assets/images/badges/swh-origin.svg)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/EISSeuropa/EISSeuropa.github.io)
+[![Source tree archived in Software Heritage](src/assets/images/badges/swh-dir.svg)](https://archive.softwareheritage.org/swh:1:dir:482a1c89d5fa36abcd5719d994c1261ce31c602e;origin=https://github.com/EISSeuropa/EISSeuropa.github.io;visit=swh:1:snp:fe6fce477add39ff7d70595c1dc8c6788f2e235e;anchor=swh:1:rev:1a8ca570193389c2ac9a603accfe4db1765f4898)
+
+<!-- The badges are checked-in copies, not hotlinks. Zenodo rate-limits
+     GitHub's image proxy, so the hotlinked DOI badge rendered as a broken
+     image whenever the proxy's fetch came back 429. Refresh the three SVGs
+     when the DOI or the SWHID moves: docs/corpus-archiving.md. -->
 
 The corpus is deposited as a CC BY 4.0 **dataset** on Zenodo under the concept DOI above, which always resolves to the newest version. Its description, covering scope, sources, the theme vocabulary and the known limitations, is deposited in HAL as a research report at [hal-05711925](https://hal.science/hal-05711925). The **source code** is archived separately in Software Heritage, identified by the SWHID badge above. See [`docs/corpus-archiving.md`](docs/corpus-archiving.md) for which identifier to cite and when to refresh them.
 
