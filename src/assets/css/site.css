@@ -2144,17 +2144,19 @@ h4 { font-size: var(--fs-lg); }
   color: var(--accent);
   overflow-wrap: anywhere;
 }
-/* Badge row at the foot of the panel, the same stickers as the repository
-   README. Self-hosted SVGs at their natural 20px height, wrapping on narrow
-   viewports; the SWHID one is 410px wide and has to be allowed to shrink. */
-.cite-corpus-badges {
+/* Deposit badges in the Anthology header, the same stickers as the repository
+   README. Own prefix per rule §15: they sit beside the two disclosures rather
+   than inside either. Self-hosted SVGs at their natural 20px height, wrapping
+   on narrow viewports. The SWHID one is 410px wide and has to be allowed to
+   shrink. */
+.deposit-badges {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
   margin: var(--space-4) 0 0;
 }
-.cite-corpus-badges img {
+.deposit-badges img {
   display: block;
   max-width: 100%;
   height: auto;

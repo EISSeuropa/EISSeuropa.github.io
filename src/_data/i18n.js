@@ -519,11 +519,9 @@ const locales = {
       // site.js and stays in English in every locale; only this chrome is
       // translated.
       citeSummary: "Cite this corpus",
-      citeBody: "The Anthology is deposited as a dataset on Zenodo under CC BY 4.0, and this DOI always resolves to the latest version. A note describing the corpus is deposited in HAL, and the code that builds it is archived in Software Heritage.",
+      citeBody: "The Anthology is deposited as a dataset on Zenodo under CC BY 4.0, and the DOI in this reference always resolves to the latest version. A note describing the corpus is deposited in HAL, and the code that builds it is archived in Software Heritage.",
       citeLabel: "Reference",
-      citeDoiLabel: "DOI",
       citeHalLabel: "Description",
-      citeSwhidLabel: "Source code",
     },
 
     // Atlas signpost (src/_includes/atlas-signpost.njk): the link-card at the
@@ -1050,11 +1048,9 @@ const locales = {
       coverageSummary: "Couverture des résumés par année",
       coverageNote: "La couverture est la plus complète pour les éditions récentes, synchronisées depuis Indico. Les années antérieures sont récupérées édition après édition.",
       citeSummary: "Citer ce corpus",
-      citeBody: "L'Anthologie est déposée comme jeu de données sur Zenodo sous licence CC BY 4.0, et ce DOI renvoie toujours vers la version la plus récente. Une note décrivant le corpus est déposée sur HAL, et le code qui le produit est archivé dans Software Heritage.",
+      citeBody: "L'Anthologie est déposée comme jeu de données sur Zenodo sous licence CC BY 4.0, et le DOI de cette référence renvoie toujours vers la version la plus récente. Une note décrivant le corpus est déposée sur HAL, et le code qui le produit est archivé dans Software Heritage.",
       citeLabel: "Référence",
-      citeDoiLabel: "DOI",
       citeHalLabel: "Description",
-      citeSwhidLabel: "Code source",
     },
 
     atlasSignpost: {
@@ -1561,11 +1557,9 @@ const locales = {
       coverageSummary: "Abstract-Abdeckung nach Jahr",
       coverageNote: "Die Abdeckung ist bei den jüngeren Ausgaben am vollständigsten, die aus Indico synchronisiert werden. Frühere Jahre werden Ausgabe für Ausgabe ergänzt.",
       citeSummary: "Dieses Korpus zitieren",
-      citeBody: "Die Anthologie ist als Datensatz unter CC BY 4.0 auf Zenodo hinterlegt, und dieser DOI verweist stets auf die neueste Fassung. Eine Notiz zur Beschreibung des Korpus ist in HAL hinterlegt, und der Code, der ihn erzeugt, ist in Software Heritage archiviert.",
+      citeBody: "Die Anthologie ist als Datensatz unter CC BY 4.0 auf Zenodo hinterlegt, und der DOI dieser Literaturangabe verweist stets auf die neueste Fassung. Eine Notiz zur Beschreibung des Korpus ist in HAL hinterlegt, und der Code, der ihn erzeugt, ist in Software Heritage archiviert.",
       citeLabel: "Literaturangabe",
-      citeDoiLabel: "DOI",
       citeHalLabel: "Beschreibung",
-      citeSwhidLabel: "Quellcode",
     },
 
     atlasSignpost: {
