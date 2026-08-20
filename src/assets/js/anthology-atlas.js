@@ -516,7 +516,14 @@
 
     const stage = canvas.parentElement.getBoundingClientRect();
     card.style.left = Math.min(mx + 16, stage.width - 300) + 'px';
-    card.style.top = Math.max(8, my - 14) + 'px';
+    // Flip above the pointer when the card would run past the bottom of the
+    // stage. The stage is overflow:hidden, so a card anchored below the
+    // pointer on a dot in the lower third lost up to 145px of itself, and
+    // what got cut was the theme pills and the "Read more" line.
+    const ch = card.offsetHeight;
+    const below = my - 14;
+    const top = below + ch > stage.height - 8 ? my - 10 - ch : below;
+    card.style.top = Math.max(8, top) + 'px';
     card.classList.add('is-on');
     card.setAttribute('aria-hidden', 'false');
   }
