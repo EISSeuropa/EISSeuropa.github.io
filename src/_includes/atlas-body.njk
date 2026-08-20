@@ -109,6 +109,15 @@
     <span class="atlas-find__msg" id="atlas-find-msg" role="status"></span>
   </div>
 
+  {# Copy-link (#1445). The lens, the chips, the toggles and the current
+     spotlight have been mirrored into the query string since #1151, so a
+     filtered view has always been shareable and nothing on the page said so.
+     The row appears only once the view differs from the default map, so the
+     canonical Atlas does not carry a button that copies its own plain URL. #}
+  <div class="atlas-controls" id="atlas-shareopts" hidden>
+    <button class="atlas-share" type="button" id="atlas-share">Copy link to this view</button>
+  </div>
+
   {# Filter rows (#1191). A native <details>, open in the markup so the
      no-JS and desktop cases simply show everything; anthology-atlas.js
      collapses it on phones, where 12 edition chips plus 18 theme chips
@@ -155,11 +164,19 @@
     <canvas id="atlas-canvas" aria-label="Force-directed map of the European Security Studies Anthology: every paper drawn toward the research themes it touches and coloured by them, with an Authors lens mapping co-authorship between the same people. The same papers and authors are available as filterable lists on the Anthology page."></canvas>
     <div class="atlas-card" id="atlas-card" aria-hidden="true"></div>
   </div>
-  {# Visible list alternative (#1155): the canvas is opaque to assistive
-     technologies, and a plain list suits plenty of sighted readers too. #}
-  <p class="muted" style="margin: var(--space-3) 0 0; font-size: var(--fs-sm);">
-    Prefer a list? Every paper and author on this map is browsable in <a href="/anthology.html">the Anthology</a>.
-  </p>
+  {# Visible list alternative (#1155, widened in #1446): the canvas is opaque
+     to assistive technologies, and a plain list suits plenty of sighted
+     readers too. It lists what the CURRENT view holds rather than sending
+     everyone to the whole Anthology, so a filtered map has a text twin. A
+     <details> rather than a visually-hidden block on purpose: hidden links
+     are focusable links a sighted keyboard user cannot see, and a closed
+     disclosure keeps its contents out of the tab order entirely. #}
+  <details class="atlas-list" id="atlas-list">
+    <summary class="atlas-list__summary" id="atlas-list-summary">Browse this view as a list</summary>
+    <p class="atlas-list__lede muted">The whole corpus, unfiltered, is browsable in <a href="/anthology.html">the Anthology</a>.</p>
+    <ul class="atlas-list__items" id="atlas-list-items"></ul>
+    <p class="atlas-list__more muted" id="atlas-list-more" hidden></p>
+  </details>
   <div class="atlas-legend" id="atlas-legend">
     <span><span class="sw sw-theme"></span>colour is the paper's research theme</span>
     <span><span class="sw sw-page"></span>has an Anthology page</span>

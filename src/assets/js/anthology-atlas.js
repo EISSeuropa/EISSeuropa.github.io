@@ -33,6 +33,14 @@
   const paperOptsEl = document.getElementById('atlas-paperopts');
   const findEl = document.getElementById('atlas-find');
   const findListEl = document.getElementById('atlas-find-list');
+  // Copy-link row (#1445) and the text twin of the current view (#1446).
+  const shareRowEl = document.getElementById('atlas-shareopts');
+  const shareBtnEl = document.getElementById('atlas-share');
+  const listEl = document.getElementById('atlas-list');
+  const listSummaryEl = document.getElementById('atlas-list-summary');
+  const listItemsEl = document.getElementById('atlas-list-items');
+  const listMoreEl = document.getElementById('atlas-list-more');
+  const LIST_CAP = 200;   // enough to browse, short of dumping 500 links
   const findMsgEl = document.getElementById('atlas-find-msg');
   const filtersEl = document.getElementById('atlas-filters');
   const filtersSummaryEl = document.getElementById('atlas-filters-label') || document.getElementById('atlas-filters-summary');
@@ -762,6 +770,44 @@
     zoomTo(view.k * Math.exp(-e.deltaY * 0.0015), e.clientX - r.left, e.clientY - r.top);
   }, { passive: false });
 
+  // Copy-link (#1445). Same shape as the BibTeX copy on a paper page: the
+  // async clipboard where it exists, a hidden textarea and execCommand where
+  // it does not, and the button itself as the confirmation. On a touchscreen
+  // the OS share sheet is the gesture people reach for, so it goes first.
+  function flashShare(text) {
+    if (!shareBtnEl) return;
+    const original = shareBtnEl.textContent;
+    shareBtnEl.textContent = text;
+    setTimeout(() => { shareBtnEl.textContent = original; }, 1600);
+  }
+
+  function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); flashShare('Copied'); } catch (e) { /* no-op */ }
+    document.body.removeChild(ta);
+  }
+
+  if (shareBtnEl) {
+    shareBtnEl.addEventListener('click', () => {
+      const url = location.href;
+      if (coarse && navigator.share) {
+        navigator.share({ title: document.title, url: url }).catch(() => {});
+        return;
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => flashShare('Copied'), () => fallbackCopy(url));
+      } else {
+        fallbackCopy(url);
+      }
+    });
+  }
+
   if (zoomInBtn) zoomInBtn.addEventListener('click', () => zoomTo(view.k * 1.6, W / 2, H / 2));
   if (zoomOutBtn) zoomOutBtn.addEventListener('click', () => zoomTo(view.k / 1.6, W / 2, H / 2));
   if (zoomResetBtn) zoomResetBtn.addEventListener('click', resetView);
@@ -802,7 +848,13 @@
   // the summary has to say whether anything is filtering.
   const bulkRefreshers = [];   // All/None buttons that follow the chip state (#1442)
 
+  // Everything on the page that follows the current view. syncUrl calls it on
+  // every interaction, and boot calls it too, which matters: a deep-linked
+  // filtered view (?editions=2026) never goes through an interaction, and
+  // arrived with the copy-link row still hidden until this moved here.
   function updateFilterSummary() {
+    if (shareRowEl) shareRowEl.hidden = !viewIsFiltered();
+    renderList();
     const eds = activeEditions.size, ths = activeHubs.size;
     const all = eds === editions.length && ths === hubs.length;
     if (filtersSummaryEl) {
@@ -814,6 +866,64 @@
     // collapsed, so the way out of a filtered view belongs beside the count.
     if (filtersClearEl) filtersClearEl.hidden = all;
     bulkRefreshers.forEach((fn) => fn());
+  }
+
+  // "Is this still the default map?" Drives the copy-link row: a button that
+  // copies the bare URL of the page you are already on is noise.
+  function viewIsFiltered() {
+    return lens !== 'papers'
+      || activeEditions.size !== editions.length
+      || activeHubs.size !== hubs.length
+      || collabOnly || abstractsOnly || paperEdgesOn
+      || !!spotlightSet || !!spotlight;
+  }
+
+  // The text twin of whatever the map is currently showing (#1446). Rebuilt
+  // from the same nodeVisible() the canvas paints with, so the two cannot
+  // disagree, and capped, because a view nobody has narrowed holds 500 papers.
+  function renderList() {
+    if (!listItemsEl) return;
+    const visible = items().filter(nodeVisible);
+    const sorted = lens === 'authors'
+      ? visible.slice().sort((a, b) => a.name.localeCompare(b.name))
+      : visible.slice().sort((a, b) => (b.year || 0) - (a.year || 0)
+        || String(a.title).localeCompare(String(b.title)));
+    listItemsEl.replaceChildren();
+    sorted.slice(0, LIST_CAP).forEach((n) => {
+      const li = document.createElement('li');
+      const label = n.type === 'author' ? n.name : n.title;
+      if (n.url) {
+        const a = document.createElement('a');
+        a.href = n.url;
+        a.textContent = label;
+        li.append(a);
+      } else {
+        li.append(document.createTextNode(label));
+      }
+      const meta = n.type === 'author'
+        ? n.paperCount + (n.paperCount === 1 ? ' paper' : ' papers')
+        : [n.authors && n.authors.length ? n.authors.join(', ') : '', n.year].filter(Boolean).join(' · ');
+      if (meta) {
+        const sp = document.createElement('span');
+        sp.className = 'atlas-list__meta';
+        sp.textContent = meta;
+        li.append(sp);
+      }
+      listItemsEl.append(li);
+    });
+    const noun = lens === 'authors'
+      ? (sorted.length === 1 ? 'author' : 'authors')
+      : (sorted.length === 1 ? 'paper' : 'papers');
+    if (listSummaryEl) {
+      listSummaryEl.textContent = 'Browse this view as a list (' + sorted.length + ' ' + noun + ')';
+    }
+    if (listMoreEl) {
+      const over = sorted.length > LIST_CAP;
+      listMoreEl.hidden = !over;
+      listMoreEl.textContent = over
+        ? 'Showing the first ' + LIST_CAP + ' of ' + sorted.length + '. Narrow the editions or themes to see the rest here.'
+        : '';
+    }
   }
 
   function syncUrl() {
