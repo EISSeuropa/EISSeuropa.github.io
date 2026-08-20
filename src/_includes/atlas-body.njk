@@ -115,16 +115,31 @@
      otherwise push the map below the fold. The summary is hidden on
      desktop by CSS. #}
   <details class="atlas-filters" id="atlas-filters" open>
-    <summary class="atlas-filters__summary" id="atlas-filters-summary">Filters</summary>
+    {# The label is its own element so the active-filter count can be rewritten
+       without taking the Clear button with it. Clear only appears once
+       something is actually filtering (#1442). #}
+    <summary class="atlas-filters__summary" id="atlas-filters-summary">
+      <span id="atlas-filters-label">Filters</span>
+      <button class="atlas-filters__clear" type="button" id="atlas-filters-clear" hidden>Clear</button>
+    </summary>
     <div class="atlas-controls" id="atlas-years" role="group" aria-label="Filter by edition year">
       <span class="lbl">Editions</span>
+      {# Every chip starts on, so isolating one edition meant switching off the
+         other eleven by hand (#1442). These two do it in one press. #}
+      <span class="atlas-bulk" id="atlas-years-bulk"><!-- All / None injected by anthology-atlas.js --></span>
       <!-- year chips injected by anthology-atlas.js -->
     </div>
     <div class="atlas-controls" id="atlas-themes" role="group" aria-label="Spotlight a research theme">
       <span class="lbl">Themes</span>
+      <span class="atlas-bulk" id="atlas-themes-bulk"><!-- All / None injected by anthology-atlas.js --></span>
       <!-- theme hub chips injected by anthology-atlas.js -->
     </div>
   </details>
+
+  {# Announcements for anyone who cannot see the map move: the card pinned by
+     a tap, and the node a search lands on (#1446). Visually hidden, so it
+     costs the sighted reader nothing. #}
+  <p class="sr-only" role="status" id="atlas-live"></p>
 
   <div class="atlas-stage">
     {# Zoom cluster (#1433). The map holds around a thousand dots in 640px of

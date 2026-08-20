@@ -35,7 +35,11 @@
   const findListEl = document.getElementById('atlas-find-list');
   const findMsgEl = document.getElementById('atlas-find-msg');
   const filtersEl = document.getElementById('atlas-filters');
-  const filtersSummaryEl = document.getElementById('atlas-filters-summary');
+  const filtersSummaryEl = document.getElementById('atlas-filters-label') || document.getElementById('atlas-filters-summary');
+  const filtersClearEl = document.getElementById('atlas-filters-clear');
+  const yearsBulkEl = document.getElementById('atlas-years-bulk');
+  const themesBulkEl = document.getElementById('atlas-themes-bulk');
+  const liveEl = document.getElementById('atlas-live');
   const legendPapers = document.getElementById('atlas-legend');
   const legendAuthors = document.getElementById('atlas-legend-authors');
   // Welcome strip + guided-tour controls (#1134).
@@ -727,6 +731,8 @@
       hovered = n;
       card.classList.add('is-pinned');
       showCard(n, toScreenX(n.x), toScreenY(n.y));
+      // The card is a canvas overlay, so nothing announces it on its own.
+      announce(card.textContent.replace(/\s+/g, ' ').trim());
       draw();
       return;
     }
@@ -794,13 +800,20 @@
   // non-default state is written, so the bare URL stays canonical.
   // Filter disclosure summary (#1191): on phones the rows are collapsed, so
   // the summary has to say whether anything is filtering.
+  const bulkRefreshers = [];   // All/None buttons that follow the chip state (#1442)
+
   function updateFilterSummary() {
-    if (!filtersSummaryEl) return;
     const eds = activeEditions.size, ths = activeHubs.size;
     const all = eds === editions.length && ths === hubs.length;
-    filtersSummaryEl.textContent = all
-      ? 'Filters'
-      : 'Filters · ' + eds + '/' + editions.length + ' editions, ' + ths + '/' + hubs.length + ' themes';
+    if (filtersSummaryEl) {
+      filtersSummaryEl.textContent = all
+        ? 'Filters'
+        : 'Filters · ' + eds + '/' + editions.length + ' editions, ' + ths + '/' + hubs.length + ' themes';
+    }
+    // The summary is the only filter control visible while the rows are
+    // collapsed, so the way out of a filtered view belongs beside the count.
+    if (filtersClearEl) filtersClearEl.hidden = all;
+    bulkRefreshers.forEach((fn) => fn());
   }
 
   function syncUrl() {
@@ -853,6 +866,37 @@
     abstractsOnly = sp.get('abstracts') === '1';
     paperEdgesOn = sp.get('links') === '1';
     return sp.get('lens') === 'authors' ? 'authors' : null;
+  }
+
+  // "All" and "None" for a chip row (#1442). They reuse the plain chip style
+  // (no colour dot, no pressed state) because they name no series: they are
+  // actions, not a filter that can be on or off.
+  function buildBulk(host, apply, isAll, isNone) {
+    if (!host) return function () {};
+    const all = document.createElement('button');
+    const none = document.createElement('button');
+    [all, none].forEach((b) => { b.type = 'button'; b.className = 'atlas-chip is-plain'; });
+    all.textContent = 'All';
+    none.textContent = 'None';
+    const refresh = function () { all.disabled = isAll(); none.disabled = isNone(); };
+    all.addEventListener('click', () => { apply(true); refresh(); });
+    none.addEventListener('click', () => { apply(false); refresh(); });
+    host.append(all, none);
+    refresh();
+    return refresh;
+  }
+
+  // Every chip in a row set at once, with the pressed state on each button
+  // brought along, since the chips are the readable record of the filter.
+  function setAllChips(host, set, keys, on) {
+    if (on) keys.forEach((k) => set.add(k)); else set.clear();
+    if (host) {
+      host.querySelectorAll('.atlas-chip[aria-pressed]').forEach((b) => {
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
+    syncUrl();
+    draw();
   }
 
   function buildEditionChips() {
@@ -940,14 +984,29 @@
     }
   }
 
+  // Anyone who cannot see the map move gets told what happened (#1446). The
+  // region is polite, so it waits its turn rather than cutting across.
+  function announce(text) {
+    if (!liveEl) return;
+    liveEl.textContent = text || '';
+  }
+
   function applyFind(q) {
     const node = resolveFind(q);
     spotlight = node;
     spotlightSet = null; // an explicit Find supersedes a pinned author
-    if (!String(q || '').trim()) setFindMsg('');
-    else if (!node) setFindMsg('No match in the corpus.');
-    else if (!nodeVisible(node)) setFindMsg('Found, but hidden by the current filters.');
-    else setFindMsg('');
+    // The Find message is a status region of its own, so the failure paths
+    // announce through it and this one is cleared rather than left holding a
+    // stale spotlight.
+    if (!String(q || '').trim()) { setFindMsg(''); announce(''); }
+    else if (!node) { setFindMsg('No match in the corpus.'); announce(''); }
+    else if (!nodeVisible(node)) { setFindMsg('Found, but hidden by the current filters.'); announce(''); }
+    else {
+      setFindMsg('');
+      announce(node.type === 'author'
+        ? 'Spotlighting ' + node.name + ', ' + node.paperCount + (node.paperCount === 1 ? ' paper.' : ' papers.')
+        : 'Spotlighting ' + node.title + '.');
+    }
     if (node) {
       const wantLens = node.type === 'author' ? 'authors' : 'papers';
       if (lens !== wantLens) { switchLens(wantLens); return; } // switchLens syncs + draws
@@ -1136,6 +1195,27 @@
       buildStats();
       buildEditionChips();
       buildThemeChips();
+      bulkRefreshers.push(buildBulk(
+        yearsBulkEl,
+        (on) => setAllChips(yearsEl, activeEditions, editions.map((e) => e.key), on),
+        () => activeEditions.size === editions.length,
+        () => activeEditions.size === 0));
+      bulkRefreshers.push(buildBulk(
+        themesBulkEl,
+        (on) => setAllChips(themesEl, activeHubs, hubs.map((h) => h.id), on),
+        () => activeHubs.size === hubs.length,
+        () => activeHubs.size === 0));
+      if (filtersClearEl) {
+        filtersClearEl.addEventListener('click', (e) => {
+          // The button lives inside the <summary>, so its click would
+          // otherwise toggle the disclosure on the way up.
+          e.preventDefault();
+          e.stopPropagation();
+          setAllChips(yearsEl, activeEditions, editions.map((x) => x.key), true);
+          setAllChips(themesEl, activeHubs, hubs.map((h) => h.id), true);
+          announce('Filters cleared. The whole corpus is on the map.');
+        });
+      }
       buildLensChips();
       buildAuthorOpts();
       buildPaperOpts();

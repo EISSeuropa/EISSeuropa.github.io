@@ -97,6 +97,12 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+### Added
+
+- **The Atlas chip rows have All and None, and a filtered view has a way out.** Every edition and theme chip starts switched on, so isolating a single edition meant switching off the other eleven by hand, and a single theme meant sixteen. Each row now leads with All and None, so it takes two presses, and the filter summary carries a Clear action whenever anything is filtering. The summary is the only filter control visible while the rows are collapsed, which is where a reader who has filtered the map down to nothing goes looking. Closes [#1442](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1442).
+
+- **The Atlas tells a screen reader what the map just did.** The card pinned by a tap is a canvas overlay that nothing announced, and a search that landed on a paper moved the map silently. Both now speak through a polite live region, alongside the Find messages added earlier in this release. Part of [#1446](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1446), whose remaining half is a keyboard path into the map itself.
+
 ### Changed
 
 - **The Atlas map now opens on the map.** The top edge of the canvas sat at y=1074 on a 1280x900 desktop and y=1275 on a 375px phone, so the page a reader landed on was a column of filter chips with the map somewhere below it. The filter rows now start collapsed at every width, not just on phones, with the active-filter count on the disclosure summary, and the corpus figures have moved below the map, where they read as context rather than as a control. The map top is now at y=501 on that desktop and y=679 on that phone. The guided tour opens the filters for itself, so its editions and themes steps still have something to point at. Closes [#1430](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1430).
