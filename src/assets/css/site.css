@@ -7513,6 +7513,21 @@ a.profile-pub-title:hover { text-decoration: underline; }
   border-bottom: 1px solid var(--border);
 }
 .atlas-filters__summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* The summary is a flex row so the Clear action can sit beside the count
+   rather than under the marker (#1442). */
+.atlas-filters__summary { display: flex; align-items: center; gap: 10px; }
+.atlas-filters__clear {
+  font: inherit; font-size: .72rem; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: var(--radius-full); cursor: pointer;
+  background: transparent; color: var(--accent);
+  border: 1px solid var(--accent);
+}
+.atlas-filters__clear:hover { background: var(--accent-soft); }
+.atlas-filters__clear:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.atlas-filters__clear[hidden] { display: none; }
+/* All / None sit with the row's label, ahead of the chips they act on. */
+.atlas-bulk { display: inline-flex; gap: 6px; margin-right: 4px; }
 /* Find-and-spotlight input (#1154), shaped like the chips beside it. */
 .atlas-find {
   font: inherit;
