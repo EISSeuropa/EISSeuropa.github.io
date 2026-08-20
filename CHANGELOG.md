@@ -99,6 +99,8 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- **The Anthology Atlas is now tagged Beta rather than Prototype.** The pill beside the Atlas heading, on the full map and on each theme page, read "Prototype" from the soft launch onwards. The map has been live and stable since v2.27.0, so the tag now reads "Beta".
+
 - **The public roadmap describes v2.28.0 as it now stands.** The card was written when persistent identifiers were the headline, and those shipped early in v2.27.0: the Zenodo DOI, the HAL note and the Software Heritage archive are all live and shown on the site, so the card was promising work already done. It now leads on what actually remains, the French Anthology leaving beta on a declared scope, an analytical export of the corpus, affiliations matched to the standard registry of research organisations, a citable theme vocabulary, and the accessibility declaration. Retitled "The corpus in French, and the data behind it" in all three locales, with `docs/roadmap-2026.md` brought into line.
 
 ### Fixed
