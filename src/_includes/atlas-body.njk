@@ -68,18 +68,13 @@
   {# First-visit welcome strip (#1134). Rendered hidden; the inline head
      script above reveals it pre-paint on a first visit, and anthology-
      atlas.js reconciles the hidden attribute + wires the buttons. #}
-  <aside class="atlas-welcome" id="atlas-welcome" role="region" aria-labelledby="atlas-welcome-title" hidden>
-    <h2 class="atlas-welcome-title" id="atlas-welcome-title">First time on the Atlas?</h2>
-    {# Same copy rules as the lede above: no bold, no semicolons, no negative
-       constructions. The Lucide glyph on each row carries the scanning job the
-       bold lead-ins used to do. #}
-    <p class="atlas-welcome-lede">This is an interactive map of the whole Anthology: {{ anthologyAtlas.papers | length }} papers across {{ anthologyAtlas.years | length }} editions, drawn to {{ anthologyAtlas.themes | length }} research themes. Here is how to read it.</p>
-    <ul class="atlas-welcome-tips">
-      <li>{{ icon("search", "icon-inline") }} Switch between the Papers and Authors lenses at the top.</li>
-      <li>{{ icon("settings", "icon-inline") }} Filter by edition year, or spotlight a research theme, with the chips.</li>
-      <li>{{ icon("info", "icon-inline") }} Solid dots have an Anthology page. Hollow rings are programme entries awaiting one.</li>
-      <li>{{ icon("arrow-right", "icon-inline") }} Hover any dot for details, and click through to the Anthology.</li>
-    </ul>
+  <aside class="atlas-welcome" id="atlas-welcome" aria-label="First time on the Atlas" hidden>
+    {# One bar rather than the four-tip block it used to be (#1444). The tips
+       taught the lenses, the chips, the dot markers and the click-through,
+       and the tour teaches all four to the same reader a moment later, so
+       the strip was holding 251px of the first screen to say twice what the
+       tour says once. The map is what a first visit should open on. #}
+    <p class="atlas-welcome-lede">New here? This is an interactive map of the whole Anthology: {{ anthologyAtlas.papers | length }} papers across {{ anthologyAtlas.years | length }} editions, drawn to {{ anthologyAtlas.themes | length }} research themes.</p>
     <div class="atlas-welcome-actions">
       <button class="tour-btn tour-btn-primary" type="button" id="atlas-welcome-tour">Take the tour</button>
       <button class="atlas-welcome-dismiss" type="button" id="atlas-welcome-dismiss" aria-controls="atlas-welcome">Got it</button>

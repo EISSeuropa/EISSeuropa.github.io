@@ -1430,11 +1430,12 @@
     const statsStep = { target: '#atlas-stats',
       title: 'The corpus at a glance',
       body: 'These figures are generated from the same data as the Anthology, so they update as the archive grows.' };
+    const editionsStep = { target: '#atlas-years',
+      title: 'Filter by edition',
+      body: 'Toggle editions on and off to narrow the map — the annual conferences by year, and the joint events on their own chips. All and None do a whole row at once.' };
     const desktopSteps = [
       lensStep,
-      { target: '#atlas-years',
-        title: 'Filter by edition',
-        body: 'Toggle editions on and off to narrow the map — the annual conferences by year, and the joint events on their own chips.' },
+      editionsStep,
       themesStep,
       stageStep,
       { target: '#atlas-legend',
@@ -1445,7 +1446,10 @@
         title: 'Collaboration, up close',
         body: '‘Collaborators only’ hides solo authors so the co-authorship clusters stand out. We’ve switched you to the Authors lens to show it.' },
     ];
-    const mobileSteps = [lensStep, themesStep, stageStep, statsStep];
+    // The welcome strip used to teach the editions filter in its tip list, and
+    // that list went in #1444, so the phone tour picks the step up rather than
+    // letting the lesson fall between the two.
+    const mobileSteps = [lensStep, editionsStep, themesStep, stageStep, statsStep];
     const rawSteps = isPhone ? mobileSteps : desktopSteps;
     // Drop steps whose target is absent/hidden/zero-size. A lens:'authors'
     // step is kept (onStep un-hides its row) as long as there are authors.
