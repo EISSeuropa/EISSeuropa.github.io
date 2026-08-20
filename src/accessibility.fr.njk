@@ -114,11 +114,16 @@ alternates:
         <li>
           <strong>Le canevas de l'Atlas de l'Anthologie.</strong> La carte interactive à l'adresse
           <code>/anthology-atlas.html</code> est dessinée dans un élément <code>&lt;canvas&gt;</code>,
-          dont les technologies d'assistance ne peuvent pas lire le contenu.
-          <em>Atténuation :</em> le canevas porte un <code>aria-label</code> descriptif, un lien
-          visible sous la carte mène au même corpus sous forme de listes filtrables sur la page de
-          l'Anthologie, et les filtres et statistiques autour de la carte sont des contrôles HTML
-          classiques avec un état <code>aria-pressed</code>.
+          dont les technologies d'assistance ne peuvent pas lire le contenu, et la carte ne peut pas
+          être parcourue point par point au clavier.
+          <em>Atténuation :</em> un bloc dépliable sous la carte, <em>Browse this view as a list</em>,
+          énumère exactement ce que la carte affiche, communications ou auteurs selon la vue
+          choisie, chaque entrée renvoyant à sa page de l'Anthologie. La liste suit les filtres et
+          correspond toujours à la carte. Une région dynamique annonce la fiche ouverte par une
+          tape ainsi que la communication ou l'auteur trouvé par une recherche. Tous les contrôles
+          autour de la carte, les deux vues, les filtres, la recherche, les boutons de zoom, sont
+          des boutons HTML classiques accessibles au clavier, portant un état
+          <code>aria-pressed</code> lorsqu'ils fonctionnent par bascule.
         </li>
       </ol>
 
@@ -201,7 +206,7 @@ alternates:
         </a>
       </p>
       <p class="meta">
-        Déclaration préparée : 14 mai 2026 · Dernière revue : 2 juin 2026 · Prochaine revue prévue :
+        Déclaration préparée : 14 mai 2026 · Dernière revue : 20 août 2026 · Prochaine revue prévue :
         14 mai 2027 ou lors d'un changement majeur de conception.
       </p>
     </article>

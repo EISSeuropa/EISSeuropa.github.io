@@ -109,11 +109,15 @@ alternates:
         <li>
           <strong>The Anthology Atlas canvas.</strong> The interactive map at
           <code>/anthology-atlas.html</code> is drawn on a <code>&lt;canvas&gt;</code>, which
-          assistive technologies cannot read into.
-          <em>Mitigation:</em> the canvas carries a descriptive <code>aria-label</code>, a visible
-          link beneath the map leads to the same corpus as filterable lists on the Anthology page,
-          and the filter chips and statistics around the map are regular HTML controls with
-          <code>aria-pressed</code> state.
+          assistive technologies cannot read into, and the map cannot be moved through dot by dot
+          from the keyboard.
+          <em>Mitigation:</em> a disclosure under the map, <em>Browse this view as a list</em>,
+          names exactly what the map is showing, papers or authors according to the lens, with each
+          entry linking to its Anthology page. The list follows the filters and always matches the
+          map. A live region announces the details card a tap opens and the paper or author a
+          search lands on. Every control around the map, the two lenses, the filter chips, Find,
+          the zoom buttons, is a regular HTML button reachable from the keyboard, carrying
+          <code>aria-pressed</code> state where it toggles.
         </li>
       </ol>
 
@@ -193,7 +197,7 @@ alternates:
         </a>
       </p>
       <p class="meta">
-        Statement prepared: 14 May 2026 · Last reviewed: 2 June 2026 · Next scheduled review:
+        Statement prepared: 14 May 2026 · Last reviewed: 20 August 2026 · Next scheduled review:
         14 May 2027 or upon major design change.
       </p>
     </article>
