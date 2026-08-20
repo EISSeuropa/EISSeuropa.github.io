@@ -1266,8 +1266,14 @@
     // is a bucket rather than a theme, so it has neither a page nor a feed and
     // simply gets no links.
     hubActionsEl.querySelectorAll('.atlas-hub__link').forEach((a) => a.remove());
+    // The slug arrives through the DOM, in the JSON the page embeds, and it
+    // ends up in an href. It is our own build data rather than anything a
+    // reader controls, but a value read out of the document and put into a
+    // link is a scheme injection in the general case, and the build's own
+    // rule (atlasThemePages.js) already guarantees the shape. Assert it here
+    // and the URL can only ever be a same-origin path.
     const slug = facts && facts.slug;
-    if (slug) {
+    if (slug && /^[a-z0-9-]+$/.test(slug)) {
       [['Open its Atlas page', '/anthology-atlas/theme/' + slug + '.html'],
        ['Follow this theme', '/feeds/themes/' + slug + '.xml']].forEach(([text, href]) => {
         const a = document.createElement('a');
