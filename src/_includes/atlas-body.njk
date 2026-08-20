@@ -50,19 +50,23 @@
     <span class="atlas-proto-pill">Beta</span>
     <button class="atlas-help" type="button" id="atlas-help" title="Take a tour" aria-label="Take a tour">?</button>
   </div>
-  {# The lede says what the map is and how to read it, and stops there. The
-     mechanics it used to carry (solid versus hollow dots, the filter chips,
-     the two lenses in detail) are all on the page already: the legend sits
-     under the map, the welcome strip greets a first visit, and the tour walks
-     through the rest. #}
+  {# The lede says what the map is, and stops there. The mechanics it used to
+     carry (solid versus hollow dots, the filter chips, the two lenses in
+     detail) are all on the page already: the legend sits under the map, the
+     welcome bar greets a first visit, and the tour walks through the rest.
+     The closing "read it by paper or by author, and hover any dot" went the
+     same way in #1459: the lens chips are directly above the map, the tour
+     and the welcome bar both say it, and "hover" stopped being the gesture
+     on a phone when a tap started pinning the card (#1431). Dropping it is
+     what puts the map on screen at 375px on a first visit. #}
   {% if atlasTheme %}
   {# Theme pages get their own lede rather than the generic one. #1255 flags
      these as near-duplicates of each other in body content, and a distinct
      opening paragraph carrying the theme's own figures is what keeps them
      genuinely distinct rather than 17 copies with a different H1. #}
-  <p class="atlas-lede">{{ atlasTheme.count }} papers on {{ atlasTheme.name | lower }}, presented at EISS conferences and workshops from {{ atlasTheme.yearRange }} by {{ atlasTheme.authorCount }} authors. They sit here inside the whole <a href="/anthology.html">European Security Studies Anthology</a>, so you can see which other themes this one reaches into. Read it by paper or by author, and hover any dot to see what it is.</p>
+  <p class="atlas-lede">{{ atlasTheme.count }} papers on {{ atlasTheme.name | lower }}, presented at EISS conferences and workshops from {{ atlasTheme.yearRange }} by {{ atlasTheme.authorCount }} authors. They sit here inside the whole <a href="/anthology.html">European Security Studies Anthology</a>, so you can see which other themes this one reaches into.</p>
   {% else %}
-  <p class="atlas-lede">A map of the <a href="/anthology.html">European Security Studies Anthology</a>. Every paper presented at an EISS conference or workshop since 2017 sits here as a dot, drawn toward the research themes it touches, so the clusters and the bridges between them become visible. Read it by paper or by author, and hover any dot to see what it is.</p>
+  <p class="atlas-lede">A map of the <a href="/anthology.html">European Security Studies Anthology</a>. Every paper presented at an EISS conference or workshop since 2017 sits here as a dot, drawn toward the research themes it touches, so the clusters and the bridges between them become visible.</p>
   {% endif %}
 
   {# First-visit welcome strip (#1134). Rendered hidden; the inline head
