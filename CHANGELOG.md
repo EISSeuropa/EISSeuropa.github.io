@@ -109,6 +109,16 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- **Scrolling past the Atlas works again on a desktop.** The wheel zoom that shipped with the map claimed every wheel event over the canvas, so a trackpad flick that happened to cross 640px of map zoomed it instead of scrolling the page, which is the desktop version of the phone scroll trap fixed earlier in this release. Zooming now needs ctrl or command held, which is also what a trackpad pinch sends, so pinching behaves as it reads. A plain scroll belongs to the page again, and the buttons on the map cover anyone who would rather not use a modifier. The legend now says so.
+
+- **An Atlas filtered down to nothing now says what happened.** Switching off every edition, or every research theme, left a blank rectangle where the map had been and no account of why. The stage now carries a short message naming which set of chips emptied the map and what to do about it, in both lenses.
+
+- **A search on the Atlas that finds nothing now says so.** Typing a name the corpus does not hold, or one the current filters are hiding, moved nothing on the map and reported nothing either, which reads as a broken control. The Find box now answers in both cases, and the paper hidden by a filter is distinguished from the paper that is not there at all.
+
+- **The Atlas failure message is back where the reader can see it.** When the map's data cannot be loaded the page used to say so in the corpus figures, which moved below the map earlier in this release, leaving the notice under an empty stage and off the fold. The message is now drawn on the stage itself, where the map should have been, and points at the Anthology as the way to browse the same papers.
+
+- **The Atlas zoom buttons are big enough for a thumb.** They were sized for a cursor at 34px square, and are now 42px on a touchscreen, where they matter most.
+
 - **A tap on the Atlas no longer navigates away before the reader has seen what they tapped.** Touch has no hover, so the card that tells you what a dot is appeared for the single frame between a tap landing and the browser leaving for the paper page, and with a hit radius sized for a mouse cursor the paper that opened was often not the one aimed at. On a touchscreen the first tap now pins the card, which becomes tappable and carries the paper's link, and a second tap on the same dot follows it. The hit radius is wider on a touchscreen, and zooming in (new in this release) narrows it in map terms, which is what makes picking one dot out of a cluster possible. Closes [#1431](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1431).
 
 - **The Atlas hover card no longer parks itself on top of the dot it describes.** Near the right-hand edge of the map the card stopped following the pointer and clamped, which put it over the dot the reader was pointing at and its neighbours. It now flips to the left of the pointer, the same treatment the bottom edge got in the previous fix. Part of [#1434](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1434).

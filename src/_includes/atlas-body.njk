@@ -104,6 +104,9 @@
     <label class="lbl" for="atlas-find">Find</label>
     <input class="atlas-find" id="atlas-find" type="search" list="atlas-find-list" placeholder="Author or paper title" autocomplete="off" spellcheck="false">
     <datalist id="atlas-find-list"><!-- options injected by anthology-atlas.js (#1154) --></datalist>
+    {# Typing a name that is not in the corpus, or one the current filters
+       hide, used to do nothing at all. #}
+    <span class="atlas-find__msg" id="atlas-find-msg" role="status"></span>
   </div>
 
   {# Filter rows (#1191). A native <details>, open in the markup so the
@@ -149,6 +152,7 @@
     <span><span class="sw sw-ring sw-prize"></span>Best Paper Prize</span>
     <span><span class="sw sw-pub"></span>published version on record</span>
     <span>drag a theme hub to rearrange the map</span>
+    <span>pinch or ctrl-scroll to zoom, or use the buttons on the map</span>
   </div>
   <div class="atlas-legend" id="atlas-legend-authors" hidden>
     <span><span class="sw sw-collab"></span>author with a co-author</span>
@@ -156,6 +160,7 @@
     <span><span class="sw sw-coauthor"></span>co-authored a paper together</span>
     <span>dot size scales with paper count</span>
     <span>drag a theme hub to rearrange the map</span>
+    <span>pinch or ctrl-scroll to zoom, or use the buttons on the map</span>
   </div>
 
   {# The corpus figures read as context for the map, so they sit under it

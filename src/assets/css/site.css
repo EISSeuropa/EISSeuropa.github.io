@@ -7525,6 +7525,9 @@ a.profile-pub-title:hover { text-decoration: underline; }
   min-width: min(260px, 100%);
 }
 .atlas-find:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.atlas-find[aria-invalid="true"] { border-color: var(--warning); }
+.atlas-find__msg { font-size: .78rem; color: var(--text-muted); }
+.atlas-find__msg:empty { display: none; }
 .atlas-stage { position: relative; border-radius: var(--radius-lg); overflow: hidden; background: radial-gradient(120% 90% at 50% 0%, var(--accent-soft), transparent 60%), var(--bg-elev); border: 1px solid var(--border); }
 /* `touch-action: none` was here for hub dragging, and it made the map a
    scroll trap on phones: a 480px-tall canvas that neither scrolled the page
@@ -7563,6 +7566,11 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-zoom__b:disabled { opacity: .4; cursor: default; }
 .atlas-zoom__b:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .atlas-zoom__reset { font-size: .78rem; letter-spacing: .04em; text-transform: uppercase; }
+/* A fingertip wants more than the 34px a cursor is happy with, and the reader
+   who most needs these buttons is the one on a phone. */
+@media (pointer: coarse) {
+  .atlas-zoom__b { min-width: 42px; height: 42px; }
+}
 .atlas-zoom__b[hidden] { display: none; }
 .atlas-card .nm { font-weight: 600; color: var(--text); font-size: var(--fs-sm); line-height: var(--lh-snug); }
 .atlas-card .meta { font-size: .8rem; color: var(--text-muted); margin-top: 3px; }
