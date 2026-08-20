@@ -193,10 +193,13 @@
     {# What the map cannot show: which themes this one actually bridges into.
        Each is a button that moves the panel across to that theme. #}
     <div class="atlas-hub__bridges" id="atlas-hub-bridges"></div>
-    <div class="atlas-hub__actions">
-      <button class="atlas-hub__filter" id="atlas-hub-filter" type="button"></button>
-      <a class="atlas-hub__link" id="atlas-hub-page" href="#">Open its Atlas page</a>
-      <a class="atlas-hub__link" id="atlas-hub-feed" href="#">Follow this theme</a>
+    {# The button carries its default label in the markup rather than waiting
+       for JS, or it would ship as a button with no accessible name. The two
+       links are built by the script instead: a placeholder href="#" is a
+       broken link on 18 pages, and there is no honest default for a link
+       whose target is whichever theme you just clicked. #}
+    <div class="atlas-hub__actions" id="atlas-hub-actions">
+      <button class="atlas-hub__filter" id="atlas-hub-filter" type="button">Show only this theme</button>
     </div>
   </aside>
 

@@ -54,8 +54,7 @@
   const hubMetaEl = document.getElementById('atlas-hub-meta');
   const hubBridgesEl = document.getElementById('atlas-hub-bridges');
   const hubFilterEl = document.getElementById('atlas-hub-filter');
-  const hubPageEl = document.getElementById('atlas-hub-page');
-  const hubFeedEl = document.getElementById('atlas-hub-feed');
+  const hubActionsEl = document.getElementById('atlas-hub-actions');
   const hubCloseEl = document.getElementById('atlas-hub-close');
   // The build's own per-theme facts, handed over in a JSON script tag rather
   // than recomputed here. Keyed by the theme name, which is the join key the
@@ -1263,13 +1262,20 @@
       draw();
     };
 
-    // The Untagged hub is a bucket rather than a theme, so it has neither a
-    // page nor a feed to point at.
+    // Built per theme, not templated with a placeholder href. The Untagged hub
+    // is a bucket rather than a theme, so it has neither a page nor a feed and
+    // simply gets no links.
+    hubActionsEl.querySelectorAll('.atlas-hub__link').forEach((a) => a.remove());
     const slug = facts && facts.slug;
-    [hubPageEl, hubFeedEl].forEach((el) => { el.hidden = !slug; });
     if (slug) {
-      hubPageEl.href = '/anthology-atlas/theme/' + slug + '.html';
-      hubFeedEl.href = '/feeds/themes/' + slug + '.xml';
+      [['Open its Atlas page', '/anthology-atlas/theme/' + slug + '.html'],
+       ['Follow this theme', '/feeds/themes/' + slug + '.xml']].forEach(([text, href]) => {
+        const a = document.createElement('a');
+        a.className = 'atlas-hub__link';
+        a.href = href;
+        a.textContent = text;
+        hubActionsEl.append(a);
+      });
     }
 
     hubPanelEl.hidden = false;
