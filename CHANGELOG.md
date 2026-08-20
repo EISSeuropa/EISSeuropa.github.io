@@ -97,6 +97,12 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+### Added
+
+- **A filtered Atlas can be handed to someone else.** The lens, the chips, the toggles and the current spotlight have been mirrored into the query string since v2.26.0, so a narrowed view of the map has always been shareable, and nothing on the page said so. A copy-link button now appears beside the Find control as soon as the view differs from the default map, and hands over the OS share sheet instead on a touchscreen that offers one. Closes [#1445](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1445).
+
+- **The Atlas view can be read as a list.** The canvas is opaque to assistive technologies, and the answer until now was a line pointing at the whole Anthology, which is the unfiltered corpus rather than the map in front of you. A disclosure under the map now lists exactly what the current view holds, papers or authors depending on the lens, rebuilt from the same test the canvas paints with, capped at 200 with a count of the rest. It is a closed disclosure rather than a hidden block on purpose: hidden links are focusable links a sighted keyboard user cannot see. Closes [#1446](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1446).
+
 ### Changed
 
 - **The Atlas map now opens on the map.** The top edge of the canvas sat at y=1074 on a 1280x900 desktop and y=1275 on a 375px phone, so the page a reader landed on was a column of filter chips with the map somewhere below it. The filter rows now start collapsed at every width, not just on phones, with the active-filter count on the disclosure summary, and the corpus figures have moved below the map, where they read as context rather than as a control. The map top is now at y=501 on that desktop and y=679 on that phone. The guided tour opens the filters for itself, so its editions and themes steps still have something to point at. Closes [#1430](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1430).
