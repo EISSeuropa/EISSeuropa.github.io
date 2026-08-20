@@ -7442,7 +7442,8 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-proto-pill { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 4px 11px; border-radius: var(--radius-full); background: var(--accent-soft); border: 1px solid var(--accent); color: var(--accent); }
 .atlas-lede { color: var(--text-muted); max-width: 74ch; margin: 0 0 20px; font-size: var(--fs-base); line-height: var(--lh-normal); }
 .atlas-lede a { color: var(--accent); }
-.atlas-stats { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 18px; }
+/* Below the map since #1430, so the margin is above the tiles, not below. */
+.atlas-stats { display: flex; gap: 10px; flex-wrap: wrap; margin: 18px 0 0; }
 /* `--surface` is the frosted-glass fill and is only ever correct alongside the
    blur + shadow that make it read as glass. These tiles carried the fill on its
    own, which rendered as a flat murky box: the one place on the site using the
@@ -7493,26 +7494,25 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-chip[aria-pressed="false"] { background: transparent; color: var(--text-muted); }
 .atlas-chip[aria-pressed="false"]::before { opacity: .4; }
 .atlas-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-/* Filter disclosure (#1191). Desktop shows the rows outright, so the summary
-   is hidden and <details> is a transparent wrapper; phones get a real
-   collapsible, closed by anthology-atlas.js on load. */
-.atlas-filters { margin: 0; }
-.atlas-filters__summary { display: none; }
-@media (max-width: 640px) {
-  .atlas-filters__summary {
-    display: block;
-    cursor: pointer;
-    font-size: .78rem;
-    font-weight: 700;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    padding: 8px 0;
-    margin: 0 0 6px;
-    border-bottom: 1px solid var(--border);
-  }
-  .atlas-filters__summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* Filter disclosure (#1191, widened to every screen in #1430). The rows are
+   collapsed on load at all widths and the summary carries the active-filter
+   count, because 12 edition chips plus 18 theme chips is 250px of controls
+   between the reader and the map on a laptop as much as on a phone. The
+   no-JS case keeps the markup's `open` and shows everything. */
+.atlas-filters { margin: 0 0 12px; }
+.atlas-filters__summary {
+  display: block;
+  cursor: pointer;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 8px 0;
+  margin: 0 0 6px;
+  border-bottom: 1px solid var(--border);
 }
+.atlas-filters__summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 /* Find-and-spotlight input (#1154), shaped like the chips beside it. */
 .atlas-find {
   font: inherit;
@@ -7537,6 +7537,33 @@ a.profile-pub-title:hover { text-decoration: underline; }
 #atlas-canvas.is-link { cursor: pointer; }
 .atlas-card { position: absolute; pointer-events: none; max-width: 290px; padding: 12px 15px; border-radius: var(--radius-md); background: var(--surface-strong); border: 1px solid var(--border); box-shadow: var(--shadow-3); -webkit-backdrop-filter: blur(var(--blur-card)); backdrop-filter: blur(var(--blur-card)); opacity: 0; transform: translateY(4px); transition: opacity .12s, transform .12s; z-index: 2; }
 .atlas-card.is-on { opacity: 1; transform: none; }
+/* A card pinned by a tap has to be tappable, unlike the hover card, which
+   must never eat the pointer it is following (#1431). */
+.atlas-card.is-pinned { pointer-events: auto; }
+.atlas-card a.go { display: inline-block; text-decoration: none; }
+.atlas-card a.go:hover { text-decoration: underline; }
+/* Zoom cluster (#1433), floating over the top-right of the stage. Sized for a
+   fingertip, since the reader who most needs it is on a phone. */
+.atlas-zoom {
+  position: absolute; top: 10px; right: 10px; z-index: 3;
+  display: flex; gap: 6px; align-items: center;
+}
+.atlas-zoom__b {
+  font: inherit; font-size: 1rem; font-weight: 700; line-height: 1;
+  min-width: 34px; height: 34px; padding: 0 9px;
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; border-radius: var(--radius-full);
+  background: var(--surface-strong); color: var(--text);
+  border: 1px solid var(--border);
+  -webkit-backdrop-filter: blur(var(--blur-card));
+  backdrop-filter: blur(var(--blur-card));
+  box-shadow: var(--shadow-2);
+}
+.atlas-zoom__b:hover:not(:disabled) { border-color: var(--border-strong); }
+.atlas-zoom__b:disabled { opacity: .4; cursor: default; }
+.atlas-zoom__b:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.atlas-zoom__reset { font-size: .78rem; letter-spacing: .04em; text-transform: uppercase; }
+.atlas-zoom__b[hidden] { display: none; }
 .atlas-card .nm { font-weight: 600; color: var(--text); font-size: var(--fs-sm); line-height: var(--lh-snug); }
 .atlas-card .meta { font-size: .8rem; color: var(--text-muted); margin-top: 3px; }
 .atlas-card .panel { font-size: .76rem; color: var(--text-subtle); margin-top: 4px; font-style: italic; }

@@ -42,6 +42,10 @@
   const welcomeDismiss = document.getElementById('atlas-welcome-dismiss');
   const welcomeTour = document.getElementById('atlas-welcome-tour');
   const tourTrigger = document.getElementById('atlas-help');
+  // Zoom cluster (#1433) + the reset that also undoes a hub drag (#1434).
+  const zoomInBtn = document.getElementById('atlas-zoom-in');
+  const zoomOutBtn = document.getElementById('atlas-zoom-out');
+  const zoomResetBtn = document.getElementById('atlas-zoom-reset');
   if (!canvas || !canvas.getContext) return;
   const ctx = canvas.getContext('2d');
 
@@ -117,6 +121,18 @@
   const activeEditions = new Set(); // edition keys currently shown (#1153)
   const activeHubs = new Set();    // theme hubs currently shown
   let hovered = null, draggingHub = null;
+  // View transform (#1433). One world-space layout, scaled and translated at
+  // paint time, so the force simulation never learns about zoom. Screen =
+  // world * view.k + view.{x,y}.
+  const view = { k: 1, x: 0, y: 0 };
+  const MIN_K = 1, MAX_K = 8;
+  let panning = null;               // {sx, sy, ox, oy} while a pan drag is live
+  let gestureMoved = false;         // a pan/drag happened, so pointerup is not a click
+  let hubsMoved = false;            // a theme hub has been dragged out of its seeded spot
+  // Touch (#1431): there is no hover, so the first tap on a node pins its card
+  // and the second follows the link.
+  let pinned = null;
+  const coarse = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
   let spotlight = null;            // node pinned by the Find control (#1154)
   let spotlightSet = null;         // {ids:Set, label:string} pinned by an author click (#1190)
   let W = 0, H = 0, dpr = 1;
@@ -241,7 +257,11 @@
 
   // ── Paint ──
   function draw() {
+    // Clear in screen space, then paint in world space (#1433). Everything
+    // below this line keeps working in the layout's own coordinates.
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
+    ctx.setTransform(dpr * view.k, 0, 0, dpr * view.k, dpr * view.x, dpr * view.y);
     // Focus = the hovered node, falling back to the Find spotlight (#1154):
     // both light the same neighbourhood and dim the rest.
     const focus = hovered || spotlight;
@@ -424,15 +444,99 @@
   }
 
   // ── Interaction ──
-  function nodeAt(mx, my) {
+  // Pointer coordinates arrive in screen space; the layout lives in world
+  // space. Everything that hit-tests or drags converts first (#1433).
+  const toWorldX = (px) => (px - view.x) / view.k;
+  const toWorldY = (py) => (py - view.y) / view.k;
+  const toScreenX = (wx) => wx * view.k + view.x;
+  const toScreenY = (wy) => wy * view.k + view.y;
+
+  // A fingertip is about three times the width of a mouse cursor's useful
+  // aim, and the dots are the same size either way (#1431). The radius is a
+  // screen measurement, so it shrinks in world terms as the map zooms in,
+  // which is what makes zooming a way to pick one dot out of a cluster.
+  const HIT = coarse ? 22 : 13;
+
+  function nodeAt(px, py) {
+    const mx = toWorldX(px), my = toWorldY(py);
     for (const h of hubs) if (Math.hypot(mx - h.x, my - h.y) <= h.r) return h;
-    let best = null, bd = 13;
+    let best = null, bd = HIT / view.k;
     for (const n of items()) {
       if (!nodeVisible(n)) continue;
       const d = Math.hypot(mx - n.x, my - n.y);
       if (d < bd) { bd = d; best = n; }
     }
     return best;
+  }
+
+  // Zoom about a fixed screen point, so the map grows under the cursor (or
+  // the centre, for the buttons) rather than sliding away from it.
+  function zoomTo(k, px, py) {
+    const next = Math.max(MIN_K, Math.min(MAX_K, k));
+    if (next === view.k) return;
+    const wx = toWorldX(px), wy = toWorldY(py);
+    view.k = next;
+    view.x = px - wx * next;
+    view.y = py - wy * next;
+    clampView();
+    unpin();
+    syncTouchAction();
+    updateZoomUi();
+    draw();
+  }
+
+  // Keep the layout from being panned off into empty space: at k=1 the view
+  // is locked to the stage, and beyond that the world edges stay outside it.
+  function clampView() {
+    const maxX = 0, minX = W - W * view.k;
+    const maxY = 0, minY = H - H * view.k;
+    view.x = Math.min(maxX, Math.max(minX, view.x));
+    view.y = Math.min(maxY, Math.max(minY, view.y));
+  }
+
+  function resetView() {
+    view.k = 1; view.x = 0; view.y = 0;
+    unpin();
+    syncTouchAction();
+    updateZoomUi();
+    // Dragged hubs are part of "the view I have made", so a reset puts the
+    // layout back too, but only when a hub has actually been moved (#1434).
+    if (hubsMoved) { hubsMoved = false; seedPositions(); reheat(200); }
+    else draw();
+  }
+
+  // Zoomed out, the map is one block of a phone screen and a swipe belongs to
+  // the page (#1428). Zoomed in, the reader is inside the map and the same
+  // swipe should pan it. touch-action is read when a gesture starts, so
+  // flipping it on a zoom change is safe.
+  function syncTouchAction() {
+    canvas.style.touchAction = view.k > 1 ? 'none' : '';
+  }
+
+  function updateZoomUi() {
+    if (zoomOutBtn) zoomOutBtn.disabled = view.k <= MIN_K;
+    if (zoomInBtn) zoomInBtn.disabled = view.k >= MAX_K;
+    if (zoomResetBtn) zoomResetBtn.hidden = view.k === MIN_K && !hubsMoved;
+  }
+
+  function unpin() {
+    if (!pinned) return;
+    pinned = null;
+    card.classList.remove('is-pinned');
+    showCard(null);
+  }
+
+  // The "go" line is a real link, so a card pinned by a tap can be tapped
+  // through (#1431). On a mouse the card is pointer-events:none and the
+  // canvas click does the navigating, so this is inert there.
+  function addGo(parent, text, href) {
+    if (!href) return addEl(parent, 'go', text);
+    const a = document.createElement('a');
+    a.className = 'go';
+    a.href = href;
+    a.textContent = text;
+    parent.append(a);
+    return a;
   }
 
   function addEl(parent, cls, text) {
@@ -480,7 +584,9 @@
         const shown = names.slice(0, 4).join(', ') + (names.length > 4 ? ', +' + (names.length - 4) : '');
         addEl(card, 'coauth', 'With ' + shown);
       }
-      if (node.paperIdx && node.paperIdx.length) addEl(card, 'go', 'Click to map their papers →');
+      if (node.paperIdx && node.paperIdx.length) {
+        addEl(card, 'go', (coarse ? 'Tap again' : 'Click') + ' to map their papers →');
+      }
     } else {
       addEl(card, 'nm', node.title);
       const who = node.authors.length
@@ -511,18 +617,20 @@
         if (node.prize) { const s = document.createElement('span'); s.className = 'badge-prize'; s.textContent = '★ Best Paper Prize'; b.append(s); }
         if (node.published) { const s = document.createElement('span'); s.className = 'badge-pub'; s.textContent = 'Published version'; b.append(s); }
       }
-      if (node.hasPage) addEl(card, 'go', 'Read more →');
+      if (node.hasPage) addGo(card, coarse ? 'Read this paper →' : 'Read more →', node.url);
     }
 
     const stage = canvas.parentElement.getBoundingClientRect();
-    card.style.left = Math.min(mx + 16, stage.width - 300) + 'px';
-    // Flip above the pointer when the card would run past the bottom of the
-    // stage. The stage is overflow:hidden, so a card anchored below the
-    // pointer on a dot in the lower third lost up to 145px of itself, and
-    // what got cut was the theme pills and the "Read more" line.
-    const ch = card.offsetHeight;
+    // Flip the card off whichever edge it would otherwise run past. The stage
+    // is overflow:hidden, so an unflipped card loses the theme pills and the
+    // "Read more" line to the crop. Vertical flip fixed in #1428, horizontal
+    // in #1434, where the card used to clamp and sit on top of its own dot.
+    const ch = card.offsetHeight, cw = card.offsetWidth;
+    const right = mx + 16;
+    const left = right + cw > stage.width - 8 ? mx - 16 - cw : right;
     const below = my - 14;
     const top = below + ch > stage.height - 8 ? my - 10 - ch : below;
+    card.style.left = Math.max(8, left) + 'px';
     card.style.top = Math.max(8, top) + 'px';
     card.classList.add('is-on');
     card.setAttribute('aria-hidden', 'false');
@@ -531,22 +639,67 @@
   canvas.addEventListener('pointermove', (e) => {
     const r = canvas.getBoundingClientRect();
     const mx = e.clientX - r.left, my = e.clientY - r.top;
-    if (draggingHub) { draggingHub.x = mx; draggingHub.y = my; draw(); return; }
+    if (draggingHub) {
+      draggingHub.x = toWorldX(mx); draggingHub.y = toWorldY(my);
+      hubsMoved = true; gestureMoved = true; updateZoomUi(); draw();
+      return;
+    }
+    if (panning) {
+      view.x = panning.ox + (mx - panning.sx);
+      view.y = panning.oy + (my - panning.sy);
+      if (Math.hypot(mx - panning.sx, my - panning.sy) > 4) gestureMoved = true;
+      clampView(); draw();
+      return;
+    }
+    // A pinned card belongs to a tap, not to whatever the pointer passes over
+    // afterwards, so hover stops driving the card while one is up (#1431).
+    if (pinned) return;
     hovered = nodeAt(mx, my);
     canvas.classList.toggle('is-link', !!(hovered && (hovered.type === 'paper' || hovered.type === 'author') && hovered.url));
     showCard(hovered, mx, my);
     draw();
   });
-  canvas.addEventListener('pointerleave', () => { hovered = null; showCard(null); draw(); });
+  canvas.addEventListener('pointerleave', () => {
+    if (pinned) return;
+    hovered = null; showCard(null); draw();
+  });
   canvas.addEventListener('pointerdown', (e) => {
     const r = canvas.getBoundingClientRect();
-    const n = nodeAt(e.clientX - r.left, e.clientY - r.top);
-    if (n && (n.type === 'theme' || n.type === 'untagged')) { draggingHub = n; canvas.setPointerCapture(e.pointerId); }
+    const mx = e.clientX - r.left, my = e.clientY - r.top;
+    const n = nodeAt(mx, my);
+    gestureMoved = false;
+    if (n && (n.type === 'theme' || n.type === 'untagged')) {
+      draggingHub = n; canvas.setPointerCapture(e.pointerId);
+      return;
+    }
+    // Empty canvas drags the view (#1433). Starting a pan on a node would
+    // make a dot impossible to click, so nodes are left alone.
+    if (!n) {
+      panning = { sx: mx, sy: my, ox: view.x, oy: view.y };
+      canvas.setPointerCapture(e.pointerId);
+    }
   });
   canvas.addEventListener('pointerup', (e) => {
     if (draggingHub) { draggingHub = null; return; }
+    if (panning) {
+      panning = null;
+      if (gestureMoved) return;
+    }
     const r = canvas.getBoundingClientRect();
     const n = nodeAt(e.clientX - r.left, e.clientY - r.top);
+    // Touch has no hover, so a tap used to navigate off the page before the
+    // card it opened could be read, and a fingertip on a dense cluster often
+    // opened the wrong paper. The first tap pins the card, the second acts
+    // on it (#1431).
+    if (coarse && n && n !== pinned && (n.type === 'paper' || n.type === 'author')) {
+      pinned = n;
+      hovered = n;
+      card.classList.add('is-pinned');
+      showCard(n, toScreenX(n.x), toScreenY(n.y));
+      draw();
+      return;
+    }
+    unpin();
     // Author (#1190): stay on the map and show their papers, rather than
     // navigating away. Papers still follow their link.
     if (n && n.type === 'author' && n.paperIdx && n.paperIdx.length) { showAuthorPapers(n); return; }
@@ -558,6 +711,18 @@
       syncUrl(); draw();
     }
   });
+
+  // Wheel zoom about the cursor (#1433). Passive:false because a zoom over
+  // the map must not also scroll the page past it.
+  canvas.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const r = canvas.getBoundingClientRect();
+    zoomTo(view.k * Math.exp(-e.deltaY * 0.0015), e.clientX - r.left, e.clientY - r.top);
+  }, { passive: false });
+
+  if (zoomInBtn) zoomInBtn.addEventListener('click', () => zoomTo(view.k * 1.6, W / 2, H / 2));
+  if (zoomOutBtn) zoomOutBtn.addEventListener('click', () => zoomTo(view.k / 1.6, W / 2, H / 2));
+  if (zoomResetBtn) zoomResetBtn.addEventListener('click', resetView);
 
   // ── Controls ──
   function chip(label, pressed, onClick, bg) {
@@ -922,15 +1087,17 @@
       buildAuthorOpts();
       buildPaperOpts();
 
-      // Phones: collapse the filter rows so the map is not pushed below the
-      // fold (#1191). Desktop and the no-JS case keep the markup's `open`.
-      if (filtersEl && window.matchMedia && window.matchMedia('(max-width: 640px)').matches) {
-        filtersEl.open = false;
-      }
+      // Collapse the filter rows on load, at every width (#1430). Phones got
+      // this in #1191; a 1280x900 desktop had the same problem, with 12
+      // edition chips and 18 theme chips putting the top of the map at
+      // y=1074 on a first visit. The summary carries the active-filter count,
+      // and the no-JS case keeps the markup's `open`.
+      if (filtersEl) filtersEl.open = false;
       updateFilterSummary();
 
       resize();
       seedPositions();
+      updateZoomUi();
       reheat(320);
       if (urlLens) switchLens(urlLens);
 
@@ -956,7 +1123,9 @@
     })
     .catch(() => { statsEl.textContent = 'The atlas data could not be loaded.'; });
 
-  window.addEventListener('resize', () => { resize(); seedPositions(); reheat(140); });
+  window.addEventListener('resize', () => {
+    resize(); seedPositions(); clampView(); reheat(140);
+  });
 
   // Re-read colours on a manual theme flip (data-theme) and repaint. Year
   // colours depend on light/dark, so rebuild the ramp too.
@@ -987,6 +1156,11 @@
   function startTour() {
     if (!window.eissTour) return; // engine missing — fail gracefully
     if (welcomeEl) welcomeEl.hidden = true;
+    // The filter rows start collapsed now (#1430), and a step whose target is
+    // inside a closed <details> measures zero and gets dropped below, which
+    // would quietly cost the tour its editions and themes steps. The tour is
+    // the one moment the filters are the subject, so open them for it.
+    if (filtersEl) filtersEl.open = true;
     // Viewport-aware split (NetSec's isPhone pattern): phones get a shorter
     // walkthrough that skips the lens-switching Authors step, whose control
     // row wraps off-screen at 375px.
