@@ -33,6 +33,7 @@
   const paperOptsEl = document.getElementById('atlas-paperopts');
   const findEl = document.getElementById('atlas-find');
   const findListEl = document.getElementById('atlas-find-list');
+  const findMsgEl = document.getElementById('atlas-find-msg');
   const filtersEl = document.getElementById('atlas-filters');
   const filtersSummaryEl = document.getElementById('atlas-filters-summary');
   const legendPapers = document.getElementById('atlas-legend');
@@ -132,6 +133,7 @@
   // Touch (#1431): there is no hover, so the first tap on a node pins its card
   // and the second follows the link.
   let pinned = null;
+  let loadFailed = false;          // the fetch failed, so the stage says so
   const coarse = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
   let spotlight = null;            // node pinned by the Find control (#1154)
   let spotlightSet = null;         // {ids:Set, label:string} pinned by an author click (#1190)
@@ -256,11 +258,40 @@
   }
 
   // ── Paint ──
+  // A message painted across the middle of the stage, in screen space, for
+  // the states where the map itself has nothing to say: every edition or
+  // every theme toggled off, or the data failing to load. Without it the
+  // reader gets a blank rectangle and no account of why.
+  function drawNotice(title, hint) {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = theme.ink;
+    ctx.font = '600 15px system-ui, -apple-system, Segoe UI, sans-serif';
+    ctx.fillText(title, W / 2, H / 2 - 10);
+    if (hint) {
+      ctx.fillStyle = theme.muted;
+      ctx.font = '13px system-ui, -apple-system, Segoe UI, sans-serif';
+      ctx.fillText(hint, W / 2, H / 2 + 14);
+    }
+    ctx.textAlign = 'start';
+    ctx.textBaseline = 'alphabetic';
+  }
+
   function draw() {
     // Clear in screen space, then paint in world space (#1433). Everything
     // below this line keeps working in the layout's own coordinates.
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
+    if (loadFailed) { drawNotice('The atlas data could not be loaded.', 'Every paper and author on this map is browsable in the Anthology.'); return; }
+    // Nothing passes the filters: say so rather than showing a blank stage.
+    if (items().length && !items().some(nodeVisible)) {
+      drawNotice(lens === 'authors' ? 'No authors match these filters.' : 'No papers match these filters.',
+        activeEditions.size === 0 ? 'Every edition is switched off. Turn one back on to see the map.'
+          : activeHubs.size === 0 ? 'Every research theme is switched off. Turn one back on to see the map.'
+            : 'Widen the editions or themes above to bring the map back.');
+      return;
+    }
     ctx.setTransform(dpr * view.k, 0, 0, dpr * view.k, dpr * view.x, dpr * view.y);
     // Focus = the hovered node, falling back to the Find spotlight (#1154):
     // both light the same neighbourhood and dim the rest.
@@ -712,9 +743,14 @@
     }
   });
 
-  // Wheel zoom about the cursor (#1433). Passive:false because a zoom over
-  // the map must not also scroll the page past it.
+  // Wheel zoom about the cursor, held behind a modifier. An unconditional
+  // preventDefault here turned 640px of the page into a desktop scroll trap:
+  // a trackpad flick that happened to cross the map zoomed it instead of
+  // scrolling past it, which is the same complaint as the phone trap the
+  // touch-action fix cured. A trackpad pinch arrives as ctrlKey, so pinching
+  // works as it reads, and the buttons cover everyone else.
   canvas.addEventListener('wheel', (e) => {
+    if (!e.ctrlKey && !e.metaKey) return; // plain scroll belongs to the page
     e.preventDefault();
     const r = canvas.getBoundingClientRect();
     zoomTo(view.k * Math.exp(-e.deltaY * 0.0015), e.clientX - r.left, e.clientY - r.top);
@@ -891,10 +927,27 @@
       || null;
   }
 
+  // Say what happened. A search that matches nothing, or matches a paper the
+  // current filters are hiding, reads as a broken control otherwise: the map
+  // simply does not move.
+  function setFindMsg(text) {
+    if (!findMsgEl) return;
+    findMsgEl.textContent = text || '';
+    findMsgEl.hidden = !text;
+    if (findEl) {
+      if (text) findEl.setAttribute('aria-invalid', 'true');
+      else findEl.removeAttribute('aria-invalid');
+    }
+  }
+
   function applyFind(q) {
     const node = resolveFind(q);
     spotlight = node;
     spotlightSet = null; // an explicit Find supersedes a pinned author
+    if (!String(q || '').trim()) setFindMsg('');
+    else if (!node) setFindMsg('No match in the corpus.');
+    else if (!nodeVisible(node)) setFindMsg('Found, but hidden by the current filters.');
+    else setFindMsg('');
     if (node) {
       const wantLens = node.type === 'author' ? 'authors' : 'papers';
       if (lens !== wantLens) { switchLens(wantLens); return; } // switchLens syncs + draws
@@ -1107,6 +1160,7 @@
         findEl.addEventListener('change', () => applyFind(findEl.value));
         findEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') applyFind(findEl.value); });
         findEl.addEventListener('input', () => {
+          setFindMsg('');
           if (!findEl.value.trim() && (spotlight || spotlightSet)) {
             spotlight = null; spotlightSet = null; syncUrl(); draw();
           }
@@ -1121,7 +1175,16 @@
         } else if (urlFind) { findEl.value = urlFind; applyFind(urlFind); }
       }
     })
-    .catch(() => { statsEl.textContent = 'The atlas data could not be loaded.'; });
+    .catch(() => {
+      // The corpus figures moved below the map in #1430, so a failure message
+      // dropped in there would sit under an empty stage, off the fold. It
+      // belongs where the map should have been.
+      loadFailed = true;
+      statsEl.textContent = '';
+      readTheme();  // the success path reads the tokens; this path never got there
+      resize();
+      draw();
+    });
 
   window.addEventListener('resize', () => {
     resize(); seedPositions(); clampView(); reheat(140);
