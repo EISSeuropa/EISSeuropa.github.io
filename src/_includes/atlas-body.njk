@@ -145,6 +145,13 @@
      costs the sighted reader nothing. #}
   <p class="sr-only" role="status" id="atlas-live"></p>
 
+  {# The per-theme facts the build already computes for the 17 theme pages:
+     name, slug, paper count, year range, author count (#1255,
+     src/_data/atlasThemePages.js). The hub panel reads them straight out of
+     here, so the slug rule lives in one place and the panel cannot disagree
+     with the page it links to. About 2KB. #}
+  <script type="application/json" id="atlas-theme-index">{{ atlasThemePages | dump | safe }}</script>
+
   <div class="atlas-stage">
     {# Zoom cluster (#1433). The map holds around a thousand dots in 640px of
        height, and the clusters around the busier hubs were unreadable without
@@ -172,13 +179,34 @@
     <ul class="atlas-list__items" id="atlas-list-items"></ul>
     <p class="atlas-list__more muted" id="atlas-list-more" hidden></p>
   </details>
+  {# Theme hub panel (#1465). Clicking a hub used to do nothing at all, and on
+     a touchscreen a hub had no hover card either, so the labelled circles that
+     organise the whole map were the one thing on it that answered nothing.
+     The panel sits under the map rather than floating over it, because at
+     375px an overlay covers the cluster it is describing. The map keeps the
+     hub's own highlight while the panel is open, which is what ties the two
+     together. #}
+  <aside class="atlas-hub" id="atlas-hub" aria-labelledby="atlas-hub-name" hidden>
+    <button class="atlas-hub__close" id="atlas-hub-close" type="button" aria-label="Close this theme">&times;</button>
+    <h2 class="atlas-hub__name" id="atlas-hub-name"></h2>
+    <p class="atlas-hub__meta" id="atlas-hub-meta"></p>
+    {# What the map cannot show: which themes this one actually bridges into.
+       Each is a button that moves the panel across to that theme. #}
+    <div class="atlas-hub__bridges" id="atlas-hub-bridges"></div>
+    <div class="atlas-hub__actions">
+      <button class="atlas-hub__filter" id="atlas-hub-filter" type="button"></button>
+      <a class="atlas-hub__link" id="atlas-hub-page" href="#">Open its Atlas page</a>
+      <a class="atlas-hub__link" id="atlas-hub-feed" href="#">Follow this theme</a>
+    </div>
+  </aside>
+
   <div class="atlas-legend" id="atlas-legend">
     <span><span class="sw sw-theme"></span>colour is the paper's research theme</span>
     <span><span class="sw sw-page"></span>has an Anthology page</span>
     <span><span class="sw sw-nopage"></span>programme entry only (no page yet)</span>
     <span><span class="sw sw-ring sw-prize"></span>Best Paper Prize</span>
     <span><span class="sw sw-pub"></span>published version on record</span>
-    <span>drag a theme hub to rearrange the map</span>
+    <span>click a theme hub for its figures, or drag it to rearrange the map</span>
     <span>pinch or ctrl-scroll to zoom, or use the buttons on the map</span>
   </div>
   <div class="atlas-legend" id="atlas-legend-authors" hidden>
@@ -186,7 +214,7 @@
     <span><span class="sw sw-solo"></span>solo-only author</span>
     <span><span class="sw sw-coauthor"></span>co-authored a paper together</span>
     <span>dot size scales with paper count</span>
-    <span>drag a theme hub to rearrange the map</span>
+    <span>click a theme hub for its figures, or drag it to rearrange the map</span>
     <span>pinch or ctrl-scroll to zoom, or use the buttons on the map</span>
   </div>
 

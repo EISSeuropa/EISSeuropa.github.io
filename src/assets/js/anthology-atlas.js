@@ -48,6 +48,27 @@
   const yearsBulkEl = document.getElementById('atlas-years-bulk');
   const themesBulkEl = document.getElementById('atlas-themes-bulk');
   const liveEl = document.getElementById('atlas-live');
+  // Theme hub panel (#1465).
+  const hubPanelEl = document.getElementById('atlas-hub');
+  const hubNameEl = document.getElementById('atlas-hub-name');
+  const hubMetaEl = document.getElementById('atlas-hub-meta');
+  const hubBridgesEl = document.getElementById('atlas-hub-bridges');
+  const hubFilterEl = document.getElementById('atlas-hub-filter');
+  const hubPageEl = document.getElementById('atlas-hub-page');
+  const hubFeedEl = document.getElementById('atlas-hub-feed');
+  const hubCloseEl = document.getElementById('atlas-hub-close');
+  // The build's own per-theme facts, handed over in a JSON script tag rather
+  // than recomputed here. Keyed by the theme name, which is the join key the
+  // ?themes= param and the map already share.
+  const themeFacts = (function () {
+    const el = document.getElementById('atlas-theme-index');
+    const out = {};
+    if (!el) return out;
+    try {
+      JSON.parse(el.textContent).forEach((t) => { out[t.name] = t; });
+    } catch (e) { /* the panel degrades to the counts the map computes */ }
+    return out;
+  })();
   const legendPapers = document.getElementById('atlas-legend');
   const legendAuthors = document.getElementById('atlas-legend-authors');
   // Welcome strip + guided-tour controls (#1134).
@@ -145,6 +166,7 @@
   // Touch (#1431): there is no hover, so the first tap on a node pins its card
   // and the second follows the link.
   let pinned = null;
+  let pinnedHub = null;            // theme hub whose panel is open (#1465)
   let loadFailed = false;          // the fetch failed, so the stage says so
   const coarse = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
   let spotlight = null;            // node pinned by the Find control (#1154)
@@ -307,7 +329,7 @@
     ctx.setTransform(dpr * view.k, 0, 0, dpr * view.k, dpr * view.x, dpr * view.y);
     // Focus = the hovered node, falling back to the Find spotlight (#1154):
     // both light the same neighbourhood and dim the rest.
-    const focus = hovered || spotlight;
+    const focus = hovered || pinnedHub || spotlight;
     const hoverIds = focus
       ? new Set([focus.id].concat(
           focus.type === 'paper' ? focus.hubs
@@ -723,7 +745,17 @@
     }
   });
   canvas.addEventListener('pointerup', (e) => {
-    if (draggingHub) { draggingHub = null; return; }
+    if (draggingHub) {
+      const hub = draggingHub;
+      draggingHub = null;
+      // A hub that was pressed and released without moving is a click, and a
+      // click on the labelled circles that organise the map used to do
+      // nothing at all, on every device (#1465).
+      if (!gestureMoved) {
+        if (pinnedHub === hub) closeHubPanel(); else openHubPanel(hub);
+      }
+      return;
+    }
     if (panning) {
       panning = null;
       if (gestureMoved) return;
@@ -749,6 +781,7 @@
     // navigating away. Papers still follow their link.
     if (n && n.type === 'author' && n.paperIdx && n.paperIdx.length) { showAuthorPapers(n); return; }
     if (n && n.type === 'paper' && n.url) { location.href = n.url; return; }
+    if (!n) closeHubPanel();
     // Clicking empty canvas clears a pinned spotlight.
     if (!n && (spotlightSet || spotlight)) {
       spotlightSet = null; spotlight = null;
@@ -807,6 +840,11 @@
       }
     });
   }
+
+  if (hubCloseEl) hubCloseEl.addEventListener('click', closeHubPanel);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && pinnedHub) closeHubPanel();
+  });
 
   if (zoomInBtn) zoomInBtn.addEventListener('click', () => zoomTo(view.k * 1.6, W / 2, H / 2));
   if (zoomOutBtn) zoomOutBtn.addEventListener('click', () => zoomTo(view.k / 1.6, W / 2, H / 2));
@@ -1027,16 +1065,29 @@
 
   function buildThemeChips() {
     hubs.forEach((h) => {
-      themesEl.appendChild(chip(
+      const b = chip(
         h.type === 'untagged' ? 'Untagged' : h.name,
         activeHubs.has(h.id),
-        (b) => {
+        (bb) => {
           if (activeHubs.has(h.id)) activeHubs.delete(h.id); else activeHubs.add(h.id);
-          b.setAttribute('aria-pressed', activeHubs.has(h.id) ? 'true' : 'false');
+          bb.setAttribute('aria-pressed', activeHubs.has(h.id) ? 'true' : 'false');
           syncUrl();
           draw();
         },
-        hubFill(h)));
+        hubFill(h));
+      // The hub panel filters the map from the canvas (#1465), so the chips
+      // have to be addressable from outside their own click handler.
+      b.dataset.hub = h.id;
+      themesEl.appendChild(b);
+    });
+  }
+
+  // Reflect activeHubs back onto the theme chips. They are the readable record
+  // of the filter, so anything that changes the set has to bring them along.
+  function syncThemeChips() {
+    if (!themesEl) return;
+    themesEl.querySelectorAll('.atlas-chip[data-hub]').forEach((b) => {
+      b.setAttribute('aria-pressed', activeHubs.has(b.dataset.hub) ? 'true' : 'false');
     });
   }
 
@@ -1128,6 +1179,116 @@
   // Cross-lens jump (#1190): pin an author's papers on the Papers lens. The
   // author's name goes into the Find field so it is visible WHY the view
   // changed, and into the URL as author= so the state is shareable.
+  // ── Theme hub panel (#1465) ──────────────────────────────────────────────
+  // Which themes does this one actually bridge into? The map draws a paper
+  // between the hubs it touches, so the bridges are visible as geometry and
+  // nowhere stated. Counted across the whole lens rather than the filtered
+  // view, to match the corpus-wide figures beside them.
+  function hubBridges(hub) {
+    const tally = new Map();
+    items().forEach((n) => {
+      if (n.hubs.indexOf(hub.id) === -1) return;
+      n.hubs.forEach((id) => {
+        if (id === hub.id) return;
+        tally.set(id, (tally.get(id) || 0) + 1);
+      });
+    });
+    return [...tally.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([id, n]) => ({ hub: hubById[id], n: n }))
+      .filter((x) => x.hub);
+  }
+
+  function isSolo(hub) {
+    return activeHubs.size === 1 && activeHubs.has(hub.id);
+  }
+
+  function openHubPanel(hub) {
+    if (!hubPanelEl) return;
+    pinnedHub = hub;
+    hovered = null; showCard(null); unpin();
+
+    const facts = themeFacts[hub.name];
+    const inLens = items().filter((n) => n.hubs.indexOf(hub.id) !== -1);
+    const shown = inLens.filter(nodeVisible).length;
+    const noun = lens === 'authors' ? 'authors' : 'papers';
+
+    hubNameEl.textContent = hub.type === 'untagged' ? 'Untagged' : hub.name;
+
+    // Corpus figures where the build has them, the map's own count otherwise
+    // (the Untagged hub is not a research theme and has no page behind it).
+    const bits = [];
+    if (facts && lens === 'papers') {
+      bits.push(facts.count + (facts.count === 1 ? ' paper' : ' papers'));
+      if (facts.yearRange) bits.push(facts.yearRange);
+      if (facts.authorCount) bits.push(facts.authorCount + (facts.authorCount === 1 ? ' author' : ' authors'));
+    } else {
+      bits.push(inLens.length + ' ' + (inLens.length === 1 ? noun.slice(0, -1) : noun));
+    }
+    hubMetaEl.textContent = bits.join(' · ')
+      + (shown !== inLens.length ? ' · ' + shown + ' shown under the current filters' : '');
+
+    hubBridgesEl.replaceChildren();
+    const bridges = hubBridges(hub);
+    if (bridges.length) {
+      const lead = document.createElement('span');
+      lead.className = 'atlas-hub__lead';
+      lead.textContent = 'Shares ' + noun + ' with';
+      hubBridgesEl.append(lead);
+      bridges.forEach((b) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'atlas-chip';
+        btn.style.setProperty('--chip-dot', hubFill(b.hub));
+        btn.textContent = (b.hub.type === 'untagged' ? 'Untagged' : b.hub.name) + ' (' + b.n + ')';
+        btn.addEventListener('click', () => openHubPanel(b.hub));
+        hubBridgesEl.append(btn);
+      });
+    }
+
+    // The Untagged hub is a bucket of papers waiting for a theme, so it does
+    // not get called one.
+    const soloLabel = hub.type === 'untagged' ? 'Show only these papers' : 'Show only this theme';
+    hubFilterEl.textContent = isSolo(hub) ? 'Show every theme again' : soloLabel;
+    hubFilterEl.onclick = () => {
+      if (isSolo(hub)) hubs.forEach((h) => activeHubs.add(h.id));
+      else { activeHubs.clear(); activeHubs.add(hub.id); }
+      syncThemeChips();
+      hubFilterEl.textContent = isSolo(hub) ? 'Show every theme again' : soloLabel;
+      announce(isSolo(hub)
+        ? 'The map now shows only ' + hubNameEl.textContent + '.'
+        : 'The map shows every theme again.');
+      syncUrl();
+      draw();
+    };
+
+    // The Untagged hub is a bucket rather than a theme, so it has neither a
+    // page nor a feed to point at.
+    const slug = facts && facts.slug;
+    [hubPageEl, hubFeedEl].forEach((el) => { el.hidden = !slug; });
+    if (slug) {
+      hubPageEl.href = '/anthology-atlas/theme/' + slug + '.html';
+      hubFeedEl.href = '/feeds/themes/' + slug + '.xml';
+    }
+
+    hubPanelEl.hidden = false;
+    announce(hubNameEl.textContent + '. ' + hubMetaEl.textContent);
+    draw();
+    // On a phone the panel opens below the map, out of sight of the tap that
+    // opened it.
+    if (coarse && hubPanelEl.scrollIntoView) {
+      hubPanelEl.scrollIntoView({ block: 'nearest', behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+  }
+
+  function closeHubPanel() {
+    if (!pinnedHub) return;
+    pinnedHub = null;
+    if (hubPanelEl) hubPanelEl.hidden = true;
+    draw();
+  }
+
   function showAuthorPapers(node) {
     const ids = new Set(node.paperIdx.map((i) => papers[i] && papers[i].id).filter(Boolean));
     if (!ids.size) return;
@@ -1215,6 +1376,9 @@
 
   function switchLens(next) {
     if (next === lens) return;
+    // A hub holds different members in each lens, so its panel is stale the
+    // moment the lens changes.
+    closeHubPanel();
     lens = next;
     syncUrl();
     hovered = null; showCard(null);

@@ -7640,6 +7640,52 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-list__more { font-size: .78rem; margin: 10px 0 0; }
 .atlas-list__more[hidden] { display: none; }
 
+/* Theme hub panel (#1465). Sits under the map, in the same frosted-surface
+   idiom as the hover card, and holds itself to the map's width. */
+.atlas-hub {
+  position: relative;
+  margin: var(--space-3) 0 0; padding: 16px 46px 16px 18px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border); border-left: 3px solid var(--accent);
+  background: linear-gradient(180deg, var(--accent-soft), transparent);
+}
+.atlas-hub[hidden] { display: none; }
+.atlas-hub__name {
+  font-size: var(--fs-lg); font-weight: 700; letter-spacing: -.01em;
+  margin: 0 0 3px; color: var(--text); line-height: var(--lh-tight);
+}
+.atlas-hub__meta { margin: 0; font-size: var(--fs-sm); color: var(--text-muted); }
+.atlas-hub__bridges {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 12px;
+}
+.atlas-hub__lead {
+  font-size: .72rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+.atlas-hub__actions {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 14px;
+}
+.atlas-hub__filter {
+  font: inherit; font-size: .82rem; font-weight: 600;
+  padding: 7px 16px; border-radius: var(--radius-full); cursor: pointer;
+  background: var(--accent); color: var(--accent-text); border: 1px solid var(--accent);
+}
+.atlas-hub__filter:hover { filter: brightness(1.06); }
+.atlas-hub__filter:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.atlas-hub__link { font-size: var(--fs-sm); font-weight: 600; color: var(--accent); }
+.atlas-hub__link[hidden] { display: none; }
+.atlas-hub__close {
+  position: absolute; top: 10px; right: 10px;
+  width: 30px; height: 30px; line-height: 1; font-size: 1.1rem;
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; border-radius: 50%;
+  background: transparent; color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.atlas-hub__close:hover { background: var(--surface-strong); color: var(--text); }
+.atlas-hub__close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (pointer: coarse) { .atlas-hub__close { width: 40px; height: 40px; } }
+
 .atlas-legend { display: flex; gap: 16px; flex-wrap: wrap; margin: 14px 2px 0; font-size: .78rem; color: var(--text-muted); align-items: center; }
 .atlas-legend .sw { display: inline-block; width: 11px; height: 11px; border-radius: 50%; vertical-align: -1px; margin-right: 5px; }
 /* Solid-vs-hollow is what encodes curation state, so the two swatches differ by
