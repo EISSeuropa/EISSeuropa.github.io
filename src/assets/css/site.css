@@ -7526,7 +7526,14 @@ a.profile-pub-title:hover { text-decoration: underline; }
 }
 .atlas-find:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .atlas-stage { position: relative; border-radius: var(--radius-lg); overflow: hidden; background: radial-gradient(120% 90% at 50% 0%, var(--accent-soft), transparent 60%), var(--bg-elev); border: 1px solid var(--border); }
-#atlas-canvas { display: block; width: 100%; height: 640px; cursor: default; touch-action: none; }
+/* `touch-action: none` was here for hub dragging, and it made the map a
+   scroll trap on phones: a 480px-tall canvas that neither scrolled the page
+   nor pinch-zoomed under a finger. `pan-y pinch-zoom` gives both back. A
+   mostly-horizontal hub drag still reaches the canvas, a vertical one now
+   scrolls the page instead, which is the right way round on a phone.
+   ponytail: if vertical hub dragging on touch ever matters, the upgrade is
+   setting touch-action to none on the stage only while a drag is live. */
+#atlas-canvas { display: block; width: 100%; height: 640px; cursor: default; touch-action: pan-y pinch-zoom; }
 #atlas-canvas.is-link { cursor: pointer; }
 .atlas-card { position: absolute; pointer-events: none; max-width: 290px; padding: 12px 15px; border-radius: var(--radius-md); background: var(--surface-strong); border: 1px solid var(--border); box-shadow: var(--shadow-3); -webkit-backdrop-filter: blur(var(--blur-card)); backdrop-filter: blur(var(--blur-card)); opacity: 0; transform: translateY(4px); transition: opacity .12s, transform .12s; z-index: 2; }
 .atlas-card.is-on { opacity: 1; transform: none; }
