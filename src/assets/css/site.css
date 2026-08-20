@@ -7640,6 +7640,26 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-list__more { font-size: .78rem; margin: 10px 0 0; }
 .atlas-list__more[hidden] { display: none; }
 
+/* Findings under the corpus figures (#1468). Reads as a line of remarks
+   rather than another row of tiles, and the actionable one is a button. */
+.atlas-findings {
+  display: flex; flex-wrap: wrap; gap: 8px 16px;
+  margin: 10px 0 0; font-size: var(--fs-sm); color: var(--text-muted);
+}
+.atlas-finding { display: inline-flex; align-items: center; gap: 7px; }
+.atlas-finding::before {
+  content: ""; flex: none; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--text-subtle);
+}
+.atlas-finding.is-action {
+  font: inherit; font-size: var(--fs-sm); font-weight: 600;
+  cursor: pointer; padding: 0; border: 0; background: none;
+  color: var(--accent); text-align: left;
+}
+.atlas-finding.is-action::before { background: var(--accent); }
+.atlas-finding.is-action:hover { text-decoration: underline; }
+.atlas-finding.is-action:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
 /* Theme hub panel (#1465). Sits under the map, in the same frosted-surface
    idiom as the hover card, and holds itself to the map's width. */
 .atlas-hub {

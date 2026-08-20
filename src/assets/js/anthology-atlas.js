@@ -48,6 +48,7 @@
   const yearsBulkEl = document.getElementById('atlas-years-bulk');
   const themesBulkEl = document.getElementById('atlas-themes-bulk');
   const liveEl = document.getElementById('atlas-live');
+  const findingsEl = document.getElementById('atlas-findings');
   // Theme hub panel (#1465).
   const hubPanelEl = document.getElementById('atlas-hub');
   const hubNameEl = document.getElementById('atlas-hub-name');
@@ -166,6 +167,8 @@
   // and the second follows the link.
   let pinned = null;
   let pinnedHub = null;            // theme hub whose panel is open (#1465)
+  let bridge = null;               // {a, b} hubs whose shared papers are the view (#1468)
+  let pendingBridge = null;        // a bridge restored from the URL, waiting for boot
   let loadFailed = false;          // the fetch failed, so the stage says so
   const coarse = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
   let spotlight = null;            // node pinned by the Find control (#1154)
@@ -186,6 +189,10 @@
       : activeEditions.has(n.edition);
     if (!edOk) return false;
     if (lens === 'authors' && collabOnly && !n.coCount) return false;
+    // A bridge is the intersection of two themes (#1468): the papers that
+    // carry both, or the authors who have worked in both. Sits alongside the
+    // chips rather than inside them, since the chip rows are a union.
+    if (bridge && !(n.hubs.indexOf(bridge.a.id) !== -1 && n.hubs.indexOf(bridge.b.id) !== -1)) return false;
     return n.hubs.some((id) => activeHubs.has(id));
   }
 
@@ -911,7 +918,7 @@
     return lens !== 'papers'
       || activeEditions.size !== editions.length
       || activeHubs.size !== hubs.length
-      || collabOnly || abstractsOnly || paperEdgesOn
+      || collabOnly || abstractsOnly || paperEdgesOn || !!bridge
       || !!spotlightSet || !!spotlight;
   }
 
@@ -978,6 +985,7 @@
     if (collabOnly) sp.set('collab', '1'); else sp.delete('collab');
     if (abstractsOnly) sp.set('abstracts', '1'); else sp.delete('abstracts');
     if (paperEdgesOn) sp.set('links', '1'); else sp.delete('links');
+    if (bridge) sp.set('bridge', bridge.a.name + '|' + bridge.b.name); else sp.delete('bridge');
     if (spotlightSet) { sp.set('author', spotlightSet.label); sp.delete('find'); }
     else if (spotlight && findEl && findEl.value.trim()) { sp.set('find', findEl.value.trim()); sp.delete('author'); }
     else { sp.delete('find'); sp.delete('author'); }
@@ -1012,6 +1020,17 @@
     collabOnly = sp.get('collab') === '1';
     abstractsOnly = sp.get('abstracts') === '1';
     paperEdgesOn = sp.get('links') === '1';
+    // A shared bridge link (#1468) opens on the intersection itself.
+    const pair = (sp.get('bridge') || '').split('|').map((x) => x.trim()).filter(Boolean);
+    if (pair.length === 2) {
+      const a = hubs.find((h) => h.name === pair[0]);
+      const b = hubs.find((h) => h.name === pair[1]);
+      // Set now so the first paint is already the intersection, and remember
+      // it so boot can open the panel that explains why the map is this
+      // sparse. A deep link never goes through the click that would have
+      // opened it.
+      if (a && b && a !== b) { bridge = { a: a, b: b }; pendingBridge = { a: a, b: b }; }
+    }
     return sp.get('lens') === 'authors' ? 'authors' : null;
   }
 
@@ -1205,6 +1224,7 @@
 
   function openHubPanel(hub) {
     if (!hubPanelEl) return;
+    bridge = null;
     pinnedHub = hub;
     hovered = null; showCard(null); unpin();
 
@@ -1241,7 +1261,9 @@
         btn.className = 'atlas-chip';
         btn.style.setProperty('--chip-dot', hubFill(b.hub));
         btn.textContent = (b.hub.type === 'untagged' ? 'Untagged' : b.hub.name) + ' (' + b.n + ')';
-        btn.addEventListener('click', () => openHubPanel(b.hub));
+        // The count is the promise: pressing it shows those papers rather
+        // than moving the panel to the other theme (#1468).
+        btn.addEventListener('click', () => openBridge(hub, b.hub));
         hubBridgesEl.append(btn);
       });
     }
@@ -1294,10 +1316,63 @@
     }
   }
 
-  function closeHubPanel() {
-    if (!pinnedHub) return;
+  // The intersection of two themes: the papers that carry both, or the authors
+  // who have worked in both (#1468). The count on a bridge chip was the one
+  // number on the page you could not get to the papers behind.
+  function openBridge(a, b) {
+    if (!hubPanelEl) return;
+    bridge = { a: a, b: b };
     pinnedHub = null;
+    hovered = null; showCard(null); unpin();
+
+    const both = items().filter((n) => n.hubs.indexOf(a.id) !== -1 && n.hubs.indexOf(b.id) !== -1);
+    const noun = lens === 'authors'
+      ? (both.length === 1 ? 'author has worked in both' : 'authors have worked in both')
+      : (both.length === 1 ? 'paper carries both themes' : 'papers carry both themes');
+    const label = (h) => (h.type === 'untagged' ? 'Untagged' : h.name);
+
+    hubNameEl.textContent = label(a) + ' / ' + label(b);
+    hubMetaEl.textContent = both.length + ' ' + noun + '. The map and the list below show them.';
+
+    // Each side stays one press away, so a bridge is a place to look from
+    // rather than a dead end.
+    hubBridgesEl.replaceChildren();
+    const lead = document.createElement('span');
+    lead.className = 'atlas-hub__lead';
+    lead.textContent = 'Look at';
+    hubBridgesEl.append(lead);
+    [a, b].forEach((h) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'atlas-chip';
+      btn.style.setProperty('--chip-dot', hubFill(h));
+      btn.textContent = label(h) + ' on its own';
+      btn.addEventListener('click', () => { bridge = null; openHubPanel(h); syncUrl(); });
+      hubBridgesEl.append(btn);
+    });
+
+    hubActionsEl.querySelectorAll('.atlas-hub__link').forEach((el) => el.remove());
+    hubFilterEl.textContent = 'Show every paper again';
+    hubFilterEl.onclick = () => { closeHubPanel(); };
+
+    hubPanelEl.hidden = false;
+    announce(hubNameEl.textContent + '. ' + hubMetaEl.textContent);
+    syncUrl();
+    draw();
+    if (coarse && hubPanelEl.scrollIntoView) {
+      hubPanelEl.scrollIntoView({ block: 'nearest', behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+  }
+
+  function closeHubPanel() {
+    if (!pinnedHub && !bridge) return;
+    const hadBridge = !!bridge;
+    pinnedHub = null;
+    bridge = null;
     if (hubPanelEl) hubPanelEl.hidden = true;
+    // A bridge narrows what the map shows, so leaving it has to put the
+    // corpus back rather than leaving a filter nobody can see.
+    if (hadBridge) syncUrl();
     draw();
   }
 
@@ -1356,8 +1431,81 @@
     return roots.size;
   }
 
+  // The strongest pair of themes in the corpus, by shared papers. Also what
+  // the first finding points at (#1468).
+  function busiestBridge() {
+    const tally = new Map();
+    papers.forEach((p) => {
+      const ids = p.hubs.filter((id) => hubById[id] && hubById[id].type === 'theme');
+      for (let i = 0; i < ids.length; i++) {
+        for (let j = i + 1; j < ids.length; j++) {
+          const key = ids[i] < ids[j] ? ids[i] + '|' + ids[j] : ids[j] + '|' + ids[i];
+          tally.set(key, (tally.get(key) || 0) + 1);
+        }
+      }
+    });
+    let best = null;
+    tally.forEach((n, key) => {
+      if (!best || n > best.n) {
+        const [x, y] = key.split('|');
+        best = { a: hubById[x], b: hubById[y], n: n };
+      }
+    });
+    return best && best.a && best.b ? best : null;
+  }
+
+  // The edition that spread across the most themes, which is a different
+  // question from the edition with the most papers.
+  function broadestEdition() {
+    let best = null;
+    editions.forEach((e) => {
+      const spread = new Set();
+      papers.forEach((p) => {
+        if (p.edition !== e.key) return;
+        p.hubs.forEach((id) => { if (hubById[id] && hubById[id].type === 'theme') spread.add(id); });
+      });
+      if (!best || spread.size > best.n) best = { edition: e, n: spread.size };
+    });
+    return best;
+  }
+
+  // Findings rather than inventory (#1468). The tiles beside these count the
+  // corpus, which a reader could get from the Anthology. These say something
+  // only the map's own structure knows, and the first one is a way in.
+  function buildFindings() {
+    if (!findingsEl) return;
+    findingsEl.replaceChildren();
+    if (lens !== 'papers') return;
+
+    const add = (text, onClick) => {
+      const el = document.createElement(onClick ? 'button' : 'span');
+      el.className = 'atlas-finding' + (onClick ? ' is-action' : '');
+      if (onClick) { el.type = 'button'; el.addEventListener('click', onClick); }
+      el.textContent = text;
+      findingsEl.append(el);
+    };
+
+    const bb = busiestBridge();
+    if (bb) {
+      // Theme names carry their own "and" ("Arms acquisition and transfer"),
+      // so a sentence joining two of them with another one is unreadable.
+      add('Busiest bridge: ' + bb.n + ' papers in both ' + bb.a.name + ' / ' + bb.b.name,
+        () => openBridge(bb.a, bb.b));
+    }
+    const be = broadestEdition();
+    if (be && be.edition) {
+      add(be.edition.label + ' spanned ' + be.n + ' of the '
+        + hubs.filter((h) => h.type === 'theme').length + ' research themes');
+    }
+    const multi = papers.filter((p) => p.hubs.filter((id) => hubById[id] && hubById[id].type === 'theme').length > 1).length;
+    if (multi) {
+      add(Math.round((multi / papers.length) * 100) + '% of papers sit in more than one theme');
+    }
+  }
+
   function buildStats() {
     statsEl.replaceChildren();
+    buildFindings();
     let rows;
     if (lens === 'authors') {
       const collaborating = authors.filter((a) => a.coCount).length;
@@ -1519,6 +1667,10 @@
       updateZoomUi();
       reheat(320);
       if (urlLens) switchLens(urlLens);
+      if (pendingBridge) {
+        openBridge(pendingBridge.a, pendingBridge.b);
+        pendingBridge = null;
+      }
 
       // Find control (#1154): options, events, and the find= deep link.
       buildFindOptions();
