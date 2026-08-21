@@ -46,6 +46,7 @@
   const filtersEl = document.getElementById('atlas-filters');
   const filtersSummaryEl = document.getElementById('atlas-filters-label') || document.getElementById('atlas-filters-summary');
   const filtersClearEl = document.getElementById('atlas-filters-clear');
+  const filtersHintEl = document.getElementById('atlas-filters-hint');
   const yearsBulkEl = document.getElementById('atlas-years-bulk');
   const themesBulkEl = document.getElementById('atlas-themes-bulk');
   const liveEl = document.getElementById('atlas-live');
@@ -972,6 +973,9 @@
         ? 'Filters'
         : 'Filters · ' + eds + '/' + editions.length + ' editions, ' + ths + '/' + hubs.length + ' themes';
     }
+    // The hint tells a reader what is behind the disclosure. Once the label
+    // reports a count it has already told them, so the hint gets out of the way.
+    if (filtersHintEl) filtersHintEl.hidden = !all;
     // The summary is the only filter control visible while the rows are
     // collapsed, so the way out of a filtered view belongs beside the count.
     if (filtersClearEl) filtersClearEl.hidden = all;
@@ -1357,7 +1361,9 @@
     if (!timeEditions.length) return;
     let i = Number(timeRangeEl.value) || 0;
     if (i >= timeEditions.length) i = 0;
-    timePlayEl.textContent = 'Pause';
+    timePlayEl.dataset.playing = 'true';
+    timePlayEl.setAttribute('aria-label', 'Pause');
+    timePlayEl.title = 'Pause';
     const step = () => {
       i += 1;
       timeRangeEl.value = String(i);
@@ -1371,7 +1377,11 @@
   function stopPlay() {
     if (playTimer) clearInterval(playTimer);
     playTimer = null;
-    if (timePlayEl) timePlayEl.textContent = 'Play';
+    if (timePlayEl) {
+      delete timePlayEl.dataset.playing;
+      timePlayEl.setAttribute('aria-label', 'Play through the editions');
+      timePlayEl.title = 'Play through the editions';
+    }
   }
 
   // ── Theme hub panel (#1465) ──────────────────────────────────────────────

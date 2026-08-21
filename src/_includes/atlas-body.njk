@@ -126,8 +126,15 @@
     {# The label is its own element so the active-filter count can be rewritten
        without taking the Clear button with it. Clear only appears once
        something is actually filtering (#1442). #}
+    {# The summary is a control, so it looks like one (#1508). It read as a
+       section heading with a rule under it and no marker, because a
+       `display: flex` summary loses the browser's own disclosure triangle,
+       and readers did not know the filters were there at all. Chevron,
+       hover and focus states, and a label that says what opens. #}
     <summary class="atlas-filters__summary" id="atlas-filters-summary">
+      <span class="atlas-filters__chevron" aria-hidden="true">{{ icon("chevron-down") }}</span>
       <span id="atlas-filters-label">Filters</span>
+      <span class="atlas-filters__hint" id="atlas-filters-hint">editions and research themes</span>
       <button class="atlas-filters__clear" type="button" id="atlas-filters-clear" hidden>Clear</button>
     </summary>
     <div class="atlas-controls" id="atlas-years" role="group" aria-label="Filter by edition year">
@@ -170,6 +177,32 @@
     <canvas id="atlas-canvas" aria-label="Force-directed map of the European Security Studies Anthology: every paper drawn toward the research themes it touches and coloured by them, with an Authors lens mapping co-authorship between the same people. The same papers and authors are available as filterable lists on the Anthology page."></canvas>
     <div class="atlas-card" id="atlas-card" aria-hidden="true"></div>
   </div>
+  {# The corpus over time (#1192). Parked when it was filed, because themes
+     were derived from panel titles and the whole corpus held about 30
+     distinct theme signatures, so stepping through editions would have moved
+     almost nothing. #1186 changed that: themes are derived per paper now and
+     the corpus holds 91 signatures, with each annual edition spanning nine to
+     sixteen themes, so the frames differ.
+
+     It sits under the map, where a time axis belongs, and it steps through
+     the annual conferences only. The joint events and the Ukraine workshop
+     are two, eight and ten papers, which would read as the map going blank
+     rather than as a year with a different shape. They stay on the chips. #}
+  <div class="atlas-controls atlas-time" id="atlas-time" role="group" aria-label="Read the corpus over time">
+    <span class="lbl">Over time</span>
+    {# Icon rather than the words PLAY and PAUSE (#1508). Both glyphs are in
+       the markup and CSS shows one, so the script toggles an attribute
+       rather than building an SVG, and the accessible name is on the button
+       where a screen reader expects it. #}
+    <button class="atlas-time__play" type="button" id="atlas-time-play"
+            aria-label="Play through the editions" title="Play through the editions">
+      <span class="atlas-time__icon atlas-time__icon--play" aria-hidden="true">{{ icon("play") }}</span>
+      <span class="atlas-time__icon atlas-time__icon--pause" aria-hidden="true">{{ icon("pause") }}</span>
+    </button>
+    <input class="atlas-time__range" type="range" id="atlas-time-range" min="0" max="0" step="1" value="0" aria-label="Edition to show">
+    <output class="atlas-time__label" id="atlas-time-label" for="atlas-time-range">Every edition</output>
+  </div>
+
   {# Visible list alternative (#1155, widened in #1446): the canvas is opaque
      to assistive technologies, and a plain list suits plenty of sighted
      readers too. It lists what the CURRENT view holds rather than sending
@@ -212,24 +245,6 @@
       {%- if listCount > 200 %}Showing the first 200 of {{ listCount }}. Narrow the editions or themes to see the rest here.{% endif %}
     </p>
   </details>
-  {# The corpus over time (#1192). Parked when it was filed, because themes
-     were derived from panel titles and the whole corpus held about 30
-     distinct theme signatures, so stepping through editions would have moved
-     almost nothing. #1186 changed that: themes are derived per paper now and
-     the corpus holds 91 signatures, with each annual edition spanning nine to
-     sixteen themes, so the frames differ.
-
-     It sits under the map, where a time axis belongs, and it steps through
-     the annual conferences only. The joint events and the Ukraine workshop
-     are two, eight and ten papers, which would read as the map going blank
-     rather than as a year with a different shape. They stay on the chips. #}
-  <div class="atlas-controls atlas-time" id="atlas-time" role="group" aria-label="Read the corpus over time">
-    <span class="lbl">Over time</span>
-    <button class="atlas-time__play" type="button" id="atlas-time-play">Play</button>
-    <input class="atlas-time__range" type="range" id="atlas-time-range" min="0" max="0" step="1" value="0" aria-label="Edition to show">
-    <output class="atlas-time__label" id="atlas-time-label" for="atlas-time-range">Every edition</output>
-  </div>
-
   {# Theme hub panel (#1465). Clicking a hub used to do nothing at all, and on
      a touchscreen a hub had no hover card either, so the labelled circles that
      organise the whole map were the one thing on it that answered nothing.
@@ -282,7 +297,12 @@
      structure knows, and the first is a button into the two themes it names. #}
   <div class="atlas-findings" id="atlas-findings"></div>
 
-  {% include "licence-block.njk" %}
+  {# No licence block here (#1508). It went in below the map with the stats,
+     the findings and the theme list, and the foot of the page was doing too
+     much. The footer states the licence on every page, and the head still
+     carries <link rel="license">, so nothing is lost but the crowding. The
+     Anthology keeps its block, where it sits beside the citation panel it
+     belongs with. #}
 
   {# Wayfinding between the whole map and its per-theme views (#1255).
      An unlinked page is one a crawler reaches only through the sitemap and a
