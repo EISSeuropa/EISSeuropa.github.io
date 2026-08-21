@@ -97,6 +97,31 @@
        language menu is also a `[data-nav-group]` but lives in the bar,
        not the drawer, so on a phone it still needs Escape and
        outside-click while the nav groups beside it do not. */
+    /* Carry the reader's view across a language switch (#1492).
+       The switcher is server-rendered, so its hrefs are the bare page and a
+       reader filtering the Anthology by theme lands on the unfiltered page
+       in the other language, having lost the thing they were looking at.
+       The filter state is in the query string and its values are
+       language-independent by design: the edition is a programme URL and the
+       theme is the English name, which is what the option values carry in
+       every locale (#1492). So the whole query string travels, along with
+       the fragment.
+
+       Progressive enhancement on purpose: with JS off the links keep working
+       and only lose the state, which is where they started. Untranslated
+       pages point their FR/DE links at the language homepage, where a
+       filter would mean nothing, so those are left alone. */
+    const langLinks = Array.from(document.querySelectorAll(".lang-chip, .lang-menu-link"));
+    if (langLinks.length && (location.search || location.hash)) {
+      langLinks.forEach((a) => {
+        const href = a.getAttribute("href") || "";
+        // The fallback to a language homepage is not an equivalent of this
+        // page, so it must not inherit this page's state.
+        if (/^\/(index\.[a-z]{2}\.html)?$/.test(href)) return;
+        a.setAttribute("href", href.split("#")[0].split("?")[0] + location.search + location.hash);
+      });
+    }
+
     const groups = Array.from(document.querySelectorAll("[data-nav-group]"));
     if (groups.length) {
       const drawerBp = matchMedia("(max-width: 880px)");
