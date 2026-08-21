@@ -66,7 +66,7 @@
      genuinely distinct rather than 17 copies with a different H1. #}
   <p class="atlas-lede">{{ atlasTheme.count }} papers on {{ atlasTheme.name | lower }}, presented at EISS conferences and workshops from {{ atlasTheme.yearRange }} by {{ atlasTheme.authorCount }} authors. They sit here inside the whole <a href="/anthology.html">European Security Studies Anthology</a>, so you can see which other themes this one reaches into.</p>
   {% else %}
-  <p class="atlas-lede">A map of the <a href="/anthology.html">European Security Studies Anthology</a>. Every paper presented at an EISS conference or workshop since 2017 sits here as a dot, drawn toward the research themes it touches, so the clusters and the bridges between them become visible.</p>
+  <p class="atlas-lede">The <a href="/anthology.html">European Security Studies Anthology</a> as a structure rather than a catalogue. Every paper presented at an EISS conference or workshop since 2017 sits here as a dot, drawn toward the research themes it touches, so the clusters and the bridges between them become visible.</p>
   {% endif %}
 
   {# First-visit welcome strip (#1134). Rendered hidden; the inline head
@@ -183,6 +183,24 @@
     <ul class="atlas-list__items" id="atlas-list-items"></ul>
     <p class="atlas-list__more muted" id="atlas-list-more" hidden></p>
   </details>
+  {# The corpus over time (#1192). Parked when it was filed, because themes
+     were derived from panel titles and the whole corpus held about 30
+     distinct theme signatures, so stepping through editions would have moved
+     almost nothing. #1186 changed that: themes are derived per paper now and
+     the corpus holds 91 signatures, with each annual edition spanning nine to
+     sixteen themes, so the frames differ.
+
+     It sits under the map, where a time axis belongs, and it steps through
+     the annual conferences only. The joint events and the Ukraine workshop
+     are two, eight and ten papers, which would read as the map going blank
+     rather than as a year with a different shape. They stay on the chips. #}
+  <div class="atlas-controls atlas-time" id="atlas-time" role="group" aria-label="Read the corpus over time">
+    <span class="lbl">Over time</span>
+    <button class="atlas-time__play" type="button" id="atlas-time-play">Play</button>
+    <input class="atlas-time__range" type="range" id="atlas-time-range" min="0" max="0" step="1" value="0" aria-label="Edition to show">
+    <output class="atlas-time__label" id="atlas-time-label" for="atlas-time-range">Every edition</output>
+  </div>
+
   {# Theme hub panel (#1465). Clicking a hub used to do nothing at all, and on
      a touchscreen a hub had no hover card either, so the labelled circles that
      organise the whole map were the one thing on it that answered nothing.

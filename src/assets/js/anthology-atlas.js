@@ -49,6 +49,12 @@
   const themesBulkEl = document.getElementById('atlas-themes-bulk');
   const liveEl = document.getElementById('atlas-live');
   const findingsEl = document.getElementById('atlas-findings');
+  // The corpus over time (#1192).
+  const timeRowEl = document.getElementById('atlas-time');
+  const timeRangeEl = document.getElementById('atlas-time-range');
+  const timePlayEl = document.getElementById('atlas-time-play');
+  const timeLabelEl = document.getElementById('atlas-time-label');
+  const STEP_MS = 1500;
   // Theme hub panel (#1465).
   const hubPanelEl = document.getElementById('atlas-hub');
   const hubNameEl = document.getElementById('atlas-hub-name');
@@ -169,6 +175,9 @@
   let pinnedHub = null;            // theme hub whose panel is open (#1465)
   let bridge = null;               // {a, b} hubs whose shared papers are the view (#1468)
   let pendingBridge = null;        // a bridge restored from the URL, waiting for boot
+  let pendingHub = null;           // a theme panel restored from the URL (#1473)
+  let timeEditions = [];           // annual editions, oldest first (#1192)
+  let playTimer = null;
   let loadFailed = false;          // the fetch failed, so the stage says so
   const coarse = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
   let spotlight = null;            // node pinned by the Find control (#1154)
@@ -507,11 +516,66 @@
       ctx.fillStyle = '#fff';
       ctx.fillText(String(h.count), h.x, h.y + 4);
       ctx.globalAlpha = 1;
-      ctx.font = '600 11px Inter, system-ui, sans-serif';
-      ctx.fillStyle = theme.muted;
-      const label = h.name.length > 26 ? h.name.slice(0, 25) + '…' : h.name;
-      ctx.fillText(label, h.x, h.y + h.r + 15);
     });
+    drawHubLabels(hoverIds);
+  }
+
+  // Hub labels, placed with the neighbours in mind (#1275). They used to be
+  // drawn at a fixed offset under each hub with no collision handling, so
+  // around the dense middle of the map one theme's name ran straight through
+  // the next and the labels stopped naming anything. The label is the only
+  // thing that says which theme a cluster is, so an unreadable one makes the
+  // colour meaningless.
+  //
+  // Two passes, both from the issue's own list and neither needing a layout
+  // library (§16.3): each label is offered four positions ordered by where the
+  // hub sits relative to the middle of the map, so outer hubs push their text
+  // outward, and a label that would land on one already placed tries the next
+  // position instead.
+  function drawHubLabels(hoverIds) {
+    ctx.textAlign = 'center';
+    ctx.font = '600 11px Inter, system-ui, sans-serif';
+    const cx = W / 2, cy = H / 2;
+    const placed = [];
+    const overlaps = (a) => placed.some((b) =>
+      a.x0 < b.x1 && a.x1 > b.x0 && a.y0 < b.y1 && a.y1 > b.y0);
+
+    // Biggest hubs first: when something has to give, it should be the theme
+    // with three papers rather than the one with seventy.
+    hubs.slice().sort((a, b) => b.count - a.count).forEach((h) => {
+      const text = h.name.length > 26 ? h.name.slice(0, 25) + '…' : h.name;
+      const w = ctx.measureText(text).width;
+      const gap = h.r + 13;
+      // Ordered by the hub's own direction from the centre, so the ring of
+      // hubs reads outward rather than every label piling downward.
+      const below = { x: h.x, y: h.y + gap + 4 };
+      const above = { x: h.x, y: h.y - gap };
+      const right = { x: h.x + h.r + 8 + w / 2, y: h.y + 4 };
+      const left = { x: h.x - h.r - 8 - w / 2, y: h.y + 4 };
+      const dx = h.x - cx, dy = h.y - cy;
+      const order = Math.abs(dx) > Math.abs(dy)
+        ? (dx > 0 ? [right, below, above, left] : [left, below, above, right])
+        : (dy > 0 ? [below, right, left, above] : [above, right, left, below]);
+
+      let spot = null;
+      for (const c of order) {
+        const box = { x0: c.x - w / 2 - 3, x1: c.x + w / 2 + 3, y0: c.y - 11, y1: c.y + 4 };
+        if (!overlaps(box)) { spot = c; placed.push(box); break; }
+      }
+      // Nowhere clear. A big hub keeps its name and accepts the overlap,
+      // because losing it outright is worse. A small one gives way, and the
+      // hover card and the panel still name it.
+      if (!spot) {
+        if (h.count < 12) return;
+        spot = order[0];
+        placed.push({ x0: spot.x - w / 2 - 3, x1: spot.x + w / 2 + 3, y0: spot.y - 11, y1: spot.y + 4 });
+      }
+      const dim = (hoverIds && !hoverIds.has(h.id)) || !activeHubs.has(h.id);
+      ctx.globalAlpha = dim ? 0.35 : 1;
+      ctx.fillStyle = theme.muted;
+      ctx.fillText(text, spot.x, spot.y);
+    });
+    ctx.globalAlpha = 1;
   }
 
   // ── Interaction ──
@@ -899,6 +963,7 @@
   function updateFilterSummary() {
     if (shareRowEl) shareRowEl.hidden = !viewIsFiltered();
     renderList();
+    syncTimeControl();
     const eds = activeEditions.size, ths = activeHubs.size;
     const all = eds === editions.length && ths === hubs.length;
     if (filtersSummaryEl) {
@@ -918,7 +983,7 @@
     return lens !== 'papers'
       || activeEditions.size !== editions.length
       || activeHubs.size !== hubs.length
-      || collabOnly || abstractsOnly || paperEdgesOn || !!bridge
+      || collabOnly || abstractsOnly || paperEdgesOn || !!bridge || !!pinnedHub
       || !!spotlightSet || !!spotlight;
   }
 
@@ -986,6 +1051,10 @@
     if (abstractsOnly) sp.set('abstracts', '1'); else sp.delete('abstracts');
     if (paperEdgesOn) sp.set('links', '1'); else sp.delete('links');
     if (bridge) sp.set('bridge', bridge.a.name + '|' + bridge.b.name); else sp.delete('bridge');
+    // An open theme panel is the densest thing on the page and was the one
+    // piece of view state a link could not carry (#1473). `theme` opens a
+    // panel, `themes` filters the map: different jobs, and they compose.
+    if (pinnedHub) sp.set('theme', pinnedHub.name); else sp.delete('theme');
     if (spotlightSet) { sp.set('author', spotlightSet.label); sp.delete('find'); }
     else if (spotlight && findEl && findEl.value.trim()) { sp.set('find', findEl.value.trim()); sp.delete('author'); }
     else { sp.delete('find'); sp.delete('author'); }
@@ -1030,6 +1099,13 @@
       // sparse. A deep link never goes through the click that would have
       // opened it.
       if (a && b && a !== b) { bridge = { a: a, b: b }; pendingBridge = { a: a, b: b }; }
+    }
+    // A theme page (#1255) arrives pre-filtered to its own theme, and its
+    // panel is exactly what that page is about, so it opens by default there.
+    const wantedPanel = sp.get('theme') || pageTheme;
+    if (wantedPanel && !pendingBridge) {
+      const h = hubs.find((x) => x.name === wantedPanel);
+      if (h) pendingHub = h;
     }
     return sp.get('lens') === 'authors' ? 'authors' : null;
   }
@@ -1076,6 +1152,7 @@
         syncUrl();
         draw();
       });
+      b.dataset.edition = e.key;
       b.title = e.label + ' · ' + e.count + ' papers';
       yearsEl.appendChild(b);
     });
@@ -1102,6 +1179,13 @@
 
   // Reflect activeHubs back onto the theme chips. They are the readable record
   // of the filter, so anything that changes the set has to bring them along.
+  function syncEditionChips() {
+    if (!yearsEl) return;
+    yearsEl.querySelectorAll('.atlas-chip[data-edition]').forEach((b) => {
+      b.setAttribute('aria-pressed', activeEditions.has(b.dataset.edition) ? 'true' : 'false');
+    });
+  }
+
   function syncThemeChips() {
     if (!themesEl) return;
     themesEl.querySelectorAll('.atlas-chip[data-hub]').forEach((b) => {
@@ -1197,6 +1281,81 @@
   // Cross-lens jump (#1190): pin an author's papers on the Papers lens. The
   // author's name goes into the Find field so it is visible WHY the view
   // changed, and into the URL as author= so the state is shareable.
+  // ── The corpus over time (#1192) ─────────────────────────────────────────
+  // Position 0 is the whole corpus and 1..N are the annual conferences,
+  // oldest first. The force layout never sees any of this: hidden nodes still
+  // take part in tick(), so positions do not depend on the filter and one
+  // year sits exactly where the next one will. That is what makes the frames
+  // comparable, and it is the damping the issue asked for, by not needing any.
+  function buildTimeControl() {
+    if (!timeRangeEl) return;
+    timeEditions = editions
+      .filter((e) => /^\d{4}$/.test(e.key))
+      .slice()
+      .sort((a, b) => a.year - b.year);
+    if (timeEditions.length < 2) { if (timeRowEl) timeRowEl.hidden = true; return; }
+    timeRangeEl.max = String(timeEditions.length);
+    timeRangeEl.addEventListener('input', () => {
+      stopPlay();
+      setTimeIndex(Number(timeRangeEl.value), true);
+    });
+    if (timePlayEl) timePlayEl.addEventListener('click', () => (playTimer ? stopPlay() : startPlay()));
+    syncTimeControl();
+  }
+
+  function setTimeIndex(i, announceIt) {
+    if (i <= 0) editions.forEach((e) => activeEditions.add(e.key));
+    else {
+      activeEditions.clear();
+      activeEditions.add(timeEditions[i - 1].key);
+    }
+    syncEditionChips();
+    syncUrl();
+    draw();
+    if (announceIt) announce(timeLabelEl ? timeLabelEl.textContent : '');
+  }
+
+  // The slider follows the chips as well as driving them, so a filter built by
+  // hand does not leave it telling a different story. Where the chips say
+  // something the slider cannot express, the label says that instead.
+  function syncTimeControl() {
+    if (!timeRangeEl || !timeEditions.length) return;
+    const all = activeEditions.size === editions.length;
+    const only = activeEditions.size === 1 ? [...activeEditions][0] : null;
+    const idx = only ? timeEditions.findIndex((e) => e.key === only) : -1;
+    if (all) {
+      timeRangeEl.value = '0';
+      timeLabelEl.textContent = 'Every edition';
+    } else if (idx !== -1) {
+      timeRangeEl.value = String(idx + 1);
+      timeLabelEl.textContent = timeEditions[idx].label;
+    } else {
+      timeLabelEl.textContent = activeEditions.size + ' editions';
+    }
+    timeRangeEl.setAttribute('aria-valuetext', timeLabelEl.textContent);
+  }
+
+  function startPlay() {
+    if (!timeEditions.length) return;
+    let i = Number(timeRangeEl.value) || 0;
+    if (i >= timeEditions.length) i = 0;
+    timePlayEl.textContent = 'Pause';
+    const step = () => {
+      i += 1;
+      timeRangeEl.value = String(i);
+      setTimeIndex(i, false);
+      if (i >= timeEditions.length) stopPlay();
+    };
+    step();
+    playTimer = setInterval(step, STEP_MS);
+  }
+
+  function stopPlay() {
+    if (playTimer) clearInterval(playTimer);
+    playTimer = null;
+    if (timePlayEl) timePlayEl.textContent = 'Play';
+  }
+
   // ── Theme hub panel (#1465) ──────────────────────────────────────────────
   // Which themes does this one actually bridge into? The map draws a paper
   // between the hubs it touches, so the bridges are visible as geometry and
@@ -1308,6 +1467,7 @@
 
     hubPanelEl.hidden = false;
     announce(hubNameEl.textContent + '. ' + hubMetaEl.textContent);
+    syncUrl();   // the open panel is part of the view now (#1473)
     draw();
     // On a phone the panel opens below the map, out of sight of the tap that
     // opened it.
@@ -1366,13 +1526,12 @@
 
   function closeHubPanel() {
     if (!pinnedHub && !bridge) return;
-    const hadBridge = !!bridge;
     pinnedHub = null;
     bridge = null;
     if (hubPanelEl) hubPanelEl.hidden = true;
-    // A bridge narrows what the map shows, so leaving it has to put the
-    // corpus back rather than leaving a filter nobody can see.
-    if (hadBridge) syncUrl();
+    // A bridge narrows what the map shows and an open panel is in the URL, so
+    // closing either has to be written down rather than left behind.
+    syncUrl();
     draw();
   }
 
@@ -1629,6 +1788,7 @@
       buildStats();
       buildEditionChips();
       buildThemeChips();
+      buildTimeControl();
       bulkRefreshers.push(buildBulk(
         yearsBulkEl,
         (on) => setAllChips(yearsEl, activeEditions, editions.map((e) => e.key), on),
@@ -1670,6 +1830,9 @@
       if (pendingBridge) {
         openBridge(pendingBridge.a, pendingBridge.b);
         pendingBridge = null;
+      } else if (pendingHub) {
+        openHubPanel(pendingHub);
+        pendingHub = null;
       }
 
       // Find control (#1154): options, events, and the find= deep link.
