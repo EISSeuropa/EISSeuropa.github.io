@@ -543,7 +543,7 @@ const locales = {
     speakers: {
       // /speakers index (EN + FR + DE share one include, this is the
       // chrome). Speaker names, paper titles, affiliations and the theme
-      // labels stay in their original language (see `note`).
+      // labels are translated, names and affiliations are not (see `note`).
       eyebrow: "The ESSC corpus",
       title: "Speakers",
       lead: "Everyone who has presented at a European Security Studies Conference, drawn from the programmes of every edition. Listed by surname, with the most recent affiliation on record. Use the site search to find a specific name.",
@@ -563,7 +563,7 @@ const locales = {
       netsecProfileAria: "{name} on the NetSec member directory (opens in a new tab)",
       contributionOne: "contribution",
       contributionMany: "contributions",
-      note: "Assembled from the published conference programmes. Names are matched conservatively, so a person who appears under noticeably different spellings across years may show more than once. Themes are inferred from the panel each paper sat in (the nine permanent EISS sections plus recurring themes). Names, affiliations and theme labels stay in their original language.",
+      note: "Assembled from the published conference programmes. Names are matched conservatively, so a person who appears under noticeably different spellings across years may show more than once. Themes are inferred from the panel each paper sat in (the nine permanent EISS sections plus recurring themes). Names and affiliations stay in their original language. The research themes are our own vocabulary, so they are translated.",
       // Live-region status strings, read by speaker-filter.js. {n}/{q}
       // are substituted client-side.
       resultsOne: "{n} speaker",
@@ -580,7 +580,7 @@ const locales = {
     papers: {
       // /papers index (EN + FR + DE share one include, this is the
       // chrome). Paper titles, author names, affiliations, panel names and
-      // theme labels stay in their original language (see `note`).
+      // theme labels are translated, the rest is not (see `note`).
       eyebrow: "The ESSC corpus",
       title: "Papers",
       lead: "Every paper presented at a European Security Studies Conference, drawn from the programmes of every edition. Browse the whole corpus, or filter by year and theme. Use the site search to find a specific title or author.",
@@ -598,7 +598,7 @@ const locales = {
       publishedOnly: "Published only",
       prizeOnly: "European Security Studies Prize",
       clear: "Clear",
-      note: "Assembled from the published conference programmes. Themes are inferred from the panel each paper sat in (the nine permanent EISS sections plus recurring themes), so a paper may carry more than one or none. Titles, author names, affiliations and theme labels stay in their original language.",
+      note: "Assembled from the published conference programmes. Themes are inferred from the panel each paper sat in (the nine permanent EISS sections plus recurring themes), so a paper may carry more than one or none. Titles, author names and affiliations stay in their original language. The research themes are our own vocabulary, so they are translated.",
       // Live-region status strings, read by paper-filter.js. {n}/{q} are
       // substituted client-side.
       resultsOne: "{n} paper",
@@ -1090,7 +1090,7 @@ const locales = {
       netsecProfileAria: "{name} dans l'annuaire des membres NetSec (nouvel onglet)",
       contributionOne: "communication",
       contributionMany: "communications",
-      note: "Constitué à partir des programmes publiés des conférences. Les noms sont rapprochés avec prudence : une personne apparaissant sous des graphies sensiblement différentes selon les années peut figurer plusieurs fois. Les thèmes sont déduits du panel dans lequel chaque communication a été présentée (les neuf sections permanentes de l'EISS et des thèmes récurrents). Les noms, affiliations et intitulés de thèmes restent dans leur langue d'origine.",
+      note: "Constitué à partir des programmes publiés des conférences. Les noms sont rapprochés avec prudence : une personne apparaissant sous des graphies sensiblement différentes selon les années peut figurer plusieurs fois. Les thèmes sont déduits du panel dans lequel chaque communication a été présentée (les neuf sections permanentes de l'EISS et des thèmes récurrents). Les noms et les affiliations restent dans leur langue d'origine. Les thèmes de recherche relèvent de notre propre vocabulaire et sont donc traduits.",
       resultsOne: "{n} intervenant",
       resultsMany: "{n} intervenants",
       noMatch: "Aucun intervenant ne correspond.",
@@ -1120,7 +1120,7 @@ const locales = {
       publishedOnly: "Publiées uniquement",
       prizeOnly: "European Security Studies Prize",
       clear: "Effacer",
-      note: "Constitué à partir des programmes publiés des conférences. Les thèmes sont déduits du panel dans lequel chaque communication a été présentée (les neuf sections permanentes de l'EISS et des thèmes récurrents) : une communication peut en porter plusieurs ou aucun. Les titres, noms d'auteurs, affiliations et intitulés de thèmes restent dans leur langue d'origine.",
+      note: "Constitué à partir des programmes publiés des conférences. Les thèmes sont déduits du panel dans lequel chaque communication a été présentée (les neuf sections permanentes de l'EISS et des thèmes récurrents) : une communication peut en porter plusieurs ou aucun. Les titres, les noms d'auteurs et les affiliations restent dans leur langue d'origine. Les thèmes de recherche relèvent de notre propre vocabulaire et sont donc traduits.",
       resultsOne: "{n} communication",
       resultsMany: "{n} communications",
       noMatch: "Aucune communication ne correspond.",
@@ -1605,7 +1605,7 @@ const locales = {
       netsecProfileAria: "{name} im NetSec-Mitgliederverzeichnis (öffnet in neuem Tab)",
       contributionOne: "Beitrag",
       contributionMany: "Beiträge",
-      note: "Zusammengestellt aus den veröffentlichten Konferenzprogrammen. Namen werden konservativ zusammengeführt: Wer über die Jahre unter deutlich verschiedenen Schreibweisen auftritt, kann mehrfach erscheinen. Themen werden aus dem Panel abgeleitet, in dem der jeweilige Beitrag stand (die neun ständigen EISS-Sektionen sowie wiederkehrende Themen). Namen, Zugehörigkeiten und Themenbezeichnungen bleiben in ihrer Originalsprache.",
+      note: "Zusammengestellt aus den veröffentlichten Konferenzprogrammen. Namen werden konservativ zusammengeführt: Wer über die Jahre unter deutlich verschiedenen Schreibweisen auftritt, kann mehrfach erscheinen. Themen werden aus dem Panel abgeleitet, in dem der jeweilige Beitrag stand (die neun ständigen EISS-Sektionen sowie wiederkehrende Themen). Namen und Zugehörigkeiten bleiben in ihrer Originalsprache. Die Forschungsthemen sind unser eigenes Vokabular und werden daher übersetzt.",
       resultsOne: "{n} Vortragende:r",
       resultsMany: "{n} Vortragende",
       noMatch: "Keine Vortragenden gefunden.",
@@ -1635,7 +1635,7 @@ const locales = {
       publishedOnly: "Nur veröffentlichte",
       prizeOnly: "Best-Paper-Preis",
       clear: "Zurücksetzen",
-      note: "Zusammengestellt aus den veröffentlichten Konferenzprogrammen. Themen werden aus dem Panel abgeleitet, in dem der jeweilige Beitrag stand (die neun ständigen EISS-Sektionen sowie wiederkehrende Themen): ein Beitrag kann mehrere oder gar keines tragen. Titel, Autorennamen, Zugehörigkeiten und Themenbezeichnungen bleiben in ihrer Originalsprache.",
+      note: "Zusammengestellt aus den veröffentlichten Konferenzprogrammen. Themen werden aus dem Panel abgeleitet, in dem der jeweilige Beitrag stand (die neun ständigen EISS-Sektionen sowie wiederkehrende Themen): ein Beitrag kann mehrere oder gar keines tragen. Titel, Autorennamen und Zugehörigkeiten bleiben in ihrer Originalsprache. Die Forschungsthemen sind unser eigenes Vokabular und werden daher übersetzt.",
       resultsOne: "{n} Beitrag",
       resultsMany: "{n} Beiträge",
       noMatch: "Keine Beiträge gefunden.",

@@ -250,8 +250,17 @@ const editions = [...editionMap.values()].sort(
 
 // Themes: each theme that tags at least one paper, in canonical order, with
 // its paper count.
+// The label in every locale, joined on the English name, which is the key the
+// filter values and the ?theme= deep link already use (#1492). The by-person
+// filter has read localised labels through corpus.themes since it was built,
+// while this one rendered the English name as its display text, so the French
+// Anthology showed one vocabulary on one tab and another on the next.
+const themeLabelByEnglishName = new Map(
+  Object.values(corpus.themeLabels).map((label) => [label.en, label])
+);
 const themes = THEME_ORDER.map((name) => ({
   name,
+  label: themeLabelByEnglishName.get(name) || { en: name },
   count: papers.filter((p) => p.theme.includes(name)).length,
 }))
   .filter((t) => t.count > 0)
@@ -262,6 +271,11 @@ module.exports = {
   years,
   editions,
   themes,
+  // English name to the label in every locale, for the surfaces that hold a
+  // paper's own themes rather than the filter list (#1492).
+  themeLabels: Object.fromEntries(
+    THEME_ORDER.map((name) => [name, themeLabelByEnglishName.get(name) || { en: name }])
+  ),
   stats: {
     paperCount: papers.length,
     editions: [...new Set(papers.map((p) => p.programmeUrl))].filter(Boolean).length,

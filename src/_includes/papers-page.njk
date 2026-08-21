@@ -30,8 +30,11 @@
     <label class="speaker-field-label" for="paper-theme">{{ p18n.themeLabel }}</label>
     <select id="paper-theme" data-paper-theme>
       <option value="">{{ p18n.allThemes }} ({{ paperIndex.stats.paperCount }})</option>
+      {#- The value stays the English name, which is what paper-filter.js
+          matches and what the ?theme= deep link carries. Only the text a
+          reader sees is localised (#1492). -#}
       {%- for th in paperIndex.themes %}
-      <option value="{{ th.name }}">{{ th.name }} ({{ th.count }})</option>
+      <option value="{{ th.name }}">{{ th.label[lang or "en"] or th.label.en }} ({{ th.count }})</option>
       {%- endfor %}
     </select>
   </div>
@@ -100,7 +103,9 @@
       </p>
       {%- if p.theme.length %}
       <p class="paper-themes">
-        {%- for th in p.theme %}<span class="paper-theme-chip" lang="en">{{ th }}</span>{% endfor %}
+        {#- The chip shows the reader's own language now that the filter above
+            does (#1492), so it drops the lang="en" it used to carry. -#}
+        {%- for th in p.theme %}<span class="paper-theme-chip">{{ paperIndex.themeLabels[th][lang or "en"] or th }}</span>{% endfor %}
       </p>
       {%- endif %}
     </article>
