@@ -33,7 +33,7 @@ const roadmap = {
   issuesUrl: `${REPO}/issues/new/choose`,
   milestonesUrl: `${REPO}/milestones`,
   releasesUrl: `${REPO}/releases`,
-  updated: { en: "1 August 2026", fr: "1er août 2026", de: "1. August 2026" },
+  updated: { en: "21 August 2026", fr: "21 août 2026", de: "21. August 2026" },
 
   quarters: [
     {
@@ -208,9 +208,66 @@ const roadmap = {
             de: "Das Korpus auf Französisch, und die Daten dahinter",
           },
           desc: {
-            en: "The French Anthology leaves beta on a declared scope: the interface, the seventeen theme labels, and the abstracts of papers with at least one French-affiliated author, with a check that fails when an entry in scope loses its translation. The corpus gains an analytical export for research use, covering affiliation shares by country, thematic distribution and co-authorship, with author affiliations matched to the standard registry of research organisations and the theme vocabulary published in a form other projects can cite. The accessibility work carries through to a declaration against the French RGAA standard, and an annual French-language note on the corpus rounds out the release.",
-            fr: "L’Anthologie en français sort de sa version bêta sur un périmètre déclaré : l’interface, les dix-sept intitulés de thèmes, et les résumés des communications comptant au moins un auteur affilié en France, avec un contrôle qui échoue lorsqu’une entrée du périmètre perd sa traduction. Le corpus reçoit un export analytique destiné à la recherche, couvrant la répartition des affiliations par pays, la distribution thématique et les co-signatures, avec les affiliations rapprochées du registre standard des organismes de recherche et le vocabulaire des thèmes publié sous une forme que d’autres projets peuvent citer. Le travail d’accessibilité aboutit à une déclaration de conformité au RGAA, et une note annuelle en français sur le corpus complète la version.",
-            de: "Die französische Anthologie verlässt den Beta-Status für einen erklärten Umfang: die Oberfläche, die siebzehn Themenbezeichnungen und die Abstracts aller Beiträge mit mindestens einer französischen Zugehörigkeit, samt einer Prüfung, die anschlägt, sobald ein Eintrag im Umfang seine Übersetzung verliert. Das Korpus erhält einen analytischen Export für die Forschung mit Zugehörigkeitsanteilen nach Ländern, thematischer Verteilung und Ko-Autorschaft, wobei die Zugehörigkeiten dem Standardregister der Forschungseinrichtungen zugeordnet werden und das Themenvokabular in einer zitierfähigen Form erscheint. Die Arbeit an der Barrierefreiheit mündet in eine Konformitätserklärung nach dem französischen RGAA, und eine jährliche französische Notiz zum Korpus rundet die Version ab.",
+            en: "The French Anthology leaves beta on a declared scope: the interface, the seventeen theme labels, and the abstracts of papers with at least one French-affiliated author, with a check that fails when an entry in scope loses its translation. The corpus gains an analytical export for research use, covering affiliation shares by country, thematic distribution and co-authorship, with author affiliations matched to the standard registry of research organisations and the theme vocabulary published in a form other projects can cite. The accessibility work carries through to a declaration against the French RGAA standard, and an annual French-language note on the corpus rounds out the release. The next conference opens in the same window: the edition is settled and entered in the conference data, the 2027 page is published to carry the call for papers, and the prize jury is confirmed in time for it.",
+            fr: "L’Anthologie en français sort de sa version bêta sur un périmètre déclaré : l’interface, les dix-sept intitulés de thèmes, et les résumés des communications comptant au moins un auteur affilié en France, avec un contrôle qui échoue lorsqu’une entrée du périmètre perd sa traduction. Le corpus reçoit un export analytique destiné à la recherche, couvrant la répartition des affiliations par pays, la distribution thématique et les co-signatures, avec les affiliations rapprochées du registre standard des organismes de recherche et le vocabulaire des thèmes publié sous une forme que d’autres projets peuvent citer. Le travail d’accessibilité aboutit à une déclaration de conformité au RGAA, et une note annuelle en français sur le corpus complète la version. La prochaine conférence s’ouvre dans la même fenêtre : l’édition est arrêtée et saisie dans les données de la conférence, la page 2027 est mise en ligne pour accueillir l’appel à communications, et le jury du prix est confirmé à temps.",
+            de: "Die französische Anthologie verlässt den Beta-Status für einen erklärten Umfang: die Oberfläche, die siebzehn Themenbezeichnungen und die Abstracts aller Beiträge mit mindestens einer französischen Zugehörigkeit, samt einer Prüfung, die anschlägt, sobald ein Eintrag im Umfang seine Übersetzung verliert. Das Korpus erhält einen analytischen Export für die Forschung mit Zugehörigkeitsanteilen nach Ländern, thematischer Verteilung und Ko-Autorschaft, wobei die Zugehörigkeiten dem Standardregister der Forschungseinrichtungen zugeordnet werden und das Themenvokabular in einer zitierfähigen Form erscheint. Die Arbeit an der Barrierefreiheit mündet in eine Konformitätserklärung nach dem französischen RGAA, und eine jährliche französische Notiz zum Korpus rundet die Version ab. Im selben Zeitraum beginnt die nächste Konferenz: die Ausgabe wird festgelegt und in die Konferenzdaten eingetragen, die Seite 2027 wird für den Call for Papers veröffentlicht, und die Preisjury steht rechtzeitig fest.",
+          },
+        },
+      ],
+    },
+    {
+      label: { en: "Q2 2027", fr: "T2 2027", de: "Q2 2027" },
+      sub: {
+        en: "April · May · June",
+        fr: "avril · mai · juin",
+        de: "April · Mai · Juni",
+      },
+      entries: [
+        {
+          status: "planned",
+          version: "v2.29.0",
+          milestone: "v2.29.0",
+          when: { en: "30 April 2027 · v2.29.0", fr: "30 avril 2027 · v2.29.0", de: "30. April 2027 · v2.29.0" },
+          title: {
+            en: "The 2027 programme on the page",
+            fr: "Le programme 2027 sur la page",
+            de: "Das Programm 2027 auf der Seite",
+          },
+          desc: {
+            en: "Accepted papers become the programme for the next edition, with the keynote announced alongside it and the practical information written around what is actually arranged. The page agrees with the live programme NetSec renders from the same source.",
+            fr: "Les communications retenues deviennent le programme de la prochaine édition, la conférence inaugurale est annoncée en même temps et les informations pratiques sont rédigées à partir de ce qui est effectivement organisé. La page concorde avec le programme en direct que NetSec affiche depuis la même source.",
+            de: "Aus den angenommenen Beiträgen entsteht das Programm der nächsten Ausgabe, die Keynote wird zugleich bekanntgegeben und die praktischen Hinweise richten sich nach dem, was tatsächlich organisiert ist. Die Seite stimmt mit dem Live-Programm überein, das NetSec aus derselben Quelle rendert.",
+          },
+        },
+        {
+          status: "planned",
+          event: true,
+          when: { en: "June 2027 · ESSC 2027", fr: "juin 2027 · ESSC 2027", de: "Juni 2027 · ESSC 2027" },
+          title: {
+            en: "European Security Studies Conference 2027",
+            fr: "Conférence européenne d’études de sécurité 2027",
+            de: "Europäische Konferenz für Sicherheitsstudien 2027",
+          },
+          desc: {
+            en: "The tenth annual conference, two days of panels and roundtables, run jointly with the COST Action NetSec and the host university. The organising group confirms the dates and the venue in September 2026.",
+            fr: "La dixième conférence annuelle, deux jours de panels et de tables rondes, organisée conjointement avec l’Action COST NetSec et l’université hôte. Le comité d’organisation confirme les dates et le lieu en septembre 2026.",
+            de: "Die zehnte Jahreskonferenz, zwei Tage mit Panels und Runden Tischen, gemeinsam mit der COST-Aktion NetSec und der gastgebenden Universität ausgerichtet. Die Organisationsgruppe bestätigt Termin und Veranstaltungsort im September 2026.",
+          },
+        },
+        {
+          status: "planned",
+          version: "v2.30.0",
+          milestone: "v2.30.0",
+          when: { en: "11 June 2027 · v2.30.0", fr: "11 juin 2027 · v2.30.0", de: "11. Juni 2027 · v2.30.0" },
+          title: {
+            en: "The edition joins the archive",
+            fr: "L’édition rejoint les archives",
+            de: "Die Ausgabe geht ins Archiv",
+          },
+          desc: {
+            en: "After the conference the edition moves into the archive on its own, and the abstracts are pulled from Indico so its papers read as fully as the earlier editions. The next year's page is parked ready at the same time.",
+            fr: "Après la conférence, l’édition rejoint les archives d’elle-même, et les résumés sont récupérés depuis Indico afin que ses communications se lisent aussi complètement que celles des éditions précédentes. La page de l’année suivante est préparée dans la foulée.",
+            de: "Nach der Konferenz wandert die Ausgabe von selbst ins Archiv, und die Abstracts werden aus Indico übernommen, damit ihre Beiträge so vollständig lesbar sind wie die der früheren Ausgaben. Zugleich wird die Seite für das Folgejahr vorbereitet.",
           },
         },
       ],
