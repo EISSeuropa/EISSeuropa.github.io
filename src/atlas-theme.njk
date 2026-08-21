@@ -18,6 +18,8 @@ eleventyComputed:
   title: "{{ atlasTheme.name }} — Anthology Atlas"
   description: "{{ atlasTheme.count }} papers on {{ atlasTheme.name | lower }}, presented at EISS conferences and workshops from {{ atlasTheme.yearRange }}, mapped as a network with the authors who wrote them and the themes they connect to."
   metaImage: "/assets/images/atlas-theme-{{ atlasTheme.slug }}-meta.jpg"
+# CC BY 4.0 content + corpus, declared in the head and in the body (#1488).
+ccbyLicence: true
 ---
 {# One page per research theme (#1255). A query string cannot carry Open Graph
    tags, so a shared ?themes= link produced the generic Atlas card and the one
