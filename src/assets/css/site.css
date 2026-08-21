@@ -7500,22 +7500,48 @@ a.profile-pub-title:hover { text-decoration: underline; }
    between the reader and the map on a laptop as much as on a phone. The
    no-JS case keeps the markup's `open` and shows everything. */
 .atlas-filters { margin: 0 0 12px; }
+/* The filters disclosure (#1508). It read as a section heading: uppercase
+   label, a rule underneath, and no disclosure triangle, because `display:
+   flex` drops the browser's own ::marker. Readers had no reason to think
+   anything opened. It is a control now: a chevron that turns, a surface that
+   responds to hover and focus, and a hint saying what is inside. */
 .atlas-filters__summary {
-  display: block;
+  display: flex; align-items: center; gap: 10px;
   cursor: pointer;
   font-size: .78rem;
   font-weight: 700;
   letter-spacing: .06em;
   text-transform: uppercase;
   color: var(--text-muted);
-  padding: 8px 0;
+  padding: 8px 10px;
   margin: 0 0 6px;
-  border-bottom: 1px solid var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-elev);
+  transition: border-color var(--motion-fast) var(--ease-out),
+              color var(--motion-fast) var(--ease-out);
 }
+.atlas-filters__summary::-webkit-details-marker { display: none; }
+.atlas-filters__summary::marker { content: ""; }
+.atlas-filters__summary:hover { border-color: var(--border-strong); color: var(--text); }
 .atlas-filters__summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-/* The summary is a flex row so the Clear action can sit beside the count
-   rather than under the marker (#1442). */
-.atlas-filters__summary { display: flex; align-items: center; gap: 10px; }
+/* Sized like the nav and language-menu chevrons, which is the disclosure
+   idiom the site already uses, but in the accent rather than muted ink,
+   because this one has to be noticed rather than merely present. */
+.atlas-filters__chevron {
+  display: inline-flex; color: var(--accent);
+  inline-size: 14px; block-size: 14px;
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+.atlas-filters__chevron .icon { inline-size: 14px; block-size: 14px; }
+.atlas-filters[open] .atlas-filters__chevron { transform: rotate(180deg); }
+/* The hint says what opens, and steps aside once the label carries a count. */
+.atlas-filters__hint { font-weight: 600; letter-spacing: .02em; text-transform: none; color: var(--text-subtle); }
+.atlas-filters__hint[hidden] { display: none; }
+.atlas-filters__clear { margin-left: auto; }
+/* A comfortable target under a thumb, where the row is the way into every
+   filter on the page. */
+@media (pointer: coarse) { .atlas-filters__summary { padding: 12px 12px; } }
 .atlas-filters__clear {
   font: inherit; font-size: .72rem; font-weight: 700;
   letter-spacing: .06em; text-transform: uppercase;
@@ -7680,13 +7706,22 @@ a.profile-pub-title:hover { text-decoration: underline; }
 
 /* The corpus over time (#1192), under the map where a time axis belongs. */
 .atlas-time { margin-top: var(--space-3); }
+/* Icon button (#1508): a round target with a play or pause glyph, which is
+   what every media control on the web looks like, rather than the words. */
 .atlas-time__play {
-  font: inherit; font-size: .78rem; font-weight: 700;
-  letter-spacing: .06em; text-transform: uppercase;
-  min-width: 74px; padding: 7px 14px; border-radius: var(--radius-full);
+  width: 38px; height: 38px; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%;
   cursor: pointer; background: var(--bg-elev); color: var(--accent);
   border: 1px solid var(--accent);
 }
+.atlas-time__play .icon { width: 1.05em; height: 1.05em; }
+.atlas-time__icon--play svg { fill: currentColor; stroke: none; }
+.atlas-time__icon--pause svg { fill: currentColor; stroke: none; }
+.atlas-time__icon--pause { display: none; }
+.atlas-time__play[data-playing="true"] .atlas-time__icon--play { display: none; }
+.atlas-time__play[data-playing="true"] .atlas-time__icon--pause { display: inline-flex; }
+@media (pointer: coarse) { .atlas-time__play { width: 44px; height: 44px; } }
 .atlas-time__play:hover { background: var(--accent-soft); }
 .atlas-time__play:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .atlas-time__range { flex: 1 1 200px; max-width: 420px; accent-color: var(--accent); cursor: pointer; }
@@ -7695,7 +7730,6 @@ a.profile-pub-title:hover { text-decoration: underline; }
   font-size: var(--fs-sm); font-weight: 600; color: var(--text);
   min-width: 11ch;
 }
-@media (pointer: coarse) { .atlas-time__play { padding: 11px 16px; } }
 
 /* Findings under the corpus figures (#1468). Reads as a line of remarks
    rather than another row of tiles, and the actionable one is a button. */
