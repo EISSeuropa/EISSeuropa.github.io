@@ -10,6 +10,7 @@ Maintainer-facing docs for [eiss-europa.com](https://eiss-europa.com)
 | [admin-guide.md](admin-guide.md) | Operator and handover guide: who holds what access, what runs unattended, and what a successor needs on day one. |
 | [design-system.md](design-system.md) | UI components and interaction patterns (the `.njk` partials + their CSS/JS). |
 | [a11y-audit-2026-08.md](a11y-audit-2026-08.md) | The August 2026 accessibility audit for #1225: method, the five defect classes found, what the tooling could not check, and what declaring conformance would take. |
+| [scoped-release.md](scoped-release.md) | How a surface declares what is finished instead of carrying a page-wide "early access" label: the derived edition scope, the interface switch, and the build gate that keeps the claim honest. |
 | [qa-checklist.md](qa-checklist.md) | Release / pre-conference Go/No-Go audit using the repo's own tooling. |
 | [qa-audit-2026-06.md](qa-audit-2026-06.md) | The June 2026 site-wide QA audit across seven dimensions: method, the 19 confirmed findings, and what each one turned into. |
 | [i18n.md](i18n.md) | Translation model (EN source + FR/DE), the drift checker, the beta ribbon. |
