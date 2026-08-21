@@ -177,11 +177,40 @@
      <details> rather than a visually-hidden block on purpose: hidden links
      are focusable links a sighted keyboard user cannot see, and a closed
      disclosure keeps its contents out of the tab order entirely. #}
+  {# Newest first, which is the order the script uses too, so the rows do not
+     reshuffle when it takes over. Nunjucks has no `contains` test for
+     selectattr, so a theme page filters inside the loop instead. No cap is
+     needed there: the largest theme holds 76 papers. #}
+  {%- set listSorted = anthologyAtlas.papers | sort(true, false, "year") %}
+  {%- set listCount = atlasTheme.count if atlasTheme else (anthologyAtlas.papers | length) %}
   <details class="atlas-list" id="atlas-list">
-    <summary class="atlas-list__summary" id="atlas-list-summary">Browse this view as a list</summary>
+    <summary class="atlas-list__summary" id="atlas-list-summary">Browse this view as a list ({{ listCount }} papers)</summary>
     <p class="atlas-list__lede muted">The whole corpus, unfiltered, is browsable in <a href="/anthology.html">the Anthology</a>.</p>
-    <ul class="atlas-list__items" id="atlas-list-items"></ul>
-    <p class="atlas-list__more muted" id="atlas-list-more" hidden></p>
+    {# A table rather than a list (#1496). Every row carries the same three
+       fields, which is what a table is for: a screen reader can move by
+       column and say which one it is in, where a list leaves "2019" as a
+       fragment after a title. The header row is rewritten per lens by the
+       script, since the Authors lens has its own two columns. #}
+    <div class="atlas-list__scroll">
+      <table class="atlas-list__table" id="atlas-list-table">
+        <thead id="atlas-list-head">
+          <tr><th scope="col">Paper</th><th scope="col">Authors</th><th scope="col">Year</th></tr>
+        </thead>
+        <tbody id="atlas-list-items">
+          {%- for p in listSorted %}
+          {%- if (atlasTheme and atlasTheme.name in p.themes) or (not atlasTheme and loop.index <= 200) %}
+          <tr>
+            <td>{% if p.url %}<a href="{{ p.url }}">{{ p.title }}</a>{% else %}{{ p.title }}{% endif %}</td>
+            <td>{{ p.authors | join(", ") }}</td>
+            <td>{{ p.year }}</td>
+          </tr>
+          {%- endif %}{% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <p class="atlas-list__more muted" id="atlas-list-more"{% if listCount <= 200 %} hidden{% endif %}>
+      {%- if listCount > 200 %}Showing the first 200 of {{ listCount }}. Narrow the editions or themes to see the rest here.{% endif %}
+    </p>
   </details>
   {# The corpus over time (#1192). Parked when it was filed, because themes
      were derived from panel titles and the whole corpus held about 30
