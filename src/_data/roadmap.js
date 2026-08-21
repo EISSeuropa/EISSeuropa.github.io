@@ -33,7 +33,7 @@ const roadmap = {
   issuesUrl: `${REPO}/issues/new/choose`,
   milestonesUrl: `${REPO}/milestones`,
   releasesUrl: `${REPO}/releases`,
-  updated: { en: "1 August 2026", fr: "1er août 2026", de: "1. August 2026" },
+  updated: { en: "21 August 2026", fr: "21 août 2026", de: "21. August 2026" },
 
   quarters: [
     {
@@ -211,6 +211,92 @@ const roadmap = {
             en: "The French Anthology leaves beta on a declared scope: the interface, the seventeen theme labels, and the abstracts of papers with at least one French-affiliated author, with a check that fails when an entry in scope loses its translation. The corpus gains an analytical export for research use, covering affiliation shares by country, thematic distribution and co-authorship, with author affiliations matched to the standard registry of research organisations and the theme vocabulary published in a form other projects can cite. The accessibility work carries through to a declaration against the French RGAA standard, and an annual French-language note on the corpus rounds out the release.",
             fr: "L’Anthologie en français sort de sa version bêta sur un périmètre déclaré : l’interface, les dix-sept intitulés de thèmes, et les résumés des communications comptant au moins un auteur affilié en France, avec un contrôle qui échoue lorsqu’une entrée du périmètre perd sa traduction. Le corpus reçoit un export analytique destiné à la recherche, couvrant la répartition des affiliations par pays, la distribution thématique et les co-signatures, avec les affiliations rapprochées du registre standard des organismes de recherche et le vocabulaire des thèmes publié sous une forme que d’autres projets peuvent citer. Le travail d’accessibilité aboutit à une déclaration de conformité au RGAA, et une note annuelle en français sur le corpus complète la version.",
             de: "Die französische Anthologie verlässt den Beta-Status für einen erklärten Umfang: die Oberfläche, die siebzehn Themenbezeichnungen und die Abstracts aller Beiträge mit mindestens einer französischen Zugehörigkeit, samt einer Prüfung, die anschlägt, sobald ein Eintrag im Umfang seine Übersetzung verliert. Das Korpus erhält einen analytischen Export für die Forschung mit Zugehörigkeitsanteilen nach Ländern, thematischer Verteilung und Ko-Autorschaft, wobei die Zugehörigkeiten dem Standardregister der Forschungseinrichtungen zugeordnet werden und das Themenvokabular in einer zitierfähigen Form erscheint. Die Arbeit an der Barrierefreiheit mündet in eine Konformitätserklärung nach dem französischen RGAA, und eine jährliche französische Notiz zum Korpus rundet die Version ab.",
+          },
+        },
+      ],
+    },
+    {
+      label: { en: "ESSC 2027", fr: "ESSC 2027", de: "ESSC 2027" },
+      sub: {
+        en: "September 2026 · June 2027",
+        fr: "septembre 2026 · juin 2027",
+        de: "September 2026 · Juni 2027",
+      },
+      entries: [
+        {
+          status: "planned",
+          milestone: "ESSC 2027: save the date",
+          when: { en: "30 September 2026 · Save the date", fr: "30 septembre 2026 · Réservez la date", de: "30. September 2026 · Termin vormerken" },
+          title: {
+            en: "The next conference takes shape",
+            fr: "La prochaine conférence prend forme",
+            de: "Die nächste Konferenz nimmt Gestalt an",
+          },
+          desc: {
+            en: "The organising group meets in September to settle the panels and the roundtables for the tenth annual conference, run jointly with the COST Action NetSec and the host university. Once the dates and the venue are confirmed, the edition enters the conference data and the homepage card turns to it.",
+            fr: "Le comité d’organisation se réunit en septembre pour arrêter les panels et les tables rondes de la dixième conférence annuelle, organisée conjointement avec l’Action COST NetSec et l’université hôte. Une fois les dates et le lieu confirmés, l’édition entre dans les données de la conférence et la carte de la page d’accueil s’y tourne.",
+            de: "Die Organisationsgruppe trifft sich im September, um die Panels und die Runden Tische der zehnten Jahreskonferenz festzulegen, die gemeinsam mit der COST-Aktion NetSec und der gastgebenden Universität ausgerichtet wird. Sobald Termin und Veranstaltungsort feststehen, geht die Ausgabe in die Konferenzdaten ein und die Karte auf der Startseite wechselt zu ihr.",
+          },
+        },
+        {
+          status: "planned",
+          milestone: "ESSC 2027: call for papers",
+          when: { en: "6 November 2026 · Call for papers", fr: "6 novembre 2026 · Appel à communications", de: "6. November 2026 · Call for Papers" },
+          title: {
+            en: "The call for papers opens",
+            fr: "L’appel à communications s’ouvre",
+            de: "Der Call for Papers wird veröffentlicht",
+          },
+          desc: {
+            en: "The call is drafted through October and approved before it goes out in early November. The conference page is published to carry it, with its own share card, and it opens to the wider research community rather than to the two organisations alone.",
+            fr: "L’appel est rédigé au cours du mois d’octobre, puis approuvé avant sa publication début novembre. La page de la conférence est mise en ligne pour l’accueillir, avec sa propre carte de partage, et s’adresse à l’ensemble de la communauté de recherche et non aux seules deux organisations.",
+            de: "Der Aufruf wird im Oktober verfasst und geprüft, bevor er Anfang November erscheint. Die Konferenzseite wird dafür veröffentlicht, mit einer eigenen Sharing-Karte, und richtet sich an die gesamte Forschungsgemeinschaft und nicht allein an die beiden Organisationen.",
+          },
+        },
+        {
+          status: "planned",
+          milestone: "ESSC 2027: selection and notifications",
+          when: { en: "31 December 2026 · Selection", fr: "31 décembre 2026 · Sélection", de: "31. Dezember 2026 · Auswahl" },
+          title: {
+            en: "Decisions, and the prize jury",
+            fr: "Les décisions, et le jury du prix",
+            de: "Entscheidungen und die Preisjury",
+          },
+          desc: {
+            en: "Submissions are reviewed and every author hears back before the year closes. The European Security Studies Prize, awarded with the Journal of Strategic Studies for the best paper by an early-career researcher, runs again with a jury confirmed in time for the call.",
+            fr: "Les propositions sont évaluées et chaque auteur reçoit une réponse avant la fin de l’année. Le Prix européen d’études de sécurité, décerné avec le Journal of Strategic Studies au meilleur article d’un chercheur en début de carrière, est de nouveau attribué, avec un jury confirmé à temps pour l’appel.",
+            de: "Die Einreichungen werden begutachtet und alle Einreichenden erhalten vor Jahresende eine Antwort. Der Europäische Preis für Sicherheitsstudien, gemeinsam mit dem Journal of Strategic Studies für den besten Beitrag einer Nachwuchswissenschaftlerin oder eines Nachwuchswissenschaftlers vergeben, wird erneut ausgelobt, mit einer rechtzeitig zum Aufruf bestätigten Jury.",
+          },
+        },
+        {
+          status: "planned",
+          milestone: "ESSC 2027: programme and logistics",
+          when: { en: "30 April 2027 · Programme", fr: "30 avril 2027 · Programme", de: "30. April 2027 · Programm" },
+          title: {
+            en: "The programme comes together",
+            fr: "Le programme se met en place",
+            de: "Das Programm entsteht",
+          },
+          desc: {
+            en: "Accepted papers become the programme on the conference page, with the keynote announced alongside it and the practical information written around what is actually arranged. The programme agrees with the live one NetSec renders from the same source.",
+            fr: "Les communications retenues deviennent le programme sur la page de la conférence, la conférence inaugurale est annoncée en même temps et les informations pratiques sont rédigées à partir de ce qui est effectivement organisé. Le programme concorde avec la version en direct que NetSec affiche depuis la même source.",
+            de: "Aus den angenommenen Beiträgen entsteht das Programm auf der Konferenzseite, die Keynote wird zugleich bekanntgegeben und die praktischen Hinweise richten sich nach dem, was tatsächlich organisiert ist. Das Programm stimmt mit der Live-Fassung überein, die NetSec aus derselben Quelle rendert.",
+          },
+        },
+        {
+          status: "planned",
+          milestone: "ESSC 2027: conference",
+          event: true,
+          when: { en: "June 2027 · Conference", fr: "juin 2027 · Conférence", de: "Juni 2027 · Konferenz" },
+          title: {
+            en: "European Security Studies Conference 2027",
+            fr: "Conférence européenne d’études de sécurité 2027",
+            de: "Europäische Konferenz für Sicherheitsstudien 2027",
+          },
+          desc: {
+            en: "The tenth annual conference, two days of panels and roundtables. Afterwards the edition moves into the archive on its own, and the abstracts are pulled from Indico so the papers read as fully as the earlier editions.",
+            fr: "La dixième conférence annuelle, deux jours de panels et de tables rondes. L’édition rejoint ensuite les archives d’elle-même, et les résumés sont récupérés depuis Indico afin que les communications se lisent aussi complètement que celles des éditions précédentes.",
+            de: "Die zehnte Jahreskonferenz, zwei Tage mit Panels und Runden Tischen. Danach wandert die Ausgabe von selbst ins Archiv, und die Abstracts werden aus Indico übernommen, damit die Beiträge so vollständig lesbar sind wie die der früheren Ausgaben.",
           },
         },
       ],
