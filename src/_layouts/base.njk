@@ -90,6 +90,14 @@
   <meta name="DC.rights" content="{{ site.corpus.rights }}">
   {%- endif %}
 
+  {# Machine-readable licence (#1488), on the pages that carry the licence
+     block in their body: the Anthology, the Atlas and the theme pages. The
+     site as a whole is not blanket CC BY, since the member photographs and
+     biographies are carved out, so this is per page rather than global. #}
+  {%- if ccbyLicence %}
+  <link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+  {%- endif %}
+
   {# hreflang alternates. Only emitted when the page declares `alternates`
      in its front-matter — most pages currently don't, and that's fine
      (English-only pages don't need alternates). The shape is:
