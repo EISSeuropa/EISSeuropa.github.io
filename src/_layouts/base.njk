@@ -77,7 +77,12 @@
      English in every locale, like the reference itself: what is described is
      one English-language dataset, whichever page you save it from. #}
   {%- if corpusMeta %}
-  <meta name="citation_title" content="{{ site.corpus.title }}">
+  {# The Atlas and its theme pages describe a view of the same dataset rather
+     than the dataset itself, so they override the title and keep every other
+     field (#1490). The DOI stays the corpus DOI until the Atlas has one of its
+     own (#1494), which is the honest position: today the map is citable only
+     through the corpus. #}
+  <meta name="citation_title" content="{{ corpusMetaTitle or site.corpus.title }}">
   <meta name="citation_author" content="{{ site.corpus.author }}">
   <meta name="citation_publication_date" content="{{ site.corpus.year }}">
   <meta name="citation_publisher" content="{{ site.corpus.publisher }}">

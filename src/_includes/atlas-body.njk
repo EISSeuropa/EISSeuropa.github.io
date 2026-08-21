@@ -314,10 +314,13 @@
   </nav>
 </div>
 
-{# Design credit (#1228), on the canonical Atlas only. The 17 theme pages are
-   the same Atlas pre-filtered, so repeating it there would be eighteen credits
-   for one piece of work. EN-only, like the rest of this page. #}
-{%- if not atlasTheme %}
+{# Design credit (#1228), on every Atlas surface (#1490). It used to render on
+   the canonical map alone, on the argument that the seventeen theme pages are
+   the same Atlas pre-filtered and eighteen credits is seventeen too many.
+   That reads the theme pages as duplicates. They are real URLs with their own
+   titles and share cards (#1255), they are the ones most likely to be shared,
+   and a page naming no author is a page nobody can be asked about. One string
+   from one include, not eighteen copies. EN-only, like the rest of this page. #}
 {#- This include never sets `t` (archive-page.njk does, but the Atlas page does
     not), so read the catalog directly. The Atlas is EN-only, so `en` is not a
     fallback here, it is the only locale this page has. -#}
@@ -326,7 +329,6 @@
   {{ _c.atlas }}
   <a href="/board.html#{{ _c.authorSlug }}">{{ _c.authorName }}</a>
 </p>
-{%- endif %}
 
 <script src="{{ '/assets/js/atlas-tour.js' | bust }}" defer></script>
 <script src="{{ '/assets/js/anthology-atlas.js' | bust }}" defer></script>
