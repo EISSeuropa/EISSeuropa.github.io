@@ -7683,27 +7683,6 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-list__more { font-size: .78rem; margin: 10px 0 0; }
 .atlas-list__more[hidden] { display: none; }
 
-/* Licence block (#1488). Sits in the body of the Anthology and the Atlas, so
-   the licence is where the reader is rather than eight screens below. */
-.licence-block {
-  display: flex; align-items: flex-start; gap: 14px;
-  margin: var(--space-4) 0 0; padding: 14px 18px;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border); border-left: 3px solid var(--accent);
-  background: var(--bg-elev);
-}
-.licence-block__badge { flex: 0 0 auto; margin-top: 3px; }
-.licence-block__h {
-  font-size: var(--fs-sm); font-weight: 700; letter-spacing: .04em;
-  text-transform: uppercase; color: var(--text-muted); margin: 0 0 5px;
-}
-.licence-block__text { margin: 0 0 6px; font-size: var(--fs-sm); color: var(--text-muted); max-width: 74ch; }
-.licence-block__text:last-child { margin-bottom: 0; }
-.licence-block__label { font-weight: 600; color: var(--text); margin-right: 6px; }
-.licence-block__attr { font-size: .82em; color: var(--text); overflow-wrap: anywhere; }
-.licence-block a { color: var(--accent); }
-@media (max-width: 640px) { .licence-block { flex-direction: column; gap: 10px; } }
-
 /* The corpus over time (#1192), under the map where a time axis belongs. */
 .atlas-time { margin-top: var(--space-3); }
 /* Icon button (#1508): a round target with a play or pause glyph, which is
