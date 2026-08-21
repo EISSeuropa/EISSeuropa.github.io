@@ -241,13 +241,7 @@ const locales = {
         twitter: "EISS on Twitter / X",
         youtube: "EISS on YouTube",
       },
-            licenceBlock: {
-        heading: "Licence",
-        body: "This page and the corpus behind it are published under the Creative Commons Attribution 4.0 International licence. You may reuse them, including commercially, as long as you credit the source.",
-        attributionLabel: "Attribution",
-        linkText: "Full licensing terms",
-      },
-      copyright: "© 2018 — {{year}} European Initiative for Security Studies. The site's text and original imagery are published under CC BY 4.0, its code under the MIT licence, and the Anthology corpus under CC BY 4.0. Member photographs and biographies are not covered by that licence, and any third-party image or content remains the property of its owners as indicated in their respective description.",
+            copyright: "© 2018 — {{year}} European Initiative for Security Studies. The site's text and original imagery are published under CC BY 4.0, its code under the MIT licence, and the Anthology corpus under CC BY 4.0. Member photographs and biographies are not covered by that licence, and any third-party image or content remains the property of its owners as indicated in their respective description.",
       imageCredits: "Euro-SWAMOS images © Marine Nationale, EEAS, État-Major des Armées, NATO CCDCOE. Prague image cc-by-2.0 Moyan Brenn. Barcelona image royalty-free stock photo (ID: 1795930126 Pajor Pawel).",
       legalStatus: "EISS is a non-profit association under the French law of 1901, registered as W751263001. | L'EISS est une association loi 1901 enregistrée sous le numéro W751263001 au Répertoire National des Associations, et appartenant au champ de l'économie sociale et solidaire.",
       legalLinks: {
@@ -864,13 +858,7 @@ const locales = {
         twitter: "EISS sur Twitter / X",
         youtube: "EISS sur YouTube",
       },
-            licenceBlock: {
-        heading: "Licence",
-        body: "Cette page et le corpus qui la nourrit sont publiés sous licence Creative Commons Attribution 4.0 International. La réutilisation est libre, y compris commerciale, à condition de citer la source.",
-        attributionLabel: "Attribution",
-        linkText: "Conditions de licence complètes",
-      },
-      copyright: "© 2018 — {{year}} European Initiative for Security Studies. Les textes et les images originales du site sont publiés sous licence CC BY 4.0, le code sous licence MIT, et le corpus de l'Anthologie sous licence CC BY 4.0. Les photographies et les biographies des membres ne sont pas couvertes par cette licence, et toute image ou tout contenu tiers reste la propriété de ses détenteurs comme indiqué dans leur description.",
+            copyright: "© 2018 — {{year}} European Initiative for Security Studies. Les textes et les images originales du site sont publiés sous licence CC BY 4.0, le code sous licence MIT, et le corpus de l'Anthologie sous licence CC BY 4.0. Les photographies et les biographies des membres ne sont pas couvertes par cette licence, et toute image ou tout contenu tiers reste la propriété de ses détenteurs comme indiqué dans leur description.",
       imageCredits: "Images Euro-SWAMOS © Marine Nationale, EEAS, État-Major des Armées, OTAN CCDCOE. Image de Prague cc-by-2.0 Moyan Brenn. Image de Barcelone photo de stock libre de droits (ID : 1795930126 Pajor Pawel).",
       legalStatus: "EISS is a non-profit association under the French law of 1901, registered as W751263001. | L'EISS est une association loi 1901 enregistrée sous le numéro W751263001 au Répertoire National des Associations, et appartenant au champ de l'économie sociale et solidaire.",
       legalLinks: {
@@ -1379,13 +1367,7 @@ const locales = {
         twitter: "EISS auf Twitter / X",
         youtube: "EISS auf YouTube",
       },
-            licenceBlock: {
-        heading: "Lizenz",
-        body: "Diese Seite und das dahinterliegende Korpus stehen unter der Lizenz Creative Commons Attribution 4.0 International. Eine Weiterverwendung ist frei, auch kommerziell, sofern die Quelle genannt wird.",
-        attributionLabel: "Namensnennung",
-        linkText: "Vollständige Lizenzbedingungen",
-      },
-      copyright: "© 2018 — {{year}} European Initiative for Security Studies. Texte und eigene Bilder dieser Website stehen unter CC BY 4.0, der Code unter der MIT-Lizenz und das Korpus der Anthologie unter CC BY 4.0. Fotografien und Biografien der Mitglieder fallen nicht unter diese Lizenz, und alle Drittanbieter-Bilder und -Inhalte bleiben das Eigentum ihrer jeweiligen Besitzer, wie in ihrer Beschreibung angegeben.",
+            copyright: "© 2018 — {{year}} European Initiative for Security Studies. Texte und eigene Bilder dieser Website stehen unter CC BY 4.0, der Code unter der MIT-Lizenz und das Korpus der Anthologie unter CC BY 4.0. Fotografien und Biografien der Mitglieder fallen nicht unter diese Lizenz, und alle Drittanbieter-Bilder und -Inhalte bleiben das Eigentum ihrer jeweiligen Besitzer, wie in ihrer Beschreibung angegeben.",
       imageCredits: "Euro-SWAMOS Bilder © Marine Nationale, EEAS, État-Major des Armées, NATO CCDCOE. Prag-Bild cc-by-2.0 Moyan Brenn. Barcelona-Bild lizenzfreies Stockfoto (ID: 1795930126 Pajor Pawel).",
       legalStatus: "EISS is a non-profit association under the French law of 1901, registered as W751263001. | L'EISS est une association loi 1901 enregistrée sous le numéro W751263001 au Répertoire National des Associations, et appartenant au champ de l'économie sociale et solidaire.",
       legalLinks: {

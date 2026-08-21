@@ -95,10 +95,13 @@
   <meta name="DC.rights" content="{{ site.corpus.rights }}">
   {%- endif %}
 
-  {# Machine-readable licence (#1488), on the pages that carry the licence
-     block in their body: the Anthology, the Atlas and the theme pages. The
-     site as a whole is not blanket CC BY, since the member photographs and
-     biographies are carved out, so this is per page rather than global. #}
+  {# Machine-readable licence (#1488), on the CC BY pages: the Anthology, the
+     Atlas and the theme pages. The site as a whole is not blanket CC BY,
+     since the member photographs and biographies are carved out, so this is
+     per page rather than global. The visible block these pages carried
+     alongside it has gone (#1513 for the Atlas, and the Anthology after it):
+     the footer states the licence on every page, so the block was saying a
+     third time what the footer and this tag already said. #}
   {%- if ccbyLicence %}
   <link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
   {%- endif %}
