@@ -347,11 +347,23 @@ work is this?". The set:
   (Indico write-API access, NetSec coordination, source research) or
   with no committed release. Mirrors the *Under watch* section of the
   roadmap.
+- **Event-cycle milestones**, added in August 2026 for the ESSC 2027
+  preparation: one per phase of a dated conference cycle, named
+  `<Event> <year>: <phase>` (*save the date*, *call for papers*,
+  *selection and notifications*, *programme and logistics*,
+  *conference*). The prep deadlines are set by the joint organising
+  group and do not land on the release cadence, so folding them into
+  version milestones would drag release dates around an external
+  calendar. NetSec runs the same five titles with the same due dates,
+  since it is one conference tracked in two repositories. Their phase
+  rows live in [`docs/roadmap-2026.md`](docs/roadmap-2026.md) beside
+  the release timeline.
 
 Due dates on the version milestones come from the roadmap timeline.
 When the roadmap shifts a planned release, **bump the milestone's due
 date in the same commit that updates the roadmap row**: they are two
-views of one schedule.
+views of one schedule. The same rule applies to the event milestones
+and their phase rows.
 
 Create a new version milestone when the roadmap gains a release row.
 Don't pre-create far-future majors.
