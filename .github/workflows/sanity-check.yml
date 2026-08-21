@@ -73,6 +73,13 @@ jobs:
       - name: Run Atom feed check
         run: python3 scripts/check-feeds.py
 
+      # The Anthology names the editions it declares complete (#1499). That
+      # claim goes stale on its own: a newly ingested paper without an
+      # abstract, or a change to what counts as eligible, can push a declared
+      # edition back under the threshold with a green build.
+      - name: Check the declared release scope still holds
+        run: node scripts/check-release-scope.mjs
+
       # The ledger is the only record of when a paper or its abstract landed,
       # so drift means the feeds are dating new material wrongly (#1256).
       - name: Check the corpus ledger is current

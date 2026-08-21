@@ -511,8 +511,13 @@ const locales = {
       // Module-level "early access" notice, rendered once by archive-page.njk
       // (so it covers /speakers and /papers in every locale). The FR/DE bodies
       // also note that the individual paper pages are English-only.
-      earlyAccessBadge: "Early access",
-      earlyAccessBody: "The Anthology is an early-access preview. We are still filling it in, edition by edition, with abstracts, citation details and links to published versions, so some entries are still sparse. Found a gap or a mistake?",
+      // A scoped note rather than a page-wide preview label (#1499). The
+      // {in} and {out} placeholders are filled from releaseScope.js, which
+      // derives them from abstract coverage, so the sentence cannot drift
+      // from the data behind it.
+      earlyAccessBadge: "Still filling in",
+      editionRangeJoiner: "to",
+      earlyAccessBody: "The {in} editions are all but complete, at {min}% abstract coverage or better, with citation details and a link to the published version where there is one. The {out} editions are still filling in, {missing} abstracts of {eligible} outstanding. Found a gap or a mistake?",
       earlyAccessCta: "Let us know",
       // Abstract-coverage stat + the per-year breakdown beneath the header.
       // {a}/{b} are substituted in the template (abstracts on file / papers
@@ -1052,8 +1057,9 @@ const locales = {
       promoBody: "Le relevé complet des travaux de l'EISS : chaque intervenant et chaque communication de nos conférences annuelles et ateliers depuis 2017, avec les résumés, les références de citation et des liens vers les versions publiées. Parcourez par personne ou par communication.",
       cta: "Ouvrir l'Anthologie",
       initiativeLink: "Parcourez chaque intervenant et chaque communication dans l'Anthologie",
-      earlyAccessBadge: "Accès anticipé",
-      earlyAccessBody: "L'Anthologie est une version préliminaire en accès anticipé. Nous la complétons édition après édition (résumés, références de citation et liens vers les versions publiées), si bien que certaines entrées restent succinctes. Les pages individuelles des communications sont consultables en anglais. Vous avez repéré un manque ou une erreur ?",
+      earlyAccessBadge: "En cours de complétion",
+      editionRangeJoiner: "à",
+      earlyAccessBody: "Les éditions {in} sont quasi complètes : au moins {min} % des communications concernées ont un résumé, avec les références de citation et un lien vers la version publiée lorsqu'elle existe. Les éditions {out} sont encore en cours de complétion, {missing} résumés manquants sur {eligible}. Les pages individuelles des communications sont consultables en anglais. Vous avez repéré un manque ou une erreur ?",
       earlyAccessCta: "Signalez-le-nous",
       statAbstracts: "résumés disponibles",
       coverageTip: "{a} des {b} communications éligibles comportent un résumé. Les tables rondes, les conférences plénières, les sessions de posters et les ateliers ne sont pas comptabilisés.",
@@ -1567,8 +1573,9 @@ const locales = {
       promoBody: "Die vollständige Aufzeichnung der EISS-Arbeiten: jeder Vortragende und jeder Beitrag unserer Jahreskonferenzen und Workshops seit 2017, mit Abstracts, Zitationsangaben und Links zu den veröffentlichten Fassungen. Durchsuchen Sie nach Person oder nach Beitrag.",
       cta: "Anthologie öffnen",
       initiativeLink: "Durchsuchen Sie jeden Vortragenden und jeden Beitrag in der Anthologie",
-      earlyAccessBadge: "Vorabversion",
-      earlyAccessBody: "Die Anthologie ist eine Vorabversion mit frühem Zugang. Wir vervollständigen sie Konferenz für Konferenz mit Abstracts, Zitationsangaben und Links zu den veröffentlichten Fassungen, sodass einige Einträge noch lückenhaft sind. Die einzelnen Beitragsseiten sind auf Englisch verfügbar. Eine Lücke oder einen Fehler entdeckt?",
+      earlyAccessBadge: "Wird noch ergänzt",
+      editionRangeJoiner: "bis",
+      earlyAccessBody: "Die Jahrgänge {in} sind nahezu vollständig: mindestens {min} % der infrage kommenden Beiträge haben ein Abstract, dazu Zitationsangaben und einen Link auf die veröffentlichte Fassung, sofern vorhanden. Die Jahrgänge {out} werden noch ergänzt, {missing} von {eligible} Abstracts fehlen. Die einzelnen Beitragsseiten sind auf Englisch verfügbar. Eine Lücke oder einen Fehler entdeckt?",
       earlyAccessCta: "Sagen Sie uns Bescheid",
       statAbstracts: "Abstracts vorhanden",
       coverageTip: "{a} von {b} infrage kommenden Beiträgen tragen ein Abstract. Podiumsdiskussionen, Keynotes, Postersessions und Workshops werden nicht mitgezählt.",

@@ -47,7 +47,11 @@
        names the page, so the wrapper is aria-hidden. #}
     <span class="atlas-mark" aria-hidden="true">{% inlineSvg "assets/images/brand/anthology-mark.svg" %}</span>
     <h1>{% if atlasTheme %}{{ atlasTheme.name }}{% else %}Anthology Atlas{% endif %}</h1>
-    <span class="atlas-proto-pill">Beta</span>
+    {#- The pill is the interface half of the declared scope (#1499). It goes
+        when releaseScope.interfaceReady says the chrome, the controls and the
+        theme labels are finished work, which is a judgement rather than a
+        measurement and so is the maintainer's to make. -#}
+    {%- if not releaseScope.interfaceReady %}<span class="atlas-proto-pill">Beta</span>{% endif %}
     <button class="atlas-help" type="button" id="atlas-help" title="Take a tour" aria-label="Take a tour">?</button>
   </div>
   {# The lede says what the map is, and stops there. The mechanics it used to
