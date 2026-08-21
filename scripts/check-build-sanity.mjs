@@ -608,7 +608,21 @@ function checkOrphanShareCards() {
 // present and on no forcing tag appearing. Adding, say, citation_journal_title
 // to that head block would retype every save as a journal article with a green
 // build and no visible change. This asserts both halves.
-const CORPUS_META_PAGES = ["anthology.html", "anthology.fr.html", "anthology.de.html"];
+// The Anthology in three locales, plus every Atlas surface (#1490): the map is
+// a view of the same deposited dataset, so a save of it should record the
+// dataset too. The theme pages are globbed rather than listed, so a new theme
+// joins the gate on its own.
+const CORPUS_META_PAGES = [
+  "anthology.html",
+  "anthology.fr.html",
+  "anthology.de.html",
+  "anthology-atlas.html",
+  ...(existsSync(join("_site", "anthology-atlas", "theme"))
+    ? readdirSync(join("_site", "anthology-atlas", "theme"))
+        .filter((f) => f.endsWith(".html"))
+        .map((f) => join("anthology-atlas", "theme", f))
+    : []),
+];
 const CORPUS_META_REQUIRED = [
   "citation_title",
   "citation_author",

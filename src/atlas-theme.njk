@@ -14,7 +14,11 @@ layout: base.njk
 permalink: "/anthology-atlas/theme/{{ atlasTheme.slug }}.html"
 navKey: "navigator"
 lang: en
+# Corpus citation metadata (#1490): the fields the Anthology emits, under this
+# theme's own title.
+corpusMeta: true
 eleventyComputed:
+  corpusMetaTitle: "The European Security Studies Anthology Atlas: {{ atlasTheme.name }}"
   title: "{{ atlasTheme.name }} — Anthology Atlas"
   description: "{{ atlasTheme.count }} papers on {{ atlasTheme.name | lower }}, presented at EISS conferences and workshops from {{ atlasTheme.yearRange }}, mapped as a network with the authors who wrote them and the themes they connect to."
   metaImage: "/assets/images/atlas-theme-{{ atlasTheme.slug }}-meta.jpg"
