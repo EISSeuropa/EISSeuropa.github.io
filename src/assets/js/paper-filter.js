@@ -89,7 +89,12 @@
           if (event && eventSel) {
             bits.push((eventSel.options[eventSel.selectedIndex].text || "").replace(/\s*\(\d+\)\s*$/, ""));
           }
-          if (theme) bits.push(theme);
+          // The value is the English theme name, which is the join key. The
+          // status line is prose for a reader, so it takes the option's own
+          // text instead, which is localised (#1492), minus its count.
+          if (theme && themeSel) {
+            bits.push((themeSel.options[themeSel.selectedIndex].text || theme).replace(/\s*\(\d+\)\s*$/, ""));
+          }
           if (pub && pubCheck && pubCheck.dataset.label) bits.push(pubCheck.dataset.label);
           if (prize && prizeCheck && prizeCheck.dataset.label) bits.push(prizeCheck.dataset.label);
           if (q) {
