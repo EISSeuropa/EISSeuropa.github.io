@@ -7628,15 +7628,32 @@ a.profile-pub-title:hover { text-decoration: underline; }
 }
 .atlas-list__summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .atlas-list__lede { font-size: var(--fs-sm); margin: 2px 0 10px; }
-.atlas-list__items {
-  list-style: none; margin: 0; padding: 0;
-  max-height: 420px; overflow-y: auto;
-  display: grid; gap: 8px;
+/* The rows are tabular, so they are a table (#1496): three fields, the same
+   three every time, and a screen reader can move by column and say which one
+   it is in. The scroller is the wrapper, not the table, so the header row
+   stays where the browser expects it. */
+.atlas-list__scroll {
+  max-height: 420px; overflow: auto;
   border-left: 2px solid var(--border); padding-left: 14px;
 }
-.atlas-list__items li { font-size: var(--fs-sm); line-height: var(--lh-snug); }
-.atlas-list__items a { color: var(--text); }
-.atlas-list__meta { display: block; font-size: .76rem; color: var(--text-muted); }
+.atlas-list__table {
+  width: 100%; border-collapse: collapse;
+  font-size: var(--fs-sm); line-height: var(--lh-snug);
+}
+.atlas-list__table th {
+  position: sticky; top: 0; z-index: 1;
+  text-align: left; font-size: .72rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted);
+  background: var(--bg); padding: 6px 10px 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+.atlas-list__table td {
+  padding: 7px 10px 7px 0; vertical-align: top;
+  border-bottom: 1px solid var(--border-glass);
+}
+.atlas-list__table td:nth-child(2) { color: var(--text-muted); }
+.atlas-list__table td:last-child { color: var(--text-muted); white-space: nowrap; }
+.atlas-list__table a { color: var(--text); }
 .atlas-list__more { font-size: .78rem; margin: 10px 0 0; }
 .atlas-list__more[hidden] { display: none; }
 

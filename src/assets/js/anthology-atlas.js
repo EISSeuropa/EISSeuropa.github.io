@@ -39,6 +39,7 @@
   const listEl = document.getElementById('atlas-list');
   const listSummaryEl = document.getElementById('atlas-list-summary');
   const listItemsEl = document.getElementById('atlas-list-items');
+  const listHeadEl = document.getElementById('atlas-list-head');
   const listMoreEl = document.getElementById('atlas-list-more');
   const LIST_CAP = 200;   // enough to browse, short of dumping 500 links
   const findMsgEl = document.getElementById('atlas-find-msg');
@@ -990,6 +991,20 @@
   // The text twin of whatever the map is currently showing (#1446). Rebuilt
   // from the same nodeVisible() the canvas paints with, so the two cannot
   // disagree, and capped, because a view nobody has narrowed holds 500 papers.
+  function cell(row, text, href) {
+    const td = document.createElement('td');
+    if (href) {
+      const a = document.createElement('a');
+      a.href = href;
+      a.textContent = text;
+      td.append(a);
+    } else {
+      td.textContent = text;
+    }
+    row.append(td);
+    return td;
+  }
+
   function renderList() {
     if (!listItemsEl) return;
     const visible = items().filter(nodeVisible);
@@ -997,28 +1012,31 @@
       ? visible.slice().sort((a, b) => a.name.localeCompare(b.name))
       : visible.slice().sort((a, b) => (b.year || 0) - (a.year || 0)
         || String(a.title).localeCompare(String(b.title)));
+    // The table arrives rendered, holding the unfiltered corpus, so the map's
+    // text twin is there with scripting off (#1496). From here the script
+    // rewrites the same tbody as the view narrows.
+    if (listHeadEl) {
+      const head = document.createElement('tr');
+      (lens === 'authors' ? ['Author', 'Papers'] : ['Paper', 'Authors', 'Year']).forEach((h) => {
+        const th = document.createElement('th');
+        th.scope = 'col';
+        th.textContent = h;
+        head.append(th);
+      });
+      listHeadEl.replaceChildren(head);
+    }
     listItemsEl.replaceChildren();
     sorted.slice(0, LIST_CAP).forEach((n) => {
-      const li = document.createElement('li');
-      const label = n.type === 'author' ? n.name : n.title;
-      if (n.url) {
-        const a = document.createElement('a');
-        a.href = n.url;
-        a.textContent = label;
-        li.append(a);
+      const row = document.createElement('tr');
+      if (n.type === 'author') {
+        cell(row, n.name, n.url);
+        cell(row, String(n.paperCount));
       } else {
-        li.append(document.createTextNode(label));
+        cell(row, n.title, n.url);
+        cell(row, n.authors && n.authors.length ? n.authors.join(', ') : '');
+        cell(row, n.year ? String(n.year) : '');
       }
-      const meta = n.type === 'author'
-        ? n.paperCount + (n.paperCount === 1 ? ' paper' : ' papers')
-        : [n.authors && n.authors.length ? n.authors.join(', ') : '', n.year].filter(Boolean).join(' · ');
-      if (meta) {
-        const sp = document.createElement('span');
-        sp.className = 'atlas-list__meta';
-        sp.textContent = meta;
-        li.append(sp);
-      }
-      listItemsEl.append(li);
+      listItemsEl.append(row);
     });
     const noun = lens === 'authors'
       ? (sorted.length === 1 ? 'author' : 'authors')

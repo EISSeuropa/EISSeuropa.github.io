@@ -114,7 +114,9 @@ alternates:
           <em>Mitigation:</em> a disclosure under the map, <em>Browse this view as a list</em>,
           names exactly what the map is showing, papers or authors according to the lens, with each
           entry linking to its Anthology page. The list follows the filters and always matches the
-          map. A live region announces the details card a tap opens and the paper or author a
+          map. It is part of the page as sent rather than built by a script, so it survives with
+          scripting switched off, and it is a table, so a screen reader can move through it by
+          column. A live region announces the details card a tap opens and the paper or author a
           search lands on. Every control around the map, the two lenses, the filter chips, Find,
           the zoom buttons, is a regular HTML button reachable from the keyboard, carrying
           <code>aria-pressed</code> state where it toggles.
