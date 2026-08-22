@@ -1,6 +1,9 @@
 ---
 pagination:
-  data: atlasThemePages
+  # Themes across locales (#1495): atlasThemeLocales is atlasThemePages
+  # multiplied by en/fr/de, so the seventeen theme views exist in all three
+  # languages from one template rather than three.
+  data: atlasThemeLocales
   size: 1
   alias: atlasTheme
   # Eleventy adds only a paginated template's FIRST page to collections.all
@@ -11,17 +14,24 @@ pagination:
   # paper pages are missing from the sitemap today, tracked separately.
   addAllPagesToCollections: true
 layout: base.njk
-permalink: "/anthology-atlas/theme/{{ atlasTheme.slug }}.html"
+permalink: "/anthology-atlas/theme/{{ atlasTheme.slug }}{{ atlasTheme.suffix }}.html"
 navKey: "navigator"
-lang: en
 # Corpus citation metadata (#1490): the fields the Anthology emits, under this
 # theme's own title.
 corpusMeta: true
 eleventyComputed:
+  lang: "{{ atlasTheme.lang }}"
   corpusMetaTitle: "The European Security Studies Anthology Atlas: {{ atlasTheme.name }}"
-  title: "{{ atlasTheme.name }} — Anthology Atlas"
-  description: "{{ atlasTheme.count }} papers on {{ atlasTheme.name | lower }}, presented at EISS conferences and workshops from {{ atlasTheme.yearRange }}, mapped as a network with the authors who wrote them and the themes they connect to."
+  # `safe` because these are our own catalog strings: without it Nunjucks
+  # escapes the apostrophe in "Atlas de l'Anthologie" here and base.njk
+  # escapes the ampersand again, so the tab reads "l&amp;#39;Anthologie".
+  title: "{{ i18n[atlasTheme.lang].atlas.themeTitle | replace('{name}', atlasTheme.label[atlasTheme.lang] or atlasTheme.label.en) | safe }}"
+  description: "{{ i18n[atlasTheme.lang].atlas.themeDescription | replace('{count}', atlasTheme.count) | replace('{lower}', (atlasTheme.label[atlasTheme.lang] or atlasTheme.label.en) | lower) | replace('{range}', (atlasTheme.firstYear ~ ' ' ~ i18n[atlasTheme.lang].atlas.yearRangeJoiner ~ ' ' ~ atlasTheme.lastYear) if atlasTheme.firstYear != atlasTheme.lastYear else atlasTheme.firstYear) | safe }}"
   metaImage: "/assets/images/atlas-theme-{{ atlasTheme.slug }}-meta.jpg"
+  alternates:
+    en: "/anthology-atlas/theme/{{ atlasTheme.slug }}.html"
+    fr: "/anthology-atlas/theme/{{ atlasTheme.slug }}.fr.html"
+    de: "/anthology-atlas/theme/{{ atlasTheme.slug }}.de.html"
 # CC BY 4.0 content + corpus, declared in the head and in the body (#1488).
 ccbyLicence: true
 ---

@@ -1,0 +1,20 @@
+---
+layout: base.njk
+permalink: /anthology-atlas.fr.html
+navKey: "navigator"
+lang: fr
+eleventyComputed:
+  title: "{{ i18n.fr.atlas.title | safe }}"
+  description: "{{ i18n.fr.atlas.description | safe }}"
+metaImage: /assets/images/anthology-atlas-meta.jpg
+# CC BY 4.0 content + corpus, declared in the head and in the body (#1488).
+ccbyLicence: true
+# Corpus citation metadata, as the Anthology carries (#1490).
+corpusMeta: true
+corpusMetaTitle: "The European Security Studies Anthology Atlas"
+alternates:
+  en: /anthology-atlas.html
+  fr: /anthology-atlas.fr.html
+  de: /anthology-atlas.de.html
+---
+{% include "atlas-body.njk" %}

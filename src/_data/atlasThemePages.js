@@ -15,6 +15,7 @@
 // addition, and each links to its equivalent ?themes= view so the two cannot
 // drift apart.
 const atlas = require("./anthologyAtlas.js");
+const corpus = require("./corpus.js");
 const paperIndex = require("./paperIndex.js");
 
 // URL key for a theme name. Deliberately not the display name: theme names
@@ -36,6 +37,12 @@ module.exports = function () {
   const index = typeof paperIndex === "function" ? paperIndex() : paperIndex;
   const counts = Object.fromEntries((index.themes || []).map((t) => [t.name, t.count]));
 
+  // The theme vocabulary is ours, so it is translated (#1492). The English
+  // name stays the key everywhere, and the label rides alongside it (#1495).
+  const corpusData = typeof corpus === "function" ? corpus() : corpus;
+  const labelByName = new Map(
+    Object.values(corpusData.themeLabels || {}).map((l) => [l.en, l])
+  );
   return (data.themes || []).map((name) => {
     const papers = (data.papers || []).filter((p) => (p.themes || []).includes(name));
     const years = papers.map((p) => p.year).filter(Boolean).sort();
@@ -43,11 +50,14 @@ module.exports = function () {
     const last = years[years.length - 1] || null;
     return {
       name,
+      label: labelByName.get(name) || { en: name },
       slug: themeSlug(name),
       count: counts[name] || papers.length,
+      // Ends only, so the word between them can come from the locale's own
+      // catalog rather than being built in English here (#1495). yearRange
+      // stays for the English surfaces that already read it.
       firstYear: first,
       lastYear: last,
-      // "2017 to 2026", or a single year when a theme only ever appeared once.
       yearRange: first && last ? (first === last ? String(first) : `${first} to ${last}`) : "",
       authorCount: new Set(papers.flatMap((p) => p.authors || [])).size,
     };
