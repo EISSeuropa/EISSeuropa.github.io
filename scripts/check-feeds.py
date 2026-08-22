@@ -107,11 +107,18 @@ for path in feeds:
     if entry_dates != sorted(entry_dates, reverse=True):
         fail(path, "entries are not ordered newest-first")
 
-# Each Atlas theme page must advertise ITS OWN feed. This shipped wrong once:
-# base.njk used a Jinja2-style `selectattr`, which Nunjucks does not implement,
-# so the chain never narrowed and `| first` handed every theme page the same
-# feed while its visible link stayed correct. Cheap to assert, invisible to the
-# eye, and the two URLs are built in different files.
+# Each Atlas theme page must advertise ITS OWN theme's feed. This shipped wrong
+# once: base.njk used a Jinja2-style `selectattr`, which Nunjucks does not
+# implement, so the chain never narrowed and `| first` handed every theme page
+# the same feed while its visible link stayed correct. Cheap to assert,
+# invisible to the eye, and the two URLs are built in different files.
+#
+# The theme pages exist per locale since #1495, and the locale suffix is
+# stripped before matching. A theme feed is deliberately NOT translated: its
+# entries are paper titles and links, which are the source language wherever
+# you subscribe, so thirty-four near-identical feeds would buy a translated
+# <title> and nothing else. What the check still guarantees is the thing that
+# broke: deterrence.fr.html advertises the deterrence feed, not intelligence's.
 ALT_RE = re.compile(
     r'<link rel="alternate" type="application/atom\+xml" title="EISS Anthology[^"]*" href="([^"]+)"'
 )
@@ -121,7 +128,9 @@ for page in theme_pages:
     if not m:
         failures.append(f"{page.relative_to(SITE)}: no Anthology feed <link rel=alternate>")
         continue
-    want = f"/feeds/themes/{page.stem}.xml"
+    # deterrence.fr -> deterrence, deterrence -> deterrence
+    slug = re.sub(r"\.(fr|de)$", "", page.stem)
+    want = f"/feeds/themes/{slug}.xml"
     if not m.group(1).endswith(want):
         failures.append(
             f"{page.relative_to(SITE)}: advertises {m.group(1)}, expected a link ending {want}"
