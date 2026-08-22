@@ -3,10 +3,17 @@
 Step-by-step playbook for publishing a new annual conference page
 (`/<year>.html`) and making it visible everywhere else on the site.
 
-After ESSC 2026, the next conference will be ESSC 2027 (or whichever
-year is announced next). This guide walks through exactly what to
-change. **Total time: about 30–45 minutes for the initial scaffolding,
-plus whatever programme content you have ready.**
+This guide walks through exactly what to change. **Total time: about
+30–45 minutes for the initial scaffolding, plus whatever programme
+content you have ready.**
+
+> **Everything in angle brackets is a placeholder.** `<YEAR>`, `<CITY>`,
+> `<VENUE>` and the dates are there to show the shape of each value, not to
+> be copied. This runbook deliberately names no edition: it used to work
+> through a concrete one, and that example contradicted the parked page for
+> the same year in this repository, which is how a wrong venue reaches a data
+> file (#1523). The confirmed edition lives in `src/_data/conferences.js` and
+> `src/<year>.njk`, and those are the only places it should be read from.
 
 ## 1. Add a structured entry to `src/_data/conferences.js`
 
@@ -18,37 +25,37 @@ Prepend a new object to the `conferences` array, newest first:
 
 ```js
 {
-  slug: "2027",
-  year: 2027,
-  ordinal: 10,
-  startDate: "2027-06-23",        // YYYY-MM-DD, ISO 8601
-  endDate: "2027-06-24",
-  city: "Amsterdam",
+  slug: "<YEAR>",
+  year: <YEAR>,
+  ordinal: <N>,                  // 10th, 11th … as a number
+  startDate: "<YEAR>-MM-DD",        // YYYY-MM-DD, ISO 8601
+  endDate: "<YEAR>-MM-DD",
+  city: "<CITY>",
   country: "Netherlands",
   venue: {
-    en: "University of Amsterdam",
-    fr: "Université d'Amsterdam",
-    de: "Universität Amsterdam",
+    en: "<VENUE>",
+    fr: "<VENUE, in French>",
+    de: "<VENUE, in German>",
   },
   dates: {
-    en: "23 — 24 June 2027",
-    fr: "23 — 24 juin 2027",
-    de: "23. — 24. Juni 2027",
+    en: "<DD> — <DD> <Month> <YEAR>",
+    fr: "<DD> — <DD> <mois> <YEAR>",
+    de: "<DD>. — <DD>. <Monat> <YEAR>",
   },
   archiveMeta: {
-    en: "10th Annual Conference · 23 — 24 June 2027 · University of Amsterdam, Amsterdam",
-    fr: "10e conférence annuelle · 23 — 24 juin 2027 · Université d'Amsterdam, Amsterdam",
-    de: "10. Jahreskonferenz · 23. — 24. Juni 2027 · Universität Amsterdam, Amsterdam",
+    en: "<N>th Annual Conference · <DD> — <DD> <Month> <YEAR> · <VENUE>, <CITY>",
+    fr: "<N>e conférence annuelle · <DD> — <DD> <mois> <YEAR> · <VENUE>, <CITY>",
+    de: "<N>. Jahreskonferenz · <DD>. — <DD>. <Monat> <YEAR> · <VENUE>, <CITY>",
   },
   organisers: {
-    en: "Jointly organised by the COST Action NetSec, the European Initiative for Security Studies (EISS), and the University of Amsterdam.",
-    fr: "Organisée conjointement par l'Action COST NetSec, l'Initiative européenne pour les études de sécurité (EISS), et l'Université d'Amsterdam.",
-    de: "Gemeinsam organisiert von der COST-Aktion NetSec, der Europäischen Initiative für Sicherheitsstudien (EISS) und der Universität Amsterdam.",
+    en: "Jointly organised by the COST Action NetSec, the European Initiative for Security Studies (EISS), and <VENUE>.",
+    fr: "Organisée conjointement par l'Action COST NetSec, l'Initiative européenne pour les études de sécurité (EISS), et <VENUE>.",
+    de: "Gemeinsam organisiert von der COST-Aktion NetSec, der Europäischen Initiative für Sicherheitsstudien (EISS) und <VENUE>.",
   },
   monthLabel: { en: "June", fr: "Juin", de: "Juni" },
   dayRange: "23–24",
-  yearLine: "2027 · Amsterdam",
-  displayCity: { en: "Amsterdam", fr: "Amsterdam", de: "Amsterdam" },
+  yearLine: "<YEAR> · <CITY>",
+  displayCity: { en: "<CITY>", fr: "<CITY>", de: "<CITY>" },
   hasOwnPage: true,
 },
 ```
@@ -58,7 +65,7 @@ update on the next build. No template edits needed.
 
 ## 2. Create the per-year page
 
-Copy `src/2026.njk` to `src/2027.njk` (and its FR/DE siblings) and:
+Copy `src/2026.njk` to `src/<YEAR>.njk` (and its FR/DE siblings) and:
 
 - Replace dates / city / venue / partner-logo references in the prose
 - Replace the neighbourhoods tile grid with the new city's neighbourhoods
@@ -79,13 +86,13 @@ so you don't touch those.
 Add a new entry to `scripts/make-share-cards.py` → `CARDS`:
 
 ```python
-{"slug": "2027", "i18n": {
-    "en": {"eyebrow": "ESSC 2027", "title": "European Security Studies Conference",
-           "subtitle": "23–24 June 2027 · University of Amsterdam"},
-    "fr": {"eyebrow": "ESSC 2027", "title": "Conférence européenne d'études de sécurité",
-           "subtitle": "23–24 juin 2027 · Université d'Amsterdam"},
-    "de": {"eyebrow": "ESSC 2027", "title": "Europäische Konferenz für Sicherheitsstudien",
-           "subtitle": "23.–24. Juni 2027 · Universität Amsterdam"},
+{"slug": "<YEAR>", "i18n": {
+    "en": {"eyebrow": "ESSC <YEAR>", "title": "European Security Studies Conference",
+           "subtitle": "<DD>–<DD> <Month> <YEAR> · <VENUE>"},
+    "fr": {"eyebrow": "ESSC <YEAR>", "title": "Conférence européenne d'études de sécurité",
+           "subtitle": "<DD>–<DD> <mois> <YEAR> · <VENUE>"},
+    "de": {"eyebrow": "ESSC <YEAR>", "title": "Europäische Konferenz für Sicherheitsstudien",
+           "subtitle": "<DD>.–<DD>. <Monat> <YEAR> · <VENUE>"},
 }},
 ```
 
@@ -95,9 +102,9 @@ Then:
 python3 scripts/make-share-cards.py
 ```
 
-The script writes `2027-meta.jpg`, `2027-meta.fr.jpg`, `2027-meta.de.jpg`
+The script writes `<YEAR>-meta.jpg`, `<YEAR>-meta.fr.jpg`, `<YEAR>-meta.de.jpg`
 to `src/assets/images/`. Point the new page's front-matter `metaImage`
-(EN + FR + DE) at `/assets/images/2027-meta.jpg`.
+(EN + FR + DE) at `/assets/images/<YEAR>-meta.jpg`.
 
 ## 4. Update the i18n drift state
 
@@ -105,8 +112,8 @@ Each new `.njk` source page that has translations needs to be tracked
 by the drift checker:
 
 ```bash
-python3 scripts/check-i18n-drift.py --mark-fresh src/2027.njk fr
-python3 scripts/check-i18n-drift.py --mark-fresh src/2027.njk de
+python3 scripts/check-i18n-drift.py --mark-fresh src/<YEAR>.njk fr
+python3 scripts/check-i18n-drift.py --mark-fresh src/<YEAR>.njk de
 ```
 
 This stamps the source hash so CI doesn't immediately flag the new
@@ -114,9 +121,9 @@ translations as stale. The script will fail with a "no entry for…"
 error until you add the entry — open `data/i18n-state.json` and add:
 
 ```json
-"src/2027.njk": {
-  "fr": { "file": "src/2027.fr.njk", "source_sha1": "...", "translated_on": "2027-MM-DD", "status": "beta" },
-  "de": { "file": "src/2027.de.njk", "source_sha1": "...", "translated_on": "2027-MM-DD", "status": "beta" }
+"src/<YEAR>.njk": {
+  "fr": { "file": "src/<YEAR>.fr.njk", "source_sha1": "...", "translated_on": "<YEAR>-MM-DD", "status": "beta" },
+  "de": { "file": "src/<YEAR>.de.njk", "source_sha1": "...", "translated_on": "<YEAR>-MM-DD", "status": "beta" }
 }
 ```
 
