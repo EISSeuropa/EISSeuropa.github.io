@@ -9,6 +9,8 @@ SKIP_HOSTS are pinned:
     200            -> passes
     404            -> still broken (the fix must not swallow real failures)
     ENETUNREACH    -> retried once, then takes the second answer
+    5xx that clears -> retried on a widening pause, then passes (#1423)
+    5xx every time -> still broken, after every attempt is spent
     hanging host   -> every attempt in TIMEOUT_SCHEDULE is made, then reported
                       as slow rather than broken (#1417)
 
@@ -62,6 +64,35 @@ urllib.request.urlopen = ns['urllib'].request.urlopen = real
 print(f'  ENETUNREACH then 200 -> {st!r} after {calls["n"]} attempt(s)')
 fails += [] if (st == 200 and calls['n'] == 2) else ['ENETUNREACH should be retried once and then succeed']
 
+# A 5xx that clears must not fail the build, and one that never clears must
+# (#1423). The pauses are shrunk here so the case runs in about a second; the
+# shape is what is being pinned: three attempts, then the verdict.
+ns['SERVER_ERROR_PAUSES'] = (0.05, 0.05)
+flap = {'n': 0}
+class Flap(H):
+    def do_HEAD(self):
+        flap['n'] += 1
+        # 503 twice, then answer: the softwareheritage.org shape.
+        self.send_response(503 if flap['n'] < 3 else 200); self.end_headers()
+    do_GET = do_HEAD
+srv2 = socketserver.TCPServer(('127.0.0.1', 0), Flap); port2 = srv2.server_address[1]
+threading.Thread(target=srv2.serve_forever, daemon=True).start()
+u, st = check_external(f'http://127.0.0.1:{port2}/flap')
+print(f'  503, 503, then 200 -> {st!r} after {flap["n"]} attempt(s)')
+fails += [] if st == 200 else ['a 5xx that clears within three attempts must not be called broken']
+
+down = {'n': 0}
+class Down(H):
+    def do_HEAD(self):
+        down['n'] += 1
+        self.send_response(503); self.end_headers()
+    do_GET = do_HEAD
+srv3 = socketserver.TCPServer(('127.0.0.1', 0), Down); port3 = srv3.server_address[1]
+threading.Thread(target=srv3.serve_forever, daemon=True).start()
+u, st = check_external(f'http://127.0.0.1:{port3}/down')
+print(f'  503 every time -> {st!r} after {down["n"]} attempt(s)')
+fails += [] if st == 'HTTP 503' else ['a host that 5xxs every attempt must still be broken']
+
 # A host that accepts the connection and never answers must exhaust the
 # schedule and come back as the "timeout" sentinel, which the report prints as
 # a slow host rather than counting as broken (#1417). The clock is shrunk here
@@ -85,5 +116,5 @@ fails += [] if (st == 'timeout' and len(connections) == 3) else \
     ['a hanging host should exhaust TIMEOUT_SCHEDULE and report "timeout", not broken']
 
 srv.shutdown()
-print('\nFAIL: ' + '; '.join(fails) if fails else '\nall five behaviours correct')
+print('\nFAIL: ' + '; '.join(fails) if fails else '\nall seven behaviours correct')
 sys.exit(1 if fails else 0)
