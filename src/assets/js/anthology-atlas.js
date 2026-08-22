@@ -91,6 +91,43 @@
   if (!canvas || !canvas.getContext) return;
   const ctx = canvas.getContext('2d');
 
+  // Every string this file injects comes from the page's own catalog (#1495),
+  // so the map speaks whichever language the page is in. The English defaults
+  // stay inline as the fallback: if the blob is missing or malformed the map
+  // still reads, in English, rather than rendering "undefined" at the reader.
+  const STRINGS = (function () {
+    const el = document.getElementById('atlas-strings');
+    if (!el) return {};
+    try { return JSON.parse(el.textContent) || {}; } catch (e) { return {}; }
+  })();
+  const t = (key, fallback) => (STRINGS[key] == null ? fallback : STRINGS[key]);
+  // The theme pages exist per locale (#1495), and the page tells us which one
+  // it is through the html lang attribute rather than a second data blob.
+  const pageLang = document.documentElement.lang || 'en';
+  const themeSuffix = pageLang === 'en' ? '' : '.' + pageLang;
+  // The hub names in the graph data are the English vocabulary, which is the
+  // join key. What a reader sees is the label for this page's locale (#1492),
+  // read from the theme index the page already embeds for the hub panel.
+  const THEME_LABELS = (function () {
+    const el = document.getElementById('atlas-theme-index');
+    const out = {};
+    if (!el) return out;
+    try {
+      JSON.parse(el.textContent).forEach((th) => {
+        if (th && th.name && th.label) out[th.name] = th.label[pageLang] || th.label.en || th.name;
+      });
+    } catch (e) { /* the English names remain, which is readable */ }
+    return out;
+  })();
+  const hubLabel = (h) => (h.type === 'untagged'
+    ? t('untagged', 'Untagged')
+    : (THEME_LABELS[h.name] || h.name));
+  // Fills {name}-style placeholders. Split/join rather than a regex, so a
+  // value carrying a dollar sign or a brace cannot rewrite the template.
+  const fill = (str, vars) => Object.keys(vars).reduce(
+    (acc, k) => acc.split('{' + k + '}').join(vars[k]), String(str)
+  );
+
   const reduceMotion = window.matchMedia
     && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -334,13 +371,13 @@
     // below this line keeps working in the layout's own coordinates.
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
-    if (loadFailed) { drawNotice('The atlas data could not be loaded.', 'Every paper and author on this map is browsable in the Anthology.'); return; }
+    if (loadFailed) { drawNotice(t('loadFailed', 'The atlas data could not be loaded.'), t('loadFailedHint', 'Every paper and author on this map is browsable in the Anthology.')); return; }
     // Nothing passes the filters: say so rather than showing a blank stage.
     if (items().length && !items().some(nodeVisible)) {
-      drawNotice(lens === 'authors' ? 'No authors match these filters.' : 'No papers match these filters.',
-        activeEditions.size === 0 ? 'Every edition is switched off. Turn one back on to see the map.'
-          : activeHubs.size === 0 ? 'Every research theme is switched off. Turn one back on to see the map.'
-            : 'Widen the editions or themes above to bring the map back.');
+      drawNotice(lens === 'authors' ? t('emptyAuthors', 'No authors match these filters.') : t('emptyPapers', 'No papers match these filters.'),
+        activeEditions.size === 0 ? t('emptyNoEditions', 'Every edition is switched off. Turn one back on to see the map.')
+          : activeHubs.size === 0 ? t('emptyNoThemes', 'Every research theme is switched off. Turn one back on to see the map.')
+            : t('emptyWiden', 'Widen the editions or themes above to bring the map back.'));
       return;
     }
     ctx.setTransform(dpr * view.k, 0, 0, dpr * view.k, dpr * view.x, dpr * view.y);
@@ -545,7 +582,8 @@
     // Biggest hubs first: when something has to give, it should be the theme
     // with three papers rather than the one with seventy.
     hubs.slice().sort((a, b) => b.count - a.count).forEach((h) => {
-      const text = h.name.length > 26 ? h.name.slice(0, 25) + '…' : h.name;
+      const name = hubLabel(h);
+      const text = name.length > 26 ? name.slice(0, 25) + '…' : name;
       const w = ctx.measureText(text).width;
       const gap = h.r + 13;
       // Ordered by the hub's own direction from the centre, so the ring of
@@ -691,7 +729,7 @@
     if (node.type === 'theme' || node.type === 'untagged') {
       addEl(card, 'nm', node.name);
       addEl(card, 'meta', node.count + (node.count === 1 ? ' ' : ' ')
-        + (lens === 'authors' ? (node.count === 1 ? 'author' : 'authors')
+        + (lens === 'authors' ? (node.count === 1 ? t('author', 'author') : t('authors', 'authors'))
                               : (node.count === 1 ? 'paper' : 'papers')));
     } else if (node.type === 'author') {
       addEl(card, 'nm', node.name);
@@ -707,7 +745,7 @@
           // Same rule as the filter chips: theme colour on the dot, label on
           // the card's own ink token.
           s.style.setProperty('--chip-dot', hubFill(h));
-          s.textContent = h.type === 'untagged' ? 'Untagged' : h.name;
+          s.textContent = hubLabel(h);
           pills.append(s);
         });
         if (node.hubs.length > 3) {
@@ -719,10 +757,11 @@
       if (node.coCount) {
         const names = node.coPeerNodes.map((c) => c.name);
         const shown = names.slice(0, 4).join(', ') + (names.length > 4 ? ', +' + (names.length - 4) : '');
-        addEl(card, 'coauth', 'With ' + shown);
+        addEl(card, 'coauth', fill(t('cardWith', 'With {names}'), { names: shown }));
       }
       if (node.paperIdx && node.paperIdx.length) {
-        addEl(card, 'go', (coarse ? 'Tap again' : 'Click') + ' to map their papers →');
+        addEl(card, 'go', fill(t('cardMapPapers', '{verb} to map their papers →'),
+          { verb: coarse ? t('cardTapAgain', 'Tap again') : t('cardClick', 'Click') }));
       }
     } else {
       addEl(card, 'nm', node.title);
@@ -740,7 +779,7 @@
           // Same rule as the filter chips: theme colour on the dot, label on
           // the card's own ink token.
           s.style.setProperty('--chip-dot', hubFill(h));
-          s.textContent = h.type === 'untagged' ? 'Untagged' : h.name;
+          s.textContent = hubLabel(h);
           pills.append(s);
         });
         if (node.hubs.length > 3) {
@@ -751,10 +790,10 @@
       }
       if (node.prize || node.published) {
         const b = addEl(card, 'badges');
-        if (node.prize) { const s = document.createElement('span'); s.className = 'badge-prize'; s.textContent = '★ Best Paper Prize'; b.append(s); }
-        if (node.published) { const s = document.createElement('span'); s.className = 'badge-pub'; s.textContent = 'Published version'; b.append(s); }
+        if (node.prize) { const s = document.createElement('span'); s.className = 'badge-prize'; s.textContent = t('cardPrize', '★ Best Paper Prize'); b.append(s); }
+        if (node.published) { const s = document.createElement('span'); s.className = 'badge-pub'; s.textContent = t('cardPublished', 'Published version'); b.append(s); }
       }
-      if (node.hasPage) addGo(card, coarse ? 'Read this paper →' : 'Read more →', node.url);
+      if (node.hasPage) addGo(card, coarse ? t('cardReadPaper', 'Read this paper →') : t('cardReadMore', 'Read more →'), node.url);
     }
 
     const stage = canvas.parentElement.getBoundingClientRect();
@@ -894,7 +933,7 @@
     ta.style.opacity = '0';
     document.body.appendChild(ta);
     ta.select();
-    try { document.execCommand('copy'); flashShare('Copied'); } catch (e) { /* no-op */ }
+    try { document.execCommand('copy'); flashShare(t('shareCopied', 'Copied')); } catch (e) { /* no-op */ }
     document.body.removeChild(ta);
   }
 
@@ -906,7 +945,7 @@
         return;
       }
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url).then(() => flashShare('Copied'), () => fallbackCopy(url));
+        navigator.clipboard.writeText(url).then(() => flashShare(t('shareCopied', 'Copied')), () => fallbackCopy(url));
       } else {
         fallbackCopy(url);
       }
@@ -970,8 +1009,9 @@
     const all = eds === editions.length && ths === hubs.length;
     if (filtersSummaryEl) {
       filtersSummaryEl.textContent = all
-        ? 'Filters'
-        : 'Filters · ' + eds + '/' + editions.length + ' editions, ' + ths + '/' + hubs.length + ' themes';
+        ? t('filtersLabel', 'Filters')
+        : fill(t('filtersCounts', 'Filters · {editions}/{editionsTotal} editions, {themes}/{themesTotal} themes'),
+          { editions: eds, editionsTotal: editions.length, themes: ths, themesTotal: hubs.length });
     }
     // The hint tells a reader what is behind the disclosure. Once the label
     // reports a count it has already told them, so the hint gets out of the way.
@@ -1021,7 +1061,9 @@
     // rewrites the same tbody as the view narrows.
     if (listHeadEl) {
       const head = document.createElement('tr');
-      (lens === 'authors' ? ['Author', 'Papers'] : ['Paper', 'Authors', 'Year']).forEach((h) => {
+      (lens === 'authors'
+        ? [t('colAuthor', 'Author'), t('colPapers', 'Papers')]
+        : [t('colPaper', 'Paper'), t('colAuthors', 'Authors'), t('colYear', 'Year')]).forEach((h) => {
         const th = document.createElement('th');
         th.scope = 'col';
         th.textContent = h;
@@ -1043,16 +1085,18 @@
       listItemsEl.append(row);
     });
     const noun = lens === 'authors'
-      ? (sorted.length === 1 ? 'author' : 'authors')
-      : (sorted.length === 1 ? 'paper' : 'papers');
+      ? (sorted.length === 1 ? t('author', 'author') : t('authors', 'authors'))
+      : (sorted.length === 1 ? t('paper', 'paper') : t('papers', 'papers'));
     if (listSummaryEl) {
-      listSummaryEl.textContent = 'Browse this view as a list (' + sorted.length + ' ' + noun + ')';
+      listSummaryEl.textContent = fill(t('listSummary', 'Browse this view as a list ({count} {noun})'),
+        { count: sorted.length, noun: noun });
     }
     if (listMoreEl) {
       const over = sorted.length > LIST_CAP;
       listMoreEl.hidden = !over;
       listMoreEl.textContent = over
-        ? 'Showing the first ' + LIST_CAP + ' of ' + sorted.length + '. Narrow the editions or themes to see the rest here.'
+        ? fill(t('listMore', 'Showing the first {cap} of {count}. Narrow the editions or themes to see the rest here.'),
+          { cap: LIST_CAP, count: sorted.length })
         : '';
     }
   }
@@ -1140,8 +1184,8 @@
     const all = document.createElement('button');
     const none = document.createElement('button');
     [all, none].forEach((b) => { b.type = 'button'; b.className = 'atlas-chip is-plain'; });
-    all.textContent = 'All';
-    none.textContent = 'None';
+    all.textContent = t('bulkAll', 'All');
+    none.textContent = t('bulkNone', 'None');
     const refresh = function () { all.disabled = isAll(); none.disabled = isNone(); };
     all.addEventListener('click', () => { apply(true); refresh(); });
     none.addEventListener('click', () => { apply(false); refresh(); });
@@ -1183,7 +1227,7 @@
   function buildThemeChips() {
     hubs.forEach((h) => {
       const b = chip(
-        h.type === 'untagged' ? 'Untagged' : h.name,
+        hubLabel(h),
         activeHubs.has(h.id),
         (bb) => {
           if (activeHubs.has(h.id)) activeHubs.delete(h.id); else activeHubs.add(h.id);
@@ -1216,7 +1260,7 @@
   }
 
   function buildLensChips() {
-    [['papers', 'Papers'], ['authors', 'Authors']].forEach(([v, label]) => {
+    [['papers', t('lensPapers', 'Papers')], ['authors', t('lensAuthors', 'Authors')]].forEach(([v, label]) => {
       // No dot: the lens pair is a mode switch, not a series, so it reads as a
       // plain segmented control and the pressed state carries the selection.
       const b = chip(label, v === lens, () => switchLens(v));
@@ -1284,13 +1328,16 @@
     // announce through it and this one is cleared rather than left holding a
     // stale spotlight.
     if (!String(q || '').trim()) { setFindMsg(''); announce(''); }
-    else if (!node) { setFindMsg('No match in the corpus.'); announce(''); }
-    else if (!nodeVisible(node)) { setFindMsg('Found, but hidden by the current filters.'); announce(''); }
+    else if (!node) { setFindMsg(t('findNoMatch', 'No match in the corpus.')); announce(''); }
+    else if (!nodeVisible(node)) { setFindMsg(t('findHidden', 'Found, but hidden by the current filters.')); announce(''); }
     else {
       setFindMsg('');
       announce(node.type === 'author'
-        ? 'Spotlighting ' + node.name + ', ' + node.paperCount + (node.paperCount === 1 ? ' paper.' : ' papers.')
-        : 'Spotlighting ' + node.title + '.');
+        ? fill(node.paperCount === 1
+          ? t('findSpotlightAuthorOne', 'Spotlighting {name}, 1 paper.')
+          : t('findSpotlightAuthor', 'Spotlighting {name}, {count} papers.'),
+          { name: node.name, count: node.paperCount })
+        : fill(t('findSpotlightPaper', 'Spotlighting {title}.'), { title: node.title }));
     }
     if (node) {
       const wantLens = node.type === 'author' ? 'authors' : 'papers';
@@ -1347,12 +1394,12 @@
     const idx = only ? timeEditions.findIndex((e) => e.key === only) : -1;
     if (all) {
       timeRangeEl.value = '0';
-      timeLabelEl.textContent = 'Every edition';
+      timeLabelEl.textContent = t('timeEvery', 'Every edition');
     } else if (idx !== -1) {
       timeRangeEl.value = String(idx + 1);
       timeLabelEl.textContent = timeEditions[idx].label;
     } else {
-      timeLabelEl.textContent = activeEditions.size + ' editions';
+      timeLabelEl.textContent = fill(t('timeSomeEditions', '{count} editions'), { count: activeEditions.size });
     }
     timeRangeEl.setAttribute('aria-valuetext', timeLabelEl.textContent);
   }
@@ -1362,8 +1409,8 @@
     let i = Number(timeRangeEl.value) || 0;
     if (i >= timeEditions.length) i = 0;
     timePlayEl.dataset.playing = 'true';
-    timePlayEl.setAttribute('aria-label', 'Pause');
-    timePlayEl.title = 'Pause';
+    timePlayEl.setAttribute('aria-label', t('timePause', 'Pause'));
+    timePlayEl.title = t('timePause', 'Pause');
     const step = () => {
       i += 1;
       timeRangeEl.value = String(i);
@@ -1379,8 +1426,8 @@
     playTimer = null;
     if (timePlayEl) {
       delete timePlayEl.dataset.playing;
-      timePlayEl.setAttribute('aria-label', 'Play through the editions');
-      timePlayEl.title = 'Play through the editions';
+      timePlayEl.setAttribute('aria-label', t('timePlay', 'Play through the editions'));
+      timePlayEl.title = t('timePlay', 'Play through the editions');
     }
   }
 
@@ -1418,36 +1465,50 @@
     const facts = themeFacts[hub.name];
     const inLens = items().filter((n) => n.hubs.indexOf(hub.id) !== -1);
     const shown = inLens.filter(nodeVisible).length;
-    const noun = lens === 'authors' ? 'authors' : 'papers';
+    const noun = lens === 'authors' ? t('authors', 'authors') : t('papers', 'papers');
 
-    hubNameEl.textContent = hub.type === 'untagged' ? 'Untagged' : hub.name;
+    hubNameEl.textContent = hubLabel(hub);
 
     // Corpus figures where the build has them, the map's own count otherwise
     // (the Untagged hub is not a research theme and has no page behind it).
     const bits = [];
     if (facts && lens === 'papers') {
-      bits.push(facts.count + (facts.count === 1 ? ' paper' : ' papers'));
-      if (facts.yearRange) bits.push(facts.yearRange);
-      if (facts.authorCount) bits.push(facts.authorCount + (facts.authorCount === 1 ? ' author' : ' authors'));
+      bits.push(facts.count + ' ' + (facts.count === 1 ? t('paper', 'paper') : t('papers', 'papers')));
+      // Built here rather than read from facts.yearRange, which is English
+      // ("2017 to 2026") because it is composed in the data layer (#1495).
+      if (facts.firstYear && facts.lastYear) {
+        bits.push(facts.firstYear === facts.lastYear
+          ? String(facts.firstYear)
+          : facts.firstYear + ' ' + t('yearRangeJoiner', 'to') + ' ' + facts.lastYear);
+      }
+      if (facts.authorCount) {
+        bits.push(facts.authorCount + ' '
+          + (facts.authorCount === 1 ? t('author', 'author') : t('authors', 'authors')));
+      }
     } else {
-      bits.push(inLens.length + ' ' + (inLens.length === 1 ? noun.slice(0, -1) : noun));
+      bits.push(inLens.length + ' '
+        + (inLens.length === 1
+          ? (lens === 'authors' ? t('author', 'author') : t('paper', 'paper'))
+          : noun));
     }
     hubMetaEl.textContent = bits.join(' · ')
-      + (shown !== inLens.length ? ' · ' + shown + ' shown under the current filters' : '');
+      + (shown !== inLens.length
+        ? fill(t('hubShownUnderFilters', ' · {count} shown under the current filters'), { count: shown })
+        : '');
 
     hubBridgesEl.replaceChildren();
     const bridges = hubBridges(hub);
     if (bridges.length) {
       const lead = document.createElement('span');
       lead.className = 'atlas-hub__lead';
-      lead.textContent = 'Shares ' + noun + ' with';
+      lead.textContent = fill(t('hubShares', 'Shares {noun} with'), { noun: noun });
       hubBridgesEl.append(lead);
       bridges.forEach((b) => {
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'atlas-chip';
         btn.style.setProperty('--chip-dot', hubFill(b.hub));
-        btn.textContent = (b.hub.type === 'untagged' ? 'Untagged' : b.hub.name) + ' (' + b.n + ')';
+        btn.textContent = hubLabel(b.hub) + ' (' + b.n + ')';
         // The count is the promise: pressing it shows those papers rather
         // than moving the panel to the other theme (#1468).
         btn.addEventListener('click', () => openBridge(hub, b.hub));
@@ -1457,16 +1518,18 @@
 
     // The Untagged hub is a bucket of papers waiting for a theme, so it does
     // not get called one.
-    const soloLabel = hub.type === 'untagged' ? 'Show only these papers' : 'Show only this theme';
-    hubFilterEl.textContent = isSolo(hub) ? 'Show every theme again' : soloLabel;
+    const soloLabel = hub.type === 'untagged'
+      ? t('hubShowOnlyPapers', 'Show only these papers')
+      : t('hubShowOnlyTheme', 'Show only this theme');
+    hubFilterEl.textContent = isSolo(hub) ? t('hubShowEveryTheme', 'Show every theme again') : soloLabel;
     hubFilterEl.onclick = () => {
       if (isSolo(hub)) hubs.forEach((h) => activeHubs.add(h.id));
       else { activeHubs.clear(); activeHubs.add(hub.id); }
       syncThemeChips();
-      hubFilterEl.textContent = isSolo(hub) ? 'Show every theme again' : soloLabel;
+      hubFilterEl.textContent = isSolo(hub) ? t('hubShowEveryTheme', 'Show every theme again') : soloLabel;
       announce(isSolo(hub)
-        ? 'The map now shows only ' + hubNameEl.textContent + '.'
-        : 'The map shows every theme again.');
+        ? fill(t('liveOnly', 'The map now shows only {name}.'), { name: hubNameEl.textContent })
+        : t('liveEvery', 'The map shows every theme again.'));
       syncUrl();
       draw();
     };
@@ -1483,8 +1546,8 @@
     // and the URL can only ever be a same-origin path.
     const slug = facts && facts.slug;
     if (slug && /^[a-z0-9-]+$/.test(slug)) {
-      [['Open its Atlas page', '/anthology-atlas/theme/' + slug + '.html'],
-       ['Follow this theme', '/feeds/themes/' + slug + '.xml']].forEach(([text, href]) => {
+      [[t('hubOpenPage', 'Open its Atlas page'), '/anthology-atlas/theme/' + slug + themeSuffix + '.html'],
+       [t('hubFollow', 'Follow this theme'), '/feeds/themes/' + slug + '.xml']].forEach(([text, href]) => {
         const a = document.createElement('a');
         a.className = 'atlas-hub__link';
         a.href = href;
@@ -1514,33 +1577,42 @@
     hovered = null; showCard(null); unpin();
 
     const both = items().filter((n) => n.hubs.indexOf(a.id) !== -1 && n.hubs.indexOf(b.id) !== -1);
-    const noun = lens === 'authors'
-      ? (both.length === 1 ? 'author has worked in both' : 'authors have worked in both')
-      : (both.length === 1 ? 'paper carries both themes' : 'papers carry both themes');
-    const label = (h) => (h.type === 'untagged' ? 'Untagged' : h.name);
+    const label = hubLabel;
+    // One sentence per case rather than a noun glued onto a count: the verb
+    // agrees with the number in English and inflects differently again in
+    // French and German, so the whole sentence is the translatable unit.
+    const key = lens === 'authors'
+      ? (both.length === 1 ? 'hubBothAuthorOne' : 'hubBothAuthors')
+      : (both.length === 1 ? 'hubBothPaperOne' : 'hubBothPapers');
+    const fallbacks = {
+      hubBothAuthorOne: '1 author has worked in both. The map and the list below show them.',
+      hubBothAuthors: '{count} authors have worked in both. The map and the list below show them.',
+      hubBothPaperOne: '1 paper carries both themes. The map and the list below show it.',
+      hubBothPapers: '{count} papers carry both themes. The map and the list below show them.',
+    };
 
     hubNameEl.textContent = label(a) + ' / ' + label(b);
-    hubMetaEl.textContent = both.length + ' ' + noun + '. The map and the list below show them.';
+    hubMetaEl.textContent = fill(t(key, fallbacks[key]), { count: both.length });
 
     // Each side stays one press away, so a bridge is a place to look from
     // rather than a dead end.
     hubBridgesEl.replaceChildren();
     const lead = document.createElement('span');
     lead.className = 'atlas-hub__lead';
-    lead.textContent = 'Look at';
+    lead.textContent = t('hubLookAt', 'Look at');
     hubBridgesEl.append(lead);
     [a, b].forEach((h) => {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'atlas-chip';
       btn.style.setProperty('--chip-dot', hubFill(h));
-      btn.textContent = label(h) + ' on its own';
+      btn.textContent = fill(t('hubOnItsOwn', '{name} on its own'), { name: label(h) });
       btn.addEventListener('click', () => { bridge = null; openHubPanel(h); syncUrl(); });
       hubBridgesEl.append(btn);
     });
 
     hubActionsEl.querySelectorAll('.atlas-hub__link').forEach((el) => el.remove());
-    hubFilterEl.textContent = 'Show every paper again';
+    hubFilterEl.textContent = t('hubShowEveryPaper', 'Show every paper again');
     hubFilterEl.onclick = () => { closeHubPanel(); };
 
     hubPanelEl.hidden = false;
@@ -1574,7 +1646,7 @@
   }
 
   function buildAuthorOpts() {
-    authorOptsEl.appendChild(chip('Collaborators only', collabOnly, (b) => {
+    authorOptsEl.appendChild(chip(t('optCollab', 'Collaborators only'), collabOnly, (b) => {
       collabOnly = !collabOnly;
       b.setAttribute('aria-pressed', collabOnly ? 'true' : 'false');
       syncUrl();
@@ -1587,7 +1659,7 @@
   // editions are still dark — not just when (the per-year bars on /anthology).
   function buildPaperOpts() {
     if (!paperOptsEl) return;
-    paperOptsEl.appendChild(chip('Abstract on file', abstractsOnly, (b) => {
+    paperOptsEl.appendChild(chip(t('optAbstracts', 'Abstract on file'), abstractsOnly, (b) => {
       abstractsOnly = !abstractsOnly;
       b.setAttribute('aria-pressed', abstractsOnly ? 'true' : 'false');
       syncUrl();
@@ -1595,7 +1667,7 @@
     }));
     // Paper-to-paper adjacency (#1188), off by default: 890 edges is a lot of
     // ink, and the hub anchoring is the primary reading of this lens.
-    paperOptsEl.appendChild(chip('Link related papers', paperEdgesOn, (b) => {
+    paperOptsEl.appendChild(chip(t('optLinks', 'Link related papers'), paperEdgesOn, (b) => {
       paperEdgesOn = !paperEdgesOn;
       b.setAttribute('aria-pressed', paperEdgesOn ? 'true' : 'false');
       syncUrl();
@@ -1676,17 +1748,18 @@
     if (bb) {
       // Theme names carry their own "and" ("Arms acquisition and transfer"),
       // so a sentence joining two of them with another one is unreadable.
-      add('Busiest bridge: ' + bb.n + ' papers in both ' + bb.a.name + ' / ' + bb.b.name,
-        () => openBridge(bb.a, bb.b));
+      add(fill(t('findingBridge', 'Busiest bridge: {count} papers in both {a} / {b}'),
+        { count: bb.n, a: hubLabel(bb.a), b: hubLabel(bb.b) }), () => openBridge(bb.a, bb.b));
     }
     const be = broadestEdition();
     if (be && be.edition) {
-      add(be.edition.label + ' spanned ' + be.n + ' of the '
-        + hubs.filter((h) => h.type === 'theme').length + ' research themes');
+      add(fill(t('findingSpanned', '{edition} spanned {count} of the {total} research themes'),
+        { edition: be.edition.label, count: be.n, total: hubs.filter((h) => h.type === 'theme').length }));
     }
     const multi = papers.filter((p) => p.hubs.filter((id) => hubById[id] && hubById[id].type === 'theme').length > 1).length;
     if (multi) {
-      add(Math.round((multi / papers.length) * 100) + '% of papers sit in more than one theme');
+      add(fill(t('findingMulti', '{pct}% of papers sit in more than one theme'),
+        { pct: Math.round((multi / papers.length) * 100) }));
     }
   }
 
@@ -1697,18 +1770,19 @@
     if (lens === 'authors') {
       const collaborating = authors.filter((a) => a.coCount).length;
       rows = [
-        ['' + authors.length, 'authors'],
-        ['' + collaborating, 'with a co-author'],
-        ['' + coEdges.length, 'co-author pairs'],
-        ['' + clusterCount(), 'collaboration clusters'],
+        ['' + authors.length, t('statAuthors', 'authors')],
+        ['' + collaborating, t('statWithCoauthor', 'with a co-author')],
+        ['' + coEdges.length, t('statPairs', 'co-author pairs')],
+        ['' + clusterCount(), t('statClusters', 'collaboration clusters')],
       ];
     } else {
       const withPage = papers.filter((p) => p.hasPage).length;
       rows = [
-        ['' + papers.length, 'papers'],
-        ['' + editions.length, 'editions, ' + yearsAsc[0] + '–' + yearsAsc[yearsAsc.length - 1]],
-        ['' + hubs.filter((h) => h.type === 'theme').length, 'research themes'],
-        [withPage + ' / ' + papers.length, 'with an Anthology page'],
+        ['' + papers.length, t('statPapers', 'papers')],
+        ['' + editions.length, fill(t('statEditions', 'editions, {from}–{to}'),
+          { from: yearsAsc[0], to: yearsAsc[yearsAsc.length - 1] })],
+        ['' + hubs.filter((h) => h.type === 'theme').length, t('statThemes', 'research themes')],
+        [withPage + ' / ' + papers.length, t('statWithPage', 'with an Anthology page')],
       ];
     }
     rows.forEach(([b, s]) => {
@@ -1835,7 +1909,7 @@
           e.stopPropagation();
           setAllChips(yearsEl, activeEditions, editions.map((x) => x.key), true);
           setAllChips(themesEl, activeHubs, hubs.map((h) => h.id), true);
-          announce('Filters cleared. The whole corpus is on the map.');
+          announce(t('liveCleared', 'Filters cleared. The whole corpus is on the map.'));
         });
       }
       buildLensChips();
@@ -1938,32 +2012,32 @@
     // row wraps off-screen at 375px.
     const isPhone = window.matchMedia && window.matchMedia('(max-width: 640px)').matches;
     const lensStep = { target: '#atlas-lens',
-      title: 'Two lenses over one archive',
-      body: 'Switch between Papers — one dot per paper, coloured by edition year — and Authors — one dot per person, with co-authorship drawn on top.' };
+      title: t('tourLensTitle', 'Two lenses over one archive'),
+      body: t('tourLensBody', 'Switch between Papers — one dot per paper, coloured by edition year — and Authors — one dot per person, with co-authorship drawn on top.') };
     const themesStep = { target: '#atlas-themes',
-      title: 'Spotlight a research theme',
-      body: 'Each labelled hub is one research theme. Toggle a chip to fade the rest; drag a hub on the map to pull its cluster apart.' };
+      title: t('tourThemesTitle', 'Spotlight a research theme'),
+      body: t('tourThemesBody', 'Each labelled hub is one research theme. Toggle a chip to fade the rest; drag a hub on the map to pull its cluster apart.') };
     const stageStep = { target: '.atlas-stage',
-      title: 'Read the map',
-      body: 'Solid dots have an Anthology page; hollow rings are programme entries without one yet. Hover any dot for details, and click through to the Anthology.' };
+      title: t('tourStageTitle', 'Read the map'),
+      body: t('tourStageBody', 'Solid dots have an Anthology page; hollow rings are programme entries without one yet. Hover any dot for details, and click through to the Anthology.') };
     const statsStep = { target: '#atlas-stats',
-      title: 'The corpus at a glance',
-      body: 'These figures are generated from the same data as the Anthology, so they update as the archive grows.' };
+      title: t('tourStatsTitle', 'The corpus at a glance'),
+      body: t('tourStatsBody', 'These figures are generated from the same data as the Anthology, so they update as the archive grows.') };
     const editionsStep = { target: '#atlas-years',
-      title: 'Filter by edition',
-      body: 'Toggle editions on and off to narrow the map — the annual conferences by year, and the joint events on their own chips. All and None do a whole row at once.' };
+      title: t('tourEditionsTitle', 'Filter by edition'),
+      body: t('tourEditionsBody', 'Toggle editions on and off to narrow the map — the annual conferences by year, and the joint events on their own chips. All and None do a whole row at once.') };
     const desktopSteps = [
       lensStep,
       editionsStep,
       themesStep,
       stageStep,
       { target: '#atlas-legend',
-        title: 'What the markers mean',
-        body: 'The legend decodes the dot styles: a landing page vs a programme-only entry, a Best Paper Prize ring, and a published version on record.' },
+        title: t('tourLegendTitle', 'What the markers mean'),
+        body: t('tourLegendBody', 'The legend decodes the dot styles: a landing page vs a programme-only entry, a Best Paper Prize ring, and a published version on record.') },
       statsStep,
       { target: '#atlas-authoropts', lens: 'authors',
-        title: 'Collaboration, up close',
-        body: '‘Collaborators only’ hides solo authors so the co-authorship clusters stand out. We’ve switched you to the Authors lens to show it.' },
+        title: t('tourCollabTitle', 'Collaboration, up close'),
+        body: t('tourCollabBody', '‘Collaborators only’ hides solo authors so the co-authorship clusters stand out. We’ve switched you to the Authors lens to show it.') },
     ];
     // The welcome strip used to teach the editions filter in its tip list, and
     // that list went in #1444, so the phone tour picks the step up rather than
@@ -1982,8 +2056,8 @@
     window.eissTour({
       steps: tourSteps.length ? tourSteps : rawSteps,
       labels: {
-        next: 'Next', prev: 'Back', done: 'Done', skip: 'Skip',
-        stepOf: 'Step %1 of %2', closeLabel: 'Close tour',
+        next: t('tourNext', 'Next'), prev: t('tourPrev', 'Back'), done: t('tourDone', 'Done'), skip: t('tourSkip', 'Skip'),
+        stepOf: t('tourStepOf', 'Step %1 of %2'), closeLabel: t('tourClose', 'Close tour'),
       },
       // Put the atlas in the lens each step describes, so back/forward keep the
       // right view and the Authors step's control row is visible.
