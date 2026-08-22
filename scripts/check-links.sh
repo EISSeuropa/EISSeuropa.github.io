@@ -136,23 +136,6 @@ SKIP_HOSTS = {
                                 # UA. The GDPR citation in the privacy
                                 # notice (all three locales) opens fine
                                 # in a browser.
-    "www.su.se",                # Stockholm University (the ESSC 2026
-                                # venue, linked from /2026). Persistently
-                                # "Network is unreachable" from GitHub's
-                                # runners — a CI-side routing/firewall
-                                # issue, not a 4xx; the URL is valid and
-                                # loads for visitors. Skipping trades away
-                                # CI verification of this one link to stop
-                                # the recurring false-red; re-check the
-                                # link by hand if the venue URL changes.
-    "europeangovernanceandpolitics.eui.eu",
-                                # EUI's European Governance and Politics
-                                # programme (the Global Risks report,
-                                # linked from /GlobalRisks). Repeatedly
-                                # times out from GitHub's runners (same
-                                # CI-side reachability class as su.se, a
-                                # timeout not a 4xx). Loads for visitors;
-                                # skipping stops the recurring false-red.
     "stockholmuniversity.zoom.us",
                                 # The ESSC 2026 livestream (Zoom webinar,
                                 # linked from /2026 while the conference
@@ -179,14 +162,6 @@ SKIP_HOSTS = {
                                 # gess.ethz.ch. Flaked the link-check on
                                 # PR #814; skipping stops the recurring
                                 # false-red on every src-touching PR.
-    "www.etsi.org",             # ETSI, cited from the accessibility statement
-                                # (`/accessibility` + FR/DE) for EN 301 549.
-                                # The deep `/deliver/...` standard URL reads
-                                # the connection slowly and times out from
-                                # GitHub's runners (a TimeoutError, not a 4xx),
-                                # same CI-side reachability class as su.se /
-                                # the EUI host above. Loads for visitors;
-                                # skipping stops the recurring false-red.
     "www.tandfonline.com",      # Taylor & Francis, the publisher hosting the
                                 # Journal of Strategic Studies (linked from the
                                 # /prizes co-branding, since EISS awards the
@@ -308,6 +283,11 @@ def _make_ssl_ctx(verify=True):
 # very much want checked.
 TIMEOUT_SCHEDULE = (15, 30, 45)  # client timeout, seconds, per attempt
 TIMEOUT_PAUSES = (3, 10)         # pause before attempts 2 and 3
+# Pauses before the second and third attempt at a host answering 5xx. Longer
+# than the timeout pauses because a 5xx answers immediately: the wall cost of
+# waiting is the pause itself, and the wobbles seen in practice have lasted
+# minutes rather than seconds.
+SERVER_ERROR_PAUSES = (3, 12)
 
 
 def check_external(url, _retry=True, _attempt=1):
@@ -350,13 +330,20 @@ def check_external(url, _retry=True, _attempt=1):
         # serving visitors perfectly well, and with no retry a single blip
         # turns into a hard CI red on an unrelated PR. That is how the
         # SKIP_HOSTS list above accumulated gess.ethz.ch and www.cnil.fr:
-        # neither is broken, both just flaked once. Retry once after a pause
-        # and take the second answer, so a genuine outage still fails (both
-        # attempts 5xx) while a blip does not. Preferred over adding hosts to
-        # the skip list, which trades a false red for a permanent blind spot.
-        if 500 <= e.code < 600 and _retry:
-            time.sleep(3)
-            return check_external(url, _retry=False)
+        # neither is broken, both just flaked once.
+        #
+        # One retry after three seconds was not enough. On 21 August 2026
+        # softwareheritage.org 503'd twice in a row here and failed an
+        # unrelated pull request, then answered normally on a re-run of the
+        # same commit minutes later: a wobble measured in minutes, not in
+        # seconds. So a 5xx now gets the same shape of patience a timeout got
+        # in #1417, three attempts on a widening pause. A genuine outage still
+        # fails, because all three attempts have to 5xx, which is what
+        # separates this from the 429 and timeout cases below: those report
+        # the host as alive, this one still counts as broken.
+        if 500 <= e.code < 600 and _attempt < len(SERVER_ERROR_PAUSES) + 1:
+            time.sleep(SERVER_ERROR_PAUSES[_attempt - 1])
+            return check_external(url, _retry=_retry, _attempt=_attempt + 1)
         # 429 is the server saying "you are asking too often", which is
         # affirmative evidence that the host is up and answering. It is never
         # a broken link, and treating it as one is what grew the SKIP_HOSTS
