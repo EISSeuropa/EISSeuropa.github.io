@@ -588,7 +588,8 @@ function checkOrphanShareCards() {
       referenced.add(m[1]);
     }
   }
-  const orphans = readdirSync(dir)
+  const onDisk = new Set(readdirSync(dir));
+  const orphans = [...onDisk]
     .filter((f) => /-meta(\.[a-z]{2})?\.jpg$/.test(f))
     .filter((f) => !referenced.has(f));
   if (orphans.length) {
@@ -596,6 +597,23 @@ function checkOrphanShareCards() {
       `${orphans.length} share card(s) that no built page points at: ${orphans.slice(0, 6).join(", ")}` +
         `${orphans.length > 6 ? `, … (+${orphans.length - 6})` : ""}. ` +
         "Delete them, or wire a page's metaImage to them (docs/new-conference.md, rollover step)."
+    );
+  }
+
+  // The other direction, and the one that actually reached production: a page
+  // pointing at a card that was never made. base.njk rewrites `-meta.jpg` to
+  // `-meta.<lang>.jpg` on every non-English page without checking the file is
+  // there, so publishing the Atlas in French and German (#1495) gave 36 pages
+  // an og:image that 404s. Nothing saw it: the link checker reads links, not
+  // meta tags, and a preview crawler is the first thing to notice, by which
+  // point the link is out in the world looking broken.
+  const missing = [...referenced].filter((f) => !onDisk.has(f));
+  if (missing.length) {
+    problems.push(
+      `${missing.length} page(s) advertise a share card that does not exist: ${missing.slice(0, 6).join(", ")}` +
+        `${missing.length > 6 ? `, … (+${missing.length - 6})` : ""}. ` +
+        "Generate them with scripts/make-share-cards.py, or point the page's metaImage at a card that is there. " +
+        "Remember base.njk appends the locale to metaImage on FR/DE pages."
     );
   }
 }
@@ -686,4 +704,4 @@ if (problems.length) {
   console.error("");
   process.exit(1);
 }
-console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, no cross-block CSS class collisions, people hovercard index resolvable, theme spread within bounds, every paper page in the sitemap, no duplicate build inputs, no orphaned share cards, Anthology corpus citation metadata intact).");
+console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, no cross-block CSS class collisions, people hovercard index resolvable, theme spread within bounds, every paper page in the sitemap, no duplicate build inputs, no orphaned or missing share cards, Anthology corpus citation metadata intact).");
