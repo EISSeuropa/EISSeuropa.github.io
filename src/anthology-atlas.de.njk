@@ -3,6 +3,10 @@ layout: base.njk
 permalink: /anthology-atlas.de.html
 navKey: "navigator"
 lang: de
+# Hand-translated and not yet reviewed by a native speaker, which is what
+# the ribbon says (CLAUDE.md §1). Every other FR/DE page carries it; these
+# shipped without one in #1535, quietly claiming a reviewed translation.
+status: beta
 eleventyComputed:
   title: "{{ i18n.de.atlas.title | safe }}"
   description: "{{ i18n.de.atlas.description | safe }}"
