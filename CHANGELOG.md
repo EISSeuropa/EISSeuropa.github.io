@@ -144,6 +144,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- **The French and German Atlas now says its translation is unreviewed, like every other translated page.** The beta-translation ribbon is how the site frames a hand-made translation that a native speaker has not yet checked, and the thirty-six pages published in those languages shipped without one, quietly claiming a review that has not happened.
 - **Sharing the French or German Atlas produced a blank preview.** Publishing the map in those languages gave it thirty-six new pages, and the site names a share card per language by rewriting the English filename, so every one of them pointed at an image that had never been made. Nothing caught it: the link checker reads links rather than picture tags, and the first thing to notice a missing preview is somebody posting the link. The cards exist now, one per theme per language, generated from the same words the pages use. The build also fails from now on when a page names a card that is not there, which is the half that stops this happening again.
 
 - **The French and German site maps sent readers to the English Atlas.** They linked to the English map and described it as English-only, which was true when they were written and stopped being true when the map was translated.

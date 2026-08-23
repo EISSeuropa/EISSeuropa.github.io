@@ -21,6 +21,10 @@ navKey: "navigator"
 corpusMeta: true
 eleventyComputed:
   lang: "{{ atlasTheme.lang }}"
+  # The beta-translation ribbon on the FR/DE views, and nothing on the English
+  # ones. Same reasoning as the canonical pages: the translation is by hand and
+  # unreviewed, so it says so (CLAUDE.md §1).
+  status: "{{ 'beta' if atlasTheme.lang != 'en' else '' }}"
   corpusMetaTitle: "The European Security Studies Anthology Atlas: {{ atlasTheme.name }}"
   # `safe` because these are our own catalog strings: without it Nunjucks
   # escapes the apostrophe in "Atlas de l'Anthologie" here and base.njk
