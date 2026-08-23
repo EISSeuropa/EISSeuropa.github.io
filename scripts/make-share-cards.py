@@ -165,6 +165,21 @@ CARDS = [
         "de": {"eyebrow": "Rechtliches", "title": "Allgemeine Geschäftsbedingungen",
                "subtitle": "Anmeldung, Mitgliedschaft, Rückerstattungen, Mailings"},
     }},
+    # The Atlas card is unusual: the English one is a hand-made capture of the
+    # settled map itself (#1156), not a generated card, so it is not listed
+    # here and `make-share-cards.py` never overwrites it. The French and German
+    # pages (#1495) need a card of their own, because base.njk rewrites
+    # `-meta.jpg` to `-meta.<lang>.jpg` for a non-English page and a missing
+    # file previews as a blank. A generated card carrying the right words beats
+    # a snapshot carrying the wrong ones, so these two are generated in the
+    # house template until somebody captures the French and German maps by
+    # hand the way the English one was (#1545).
+    {"slug": "anthology-atlas", "i18n": {
+        "fr": {"eyebrow": "EISS", "title": "Atlas de l'Anthologie",
+               "subtitle": "Le corpus comme carte des thèmes et des auteurs"},
+        "de": {"eyebrow": "EISS", "title": "Anthologie-Atlas",
+               "subtitle": "Das Korpus als Karte der Themen und Personen"}}},
+
     {"slug": "NetSecSchool", "i18n": {
         "en": {"eyebrow": "Programme", "title": "NetSec Summer School",
                "subtitle": "Early-career scholars summer school"},
@@ -204,8 +219,15 @@ CARDS = [
 
 
 def atlas_theme_cards() -> list[dict]:
-    """One card per Atlas research theme (#1255), EN-only because the theme
-    pages are.
+    """One card per Atlas research theme (#1255), in all three languages.
+
+    It was EN-only while the theme pages were. #1495 published them in French
+    and German, and base.njk rewrites `-meta.jpg` to `-meta.<lang>.jpg` for a
+    non-English page without checking the file exists, so the 34 new pages
+    advertised cards that were never generated: a shared French Atlas link
+    previewed as a blank card. The labels and the joining word come from the
+    same catalogs the pages use, so the card cannot say something the page
+    does not.
 
     The themes come from src/_data/atlasThemePages.js via node, rather than
     being retyped here: that module is what the pages paginate over, so a theme
@@ -222,15 +244,36 @@ def atlas_theme_cards() -> list[dict]:
     except Exception as exc:  # node missing, module broken, malformed JSON
         print(f"  ! skipping Atlas theme cards: {exc}", file=sys.stderr)
         return []
+    # Read from the i18n catalog rather than retyped here, for the same reason
+    # the theme list is read from its module: two copies of a string drift.
+    try:
+        cat = json.loads(subprocess.run(
+            ["node", "-e",
+             "const i=require('./src/_data/i18n.js');const d=typeof i==='function'?i():i;"
+             "process.stdout.write(JSON.stringify({en:d.en.atlas,fr:d.fr.atlas,de:d.de.atlas}))"],
+            cwd=ROOT, capture_output=True, text=True, timeout=60, check=True,
+        ).stdout)
+    except Exception as exc:
+        print(f"  ! Atlas theme cards fall back to English: {exc}", file=sys.stderr)
+        cat = {}
+
+    def entry(t: dict, lang: str) -> dict:
+        a = cat.get(lang) or {}
+        label = (t.get("label") or {}).get(lang) or t["name"]
+        first, last = t.get("firstYear"), t.get("lastYear")
+        joiner = a.get("yearRangeJoiner", "to")
+        span = str(first) if first == last else f"{first} {joiner} {last}"
+        return {
+            "eyebrow": a.get("title", "Anthology Atlas"),
+            "title": label,
+            "subtitle": f"{t['count']} {a.get('papers', 'papers')} · {span}",
+        }
+
     return [
         {
             "slug": f"atlas-theme-{t['slug']}",
             "motif": "anthology-mark.svg",
-            "i18n": {"en": {
-                "eyebrow": "Anthology Atlas",
-                "title": t["name"],
-                "subtitle": f"{t['count']} papers · {t['yearRange']}",
-            }},
+            "i18n": {lang: entry(t, lang) for lang in ("en", "fr", "de")},
         }
         for t in themes
     ]
