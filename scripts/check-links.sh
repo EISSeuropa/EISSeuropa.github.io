@@ -308,12 +308,14 @@ def check_external(url, _retry=True, _attempt=1):
         with urllib.request.urlopen(req, timeout=timeout, context=ctx) as resp:
             return resp.status
 
-    def _again():
-        """Next timeout attempt, or the verdict once patience runs out."""
+    def _again(verdict="timeout"):
+        """Next attempt on the widening clock, or the verdict once patience
+        runs out. `verdict` distinguishes a host that never answered from one
+        that cut the connection, so the report can say which happened."""
         if _attempt < len(TIMEOUT_SCHEDULE):
             time.sleep(TIMEOUT_PAUSES[_attempt - 1])
             return check_external(url, _retry=_retry, _attempt=_attempt + 1)
-        return (url, "timeout")
+        return (url, verdict)
 
     try:
         return (url, _do(method, _make_ssl_ctx(verify=True)))
@@ -375,6 +377,17 @@ def check_external(url, _retry=True, _attempt=1):
                 return (url, _do(method, _make_ssl_ctx(verify=False)))
             except Exception as e2:
                 return (url, f"err: {e2.__class__.__name__}: {e2}")
+        # A TLS connection cut mid-handshake or mid-read is the same class of
+        # event as a timeout: the runner could not complete a conversation
+        # with the host, which says nothing about whether the link is right.
+        # europeangovernanceandpolitics.eui.eu does this from GitHub's runners
+        # intermittently (the scheduled run on master passed the same morning
+        # a pull request went red on it) while answering in half a second from
+        # a laptop. It was on the skip list for the same underlying reason
+        # until #1423 took it off, and a skip is a permanent blind spot, so it
+        # gets patience and a warning instead of a skip or a red build.
+        if "UNEXPECTED_EOF_WHILE_READING" in str(e) or "SSLEOFError" in e.__class__.__name__:
+            return _again("unreachable")
         # A connect timeout arrives wrapped in URLError; a read timeout does
         # not (see the TimeoutError branch below). Both go to the schedule.
         # Matched on the message as well as the type: urllib does not promise
@@ -436,6 +449,15 @@ if not internal_only and external_links:
                 print(
                     f"  ⚠ {url}  (timed out on {len(TIMEOUT_SCHEDULE)} attempts, "
                     f"last at {TIMEOUT_SCHEDULE[-1]}s — slow host, not counted as broken)"
+                )
+            elif status == "unreachable":
+                # The runner could not hold a TLS connection open long enough
+                # to get an answer. Same treatment as a timeout, and printed
+                # unconditionally for the same reason: a host that does this
+                # every run should be visible, not quietly excused (#1423).
+                print(
+                    f"  ⚠ {url}  (connection cut on {len(TIMEOUT_SCHEDULE)} attempts — "
+                    f"unreachable from CI, not counted as broken)"
                 )
             elif isinstance(status, int) and 200 <= status < 400:
                 if not quiet:
