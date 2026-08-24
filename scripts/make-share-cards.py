@@ -40,6 +40,7 @@ import tempfile
 from html import escape
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = ROOT / "src" / "assets" / "images"
 BRAND_DIR = ROOT / "src" / "assets" / "images" / "brand"
@@ -165,21 +166,6 @@ CARDS = [
         "de": {"eyebrow": "Rechtliches", "title": "Allgemeine Geschäftsbedingungen",
                "subtitle": "Anmeldung, Mitgliedschaft, Rückerstattungen, Mailings"},
     }},
-    # The Atlas card is unusual: the English one is a hand-made capture of the
-    # settled map itself (#1156), not a generated card, so it is not listed
-    # here and `make-share-cards.py` never overwrites it. The French and German
-    # pages (#1495) need a card of their own, because base.njk rewrites
-    # `-meta.jpg` to `-meta.<lang>.jpg` for a non-English page and a missing
-    # file previews as a blank. A generated card carrying the right words beats
-    # a snapshot carrying the wrong ones, so these two are generated in the
-    # house template until somebody captures the French and German maps by
-    # hand the way the English one was (#1545).
-    {"slug": "anthology-atlas", "i18n": {
-        "fr": {"eyebrow": "EISS", "title": "Atlas de l'Anthologie",
-               "subtitle": "Le corpus comme carte des thèmes et des auteurs"},
-        "de": {"eyebrow": "EISS", "title": "Anthologie-Atlas",
-               "subtitle": "Das Korpus als Karte der Themen und Personen"}}},
-
     {"slug": "NetSecSchool", "i18n": {
         "en": {"eyebrow": "Programme", "title": "NetSec Summer School",
                "subtitle": "Early-career scholars summer school"},
@@ -537,6 +523,44 @@ def dest_filename(slug: str, lang: str) -> str:
     return f"{slug}-meta.jpg" if lang == "en" else f"{slug}-meta.{lang}.jpg"
 
 
+def make_atlas_map_cards() -> None:
+    """The Atlas card is the map itself, redrawn per locale (#1545).
+
+    Every other card here is the house template: lockup, title, subtitle. The
+    Atlas one is a picture of the corpus, because that is what sells the map,
+    and it used to be a hand capture of the running page (#1156). A capture
+    cannot be translated, and the hub labels are the reader's language since
+    #1495, so all three are generated from the corpus by
+    scripts/atlas_map_card.py using the layout the browser uses."""
+    from atlas_map_card import load_corpus, write_card
+
+    corpus = load_corpus()
+    cat = json.loads(subprocess.run(
+        ["node", "-e",
+         "const i=require('./src/_data/i18n.js');const d=typeof i==='function'?i():i;"
+         "process.stdout.write(JSON.stringify({en:d.en.atlas,fr:d.fr.atlas,de:d.de.atlas}))"],
+        cwd=ROOT, capture_output=True, text=True, check=True).stdout)
+    themes = json.loads(subprocess.run(
+        ["node", "-e", "const m=require('./src/_data/atlasThemePages.js');"
+         "process.stdout.write(JSON.stringify(m()))"],
+        cwd=ROOT, capture_output=True, text=True, check=True).stdout)
+
+    papers = len(corpus.get("papers", []))
+    authors = len(corpus.get("authors", []))
+    theme_count = len(corpus.get("themes", []))
+    work = Path(tempfile.mkdtemp(prefix="atlas-map-"))
+    for lang in ("en", "fr", "de"):
+        a = cat[lang]
+        labels = {t["name"]: (t.get("label") or {}).get(lang, t["name"]) for t in themes}
+        labels["__untagged__"] = a["untagged"]
+        subtitle = (f"{papers} {a['papers']} · {authors} {a['authors']} · "
+                    f"{theme_count} {a['statThemes']}")
+        svg_path = write_card(lang, a["title"], subtitle, labels,
+                              work / f"atlas-map-{lang}.svg")
+        out = rasterize(svg_path, dest_filename("anthology-atlas", lang))
+        print(f"  \u2713 {out.relative_to(ROOT)}  ({out.stat().st_size // 1024} KB)")
+
+
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     # Optional slug filter: `make-share-cards.py news anthology` regenerates
@@ -544,6 +568,8 @@ def main() -> None:
     # drift by a few bytes between machines, so regenerating everything would
     # dirty cards you didn't mean to change). No args → regenerate all.
     only = set(sys.argv[1:])
+    if not only or "anthology-atlas" in only:
+        make_atlas_map_cards()
     lockup = build_lockup()
     motif = build_motif()
     font_face = inter_face()
