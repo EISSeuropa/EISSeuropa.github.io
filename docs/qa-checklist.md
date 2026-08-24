@@ -74,7 +74,22 @@ own pass at a desktop width and at 375px, on `/anthology-atlas.html`:
   says why it is empty.
 - **Browse this view as a list** matches the filters, and its links are
   out of the tab order while it is closed.
+- Check the **French and German maps too**, at 375px. Longer words cost
+  height above the map, and the fold was measured in English (#1548).
 - The **tour** runs to the end at both widths.
+
+### After an edition lands
+
+The Atlas share cards are drawn from the corpus, so they show last year's
+figures until they are redrawn (#1545). One command, three languages:
+
+```bash
+python3 scripts/make-share-cards.py anthology-atlas
+```
+
+Look at the output rather than trusting the exit code, and check the figures
+line matches the corpus. `check-build-sanity.mjs` catches a card that is
+missing, not one that is out of date.
 
 ## Pre-conference extras (the weeks before an ESSC)
 

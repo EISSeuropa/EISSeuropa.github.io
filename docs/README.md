@@ -23,7 +23,7 @@ Maintainer-facing docs for [eiss-europa.com](https://eiss-europa.com)
 | [publication-matching.md](publication-matching.md) | Linking ESSC papers to their later-published versions: the matcher, the review queue, the confirm step, the monthly sync. |
 | [anthology-corpus-note.md](anthology-corpus-note.md) | The public corpus-description note: scope, sources, the theme vocabulary, co-authorship, coverage, limitations. Drafted for deposit. |
 | [corpus-archiving.md](corpus-archiving.md) | Depositing the Anthology outside the repo: the Zenodo concept vs version DOI, where the DOI surfaces, the versioning cadence, HAL. |
-| [anthology-machine-readable.md](anthology-machine-readable.md) | What the corpus emits for machines: `.bib`/`.ris` exports and the bulk control, the per-theme Atlas pages and their generated cards, the per-theme Atom feeds and the committed date ledger behind them. |
+| [anthology-machine-readable.md](anthology-machine-readable.md) | What the corpus emits for machines: `.bib`/`.ris` exports and the bulk control, the per-theme Atlas pages and their generated cards in three languages, the Atlas card drawn from the corpus, the per-theme Atom feeds and the committed date ledger behind them. |
 | [netsec-directory-integration.md](netsec-directory-integration.md) | Anthology authors ↔ NetSec member directory cross-links (both directions): the two JSON contracts, the name-key join, the sync, per-author addressability. |
 | [internship-handbook.md](internship-handbook.md) | For volunteers and interns: first week, claiming a task, the two review jobs in detail, house style, how writing gets published. The operational half of `/internship.html`. |
 | [roadmap-2026.md](roadmap-2026.md) | The internal roadmap (autostamped from the CHANGELOG). |

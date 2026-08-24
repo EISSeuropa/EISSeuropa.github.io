@@ -159,6 +159,19 @@ Conference" card.
   producing an unreferenced per-year card — a `check-build-sanity` /
   orphan check will flag it).
 
+A second one for the **Atlas card**, which is drawn from the corpus and so
+carries the paper, author and theme counts as they stood when it was last
+generated (#1545). A new edition changes all three, so redraw it in all
+three languages:
+
+```bash
+python3 scripts/make-share-cards.py anthology-atlas
+```
+
+Nothing fails if you forget: the card is still there and still valid, it
+just shows the previous edition's figures. See
+[anthology-machine-readable.md](anthology-machine-readable.md#the-atlas-card-is-the-map).
+
 This is the same swap, in reverse, that step 3 does for the new edition,
 so at any time exactly one edition (the upcoming / live one) carries the
 full-name card and everything else shares the archive card.
