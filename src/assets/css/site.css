@@ -675,6 +675,15 @@ h4 { font-size: var(--fs-lg); }
   flex-wrap: wrap;
 }
 
+/* One sentence of meaning was taking three lines on a 375px screen in German,
+   95px of it, before the reader reached anything (#1548). Same words, tighter
+   setting: the badge and the text share a line, the link follows. */
+@media (max-width: 640px) {
+  .beta-ribbon-inner { gap: 6px 10px; padding-block: 6px; }
+  .beta-ribbon { font-size: .8rem; }
+  .beta-ribbon-badge { width: 18px; height: 18px; font-size: 11px; }
+}
+
 .beta-ribbon-badge {
   flex: none;
   display: inline-grid;
@@ -7437,11 +7446,27 @@ a.profile-pub-title:hover { text-decoration: underline; }
    currentColor, the network holds --brand-network on every surface. */
 .atlas-mark { flex: 0 0 auto; align-self: center; display: block; color: var(--accent); }
 .atlas-mark svg { width: 2.75rem; height: 2.75rem; display: block; }
-@media (max-width: 640px) { .atlas-mark svg { width: 2.25rem; height: 2.25rem; } }
+
 .atlas-masthead h1 { font-size: var(--fs-2xl); margin: 0; color: var(--text); letter-spacing: -.02em; line-height: var(--lh-tight); }
 .atlas-proto-pill { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 4px 11px; border-radius: var(--radius-full); background: var(--accent-soft); border: 1px solid var(--accent); color: var(--accent); }
 .atlas-lede { color: var(--text-muted); max-width: 74ch; margin: 0 0 20px; font-size: var(--fs-base); line-height: var(--lh-normal); }
 .atlas-lede a { color: var(--accent); }
+/* The masthead is the biggest single cost on a narrow screen in a language
+   whose title is longer than the English one (#1548). At 375px "Atlas de
+   l'Anthologie" wrapped at --fs-2xl and pushed the Beta pill onto a line of
+   its own, taking the row from about 85px to 177px and the map off the first
+   screen. A smaller mark, a smaller heading and a tighter gap keep the title,
+   the pill and the tour button on two lines in every language. */
+@media (max-width: 640px) {
+  .atlas-mark svg { width: 1.6rem; height: 1.6rem; }
+  .atlas-masthead { gap: 8px; align-items: center; margin: 4px 0 6px; }
+  .atlas-masthead h1 { font-size: var(--fs-xl); }
+  .atlas-proto-pill { font-size: .66rem; padding: 3px 9px; }
+  /* The lede's own bottom margin is the last free saving before the map,
+     and it is doing nothing a phone reader needs 20px of. */
+  .atlas-lede { margin-bottom: 12px; }
+}
+
 /* Below the map since #1430, so the margin is above the tiles, not below. */
 .atlas-stats { display: flex; gap: 10px; flex-wrap: wrap; margin: 18px 0 0; }
 /* `--surface` is the frosted-glass fill and is only ever correct alongside the
