@@ -10,6 +10,7 @@ SKIP_HOSTS are pinned:
     404            -> still broken (the fix must not swallow real failures)
     ENETUNREACH    -> retried once, then takes the second answer
     5xx that clears -> retried on a widening pause, then passes (#1423)
+    TLS cut        -> retried, then reported unreachable rather than broken
     5xx every time -> still broken, after every attempt is spent
     hanging host   -> every attempt in TIMEOUT_SCHEDULE is made, then reported
                       as slow rather than broken (#1417)
@@ -93,6 +94,22 @@ u, st = check_external(f'http://127.0.0.1:{port3}/down')
 print(f'  503 every time -> {st!r} after {down["n"]} attempt(s)')
 fails += [] if st == 'HTTP 503' else ['a host that 5xxs every attempt must still be broken']
 
+# A TLS connection cut mid-read must be retried and then reported as
+# unreachable, not counted as broken (#1423). Simulated by raising the same
+# URLError urllib produces, on every attempt.
+import ssl as _ssl
+calls = {'n': 0}
+def tls_cut(req, **kw):
+    calls['n'] += 1
+    raise urllib.error.URLError(
+        _ssl.SSLError(1, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol'))
+ns['TIMEOUT_PAUSES'] = (0.05, 0.05)
+urllib.request.urlopen = ns['urllib'].request.urlopen = tls_cut
+u, st = check_external(f'{base}/ok')
+urllib.request.urlopen = ns['urllib'].request.urlopen = real
+print(f'  TLS cut every time -> {st!r} after {calls["n"]} attempt(s)')
+fails += [] if st == 'unreachable' else ['a cut TLS connection should report unreachable, not broken']
+
 # A host that accepts the connection and never answers must exhaust the
 # schedule and come back as the "timeout" sentinel, which the report prints as
 # a slow host rather than counting as broken (#1417). The clock is shrunk here
@@ -116,5 +133,5 @@ fails += [] if (st == 'timeout' and len(connections) == 3) else \
     ['a hanging host should exhaust TIMEOUT_SCHEDULE and report "timeout", not broken']
 
 srv.shutdown()
-print('\nFAIL: ' + '; '.join(fails) if fails else '\nall seven behaviours correct')
+print('\nFAIL: ' + '; '.join(fails) if fails else '\nall eight behaviours correct')
 sys.exit(1 if fails else 0)
