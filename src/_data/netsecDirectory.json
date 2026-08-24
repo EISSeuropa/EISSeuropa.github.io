@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-08T07:30:20+00:00",
-  "count": 79,
+  "generated_at": "2026-08-23T05:43:21+00:00",
+  "count": 82,
   "source": "https://netsec-cost.eu/directory-index.json",
   "members": [
     {
@@ -112,6 +112,17 @@
       "role": null,
       "affiliation": "University of West Attica",
       "photo": "https://netsec-cost.eu/assets/images/people/athanasios-skraparlis.jpg"
+    },
+    {
+      "name": "Mr Avnihan Kırışık",
+      "name_key": "avnihan k",
+      "aliases": [],
+      "slug": "avnihan-k-r-s-k",
+      "url": "https://netsec-cost.eu/people/avnihan-k-r-s-k.html",
+      "orcid": "0000-0001-5552-3958",
+      "role": null,
+      "affiliation": "Ankara University & Mersin University",
+      "photo": "https://netsec-cost.eu/assets/images/people/avnihan-k-r-s-k.jpg"
     },
     {
       "name": "Carla Sofia Ferreira Fernandes",
@@ -488,6 +499,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/laura-lisboa.jpg"
     },
     {
+      "name": "Dr Li Yang",
+      "name_key": "li yang",
+      "aliases": [],
+      "slug": "li-yang",
+      "url": "https://netsec-cost.eu/people/li-yang.html",
+      "orcid": "0000-0000-0000-0000",
+      "role": null,
+      "affiliation": "Horizon Europe ReConnect China Project",
+      "photo": "https://netsec-cost.eu/assets/images/people/li-yang.jpg"
+    },
+    {
       "name": "Dr Linde Desmaele",
       "name_key": "linde desmaele",
       "aliases": [],
@@ -783,6 +805,17 @@
       "role": null,
       "affiliation": "Catholic University of Paris",
       "photo": null
+    },
+    {
+      "name": "Prof. Sprincean Serghei",
+      "name_key": "sprincean serghei",
+      "aliases": [],
+      "slug": "sprincean-serghei",
+      "url": "https://netsec-cost.eu/people/sprincean-serghei.html",
+      "orcid": "0000-0002-7411-9958",
+      "role": null,
+      "affiliation": "Moldova State University. Institute of Legal, Political and Sociological Research",
+      "photo": "https://netsec-cost.eu/assets/images/people/sprincean-serghei.jpg"
     },
     {
       "name": "Dr Tanja Pavleska",
