@@ -1,0 +1,8 @@
+---
+permalink: /vocab/themes.ttl
+eleventyExcludeFromCollections: true
+---
+{#- The theme vocabulary as SKOS in Turtle (#1249). Serialised in
+    themeVocab.js, not here: the JSON-LD sibling is generated from the same
+    structure, so the two cannot drift. -#}
+{{ themeVocab.turtle | safe }}

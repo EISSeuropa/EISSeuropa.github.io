@@ -1,0 +1,48 @@
+---
+pagination:
+  data: themeVocab.concepts
+  size: 1
+  alias: concept
+layout: base.njk
+permalink: "/vocab/themes/{{ concept.key }}/index.html"
+navKey: "navigator"
+lang: en
+eleventyComputed:
+  title: "{{ concept.prefLabel.en }}"
+  description: "A concept in the European security studies theme vocabulary, tagging {{ concept.count }} papers in the Anthology."
+  redirectTo: "{{ concept.pages.en }}"
+---
+{#- A concept URI has to resolve to something a human can read (#1249). The
+    theme's Atlas view is that page, so this is a stub that hands over to it
+    and carries the canonical link, rather than a seventeenth thin page
+    competing with it in search results. Not the "page moved" body: nothing
+    moved, this URI is the concept's permanent name. -#}
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">Theme vocabulary</span>
+    <h1>{{ concept.prefLabel.en }}</h1>
+    <p class="page-lead">
+      {{ concept.prefLabel.fr }} · {{ concept.prefLabel.de }}
+    </p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-7));">
+      <p>
+        This is the permanent identifier for one of the seventeen research
+        themes the Anthology indexes by. You'll be taken to the theme's view
+        in the Atlas in a moment.
+      </p>
+      <p>
+        <a class="btn btn-primary" href="{{ concept.pages.en }}">{{ concept.prefLabel.en }} in the Atlas</a>
+      </p>
+      <p class="muted">
+        The whole vocabulary, as SKOS:
+        <a href="/vocab/themes.ttl">Turtle</a> or
+        <a href="/vocab/themes.jsonld">JSON-LD</a>.
+      </p>
+    </article>
+  </div>
+</section>

@@ -1,0 +1,62 @@
+---
+layout: base.njk
+permalink: /vocab/themes/index.html
+title: European security studies research themes
+description: The seventeen-theme controlled vocabulary the Anthology indexes by, in English, French and German, published as SKOS.
+navKey: "navigator"
+lang: en
+ccbyLicence: true
+---
+{#- The concept scheme's own URI has to resolve, the same way each concept's
+    does (#1249). This is that page, and it is the one a citation points at.
+    Everything on it comes from themeVocab.js, so a label fix lands here and in
+    both serialisations at once. -#}
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">Vocabulary</span>
+    <h1>{{ themeVocab.title }}</h1>
+    <p class="page-lead">
+      The seventeen research themes the
+      <a href="/anthology.html">Anthology</a> indexes by, each with a permanent
+      identifier and a label in English, French and German.
+    </p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-7));">
+      <p>
+        Nine of the themes are the permanent sections of the European Security
+        Studies Conference. The other eight recur across the open panels. Every
+        concept identifier below resolves, and each theme's own view in the
+        <a href="/anthology-atlas.html">Atlas</a> lists the papers it tags.
+      </p>
+      <p>
+        The whole vocabulary as SKOS:
+        <a href="/vocab/themes.ttl">Turtle</a> or
+        <a href="/vocab/themes.jsonld">JSON-LD</a>.
+        Reusable under
+        <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>.
+      </p>
+    </article>
+  </div>
+</section>
+
+{%- for tier, heading in {"permanent": "Permanent conference sections", "derived": "Recurring themes from the open panels"} %}
+<section class="section">
+  <div class="container">
+    <h2>{{ heading }}</h2>
+    <ul>
+      {%- for concept in themeVocab.concepts %}{% if concept.tier == tier %}
+      <li>
+        <a href="{{ concept.pages.en }}">{{ concept.prefLabel.en }}</a>
+        <span class="muted">— {{ concept.prefLabel.fr }} · {{ concept.prefLabel.de }}</span><br>
+        <code>{{ concept.uri }}</code>
+        <span class="muted">({{ concept.count }} papers)</span>
+      </li>
+      {%- endif %}{% endfor %}
+    </ul>
+  </div>
+</section>
+{%- endfor %}
