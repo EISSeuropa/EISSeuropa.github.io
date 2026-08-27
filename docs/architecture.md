@@ -49,6 +49,8 @@ src/*.njk (pages)  +  src/_includes/*.njk (components)  +  src/_data/* (data)
 | `netsecDirectory.json` | Mirror of NetSec's published `directory-index.json`; `corpus.js` matches it to authors to render the "NetSec profile" link. See `netsec-directory-integration.md`. | `sync-netsec-directory.mjs`. |
 | `netsecDirectoryRejects.json` | Suppresses a wrong homonym match in the above. | Hand-maintained. |
 | `announcement.js` | The data-driven announcement/quote blocks. | Hand-maintained. |
+| `corpusRenewal.js` | Renewal and collaboration per annual edition: papers, people, first-timers, sole-authored share, authors per paper. First appearance is computed over the whole corpus, joint events included; the rows cover the annual editions only. | Derived from `corpus.js`. |
+| `themeMatrix.js` | Theme co-occurrence: a 17x17 grid of the papers any two themes both tag, shaded by count, each cell linking into the Atlas bridge view, plus the same pairs ranked, which is what narrow viewports are shown instead. | Derived from `anthologyAtlas.js`. |
 | `panels2022.js`, `countryFlags.js`, `site.js` | 2022 panels, flag lookup, site-wide config (nav array, URLs). | Hand-maintained. |
 
 ## The theme vocabulary lives in three places
