@@ -337,6 +337,56 @@
      structure knows, and the first is a button into the two themes it names. #}
   <div class="atlas-findings" id="atlas-findings"></div>
 
+  {# Every theme pair at once (#1567). The hub panel answers one pair at a
+     time, and 70 of the 136 possible pairs carry papers, so the structure a
+     reader walks press by press has never been shown whole. Markup, not
+     canvas: this is the view that survives a screenshot and a screen reader.
+     Closed by default, because #1508 found the foot of this page was already
+     doing too much. Canonical Atlas only: on a theme page the hub panel
+     already carries that theme's own bridges, and seventeen copies of a
+     289-cell table would be weight for nothing. #}
+  {%- if not atlasTheme %}
+  <details class="atlas-matrix">
+    <summary class="atlas-matrix__summary">{{ a.matrixSummary | replace("{used}", themeMatrix.pairsUsed) | replace("{all}", themeMatrix.pairsPossible) }}</summary>
+    <div class="atlas-matrix__scroll">
+      <table class="atlas-matrix__table">
+        <thead>
+          <tr>
+            <td></td>
+            {%- for r in themeMatrix.rows %}
+            {# The column head is the row number, with the theme name for
+               assistive technology: seventeen full names across the top is not
+               a table anybody can read, in any language. #}
+            <th scope="col"><span class="sr-only">{{ r.label[L] or r.label.en }}</span><span aria-hidden="true">{{ r.number }}</span></th>
+            {%- endfor %}
+          </tr>
+        </thead>
+        <tbody>
+        {%- for r in themeMatrix.rows %}
+          <tr>
+            <th scope="row"><span class="atlas-matrix__n" aria-hidden="true">{{ r.number }}</span> <a href="/anthology-atlas/theme/{{ r.slug }}{{ themeSuffix }}.html">{{ r.label[L] or r.label.en }}</a></th>
+            {%- for c in r.cells %}
+            {%- if c.diagonal %}
+            <td class="atlas-matrix__self" title="{{ a.matrixSelf | replace("{name}", r.label[L] or r.label.en) | replace("{n}", r.total) }}">{{ r.total }}</td>
+            {%- elif c.n %}
+            {%- set cellLabel = a.matrixCell | replace("{a}", r.label[L] or r.label.en) | replace("{b}", c.otherLabel[L] or c.otherLabel.en) | replace("{n}", c.n) %}
+            {# Into the bridge view (#1468), which already has its own URL
+               (#1473). The English name is the join key the map filters on,
+               here as everywhere. #}
+            <td class="atlas-matrix__on" style="--cell: {{ c.weight }}"><a href="{{ atlasHref }}?bridge={{ r.name | urlencode }}|{{ c.other | urlencode }}" title="{{ cellLabel }}" aria-label="{{ cellLabel }}">{{ c.n }}</a></td>
+            {%- else %}
+            <td></td>
+            {%- endif %}
+            {%- endfor %}
+          </tr>
+        {%- endfor %}
+        </tbody>
+      </table>
+    </div>
+    <p class="atlas-matrix__note muted">{{ a.matrixNote }}</p>
+  </details>
+  {%- endif %}
+
   {# No licence block here (#1508). It went in below the map with the stats,
      the findings and the theme list, and the foot of the page was doing too
      much. The footer states the licence on every page, and the head still

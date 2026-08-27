@@ -93,6 +93,43 @@
       <p class="coverage-note">{{ n18n.coverageNote }}</p>
     </details>
 
+    {# Renewal and collaboration by edition (#1566). Same disclosure treatment
+       as the coverage bars above, and for the same reason: this header already
+       carries the stats row, the badges and two panels, so a fourth block is
+       closed by default. A real table rather than a bar list, because six
+       columns of counts is what the question needs and a screen reader gets
+       the header association for free. Rows from corpusRenewal.js. #}
+    <details class="coverage-detail renewal-detail">
+      <summary>{{ n18n.renewalSummary }}</summary>
+      <div class="renewal-scroll">
+        <table class="renewal-table">
+          <thead>
+            <tr>
+              <th scope="col">{{ n18n.renewalColEdition }}</th>
+              <th scope="col">{{ n18n.renewalColPapers }}</th>
+              <th scope="col">{{ n18n.renewalColPeople }}</th>
+              <th scope="col">{{ n18n.renewalColNew }}</th>
+              <th scope="col">{{ n18n.renewalColSolo }}</th>
+              <th scope="col">{{ n18n.renewalColPerPaper }}</th>
+            </tr>
+          </thead>
+          <tbody>
+          {%- for r in corpusRenewal.rows %}
+            <tr>
+              <th scope="row"><a href="{{ r.url }}">{{ r.label }} {{ r.year }}</a></th>
+              <td>{{ r.papers }}</td>
+              <td>{{ r.authors }}</td>
+              <td>{{ r.newcomerPct }}%</td>
+              <td>{{ r.soloPct }}%</td>
+              <td>{{ r.authorsPerPaper }}</td>
+            </tr>
+          {%- endfor %}
+          </tbody>
+        </table>
+      </div>
+      <p class="coverage-note">{{ n18n.renewalNote }}</p>
+    </details>
+
     {# "Cite this corpus" (#1221). The Anthology is deposited as a dataset on
        Zenodo, so it can be cited like any other source. Collapsed by default
        (native <details>, same treatment as the coverage bars) so it sits
