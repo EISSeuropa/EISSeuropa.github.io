@@ -5636,6 +5636,54 @@ body.search-open { overflow: hidden; }
   line-height: var(--lh-snug);
 }
 
+/* Renewal and collaboration by edition (#1566): six columns of counts in the
+   same disclosure treatment as the coverage bars above. It needs more than
+   .coverage-detail's reading measure, and a scroll container on a phone
+   rather than a sixth column squeezed to nothing. */
+.renewal-detail {
+  max-width: 46rem;
+}
+.renewal-scroll {
+  overflow-x: auto;
+  margin-top: var(--space-4);
+}
+.renewal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+  font-variant-numeric: tabular-nums;
+}
+.renewal-table th,
+.renewal-table td {
+  padding: 6px 10px 6px 0;
+  text-align: right;
+  white-space: nowrap;
+}
+.renewal-table th:first-child,
+.renewal-table td:first-child {
+  text-align: left;
+}
+.renewal-table thead th {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+.renewal-table tbody th {
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-glass);
+}
+.renewal-table tbody td {
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-glass);
+}
+.renewal-table a {
+  color: var(--text);
+}
+
 /* Conference Navigator promo panel (navigator-promo.njk): a stats-backed
    entry point used on the homepage and at the head of the /past conferences
    page. Text on the left, the live corpus counts on the right; stacks on
@@ -7707,6 +7755,86 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-list__table a { color: var(--text); }
 .atlas-list__more { font-size: .78rem; margin: 10px 0 0; }
 .atlas-list__more[hidden] { display: none; }
+
+/* Theme co-occurrence matrix (#1567): seventeen rows against seventeen
+   numbered columns, under the map with the findings. --cell is the pair's
+   count over the busiest pair, set per cell by the template, and it is the
+   only thing shading the grid. Seventeen columns never fit a phone, so the
+   grid scrolls inside its own container rather than the page scrolling
+   sideways. */
+.atlas-matrix {
+  margin-top: var(--space-5);
+}
+.atlas-matrix__summary {
+  cursor: pointer;
+  width: max-content;
+  font-size: var(--fs-sm);
+  color: var(--accent);
+}
+.atlas-matrix__summary:hover {
+  color: var(--accent-hover);
+}
+.atlas-matrix__scroll {
+  overflow-x: auto;
+  margin-top: var(--space-4);
+}
+.atlas-matrix__table {
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums;
+}
+.atlas-matrix__table th,
+.atlas-matrix__table td {
+  border: 1px solid var(--border-glass);
+  padding: 4px 6px;
+  text-align: center;
+  min-width: 2.1rem;
+}
+.atlas-matrix__table thead th {
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.72rem;
+}
+.atlas-matrix__table tbody th {
+  text-align: left;
+  font-weight: 400;
+  white-space: nowrap;
+  border-left: 0;
+}
+.atlas-matrix__table tbody th a {
+  color: var(--text);
+}
+.atlas-matrix__n {
+  display: inline-block;
+  min-width: 1.4em;
+  color: var(--text-muted);
+}
+.atlas-matrix__on {
+  /* 12% floor, so a pair with one paper still reads as a filled cell rather
+     than an empty one, up to 55% on the busiest pair, which keeps the number
+     on it above 4.5:1 in both themes. A browser without color-mix drops the
+     declaration and gets an unshaded grid, which still carries every count. */
+  background: color-mix(in srgb, var(--accent) calc(12% + var(--cell) * 43%), transparent);
+}
+.atlas-matrix__on a {
+  color: var(--text);
+  text-decoration: none;
+  display: block;
+}
+.atlas-matrix__on a:hover,
+.atlas-matrix__on a:focus-visible {
+  text-decoration: underline;
+}
+.atlas-matrix__self {
+  color: var(--text-muted);
+  background: var(--bg-elev);
+}
+.atlas-matrix__note {
+  margin-top: var(--space-4);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-snug);
+  max-width: 60ch;
+}
 
 /* The corpus over time (#1192), under the map where a time axis belongs. */
 .atlas-time { margin-top: var(--space-3); }
