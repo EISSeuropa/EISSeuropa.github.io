@@ -7774,9 +7774,39 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-matrix__summary:hover {
   color: var(--accent-hover);
 }
+/* The grid and the ranked list are two shapes of one dataset, and exactly one
+   of them is displayed at any width. `display: none` also removes the other
+   from the accessibility tree, which is the point: a screen reader that met
+   both would be read all 70 counts twice. The switch is at 60em because the
+   grid is about 930px wide at its natural size, so below that it would be
+   scrolling sideways rather than being read. */
 .atlas-matrix__scroll {
+  display: none;
   overflow-x: auto;
   margin-top: var(--space-4);
+}
+.atlas-matrix__ranked {
+  margin: var(--space-4) 0 0;
+  padding-left: 1.6em;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+}
+.atlas-matrix__ranked li {
+  margin-bottom: 0.35rem;
+}
+.atlas-matrix__ranked a {
+  color: var(--text);
+}
+.atlas-matrix__count {
+  white-space: nowrap;
+}
+@media (min-width: 60em) {
+  .atlas-matrix__scroll {
+    display: block;
+  }
+  .atlas-matrix__ranked {
+    display: none;
+  }
 }
 .atlas-matrix__table {
   border-collapse: collapse;

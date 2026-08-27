@@ -58,15 +58,29 @@ module.exports = function () {
     })),
   }));
 
-  let used = 0;
+  // The same pairs ranked. This is the grid's data in the shape a phone can
+  // read, and site.css shows exactly one of the two at a time, so a screen
+  // reader is never handed both.
+  const pairs = [];
   for (let i = 0; i < names.length; i++) {
-    for (let j = i + 1; j < names.length; j++) if (counts[i][j]) used += 1;
+    for (let j = i + 1; j < names.length; j++) {
+      if (!counts[i][j]) continue;
+      pairs.push({
+        a: names[i],
+        b: names[j],
+        labelA: rows[i].label,
+        labelB: rows[j].label,
+        n: counts[i][j],
+      });
+    }
   }
+  pairs.sort((x, y) => y.n - x.n || x.a.localeCompare(y.a));
 
   return {
     rows,
+    pairs,
     max,
-    pairsUsed: used,
+    pairsUsed: pairs.length,
     pairsPossible: (names.length * (names.length - 1)) / 2,
   };
 };

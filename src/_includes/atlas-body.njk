@@ -367,9 +367,9 @@
             <th scope="row"><span class="atlas-matrix__n" aria-hidden="true">{{ r.number }}</span> <a href="/anthology-atlas/theme/{{ r.slug }}{{ themeSuffix }}.html">{{ r.label[L] or r.label.en }}</a></th>
             {%- for c in r.cells %}
             {%- if c.diagonal %}
-            <td class="atlas-matrix__self" title="{{ a.matrixSelf | replace("{name}", r.label[L] or r.label.en) | replace("{n}", r.total) }}">{{ r.total }}</td>
+            <td class="atlas-matrix__self" title="{{ a.matrixSelf | replace("{name}", r.label[L] or r.label.en) | replace("{n}", r.total) | replace("{noun}", a.paper if r.total == 1 else a.papers) }}">{{ r.total }}</td>
             {%- elif c.n %}
-            {%- set cellLabel = a.matrixCell | replace("{a}", r.label[L] or r.label.en) | replace("{b}", c.otherLabel[L] or c.otherLabel.en) | replace("{n}", c.n) %}
+            {%- set cellLabel = a.matrixCell | replace("{a}", r.label[L] or r.label.en) | replace("{b}", c.otherLabel[L] or c.otherLabel.en) | replace("{n}", c.n) | replace("{noun}", a.paper if c.n == 1 else a.papers) %}
             {# Into the bridge view (#1468), which already has its own URL
                (#1473). The English name is the join key the map filters on,
                here as everywhere. #}
@@ -383,6 +383,27 @@
         </tbody>
       </table>
     </div>
+
+    {# The same 70 pairs ranked, which is what a phone gets: seventeen columns
+       is not a table anybody can read at 375px. site.css shows exactly one of
+       the two at any width, and `display: none` takes the other out of the
+       accessibility tree with it, so a screen reader is never read the same
+       counts twice. #}
+    <ol class="atlas-matrix__ranked" aria-label="{{ a.matrixRankedAria }}">
+      {%- for p in themeMatrix.pairs %}
+      {%- set nameA = p.labelA[L] or p.labelA.en %}
+      {%- set nameB = p.labelB[L] or p.labelB.en %}
+      {%- set noun = a.paper if p.n == 1 else a.papers %}
+      <li>
+        {# The visible line separates the two names with a dot rather than the
+           word "and": several theme names contain "and" themselves, so the
+           sentence form is ambiguous on the page. Speech gets the sentence,
+           through the accessible name. #}
+        <a href="{{ atlasHref }}?bridge={{ p.a | urlencode }}|{{ p.b | urlencode }}"
+           aria-label="{{ a.matrixCell | replace("{a}", nameA) | replace("{b}", nameB) | replace("{n}", p.n) | replace("{noun}", noun) }}">{{ nameA }} <span aria-hidden="true">·</span> {{ nameB }} <span class="atlas-matrix__count muted">{{ p.n }} {{ noun }}</span></a>
+      </li>
+      {%- endfor %}
+    </ol>
     <p class="atlas-matrix__note muted">{{ a.matrixNote }}</p>
   </details>
   {%- endif %}
