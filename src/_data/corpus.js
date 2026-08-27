@@ -438,14 +438,24 @@ for (const { slug, slot, c } of iterContributions()) {
     // slot, whose papers the grid does not render, so they have no slot to
     // deep-link to — guard the Anthology deep link off this (#738).
     slotAnchored: slot.kind !== "break",
-    // Eligible for an abstract = a regular paper slot. Posters are modelled as
-    // break slots; keynotes, roundtables and plenaries carry a subtype. The
-    // coverage stat (#abstract-coverage) measures abstracts against this set, so
-    // sessions that never have an abstract don't drag the ratio down. No
-    // `workshop` subtype exists in the data yet; listed for when one appears.
+    // Eligible for an abstract = a regular paper slot. Keynotes, roundtables
+    // and plenaries carry a subtype. The coverage stat (#abstract-coverage)
+    // measures abstracts against this set, so sessions that never have an
+    // abstract don't drag the ratio down. No `workshop` subtype exists in the
+    // data yet; listed for when one appears.
+    //
+    // Posters are excluded by TITLE, not by slot shape (#1575). The editions
+    // disagree about how a poster slot is modelled: 2025 transcribes it as a
+    // break, 2024 and 2026 as ordinary slots, so `kind` alone put three poster
+    // papers outside the denominator and seven inside it. The transcription
+    // stays as printed, since that is what it is for, and the derived flag is
+    // what gets made consistent. This is also what the site already tells a
+    // reader: the coverage tooltip says roundtables, keynotes, posters and
+    // workshop sessions are not counted.
     abstractEligible:
       !conf.abstractsUnavailable &&
       slot.kind !== "break" &&
+      !/poster/i.test(sessionTitle || "") &&
       !["keynote", "roundtable", "plenary", "workshop"].includes(slot.subtype || ""),
     sessionTitle,
     themes: themesOf(sessionTitle),
