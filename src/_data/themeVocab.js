@@ -140,5 +140,16 @@ module.exports = function () {
     ],
   };
 
-  return { schemeUri: SCHEME_URI, title: SCHEME_TITLE, concepts, turtle, jsonld };
+  return {
+    schemeUri: SCHEME_URI,
+    title: SCHEME_TITLE,
+    concepts,
+    // English theme name to its concept URI, for the surfaces that hold a
+    // theme's name rather than its key (#1571). The name is the join key
+    // everywhere else on the Atlas, so this is the lookup those templates
+    // can actually perform.
+    uriByName: Object.fromEntries(concepts.map((c) => [c.prefLabel.en, c.uri])),
+    turtle,
+    jsonld,
+  };
 };

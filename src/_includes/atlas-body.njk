@@ -429,6 +429,12 @@
       {%- endif %}
       {%- endfor %}
     </ul>
+    {# An identifier nobody can find is barely better than one never minted,
+       and the map is where the people who would reuse this vocabulary already
+       are (#1571). The nav is not the place for it, the theme list is. #}
+    <p class="atlas-themes__vocab muted">
+      <a href="/vocab/themes/">{{ a.themesNavVocab }}</a>
+    </p>
     {%- if atlasTheme %}
     {# The query-string form stays the canonical shareable filter and is already
        indexed, so the theme page points at its equivalent rather than replacing
@@ -441,6 +447,16 @@
       <a href="/feeds/themes/{{ atlasTheme.slug }}.xml" type="application/atom+xml">{{ icon("bell") }} {{ a.themesNavFollow }}</a>
       <span class="muted">{{ a.themesNavFeedNote }}</span>
     </p>
+    {# This theme's concept URI in the published vocabulary (#1249 / #1571).
+       Shown in full rather than hidden behind link text: it is an identifier
+       somebody copies into a citation or a mapping file, and a theme page is
+       the likeliest place a crawler or a reader arrives at it. #}
+    {%- if themeVocab.uriByName[atlasTheme.name] %}
+    <p class="atlas-themes__uri">
+      <span class="muted">{{ a.vocabConcept }}</span>
+      <a href="{{ themeVocab.uriByName[atlasTheme.name] }}"><code>{{ themeVocab.uriByName[atlasTheme.name] }}</code></a>
+    </p>
+    {%- endif %}
     {%- endif %}
   </nav>
 </div>

@@ -386,6 +386,15 @@ it, so a label fix lands in both or in neither. Verified isomorphic with
 | JSON-LD | `/vocab/themes.jsonld` |
 | Human-readable | `/vocab/themes/` |
 
+**Where a reader meets it.** A vocabulary nobody can find is barely better
+than one never minted, and the map is where the people who would reuse this
+already are (#1571). The theme list on every Atlas view links to
+`/vocab/themes/`, a theme's hub panel on the map links to that theme's
+identifier, and each of the seventeen theme pages prints its own URI in full,
+since that is the page a crawler or a reader is likeliest to arrive at. The
+hub panel links by path rather than by the absolute URI, and asserts the key's
+shape first, the same way the existing slug links do.
+
 **The `re` matching rules are deliberately not published.** They are how a
 paper gets tagged, not what a theme means, and shipping them invites a reader
 to treat a regex as the definition of a research field. If a theme needs

@@ -43,6 +43,13 @@ module.exports = function () {
   const labelByName = new Map(
     Object.values(corpusData.themeLabels || {}).map((l) => [l.en, l])
   );
+  // The stable, locale-agnostic theme key, which is also the last segment of
+  // the concept URI in the published vocabulary (#1249). Carried here so the
+  // Atlas hub panel can link a theme to its identifier from the theme index
+  // it already reads, rather than through a second data blob (#1571).
+  const keyByName = new Map(
+    Object.entries(corpusData.themeLabels || {}).map(([key, l]) => [l.en, key])
+  );
   return (data.themes || []).map((name) => {
     const papers = (data.papers || []).filter((p) => (p.themes || []).includes(name));
     const years = papers.map((p) => p.year).filter(Boolean).sort();
@@ -51,6 +58,7 @@ module.exports = function () {
     return {
       name,
       label: labelByName.get(name) || { en: name },
+      key: keyByName.get(name) || null,
       slug: themeSlug(name),
       count: counts[name] || papers.length,
       // Ends only, so the word between them can come from the locale's own
