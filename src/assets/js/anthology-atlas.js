@@ -1555,6 +1555,19 @@
         hubActionsEl.append(a);
       });
     }
+    // The theme's concept URI in the published vocabulary (#1249 / #1571).
+    // Linked by PATH rather than by the absolute URI the vocabulary prints:
+    // same-origin either way, and the key gets the same shape assertion the
+    // slug above does, so nothing read out of the document can become a
+    // scheme. The key is stable and locale-agnostic, unlike the slug.
+    const key = facts && facts.key;
+    if (key && /^[a-z0-9-]+$/.test(key)) {
+      const a = document.createElement('a');
+      a.className = 'atlas-hub__link';
+      a.href = '/vocab/themes/' + key + '/';
+      a.textContent = t('vocabConcept', 'Permanent identifier');
+      hubActionsEl.append(a);
+    }
 
     hubPanelEl.hidden = false;
     announce(hubNameEl.textContent + '. ' + hubMetaEl.textContent);

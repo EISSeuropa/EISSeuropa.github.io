@@ -628,6 +628,10 @@ const locales = {
       // The same pairs ranked, which is the readable shape on a phone. Only
       // one of the two is in the accessibility tree at a time (site.css).
       matrixRankedAria: "Theme pairs, most shared papers first",
+      // The published vocabulary (#1249), linked from the Atlas rather than
+      // reachable only through the sitemap and the docs (#1571).
+      themesNavVocab: "These seventeen themes are published as a citable vocabulary.",
+      vocabConcept: "Permanent identifier",
       themesNavHeading: "Browse by research theme",
       themesNavOther: "Other research themes",
       themesNavOpenFull: "Open this theme on the full Atlas",
@@ -1348,6 +1352,8 @@ const locales = {
       matrixSelf: "{name}, {n} {noun} au total",
       matrixNote: "Chaque case compte les communications rattachées aux deux thèmes à la fois et les ouvre sur la carte. La diagonale indique le total propre à chaque thème. Les thèmes sont déduits du panel ou du résumé : une paire signale donc deux champs réunis dans une même salle, et non un jugement sur le sujet d'une communication.",
       matrixRankedAria: "Paires de thèmes, des plus partagées aux moins partagées",
+      themesNavVocab: "Ces dix-sept thèmes sont publiés sous forme de vocabulaire citable.",
+      vocabConcept: "Identifiant permanent",
       themesNavHeading: "Parcourir par thème de recherche",
       themesNavOther: "Autres thèmes de recherche",
       themesNavOpenFull: "Ouvrir ce thème sur l'Atlas complet",
@@ -2027,6 +2033,8 @@ const locales = {
       matrixSelf: "{name}, {n} {noun} insgesamt",
       matrixNote: "Jede Zelle zählt die Beiträge, die beide Themen zugleich tragen, und öffnet sie auf der Karte. Die Diagonale nennt die Gesamtzahl eines Themas. Themen werden aus dem Panel oder dem Abstract abgeleitet: Ein Paar zeigt also, dass sich zwei Felder in einem Raum begegnet sind, und ist keine Aussage über das Thema eines einzelnen Beitrags.",
       matrixRankedAria: "Themenpaare, nach gemeinsamen Beiträgen geordnet",
+      themesNavVocab: "Diese siebzehn Themen sind als zitierfähiges Vokabular veröffentlicht.",
+      vocabConcept: "Dauerhafte Kennung",
       themesNavHeading: "Nach Forschungsthema durchgehen",
       themesNavOther: "Weitere Forschungsthemen",
       themesNavOpenFull: "Dieses Thema im ganzen Atlas öffnen",

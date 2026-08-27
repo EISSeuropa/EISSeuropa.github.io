@@ -8022,6 +8022,20 @@ a.profile-pub-title:hover { text-decoration: underline; }
   font-weight: 600;
 }
 .atlas-themes__feed .muted { font-size: var(--fs-xs); }
+/* The vocabulary link under the theme list, and a theme's own concept URI on
+   its page (#1571). The URI is shown in full because it is meant to be copied,
+   so it wraps anywhere rather than pushing the page sideways on a phone. */
+.atlas-themes__vocab { margin: var(--space-4) 0 0; font-size: var(--fs-sm); }
+.atlas-themes__uri {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  font-size: var(--fs-sm);
+}
+.atlas-themes__uri .muted { font-size: var(--fs-xs); }
+.atlas-themes__uri code { overflow-wrap: anywhere; }
 @media (prefers-reduced-motion: reduce) { .atlas-chip { transition: none; } .atlas-chip:hover { transform: none; } }
 
 /* ─── Anthology Atlas — welcome strip + guided tour (#1134) ──────────────
