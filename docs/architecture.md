@@ -51,6 +51,42 @@ src/*.njk (pages)  +  src/_includes/*.njk (components)  +  src/_data/* (data)
 | `announcement.js` | The data-driven announcement/quote blocks. | Hand-maintained. |
 | `panels2022.js`, `countryFlags.js`, `site.js` | 2022 panels, flag lookup, site-wide config (nav array, URLs). | Hand-maintained. |
 
+## The theme vocabulary lives in three places
+
+The seventeen research themes are matched by regular expression, and the
+patterns are copied into **three** tables that must move together. Nothing
+fails if they drift, which is the whole problem: the Anthology filter and the
+Atlas would simply tag the same paper differently, and no build, gate or test
+would say so.
+
+| Table | File | What it matches |
+|---|---|---|
+| `THEME_RULES` | `src/_data/corpus.js` | Panel titles. Also the source of the labels, the stable keys and the published SKOS vocabulary. |
+| `THEME_MATCH` | `src/_data/paperIndex.js` | Panel titles again. A deliberate copy: the paper index does not depend on `corpus.js` for this. |
+| `ABSTRACT_OVERRIDE` | `src/_data/paperIndex.js` | Abstract prose, for three themes only. **Deliberately narrower**, see below. |
+
+**The invariant.** For all seventeen themes, the pattern in `THEME_RULES` and
+the pattern in `THEME_MATCH` are byte-identical. They were, as of the last
+check. A widening applied to one and not the other is the drift this section
+exists to prevent.
+
+**`ABSTRACT_OVERRIDE` is the exception, and is meant to differ.** Matching a
+curated panel title and matching free prose are different jobs. Three themes
+carry a prose-only pattern that drops vocabulary which is *ambient* in this
+literature rather than topical: `theor` fires in 27% of abstracts,
+`\bnato\b` in 19%, `\balliance` in 15%, and `\bspace\b` is a false friend
+("policy space"). Left in, those hubs swallowed the corpus. The reasoning is
+written out above the constant in `paperIndex.js`, and it is the reason a
+paper with an abstract full of NATO can still be untagged.
+
+**So: widening a pattern is a three-file edit**, or a two-file edit plus a
+deliberate decision to leave the prose side alone.
+
+Measure before applying one. Count the panel titles the widened pattern newly
+matches, the papers that move, and how often the new words appear across the
+abstracts on file. A word that fires in more than a few per cent of abstracts
+is ambient rather than topical, and belongs on the panel side only.
+
 ## Sync pipelines (scheduled GitHub Actions → auto-PR)
 
 - **`sync-indico.yml`** → `sync-indico.py` → `indico.json` (programme +
