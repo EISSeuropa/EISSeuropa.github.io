@@ -715,6 +715,11 @@ module.exports = {
   // Stable theme key → per-locale label, for resolving the localised chip
   // text on a speaker entry (whose `themes` array holds keys, not labels).
   themeLabels: Object.fromEntries(THEME_RULES.map((th) => [th.key, th.label])),
+  // The nine permanent panel sections come first in THEME_RULES, the derived
+  // open-panel themes after. The split is real (see the comment above the
+  // rules) and the SKOS vocabulary in themeVocab.js models it, so it is
+  // exported rather than re-counted there.
+  themePermanentKeys: THEME_ORDER.slice(0, 9),
   editions,
   stats: {
     paperCount: papers.length,
