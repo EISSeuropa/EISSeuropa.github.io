@@ -1,0 +1,6 @@
+---
+permalink: /vocab/themes.jsonld
+eleventyExcludeFromCollections: true
+---
+{#- The same SKOS graph as /vocab/themes.ttl, as JSON-LD (#1249). -#}
+{{ themeVocab.jsonld | dump(2) | safe }}

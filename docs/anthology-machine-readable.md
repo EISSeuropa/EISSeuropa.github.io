@@ -336,6 +336,86 @@ per-page alternate link. Runs in `sanity-check.yml`.
 
 ---
 
+## 4. The theme vocabulary as SKOS
+
+`THEME_RULES` in `src/_data/corpus.js` is a controlled vocabulary of seventeen
+research themes, translated by hand into French and German, and it tags 479 of
+the 511 papers. Until #1249 it existed only as a JavaScript constant inside a
+website build, which nobody outside the repository could cite, reuse or map
+their own data to. `src/_data/themeVocab.js` re-expresses it as SKOS.
+
+### The URI scheme
+
+This is the one irreversible decision in the feature, so it is written down
+here rather than left to be read off a template.
+
+| Object | URI |
+|---|---|
+| The concept scheme | `https://eiss-europa.com/vocab/themes` |
+| A concept | `https://eiss-europa.com/vocab/themes/<key>` |
+| The two tier collections | `https://eiss-europa.com/vocab/themes/collection/{permanent-sections,derived-themes}` |
+
+`<key>` is the **stable theme key** (`warfare-transformations`), not the theme's
+English name and not the Atlas page slug (`transformations-of-warfare-and-conflict`).
+The key is locale-agnostic and is already what the Atlas filter and the
+`data-themes` attribute match on. The name is display text, and it is
+translated, so it cannot name a concept.
+
+Minting a URI is a promise to keep it resolving. Every one of them does:
+`src/vocab-themes.njk` renders the scheme URI as the vocabulary's own page, and
+`src/vocab-theme.njk` renders one stub per concept that carries the canonical
+link and hands over to that theme's view in the Atlas. The stubs are excluded
+from the sitemap, so seventeen near-empty pages do not compete with the theme
+views they point at.
+
+One known impurity: a static host cannot content-negotiate, and GitHub Pages
+cannot answer 303, so a concept URI resolves to a document rather than
+distinguishing the concept from its description. Linked-data purists call that
+wrong, and the alternative is a server we do not run. The serialisations are
+unaffected.
+
+### One structure, two serialisations
+
+`themeVocab.js` builds the graph once and emits both Turtle and JSON-LD from
+it, so a label fix lands in both or in neither. Verified isomorphic with
+`rdflib` at 161 triples each when the feature shipped.
+
+| Surface | URL |
+|---|---|
+| Turtle | `/vocab/themes.ttl` |
+| JSON-LD | `/vocab/themes.jsonld` |
+| Human-readable | `/vocab/themes/` |
+
+**The `re` matching rules are deliberately not published.** They are how a
+paper gets tagged, not what a theme means, and shipping them invites a reader
+to treat a regex as the definition of a research field. If a theme needs
+disambiguating, the place for it is a `skos:scopeNote` in prose.
+
+**The two tiers are modelled, not flattened.** Nine themes are the permanent
+conference sections and eight are derived from the open-panel remainder. That
+distinction is real, so it rides in the output as two `skos:Collection`s rather
+than as a note. `corpus.js` exports `themePermanentKeys` for the split, since
+the nine come first in `THEME_RULES` and counting them in two places would
+drift.
+
+### The gate
+
+There is no separate CI script. `themeVocab.js` **throws at build time** if a
+theme has no Atlas page (a concept URI that resolves nowhere) or is missing one
+of its three labels (an incomplete vocabulary). Both failures are invisible in
+the built output, which is exactly why they fail the build instead.
+
+### Still open
+
+The deposit steps in
+[#1249](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1249) are
+external and unfinished: a Zenodo record of its own in the `eiss` community
+with its own concept DOI, a submission to Loterre, and the row in
+[`corpus-archiving.md`](corpus-archiving.md) saying which identifier belongs to
+which object. The vocabulary is published and citable by URI in the meantime.
+
+---
+
 ## Files at a glance
 
 | Path | Role |
@@ -354,6 +434,10 @@ per-page alternate link. Runs in `sanity-check.yml`.
 | `scripts/sync-corpus-ledger.mjs` | Maintains the ledger. |
 | `scripts/check-citations.mjs` | CI gate for the citation exports. |
 | `scripts/check-feeds.py` | CI gate for the feeds. |
+| `src/_data/themeVocab.js` | The SKOS graph, and the build-time gate on it. |
+| `src/vocab-themes.njk` | `/vocab/themes/`, the vocabulary's own page. |
+| `src/vocab-themes-ttl.njk` / `src/vocab-themes-jsonld.njk` | The two serialisations. |
+| `src/vocab-theme.njk` | The 17 concept URIs. |
 
 
 ---
