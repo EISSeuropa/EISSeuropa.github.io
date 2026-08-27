@@ -68,9 +68,12 @@ would say so.
 | `ABSTRACT_OVERRIDE` | `src/_data/paperIndex.js` | Abstract prose, for three themes only. **Deliberately narrower**, see below. |
 
 **The invariant.** For all seventeen themes, the pattern in `THEME_RULES` and
-the pattern in `THEME_MATCH` are byte-identical. They were, as of the last
-check. A widening applied to one and not the other is the drift this section
-exists to prevent.
+the pattern in `THEME_MATCH` are byte-identical. `checkThemeRuleDrift()` in
+`scripts/check-build-sanity.mjs` now asserts it on every PR, reporting a
+changed pattern, a theme present in one table only, and a reformat that
+defeats its own extraction. It reads the tables out of the source rather than
+importing them: exporting them would put regexes into the data cascade, and
+from there into the published JSON exports, for the benefit of a check.
 
 **`ABSTRACT_OVERRIDE` is the exception, and is meant to differ.** Matching a
 curated panel title and matching free prose are different jobs. Three themes

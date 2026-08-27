@@ -488,6 +488,86 @@ function checkThemeSpread() {
 }
 
 // ---------------------------------------------------------------------------
+// The theme patterns agree across their two copies (#1577).
+//
+// The seventeen theme patterns live twice, on purpose: THEME_RULES in
+// corpus.js and THEME_MATCH in paperIndex.js, which must not depend on
+// corpus.js for this (see the comment above THEME_MATCH). They are meant to be
+// identical, and nothing enforces it. A widening applied to one and not the
+// other leaves the Anthology by-paper filter and the Atlas tagging the same
+// paper differently, with no build, gate or test saying so. It nearly happened
+// in #1570, which had to edit both by hand.
+//
+// ABSTRACT_OVERRIDE, the third copy, is DELIBERATELY narrower for three themes
+// and is not compared here. See the ambient-vocabulary reasoning above it.
+//
+// Read out of the source rather than imported: exporting the tables would put
+// regexes into the data cascade, and from there into the published JSON
+// exports, for the benefit of a check.
+const THEME_COUNT = 17;
+function checkThemeRuleDrift() {
+  const read = (f) => {
+    try {
+      return readFileSync(f, "utf8");
+    } catch (e) {
+      problems.push(`${f}: could not read (${e.message})`);
+      return null;
+    }
+  };
+  const corpusSrc = read("src/_data/corpus.js");
+  const indexSrc = read("src/_data/paperIndex.js");
+  if (!corpusSrc || !indexSrc) return;
+
+  // THEME_RULES: { key: "...", label: { en: "..." }, re: /.../i }
+  const rules = new Map();
+  for (const m of corpusSrc.matchAll(
+    /key:\s*"([^"]+)",[\s\S]*?en:\s*"([^"]+)"[\s\S]*?re:\s*(\/[\s\S]*?\/i),/g
+  )) {
+    rules.set(m[2], { key: m[1], source: m[3] });
+  }
+  // THEME_MATCH: ["Name", /.../i],
+  const match = new Map();
+  for (const m of indexSrc.matchAll(/\["([^"]+)",\s*(\/[\s\S]*?\/i)\],/g)) {
+    match.set(m[1], m[2]);
+  }
+
+  // A reformat that defeats the extraction must fail loudly rather than pass
+  // with nothing to compare.
+  if (rules.size !== THEME_COUNT || match.size !== THEME_COUNT) {
+    problems.push(
+      `theme patterns: read ${rules.size} from THEME_RULES and ${match.size} from THEME_MATCH, ` +
+        `expected ${THEME_COUNT} each — the tables were reformatted and this check can no longer ` +
+        "read them, so update the patterns in checkThemeRuleDrift()"
+    );
+    return;
+  }
+
+  for (const [name, rule] of rules) {
+    const other = match.get(name);
+    if (other === undefined) {
+      problems.push(
+        `theme "${name}" (${rule.key}) is in corpus.js THEME_RULES and missing from ` +
+          "paperIndex.js THEME_MATCH — the Atlas and the by-paper filter would tag differently"
+      );
+    } else if (other !== rule.source) {
+      problems.push(
+        `theme "${name}" (${rule.key}) has drifted between its two copies. ` +
+          `corpus.js: ${rule.source}  paperIndex.js: ${other}. ` +
+          "Widening a pattern is a two-file edit (three, if the prose side should move too)"
+      );
+    }
+  }
+  for (const name of match.keys()) {
+    if (!rules.has(name)) {
+      problems.push(
+        `theme "${name}" is in paperIndex.js THEME_MATCH and missing from corpus.js THEME_RULES, ` +
+          "so it has no key, no labels and no entry in the published vocabulary"
+      );
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Every paper page is in the sitemap (#1293).
 //
 // This failed silently for months. Eleventy adds only a paginated template's
@@ -693,6 +773,7 @@ checkUndefinedClasses();
 checkCssCollisions();
 checkPeopleIndex();
 checkThemeSpread();
+checkThemeRuleDrift();
 checkSitemapCoverage();
 checkNoDuplicateInputs();
 checkOrphanShareCards();
@@ -704,4 +785,4 @@ if (problems.length) {
   console.error("");
   process.exit(1);
 }
-console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, no cross-block CSS class collisions, people hovercard index resolvable, theme spread within bounds, every paper page in the sitemap, no duplicate build inputs, no orphaned or missing share cards, Anthology corpus citation metadata intact).");
+console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, no cross-block CSS class collisions, people hovercard index resolvable, theme spread within bounds, theme patterns identical across their two copies, every paper page in the sitemap, no duplicate build inputs, no orphaned or missing share cards, Anthology corpus citation metadata intact).");
