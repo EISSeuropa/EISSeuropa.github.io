@@ -28,7 +28,7 @@ const corpus = require("./corpus.js");
 // paper index never depends on corpus.js THEME_RULES.
 const THEME_MATCH = [
   ["Transformations of warfare and conflict", /transformation|future war|conduct of.*war|character of war|military innovation|military technolog|military strateg|change and continuity in war|art of war|warfare/i],
-  ["Emerging domains: cyber and technology", /cyber|digital|\bAI\b|artificial intelligence|information operation|outer space|\bspace\b|autonom|drone|disruptive machine|hybrid (threat|war|domain)/i],
+  ["Emerging domains: cyber and technology", /cyber|digital|\bAI\b|artificial intelligence|information (operation|influence)|influence operation|disinformation|outer space|\bspace\b|autonom|drone|disruptive machine|hybrid (threat|war|domain)/i],
   ["Arms acquisition and transfer", /arms (procurement|production|transfer|acquisition|trade)|defen[cs]e (industry|procurement)|weapons? (procurement|transfer|production)/i],
   ["Private military actors", /private (actor|militar|security)|mercenar|\bpmc\b|non-?state.*(armed|actor)|beyond the state/i],
   ["Defence cooperation and military assistance", /defen[cs]e cooperation|military assistance|security assistance|\balliance|burden.?sharing|\bnato\b|interoperab|coalition|realignment|\balignment/i],
@@ -81,7 +81,7 @@ const ABSTRACT_MIN_HITS = 2;
 // but there they are the subject, not the wallpaper. This map is the
 // curation lever for prose matching, the same way THEME_MATCH is for panels.
 const ABSTRACT_OVERRIDE = {
-  "Emerging domains: cyber and technology": /cyber|digital|\bAI\b|artificial intelligence|information operation|outer space|autonom|drone|disruptive machine|hybrid (threat|war|domain)/i,
+  "Emerging domains: cyber and technology": /cyber|digital|\bAI\b|artificial intelligence|information (operation|influence)|influence operation|disinformation|outer space|autonom|drone|disruptive machine|hybrid (threat|war|domain)/i,
   "Defence cooperation and military assistance": /defen[cs]e cooperation|military assistance|security assistance|burden.?sharing|interoperab|coalition|realignment/i,
   "Theoretical developments in security studies": /conceptuali[sz]|knowledge production|epistem|ontolog|methodolog|origins of war|peace.?violence/i,
 };
