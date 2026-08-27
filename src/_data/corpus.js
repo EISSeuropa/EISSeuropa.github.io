@@ -225,7 +225,7 @@ const THEME_RULES = [
       fr: "Domaines émergents : cyber et technologie",
       de: "Aufkommende Domänen: Cyber und Technologie",
     },
-    re: /cyber|digital|\bAI\b|artificial intelligence|information operation|outer space|\bspace\b|autonom|drone|disruptive machine|hybrid (threat|war|domain)/i,
+    re: /cyber|digital|\bAI\b|artificial intelligence|information (operation|influence)|influence operation|disinformation|outer space|\bspace\b|autonom|drone|disruptive machine|hybrid (threat|war|domain)/i,
   },
   {
     key: "arms-acquisition",

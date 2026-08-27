@@ -130,7 +130,7 @@ English, French and German.
 | Theme | Papers |
 |---|---:|
 | Transformations of warfare and conflict | 76 |
-| Emerging domains: cyber and technology | 72 |
+| Emerging domains: cyber and technology | 76 |
 | Defence cooperation and military assistance | 68 |
 | European and transatlantic security | 49 |
 | Military interventions | 48 |
@@ -150,19 +150,30 @@ English, French and German.
 **How a paper gets its themes, and why this matters.** I match themes
 against the title of the *panel* a paper sat in, not against the paper's
 own title or abstract. Every paper on a panel therefore inherits that
-panel's themes. A paper may carry more than one: **131 papers** do.
+panel's themes. A paper may carry more than one: **132 papers** do.
 
 I have kept the rule set deliberately conservative. Where a panel title
 matches no rule, I leave its papers untagged rather than force them into
-an approximate bucket, which is why **32 papers** carry no theme at all.
+an approximate bucket, which is why **29 papers** carry no theme at all.
 I would rather under-claim than tag confidently and wrongly.
+
+Those 29 are not one kind of thing, and `scripts/untagged-papers.mjs`
+prints them split by what could be done about each. Eight are keynotes,
+roundtables and opening remarks, which are not papers. Eight are poster
+sessions. Eight sat on 2019 panels titled only "Session I" to "Session
+IV", where the panel title carries no subject at all and only an abstract
+could have tagged them. The remaining five sat on two panels whose
+subject the vocabulary does not cover: the evolutionary anthropology of
+war, at the 2024 joint conference, and the domestic politics of security
+and defence, in 2019. Both are boundaries I am content with rather than
+gaps I intend to close.
 
 This has a consequence I want to state plainly, because the table above
 invites the opposite reading. These counts are a reliable floor on each
 theme's presence in the corpus. They are not a measurement of what
 European security studies is about, and they should not be cited as one.
 Panel-level inheritance makes the tagging coarser than abstract-level
-classification would be, and the 511 papers resolve to only 91 distinct
+classification would be, and the 511 papers resolve to only 92 distinct
 theme combinations. A finer-grained classification drawn from abstract
 text is possible for the 294 papers that now carry an abstract, and I
 have not attempted it here.
