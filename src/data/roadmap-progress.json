@@ -33,22 +33,22 @@
     },
     "v2.28.0": {
       "closed": 69,
-      "total": 81,
-      "percent": 85,
+      "total": 86,
+      "percent": 80,
       "state": "open",
       "due": "2026-12-08"
     },
     "v2.29.0": {
       "closed": 0,
-      "total": 0,
-      "percent": null,
+      "total": 1,
+      "percent": 0,
       "state": "open",
       "due": "2027-04-30"
     },
     "v2.30.0": {
       "closed": 0,
-      "total": 0,
-      "percent": null,
+      "total": 1,
+      "percent": 0,
       "state": "open",
       "due": "2027-06-11"
     }
