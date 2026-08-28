@@ -12,7 +12,7 @@ conference or workshop of the European Initiative for Security Studies
 (EISS) since the association's first meeting in January 2017. It holds
 **511 papers** by **494 authors** across **12 editions**, each paper
 tagged against a controlled vocabulary of **17 research themes**, with an
-abstract on file for **292 of the 492 papers eligible for one**.
+abstract on file for **286 of the 485 papers eligible for one**.
 
 One feature of the corpus governs how it can be used, and I put it first
 rather than in a footnote. Documentation is not uniform across the
@@ -34,7 +34,7 @@ lors d'une conférence ou d'un atelier de l'Initiative européenne pour les
 en janvier 2017. Elle rassemble **511 communications** de **494 auteurs**
 réparties sur **12 éditions**, chacune indexée selon un vocabulaire
 contrôlé de **17 thèmes de recherche**, un résumé étant disponible pour
-**292 des 492 communications qui peuvent en comporter un**.
+**286 des 485 communications qui peuvent en comporter un**.
 
 Une caractéristique du corpus détermine l'usage que l'on peut en faire,
 et je la place en tête plutôt qu'en note. La documentation n'est pas
@@ -147,10 +147,21 @@ English, French and German.
 | Climate and security | 10 |
 | Gender and security | 6 |
 
-**How a paper gets its themes, and why this matters.** I match themes
-against the title of the *panel* a paper sat in, not against the paper's
-own title or abstract. Every paper on a panel therefore inherits that
-panel's themes. A paper may carry more than one: **132 papers** do.
+**How a paper gets its themes, and why this matters.** Two signals, and
+they are not equal. The panel comes first: I match themes against the
+title of the *panel* a paper sat in, and every paper on that panel
+inherits them. A panel title is editorially curated, so I trust it even
+when the paper's own text is silent about a theme.
+
+The abstract is then allowed to add to that, and only to add. A theme the
+abstract argues for joins the panel's themes when its pattern matches at
+least twice, since a single passing mention is not what a paper is about.
+Three themes carry a narrower pattern on the abstract side than on the
+panel side, because vocabulary that is ambient in this literature is not
+evidence of subject: "theoretical" appears in a quarter of the abstracts
+on file and "NATO" in a fifth, which is why a paper whose abstract is
+full of NATO can still carry no theme. A paper may end up with more than
+one: **132 papers** do.
 
 I have kept the rule set deliberately conservative. Where a panel title
 matches no rule, I leave its papers untagged rather than force them into
@@ -172,11 +183,11 @@ This has a consequence I want to state plainly, because the table above
 invites the opposite reading. These counts are a reliable floor on each
 theme's presence in the corpus. They are not a measurement of what
 European security studies is about, and they should not be cited as one.
-Panel-level inheritance makes the tagging coarser than abstract-level
-classification would be, and the 511 papers resolve to only 92 distinct
-theme combinations. A finer-grained classification drawn from abstract
-text is possible for the 294 papers that now carry an abstract, and I
-have not attempted it here.
+The panel remains the primary signal and the abstract only adds to it,
+so the tagging stays coarser than a classification built from the paper's
+own text would be, and the 511 papers resolve to only 92 distinct theme
+combinations. A classification drawn from the abstracts alone is possible
+for the 294 papers that carry one, and I have not attempted it here.
 
 ## 5. Authors and co-authorship
 
@@ -207,20 +218,22 @@ unreliable until it does.
 
 ## 6. Abstract coverage
 
-**292 of the 492 papers eligible for an abstract carry one**, or 59 per
-cent. Nineteen entries are not eligible: keynotes, roundtables, posters
+**286 of the 485 papers eligible for an abstract carry one**, or 59 per
+cent. Twenty-six entries are not eligible: keynotes, roundtables, posters
 and workshop sessions do not have submitted abstracts, and are excluded
-from the ratio rather than counted as gaps.
+from the ratio rather than counted as gaps. Some of them do carry one
+anyway, and those abstracts are on the site. They are simply not counted
+in a ratio that measures how completely the papers are documented.
 
 Coverage tracks the change of source described in section 3 almost
 exactly:
 
 | Year | Eligible | With abstract | Coverage |
 |---|---:|---:|---:|
-| 2026 | 70 | 70 | 100% |
+| 2026 | 66 | 66 | 100% |
 | 2025 | 41 | 41 | 100% |
 | 2023 | 59 | 57 | 97% |
-| 2024 | 52 | 49 | 94% |
+| 2024 | 49 | 47 | 96% |
 | 2022 | 47 | 19 | 40% |
 | 2019 | 66 | 26 | 39% |
 | 2021 | 40 | 10 | 25% |
@@ -284,8 +297,9 @@ publishers, and are not covered by the licence on the dataset.
 
 The corpus grows as each edition is added and as the recovery of earlier
 abstracts continues, so every figure in this note is a statement about
-one version. The figures here describe the corpus as of 5 August 2026:
-511 papers, 494 authors, 12 editions, 292 abstracts. I cut a new
+one version. The figures here describe the corpus as of 28 August 2026:
+511 papers, 494 authors, 12 editions, 286 abstracts counted against the
+485 papers eligible for one. I cut a new
 deposited version as the corpus reaches a stable state, and the concept
 DOI resolves to the most recent one.
 
