@@ -53,6 +53,8 @@ other way round, so this is where a new release first appears.
 | v2.26.0 | 25 Jun 2026 | **Shipped** | Introducing the Anthology |
 | v2.27.0 | 19 Aug 2026 | **Shipped** | The Anthology Atlas and the recovered back catalogue |
 | v2.28.0 | 8 Dec 2026 | Planned | The corpus in French, and the data behind it |
+| v2.29.0 | 30 Apr 2027 | Planned | ESSC 2027 programme and logistics |
+| v2.30.0 | 11 Jun 2027 | Planned | ESSC 2027, and the archive rollover after it |
 
 (`v2.24.1` was planned as a pre-ESSC patch but the work grew into a feature-rich minor, so it shipped as the **v2.25.0** *Ready for Stockholm* release instead; the `v2.24.1` milestone is closed as superseded.)
 
@@ -65,17 +67,20 @@ organising group met in August 2026 and meets again on 7 September
 confirmed at that meeting, and this repository carries two different
 placeholder editions until then (see issue #1522).
 
-The cycle runs on the organising group's calendar rather than the
-release cadence, so it carries five event milestones (CLAUDE.md §10),
-mirrored title for title on the NetSec side.
+The prep work rides the release milestones rather than a calendar of
+its own (CLAUDE.md §10), so each phase lands in whichever release is
+open when its deadline falls. The deadlines themselves live in the
+issues, and they are the organising group's, not ours.
 
-| Due | Milestone | EISS-side work |
+| Release | Due | Conference work in it |
 | --- | --- | --- |
-| 30 Sep 2026 | *ESSC 2027: save the date* | The edition settled and entered in `conferences.js` (#1522) · the runbook's contradictory worked example fixed (#1523) |
-| 6 Nov 2026 | *ESSC 2027: call for papers* | The parked 2027 page activated (#1524) · the edition share cards generated (#1525) · the call published and announced (#1526) |
-| 31 Dec 2026 | *ESSC 2027: selection and notifications* | The prize jury confirmed and the terms published (#1527) |
-| 30 Apr 2027 | *ESSC 2027: programme and logistics* | Programme content once the accepted papers are known (#1528) |
-| 11 Jun 2027 | *ESSC 2027: conference* | The archive rollover and the abstract pull (#1529) |
+| v2.28.0 | 8 Dec 2026 | *Save the date*, due 30 September: the edition settled and entered in `conferences.js` (#1522) · *Call for papers*, due 6 November: the parked 2027 page activated (#1524), the edition share cards generated (#1525), the call published and announced (#1526) · *Selection and notifications*, due 31 December: the prize jury confirmed and the terms published (#1527) |
+| v2.29.0 | 30 Apr 2027 | *Programme and logistics*: programme content once the accepted papers are known (#1528) |
+| v2.30.0 | 11 Jun 2027 | *The conference itself*: the archive rollover and the abstract pull afterwards (#1529) |
+
+The phase names are the joint group's vocabulary and the NetSec
+roadmap uses the same five, so a deadline can be named across the two
+repositories without either of them minting a milestone for it.
 
 **Versioning rules**: see the *Versioning* section of
 [`README.md`](../README.md) for the canonical definition of MAJOR /
