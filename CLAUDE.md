@@ -347,23 +347,30 @@ work is this?". The set:
   (Indico write-API access, NetSec coordination, source research) or
   with no committed release. Mirrors the *Under watch* section of the
   roadmap.
-- **Event-cycle milestones**, added in August 2026 for the ESSC 2027
-  preparation: one per phase of a dated conference cycle, named
-  `<Event> <year>: <phase>` (*save the date*, *call for papers*,
-  *selection and notifications*, *programme and logistics*,
-  *conference*). The prep deadlines are set by the joint organising
-  group and do not land on the release cadence, so folding them into
-  version milestones would drag release dates around an external
-  calendar. NetSec runs the same five titles with the same due dates,
-  since it is one conference tracked in two repositories. Their phase
-  rows live in [`docs/roadmap-2026.md`](docs/roadmap-2026.md) beside
-  the release timeline.
+
+**Every milestone title is a SemVer version, or the backlog.** No
+sentence-titled milestones. A conference cycle has phases with their own
+deadlines (*save the date*, *call for papers*, *selection and
+notifications*, *programme and logistics*, *conference*), and those are
+real, but they are named in the roadmap and in the issues rather than
+minted as milestones. The prep work rides whichever release is open when
+its deadline falls, which is what NetSec does and says in its own §10.
+
+This was tried the other way in August 2026 and reverted the same month:
+five `ESSC 2027: <phase>` milestones existed briefly, and the reason
+against them is that they answer a different question from the rest of
+the set. A milestone here answers "which release is this for?", and a
+board where some rows answer that and others answer "which phase of a
+conference is this?" cannot be read as one queue. The phase rows live in
+[`docs/roadmap-2026.md`](docs/roadmap-2026.md) beside the release
+timeline, which is where a date owned by somebody else belongs.
 
 Due dates on the version milestones come from the roadmap timeline.
 When the roadmap shifts a planned release, **bump the milestone's due
 date in the same commit that updates the roadmap row**: they are two
-views of one schedule. The same rule applies to the event milestones
-and their phase rows.
+views of one schedule. A conference deadline that lands between releases
+moves the nearest release's date or waits for it, and the roadmap says
+which.
 
 Create a new version milestone when the roadmap gains a release row.
 Don't pre-create far-future majors.
