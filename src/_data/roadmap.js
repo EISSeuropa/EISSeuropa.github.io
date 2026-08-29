@@ -193,9 +193,9 @@ const roadmap = {
           notesUrl: notes("v2.28.0"),
           when: { en: "29 August 2026 · v2.28.0", fr: "29 août 2026 · v2.28.0", de: "29. August 2026 · v2.28.0" },
           title: {
-            en: "The Atlas you can read, and a vocabulary you can cite",
-            fr: "L’Atlas que l’on peut lire, et un vocabulaire que l’on peut citer",
-            de: "Der Atlas, den man lesen kann, und ein Vokabular, das man zitieren kann",
+            en: "A usable Atlas, and a citable theme vocabulary",
+            fr: "Un Atlas utilisable, et un vocabulaire thématique citable",
+            de: "Ein nutzbarer Atlas und ein zitierfähiges Themenvokabular",
           },
           desc: {
             en: "The seventeen research themes the Anthology indexes by are published as a vocabulary anyone can cite and reuse, each with a permanent identifier reachable from the map. The Atlas gains a grid of every pair of themes that share papers, and the Anthology now says how the conference is changing: how many presenters are there for the first time, and how much of the work is written alone.",

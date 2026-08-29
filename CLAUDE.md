@@ -266,6 +266,16 @@ inside fenced blocks keeps its language-required semicolons.)
 there are five, write five. Manufactured triplets for cadence are
 the most reliable AI tell.
 
+**No second person in the CHANGELOG.** Release notes describe what
+changed, they do not address the reader. "The Atlas can show you what two
+themes share" becomes "The Atlas shows what two themes share", and "a view
+you found is a view you can send" becomes "a view that was found is a view
+that can be sent". This covers the lede, the themed sections, the index
+bullets and the release title, which is reused verbatim as the GitHub
+Release title and on the public roadmap card. Site pages are a different
+surface and keep their own voice: a page is spoken to a reader, a
+changelog is a record of what happened.
+
 **No synonym cycling.** Pick one referent for an entity and reuse it
 across consecutive sentences. Writing "the script" then "the sync"
 then "the workflow" for the same thing in three sentences is an AI
