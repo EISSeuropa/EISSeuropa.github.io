@@ -97,7 +97,35 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
-### Added
+> The Atlas shipped in August as a map you could look at. This release makes it a map you can use: in French and German, from a keyboard, on a phone, and behind a link that carries what you were looking at. Alongside it, the seventeen research themes the Anthology indexes by are now published as a vocabulary anybody can cite and reuse.
+
+### The Atlas, from something to look at to something to work with
+
+Most of this release is the map catching up with the promise of it. It opens on the map rather than below a screen of chrome, zooms and pans, and holds still while you read it. Clicking a research theme now tells you about that theme: its papers, its years, the themes it most often shares papers with, and one press into any of them. A filtered view has a link, and so does an open theme panel, so a view you found is a view you can send. Under the map, a slider walks the nine annual editions one at a time, and a line of findings says what only the map's own structure knows, such as the busiest bridge between two fields.
+
+It is also readable now by people who were previously locked out of it. The whole current view exists as a list under the canvas, the map speaks its state through a live region, and the French and German Atlases are complete rather than an English core with translated edges, including the parts the script writes rather than the page.
+
+### A vocabulary other people can use
+
+The seventeen themes were a JavaScript constant inside a website's build. They are now a published SKOS vocabulary at `/vocab/themes/`, in Turtle and JSON-LD, each theme carrying a permanent identifier that resolves, with its labels in English, French and German. The map links to them, and each theme page prints its own identifier in full, ready to copy into a citation or a mapping file.
+
+Publishing it meant deciding what the vocabulary does not cover, which is a more useful statement than it sounds. The matching rules stay unpublished, because they are how a paper gets tagged rather than what a theme means. One rule turned out to be genuinely too narrow and was widened. The papers that still carry no theme were then gone through one by one, and what remains is keynotes, poster sessions, four 2019 panels titled only "Session I" to "Session IV", and two panels whose subject the vocabulary deliberately does not reach.
+
+### The Anthology says more about itself
+
+The header counted speakers, editions, papers and abstracts, none of which say whether the Initiative is meeting the same people again or new ones. It now sets out every annual edition against five figures, and two movements are visible in them: first-time presenters have fallen from 87% in 2018 to between 61% and 77%, and sole-authored papers from 89% to 69%. The page also stops calling itself a preview and names instead which editions are finished and which are still filling in.
+
+Two figures were quietly wrong and are not any more. Poster papers were counted in the abstract-coverage ratio in some editions and not in others, depending on how each programme was transcribed. And the corpus note described a tagging method the site stopped using when abstracts began feeding the themes.
+
+### The phone, and the reader without JavaScript
+
+A run of fixes that share one cause: the map was built at desktop width with scripts running. On a phone it now reaches the first screen in all three languages, a tap previews rather than navigating away, the hover card stays out from under the thing it describes and inside the map, and a scrolling finger is no longer trapped. Without JavaScript the list alternative still exists. The rest is the ordinary tail of a release: share cards that were blank, language switches that lost your place, and a licence line that contradicted the licence.
+
+### Index of changes
+
+The themed sections above are the story. The index below is the audit trail, same content, terser.
+
+#### Added
 
 - **Every research theme on the Atlas now carries its permanent identifier.** The seventeen themes were published as a citable vocabulary last week and nothing on the map said so, which left the identifiers reachable through the sitemap and the documentation and nowhere a reader actually goes. A theme's panel on the map now links to its identifier, each of the seventeen theme pages prints its own in full, ready to copy into a citation or a mapping file, and the theme list on every Atlas view links to the vocabulary itself. Closes [#1571](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1571).
 
@@ -125,7 +153,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 - **The Atlas tells a screen reader what the map just did.** The card pinned by a tap is a canvas overlay that nothing announced, and a search that landed on a paper moved the map silently. Both now speak through a polite live region, alongside the Find messages added earlier in this release. Part of [#1446](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1446), whose remaining half is a keyboard path into the map itself.
 
-### Changed
+#### Changed
 
 - **Four more papers now carry a research theme, and the untagged set is down to 29.** A panel on foreign information influence matched none of the seventeen themes, because the pattern behind "emerging domains" recognised information *operations* and not the influence and disinformation vocabulary the same literature uses. Widening it moves four papers, three of which carried no theme at all, and it changes nothing else: the words appear in 1.4% of abstracts on file, so they are topical rather than ambient. The remaining untagged papers are now keynotes and roundtables, poster sessions, four 2019 panels titled only "Session I" to "Session IV", and two panels whose subject the vocabulary genuinely does not cover. Closes [#1570](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1570).
 
@@ -153,7 +181,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 - **The public roadmap describes v2.28.0 as it now stands.** The card was written when persistent identifiers were the headline, and those shipped early in v2.27.0: the Zenodo DOI, the HAL note and the Software Heritage archive are all live and shown on the site, so the card was promising work already done. It now leads on what actually remains, the French Anthology leaving beta on a declared scope, an analytical export of the corpus, affiliations matched to the standard registry of research organisations, a citable theme vocabulary, and the accessibility declaration. Retitled "The corpus in French, and the data behind it" in all three locales, with `docs/roadmap-2026.md` brought into line.
 
-### Fixed
+#### Fixed
 
 - **Poster papers are counted the same way in every edition.** The abstract-coverage figure measures how completely the papers are documented, and it excludes the sessions that never have a submitted abstract, which is what the page has always said. Poster sessions were only half excluded: the 2025 programme records them one way and the 2024 and 2026 programmes another, so seven poster papers sat inside the denominator while three sat outside it. They are all outside it now, decided on what the session is rather than on how its edition happens to be transcribed. The figure reads 286 abstracts across 485 eligible papers, and the 2024 edition rises from 94% to 96%. No abstract has been removed, and the poster abstracts on file are still on the site.
 
