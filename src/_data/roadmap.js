@@ -187,6 +187,22 @@ const roadmap = {
             de: "Der Anthologie-Atlas kartiert das gesamte Konferenzkorpus als interaktiven Graphen, nach Beitrag und nach Ko-Autorschaft. Die Wiedergewinnung der Abstracts reicht bis in die Ausgaben vor Indico zurück, und die Anthologie zeigt nun die Abdeckung pro Jahr. Ebenfalls in diesem Zyklus: die Praktikumsseite, die Global-Risks-Umfrage 2026, die Ankündigung der neuen Leitung und die Ankündigung der ESSC 2027, sobald Datum und Ort feststehen.",
           },
         },
+        {
+          status: "shipped",
+          version: "v2.28.0",
+          notesUrl: notes("v2.28.0"),
+          when: { en: "29 August 2026 · v2.28.0", fr: "29 août 2026 · v2.28.0", de: "29. August 2026 · v2.28.0" },
+          title: {
+            en: "The Atlas you can read, and a vocabulary you can cite",
+            fr: "L’Atlas que l’on peut lire, et un vocabulaire que l’on peut citer",
+            de: "Der Atlas, den man lesen kann, und ein Vokabular, das man zitieren kann",
+          },
+          desc: {
+            en: "The seventeen research themes the Anthology indexes by are published as a vocabulary anyone can cite and reuse, each with a permanent identifier reachable from the map. The Atlas gains a grid of every pair of themes that share papers, and the Anthology now says how the conference is changing: how many presenters are there for the first time, and how much of the work is written alone.",
+            fr: "Les dix-sept thèmes de recherche qui indexent l’Anthologie sont publiés sous forme de vocabulaire que chacun peut citer et réutiliser, chacun doté d’un identifiant permanent accessible depuis la carte. L’Atlas reçoit une grille de toutes les paires de thèmes qui partagent des communications, et l’Anthologie indique désormais comment la conférence évolue : combien d’intervenants viennent pour la première fois, et quelle part du travail est signée seul.",
+            de: "Die siebzehn Forschungsthemen, nach denen die Anthologie indexiert ist, erscheinen als Vokabular, das sich zitieren und weiterverwenden lässt, jedes mit einer dauerhaften Kennung, die von der Karte aus erreichbar ist. Der Atlas erhält ein Raster aller Themenpaare, die sich Beiträge teilen, und die Anthologie zeigt nun, wie sich die Konferenz verändert: wie viele Vortragende zum ersten Mal dabei sind und wie viel der Arbeit allein verfasst wird.",
+          },
+        },
       ],
     },
     {
@@ -199,9 +215,9 @@ const roadmap = {
       entries: [
         {
           status: "planned",
-          version: "v2.28.0",
-          milestone: "v2.28.0",
-          when: { en: "8 December 2026 · v2.28.0", fr: "8 décembre 2026 · v2.28.0", de: "8. Dezember 2026 · v2.28.0" },
+          version: "v2.29.0",
+          milestone: "v2.29.0",
+          when: { en: "8 December 2026 · v2.29.0", fr: "8 décembre 2026 · v2.29.0", de: "8. Dezember 2026 · v2.29.0" },
           title: {
             en: "The corpus in French, and the data behind it",
             fr: "Le corpus en français, et les données qui le sous-tendent",
@@ -225,9 +241,9 @@ const roadmap = {
       entries: [
         {
           status: "planned",
-          version: "v2.29.0",
-          milestone: "v2.29.0",
-          when: { en: "30 April 2027 · v2.29.0", fr: "30 avril 2027 · v2.29.0", de: "30. April 2027 · v2.29.0" },
+          version: "v2.30.0",
+          milestone: "v2.30.0",
+          when: { en: "30 April 2027 · v2.30.0", fr: "30 avril 2027 · v2.30.0", de: "30. April 2027 · v2.30.0" },
           title: {
             en: "The 2027 programme on the page",
             fr: "Le programme 2027 sur la page",
@@ -256,9 +272,9 @@ const roadmap = {
         },
         {
           status: "planned",
-          version: "v2.30.0",
-          milestone: "v2.30.0",
-          when: { en: "11 June 2027 · v2.30.0", fr: "11 juin 2027 · v2.30.0", de: "11. Juni 2027 · v2.30.0" },
+          version: "v2.31.0",
+          milestone: "v2.31.0",
+          when: { en: "11 June 2027 · v2.31.0", fr: "11 juin 2027 · v2.31.0", de: "11. Juni 2027 · v2.31.0" },
           title: {
             en: "The edition joins the archive",
             fr: "L’édition rejoint les archives",

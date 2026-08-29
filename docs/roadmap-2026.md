@@ -52,9 +52,10 @@ other way round, so this is where a new release first appears.
 | v2.25.0 | 9 Jun 2026 | **Shipped** | Ready for Stockholm (pre-conference release) |
 | v2.26.0 | 25 Jun 2026 | **Shipped** | Introducing the Anthology |
 | v2.27.0 | 19 Aug 2026 | **Shipped** | The Anthology Atlas and the recovered back catalogue |
-| v2.28.0 | 8 Dec 2026 | Planned | The corpus in French, and the data behind it |
-| v2.29.0 | 30 Apr 2027 | Planned | ESSC 2027 programme and logistics |
-| v2.30.0 | 11 Jun 2027 | Planned | ESSC 2027, and the archive rollover after it |
+| v2.28.0 | 29 Aug 2026 | **Shipped** | The Atlas you can read, and a vocabulary you can cite |
+| v2.29.0 | 8 Dec 2026 | Planned | The corpus in French, and the data behind it |
+| v2.30.0 | 30 Apr 2027 | Planned | ESSC 2027 programme and logistics |
+| v2.31.0 | 11 Jun 2027 | Planned | ESSC 2027, and the archive rollover after it |
 
 (`v2.24.1` was planned as a pre-ESSC patch but the work grew into a feature-rich minor, so it shipped as the **v2.25.0** *Ready for Stockholm* release instead; the `v2.24.1` milestone is closed as superseded.)
 
@@ -74,9 +75,9 @@ issues, and they are the organising group's, not ours.
 
 | Release | Due | Conference work in it |
 | --- | --- | --- |
-| v2.28.0 | 8 Dec 2026 | *Save the date*, due 30 September: the edition settled and entered in `conferences.js` (#1522) · *Call for papers*, due 6 November: the parked 2027 page activated (#1524), the edition share cards generated (#1525), the call published and announced (#1526) · *Selection and notifications*, due 31 December: the prize jury confirmed and the terms published (#1527) |
-| v2.29.0 | 30 Apr 2027 | *Programme and logistics*: programme content once the accepted papers are known (#1528) |
-| v2.30.0 | 11 Jun 2027 | *The conference itself*: the archive rollover and the abstract pull afterwards (#1529) |
+| v2.29.0 | 8 Dec 2026 | *Save the date*, due 30 September: the edition settled and entered in `conferences.js` (#1522) · *Call for papers*, due 6 November: the parked 2027 page activated (#1524), the edition share cards generated (#1525), the call published and announced (#1526) · *Selection and notifications*, due 31 December: the prize jury confirmed and the terms published (#1527) |
+| v2.30.0 | 30 Apr 2027 | *Programme and logistics*: programme content once the accepted papers are known (#1528) |
+| v2.31.0 | 11 Jun 2027 | *The conference itself*: the archive rollover and the abstract pull afterwards (#1529) |
 
 The phase names are the joint group's vocabulary and the NetSec
 roadmap uses the same five, so a deadline can be named across the two
@@ -233,7 +234,7 @@ crossfades, an acknowledgments / contributors page, a newsletter
 archive page, `rel="me"` verification if EISS gets a Mastodon or
 Bluesky account.
 
-### v2.28.0 — The corpus in French, and the data behind it · target 8 December 2026
+### v2.29.0 — The corpus in French, and the data behind it · target 8 December 2026
 
 The identifier strand that gave this release its old name shipped early,
 inside v2.27.0: the Zenodo DOI, the HAL note and the Software Heritage
@@ -243,7 +244,7 @@ large part of the network reads, together with the metadata work that
 turns the corpus into something other projects can analyse and cite.
 
 The
-[v2.28.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/11)
+[v2.29.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/24)
 is the queryable commitment (rule §10).
 
 - **Persistent identifiers and long-term archiving (shipped in v2.27.0)** — the corpus is
