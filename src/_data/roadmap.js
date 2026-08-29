@@ -188,9 +188,12 @@ const roadmap = {
           },
         },
         {
-          status: "shipped",
+          // Planned until the release exists. scripts/release.sh offers to flip
+          // this card, which is what adds the notes link, and a notesUrl written
+          // ahead of the tag is a 404 the link checker rightly fails on.
+          status: "planned",
           version: "v2.28.0",
-          notesUrl: notes("v2.28.0"),
+          milestone: "v2.28.0",
           when: { en: "29 August 2026 · v2.28.0", fr: "29 août 2026 · v2.28.0", de: "29. August 2026 · v2.28.0" },
           title: {
             en: "A usable Atlas, and a citable theme vocabulary",

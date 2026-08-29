@@ -52,7 +52,7 @@ other way round, so this is where a new release first appears.
 | v2.25.0 | 9 Jun 2026 | **Shipped** | Ready for Stockholm (pre-conference release) |
 | v2.26.0 | 25 Jun 2026 | **Shipped** | Introducing the Anthology |
 | v2.27.0 | 19 Aug 2026 | **Shipped** | The Anthology Atlas and the recovered back catalogue |
-| v2.28.0 | 29 Aug 2026 | **Shipped** | A usable Atlas, and a citable theme vocabulary |
+| v2.28.0 | 29 Aug 2026 | In progress | A usable Atlas, and a citable theme vocabulary |
 | v2.29.0 | 8 Dec 2026 | Planned | The corpus in French, and the data behind it |
 | v2.30.0 | 30 Apr 2027 | Planned | ESSC 2027 programme and logistics |
 | v2.31.0 | 11 Jun 2027 | Planned | ESSC 2027, and the archive rollover after it |
