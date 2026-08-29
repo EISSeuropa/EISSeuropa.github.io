@@ -97,6 +97,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+_Nothing yet._
+
+## [2.28.0] · 2026-08-29 — A usable Atlas, and a citable theme vocabulary
+
 > The Atlas shipped in August as a map to look at. This release makes it a map to work with: in French and German, from a keyboard, on a phone, and behind a link that carries the view it was shared from. Alongside it, the seventeen research themes the Anthology indexes by are published as a vocabulary that can be cited and reused.
 
 ### The Atlas, from something to look at to something to work with
@@ -1431,7 +1435,8 @@ Preview MCP screenshots of `/index.fr.html`, `/index.de.html`, `/initiative.de.h
 
 *Originally tagged as **v2.0.0**; renumbered to **v2.0.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
 
-[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.27.0...HEAD
+[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.28.0...HEAD
+[2.28.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.27.0...v2.28.0
 [2.27.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.26.0...v2.27.0
 [2.26.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.25.0...v2.26.0
 [2.25.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.24.0...v2.25.0
