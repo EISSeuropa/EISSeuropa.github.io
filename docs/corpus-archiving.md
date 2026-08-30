@@ -1,4 +1,4 @@
-# Archiving the Anthology corpus
+# Archiving the Anthology
 
 How the Anthology is deposited outside this repository, so it can be
 cited and so it outlives the website. Tracked in
@@ -6,6 +6,16 @@ cited and so it outlives the website. Tracked in
 (Zenodo) and
 [#1222](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1222)
 (HAL).
+
+**Two objects, deposited separately.** The *corpus* is the data: every
+paper, every author, the abstracts and the tags. The *theme vocabulary*
+is the seventeen-concept classification the corpus is indexed by, which
+is reusable by people who have no interest in EISS papers at all. They
+get one record each, with one concept DOI each, because a reuser citing
+the vocabulary is not citing the corpus. Most of this file is about the
+corpus. The vocabulary has its own section at the end
+([jump](#the-theme-vocabulary-a-record-of-its-own)), tracked in
+[#1249](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1249).
 
 ## The two DOIs, and which one to use
 
@@ -321,3 +331,179 @@ and producing a permanent record per release from a 117 MB repository,
 with default metadata. Software Heritage archives continuously, mints no
 DOI, and is the identifier HAL accepts for a software deposit. That is
 why this is the route taken.
+
+---
+
+## The theme vocabulary: a record of its own
+
+The seventeen research themes shipped as SKOS in v2.28.0 (see
+[`anthology-machine-readable.md` §4](anthology-machine-readable.md) for
+how they are generated). They are deposited **separately from the
+corpus**, in the same `eiss` community, because they are a separate
+object: somebody classifying European security studies material can
+reuse the vocabulary without touching a single EISS paper. Bundling it
+into the corpus record would make it uncitable on its own.
+
+### Which identifier belongs to which object
+
+| Object | Identifier | Kind |
+|---|---|---|
+| The corpus | `10.5281/zenodo.21776209` | Zenodo concept DOI |
+| The corpus, `v2.26.0` snapshot | `10.5281/zenodo.21776210` | Zenodo version DOI |
+| The corpus note | `hal-05711925` | HAL, typed Research report |
+| The site source | `swh:1:dir:482a1c89…` | Software Heritage directory |
+| The theme vocabulary | *not yet minted* | Zenodo concept DOI |
+| The vocabulary, live | `https://eiss-europa.com/vocab/themes` | Resolvable concept scheme URI |
+| A single theme, live | `https://eiss-europa.com/vocab/themes/<key>` | Resolvable concept URI |
+
+The concept-versus-version rule from the top of this file applies to the
+vocabulary record identically: cite the concept DOI, never the version
+one.
+
+### Preparing the files
+
+The serialisations are ordinary build outputs, so there is no export
+script to run. Build, then copy the two files out under names that still
+mean something in a stranger's downloads folder:
+
+```bash
+npx @11ty/eleventy && cp _site/vocab/themes.ttl data/eiss-themes-skos.ttl && cp _site/vocab/themes.jsonld data/eiss-themes-skos.jsonld
+```
+
+Both land in `data/`, gitignored the same way the corpus export is: they
+are generated from committed source, so committing them would be a
+second copy to keep in step.
+
+Sanity-check the pair before uploading. They are emitted from one
+structure and should therefore carry the same graph:
+
+```bash
+python3 -c "
+import rdflib
+for p, f in [('data/eiss-themes-skos.ttl','turtle'), ('data/eiss-themes-skos.jsonld','json-ld')]:
+    g = rdflib.Graph(); g.parse(p, format=f)
+    S = rdflib.Namespace('http://www.w3.org/2004/02/skos/core#')
+    print(p, len(g), 'triples,', len(set(g.subjects(rdflib.RDF.type, S.Concept))), 'concepts')
+"
+```
+
+At the time of writing that prints 161 triples and 17 concepts for each.
+A mismatch between the two lines means one serialiser drifted, which
+`themeVocab.js` is built to make impossible, so investigate rather than
+deposit.
+
+### Versioning: the vocabulary's own SemVer, not the site's
+
+The corpus deposit has an unsettled cadence question (see above). The
+vocabulary does not, and the answer is different: **its version belongs
+to the vocabulary, not to the website that emits it.** A new version is
+cut when a concept is added, retired or relabelled. A site release that
+touches nothing in `THEME_RULES` produces no vocabulary version, however
+many times the `.ttl` is rebuilt. The first deposit is `1.0.0`.
+
+This is the right split because a reuser who has mapped their categories
+onto these concepts cares about exactly one thing: whether the concepts
+moved. Versioning by site release would flood them with versions that
+say nothing.
+
+### The Zenodo form, field by field
+
+Ready to paste. Everything here is settled apart from the ORCID, which
+is not on file in the repository.
+
+- **Resource type**: Dataset. DataCite has no vocabulary type, and
+  Dataset is what the corpus record uses and what comparable SKOS
+  deposits use. Deliberate, not a default.
+- **Title**: European security studies research themes: a trilingual
+  SKOS vocabulary
+- **Authors**: Laudrain, Arthur (European Initiative for Security
+  Studies). Add the ORCID at deposit time.
+- **Publisher**: European Initiative for Security Studies, matching
+  `site.corpus.publisher` on the corpus record
+- **Publication date**: the day of deposit
+- **Version**: `1.0.0`
+- **Language**: English (the concept labels are English, French and
+  German, which the description says and Zenodo's single-language field
+  cannot)
+- **Licence**: Creative Commons Attribution 4.0 International
+- **Community**: `eiss`
+- **Keywords**: security studies, European security, SKOS, controlled
+  vocabulary, thesaurus, research classification, multilingual
+  vocabulary, defence studies, war studies, linked data
+- **Related identifiers**:
+  - `https://eiss-europa.com/vocab/themes`, *is identical to*, being
+    the live resolvable form of the same vocabulary
+  - `10.5281/zenodo.21776209`, *is referenced by*, that being the
+    Anthology corpus this vocabulary indexes
+
+#### Description
+
+Paste as-is.
+
+> Seventeen research themes for the field of European security studies,
+> published as SKOS in Turtle and JSON-LD, with a preferred label in
+> English, French and German for every concept.
+>
+> The vocabulary is the classification the European Security Studies
+> Anthology indexes by, where it tags 482 of 511 conference papers.
+> Nine of the concepts are the permanent sections of the European
+> Security Studies Conference, carried over verbatim from the
+> conference's own trilingual section titles. The other eight are
+> recurring subjects derived from the open panels across the annual
+> editions from 2017 to 2026. The two groups are modelled as separate
+> `skos:Collection`s rather than flattened together, so a reuser can
+> tell a standing section of the field from a theme that emerged from
+> what was submitted.
+>
+> Every concept carries a permanent HTTP identifier of the form
+> `https://eiss-europa.com/vocab/themes/<key>`, which resolves to a page
+> listing the papers that theme tags. The concept scheme itself is at
+> `https://eiss-europa.com/vocab/themes`.
+>
+> **What it is for.** A researcher classifying European security studies
+> material, a library or repository assigning subjects to conference
+> output, or a project mapping its own categories onto a shared set, can
+> reuse these concepts by URI instead of inventing a scheme from
+> scratch. The hand-written French and German labels mean a francophone
+> or germanophone catalogue can adopt the vocabulary without translating
+> it first. And because the identifiers resolve into a live corpus, a
+> concept is an entry point to the papers it tags rather than only a
+> label.
+>
+> **What it is not.** The vocabulary carries meaning, not method. The
+> pattern rules that decide which paper receives which theme are
+> deliberately left unpublished: they are how one corpus tags its own
+> material, and a regular expression is not the definition of a research
+> field. Where a concept needs disambiguating, a scope note is the place
+> for it.
+>
+> **Files.** `eiss-themes-skos.ttl` holds the vocabulary in Turtle and
+> `eiss-themes-skos.jsonld` holds the same graph in JSON-LD. Both are
+> generated from one structure, so they cannot diverge, and they are
+> verified isomorphic at 161 triples.
+>
+> Version numbering belongs to the vocabulary rather than to the website
+> that generates it. A new version appears when a concept is added,
+> retired or relabelled.
+
+### After the DOI exists
+
+Five edits, none of which can be made before the deposit because they
+all need the concept DOI:
+
+1. Fill in the vocabulary row in the identifier table above.
+2. Add a `site.themeVocab` block beside `site.corpus` in
+   `src/_data/site.js`, holding the DOI, the DOI URL and the citation
+   string, so nothing downstream hard-codes it.
+3. Give `/vocab/themes/` a "Cite this vocabulary" line rendered from
+   that block. It is the page a reuser lands on, and it is currently the
+   only citable surface with no citation on it.
+4. Update the "Still open" note in
+   [`anthology-machine-readable.md` §4](anthology-machine-readable.md) to
+   point here.
+5. Add a `[Unreleased]` CHANGELOG bullet: a new DOI is user-visible.
+
+Then submit to Loterre (INIST-CNRS) and record the outcome in
+[#1249](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1249)
+either way. That is a submission through their process, not a
+partnership, and it is the last box on that issue.

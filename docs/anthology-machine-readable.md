@@ -418,10 +418,12 @@ the built output, which is exactly why they fail the build instead.
 
 The deposit steps in
 [#1249](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1249) are
-external and unfinished: a Zenodo record of its own in the `eiss` community
-with its own concept DOI, a submission to Loterre, and the row in
-[`corpus-archiving.md`](corpus-archiving.md) saying which identifier belongs to
-which object. The vocabulary is published and citable by URI in the meantime.
+external, so they cannot be finished from a PR: a Zenodo record of its own in
+the `eiss` community with its own concept DOI, and a submission to Loterre.
+Everything up to the upload is prepared and written down in
+[`corpus-archiving.md`](corpus-archiving.md), including the identifier table,
+the two-line file build, the version-numbering decision and the Zenodo form
+field by field. The vocabulary is published and citable by URI in the meantime.
 
 ---
 
