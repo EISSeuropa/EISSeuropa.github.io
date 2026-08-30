@@ -1,0 +1,174 @@
+# Refresh the roadmap's two machine-managed surfaces, once a day, in one PR.
+#
+# Replaces sync-roadmap.yml and roadmap-progress.yml, which did the same two
+# jobs on event triggers. Between them they produced 198 of the 308 commits on
+# `master` in August 2026, so bookkeeping was 64% of the month's history. On
+# 27 August every single commit that landed was one of these two.
+#
+# Why a schedule rather than events
+#   Both outputs are eventually consistent, not real-time. docs/roadmap-2026.md
+#   says so of the autostamp: it is a staleness alarm, and a human writes the
+#   synthesis at release time (CLAUDE.md §11). The progress figures drive a
+#   progress bar on a roadmap card. Nothing downstream reads either within
+#   minutes, so reacting to events bought nothing and cost a pull request per
+#   merge.
+#
+#   The old triggers were also self-feeding, in two different ways.
+#   sync-roadmap.yml ran on any push to master touching CHANGELOG.md, and rule
+#   §4 asks every substantive PR to add an [Unreleased] bullet, so nearly every
+#   merge fired it. It had already been narrowed once, in v2.23.1, after its
+#   own output retriggered it and GitHub's anti-abuse heuristic flagged the
+#   runs as disruptive. That fix stopped the output loop but left the input
+#   one. roadmap-progress.yml ran on `milestoned`, and rule §10 asks every
+#   issue to carry a milestone, so filing an issue fired it with no merge
+#   involved at all.
+#
+#   Both carried concurrency groups with cancel-in-progress. That was never the
+#   missing piece: each run finished and opened its PR before the next merge
+#   arrived, so there was nothing in flight to cancel.
+#
+# What this costs
+#   Up to a day of staleness on both surfaces, which neither has a consumer
+#   for, with one exception now closed. scripts/release.sh assumed the
+#   autostamp was fresh because a merge had just refreshed it. It now runs both
+#   scripts itself before promoting the CHANGELOG, so a release never depends
+#   on a scheduled job having fired. Use workflow_dispatch for any other
+#   "I want it now" case.
+#
+# What it produces
+#   One PR on `roadmap-refresh/auto`, auto-merge armed, carrying whichever of
+#   the two files actually moved. If neither moved, create-pull-request finds
+#   no diff and opens nothing, which is the ordinary case on a quiet day.
+#
+# Adapted from the sister repo
+# EISSeuropa/netsec.github.io/.github/workflows/roadmap-refresh.yml. Three
+# adaptations for EISS: the target branch is `master` not `main`; the progress
+# JSON lives at `src/data/` (an Eleventy passthrough) rather than NetSec's
+# repo-root `data/`; and the auto-merge step keeps EISS's retry loop, which
+# exists because the enable-auto-merge call has returned a 504 and left a
+# dangling un-merged auto-PR.
+
+name: Refresh roadmap surfaces
+
+on:
+  # 05:00 UTC daily, after the daily sync-indico (03:45) and scheduled-rebuild
+  # (04:15), so the day's refresh sees anything they changed rather than
+  # trailing it by 24 hours. Clear of the Monday 06:00-07:00 cluster.
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: roadmap-refresh
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    name: Refresh the autostamp and the milestone progress
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # fetch-depth: 0 so `git tag --list --sort=-v:refname` sees the full
+          # tag history. Shallow clones default to depth 1, which loses tags.
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+
+      - name: Refresh the [Unreleased] autostamp
+        run: |
+          set -o pipefail
+          python3 scripts/sync-roadmap.py | tee /tmp/sync-roadmap.txt
+
+      - name: Refresh the milestone progress
+        env:
+          # The script calls `gh api`; gh authenticates from GH_TOKEN.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -o pipefail
+          python3 scripts/sync-roadmap-progress.py | tee /tmp/roadmap-progress.txt
+
+      - name: Compose the PR body
+        run: |
+          {
+            echo "Daily refresh of the roadmap's two machine-managed surfaces."
+            echo ""
+            echo "**\`docs/roadmap-2026.md\`**: the \`[Unreleased]\` autostamp counts"
+            echo "bullets in \`CHANGELOG.md\` per category and freshness-stamps the date."
+            echo "The prose in the timeline rows is untouched. Refreshing that synthesis"
+            echo "is a maintainer call at the release-time cross-check."
+            echo ""
+            echo '```'
+            cat /tmp/sync-roadmap.txt
+            echo '```'
+            echo ""
+            echo "**\`src/data/roadmap-progress.json\`**: per-milestone closed/total/percent,"
+            echo "read by the progress bars on \`/roadmap.html\` (+ FR + DE). Committed rather"
+            echo "than fetched live, so the page stays static and survives an API outage."
+            echo ""
+            echo '```'
+            cat /tmp/roadmap-progress.txt
+            echo '```'
+            echo ""
+            echo "---"
+            echo "_Workflow: **Refresh roadmap surfaces**, run_id \`${{ github.run_id }}\`, trigger \`${{ github.event_name }}\`._"
+          } > /tmp/roadmap-refresh-pr-body.md
+
+      - name: Open or update the PR if either surface moved
+        id: create-pr
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: roadmap-refresh/auto
+          base: master
+          delete-branch: true
+          title: 'chore(roadmap): daily refresh of the autostamp and milestone progress'
+          commit-message: |
+            chore(roadmap): daily refresh of the autostamp and milestone progress
+
+            Auto-generated by scripts/sync-roadmap.py and
+            scripts/sync-roadmap-progress.py. See the PR body for both deltas.
+          body-path: /tmp/roadmap-refresh-pr-body.md
+          labels: |
+            automated
+            documentation
+
+      # Auto-merge so the refresh ships without manual review. Both diffs are
+      # mechanical, CodeQL still runs, and a failing check still blocks.
+      - name: Arm auto-merge on the auto-PR
+        if: steps.create-pr.outputs.pull-request-number
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Arm auto-merge, retrying transient GitHub API hiccups (e.g. a
+          # 504 Gateway Timeout on the enable-auto-merge call, which has
+          # failed the job and left a dangling un-merged auto-PR). Treat
+          # "already merged" / "auto-merge already enabled" as success so a
+          # partial first attempt doesn't then fail the retry.
+          pr="${{ steps.create-pr.outputs.pull-request-number }}"
+          repo="${{ github.repository }}"
+          for attempt in 1 2 3 4 5; do
+            if gh pr merge "$pr" --squash --auto --repo "$repo"; then
+              echo "Auto-merge armed (attempt $attempt)."
+              exit 0
+            fi
+            state=$(gh pr view "$pr" --repo "$repo" \
+              --json state,autoMergeRequest \
+              -q '.state + " auto=" + ((.autoMergeRequest != null) | tostring)' || true)
+            echo "Attempt $attempt failed; PR state: $state"
+            case "$state" in
+              MERGED*)    echo "Already merged."; exit 0 ;;
+              *auto=true) echo "Auto-merge already enabled."; exit 0 ;;
+            esac
+            sleep 15
+          done
+          echo "::error::Could not arm auto-merge after 5 attempts."
+          exit 1

@@ -23,7 +23,7 @@
 #   - The roster (who has an ORCID iD) comes from src/_data/board.json,
 #     fed by the board-bios Google Form (see docs/board-bios-setup.md).
 #
-# Adapted from .github/workflows/sync-roadmap.yml: same SHA-pinned
+# Adapted from .github/workflows/roadmap-refresh.yml: same SHA-pinned
 # actions, same auto-merge-arming retry loop, target branch `master`.
 # Cron sequenced after sync-roadmap (Monday 06:00 UTC).
 
@@ -36,7 +36,7 @@ on:
       # Re-run when a member's ORCID iD is added/changed in the roster
       # or when the fetch logic changes. Does NOT listen to its own
       # output (orcidWorks.json) to avoid a self-feeding PR loop, the
-      # same trap documented in sync-roadmap.yml.
+      # same trap documented in roadmap-refresh.yml.
       - 'src/_data/board.json'
       - 'scripts/sync-orcid.py'
       - '.github/workflows/sync-orcid.yml'

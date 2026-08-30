@@ -1,8 +1,8 @@
 # Scheduled-workflow failure alarm (issue #56).
 #
 # The site's data freshness rides on unattended cron workflows (the
-# Indico sync, the board-bios sync, the daily rebuild, the roadmap
-# autostamp + progress refresh) plus the on-push deploy. A failed run
+# Indico sync, the board-bios sync, the daily rebuild, the daily roadmap
+# refresh) plus the on-push deploy. A failed run
 # used to be discoverable only by reading the Actions tab, so the
 # programme could quietly go stale. This workflow turns any failure
 # into a tracking issue the maintainer actually sees.
@@ -26,8 +26,7 @@ on:
       - Sync events from Indico
       - Sync board bios from Google Form
       - Scheduled rebuild
-      - Sync roadmap autostamp
-      - Sync roadmap progress
+      - Refresh roadmap surfaces
       - Build and deploy site
     types: [completed]
 

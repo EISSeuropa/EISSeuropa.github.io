@@ -175,6 +175,53 @@ fi
 echo "✓ On master, clean, in sync with origin, v$VERSION is fresh."
 
 # ────────────────────────────────────────────────────────────────────
+# Refresh the roadmap's machine-managed surfaces
+#
+# These used to be refreshed by workflows that fired on every merge and on
+# every `milestoned` event, so they were always seconds old by the time a
+# release ran. They are now one daily job (roadmap-refresh.yml), which means
+# a release could otherwise ship a stamp up to a day stale. Running both here
+# removes the dependency on a scheduled job having fired, which is the right
+# shape regardless: a release should not rely on cron.
+#
+# Both are idempotent. sync-roadmap.py is offline; sync-roadmap-progress.py
+# reads the milestones through `gh`, so it is reported and skipped rather than
+# fatal if that call fails. Neither is worth aborting a release over.
+# ────────────────────────────────────────────────────────────────────
+
+step "Refresh the roadmap autostamp and milestone progress"
+
+ROADMAP_SURFACES=(docs/roadmap-2026.md src/data/roadmap-progress.json)
+
+if "$PY3" "$REPO_ROOT/scripts/sync-roadmap.py"; then
+  echo "  ✓ autostamp current."
+else
+  echo "  ! sync-roadmap.py failed; the [Unreleased] autostamp may be stale."
+fi
+
+if "$PY3" "$REPO_ROOT/scripts/sync-roadmap-progress.py"; then
+  echo "  ✓ milestone progress current."
+else
+  echo "  ! sync-roadmap-progress.py failed (gh auth?); the roadmap progress"
+  echo "    bars may be stale. Not fatal to the release."
+fi
+
+if ! git diff --quiet -- "${ROADMAP_SURFACES[@]}"; then
+  if [[ "$DRY_RUN" == "--dry-run" ]]; then
+    # Pre-flight guarantees a clean tree, so anything dirty here was written
+    # by the two refreshes above. Put it back: a preview that mutates the
+    # tree makes the next real run fail its own clean-tree check. Called
+    # directly, not through run(), which is a no-op under --dry-run and would
+    # print the revert without performing it.
+    git checkout -- "${ROADMAP_SURFACES[@]}"
+    echo "  · one or both moved; reverted, because this is a dry run."
+  else
+    echo "  · one or both moved; the changes ride in the release commit below."
+    ROADMAP_SURFACES_MOVED=1
+  fi
+fi
+
+# ────────────────────────────────────────────────────────────────────
 # Promote [Unreleased] → [<version>] in CHANGELOG.md
 # ────────────────────────────────────────────────────────────────────
 
@@ -333,9 +380,13 @@ step "Commit, tag, push"
 run git add CHANGELOG.md
 # The roadmap card, when the offer above was accepted. Staged explicitly rather
 # than with `git add -A`, so a release never sweeps in unrelated working-tree
-# changes (rule §8).
+# changes (rule §8). Same for the two machine-managed surfaces refreshed during
+# pre-flight, which are only staged when they actually moved.
 if [[ "${ROADMAP_FLIPPED:-0}" == "1" ]]; then
   run git add src/_data/roadmap.js
+fi
+if [[ "${ROADMAP_SURFACES_MOVED:-0}" == "1" ]]; then
+  run git add "${ROADMAP_SURFACES[@]}"
 fi
 run git commit -m \"Release v$VERSION — $TITLE\" \
        -m \"Promotes the CHANGELOG.md [Unreleased] section to [$VERSION] · $TODAY — $TITLE and resets [Unreleased].\"

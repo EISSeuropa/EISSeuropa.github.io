@@ -23,7 +23,7 @@
 #   unreachable (or not published yet) the script leaves the last snapshot
 #   in place and the run is a no-op.
 #
-# Mirrors the EISS sync-roadmap.yml plumbing (auto-PR + armed auto-merge).
+# Mirrors the EISS roadmap-refresh.yml plumbing (auto-PR + armed auto-merge).
 # The fast path is repository_dispatch (type netsec-directory-changed), the
 # mirror of the netsec-indico-dispatch EISS already fires toward NetSec.
 

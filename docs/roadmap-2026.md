@@ -7,14 +7,15 @@ public [`/roadmap.html`](https://eiss-europa.com/roadmap.html).
 **Last update: 25 July 2026 (Atlas follow-on items folded in).**
 
 <!-- AUTOSTAMP:BEGIN -->
-> _Auto-tracked: `[Unreleased]` is empty since **v2.28.0**. Last refresh by `scripts/sync-roadmap.py`: 29 Aug 2026._
+> _Auto-tracked: `[Unreleased]` is empty since **v2.28.0**. Last refresh by `scripts/sync-roadmap.py`: 30 Aug 2026._
 <!-- AUTOSTAMP:END -->
 
 > **Sync convention.** This file is the authoritative planning source.
 > The block above between `<!-- AUTOSTAMP:BEGIN -->` markers is
-> machine-managed by `scripts/sync-roadmap.py` (fires from
-> `.github/workflows/sync-roadmap.yml` on every push that touches
-> `CHANGELOG.md`, plus a weekly Monday 06:00 UTC belt-and-braces run).
+> machine-managed by `scripts/sync-roadmap.py`, which
+> `.github/workflows/roadmap-refresh.yml` runs once a day at 05:00 UTC
+> alongside the milestone-progress refresh, in a single auto-merged PR.
+> `scripts/release.sh` runs it too, so a release never ships a stale stamp.
 > The count surfaces staleness, the maintainer decides when the prose
 > timeline below needs a refresh (release-time §5 cross-check per
 > `CLAUDE.md`). The public `/roadmap.html` cards are a curated mirror
