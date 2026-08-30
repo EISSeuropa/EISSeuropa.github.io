@@ -20,6 +20,12 @@ __pycache__/
 data/anthology-corpus.json
 data/anthology-corpus-note.pdf
 
+# The SKOS theme vocabulary, staged for its own Zenodo record (#1249). Copied
+# straight out of _site/vocab/ by the two-line build in docs/corpus-archiving.md,
+# so committing it would be a second copy of a generated file to keep in step.
+data/eiss-themes-skos.ttl
+data/eiss-themes-skos.jsonld
+
 # Finder/iCloud-style duplicate files ("name 2.ext", "name 3.ext", …).
 # These get created on the maintainer's Mac and were twice swept into
 # commits by `git add -A` (the 20 MB essc-2025 2.mp4 and a stray
