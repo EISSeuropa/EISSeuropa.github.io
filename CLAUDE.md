@@ -419,22 +419,37 @@ cadence for staying current.
    their target doc inline, so the sweep is the safety net rather
    than the workhorse.
 
-#### Automation note: roadmap autostamp
+#### Automation note: the daily roadmap refresh
 
-`.github/workflows/sync-roadmap.yml` keeps the AUTOSTAMP block near
-the top of `docs/roadmap-2026.md` in sync with `CHANGELOG.md`'s
-`[Unreleased]` section. It counts the bullets per Keep-a-Changelog
-category, records the freshness date, and anchors against the most
-recent SemVer tag. Triggers on every push to `master` that touches
-`CHANGELOG.md` (plus weekly Monday 06:00 UTC + manual dispatch),
-opens an auto-PR on `roadmap-sync/auto` with auto-merge armed.
+`.github/workflows/roadmap-refresh.yml` runs once a day at 05:00 UTC
+(plus manual dispatch) and refreshes both machine-managed roadmap
+surfaces in **one** auto-merged PR on `roadmap-refresh/auto`:
 
-So the maintainer never has to manually refresh the count or
-freshness stamp; that's handled. **What the automation does not
-do**: rewrite the prose timeline rows. When the count visibly
-diverges from what the prose says is in flight, the maintainer
-resynthesises by hand (also a §5 cross-check item at release time).
-The autostamp is the staleness alarm; humans write the synthesis.
+- `scripts/sync-roadmap.py` rewrites the AUTOSTAMP block near the top
+  of `docs/roadmap-2026.md` from `CHANGELOG.md`'s `[Unreleased]`
+  section, counting bullets per Keep-a-Changelog category, recording
+  the freshness date and anchoring against the most recent SemVer tag.
+- `scripts/sync-roadmap-progress.py` rewrites
+  `src/data/roadmap-progress.json` from the repo's version milestones,
+  which drives the progress bars on `/roadmap.html`.
+
+So the maintainer never has to refresh the count, the freshness stamp
+or the bars by hand. **What the automation does not do**: rewrite the
+prose timeline rows. When the count visibly diverges from what the
+prose says is in flight, the maintainer resynthesises by hand (also a
+§5 cross-check item at release time). The autostamp is the staleness
+alarm. Humans write the synthesis.
+
+**Why daily, and not on the events that move them.** These were two
+workflows firing on merges and on `milestoned`, and rules §4 and §10
+guarantee that nearly every PR and every new issue trips one of them.
+They produced 198 of the 308 commits on `master` in August 2026, so
+the bookkeeping was 64% of the month's history and on 27 August it was
+all of it. Neither output has a consumer that reads it within minutes:
+the autostamp is a staleness alarm and the bars sit on a roadmap card.
+A day of staleness costs nothing, and `scripts/release.sh` runs both
+scripts itself during pre-flight, so a release never waits on cron. If
+a surface is needed fresh at some other moment, dispatch the workflow.
 
 ## 14. Ship-completeness: a green build is not "it works"
 

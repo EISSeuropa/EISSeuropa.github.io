@@ -98,10 +98,14 @@ is ambient rather than topical, and belongs on the panel side only.
   events). Needs the Indico API token (`indico-api-token.md`).
 - **`sync-board.yml`** → `sync-board.py` → `board.json` (Form pipeline;
   tuned to produce zero dirty files when nobody changed their entry).
-- **`sync-roadmap.yml`** → autostamps `docs/roadmap-2026.md` from the
-  CHANGELOG `[Unreleased]` section; `roadmap-progress.yml` →
-  `sync-roadmap-progress.py` → `data/roadmap-progress.json` (closed/total
-  per milestone, drives the `/roadmap` progress bars).
+- **`roadmap-refresh.yml`** (daily, 05:00 UTC) → both roadmap surfaces in
+  one PR: `sync-roadmap.py` autostamps `docs/roadmap-2026.md` from the
+  CHANGELOG `[Unreleased]` section, and `sync-roadmap-progress.py` writes
+  `src/data/roadmap-progress.json` (closed/total per milestone, drives the
+  `/roadmap` progress bars). One daily job rather than the two event-triggered
+  workflows it replaced, which produced 64% of August 2026's commits between
+  them. `release.sh` runs both scripts itself, so a release never waits on the
+  cron.
 - **`sync-orcid.yml`** → `sync-orcid.py` → `orcidWorks.json` (members'
   recent public ORCID works; weekly).
 - **`sync-publications.yml`** → `match-publications.mjs` +
