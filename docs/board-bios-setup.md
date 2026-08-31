@@ -1,19 +1,20 @@
 # Setting up the board-bios Google Form
 
 This guide walks through creating the Google Form, linking it to a Sheet,
-and wiring the published Sheet into the manual sync workflow.
+and wiring the published Sheet into the sync workflow.
 **One-time setup, ~30 minutes.** After this, board updates are:
 
 1. A board / support-team member submits or updates their bio via the Form.
-2. You go to Actions → *Sync board bios from Google Form* → *Run
-   workflow*.
+2. The workflow runs itself every Monday at 05:30 UTC. To pick a
+   submission up sooner, go to Actions → *Sync board bios from Google
+   Form* → *Run workflow*.
 3. A PR appears. You review the diff (one file, `src/_data/board.json`)
    and click Merge.
 
 ## How the pipeline works
 
 ```
-Google Form ──► Google Sheet ──► sync-board.yml (manual) ──► PR ──► review + merge ──► /board.html
+Google Form ──► Google Sheet ──► sync-board.yml (weekly) ──► PR ──► review + merge ──► /board.html
 ```
 
 Two repo-side moving parts:
@@ -212,7 +213,7 @@ the values in `columns` (e.g. your Google account's locale renamed
 *Timestamp* to *Horodateur*), update `columns` to match the exact
 header text in the Sheet.
 
-Commit. The workflow will pick it up on the next manual run.
+Commit. The workflow will pick it up on its next run.
 
 ## Step 5 · Photo permissions — the one Google quirk
 
