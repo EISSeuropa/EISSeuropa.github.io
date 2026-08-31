@@ -22,15 +22,18 @@
     {
       "name": "Prof. Chiara Ruffa",
       "role": "Co-Director",
-      "photo": "/assets/images/jritvrpl-400x400.jpg",
       "alt": "Prof. Chiara Ruffa",
-      "themes": "Multilateralism on the ground, Peacekeeping, Civil-military relations, Political sociology, Fieldwork.",
+      "photo": "/assets/images/board/chiara-ruffa.jpg",
+      "position": "Full Professor in International Relations",
+      "institution": "CERI",
       "country": "France",
-      "position": "Professor of Political Science",
-      "institution": "Sciences Po, Center for International Studies (CERI)",
+      "bio": "Chiara is a professor in political science (specialising in International Relations) at the Centre for International Studies (CERI) at Sciences Po. Her research is about multilateralism on the ground, peacekeeping operations, norms, cultures and civil-military relations. Her work has been published in the European Journal of International Relations, Perspectives on Politics, Global Studies Quarterly, Security Studies, Acta Sociologica, Armed Forces and Society, among others. Her first book Military Cultures in Peace and Stability Operations was published with the University of Pennsylvania Press in 2018. Her second book (with Vincenzo Bove and Andrea Ruggeri) Composing Peace. Mission Composition in UN Peacekeeping was published by Oxford University Press in April 2020. Her research has been funded by the European Commission, COST Action, Fulbright Commission, the Swedish Research Council, the Royal Swedish Academy, among others.",
+      "themes": "multilateralism, peacekeeping, military organizations, norms and cultures",
       "links": {
+        "website": "https://sites.google.com/site/chiararuffa/home",
         "orcid": "https://orcid.org/0000-0002-3474-4281"
-      }
+      },
+      "workingGroups": "WG2"
     },
     {
       "name": "Dr Moritz Weiss",
@@ -319,7 +322,7 @@
       "themes": "military technology; strategic thinking; nuclear weapons",
       "links": {
         "publicEmail": "sverschu@bu.edu",
-        "website": "http://www.sanneverschuren.com",
+        "website": "https://www.sanneverschuren.com",
         "orcid": "https://orcid.org/0000-0001-7977-361X"
       },
       "workingGroups": "WG1"
