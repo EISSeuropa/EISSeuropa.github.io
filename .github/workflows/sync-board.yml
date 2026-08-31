@@ -15,10 +15,12 @@
 #      state), the script no-ops cleanly so this workflow stays green
 #      while the Google Form is still being set up.
 #
-# Why manual-only (no cron)
-#   The board changes a few times a year, not weekly. A weekly cron
-#   would produce mostly-empty no-op runs. Run this when you know
-#   submissions are in.
+# Why weekly
+#   The board changes a few times a year, so most runs are no-ops that
+#   exit silently without opening a PR. The weekly tick means a
+#   submission lands on the site within days rather than waiting for
+#   someone to remember to dispatch the workflow. Manual dispatch stays
+#   available for when submissions are known to be in.
 #
 # Where to look
 #   - The sync logic lives in scripts/sync-board.py.
@@ -30,7 +32,9 @@
 name: Sync board bios from Google Form
 
 on:
-  workflow_dispatch: # Manual run from the Actions tab — no cron.
+  schedule:
+    - cron: '30 5 * * 1' # 05:30 UTC every Monday, ahead of the other Monday syncs.
+  workflow_dispatch: # Manual run from the Actions tab.
 
 permissions:
   contents: write
