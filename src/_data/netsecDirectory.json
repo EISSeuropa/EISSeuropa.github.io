@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-23T05:43:21+00:00",
-  "count": 82,
+  "generated_at": "2026-08-28T17:26:17+00:00",
+  "count": 84,
   "source": "https://netsec-cost.eu/directory-index.json",
   "members": [
     {
@@ -499,6 +499,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/laura-lisboa.jpg"
     },
     {
+      "name": "Mr Leonardo Pesci",
+      "name_key": "leonardo pesci",
+      "aliases": [],
+      "slug": "leonardo-pesci",
+      "url": "https://netsec-cost.eu/people/leonardo-pesci.html",
+      "orcid": "0009-0006-6818-7686",
+      "role": null,
+      "affiliation": "Université Catholique de Lille",
+      "photo": "https://netsec-cost.eu/assets/images/people/leonardo-pesci.jpg"
+    },
+    {
       "name": "Dr Li Yang",
       "name_key": "li yang",
       "aliases": [],
@@ -684,6 +695,17 @@
       "role": null,
       "affiliation": "Giresun University",
       "photo": "https://netsec-cost.eu/assets/images/people/p-nar-akgul.jpg"
+    },
+    {
+      "name": "Mr Pablo Arriazu",
+      "name_key": "pablo arriazu",
+      "aliases": [],
+      "slug": "pablo-arriazu",
+      "url": "https://netsec-cost.eu/people/pablo-arriazu.html",
+      "orcid": "0009-0000-5391-3143",
+      "role": null,
+      "affiliation": "National University of Distance Education (UNED)",
+      "photo": "https://netsec-cost.eu/assets/images/people/pablo-arriazu.jpg"
     },
     {
       "name": "Prof. Paulina Polko",
