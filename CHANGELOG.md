@@ -97,6 +97,9 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+### Removed
+
+- 102 orphaned images from the Mobirise era, about 25 MB, no longer cloned on checkout or served to the site. They were passthrough-copied into every deploy while no page, stylesheet, feed or serialisation referenced them: AMP-era screen captures, superseded logo files and stray crops. Verified against the built output rather than by name, so the share cards that are assembled at build time and never named literally were not caught in it.
 ### Fixed
 
 - Sanne Verschuren's website link points at the address her site actually answers on. Her site serves no working HTTPS, so the `https://` form was dead in a browser, and the correction made once by hand had been overwritten by the board-bios sync. The sync now holds a small table of links to pin, so the correction survives every future run.
