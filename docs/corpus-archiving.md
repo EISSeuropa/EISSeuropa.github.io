@@ -406,6 +406,16 @@ onto these concepts cares about exactly one thing: whether the concepts
 moved. Versioning by site release would flood them with versions that
 say nothing.
 
+The artefacts state this themselves, so a deposited or downloaded copy
+can be dated and ordered without the record it came from: the scheme
+node in both serialisations carries `owl:versionInfo` and `dct:issued`,
+from `SCHEME_VERSION` and `SCHEME_ISSUED` in `src/_data/themeVocab.js`
+(#1607). Bump both in the same PR that changes a concept. A digest guard
+in that file fails the build if the concepts move and the version does
+not, so the two cannot silently disagree. Set `SCHEME_ISSUED` to the day
+the new version is cut, not to the day it is deposited, and make the
+Zenodo record's version and publication date match what the files say.
+
 ### The Zenodo form, field by field
 
 Ready to paste. Everything here is settled apart from the ORCID, which

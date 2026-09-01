@@ -97,7 +97,9 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
-_Nothing yet._
+### Changed
+
+- The SKOS theme vocabulary states its own version and issue date. The concept scheme in `/vocab/themes.ttl` and `/vocab/themes.jsonld` now carries `owl:versionInfo` and `dct:issued`, so a deposited or downloaded copy can be dated and told apart from another copy without the record it came from. The version is the vocabulary's own, moving when a concept is added, retired or relabelled rather than when the site releases, and a build-time guard fails the build if the concepts move and the version does not.
 
 ## [2.28.0] · 2026-08-29 — A usable Atlas, and a citable theme vocabulary
 

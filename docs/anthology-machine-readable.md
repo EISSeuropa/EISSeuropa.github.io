@@ -378,13 +378,38 @@ unaffected.
 
 `themeVocab.js` builds the graph once and emits both Turtle and JSON-LD from
 it, so a label fix lands in both or in neither. Verified isomorphic with
-`rdflib` at 161 triples each when the feature shipped.
+`rdflib` at 163 triples each (161 when the feature shipped, before the two
+versioning predicates below).
 
 | Surface | URL |
 |---|---|
 | Turtle | `/vocab/themes.ttl` |
 | JSON-LD | `/vocab/themes.jsonld` |
 | Human-readable | `/vocab/themes/` |
+
+### Stating its own version
+
+The scheme node carries `owl:versionInfo` and a `dct:issued` typed as
+`xsd:date`, both from constants at the top of `themeVocab.js`. That is
+invisible when the file is fetched from the site, where the URL is the current
+version by definition, and it stops being invisible the moment a `.ttl` is
+deposited or downloaded: a copy in somebody's folder cannot otherwise be dated
+or ordered against another copy (#1607).
+
+The version is **the vocabulary's own SemVer, not the site's**, so it moves
+when a concept is added, retired or relabelled and stays put across every other
+release (docs/corpus-archiving.md). `SCHEME_ISSUED` is the date that version
+was cut, deliberately not the build date: a value that changed on every rebuild
+would make two builds of one vocabulary look like two versions, which is the
+opposite of what versioning an artefact is for.
+
+A hand-maintained constant drifts the moment somebody edits `THEME_RULES` and
+forgets it, so `SCHEME_DIGEST` pins a short hash of the meaning-bearing content
+(every key, its tier, and its label in all three languages). Any change to that
+content fails the build with the digest to paste in, which forces the version
+and its date to be reconsidered in the same PR. The digest is not the version:
+a hash cannot be ordered by a human, it only detects that a bump is owed.
+Adding a paper does not trip it, because papers are not vocabulary.
 
 **Where a reader meets it.** A vocabulary nobody can find is barely better
 than one never minted, and the map is where the people who would reuse this

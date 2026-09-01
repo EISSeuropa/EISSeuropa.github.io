@@ -17,6 +17,7 @@
  * theme's English name: the name is display text and is translated, the key
  * is not. See docs/anthology-machine-readable.md §4.
  */
+const { createHash } = require("node:crypto");
 const site = require("./site.js");
 const corpus = require("./corpus.js");
 const themePages = require("./atlasThemePages.js");
@@ -24,6 +25,17 @@ const themePages = require("./atlasThemePages.js");
 const SCHEME_URI = `${site.url}/vocab/themes`;
 const LICENCE_URI = "http://creativecommons.org/licenses/by/4.0/";
 const SCHEME_TITLE = "European security studies research themes";
+// The vocabulary carries its own SemVer, which moves when a concept is added,
+// retired or relabelled, not when the site releases
+// (docs/corpus-archiving.md). Stating it in the file is what lets a .ttl
+// sitting in somebody's downloads folder be dated and ordered against another
+// copy, which is the whole point of versioning it (#1607). SCHEME_ISSUED is
+// the date that version was cut, never the build date: a value that moved on
+// every rebuild would make two builds of one vocabulary look like two
+// versions. SCHEME_DIGEST is the guard, see checkDigest below.
+const SCHEME_VERSION = "1.0.0";
+const SCHEME_ISSUED = "2026-08-29";
+const SCHEME_DIGEST = "d3d49c2e954f399e";
 const COLLECTIONS = {
   permanent: {
     uri: `${SCHEME_URI}/collection/permanent-sections`,
@@ -70,17 +82,45 @@ module.exports = function () {
     };
   });
 
+  // A hand-maintained version drifts the moment somebody edits THEME_RULES and
+  // forgets to bump it, so the meaning-bearing content is digested and pinned.
+  // Anything that changes what the vocabulary says (a key, a label in any
+  // language, a collection membership) fails the build until SCHEME_VERSION,
+  // SCHEME_ISSUED and this digest are all reconsidered together. The digest is
+  // not the version: it cannot be ordered by a human, it only detects that one
+  // is owed.
+  const digest = createHash("sha256")
+    .update(
+      JSON.stringify(
+        concepts.map((x) => [x.key, x.tier, x.prefLabel.en, x.prefLabel.fr, x.prefLabel.de])
+      )
+    )
+    .digest("hex")
+    .slice(0, 16);
+  if (digest !== SCHEME_DIGEST) {
+    throw new Error(
+      `themeVocab: the vocabulary content changed but SCHEME_VERSION is still ${SCHEME_VERSION}.\n` +
+        `  Bump SCHEME_VERSION, set SCHEME_ISSUED to today, and set SCHEME_DIGEST to "${digest}"\n` +
+        "  in src/_data/themeVocab.js. A relabelled or retired concept is a new version of the\n" +
+        "  vocabulary (docs/corpus-archiving.md). Adding a paper is not."
+    );
+  }
+
   const membersOf = (tier) => concepts.filter((x) => x.tier === tier);
 
   const turtle = [
     "@prefix skos: <http://www.w3.org/2004/02/skos/core#> .",
     "@prefix dct:  <http://purl.org/dc/terms/> .",
     "@prefix foaf: <http://xmlns.com/foaf/0.1/> .",
+    "@prefix owl:  <http://www.w3.org/2002/07/owl#> .",
+    "@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .",
     "",
     `<${SCHEME_URI}> a skos:ConceptScheme ;`,
     `  dct:title ${ttl(SCHEME_TITLE)}@en ;`,
     `  dct:creator ${ttl(site.fullName)} ;`,
     `  dct:license <${LICENCE_URI}> ;`,
+    `  owl:versionInfo ${ttl(SCHEME_VERSION)} ;`,
+    `  dct:issued "${SCHEME_ISSUED}"^^xsd:date ;`,
     "  skos:hasTopConcept",
     concepts.map((x) => `    <${x.uri}>`).join(" ,\n") + " .",
     "",
@@ -110,6 +150,8 @@ module.exports = function () {
       skos: "http://www.w3.org/2004/02/skos/core#",
       dct: "http://purl.org/dc/terms/",
       foaf: "http://xmlns.com/foaf/0.1/",
+      owl: "http://www.w3.org/2002/07/owl#",
+      xsd: "http://www.w3.org/2001/XMLSchema#",
     },
     "@graph": [
       {
@@ -118,6 +160,8 @@ module.exports = function () {
         "dct:title": { "@value": SCHEME_TITLE, "@language": "en" },
         "dct:creator": site.fullName,
         "dct:license": { "@id": LICENCE_URI },
+        "owl:versionInfo": SCHEME_VERSION,
+        "dct:issued": { "@value": SCHEME_ISSUED, "@type": "xsd:date" },
         "skos:hasTopConcept": concepts.map((x) => ({ "@id": x.uri })),
       },
       ...Object.entries(COLLECTIONS).map(([tier, col]) => ({
@@ -143,6 +187,8 @@ module.exports = function () {
   return {
     schemeUri: SCHEME_URI,
     title: SCHEME_TITLE,
+    version: SCHEME_VERSION,
+    issued: SCHEME_ISSUED,
     concepts,
     // English theme name to its concept URI, for the surfaces that hold a
     // theme's name rather than its key (#1571). The name is the join key
