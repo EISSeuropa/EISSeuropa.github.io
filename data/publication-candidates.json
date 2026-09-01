@@ -13,6 +13,12 @@
     "publishedUrl": "https://doi.org/10.6084/m9.figshare.31056283",
     "titleScore": 0.667,
     "band": "review",
-    "verified": false
+    "verified": false,
+    "llmVerdict": {
+      "verdict": "different_work",
+      "rationale": "Same author (ORCID match) and topic (de facto states, nuclear security, same year), but the figshare DOI resolves to a dataset deposit, not a journal article or book chapter, so it is not a later-published version of the paper's text.",
+      "model": "claude-sonnet-5",
+      "judgedOn": "2026-09-01"
+    }
   }
 ]
