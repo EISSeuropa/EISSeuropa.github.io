@@ -97,6 +97,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+### Removed
+
+- 102 orphaned images from the Mobirise era, about 25 MB, no longer cloned on checkout or served to the site. They were passthrough-copied into every deploy while no page, stylesheet, feed or serialisation referenced them: AMP-era screen captures, superseded logo files and stray crops. Verified against the built output rather than by name, so the share cards that are assembled at build time and never named literally were not caught in it.
+
 ### Changed
 
 - The SKOS theme vocabulary states its own version and issue date. The concept scheme in `/vocab/themes.ttl` and `/vocab/themes.jsonld` now carries `owl:versionInfo` and `dct:issued`, so a deposited or downloaded copy can be dated and told apart from another copy without the record it came from. The version is the vocabulary's own, moving when a concept is added, retired or relabelled rather than when the site releases, and a build-time guard fails the build if the concepts move and the version does not.
