@@ -4,10 +4,11 @@ A planning document to help the maintainer think through what's worth
 doing next, in what order, and at what effort. Organised by **release
 version** (SemVer), the same axis as the GitHub milestones and the
 public [`/roadmap.html`](https://eiss-europa.com/roadmap.html).
-**Last update: 25 July 2026 (Atlas follow-on items folded in).**
+**Last update: 1 September 2026 (resynchronised with v2.27.0 and
+v2.28.0 after the autostamp flagged the drift, #1619).**
 
 <!-- AUTOSTAMP:BEGIN -->
-> _Auto-tracked: `[Unreleased]` is empty since **v2.28.0**. Last refresh by `scripts/sync-roadmap.py`: 1 Sep 2026._
+> _Auto-tracked: **3 entries** in [`[Unreleased]`](../CHANGELOG.md#unreleased) since **v2.28.0** (1 Changed, 1 Removed, 1 Fixed). Last refresh by `scripts/sync-roadmap.py`: 1 Sep 2026. Prose in the timeline below may lag; the maintainer resynthesises on release-time §5 sweep._
 <!-- AUTOSTAMP:END -->
 
 > **Sync convention.** This file is the authoritative planning source.
@@ -133,10 +134,11 @@ the RSS feed [#605](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/60
 issue-driven news publishing [#634](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/634))
 moved on to later milestones. See [`CHANGELOG.md`](../CHANGELOG.md) for the full index of changes.
 
-### v2.27.0 — The Anthology Atlas and the recovered back catalogue · target September 2026
+### v2.27.0 — The Anthology Atlas and the recovered back catalogue · shipped 19 August 2026
 
-The cycle outgrew its original "polish" framing. Landed so far,
-sitting in `[Unreleased]`:
+The cycle outgrew its original "polish" framing and shipped as
+[v2.27.0](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.27.0)
+on 19 August 2026, ahead of the September target. What landed:
 
 - **The Anthology Atlas** — a force-directed map of the corpus at
   `/anthology-atlas.html`, with a Papers lens (511 papers pulled toward
@@ -188,65 +190,126 @@ sitting in `[Unreleased]`:
   and the legacy Mobirise redirects
   ([#607](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/607)).
 
-Still open for the cut. The
-[v2.27.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/10)
-is the queryable commitment (rule §10) and now holds **3** open issues,
-down from twenty. Nine were reslipped to *Under watch* in one pass: each
-was blocked on something outside the release (repo settings, a statutes
-PDF, working-group names nobody has written down), premature (attendee
-features that need an ESSC 2027 programme that does not exist yet), or
-resting on a premise that had gone stale. Reasons are recorded per issue.
+The [v2.27.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/10)
+closed with 129 issues in it and none open. Along the way nine were
+reslipped to *Under watch* in one pass, each blocked on something
+outside the release (repo settings, a statutes PDF, working-group names
+nobody has written down), premature (attendee features that need an ESSC
+2027 programme that does not exist yet), or resting on a premise that
+had gone stale. Reasons are recorded per issue. Of what this section
+last listed as still open, all but one shipped:
 
-- **Per-paper theme derivation** — themes are currently matched against
-  a paper's *panel* title, so every paper in a panel inherits the same
-  set: 511 papers occupy just 30 distinct theme signatures, and the
-  Atlas's Papers lens therefore has 30 distinct positions to place them
-  in. Deriving themes from abstract text, now on file for 294 papers,
-  is what would let the map show more than the by-paper filter already
-  does. The threshold matters more than the coverage gain (the
-  "confidence over coverage" principle in `paperIndex.js`).
-  [#1186](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1186), M.
+- **Per-paper theme derivation** — themes had been matched against a
+  paper's *panel* title, so every paper in a panel inherited the same
+  set and the whole corpus collapsed into 30 distinct theme
+  combinations. Abstracts are read too now, so a paper is tagged for
+  what it argues rather than for the room it was presented in: 91
+  distinct combinations, and papers touching more than one theme rise
+  from 56 to 131. The panel title stays the trusted prior and abstract
+  evidence is additive, clearing a two-mention threshold, so the average
+  holds at 1.28 themes per paper rather than becoming tag soup. The
+  threshold mattered more than the coverage gain (the "confidence over
+  coverage" principle in `paperIndex.js`).
+  [#1186](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1186).
 - **Atlas follow-ons** — paper-to-paper edges reusing the adjacency
   #1148 already computes
-  ([#1188](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1188),
-  M, best taken after #1186), reciprocal "See this on the Atlas" links
-  from paper pages and author entries
-  ([#1189](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1189), S),
+  ([#1188](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1188)),
+  reciprocal "See this on the Atlas" links from paper pages and author
+  entries
+  ([#1189](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1189)),
   an author's papers shown in place on the Papers lens rather than
   navigating away
-  ([#1190](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1190), S),
+  ([#1190](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1190)),
   and a collapsed filter stack on phones
-  ([#1191](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1191), S).
-- **ESSC 2027 announcement** — drop one entry into
-  `src/_data/conferences.js` per [`docs/new-conference.md`](new-conference.md)
-  once the date and venue firm up. S.
-- **Social-card polish** — keep the EISS iconmark on every OG card
+  ([#1191](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1191)).
+- **Social-card polish** — the EISS iconmark now sits on every OG card
   ([#157](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/157))
-  and add a bespoke card for `/roadmap`
-  ([#272](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/272)). S each.
+  and `/roadmap` has a bespoke one
+  ([#272](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/272)).
   The per-edition archive cards
   ([#474](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/474))
   moved to *Under watch*: no per-edition card exists anywhere, so the job
   is eleven pages or a close, not the three the issue assumed.
 
-Candidates without committed scope yet, pulled in if a release has
-room: a conference countdown widget, View Transitions API page
-crossfades, an acknowledgments / contributors page, a newsletter
-archive page, `rel="me"` verification if EISS gets a Mastodon or
-Bluesky account.
+The one item on that list which did not ship is the **ESSC 2027
+announcement**, the single entry in `src/_data/conferences.js` per
+[`docs/new-conference.md`](new-conference.md). It waits on a date and a
+venue rather than on us, and is now
+[#1522](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1522)
+against v2.29.0.
+
+### v2.28.0 — A usable Atlas, and a citable theme vocabulary · shipped 29 August 2026
+
+Ten days after v2.27.0, and mostly the map catching up with the promise
+of it. Shipped as
+[v2.28.0](https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v2.28.0)
+on 29 August 2026.
+
+- **The Atlas, from something to look at to something to work with** —
+  it opens on the map rather than below a screen of chrome, zooms and
+  pans, and holds still while it is read. Clicking a hub filters to that
+  theme. The view a reader arrives at is the view a link carries, so a
+  filtered map can be sent to somebody else. It is also no longer
+  keyboard-inaccessible or English-only: the whole current view exists
+  as a list under the canvas, the map announces its state through a live
+  region, and the French and German interfaces are complete.
+- **A vocabulary other people can use** — the seventeen research themes
+  were a JavaScript constant inside a website's build and are now a
+  published SKOS concept scheme at `/vocab/themes/`, in Turtle and
+  JSON-LD, each theme carrying a permanent identifier and a preferred
+  label in all three languages. The matching rules stay unpublished on
+  purpose: they are how a paper gets tagged, not what a theme means, and
+  a regex is not a definition. Part of
+  [#1249](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1249),
+  which stays open for the Zenodo deposit itself.
+- **The Anthology says more about itself** — the header set out every
+  annual edition against five figures rather than four aggregate counts,
+  which is what shows whether the Initiative is meeting the same people
+  again or new ones. Two figures were quietly wrong and were corrected:
+  poster papers had been counted in the abstract-coverage ratio in some
+  editions and not others, depending on how each programme was
+  transcribed.
+- **The phone, and the reader without JavaScript** — a run of fixes with
+  one cause, a map built at desktop width with scripts running. It now
+  reaches the first screen in all three languages, and a tap previews
+  rather than navigating away.
+
+The [v2.28.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/11)
+closed with 72 issues in it and none open.
+
+Three things landed just after the cut, against v2.29.0. The SKOS files
+now state their own version and issue date, so a deposited copy can be
+dated
+([#1607](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1607)).
+`release.sh` reports a failed roadmap-card flip instead of reading it as
+nothing to do
+([#1604](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1604)),
+which is the bug that let this release ship with a stale card on the
+public roadmap. And 102 orphaned Mobirise-era images, about 25 MB, came
+out of the repository
+([#471](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/471)).
 
 ### v2.29.0 — The corpus in French, and the data behind it · target 8 December 2026
 
 The identifier strand that gave this release its old name shipped early,
 inside v2.27.0: the Zenodo DOI, the HAL note and the Software Heritage
-archive are all live and shown on the site. What remains here is the
-second strand, making the corpus usable in French, which is where a
-large part of the network reads, together with the metadata work that
+archive are all live and shown on the site. What names the release now
+is the second strand, making the corpus usable in French, which is where
+a large part of the network reads, alongside the metadata work that
 turns the corpus into something other projects can analyse and cite.
+Two further strands ride this release. The first three ESSC 2027 phases
+land here because their deadlines fall inside it, and the accessibility
+declaration lands here as the follow-through the Atlas owes (rule §9).
 
 The
 [v2.29.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/24)
-is the queryable commitment (rule §10).
+is the queryable commitment (rule §10). It holds **16** open issues,
+which is more than one December cut can carry, so part of preparing this
+release is deciding what does not make it. Two things cannot be the
+answer: the ESSC 2027 phases have dates owned by the joint organising
+group, and the French scope is what the release is named after.
+Everything else is negotiable, and the negotiation belongs to the
+release rather than to this document.
 
 - **Persistent identifiers and long-term archiving (shipped in v2.27.0)** — the corpus is
   deposited on Zenodo as a *dataset* in the `eiss` community, under the
@@ -282,16 +345,68 @@ is the queryable commitment (rule §10).
   ([#1224](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1224), L).
   Per-theme annotated bibliographies in French follow, generated from
   the corpus, printable, and licensed for teaching use
-  ([#1226](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1226), L).
+  ([#1226](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1226),
+  L, now *Under watch* rather than committed here).
+  A French-language note on the corpus, published annually, is the
+  companion piece
+  ([#1250](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1250), M).
 - **The corpus as data** — an analytical export layered on the raw
   open-data export (#641): per edition, affiliation shares by country
   and thematic distribution, plus co-authorship edges, versioned with
   the corpus and documented in `docs/`
   ([#1227](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1227), M).
+  Underneath it, corpus affiliations resolve to ROR identifiers so that
+  any country figure can state its own coverage instead of guessing
+  ([#1248](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1248),
+  M). The automated pass is drafted in
+  [#1264](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/1264)
+  and waits on human review, which is the point: two wrong matches
+  scored above 0.97, so publishing country figures off the unreviewed
+  mapping would put confident wrong numbers on the site.
+- **The theme vocabulary, deposited** — v2.28.0 published the seventeen
+  themes as SKOS at `/vocab/themes/`. What remains is making that
+  artefact citable rather than merely fetchable: the Zenodo deposit
+  under its own SemVer, prepared in
+  [#1606](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/1606)
+  and still to be cut
+  ([#1249](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1249)),
+  and an entry for the corpus dataset in Recherche Data Gouv, the French
+  national research-data platform
+  ([#1251](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1251), M).
+- **ESSC 2027, the first three phases** — *save the date*, *call for
+  papers* and *selection and notifications*, five issues with deadlines
+  between 30 September and 31 December. These are set out in the *ESSC
+  2027 preparation* table above rather than repeated here, because the
+  dates belong to the joint organising group.
+- **Accessibility, conformant rather than partial** — the statement
+  declares partial conformance today, which is the honest label while
+  the Atlas's canvas has a mitigation rather than an equivalent. Closing
+  that, and declaring against RGAA 4.1 alongside EN 301 549, is
+  [#1225](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1225)
+  (L). It pairs with the French strand: RGAA is the framework applicable
+  to a French-registered organisation, and it requires a declaration to
+  name its escalation route.
 
-Both L items depend on a French reviewer's time, which is the main
-risk to the date. If that slips, the identifier strand still stands on
-its own.
+Also carried in the milestone and not belonging to any strand:
+the joint-event programmes for `/JPW2019` and a new `/joint-2024`
+([#328](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/328)),
+the HAL collection and the Software Heritage software deposit that the
+identifier strand still owes
+([#1222](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1222),
+[#1223](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1223)),
+and the resynchronisation of this document
+([#1619](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1619)).
+
+The French strand depends on a reviewer's time, which is the main risk
+to the date. If it slips, the ESSC 2027 phases still have to land on
+their own deadlines, so they are the part of this release that cannot
+wait for the rest.
+
+Candidates without committed scope yet, pulled in if a release has
+room: a conference countdown widget, View Transitions API page
+crossfades, an acknowledgments / contributors page, a newsletter
+archive page, `rel="me"` verification if EISS gets a Mastodon or
+Bluesky account.
 
 ---
 
@@ -367,34 +482,45 @@ The reasoning for each is in this file's git history.
 
 ---
 
-## Status as of v2.24.0
+## Status as of v2.28.0
 
 Where the site stands today, so the plan above makes sense:
 
 - **Stack**: Eleventy 3 + Nunjucks. GH Actions builds + deploys. No
   client-side framework. A small amount of hand-written JS for theme,
   mobile menu, lazy YouTube, and print preparation.
-- **Pages**: 72 `.njk` templates including the FR / DE locales. All
-  URLs preserved from the original Mobirise export. `src/legacy/`
-  fully retired in v1.0.
+- **Pages**: 136 page templates at the top level of `src/`, 26 of them
+  French and 26 German, plus the generated per-paper, per-person and
+  per-theme pages the Anthology emits. All URLs preserved from the
+  original Mobirise export. `src/legacy/` fully retired in v1.0.
 - **Brand identity**: real EISS lockup (constellation + EiSS wordmark)
   across header, footer, favicon, Apple touch icon, Android adaptive
   icon, PWA manifest, joint-organisers strip. Schema.org
-  `Organization.logo` points at the high-res brand PNG. OG-card
-  iconmark overlay still outstanding ([#157](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/157)).
+  `Organization.logo` points at the high-res brand PNG. The iconmark
+  overlay reached every OG card in v2.27.0
+  ([#157](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/157)).
 - **Design**: Apple-style glass, auto + manual dark mode, Inter font,
   reveal animations gated on `prefers-reduced-motion`. Brand-blue
   (`#007bc6`) is the canonical accent.
-- **Accessibility**: WCAG 2.1 AA, axe-core clean across light + dark.
+- **Accessibility**: `/accessibility.html` §7 declares **partial**
+  conformance with WCAG 2.1 AA, aligned with EN 301 549. axe-core is
+  clean across light and dark. The limitation that is ours is the
+  Atlas's `<canvas>`, which v2.28.0 mitigated with a keyboard path, a
+  live region and a list alternative rather than replaced with an
+  equivalent. Moving to conformant, and declaring against RGAA 4.1 as a
+  French-registered organisation should, is
+  [#1225](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1225).
 - **SEO**: full OG + Twitter Card meta, JSON-LD Organization with
   `ImageObject` logo + `foundingDate: "2017"`, per-page bespoke share
   cards in all three languages, favicon stack, webmanifest,
   robots.txt + sitemap.xml.
-- **i18n**: EN / FR / DE. Chrome strings in `src/_data/i18n.js`. 12+
-  fully translated pages × 3 langs. Beta ribbon on FR / DE pages until
-  native-speaker review. Drift detection in CI on every HTML-touching
-  PR. A `localizedHref` filter falls cross-locale links back to the
-  English page when the target locale doesn't exist.
+- **i18n**: EN / FR / DE. Chrome strings in `src/_data/i18n.js`. 26
+  French and 26 German page files, 16 English sources tracked in
+  `data/i18n-state.json`. All 32 tracked translations are still
+  `status: "beta"`, so **no page has cleared native-speaker review yet**
+  and every FR / DE page still carries the ribbon. Drift detection in CI
+  on every HTML-touching PR. A `localizedHref` filter falls cross-locale
+  links back to the English page when the target locale doesn't exist.
 - **Conference cycle**: driven by `src/_data/conferences.js`. The
   homepage "next conference" card and the `/past` archive both read
   from this single data source; the cut-off advances automatically
@@ -413,14 +539,28 @@ Where the site stands today, so the plan above makes sense:
 - **Operator + CI conventions** (imported from `netsec.github.io`):
   `CLAUDE.md` operator playbook, full `SECURITY.md`, hybrid CHANGELOG
   format, roadmap autostamp via `sync-roadmap.py`, link checker on
-  every PR + Monday cron. Dependabot watches GitHub Actions and Python
-  deps weekly. Version-numbered milestones drive release planning
+  every PR + Monday cron. Both roadmap surfaces refresh in one daily
+  workflow rather than on every merge. The board-bios sync runs weekly.
+  Dependabot watches GitHub Actions and Python deps weekly. Version-numbered milestones drive release planning
   (switched from thematic after v2.24.0). Cross-repo GitHub Project
   ([#1](https://github.com/users/EISSeuropa/projects/1)) spans open
   enhancement issues across EISS + NetSec.
+- **The Anthology**: `/anthology` is the site's flagship, 519 papers and
+  494 named people across 12 editions, indexed by 17 research themes.
+  The Atlas at `/anthology-atlas.html` maps it, deep-linkably and in all
+  three languages. The themes are published as a SKOS vocabulary at
+  `/vocab/themes/` in Turtle and JSON-LD, each with a permanent
+  identifier and its own SemVer.
+- **Corpus archiving**: deposited on Zenodo as a dataset under the
+  concept DOI `10.5281/zenodo.21776209`, described in a HAL research
+  report at `hal-05711925`, and the source archived in Software Heritage
+  with the SWHID shown on `/licensing` and `/anthology`. Procedure in
+  [`docs/corpus-archiving.md`](corpus-archiving.md).
 - **What's New banner**: `src/data/whats-new.json`-driven dismissible
-  site-wide announcement, currently pointing visitors at the live
-  ESSC 2026 programme. CLAUDE.md §12 governs the discipline.
+  site-wide announcement. **Currently off**, since 13 June 2026, the day
+  after ESSC 2026 closed. The `whats-new-banner` skill governs the
+  discipline (it was CLAUDE.md §12 until the lazy-loaded procedures
+  split out).
 
 ---
 
