@@ -42,10 +42,6 @@ audit trail. Same content, terser.
 - **Board members are individually searchable.** Site search indexed `/board` as one page, so a name query returned the whole board rather than the person. Now `src/_data/searchBios.js` + `src/search-bios.njk` emit a lightweight Pagefind index stub per person per locale at `/search/bios/<lang>/<slug>.html` (noindex; redirects a click to the canonical `/board[.lang].html#<slug>` anchor). Every board / support card gains a stable `#<slug>` anchor (deep-linkable), rendered by `person-card.njk` from a slug derived in `boardSorted.js`. The stubs are excluded from the sitemap. NetSec parity ([#353](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/353)); search architecture documented in `docs/search.md`, including the post-deploy verification ([#359](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/359)).
 - (one-line pointer bullets, what not why)
 
-#### Fixed
-
-- Sanne Verschuren's website link points at the address her site actually answers on. Her site serves no working HTTPS, so the `https://` form was dead in a browser, and the correction made once by hand had been overwritten by the board-bios sync. The sync now holds a small table of links to pin, so the correction survives every future run.
-
 ### Changed
 
 - **`/licensing` now shows the Software Heritage identifier for the code.** The MIT section of `/licensing.html` (+ FR + DE) carries the archived directory SWHID, `swh:1:dir:482a1c89…`, linked into the Software Heritage archive, with a sentence explaining that it is computed from the content itself rather than assigned by a registry. `docs/corpus-archiving.md` records all three identifiers (directory, revision, snapshot), where they surface, and the rule for refreshing them at release time rather than per commit, since an identifier that silently ages is worse than none. It also records why Zenodo's GitHub integration is deliberately off. Part of [#1223](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1223).
@@ -100,6 +96,10 @@ See [`CLAUDE.md`](CLAUDE.md) §4 for the operator-facing version of these rules.
 At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spelt out in [`README.md`](README.md). Several pre-v2.13 tags had been bumped too liberally — features that should have been patches got minor labels. The renumbering swept through every existing release; the original tag is noted in italics under each section below. The corresponding git tags + GitHub Releases were re-cut at the same commit SHAs.
 
 ## [Unreleased]
+
+### Fixed
+
+- Sanne Verschuren's website link points at the address her site actually answers on. Her site serves no working HTTPS, so the `https://` form was dead in a browser, and the correction made once by hand had been overwritten by the board-bios sync. The sync now holds a small table of links to pin, so the correction survives every future run.
 
 ### Changed
 
