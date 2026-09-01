@@ -34,7 +34,18 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { createRequire } from "node:module";
-import * as acorn from "acorn";
+
+// acorn arrives transitively through Eleventy and is declared in
+// devDependencies so this script does not depend on that staying true. A
+// dynamic import is what lets a missing node_modules produce a sentence
+// instead of a module-loader stack trace (#1604).
+let acorn;
+try {
+  acorn = await import("acorn");
+} catch {
+  console.error("error: the `acorn` parser is not installed. Run `npm install` in the repo root, then re-run this script.");
+  process.exit(1);
+}
 
 const require = createRequire(import.meta.url);
 const FILE = new URL("../src/_data/roadmap.js", import.meta.url);

@@ -283,9 +283,19 @@ if [[ "$DRY_RUN" != "--dry-run" ]]; then
     # edit rather than a judgement, so offer to make it (#280). Shown as a diff
     # first and applied only on an explicit "y": this rewrites hand-translated
     # data during a release, which is the wrong moment to be surprised.
-    if node scripts/flip-roadmap-card.mjs "$VERSION" 2>/dev/null | grep -q 'would flip'; then
+    FLIP_OUT=$(node scripts/flip-roadmap-card.mjs "$VERSION" 2>&1) && FLIP_RC=0 || FLIP_RC=$?
+    if [[ "$FLIP_RC" -ne 0 ]]; then
+      # A broken tool is not a synonym for "already shipped". Reading the two
+      # the same way is how v2.28.0 shipped with a stale public card: the run
+      # had no node_modules, the flip died on its acorn import, and the
+      # cross-check reported that there was no problem (#1604).
+      printf '  Roadmap card: the flip tool failed (exit %s), so the card was NOT checked.\n' "$FLIP_RC"
+      printf '  Cross-check /roadmap by hand before publishing.\n\n'
+      printf '%s\n' "$FLIP_OUT" | sed 's/^/    /'
+      printf '\n'
+    elif printf '%s' "$FLIP_OUT" | grep -q 'would flip'; then
       printf '  The public /roadmap card for v%s is still unshipped:\n\n' "$VERSION"
-      node scripts/flip-roadmap-card.mjs "$VERSION" | sed 's/^/  /'
+      printf '%s\n' "$FLIP_OUT" | sed 's/^/  /'
       printf '\n  Apply this now? Type "y" to flip it, anything else to skip: '
       read -r FLIP
       case "$FLIP" in
@@ -297,10 +307,10 @@ if [[ "$DRY_RUN" != "--dry-run" ]]; then
         *) printf '\n  Skipped. Flip it by hand, or re-run the command above later.\n\n' ;;
       esac
     else
-      # Say so rather than skipping in silence. The guard above missing is
-      # usually benign (the card is already shipped), but when it was the
-      # version format that misfired, a silent skip meant nobody noticed the
-      # offer had been dead since #280 (#1415).
+      # Say so rather than skipping in silence. The tool ran and found nothing
+      # to do, which is usually benign (the card is already shipped), but when
+      # it was the version format that misfired, a silent skip meant nobody
+      # noticed the offer had been dead since #280 (#1415).
       printf '  Roadmap card: nothing to flip for v%s (already shipped, or no card).\n\n' "$VERSION"
     fi
   fi
