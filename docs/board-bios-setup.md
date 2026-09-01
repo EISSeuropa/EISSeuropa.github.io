@@ -335,6 +335,34 @@ warning visible in the PR body.
 Their old photo file stays in `src/assets/images/board/` until you
 delete it manually.
 
+## Pinning a link the Form gets wrong
+
+Editing `src/_data/board.json` by hand does not hold: the next sync
+rebuilds the entry from the Sheet and writes the Form's value back.
+That happened to Sanne Verschuren's website link, whose site serves no
+working HTTPS, so the `https://` URL her entry carries is dead in a
+real browser and fails the external-link CI gate on every
+HTML-touching PR. It was corrected by hand and reverted by the next
+sync ([#1115](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1115)),
+and now that the workflow runs weekly a hand fix lasts until Monday.
+
+So pin it in `scripts/board-source.json` instead:
+
+```json
+"url_overrides": {
+  "https://www.sanneverschuren.com": "http://www.sanneverschuren.com"
+}
+```
+
+Keyed by the exact value the Form holds, not by person, so it needs no
+name matching and follows the link if it moves to another entry.
+`sync-board.py` applies the table after normalisation, just before
+`board.json` is written, and prints a line per pin it applied.
+
+Reach for this only when the Form value is genuinely unusable and the
+submitter cannot be reached to correct it. The better outcome is always
+the submitter fixing their own entry, at which point delete the row.
+
 ## Exporting / archiving the data
 
 `src/_data/board.json` is the canonical export, version-controlled in

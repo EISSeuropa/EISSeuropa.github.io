@@ -373,6 +373,29 @@ def _normalize_link(out_key: str, value: str) -> str:
     return f"https://{v}"
 
 
+def apply_url_overrides(entries: list[dict], overrides: dict) -> None:
+    """Rewrite links the Form holds that must not ship as written.
+
+    Sanne Verschuren's site serves no working HTTPS, so the https:// value
+    her entry carries is dead in a real browser and fails the external-link
+    gate on every HTML-touching PR. #1112 rewrote it by hand, the next sync
+    put it straight back (#1115), and now that this workflow runs weekly that
+    costs a week rather than lasting until somebody dispatches it.
+
+    Keyed by the exact URL rather than by person, so it needs no slug matching
+    and follows the link if it moves to another entry. Applied after
+    normalisation, so an override is compared against the value that would
+    otherwise be written. Mutates in place."""
+    if not overrides:
+        return
+    for e in entries:
+        for k in list((e.get("links") or {}).keys()):
+            replacement = overrides.get(e["links"][k])
+            if replacement:
+                print(f"  · {e.get('name', '?')}: {k} pinned to {replacement} (url_overrides)")
+                e["links"][k] = replacement
+
+
 def build_from_row(row: dict, cols: dict, role_info: dict, prior: dict | None) -> dict:
     """Build a board.json entry from one form submission, falling back
     to fields from `prior` (the existing board.json entry for this
@@ -1021,6 +1044,8 @@ def main() -> None:
     support.sort(key=lambda e: e["_sort"])
     for e in members + support:
         e.pop("_sort", None)
+
+    apply_url_overrides(members + support, config.get("url_overrides", {}))
 
     warn_on_duplicates(members + support, roles_map)
 
