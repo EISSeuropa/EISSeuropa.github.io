@@ -266,7 +266,11 @@ eleventyExcludeFromCollections: true
       Tokens with no bespoke block above. They are still part of the system, and listing
       them is what stops one going missing when it is added.
     </p>
-    <div class="ds-token-table-wrap">
+    {# The wrapper scrolls horizontally on a narrow screen, and a scrollable
+       region has to be reachable from the keyboard or its overflow cannot be
+       read without a mouse (axe scrollable-region-focusable, #1625). tabindex
+       plus a name makes it a labelled region a keyboard can enter and pan. #}
+    <div class="ds-token-table-wrap" tabindex="0" role="region" aria-labelledby="other">
       <table class="ds-token-table">
         <thead><tr><th>Token</th><th>Value</th><th>Family</th></tr></thead>
         <tbody>

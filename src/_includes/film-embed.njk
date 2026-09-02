@@ -10,9 +10,14 @@
 
    theme.js sets the src and muted-autoplay-loops it only when it scrolls
    into view (nothing downloads otherwise; pauses off-screen). The film is
-   silent — muted, no sound control. A tap or the keyboard (Space / Enter)
-   toggles play/pause; a centre play button appears if autoplay is blocked.
-   prefers-reduced-motion: native controls, no autoplay. #}
+   silent — muted, no sound control.
+
+   The centre button is the play/pause control, and it is the one assistive
+   technology and the keyboard see. It stays in the accessibility tree while
+   the film plays rather than being hidden, because that is exactly when a
+   pause control is needed (WCAG 2.2.2); CSS fades it out of the picture and
+   hover or focus brings it back. Tapping the film itself toggles too, as a
+   pointer convenience. prefers-reduced-motion: native controls, no autoplay. #}
 {% from "icons.njk" import icon %}
 {%- set _lang = lang or "en" -%}
 {%- set t = i18n[_lang] -%}
@@ -22,7 +27,9 @@
            poster="{{ filmPoster | bust }}"
            data-film="{{ filmSrc }}"
            aria-label="{{ filmCaption or t.film.play }}"></video>
-    <button class="film-play" type="button" data-film-play hidden aria-label="{{ t.film.play }}">
+    <button class="film-play" type="button" data-film-play hidden data-state="paused"
+            data-label-play="{{ t.film.play }}" data-label-pause="{{ t.film.pause }}"
+            aria-label="{{ t.film.play }}">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
     </button>
   </div>

@@ -463,7 +463,18 @@
       v.src = v.getAttribute("data-film");
       v.load();
     }
-    function showPlay(on) { if (playBtn) playBtn.hidden = !on; }
+    // `on` means the film is stopped, so the control offers Play. The button
+    // is the accessible control: its name says which action it performs, and
+    // unlike before it stays in the accessibility tree while the film plays,
+    // which is when a pause control is actually needed (WCAG 2.2.2). CSS
+    // fades it out of the picture and brings it back on hover or focus.
+    function showPlay(on) {
+      if (!playBtn) return;
+      playBtn.hidden = false;
+      playBtn.dataset.state = on ? "paused" : "playing";
+      var label = on ? playBtn.dataset.labelPlay : playBtn.dataset.labelPause;
+      if (label) playBtn.setAttribute("aria-label", label);
+    }
     function tryPlay() {
       load();
       var p = v.play();
@@ -474,15 +485,18 @@
     function toggle() { if (v.paused) { tryPlay(); } else { v.pause(); } }
 
     if (reduce) {
+      // Native controls take over, so the overlay button would be a second
+      // control for the same thing. This is the one path where it stays
+      // hidden outright.
       load();
       v.controls = true;
-      showPlay(false);
+      if (playBtn) playBtn.hidden = true;
       return;
     }
 
     // Keep the overlay in sync with the real play state.
-    v.addEventListener("play", function () { showPlay(false); v.setAttribute("aria-pressed", "true"); });
-    v.addEventListener("pause", function () { showPlay(true); v.setAttribute("aria-pressed", "false"); });
+    v.addEventListener("play", function () { showPlay(false); });
+    v.addEventListener("pause", function () { showPlay(true); });
 
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (entries) {
@@ -495,22 +509,20 @@
       tryPlay();
     }
 
-    // Tap or click toggles play/pause; make the same toggle reachable from
-    // the keyboard (reduced-motion users get native <video controls> above).
-    // Expose it to assistive tech as a toggle button (the reduced-motion path
-    // returned above, so native-controls videos never get this role).
-    v.tabIndex = 0;
-    v.setAttribute("role", "button");
-    v.setAttribute("aria-pressed", v.paused ? "false" : "true");
+    // Tapping the film toggles play/pause, as a pointer convenience. The
+    // keyboard and assistive-technology path is the .film-play button, which
+    // is a real <button> with a name that changes with the state.
+    //
+    // This used to put role="button", aria-pressed and tabindex on the <video>
+    // itself. ARIA does not allow role="button" there: the element has its own
+    // semantics and its own interactive descendants, so a screen reader was
+    // told "button" about something that is a video (#1625). Moving the
+    // semantics onto the button that was already in the markup makes the
+    // control valid and gives it something to announce.
     v.addEventListener("click", toggle);
-    v.addEventListener("keydown", function (e) {
-      if (e.key === " " || e.key === "Spacebar" || e.key === "Enter") {
-        e.preventDefault();
-        toggle();
-      }
-    });
     if (playBtn) {
       playBtn.addEventListener("click", function (e) { e.stopPropagation(); toggle(); });
     }
+    showPlay(v.paused);
   });
 })();
