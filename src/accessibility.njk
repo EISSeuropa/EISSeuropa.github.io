@@ -69,7 +69,8 @@ alternates:
         Beyond automated tools, the static lint
         <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/scripts/a11y_lint.py" target="_blank" rel="noopener">scripts/a11y_lint.py</a>
         is run on each build and currently reports
-        <strong>0&nbsp;pages with issues</strong> across all templates.
+        <strong>0&nbsp;pages with issues</strong> across all templates. It reads the
+        built HTML, so it is a check on markup rather than on the rendered page.
       </p>
       <p>
         In <strong>June&nbsp;2026</strong> we ran a broader site-wide review: a multi-pass
@@ -80,6 +81,29 @@ alternates:
         being tracked, are recorded in the public
         <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues" target="_blank" rel="noopener">issue&nbsp;tracker</a>;
         the resulting improvements are reflected in §4 and the remaining items in §3.
+      </p>
+      <p>
+        In <strong>September&nbsp;2026</strong> we widened the method. Both the static lint
+        and the earlier scans read each page as it is sent, not as a browser draws it, so
+        anything that depends on layout, computed colour or a script running was outside
+        what they could report. We re-ran
+        <a href="https://github.com/dequelabs/axe-core" target="_blank" rel="noopener">axe-core&nbsp;4.13</a>
+        in a real browser at a phone width and a desktop width, in both colour schemes,
+        across <strong>51&nbsp;pages</strong>, and again over all <strong>660</strong>
+        generated paper, person and theme pages.
+      </p>
+      <p>
+        It found <strong>eight defects</strong> that the earlier passes could not have
+        reported. The most serious was an empty, unlabelled link sitting at the end of the
+        keyboard tab order on <strong>every page of the site</strong>, held there by a
+        stylesheet rule that overrode the <code>hidden</code> attribute on the card that
+        shows a person&rsquo;s details. Alongside it: a map whose seven conference links were
+        hidden from screen readers, a badge below the contrast minimum on thirteen archive
+        pages, and four pages that scrolled sideways on a phone. Those are fixed. The rest
+        are listed in <a href="#known-limitations">&sect;3</a> with the issues tracking them.
+        Four more, reported by the same pass, were fixed shortly afterwards: the conference
+        film&rsquo;s control, the Atlas filter panel, links inside grey paragraphs, and a
+        table that scrolled without being reachable from the keyboard.
       </p>
 
       <h2 id="known-limitations">3. Known limitations</h2>
@@ -121,19 +145,30 @@ alternates:
           the zoom buttons, is a regular HTML button reachable from the keyboard, carrying
           <code>aria-pressed</code> state where it toggles.
         </li>
+        <li>
+          <strong>Link and label colour on tinted surfaces.</strong> The accent blue used for
+          links and for role labels measures 4.51:1 against white, which clears the AA
+          minimum by a hundredth. On a surface that is tinted rather than white it falls
+          below: the role labels and profile links on the People page measure 3.99:1, and the
+          category chips on the home page and the news page measure 4.05:1.
+          <em>Mitigation:</em> none that leaves the colour alone, so this is being corrected
+          rather than worked around. Tracked in
+          <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1624" target="_blank" rel="noopener">issue&nbsp;#1624</a>.
+        </li>
       </ol>
 
       <h2>4. Accessibility features implemented</h2>
       <ul>
         <li>Semantic landmarks (<code>&lt;header&gt;</code>, <code>&lt;nav aria-label="Primary"&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>) and a skip-to-content link as the first focusable element on every page</li>
         <li>Visible focus indicators via <code>:focus-visible</code> on every interactive control</li>
-        <li>Light and dark colour schemes both meeting WCAG&nbsp;AA contrast ratios for body text, links, and UI</li>
+        <li>Light and dark colour schemes, with body text and interface controls meeting WCAG&nbsp;AA contrast ratios, apart from the case recorded in &sect;3</li>
+        <li>Links inside grey paragraphs underlined, where the accent is 1.76:1 against the text around them and colour alone would not tell them apart (WCAG&nbsp;1.4.1)</li>
+        <li>The conference film pausable from the keyboard, by a named control that stays reachable while the film plays</li>
         <li>Automatic dark mode via <code>prefers-color-scheme</code>, with a manual override that persists in <code>localStorage</code></li>
         <li>All animations gated on <code>prefers-reduced-motion</code>: when the user opts out, transitions and reveal animations are disabled</li>
         <li>Resizable text reflowing cleanly at 200 % zoom and at viewports down to 320&nbsp;px</li>
         <li>Alt text on every meaningful image; decorative images carry <code>alt=""</code> to be skipped by assistive technologies</li>
         <li>Descriptive link text: every link indicates its destination without relying on surrounding context (no bare “Learn more”)</li>
-        <li>Links in body text underlined, so colour is not the only distinguishing cue (WCAG&nbsp;1.4.1)</li>
         <li>Native <code>&lt;details&gt;</code> for FAQ accordions (e.g. NetSec Summer School, Euro-SWAMOS) — keyboard-accessible without JavaScript</li>
         <li>Mobile navigation drawer with opaque background, <code>aria-expanded</code> on the toggle, focus management on close</li>
         <li>Site search opens as a modal dialog that holds keyboard focus (the rest of the page is set <code>inert</code> while it is open, so Tab cannot drift behind the overlay) and behaves as an ARIA combobox: results form a listbox moved through with the arrow keys, Enter follows the highlighted result, Escape closes</li>
@@ -181,10 +216,12 @@ alternates:
         <strong>Partial conformance</strong> with WCAG&nbsp;2.1 Level&nbsp;AA, aligned with
         EN&nbsp;301&nbsp;549. All templates of the site meet the standard. The residual
         partial-compliance label reflects the documented limitations in §3 (embedded PDFs,
-        translucent surfaces, generic alt text on some archive photos). Automated audits currently report zero
-        violations, the June&nbsp;2026 review
-        found no critical or serious barriers, and the items in “manual review” have been
-        individually verified compliant.
+        translucent surfaces, generic alt text on some archive photos, the accent colour on
+        tinted surfaces). The static lint and the
+        markup-level scans report zero violations, and the items they raise for
+        &ldquo;manual review&rdquo; have been individually verified compliant. The
+        September&nbsp;2026 browser-based pass is the current assessment, and what it found
+        still open is listed in §3 rather than summarised here.
       </p>
       <p>
         <a class="wcag-badge"
@@ -199,7 +236,7 @@ alternates:
         </a>
       </p>
       <p class="meta">
-        Statement prepared: 14 May 2026 · Last reviewed: 20 August 2026 · Next scheduled review:
+        Statement prepared: 14 May 2026 · Last reviewed: 2 September 2026 · Next scheduled review:
         14 May 2027 or upon major design change.
       </p>
     </article>
