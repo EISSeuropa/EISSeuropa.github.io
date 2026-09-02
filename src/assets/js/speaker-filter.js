@@ -3,13 +3,16 @@
  * Progressive enhancement: with JS off the page shows every speaker (the
  * controls simply do nothing). With JS on:
  *   - a theme <select> narrows to speakers carrying that theme;
- *   - a name search box narrows by surname/given (diacritic-insensitive);
+ *   - a name search box narrows by surname/given (diacritic-insensitive, and
+ *     every whitespace-separated word has to match, so a name typed in either
+ *     order finds its entry);
  *   - the two combine (AND);
- *   - empty letter headings are hidden, and a role=status region announces
- *     the new count to assistive tech (no focus move);
+ *   - empty letter headings are hidden, and a role=status region carries the
+ *     count at all times, announcing a change to assistive tech (no focus
+ *     move);
  *   - a Clear button resets both;
- *   - the theme is mirrored in the URL (?theme=…) so a filtered view is
- *     shareable and survives Back. The served page's <link rel=canonical>
+ *   - theme, event and the name query are mirrored in the URL so a filtered
+ *     view is shareable and survives Back. The served page's <link rel=canonical>
  *     stays the clean /speakers.html (the param is added client-side only),
  *     so this introduces no duplicate-content URL for crawlers.
  *
@@ -38,15 +41,30 @@
       .trim();
   };
 
+  // Every word of the query has to appear in the name, in any order (#1637).
+  // A single indexOf matched one contiguous run, so a surname typed before a
+  // given name found nothing.
+  var tokenise = function (s) {
+    var n = norm(s);
+    return n ? n.split(/\s+/) : [];
+  };
+  var matches = function (hay, tokens) {
+    for (var i = 0; i < tokens.length; i++) {
+      if (hay.indexOf(tokens[i]) === -1) return false;
+    }
+    return true;
+  };
+
   function apply() {
     var theme = themeSel.value;
     var ev = eventSel ? eventSel.value : "";
     var q = norm(findEl && findEl.value);
+    var tokens = tokenise(q);
     var visible = 0;
     entries.forEach(function (el) {
       var okTheme = !theme || (el.getAttribute("data-themes") || "").split("|").indexOf(theme) !== -1;
       var okEvent = !ev || (el.getAttribute("data-events") || "").split("|").indexOf(ev) !== -1;
-      var okName = !q || norm(el.getAttribute("data-name")).indexOf(q) !== -1;
+      var okName = !q || matches(norm(el.getAttribute("data-name")), tokens);
       var show = okTheme && okEvent && okName;
       el.hidden = !show;
       if (show) visible++;
@@ -68,14 +86,13 @@
       // Box + centre the "nothing matched" message so the empty list reads as
       // intentional, not broken.
       statusEl.classList.toggle("speaker-status--empty", filtering && visible === 0);
+      var d = statusEl.dataset;
       if (!filtering) {
-        statusEl.hidden = true;
-        statusEl.textContent = "";
+        // The unfiltered state keeps a count rather than going blank (#1640).
+        setStatus((d.msgAll || "All {n} speakers").replace("{n}", visible));
       } else {
-        statusEl.hidden = false;
-        var d = statusEl.dataset;
         if (visible === 0) {
-          statusEl.textContent = d.msgNone || "No speakers match.";
+          setStatus(d.msgNone || "No speakers match.");
         } else {
           var tmpl = visible === 1
             ? (d.msgOne || "{n} speaker")
@@ -93,16 +110,26 @@
             var matchTmpl = d.msgMatching || 'matching "{q}"';
             bits.push(matchTmpl.replace("{q}", (findEl.value || "").trim()));
           }
-          statusEl.textContent =
+          setStatus(
             tmpl.replace("{n}", visible) +
-            (bits.length ? " · " + bits.join(" · ") : "");
+            (bits.length ? " · " + bits.join(" · ") : "")
+          );
         }
       }
     }
   }
 
-  // Mirror the theme in the URL (shareable / Back-restorable). Name search
-  // stays out of the URL — it's an ephemeral accelerator, not a view.
+  // Only touch the live region when the text actually changes. The status is
+  // server-rendered with the unfiltered count, so writing an identical string
+  // during the load-time apply() would announce it for no reason.
+  function setStatus(text) {
+    if (statusEl.textContent.trim() !== text) statusEl.textContent = text;
+  }
+
+  // Mirror theme, event and the name query in the URL (shareable /
+  // Back-restorable). The query used to be left out as an ephemeral
+  // accelerator, but it is the control people reach for first and the one
+  // result they most want to send on (#1638).
   function syncUrl() {
     if (!window.history || !history.replaceState) return;
     var url = new URL(window.location.href);
@@ -110,12 +137,16 @@
     else url.searchParams.delete("theme");
     if (eventSel && eventSel.value) url.searchParams.set("event", eventSel.value);
     else url.searchParams.delete("event");
+    if (findEl && findEl.value.trim()) url.searchParams.set("q", findEl.value.trim());
+    else url.searchParams.delete("q");
     history.replaceState(null, "", url.pathname + url.search + url.hash);
   }
 
   themeSel.addEventListener("change", function () { syncUrl(); apply(); });
   if (eventSel) eventSel.addEventListener("change", function () { syncUrl(); apply(); });
-  if (findEl) findEl.addEventListener("input", apply);
+  // replaceState on every keystroke rather than pushState, so typing swaps the
+  // current entry instead of filling the history stack.
+  if (findEl) findEl.addEventListener("input", function () { syncUrl(); apply(); });
   if (clearEl) {
     clearEl.addEventListener("click", function () {
       themeSel.value = "";
@@ -127,7 +158,8 @@
     });
   }
 
-  // Restore theme + event from the URL on load (deep link / Back).
+  // Restore theme, event and the name query from the URL on load (deep link /
+  // Back).
   function restore(param, sel) {
     if (!sel) return;
     var v = new URL(window.location.href).searchParams.get(param);
@@ -135,6 +167,8 @@
   }
   restore("theme", themeSel);
   restore("event", eventSel);
+  var qParam = new URL(window.location.href).searchParams.get("q");
+  if (findEl && qParam) findEl.value = qParam;
   apply();
 
   // Deep-link to a specific person: ?person=<profile-slug> scrolls to their
