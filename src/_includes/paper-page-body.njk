@@ -9,7 +9,7 @@
    in-article one) to history.back() with a referrer-aware label. #}
 <div class="paper-back-sticky">
   <div class="container">
-    <a class="btn btn-secondary btn-sm" href="/anthology.html?view=papers#paper-{{ paper.slug }}"
+    <a class="btn btn-secondary btn-sm" href="/anthology.html?view=papers&amp;paper={{ paper.slug }}"
        data-paper-back
        data-back-conf-path="{{ paper.conferenceUrl }}"
        data-back-event="{{ paper.conferenceLabel }} {{ paper.year }}"
@@ -115,11 +115,11 @@
       {%- endif %}
       {# Adaptive Back (#889). Stands apart from the secondary actions and is a
          touch larger, with a return arrow. Baseline: a real anchor to the index
-         at this paper's anchor. paper-back.js upgrades it to history.back() with
+         at this paper's row. paper-back.js upgrades it to history.back() with
          a referrer-aware label when the reader came from a same-origin page,
          returning them to their exact filtered index + scroll. #}
       <p style="margin-top: var(--space-5);">
-        <a class="btn btn-secondary" href="/anthology.html?view=papers#paper-{{ paper.slug }}"
+        <a class="btn btn-secondary" href="/anthology.html?view=papers&amp;paper={{ paper.slug }}"
            data-paper-back
            data-back-conf-path="{{ paper.conferenceUrl }}"
            data-back-event="{{ paper.conferenceLabel }} {{ paper.year }}"

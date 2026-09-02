@@ -67,9 +67,9 @@
         if (!incoming) throw new Error("panel missing");
         panel.replaceChildren.apply(panel, Array.prototype.slice.call(incoming.childNodes));
         runScripts(panel);
-        // The fragment brings the rows a #paper- / #person- link was aiming
-        // at, and the browser resolved that hash before they existed.
-        focusFromHash(true);
+        // The fragment brings the rows a deep link was aiming at, and the
+        // browser resolved the URL before they existed.
+        revealTarget(true);
       })
       .catch(function () {
         panel.setAttribute("data-archive-src", src);
@@ -117,17 +117,25 @@
   });
 
   /* Focus-return (#889, item 4). When the reader arrives at a specific entry —
-   * the Back link from a paper page lands on ?view=papers#paper-<slug>, or a
-   * deep link targets a person — move focus to that row so keyboard and
-   * screen-reader users resume where they left off rather than at the top of
-   * the page. On a first render the browser's native anchor scroll already
-   * positions it and preventScroll keeps that position. A row that arrived
-   * with a fetched panel was not in the document when the browser resolved
-   * the hash, so that call passes `scroll` and does the positioning itself. */
-  function focusFromHash(scroll) {
-    var h = location.hash;
-    if (!h || !/^#(paper|person)-/.test(h)) return;
-    var el = document.getElementById(h.slice(1));
+   * the Back link from a paper page, or a deep link to a person — move focus
+   * to that row so keyboard and screen-reader users resume where they left
+   * off rather than at the top of the page.
+   *
+   * The by-paper view names its row in a query parameter, `?paper=<slug>`,
+   * rather than a fragment (#1641). That view is fetched now, so its rows are
+   * not in the served document and 511 `#paper-` links from the paper pages
+   * would have pointed at anchors a crawler, a link checker and a reader
+   * without scripting could not resolve. A query parameter makes no promise
+   * the document does not keep, and it matches the `?person=` deep link
+   * speaker-filter.js already handles. The fragment form is still honoured,
+   * for links made before this and for the by-person rows, which are still
+   * server-rendered.
+   *
+   * On a first render the browser's native anchor scroll has already
+   * positioned a fragment target and preventScroll keeps that position. A row
+   * that arrived with a fetched panel, or one named by a query parameter, was
+   * never positioned, so those paths pass `scroll` and do it themselves. */
+  function reveal(el, scroll) {
     if (!el) return;
     if (scroll) el.scrollIntoView({ block: "center" });
     if (!el.hasAttribute("tabindex")) el.setAttribute("tabindex", "-1");
@@ -137,6 +145,19 @@
       el.focus();
     }
   }
-  focusFromHash(false);
-  window.addEventListener("hashchange", function () { focusFromHash(false); });
+
+  function revealTarget(scroll) {
+    var h = location.hash;
+    if (h && /^#(paper|person)-/.test(h)) {
+      reveal(document.getElementById(h.slice(1)), scroll);
+      return;
+    }
+    var slug;
+    try {
+      slug = new URLSearchParams(location.search).get("paper");
+    } catch (e) {}
+    if (slug) reveal(document.getElementById("paper-" + slug), true);
+  }
+  revealTarget(false);
+  window.addEventListener("hashchange", function () { revealTarget(false); });
 })();
