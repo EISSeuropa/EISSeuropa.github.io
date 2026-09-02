@@ -73,7 +73,8 @@ alternates:
         Au-delà des outils automatisés, le lint statique
         <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/scripts/a11y_lint.py" target="_blank" rel="noopener">scripts/a11y_lint.py</a>
         est exécuté à chaque build et signale actuellement
-        <strong>0&nbsp;page avec des problèmes</strong> sur tous les modèles.
+        <strong>0&nbsp;page avec des problèmes</strong> sur tous les modèles. Il lit le HTML
+        produit : c'est donc un contrôle du balisage et non de la page rendue.
       </p>
       <p>
         En <strong>juin&nbsp;2026</strong>, nous avons mené une revue plus large de l'ensemble du
@@ -84,6 +85,29 @@ alternates:
         manière dont chacun a été résolu ou est suivi, sont consignés dans le
         <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues" target="_blank" rel="noopener">suivi&nbsp;public&nbsp;des&nbsp;tickets</a> ;
         les améliorations qui en découlent figurent au §4 et les points restants au §3.
+      </p>
+      <p>
+        En <strong>septembre&nbsp;2026</strong>, nous avons élargi la méthode. Le lint statique
+        et les analyses précédentes lisaient chaque page telle qu'elle est envoyée, et non telle
+        qu'un navigateur la dessine : tout ce qui dépend de la mise en page, d'une couleur
+        calculée ou d'un script en cours d'exécution échappait à ce qu'ils pouvaient signaler.
+        Nous avons relancé
+        <a href="https://github.com/dequelabs/axe-core" target="_blank" rel="noopener">axe-core&nbsp;4.13</a>
+        dans un vrai navigateur, à une largeur de téléphone et à une largeur d'ordinateur, dans
+        les deux schémas de couleurs, sur <strong>51&nbsp;pages</strong>, puis à nouveau sur
+        l'ensemble des <strong>660</strong> pages générées de communications, de personnes et
+        de thèmes.
+      </p>
+      <p>
+        Cette passe a révélé <strong>huit défauts</strong> que les précédentes ne pouvaient pas
+        signaler. Le plus grave était un lien vide et sans intitulé placé en fin d'ordre de
+        tabulation sur <strong>chaque page du site</strong>, maintenu là par une règle de style
+        qui neutralisait l'attribut <code>hidden</code> de la carte affichant les informations
+        d'une personne. À ses côtés : une carte dont les sept liens vers les conférences étaient
+        masqués aux lecteurs d'écran, un badge sous le seuil de contraste sur treize pages
+        d'archives, et quatre pages qui défilaient latéralement sur un téléphone. Ces points
+        sont corrigés. Les autres figurent au
+        <a href="#known-limitations">&sect;3</a> avec les tickets qui les suivent.
       </p>
 
       <h2 id="known-limitations">3. Limites connues</h2>
@@ -127,19 +151,41 @@ alternates:
           des boutons HTML classiques accessibles au clavier, portant un état
           <code>aria-pressed</code> lorsqu'ils fonctionnent par bascule.
         </li>
+        <li>
+          <strong>Couleur des liens et des libellés sur fonds teintés.</strong> Le bleu
+          d'accentuation utilisé pour les liens et les libellés de rôle mesure 4,51:1 sur du
+          blanc, soit un centième au-dessus du minimum AA. Sur une surface teintée plutôt que
+          blanche, il passe en dessous : les libellés de rôle et les liens de profil de la page
+          Les personnes mesurent 3,99:1, et les pastilles de catégorie de la page d'accueil et
+          de la page actualités mesurent 4,05:1.
+          <em>Atténuation :</em> aucune qui laisse la couleur inchangée ; ce point est donc
+          corrigé plutôt que contourné. Suivi dans le
+          <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1624" target="_blank" rel="noopener">ticket&nbsp;#1624</a>.
+        </li>
+        <li>
+          <strong>Quatre défauts plus petits en attente de publication.</strong> Le film de la
+          conférence se décrit aux technologies d'assistance avec un rôle qui n'est pas autorisé
+          sur un élément vidéo. Le panneau de filtres de l'Atlas place un bouton à l'intérieur
+          du contrôle qui l'ouvre. Les liens situés dans les paragraphes gris se distinguent du
+          texte qui les entoure par la seule couleur. Le tableau des jetons du système de design
+          défile latéralement sans être atteignable au clavier.
+          <em>Atténuation :</em> le film peut toujours être mis en pause en le touchant, les
+          filtres de l'Atlas peuvent toujours être réinitialisés, et les pages concernées
+          restent utilisables. Les correctifs sont écrits et suivis dans le
+          <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1625" target="_blank" rel="noopener">ticket&nbsp;#1625</a>.
+        </li>
       </ol>
 
       <h2>4. Fonctionnalités d'accessibilité mises en œuvre</h2>
       <ul>
         <li>Repères sémantiques (<code>&lt;header&gt;</code>, <code>&lt;nav aria-label="Primary"&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>) et un lien d'évitement vers le contenu comme premier élément focusable sur chaque page</li>
         <li>Indicateurs de focus visibles via <code>:focus-visible</code> sur chaque contrôle interactif</li>
-        <li>Schémas de couleurs clair et sombre respectant tous deux les ratios de contraste WCAG&nbsp;AA pour le texte, les liens et l'UI</li>
+        <li>Schémas de couleurs clair et sombre respectant les ratios de contraste WCAG&nbsp;AA pour le texte et les contrôles d'interface, à l'exception du cas consigné au §3</li>
         <li>Mode sombre automatique via <code>prefers-color-scheme</code>, avec une bascule manuelle persistante dans <code>localStorage</code></li>
         <li>Toutes les animations conditionnées à <code>prefers-reduced-motion</code> — lorsque l'utilisateur le désactive, les transitions et animations de révélation sont désactivées</li>
         <li>Texte redimensionnable s'adaptant proprement à un zoom de 200 % et à des fenêtres jusqu'à 320&nbsp;px</li>
         <li>Texte alt sur chaque image significative ; les images décoratives portent <code>alt=""</code> pour être ignorées par les technologies d'assistance</li>
         <li>Texte de lien descriptif — chaque lien indique sa destination sans dépendre du contexte environnant (pas de simple « En savoir plus »)</li>
-        <li>Liens dans le corps du texte soulignés, pour que la couleur ne soit pas le seul indice distinctif (WCAG&nbsp;1.4.1)</li>
         <li>Balises natives <code>&lt;details&gt;</code> pour les accordéons FAQ (par exemple école d'été NetSec, Euro-SWAMOS) — accessibles au clavier sans JavaScript</li>
         <li>Tiroir de navigation mobile avec arrière-plan opaque, <code>aria-expanded</code> sur la bascule, gestion du focus à la fermeture</li>
         <li>La recherche du site s'ouvre comme une boîte de dialogue modale qui retient le focus clavier (le reste de la page est mis en <code>inert</code> tant qu'elle est ouverte, de sorte que la tabulation ne peut pas passer derrière la surcouche) et se comporte comme une combobox ARIA : les résultats forment une liste (listbox) parcourue avec les touches fléchées, Entrée suit le résultat surligné, Échap ferme</li>
@@ -190,10 +236,12 @@ alternates:
         <strong>Conformité partielle</strong> avec WCAG&nbsp;2.1 Niveau&nbsp;AA, alignée avec
         EN&nbsp;301&nbsp;549. Tous les modèles du site respectent la norme ; le label de conformité
         partielle résiduelle reflète les limites documentées au §3 (PDF intégrés, surfaces translucides,
-        texte alt générique sur certaines photos d'archive). Les
-        audits automatisés ne signalent actuellement aucune violation, la revue de juin&nbsp;2026 n'a
-        trouvé aucun obstacle critique ou grave, et les éléments en « revue manuelle » ont été
-        individuellement vérifiés conformes.
+        texte alt générique sur certaines photos d'archive, la couleur d'accentuation sur fonds
+        teintés, et les quatre points en attente de publication). Le lint statique et les
+        analyses au niveau du balisage ne signalent aucune violation, et les éléments qu'ils
+        placent en « revue manuelle » ont été individuellement vérifiés conformes. La passe de
+        septembre&nbsp;2026 menée dans un navigateur constitue l'évaluation en vigueur, et ce
+        qu'elle laisse ouvert est listé au §3 plutôt que résumé ici.
       </p>
       <p>
         <a class="wcag-badge"
@@ -208,7 +256,7 @@ alternates:
         </a>
       </p>
       <p class="meta">
-        Déclaration préparée : 14 mai 2026 · Dernière revue : 20 août 2026 · Prochaine revue prévue :
+        Déclaration préparée : 14 mai 2026 · Dernière revue : 2 septembre 2026 · Prochaine revue prévue :
         14 mai 2027 ou lors d'un changement majeur de conception.
       </p>
     </article>

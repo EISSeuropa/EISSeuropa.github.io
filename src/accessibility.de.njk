@@ -74,7 +74,8 @@ alternates:
         Über automatisierte Tools hinaus wird der statische Linter
         <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/scripts/a11y_lint.py" target="_blank" rel="noopener">scripts/a11y_lint.py</a>
         bei jedem Build ausgeführt und meldet derzeit
-        <strong>0&nbsp;Seiten mit Problemen</strong> über alle Vorlagen hinweg.
+        <strong>0&nbsp;Seiten mit Problemen</strong> über alle Vorlagen hinweg. Es liest das
+        erzeugte HTML und prüft damit die Auszeichnung, nicht die gezeichnete Seite.
       </p>
       <p>
         Im <strong>Juni&nbsp;2026</strong> haben wir eine umfassendere, websiteweite Überprüfung
@@ -87,6 +88,27 @@ alternates:
         <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues" target="_blank" rel="noopener">Issue-Tracker</a>
         festgehalten; die daraus resultierenden Verbesserungen sind in §4 und die verbleibenden
         Punkte in §3 wiedergegeben.
+      </p>
+      <p>
+        Im <strong>September&nbsp;2026</strong> haben wir die Methode erweitert. Das statische
+        Lint und die früheren Prüfungen lasen jede Seite so, wie sie ausgeliefert wird, und nicht
+        so, wie ein Browser sie zeichnet: alles, was von Layout, berechneter Farbe oder einem
+        laufenden Skript abhängt, lag außerhalb dessen, was sie melden konnten. Wir haben
+        <a href="https://github.com/dequelabs/axe-core" target="_blank" rel="noopener">axe-core&nbsp;4.13</a>
+        erneut in einem echten Browser ausgeführt, in Telefon- und in Desktopbreite, in beiden
+        Farbschemata, über <strong>51&nbsp;Seiten</strong>, und noch einmal über alle
+        <strong>660</strong> generierten Beitrags-, Personen- und Themenseiten.
+      </p>
+      <p>
+        Dabei kamen <strong>acht Mängel</strong> zutage, die die früheren Durchläufe nicht melden
+        konnten. Der schwerwiegendste war ein leerer Link ohne Bezeichnung am Ende der
+        Tabulatorreihenfolge <strong>jeder Seite der Website</strong>, dort gehalten von einer
+        Stilregel, die das Attribut <code>hidden</code> der Karte mit den Angaben zu einer Person
+        außer Kraft setzte. Daneben: eine Karte, deren sieben Konferenzlinks vor Bildschirmlesern
+        verborgen waren, ein Abzeichen unter dem Kontrastminimum auf dreizehn Archivseiten und
+        vier Seiten, die auf einem Telefon seitlich scrollten. Diese Punkte sind behoben. Die
+        übrigen sind in <a href="#known-limitations">&sect;3</a> mit den zugehörigen Tickets
+        aufgeführt.
       </p>
 
       <h2 id="known-limitations">3. Bekannte Einschränkungen</h2>
@@ -132,19 +154,40 @@ alternates:
           HTML-Schaltflächen, die mit der Tastatur erreichbar sind und einen
           <code>aria-pressed</code>-Zustand tragen, wo sie umschalten.
         </li>
+        <li>
+          <strong>Link- und Bezeichnungsfarbe auf getönten Flächen.</strong> Das Akzentblau für
+          Links und Rollenbezeichnungen misst 4,51:1 auf Weiß und liegt damit ein Hundertstel
+          über dem AA-Minimum. Auf einer getönten statt weißen Fläche fällt es darunter: die
+          Rollenbezeichnungen und Profillinks auf der Seite Die Menschen messen 3,99:1, die
+          Kategorie-Chips auf der Startseite und der Aktuelles-Seite 4,05:1.
+          <em>Abhilfe:</em> keine, die die Farbe unangetastet lässt; dieser Punkt wird daher
+          behoben statt umgangen. Nachverfolgt in
+          <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1624" target="_blank" rel="noopener">Ticket&nbsp;#1624</a>.
+        </li>
+        <li>
+          <strong>Vier kleinere Mängel vor der Veröffentlichung.</strong> Der Konferenzfilm gibt
+          sich gegenüber Hilfstechnologien mit einer Rolle aus, die auf einem Videoelement nicht
+          zulässig ist. Das Filterfeld des Atlas setzt eine Schaltfläche in das Bedienelement,
+          das es öffnet. Links in grauen Absätzen unterscheiden sich vom umgebenden Text allein
+          durch die Farbe. Die Token-Tabelle des Designsystems scrollt seitlich, ohne mit der
+          Tastatur erreichbar zu sein.
+          <em>Abhilfe:</em> der Film lässt sich weiterhin durch Antippen anhalten, die
+          Atlas-Filter lassen sich weiterhin zurücksetzen, und die betroffenen Seiten bleiben
+          nutzbar. Die Korrekturen sind geschrieben und werden in
+          <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1625" target="_blank" rel="noopener">Ticket&nbsp;#1625</a> nachverfolgt.
+        </li>
       </ol>
 
       <h2>4. Implementierte Barrierefreiheitsfunktionen</h2>
       <ul>
         <li>Semantische Landmarken (<code>&lt;header&gt;</code>, <code>&lt;nav aria-label="Primary"&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>) und ein Skip-to-Content-Link als erstes fokussierbares Element auf jeder Seite</li>
         <li>Sichtbare Fokusindikatoren über <code>:focus-visible</code> auf jedem interaktiven Steuerelement</li>
-        <li>Helles und dunkles Farbschema, die beide die WCAG&nbsp;AA-Kontrastverhältnisse für Fließtext, Links und UI erfüllen</li>
+        <li>Helles und dunkles Farbschema, die die WCAG&nbsp;AA-Kontrastverhältnisse für Fließtext und Bedienelemente erfüllen, mit Ausnahme des in §3 festgehaltenen Falls</li>
         <li>Automatischer Dunkelmodus über <code>prefers-color-scheme</code>, mit manueller Übersteuerung, die in <code>localStorage</code> persistiert wird</li>
         <li>Alle Animationen auf <code>prefers-reduced-motion</code> gestaffelt — wenn der Nutzer dies deaktiviert, werden Übergänge und Reveal-Animationen ausgeschaltet</li>
         <li>Größenveränderbarer Text, der sauber bei 200 % Zoom und bei Viewports bis 320&nbsp;px umfließt</li>
         <li>Alt-Text auf jedem bedeutsamen Bild; dekorative Bilder tragen <code>alt=""</code>, um von Hilfstechnologien übersprungen zu werden</li>
         <li>Beschreibender Linktext — jeder Link gibt sein Ziel an, ohne auf den umgebenden Kontext angewiesen zu sein (kein bloßes „Mehr erfahren")</li>
-        <li>Links im Fließtext sind unterstrichen, sodass Farbe nicht das einzige Unterscheidungsmerkmal ist (WCAG&nbsp;1.4.1)</li>
         <li>Native <code>&lt;details&gt;</code>-Elemente für FAQ-Akkordeons (z. B. NetSec-Sommerschule, Euro-SWAMOS) — tastaturzugänglich ohne JavaScript</li>
         <li>Mobiler Navigationsdrawer mit undurchsichtigem Hintergrund, <code>aria-expanded</code> auf dem Umschalter, Fokusverwaltung beim Schließen</li>
         <li>Die Website-Suche öffnet sich als modaler Dialog, der den Tastaturfokus hält (der Rest der Seite wird auf <code>inert</code> gesetzt, solange sie geöffnet ist, sodass der Tabulator nicht hinter die Überlagerung gelangen kann) und verhält sich wie eine ARIA-Combobox: die Ergebnisse bilden eine Listbox, die mit den Pfeiltasten durchlaufen wird, Enter folgt dem hervorgehobenen Ergebnis, Escape schließt</li>
@@ -192,9 +235,13 @@ alternates:
         <strong>Teilweise Konformität</strong> mit WCAG&nbsp;2.1 Stufe&nbsp;AA, ausgerichtet auf
         EN&nbsp;301&nbsp;549. Alle Vorlagen der Website erfüllen den Standard; das Label
         „teilweise Konformität" spiegelt die in §3 dokumentierten Einschränkungen wider (eingebettete
-        PDFs, transluzente Flächen, generischer Alt-Text auf einigen Archivfotos). Automatisierte Audits melden derzeit keine Verstöße, die Überprüfung vom
-        Juni&nbsp;2026 fand keine kritischen oder schwerwiegenden Barrieren, und die Elemente in
-        „manueller Überprüfung" wurden einzeln als konform verifiziert.
+        PDFs, transluzente Flächen, generischer Alt-Text auf einigen Archivfotos, die
+        Akzentfarbe auf getönten Flächen und die vier Punkte vor der Veröffentlichung). Das
+        statische Lint und die Prüfungen auf Auszeichnungsebene melden keine Verstöße, und die
+        Elemente, die sie in „manuelle Überprüfung" geben, wurden einzeln als konform
+        verifiziert. Der im Browser durchgeführte Durchlauf vom September&nbsp;2026 ist die
+        geltende Bewertung; was er offen lässt, ist in §3 aufgeführt statt hier
+        zusammengefasst.
       </p>
       <p>
         <a class="wcag-badge"
@@ -209,7 +256,7 @@ alternates:
         </a>
       </p>
       <p class="meta">
-        Erklärung erstellt: 14. Mai 2026 · Zuletzt überprüft: 20. August 2026 · Nächste geplante
+        Erklärung erstellt: 14. Mai 2026 · Zuletzt überprüft: 2. September 2026 · Nächste geplante
         Überprüfung: 14. Mai 2027 oder bei einer größeren Designänderung.
       </p>
     </article>
