@@ -107,7 +107,10 @@ alternates:
         masqués aux lecteurs d'écran, un badge sous le seuil de contraste sur treize pages
         d'archives, et quatre pages qui défilaient latéralement sur un téléphone. Ces points
         sont corrigés. Les autres figurent au
-        <a href="#known-limitations">&sect;3</a> avec les tickets qui les suivent.
+        <a href="#known-limitations">&sect;3</a> avec les tickets qui les suivent. Quatre
+        autres, signalés par la même passe, ont été corrigés peu après : le contrôle du film de
+        la conférence, le panneau de filtres de l'Atlas, les liens dans les paragraphes gris,
+        et un tableau qui défilait sans être atteignable au clavier.
       </p>
 
       <h2 id="known-limitations">3. Limites connues</h2>
@@ -162,18 +165,6 @@ alternates:
           corrigé plutôt que contourné. Suivi dans le
           <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1624" target="_blank" rel="noopener">ticket&nbsp;#1624</a>.
         </li>
-        <li>
-          <strong>Quatre défauts plus petits en attente de publication.</strong> Le film de la
-          conférence se décrit aux technologies d'assistance avec un rôle qui n'est pas autorisé
-          sur un élément vidéo. Le panneau de filtres de l'Atlas place un bouton à l'intérieur
-          du contrôle qui l'ouvre. Les liens situés dans les paragraphes gris se distinguent du
-          texte qui les entoure par la seule couleur. Le tableau des jetons du système de design
-          défile latéralement sans être atteignable au clavier.
-          <em>Atténuation :</em> le film peut toujours être mis en pause en le touchant, les
-          filtres de l'Atlas peuvent toujours être réinitialisés, et les pages concernées
-          restent utilisables. Les correctifs sont écrits et suivis dans le
-          <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1625" target="_blank" rel="noopener">ticket&nbsp;#1625</a>.
-        </li>
       </ol>
 
       <h2>4. Fonctionnalités d'accessibilité mises en œuvre</h2>
@@ -181,6 +172,8 @@ alternates:
         <li>Repères sémantiques (<code>&lt;header&gt;</code>, <code>&lt;nav aria-label="Primary"&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>) et un lien d'évitement vers le contenu comme premier élément focusable sur chaque page</li>
         <li>Indicateurs de focus visibles via <code>:focus-visible</code> sur chaque contrôle interactif</li>
         <li>Schémas de couleurs clair et sombre respectant les ratios de contraste WCAG&nbsp;AA pour le texte et les contrôles d'interface, à l'exception du cas consigné au §3</li>
+        <li>Liens soulignés dans les paragraphes gris, où l'accentuation n'atteint que 1,76:1 face au texte qui les entoure et où la couleur seule ne suffirait pas à les distinguer (WCAG&nbsp;1.4.1)</li>
+        <li>Film de la conférence pouvant être mis en pause au clavier, par un contrôle nommé qui reste atteignable pendant la lecture</li>
         <li>Mode sombre automatique via <code>prefers-color-scheme</code>, avec une bascule manuelle persistante dans <code>localStorage</code></li>
         <li>Toutes les animations conditionnées à <code>prefers-reduced-motion</code> — lorsque l'utilisateur le désactive, les transitions et animations de révélation sont désactivées</li>
         <li>Texte redimensionnable s'adaptant proprement à un zoom de 200 % et à des fenêtres jusqu'à 320&nbsp;px</li>
@@ -237,7 +230,7 @@ alternates:
         EN&nbsp;301&nbsp;549. Tous les modèles du site respectent la norme ; le label de conformité
         partielle résiduelle reflète les limites documentées au §3 (PDF intégrés, surfaces translucides,
         texte alt générique sur certaines photos d'archive, la couleur d'accentuation sur fonds
-        teintés, et les quatre points en attente de publication). Le lint statique et les
+        teintés). Le lint statique et les
         analyses au niveau du balisage ne signalent aucune violation, et les éléments qu'ils
         placent en « revue manuelle » ont été individuellement vérifiés conformes. La passe de
         septembre&nbsp;2026 menée dans un navigateur constitue l'évaluation en vigueur, et ce

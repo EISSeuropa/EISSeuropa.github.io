@@ -108,7 +108,9 @@ alternates:
         verborgen waren, ein Abzeichen unter dem Kontrastminimum auf dreizehn Archivseiten und
         vier Seiten, die auf einem Telefon seitlich scrollten. Diese Punkte sind behoben. Die
         übrigen sind in <a href="#known-limitations">&sect;3</a> mit den zugehörigen Tickets
-        aufgeführt.
+        aufgeführt. Vier weitere, die dieselbe Prüfung meldete, wurden kurz darauf behoben: das
+        Bedienelement des Konferenzfilms, das Filterfeld des Atlas, Links in grauen Absätzen und
+        eine Tabelle, die scrollte, ohne mit der Tastatur erreichbar zu sein.
       </p>
 
       <h2 id="known-limitations">3. Bekannte Einschränkungen</h2>
@@ -164,18 +166,6 @@ alternates:
           behoben statt umgangen. Nachverfolgt in
           <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1624" target="_blank" rel="noopener">Ticket&nbsp;#1624</a>.
         </li>
-        <li>
-          <strong>Vier kleinere Mängel vor der Veröffentlichung.</strong> Der Konferenzfilm gibt
-          sich gegenüber Hilfstechnologien mit einer Rolle aus, die auf einem Videoelement nicht
-          zulässig ist. Das Filterfeld des Atlas setzt eine Schaltfläche in das Bedienelement,
-          das es öffnet. Links in grauen Absätzen unterscheiden sich vom umgebenden Text allein
-          durch die Farbe. Die Token-Tabelle des Designsystems scrollt seitlich, ohne mit der
-          Tastatur erreichbar zu sein.
-          <em>Abhilfe:</em> der Film lässt sich weiterhin durch Antippen anhalten, die
-          Atlas-Filter lassen sich weiterhin zurücksetzen, und die betroffenen Seiten bleiben
-          nutzbar. Die Korrekturen sind geschrieben und werden in
-          <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1625" target="_blank" rel="noopener">Ticket&nbsp;#1625</a> nachverfolgt.
-        </li>
       </ol>
 
       <h2>4. Implementierte Barrierefreiheitsfunktionen</h2>
@@ -183,6 +173,8 @@ alternates:
         <li>Semantische Landmarken (<code>&lt;header&gt;</code>, <code>&lt;nav aria-label="Primary"&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>) und ein Skip-to-Content-Link als erstes fokussierbares Element auf jeder Seite</li>
         <li>Sichtbare Fokusindikatoren über <code>:focus-visible</code> auf jedem interaktiven Steuerelement</li>
         <li>Helles und dunkles Farbschema, die die WCAG&nbsp;AA-Kontrastverhältnisse für Fließtext und Bedienelemente erfüllen, mit Ausnahme des in §3 festgehaltenen Falls</li>
+        <li>Unterstrichene Links in grauen Absätzen, wo der Akzent gegenüber dem umgebenden Text nur 1,76:1 erreicht und Farbe allein sie nicht unterscheidbar machen würde (WCAG&nbsp;1.4.1)</li>
+        <li>Der Konferenzfilm lässt sich mit der Tastatur anhalten, über ein benanntes Bedienelement, das während der Wiedergabe erreichbar bleibt</li>
         <li>Automatischer Dunkelmodus über <code>prefers-color-scheme</code>, mit manueller Übersteuerung, die in <code>localStorage</code> persistiert wird</li>
         <li>Alle Animationen auf <code>prefers-reduced-motion</code> gestaffelt — wenn der Nutzer dies deaktiviert, werden Übergänge und Reveal-Animationen ausgeschaltet</li>
         <li>Größenveränderbarer Text, der sauber bei 200 % Zoom und bei Viewports bis 320&nbsp;px umfließt</li>
@@ -236,7 +228,7 @@ alternates:
         EN&nbsp;301&nbsp;549. Alle Vorlagen der Website erfüllen den Standard; das Label
         „teilweise Konformität" spiegelt die in §3 dokumentierten Einschränkungen wider (eingebettete
         PDFs, transluzente Flächen, generischer Alt-Text auf einigen Archivfotos, die
-        Akzentfarbe auf getönten Flächen und die vier Punkte vor der Veröffentlichung). Das
+        Akzentfarbe auf getönten Flächen). Das
         statische Lint und die Prüfungen auf Auszeichnungsebene melden keine Verstöße, und die
         Elemente, die sie in „manuelle Überprüfung" geben, wurden einzeln als konform
         verifiziert. Der im Browser durchgeführte Durchlauf vom September&nbsp;2026 ist die

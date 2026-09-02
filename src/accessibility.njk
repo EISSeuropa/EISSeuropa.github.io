@@ -101,6 +101,9 @@ alternates:
         hidden from screen readers, a badge below the contrast minimum on thirteen archive
         pages, and four pages that scrolled sideways on a phone. Those are fixed. The rest
         are listed in <a href="#known-limitations">&sect;3</a> with the issues tracking them.
+        Four more, reported by the same pass, were fixed shortly afterwards: the conference
+        film&rsquo;s control, the Atlas filter panel, links inside grey paragraphs, and a
+        table that scrolled without being reachable from the keyboard.
       </p>
 
       <h2 id="known-limitations">3. Known limitations</h2>
@@ -152,18 +155,6 @@ alternates:
           rather than worked around. Tracked in
           <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1624" target="_blank" rel="noopener">issue&nbsp;#1624</a>.
         </li>
-        <li>
-          <strong>Four smaller defects awaiting release.</strong> The conference film
-          describes itself to assistive technology with a role that is not permitted on a
-          video element. The Atlas filter panel puts a button inside the control that opens
-          it. Links inside grey paragraphs are told apart from the text around them by colour
-          alone. The design-system token table scrolls sideways without being reachable from
-          the keyboard.
-          <em>Mitigation:</em> the film can still be paused by tapping it, the Atlas filters
-          can still be cleared, and the affected pages remain usable. Fixes for all four are
-          written and tracked in
-          <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1625" target="_blank" rel="noopener">issue&nbsp;#1625</a>.
-        </li>
       </ol>
 
       <h2>4. Accessibility features implemented</h2>
@@ -171,6 +162,8 @@ alternates:
         <li>Semantic landmarks (<code>&lt;header&gt;</code>, <code>&lt;nav aria-label="Primary"&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>) and a skip-to-content link as the first focusable element on every page</li>
         <li>Visible focus indicators via <code>:focus-visible</code> on every interactive control</li>
         <li>Light and dark colour schemes, with body text and interface controls meeting WCAG&nbsp;AA contrast ratios, apart from the case recorded in &sect;3</li>
+        <li>Links inside grey paragraphs underlined, where the accent is 1.76:1 against the text around them and colour alone would not tell them apart (WCAG&nbsp;1.4.1)</li>
+        <li>The conference film pausable from the keyboard, by a named control that stays reachable while the film plays</li>
         <li>Automatic dark mode via <code>prefers-color-scheme</code>, with a manual override that persists in <code>localStorage</code></li>
         <li>All animations gated on <code>prefers-reduced-motion</code>: when the user opts out, transitions and reveal animations are disabled</li>
         <li>Resizable text reflowing cleanly at 200 % zoom and at viewports down to 320&nbsp;px</li>
@@ -224,7 +217,7 @@ alternates:
         EN&nbsp;301&nbsp;549. All templates of the site meet the standard. The residual
         partial-compliance label reflects the documented limitations in §3 (embedded PDFs,
         translucent surfaces, generic alt text on some archive photos, the accent colour on
-        tinted surfaces, and the four items awaiting release). The static lint and the
+        tinted surfaces). The static lint and the
         markup-level scans report zero violations, and the items they raise for
         &ldquo;manual review&rdquo; have been individually verified compliant. The
         September&nbsp;2026 browser-based pass is the current assessment, and what it found
