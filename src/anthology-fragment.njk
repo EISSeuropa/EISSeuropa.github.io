@@ -1,0 +1,47 @@
+---
+# Fetch targets for the Anthology's second view (#1641).
+#
+# /anthology.html used to ship both panels of the Conference Navigator, about
+# 1,000 list rows, at 1,530,626 bytes. The panel a reader is not looking at
+# carried data-pagefind-ignore, so it earned nothing where it sat and still
+# cost 639,520 bytes of it. archive-page.njk now renders the default view
+# only, and archive.js fetches the other from here the first time its tab is
+# activated.
+#
+# One template, six pages: the two views across the three locales. They are
+# machine-fetched rather than read, so they carry no site chrome and no
+# layout, only the panel div archive.js lifts out and the script tags it
+# re-creates (a script inserted as parsed HTML does not execute, so the
+# loader rebuilds them).
+#
+# Excluded from collections, so no sitemap entry and no visual-sitemap row,
+# and noindex + data-pagefind-ignore, so neither a crawler nor site search
+# treats a bare fragment as a destination. That leaves the by-paper view
+# unindexed, which is what shipping it behind data-pagefind-ignore on the
+# canonical page already meant.
+pagination:
+  data: archiveFragments
+  size: 1
+  alias: frag
+permalink: "/fragments/anthology-{{ frag.view }}.{{ frag.lang }}.html"
+eleventyExcludeFromCollections: true
+---
+{%- set lang = frag.lang -%}
+<!doctype html>
+<html lang="{{ frag.lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="{{ frag.canonical }}">
+  <title>{{ frag.view }} · {{ frag.lang }}</title>
+</head>
+<body data-pagefind-ignore>
+<div class="archive-panel" id="archive-panel-{{ frag.view }}" data-archive-panel="{{ frag.view }}">
+  {%- if frag.view == "papers" %}
+  {% include "papers-page.njk" %}
+  {%- else %}
+  {% include "speakers-index.njk" %}
+  {%- endif %}
+</div>
+</body>
+</html>

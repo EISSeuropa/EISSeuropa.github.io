@@ -1,11 +1,18 @@
-/* Conference Navigator view toggle (#756).
+/* Conference Navigator view toggle (#756) + the second view's loader (#1641).
  * ───────────────────────────────────────────────────────────────────────────
- * The page ships two server-rendered panels (by-person, by-paper); one is
- * visible by default (set per wrapper: /speakers → people, /papers → papers),
- * the other carries `hidden`. This wires the tablist: clicking a tab shows its
- * panel, mirrors the choice in ?view= (shareable, survives Back), and supports
- * arrow-key navigation with a roving tabindex. With no JS the default panel
- * still renders fully — progressive enhancement.
+ * The page server-renders one panel, the default view (set per wrapper). The
+ * other arrives as an empty placeholder carrying data-archive-src, and is
+ * fetched from /fragments/anthology-<view>.<lang>.html the first time its tab
+ * is activated. Shipping both cost 1,530,626 bytes for a page where half of
+ * it sat behind `hidden` and `data-pagefind-ignore`.
+ *
+ * This wires the tablist: activating a tab loads its panel if it has not been
+ * loaded, shows it, mirrors the choice in ?view= (shareable, survives Back),
+ * and supports arrow-key navigation with a roving tabindex.
+ *
+ * Progressive enhancement is unchanged in substance: the tablist has always
+ * been JS, and the non-default panel has always been `hidden`, so a reader
+ * without scripting saw the default view then and sees it now.
  */
 (function () {
   "use strict";
@@ -18,7 +25,61 @@
     return document.getElementById("archive-panel-" + name);
   }
 
+  // A panel whose markup has not arrived yet. Cleared by load(), so a failed
+  // fetch leaves the panel loadable and pressing the tab again retries.
+  function pending(panel) {
+    return !!(panel && panel.getAttribute("data-archive-src"));
+  }
+
+  function status(panel, key, fallback) {
+    var el = panel.querySelector("[data-archive-status]");
+    if (!el) return;
+    var msg = toggle.getAttribute(key);
+    el.textContent = msg || fallback;
+  }
+
+  // A <script> that arrives as parsed HTML never executes, so the panel's own
+  // scripts (paper-filter, paper-export, speaker-filter) are recreated here.
+  // They are plain IIFEs that bind to the list on run, and they bailed out on
+  // page load because their list was not in the document yet.
+  function runScripts(panel) {
+    Array.prototype.forEach.call(panel.querySelectorAll("script"), function (old) {
+      var fresh = document.createElement("script");
+      if (old.src) fresh.src = old.src; else fresh.textContent = old.textContent;
+      old.parentNode.replaceChild(fresh, old);
+    });
+  }
+
+  function load(panel) {
+    var src = panel.getAttribute("data-archive-src");
+    if (!src) return Promise.resolve();
+    // Dropped before the request, not after: two quick presses of the tab
+    // would otherwise start two fetches and inject the panel twice.
+    panel.removeAttribute("data-archive-src");
+    return fetch(src, { credentials: "same-origin" })
+      .then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        return r.text();
+      })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, "text/html");
+        var incoming = doc.getElementById(panel.id);
+        if (!incoming) throw new Error("panel missing");
+        panel.replaceChildren.apply(panel, Array.prototype.slice.call(incoming.childNodes));
+        runScripts(panel);
+        // The fragment brings the rows a #paper- / #person- link was aiming
+        // at, and the browser resolved that hash before they existed.
+        focusFromHash(true);
+      })
+      .catch(function () {
+        panel.setAttribute("data-archive-src", src);
+        status(panel, "data-msg-failed", "This view could not be loaded. Press the tab again to retry.");
+      });
+  }
+
   function show(name, focusTab) {
+    var target = panelFor(name);
+    if (pending(target)) load(target);
     Array.prototype.forEach.call(tabs, function (tab) {
       var sel = tab.getAttribute("data-archive-tab") === name;
       tab.setAttribute("aria-selected", sel ? "true" : "false");
@@ -54,21 +115,21 @@
       next.focus();
     });
   });
-})();
 
-/* Focus-return (#889, item 4). When the reader arrives at a specific entry —
- * the Back link from a paper page lands on /papers#paper-<slug>, or a deep
- * link targets a person — move focus to that row so keyboard and screen-reader
- * users resume where they left off rather than at the top of the page. The
- * browser's native anchor scroll already positions it; preventScroll keeps
- * that position so focusing doesn't jump. */
-(function () {
-  "use strict";
-  function focusFromHash() {
+  /* Focus-return (#889, item 4). When the reader arrives at a specific entry —
+   * the Back link from a paper page lands on ?view=papers#paper-<slug>, or a
+   * deep link targets a person — move focus to that row so keyboard and
+   * screen-reader users resume where they left off rather than at the top of
+   * the page. On a first render the browser's native anchor scroll already
+   * positions it and preventScroll keeps that position. A row that arrived
+   * with a fetched panel was not in the document when the browser resolved
+   * the hash, so that call passes `scroll` and does the positioning itself. */
+  function focusFromHash(scroll) {
     var h = location.hash;
     if (!h || !/^#(paper|person)-/.test(h)) return;
     var el = document.getElementById(h.slice(1));
     if (!el) return;
+    if (scroll) el.scrollIntoView({ block: "center" });
     if (!el.hasAttribute("tabindex")) el.setAttribute("tabindex", "-1");
     try {
       el.focus({ preventScroll: true });
@@ -76,6 +137,6 @@
       el.focus();
     }
   }
-  focusFromHash();
-  window.addEventListener("hashchange", focusFromHash);
+  focusFromHash(false);
+  window.addEventListener("hashchange", function () { focusFromHash(false); });
 })();
