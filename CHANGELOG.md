@@ -97,12 +97,17 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+### Fixed
+
+- Every page carried an invisible link at the end of its tab order. The shared hovercard that shows a person's role when their name appears in prose was built empty on page load and marked hidden, but a stylesheet rule outranked that, so the placeholder link inside it stayed reachable by keyboard and the empty card stayed audible to screen readers on all 1,159 pages. The card behaves as before when a name is hovered or focused.
+- The host-city map on `/initiative` and the partner strip on `/prizes` were each described to assistive technology as a single image, which hid the seven conference links inside the map and the partner link beside it. Both now expose their links while keeping their descriptions.
+- The archive banner's "Archive" badge failed the AA contrast floor at 4.44:1 against its own background. Now 5.13:1, same colour.
+- Four pages scrolled sideways on a phone, pushed out by an identifier or a web address too long to break: `/licensing` by 153px, `/vocab/themes` by 49px, `/policy` by 21px and `/anthology-atlas` by 16px. Long identifiers now wrap.
+- Sanne Verschuren's website link points at the address her site actually answers on. Her site serves no working HTTPS, so the `https://` form was dead in a browser, and the correction made once by hand had been overwritten by the board-bios sync. The sync now holds a small table of links to pin, so the correction survives every future run.
+
 ### Removed
 
 - 102 orphaned images from the Mobirise era, about 25 MB, no longer cloned on checkout or served to the site. They were passthrough-copied into every deploy while no page, stylesheet, feed or serialisation referenced them: AMP-era screen captures, superseded logo files and stray crops. Verified against the built output rather than by name, so the share cards that are assembled at build time and never named literally were not caught in it.
-### Fixed
-
-- Sanne Verschuren's website link points at the address her site actually answers on. Her site serves no working HTTPS, so the `https://` form was dead in a browser, and the correction made once by hand had been overwritten by the board-bios sync. The sync now holds a small table of links to pin, so the correction survives every future run.
 
 ### Changed
 

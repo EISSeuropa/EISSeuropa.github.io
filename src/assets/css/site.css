@@ -741,7 +741,9 @@ h4 { font-size: var(--fs-lg); }
   display: inline-block;
   padding: 2px 10px;
   border-radius: 999px;
-  background: hsl(220, 18%, 50%);
+  /* 50% lightness gave white 4.44:1, a hair under the 4.5:1 AA floor for
+     11px bold. 46% is the same grey-blue at 5.05:1. */
+  background: hsl(220, 18%, 46%);
   color: white;
   font-size: 11px;
   font-weight: 700;
@@ -1823,6 +1825,18 @@ h4 { font-size: var(--fs-lg); }
 
 .pdf-doc-meta {
   min-width: 0;
+}
+
+/* Long unbreakable tokens (a SWHID, a concept URI, a repository URL written
+   out as its own link text) were pushing the page wider than a phone screen:
+   /licensing by 153px at 375px, /vocab/themes by 49px, /policy by 21px. These
+   are the places such tokens appear (the citation blockquotes carry a bare
+   DOI URL as plain text), so they break anywhere rather than forcing the whole
+   document to scroll sideways. */
+code,
+blockquote,
+a[href^="http"]:not([class]) {
+  overflow-wrap: anywhere;
 }
 
 .pdf-doc-title {
@@ -7325,9 +7339,20 @@ a.joint-orgs-card:hover .joint-orgs-name {
   transform: translateY(4px);
   pointer-events: none;
   transition: opacity var(--motion-fast) var(--ease-out),
-              transform var(--motion-fast) var(--ease-out);
+              transform var(--motion-fast) var(--ease-out),
+              visibility 0s linear var(--motion-fast);
 }
-.person-hovercard.is-visible { opacity: 1; transform: none; pointer-events: auto; }
+/* `hidden` alone does nothing here: the `display: flex` above outranks the UA
+   `[hidden] { display: none }`, so the idle card stayed in the accessibility
+   tree and its empty placeholder link stayed in the tab order on every page
+   that loads people-hovercards.js. Driving AT visibility off `visibility`
+   removes both, and the delayed transition keeps the fade-out playing (the
+   flip happens after the opacity has finished). */
+.person-hovercard { visibility: hidden; }
+.person-hovercard.is-visible {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition-delay: 0s;
+}
 .person-hovercard-media {
   flex: 0 0 auto;
   inline-size: 56px;
@@ -7767,7 +7792,11 @@ a.profile-pub-title:hover { text-decoration: underline; }
 }
 .atlas-matrix__summary {
   cursor: pointer;
+  /* max-content alone made the marker sit at its intrinsic 371px on a 375px
+     phone, which pushed the page 16px sideways. Capping it lets the label
+     wrap instead. */
   width: max-content;
+  max-inline-size: 100%;
   font-size: var(--fs-sm);
   color: var(--accent);
 }
