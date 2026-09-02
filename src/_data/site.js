@@ -32,8 +32,8 @@ module.exports = {
   // three locales (#1352). Kept here so the three hand-maintained language
   // variants cannot drift apart on a URL.
   //
-  // The label page, not `/issues?q=`: `help wanted` currently sits on pull
-  // requests rather than issues, and the issues search hides PRs.
+  // The label page, not `/issues?q=`: `help wanted` sits on both issues and
+  // pull requests, and the issues search hides PRs.
   helpWantedUrl:
     "https://github.com/EISSeuropa/EISSeuropa.github.io/labels/help%20wanted",
   handbookUrl:

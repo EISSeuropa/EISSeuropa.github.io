@@ -26,8 +26,9 @@ it. That is the whole of the expectation.
 2. **Send us your GitHub account name.** We add you to the repository
    with it. If you have never used GitHub, say so. We set it up with
    you on a call, and it is not a prerequisite for anything.
-3. **Put the weekly call in your calendar.** It is short. Missing one
-   is fine and needs no explanation.
+3. **Put the three meetings in your calendar.** Onboarding in your
+   first week, a review at the halfway point, and an exit review at the
+   end with a short feedback survey. We send the invitations.
 4. **Have a look around the corpus.** [The Anthology](https://eiss-europa.com/anthology.html)
    is what most of the work here touches. Ten minutes clicking through
    it will make the task list mean something.
@@ -39,6 +40,33 @@ Open work lives on the
 Everything there is real outstanding work with a tracked issue behind
 it. None of it is an exercise invented for a volunteer, and if we run
 out of real work we will tell you rather than making some up.
+
+**The labels, and what each one is telling you.**
+
+- **`help wanted`** is the pickup signal. Somebody has checked that the
+  issue is still true, that it does not need a password or an account
+  you will not have, and that it is finishable by one person. If it is
+  not on this label, it is not because we forgot: it is because it
+  needs a decision that is not ours to delegate, or nobody has checked
+  it recently enough to hand it over.
+- **`needs-review`** says what happens at the end. Your work gets read
+  by a maintainer who accepts it, asks for changes, or declines it.
+  This is not a comment on you. It is on every task we delegate, and it
+  is why you can take something on without carrying the risk of getting
+  it wrong.
+- **`good first issue`** is a subset of `help wanted`, not a separate
+  queue: the tasks that assume no knowledge of this repository. Start
+  here if you want one, but nothing stops you taking anything else on
+  the list instead.
+
+Each tagged issue also carries a comment saying what was verified and
+what to settle before starting. **Read that comment before the issue
+body**, because where the two disagree the comment is newer.
+
+If you find that an issue is already done, or that its premise no longer
+holds, say so on the issue. That is a real contribution and it is
+credited like any other. Three issues were closed or re-scoped that way
+while this label set was being prepared.
 
 **To take something**, comment on the issue or pull request saying you
 are picking it up. That is the whole protocol. Nobody assigns you work
