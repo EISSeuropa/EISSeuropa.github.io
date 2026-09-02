@@ -883,7 +883,7 @@
       card.classList.add('is-pinned');
       showCard(n, toScreenX(n.x), toScreenY(n.y));
       // The card is a canvas overlay, so nothing announces it on its own.
-      announce(card.textContent.replace(/\s+/g, ' ').trim());
+      announce(cardText());
       draw();
       return;
     }
@@ -900,6 +900,80 @@
       syncUrl(); draw();
     }
   });
+
+  // ── Keyboard (#1646) ─────────────────────────────────────────────────────
+  // The canvas is one tab stop, and the arrow keys walk the current view in
+  // the same order the list under the map uses. Everything here reuses the
+  // pointer path's machinery: `pinned` is the cursor, so the node draws with
+  // the ring a tap already gives it, showCard() renders the same card, and
+  // announce() pushes it to the live region #1446 added.
+  let keyIdx = -1;
+
+  function keyMoveTo(idx) {
+    const set = visibleSorted();
+    if (!set.length) {
+      keyIdx = -1;
+      announce(t('kbdEmpty', 'No papers or authors in this view.'));
+      return;
+    }
+    keyIdx = Math.max(0, Math.min(set.length - 1, idx));
+    const n = set[keyIdx];
+    pinned = n;
+    hovered = n;
+    card.classList.add('is-pinned');
+    bringIntoView(n);
+    showCard(n, toScreenX(n.x), toScreenY(n.y));
+    announce(cardText() + ' · ' + fill(t('kbdPosition', '{i} of {n}'), { i: keyIdx + 1, n: set.length }));
+    draw();
+  }
+
+  // Zoomed in, the cursor can land on a node that is off the stage. Pan so it
+  // is centred rather than silently moving to something nobody can see. At
+  // k=1 clampView locks the view to the stage, so this is a no-op there.
+  function bringIntoView(n) {
+    const sx = toScreenX(n.x), sy = toScreenY(n.y);
+    const m = 40;
+    if (sx >= m && sx <= W - m && sy >= m && sy <= H - m) return;
+    view.x += W / 2 - sx;
+    view.y += H / 2 - sy;
+    clampView();
+  }
+
+  canvas.addEventListener('keydown', (e) => {
+    const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+    if (step) {
+      e.preventDefault();
+      keyMoveTo(keyIdx === -1 ? (step > 0 ? 0 : visibleSorted().length - 1) : keyIdx + step);
+      return;
+    }
+    if (e.key === 'Home') { e.preventDefault(); keyMoveTo(0); return; }
+    if (e.key === 'End') { e.preventDefault(); keyMoveTo(visibleSorted().length - 1); return; }
+    if (e.key === 'Enter' || e.key === ' ') {
+      if (keyIdx === -1) { e.preventDefault(); keyMoveTo(0); return; }
+      const n = visibleSorted()[keyIdx];
+      if (!n) return;
+      e.preventDefault();
+      // Same two outcomes the pointer path has: an author opens their papers
+      // in place (#1190), a paper follows its link.
+      if (n.type === 'author' && n.paperIdx && n.paperIdx.length) { unpin(); showAuthorPapers(n); keyIdx = -1; return; }
+      if (n.type === 'paper' && n.url) location.href = n.url;
+      return;
+    }
+    if (e.key === 'Escape' && pinned) {
+      e.preventDefault();
+      unpin(); keyIdx = -1; hovered = null; announce(''); draw();
+    }
+  });
+
+  // A cursor left behind on blur would draw as a selection nobody is on.
+  canvas.addEventListener('blur', () => {
+    if (keyIdx === -1) return;
+    keyIdx = -1; unpin(); hovered = null; draw();
+  });
+
+  // A filter change reshuffles the set, so an index into the old one is
+  // meaningless. renderList runs on every such change.
+  function resetKeyCursor() { keyIdx = -1; }
 
   // Wheel zoom about the cursor, held behind a modifier. An unconditional
   // preventDefault here turned 640px of the page into a desktop scroll trap:
@@ -1049,13 +1123,21 @@
     return td;
   }
 
-  function renderList() {
-    if (!listItemsEl) return;
+  // The current view in the order a reader meets it. The list under the map
+  // and the keyboard cursor (#1646) walk the same sequence, so tabbing to the
+  // canvas and pressing an arrow lands where the list says it should.
+  function visibleSorted() {
     const visible = items().filter(nodeVisible);
-    const sorted = lens === 'authors'
+    return lens === 'authors'
       ? visible.slice().sort((a, b) => a.name.localeCompare(b.name))
       : visible.slice().sort((a, b) => (b.year || 0) - (a.year || 0)
         || String(a.title).localeCompare(String(b.title)));
+  }
+
+  function renderList() {
+    resetKeyCursor();
+    if (!listItemsEl) return;
+    const sorted = visibleSorted();
     // The table arrives rendered, holding the unfiltered corpus, so the map's
     // text twin is there with scripting off (#1496). From here the script
     // rewrites the same tbody as the view narrows.
@@ -1318,6 +1400,15 @@
   function announce(text) {
     if (!liveEl) return;
     liveEl.textContent = text || '';
+  }
+
+  // The card is a stack of divs, so its raw textContent runs each row into the
+  // next ("...Frontline StatesChristopher David LaRoche · 2026Extended..."),
+  // which is what a screen reader then reads out. Join the rows instead.
+  function cardText() {
+    return Array.prototype.map.call(card.children, (el) => el.textContent.trim())
+      .filter(Boolean)
+      .join(' · ');
   }
 
   function applyFind(q) {
@@ -1986,13 +2077,28 @@
     resize(); seedPositions(); clampView(); reheat(140);
   });
 
-  // Re-read colours on a manual theme flip (data-theme) and repaint. Year
-  // colours depend on light/dark, so rebuild the ramp too.
-  new MutationObserver(() => {
-    readTheme();
-    // Theme hub colours are fixed hexes, so only the ink/chrome tokens change.
-    draw();
-  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  // Re-read colours on a theme flip and repaint. Year colours depend on
+  // light/dark, so rebuild the ramp too. Theme hub colours are fixed hexes,
+  // so only the ink/chrome tokens change.
+  function repaintTheme() { readTheme(); draw(); }
+  // The manual toggle stamps data-theme on the root.
+  new MutationObserver(repaintTheme)
+    .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  // A reader who has never touched the toggle is on the OS setting, which
+  // isDark() falls back to, and nothing was watching it (#1649). Flipping
+  // macOS or Windows to dark mid-visit repainted the page around a canvas
+  // that kept the light palette, which reads as broken rather than as a
+  // preference not yet applied.
+  if (window.matchMedia) {
+    const osTheme = window.matchMedia('(prefers-color-scheme: dark)');
+    const onOsTheme = () => {
+      // The manual toggle wins while it is set, so an OS flip under it is not
+      // ours to act on.
+      if (!document.documentElement.hasAttribute('data-theme')) repaintTheme();
+    };
+    if (osTheme.addEventListener) osTheme.addEventListener('change', onOsTheme);
+    else if (osTheme.addListener) osTheme.addListener(onOsTheme);
+  }
 
   // ── Welcome strip + guided tour (#1134) ──────────────────────────────────
   // First-visit welcome strip + a coachmark tour, both keyed on the same
