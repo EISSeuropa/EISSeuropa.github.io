@@ -2108,6 +2108,19 @@ a[href^="http"]:not([class]) {
 }
 .anthology-notice-text a { color: var(--accent); }
 
+/* Links sitting in muted prose are told apart from the text around them by
+   colour alone, and the accent is only 1.76:1 against --text-muted and 1.38:1
+   against --text-subtle, well under the 3:1 that lets colour carry the job on
+   its own (WCAG 1.4.1, axe link-in-text-block, #1625). An underline is the
+   second cue. Links in full-strength body text clear 3:1 in light mode and
+   keep the site's underline-on-hover treatment. */
+.anthology-notice-text a,
+.muted a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
 /* "Cite this corpus" disclosure on the Anthology header (#1221). Deliberately
    matches .coverage-detail's summary treatment — they are siblings in the
    header and should read as one pair of affordances, not two designs. Own
@@ -5106,6 +5119,15 @@ a.paper-theme-chip:focus-visible { border-color: var(--accent); color: var(--acc
   backdrop-filter: blur(6px);
 }
 .film-play[hidden] { display: none; }
+/* While the film plays the control fades out of the picture but stays in the
+   tab order and the accessibility tree, because hiding the only pause control
+   during playback removes it exactly when it is wanted (WCAG 2.2.2). Hover
+   over the frame or focus the button and it comes back, the way a player's
+   own chrome does. */
+.film-play { transition: opacity var(--motion-fast) var(--ease-out); }
+.film-play[data-state="playing"] { opacity: 0; }
+.film-frame:hover .film-play[data-state="playing"],
+.film-play[data-state="playing"]:focus-visible { opacity: 1; }
 .film-play svg { width: 1.75rem; height: 1.75rem; margin-left: 2px; }
 .film-caption { margin-top: var(--space-3); text-align: center; font-size: var(--fs-sm); }
 
@@ -7636,7 +7658,8 @@ a.profile-pub-title:hover { text-decoration: underline; }
 /* The hint says what opens, and steps aside once the label carries a count. */
 .atlas-filters__hint { font-weight: 600; letter-spacing: .02em; text-transform: none; color: var(--text-subtle); }
 .atlas-filters__hint[hidden] { display: none; }
-.atlas-filters__clear { margin-left: auto; }
+/* Sat at the right end of the summary row when Clear lived inside the
+   <summary>. It is in the view-actions row now (#1625), beside Copy link. */
 /* A comfortable target under a thumb, where the row is the way into every
    filter on the page. */
 @media (pointer: coarse) { .atlas-filters__summary { padding: 12px 12px; } }
@@ -8309,6 +8332,11 @@ html.atlas-welcome .atlas-welcome[hidden] { display: flex; }
   --bg: hsl(0 0% 100%);
   --text: hsl(222 28% 12%);
   --border: hsl(220 20% 88%);
+  /* The muted pair was missing from this list, so the panel's caption and
+     swatch values kept their dark-mode greys on a white background and failed
+     contrast for any visitor in dark mode (#1625). */
+  --text-muted: hsl(222 16% 34%);
+  --text-subtle: hsl(222 13% 40%);
 }
 .ds-marks-label {
   font-size: var(--fs-xs);

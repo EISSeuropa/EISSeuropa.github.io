@@ -99,6 +99,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- The conference film can be paused from the keyboard, and says so. The control was the video itself, dressed up with a role it is not allowed to carry, and the real button beside it disappeared while the film played, which is exactly when a pause control is wanted. The button is the control now, named "Play the film" or "Pause the film" as the state changes, and it stays reachable while the film runs.
+- The Atlas "Clear" button moved out of the filters disclosure and up beside "Copy link to this view". It was a button inside the control that opens the panel, so a press had to fight the disclosure for the click, and it vanished whenever the panel was collapsed. It now sits with the other action on the current view and stays put.
+- Links inside muted paragraphs are underlined. The link colour is 1.76:1 against the grey text around it, so colour alone was not telling a reader where the links were.
+- The design-system token table can be scrolled from the keyboard, and its light-surface panel keeps its own muted greys in dark mode instead of borrowing the dark ones onto a white background.
 - Every page carried an invisible link at the end of its tab order. The shared hovercard that shows a person's role when their name appears in prose was built empty on page load and marked hidden, but a stylesheet rule outranked that, so the placeholder link inside it stayed reachable by keyboard and the empty card stayed audible to screen readers on all 1,159 pages. The card behaves as before when a name is hovered or focused.
 - The host-city map on `/initiative` and the partner strip on `/prizes` were each described to assistive technology as a single image, which hid the seven conference links inside the map and the partner link beside it. Both now expose their links while keeping their descriptions.
 - The archive banner's "Archive" badge failed the AA contrast floor at 4.44:1 against its own background. Now 5.13:1, same colour.

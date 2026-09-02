@@ -151,6 +151,7 @@ const locales = {
       toggleSound: "Toggle sound",
       watchOnYouTube: "Watch on YouTube",
       play: "Play the film",
+      pause: "Pause the film",
     },
 
     pressKit: {
@@ -954,6 +955,7 @@ const locales = {
       toggleSound: "Activer ou couper le son",
       watchOnYouTube: "Voir sur YouTube",
       play: "Lire le film",
+      pause: "Mettre le film en pause",
     },
 
     pressKit: {
@@ -1635,6 +1637,7 @@ const locales = {
       toggleSound: "Ton ein- oder ausschalten",
       watchOnYouTube: "Auf YouTube ansehen",
       play: "Film abspielen",
+      pause: "Film anhalten",
     },
 
     pressKit: {
