@@ -214,14 +214,14 @@
     "src/internship.njk": {
       "fr": {
         "file": "src/internship.fr.njk",
-        "source_sha1": "738a0493ba7bbce6c39e12fafaacc5be11ba4f01",
-        "translated_on": "2026-08-18",
+        "source_sha1": "77b9fe920af881f118001b4dcc2f162c559d618a",
+        "translated_on": "2026-09-02",
         "status": "beta"
       },
       "de": {
         "file": "src/internship.de.njk",
-        "source_sha1": "738a0493ba7bbce6c39e12fafaacc5be11ba4f01",
-        "translated_on": "2026-08-18",
+        "source_sha1": "77b9fe920af881f118001b4dcc2f162c559d618a",
+        "translated_on": "2026-09-02",
         "status": "beta"
       }
     }
