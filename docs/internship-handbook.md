@@ -41,7 +41,7 @@ Everything there is real outstanding work with a tracked issue behind
 it. None of it is an exercise invented for a volunteer, and if we run
 out of real work we will tell you rather than making some up.
 
-**Two labels, and they mean different things.**
+**The labels, and what each one is telling you.**
 
 - **`help wanted`** is the pickup signal. Somebody has checked that the
   issue is still true, that it does not need a password or an account
@@ -54,6 +54,10 @@ out of real work we will tell you rather than making some up.
   This is not a comment on you. It is on every task we delegate, and it
   is why you can take something on without carrying the risk of getting
   it wrong.
+- **`good first issue`** is a subset of `help wanted`, not a separate
+  queue: the tasks that assume no knowledge of this repository. Start
+  here if you want one, but nothing stops you taking anything else on
+  the list instead.
 
 Each tagged issue also carries a comment saying what was verified and
 what to settle before starting. **Read that comment before the issue
