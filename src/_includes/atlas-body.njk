@@ -148,17 +148,25 @@
      canonical Atlas does not carry a button that copies its own plain URL. #}
   <div class="atlas-controls" id="atlas-shareopts" hidden>
     <button class="atlas-share" type="button" id="atlas-share">{{ a.shareCopy }}</button>
+    {# Clear used to live inside the filters <summary>. A <summary> is itself
+       the disclosure control, so a button inside it is a control inside a
+       control: axe reports nested-interactive, and a press had to fight the
+       disclosure for the click (#1625). It belongs here anyway, beside the
+       other action on the current view. This row is shown whenever the view
+       differs from the default map, which is a superset of the cases where
+       Clear has anything to clear, so it always has somewhere to appear. #}
+    <button class="atlas-filters__clear" type="button" id="atlas-filters-clear" hidden>{{ a.filtersClear }}</button>
   </div>
 
   {# Filter rows (#1191). A native <details>, open in the markup so the
      no-JS and desktop cases simply show everything; anthology-atlas.js
      collapses it on phones, where 12 edition chips plus 18 theme chips
-     otherwise push the map below the fold. The summary is hidden on
-     desktop by CSS. #}
+     otherwise push the map below the fold. The summary is a visible control
+     at every width since #1508. #}
   <details class="atlas-filters" id="atlas-filters" open>
     {# The label is its own element so the active-filter count can be rewritten
-       without taking the Clear button with it. Clear only appears once
-       something is actually filtering (#1442). #}
+       independently. Clear itself sits in the view-actions row above, and
+       still only appears once something is actually filtering (#1442). #}
     {# The summary is a control, so it looks like one (#1508). It read as a
        section heading with a rule under it and no marker, because a
        `display: flex` summary loses the browser's own disclosure triangle,
@@ -168,7 +176,6 @@
       <span class="atlas-filters__chevron" aria-hidden="true">{{ icon("chevron-down") }}</span>
       <span id="atlas-filters-label">{{ a.filtersLabel }}</span>
       <span class="atlas-filters__hint" id="atlas-filters-hint">{{ a.filtersHint }}</span>
-      <button class="atlas-filters__clear" type="button" id="atlas-filters-clear" hidden>{{ a.filtersClear }}</button>
     </summary>
     <div class="atlas-controls" id="atlas-years" role="group" aria-label="{{ a.editionsAria }}">
       <span class="lbl">{{ a.editionsLabel }}</span>
