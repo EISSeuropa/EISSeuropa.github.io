@@ -44,6 +44,9 @@ authoritative for EISS.
   `scripts/release.sh`, eyeball the lede + themes + index before
   confirming the publish prompt. Publication to GitHub Releases is
   harder to undo than a merge.
+- **Set the milestone when you open the PR** (rule §10). It goes in the
+  `gh pr create` command itself. If none fits or you are unsure which,
+  ask rather than leaving it blank.
 - **Squash, not merge commits.** Every PR ends as a single commit on
   `master`. The release-cutter then writes the release commit on top.
 - **Once a PR is opened, treat its branch as frozen.** Any commit
@@ -184,7 +187,8 @@ user-visible change adds at least one bullet under
 same PR. Reconstructing a release batch from the git log at release
 time loses nuance and burns time; capturing the bullet while the
 context is fresh is cheap. Exempt: Dependabot PRs, the automated
-`indico-sync/auto` and `bios-sync/auto` data refresh PRs, and any
+data-refresh PRs (`indico-sync/auto`, `bios-sync/auto`,
+`roadmap-refresh/auto`, `netsec-directory-sync/auto`), and any
 internal-only commit (docs-only refresh, CI tooling, working-tree
 hygiene). When in doubt, add the bullet. Cutting a release becomes:
 review what's already there, decide on the title,
@@ -333,10 +337,11 @@ is being edited anyway.
 
 ## 10. Milestone tagging
 
-Every open issue belongs to exactly one milestone. The milestone is
-the bridge between the *Milestone* line in the issue template (rule
-§3) and the planned releases on the roadmap; without it, the backlog
-drifts.
+Every open issue **and every pull request** belongs to exactly one
+milestone. The milestone is the bridge between the *Milestone* line in
+the issue template (rule §3) and the planned releases on the roadmap.
+Without it the backlog drifts, and a release cannot be assembled from a
+query.
 
 ### The milestone set (version-tied, SemVer)
 
@@ -390,11 +395,23 @@ Don't pre-create far-future majors.
 - **At issue creation.** Whenever rule §3 fires, set the milestone
   alongside the title and body. `gh issue create --milestone v2.25.0 ...`
   keeps it inline.
+- **At PR creation, every time.** `gh pr create --milestone v2.29.0 ...`,
+  in the same command that opens it, not afterwards. The usual answer is
+  the release that is currently open, since a PR ships in whatever
+  release is cut next.
+- **Ask when the answer is not obvious.** If no milestone fits, or the
+  right one does not exist yet, or the PR could reasonably belong to
+  either of two, stop and ask the maintainer rather than guessing or
+  leaving it blank. Creating a milestone is a roadmap decision (see the
+  set above) and is not yours to make.
+- **Exempt:** the automated data-refresh PRs (`indico-sync/auto`,
+  `bios-sync/auto`, `roadmap-refresh/auto`, `netsec-directory-sync/auto`)
+  and Dependabot. Same list as the §4 CHANGELOG exemption.
 - **When an issue slips to a later release.** Update the milestone in
   the same edit that records the reslip, with a one-line reason in
   the thread.
-- **Never leave an open issue without one.** A milestone-less open
-  issue is invisible to roadmap planning. If it has no committed
+- **Never leave an open issue or PR without one.** A milestone-less
+  open issue is invisible to roadmap planning. If it has no committed
   release, it belongs in `Backlog — Under watch`.
 
 ## 11. Documentation currency
