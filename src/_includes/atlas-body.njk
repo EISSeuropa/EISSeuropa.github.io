@@ -159,10 +159,11 @@
   </div>
 
   {# Filter rows (#1191). A native <details>, open in the markup so the
-     no-JS and desktop cases simply show everything; anthology-atlas.js
-     collapses it on phones, where 12 edition chips plus 18 theme chips
-     otherwise push the map below the fold. The summary is a visible control
-     at every width since #1508. #}
+     no-JS case simply shows everything. anthology-atlas.js then collapses it
+     at every width (#1430, extending #1191's phones-only behaviour): 12
+     edition chips plus 18 theme chips put the top of the map at y=1074 on a
+     1280x900 desktop too. The summary carries the active-filter count and is
+     a visible control at every width since #1508. #}
   <details class="atlas-filters" id="atlas-filters" open>
     {# The label is its own element so the active-filter count can be rewritten
        independently. Clear itself sits in the view-actions row above, and
