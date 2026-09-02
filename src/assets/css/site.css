@@ -4535,6 +4535,15 @@ a.speaker-paper-title:hover {
   border-color: var(--accent);
   color: var(--accent);
 }
+/* Placeholder line inside a panel whose markup is still on its way, and the
+   error if it does not arrive (#1641). Same register as the filter status it
+   sits where. */
+.archive-panel__status {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  padding: var(--space-5) 0;
+  margin: 0;
+}
 .speaker-status {
   color: var(--text-muted);
   font-size: var(--fs-sm);
