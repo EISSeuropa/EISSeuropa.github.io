@@ -386,7 +386,22 @@ def check_external(url, _retry=True, _attempt=1):
         # a laptop. It was on the skip list for the same underlying reason
         # until #1423 took it off, and a skip is a permanent blind spot, so it
         # gets patience and a warning instead of a skip or a red build.
-        if "UNEXPECTED_EOF_WHILE_READING" in str(e) or "SSLEOFError" in e.__class__.__name__:
+        # A reset is the same event one layer down: the peer dropped the
+        # connection rather than closing the TLS session, and urllib surfaces
+        # it as ConnectionResetError (errno 104) rather than an SSL error. It
+        # was missing from this list, so the same host could produce a warning
+        # for one URL and a red build for another in a single run: on 2 Sep
+        # 2026 europeangovernanceandpolitics.eui.eu was excused for its page
+        # and failed the build for a 5 MB PDF beside it, which answers 200
+        # from a laptop. The larger the response the likelier the cut, so the
+        # split was arbitrary rather than meaningful.
+        reason_e = getattr(e, "reason", e)
+        if (
+            "UNEXPECTED_EOF_WHILE_READING" in str(e)
+            or "SSLEOFError" in e.__class__.__name__
+            or isinstance(reason_e, ConnectionResetError)
+            or "connection reset by peer" in str(e).lower()
+        ):
             return _again("unreachable")
         # A connect timeout arrives wrapped in URLError; a read timeout does
         # not (see the TimeoutError branch below). Both go to the schedule.
