@@ -54,13 +54,21 @@
 </div>
 
 {# Filter status, announced to assistive tech (role=status → polite live
-   region). Empty when nothing is filtered. The data-msg-* strings are
-   the localised templates paper-filter.js fills in. #}
-<p class="speaker-status" role="status" aria-live="polite" data-paper-status hidden
+   region). The data-msg-* strings are the localised templates
+   paper-filter.js fills in.
+
+   Server-rendered with the unfiltered count rather than starting hidden
+   (#1640): the header stats sit above the Atlas signpost, the coverage bars
+   and the citation panel, so by the time a reader reaches the list the total
+   is off screen, and clearing a filter used to confirm nothing. Rendering it
+   here also gives the no-JS page a count. paper-filter.js only writes when
+   the text actually changes, so this does not announce itself on load. #}
+<p class="speaker-status" role="status" aria-live="polite" data-paper-status
+   data-msg-all="{{ p18n.resultsAll }}"
    data-msg-none="{{ p18n.noMatch }}"
    data-msg-one="{{ p18n.resultsOne }}"
    data-msg-many="{{ p18n.resultsMany }}"
-   data-msg-matching="{{ p18n.matching }}"></p>
+   data-msg-matching="{{ p18n.matching }}">{{ p18n.resultsAll | replace("{n}", paperIndex.stats.paperCount) }}</p>
 
 {# Bulk citation export (#1254). Hidden until the JS enables it: without
    scripting there is no filtering either, so the honest fallback is the

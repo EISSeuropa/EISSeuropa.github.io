@@ -221,7 +221,12 @@
       <button class="atlas-zoom__b" type="button" id="atlas-zoom-out" aria-label="{{ a.zoomOut }}" disabled>&minus;</button>
       <button class="atlas-zoom__b atlas-zoom__reset" type="button" id="atlas-zoom-reset" hidden>{{ a.zoomReset }}</button>
     </div>
-    <canvas id="atlas-canvas" aria-label="Force-directed map of the European Security Studies Anthology: every paper drawn toward the research themes it touches and coloured by them, with an Authors lens mapping co-authorship between the same people. The same papers and authors are available as filterable lists on the Anthology page."></canvas>
+    {# tabindex + a described hint (#1646). The map was one tab stop short of
+       being operable: the chips, the Find box and the list under it all took
+       keyboard input and the canvas itself took none, so its nodes were
+       pointer-only. The arrow keys now walk the same order the list uses. #}
+    <canvas id="atlas-canvas" tabindex="0" aria-describedby="atlas-kbd-hint" aria-label="Force-directed map of the European Security Studies Anthology: every paper drawn toward the research themes it touches and coloured by them, with an Authors lens mapping co-authorship between the same people. The same papers and authors are available as filterable lists on the Anthology page."></canvas>
+    <p class="sr-only" id="atlas-kbd-hint">{{ a.kbdHint }}</p>
     <div class="atlas-card" id="atlas-card" aria-hidden="true"></div>
   </div>
   {# The corpus over time (#1192). Parked when it was filed, because themes
