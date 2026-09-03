@@ -4548,11 +4548,12 @@ a.speaker-paper-title:hover {
   color: var(--accent);
 }
 /* Doors into the corpus by subject (#1644): the seventeen research themes as
-   links to their own Atlas pages, under the Atlas signpost in the Anthology
-   header. Reuses the chip shape the filters and the paper cards already use,
-   with the count in the muted ink so the label stays the thing being read. */
+   links to their own Atlas pages, sitting between the view toggle and the
+   list. Reuses the chip shape the filters and the paper cards already use,
+   with the count in the muted ink so the label stays the thing being read.
+   Margins on both sides now that it has a neighbour below it. */
 .theme-doors {
-  margin: var(--space-5) 0 0;
+  margin: var(--space-4) 0 var(--space-5);
 }
 .theme-doors__h {
   margin: 0 0 var(--space-2);
