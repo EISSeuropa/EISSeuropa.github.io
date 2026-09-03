@@ -129,6 +129,30 @@
      author with no co-author. A blue-grey on the neutral hue, so it reads as
      "nothing here yet" rather than as a category of its own. */
   --atlas-inactive: hsl(220 14% 64%);
+  /* Anthology Atlas theme wheel: one stable hue per research theme, indexed by
+     the theme's position in `paperIndex.themes`. The Atlas colours its hubs and
+     their papers from this, and the theme chips on the Anthology lists and the
+     paper pages carry the same hue as a dot, so orange means Deterrence
+     wherever a reader meets it (#1660). Defined here rather than in
+     anthology-atlas.js so the map and the templates read one palette. Same
+     wheel the NetSec Atlas uses for its theme lens. */
+  --atlas-wheel-0: #0973de; /* Transformations of warfare and conflict */
+  --atlas-wheel-1: #10b981; /* Emerging domains: cyber and technology */
+  --atlas-wheel-2: #8457ea; /* Arms acquisition and transfer */
+  --atlas-wheel-3: #f59e0b; /* Private military actors */
+  --atlas-wheel-4: #e2568c; /* Defence cooperation and military assistance */
+  --atlas-wheel-5: #0aa2c0; /* Military interventions */
+  --atlas-wheel-6: #7a9a01; /* Non-proliferation and arms control */
+  --atlas-wheel-7: #b3562e; /* Terrorism and counter-terrorism */
+  --atlas-wheel-8: #5867dd; /* Theoretical developments in security studies */
+  --atlas-wheel-9: #2e9e6a; /* Deterrence */
+  --atlas-wheel-10: #a855f7; /* Intelligence */
+  --atlas-wheel-11: #d97706; /* European and transatlantic security */
+  --atlas-wheel-12: #3b82f6; /* Regional security and area studies */
+  --atlas-wheel-13: #14b8a6; /* Civil–military relations and the armed forces */
+  --atlas-wheel-14: #ef4444; /* Climate and security */
+  --atlas-wheel-15: #6366f1; /* Gender and security */
+  --atlas-wheel-16: #059669; /* Political economy of security */
   --hero-overlay: linear-gradient(180deg, hsl(220 50% 8% / 0.32) 0%, hsl(220 50% 8% / 0.7) 100%);
 
   --gradient-mesh-1: radial-gradient(800px circle at 12% 8%, hsl(203 88% 70% / 0.22), transparent 55%);
@@ -4580,6 +4604,14 @@ a.speaker-paper-title:hover {
   font-size: var(--fs-sm);
   text-decoration: none;
 }
+/* The theme's Atlas hue, the same `--chip-dot` dot `.atlas-chip` wears
+   (#1660). align-self, because the row aligns on the baseline for the count
+   and a dot has no baseline to sit on. */
+.theme-doors__list a::before {
+  content: ""; flex: none; align-self: center;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--chip-dot, var(--text-subtle));
+}
 .theme-doors__list a:hover,
 .theme-doors__list a:focus-visible {
   border-color: var(--accent);
@@ -4651,6 +4683,7 @@ a.speaker-paper-title:hover {
   color: var(--text-muted);
 }
 .speaker-theme-chip {
+  display: inline-flex; align-items: center; gap: 0.4em;
   font-size: var(--fs-xs);
   color: var(--text-muted);
   background: var(--bg-tinted);
@@ -4658,6 +4691,14 @@ a.speaker-paper-title:hover {
   border-radius: 999px;
   padding: 0.05rem 0.5rem;
   line-height: 1.5;
+}
+/* The theme's Atlas hue, the same `--chip-dot` treatment `.atlas-chip` wears
+   (#1660). Set per chip from paperIndex.themeDot; a theme the wheel does not
+   know falls back to the subtle ink rather than losing the dot. Decorative:
+   the label carries the meaning, so there is nothing here to announce. */
+.speaker-theme-chip::before {
+  content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--chip-dot, var(--text-subtle));
 }
 @media (max-width: 600px) {
   .speaker-papers li { flex-direction: column; gap: 0.1rem; }
@@ -4788,6 +4829,7 @@ a.speaker-paper-title:hover {
   margin: 0.35rem 0 0;
 }
 .paper-theme-chip {
+  display: inline-flex; align-items: center; gap: 0.4em;
   font-size: var(--fs-xs);
   color: var(--text-muted);
   background: var(--bg-tinted);
@@ -4795,6 +4837,14 @@ a.speaker-paper-title:hover {
   border-radius: 999px;
   padding: 0.05rem 0.5rem;
   line-height: 1.5;
+}
+/* The theme's Atlas hue, the same `--chip-dot` treatment `.atlas-chip` wears
+   (#1660). Set per chip from paperIndex.themeDot; a theme the wheel does not
+   know falls back to the subtle ink rather than losing the dot. Decorative:
+   the label carries the meaning, so there is nothing here to announce. */
+.paper-theme-chip::before {
+  content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--chip-dot, var(--text-subtle));
 }
 /* Anchor variant (#1149): the paper landing page renders the same chips as
    links into the by-paper theme filter. */

@@ -127,6 +127,8 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- Research themes wear their Atlas colour everywhere in the Anthology. The theme doors, the chips on the by-paper and by-person lists and the tags on a paper's own page each carry the hue the map gives that theme, as a small dot beside the label, so a reader who has learned the palette on the Atlas keeps it after clicking through. The wheel moved out of the Atlas script into `site.css` as `--atlas-wheel-*` tokens, which is what stops the map and the pages drifting onto two palettes. Closes [#1660](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1660).
+
 - The internship page sets out three meetings across the two months rather than a weekly call: onboarding in the first week, a review at the halfway point, and an exit review with a short feedback survey. Updated in all three languages.
 
 
