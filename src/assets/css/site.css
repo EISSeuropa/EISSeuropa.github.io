@@ -7717,6 +7717,14 @@ a.profile-pub-title:hover { text-decoration: underline; }
    setting touch-action to none on the stage only while a drag is live. */
 #atlas-canvas { display: block; width: 100%; height: 640px; cursor: default; touch-action: pan-y pinch-zoom; }
 #atlas-canvas.is-link { cursor: pointer; }
+/* The canvas is a tab stop now (#1646), so the ring has to be visible against
+   both themes and against the map's own dark stage, which a default UA ring
+   is not reliably. Keyboard focus only: a click on the map should not draw a
+   frame round it. */
+#atlas-canvas:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
 .atlas-card { position: absolute; pointer-events: none; max-width: 290px; padding: 12px 15px; border-radius: var(--radius-md); background: var(--surface-strong); border: 1px solid var(--border); box-shadow: var(--shadow-3); -webkit-backdrop-filter: blur(var(--blur-card)); backdrop-filter: blur(var(--blur-card)); opacity: 0; transform: translateY(4px); transition: opacity .12s, transform .12s; z-index: 2; }
 .atlas-card.is-on { opacity: 1; transform: none; }
 /* A card pinned by a tap has to be tappable, unlike the hover card, which
