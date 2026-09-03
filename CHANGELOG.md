@@ -108,6 +108,8 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 - The archive banner's "Archive" badge failed the AA contrast floor at 4.44:1 against its own background. Now 5.13:1, same colour.
 - Four pages scrolled sideways on a phone, pushed out by an identifier or a web address too long to break: `/licensing` by 153px, `/vocab/themes` by 49px, `/policy` by 21px and `/anthology-atlas` by 16px. Long identifiers now wrap.
 - Sanne Verschuren's website link points at the address her site actually answers on. Her site serves no working HTTPS, so the `https://` form was dead in a browser, and the correction made once by hand had been overwritten by the board-bios sync. The sync now holds a small table of links to pin, so the correction survives every future run.
+- A search on the Anthology now matches each word of the query on its own, so naming a topic and an affiliation together finds the papers carrying both. The filter compared the whole query against one string built from the title, the authors and the affiliations, so anything typed out of order returned nothing at all and read as an absence from the corpus. The by-person search gained the same treatment, which is what lets a name typed surname-first find its entry. Closes [#1637](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1637).
+- A search on the Anthology can now be shared and survives Back. The edition, the theme and the two checkboxes were already carried in the address bar and restored on load, and the search box was not, so copying the address after a search handed the reader the unfiltered list. Closes [#1638](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1638).
 
 ### Removed
 
@@ -119,6 +121,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 
 - The SKOS theme vocabulary states its own version and issue date. The concept scheme in `/vocab/themes.ttl` and `/vocab/themes.jsonld` now carries `owl:versionInfo` and `dct:issued`, so a deposited or downloaded copy can be dated and told apart from another copy without the record it came from. The version is the vocabulary's own, moving when a concept is added, retired or relabelled rather than when the site releases, and a build-time guard fails the build if the concepts move and the version does not.
+
+- The Anthology's two lists skip the rendering work for the rows that are off screen. The page holds around 1,000 entries across the by-person and by-paper views, and the browser laid out and painted every one of them on first render and again on each pass of the filters, which is where a phone slowed down. Closes [#1639](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1639).
+
+- The Anthology's two lists carry their count in every state. The line under the filters appeared only once something was filtered, so the unfiltered page gave no total anywhere near the list and clearing a filter confirmed nothing. It now reads "All 511 papers" until a filter narrows it, comes from the server so it is there without scripting, and stays silent for a screen reader while the text is unchanged. Closes [#1640](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1640).
 
 ## [2.28.0] · 2026-08-29 — A usable Atlas, and a citable theme vocabulary
 
