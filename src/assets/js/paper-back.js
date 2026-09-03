@@ -4,8 +4,9 @@
  * index at some filter, an event programme, a board profile, an external
  * link), so a single fixed target can't be right for everyone. Progressive
  * enhancement, three layers:
- *   1. No-JS baseline — the control is a real anchor to papers.html#paper-<slug>
- *      (set in the template). Crawlers and no-JS readers get a working link.
+ *   1. No-JS baseline — the control is a real anchor to
+ *      /anthology.html?view=papers&paper=<slug> (set in the template).
+ *      Crawlers and no-JS readers get a working link.
  *   2. Same-origin history — if the referrer is same-origin and there's history
  *      to go back to, intercept the click and call history.back(). That returns
  *      the reader to their EXACT prior scroll + filter state (the index mirrors

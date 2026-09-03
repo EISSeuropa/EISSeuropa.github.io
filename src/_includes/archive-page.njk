@@ -2,12 +2,17 @@
    One surface, two lenses: a by-person view (speakers-index.njk) and a
    by-paper view (papers-page.njk), both rendering from corpus.js /
    paperIndex.js. The wrapper page sets `archiveDefaultView` ("people" or
-   "papers"): /speakers.html defaults to people, /papers.html to papers, and
-   both URLs stay live (no link breaks, one include = no drift). archive.js
-   toggles the panels and mirrors the choice in ?view=. The non-default panel
-   is server-rendered (so the toggle has content) but carries
-   data-pagefind-ignore, so each URL contributes only its own view to the
-   site search rather than indexing both lists twice. #}
+   "papers"); /speakers.html and /papers.html are redirects into this page
+   with the matching view forced. archive.js toggles the panels and mirrors
+   the choice in ?view=.
+
+   Only the default view is server-rendered (#1641). The other panel is a
+   placeholder that archive.js fills from anthology-fragment.njk on first
+   activation. It used to ship in full behind `hidden`, which put both lists
+   in one 1,530,626-byte document; the page is 891,549 bytes now. Either way
+   only the default view reaches site search, since the panel that is not
+   rendered cannot be indexed and the placeholder carries
+   data-pagefind-ignore. #}
 {% from "icons.njk" import icon %}
 {%- set t = i18n[lang or "en"] -%}
 {%- set n18n = t.navigator -%}
@@ -181,7 +186,11 @@
         | replace("{eligible}", releaseScope.eligibleOut) }} <a href="mailto:{{ site.contactEmail }}?subject=Anthology">{{ n18n.earlyAccessCta }}</a></p>
     </aside>
 
-    <div class="archive-toggle" role="tablist" aria-label="{{ n18n.title }}">
+    {# data-msg-failed is the loader's error string (#1641), kept on the
+       tablist rather than in the script so it stays localised the same way
+       the filter status lines are. #}
+    <div class="archive-toggle" role="tablist" aria-label="{{ n18n.title }}"
+         data-msg-failed="{{ n18n.loadFailedView }}">
       <button type="button" role="tab" class="archive-tab" data-archive-tab="people"
               id="archive-tab-people" aria-controls="archive-panel-people"
               aria-selected="{{ 'true' if defaultView == 'people' else 'false' }}">{{ n18n.byPerson }}</button>
@@ -190,16 +199,36 @@
               aria-selected="{{ 'true' if defaultView == 'papers' else 'false' }}">{{ n18n.byPaper }}</button>
     </div>
 
+    {# Only the default view is server-rendered (#1641). The other panel used
+       to ship in full behind `hidden` and `data-pagefind-ignore`, which is
+       639,520 of this page's 1,530,626 bytes doing nothing for the reader who
+       never opens it. It arrives from /fragments/anthology-<view>.<lang>.html
+       the first time its tab is activated, and stays for the rest of the
+       visit, so the toggle is instant from the second press on.
+
+       The placeholder holds the loading line, which the loader replaces with
+       the panel or with an error the reader can retry by pressing the tab
+       again. Scripting was already required to reach the second view at all,
+       since the tablist is wired in archive.js and both panels are otherwise
+       `hidden`, so nothing that worked without it stops working. #}
     <div class="archive-panel" id="archive-panel-people" role="tabpanel"
          aria-labelledby="archive-tab-people" data-archive-panel="people"
-         {%- if defaultView != 'people' %} hidden data-pagefind-ignore{% endif %}>
+         {%- if defaultView != 'people' %} hidden data-pagefind-ignore data-archive-src="/fragments/anthology-people.{{ lang or 'en' }}.html"{% endif %}>
+      {%- if defaultView == 'people' %}
       {% include "speakers-index.njk" %}
+      {%- else %}
+      <p class="archive-panel__status" data-archive-status>{{ n18n.loadingView }}</p>
+      {%- endif %}
     </div>
 
     <div class="archive-panel" id="archive-panel-papers" role="tabpanel"
          aria-labelledby="archive-tab-papers" data-archive-panel="papers"
-         {%- if defaultView != 'papers' %} hidden data-pagefind-ignore{% endif %}>
+         {%- if defaultView != 'papers' %} hidden data-pagefind-ignore data-archive-src="/fragments/anthology-papers.{{ lang or 'en' }}.html"{% endif %}>
+      {%- if defaultView == 'papers' %}
       {% include "papers-page.njk" %}
+      {%- else %}
+      <p class="archive-panel__status" data-archive-status>{{ n18n.loadingView }}</p>
+      {%- endif %}
     </div>
 
   </div>
