@@ -4547,6 +4547,48 @@ a.speaker-paper-title:hover {
   border-color: var(--accent);
   color: var(--accent);
 }
+/* Doors into the corpus by subject (#1644): the seventeen research themes as
+   links to their own Atlas pages, under the Atlas signpost in the Anthology
+   header. Reuses the chip shape the filters and the paper cards already use,
+   with the count in the muted ink so the label stays the thing being read. */
+.theme-doors {
+  margin: var(--space-5) 0 0;
+}
+.theme-doors__h {
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.theme-doors__list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+}
+.theme-doors__list a {
+  display: inline-flex;
+  gap: 0.35rem;
+  align-items: baseline;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: var(--fs-sm);
+  text-decoration: none;
+}
+.theme-doors__list a:hover,
+.theme-doors__list a:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.theme-doors__n {
+  font-size: var(--fs-xs);
+}
+
 /* Placeholder line inside a panel whose markup is still on its way, and the
    error if it does not arrive (#1641). Same register as the filter status it
    sits where. */
@@ -4657,6 +4699,43 @@ a.speaker-paper-title:hover {
   display: grid;
   gap: var(--space-3);
   max-width: 52rem;
+}
+/* Edition jump nav and heading rows (#1643), the by-paper twin of .speaker-az
+   and .speaker-letter-h. Wider labels than a single letter, so the pills wrap
+   rather than sitting on a min-width. */
+.paper-editions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: var(--space-5);
+}
+.paper-editions[hidden] {
+  display: none;
+}
+.paper-editions a {
+  display: inline-flex;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  text-decoration: none;
+}
+.paper-editions a:hover,
+.paper-editions a:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.paper-edition-row[hidden] {
+  display: none;
+}
+.paper-edition-h {
+  scroll-margin-top: 6rem;
+  margin: var(--space-5) 0 0;
+  padding-bottom: 0.2rem;
+  border-bottom: 2px solid var(--border);
+  font-size: var(--fs-lg);
+  color: var(--accent);
 }
 /* Same off-screen render skipping as .speaker-entry (#1639). */
 .paper-entry {
