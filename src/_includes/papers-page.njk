@@ -38,6 +38,18 @@
       {%- endfor %}
     </select>
   </div>
+  {# Sort (#1642). 511 rows arrived in build order with no way to ask for
+     anything else, while the by-person view has been alphabetical with a jump
+     nav since #756. The default is the order paperIndex already produces,
+     newest edition first, so the control changes nothing until it is used. #}
+  <div class="speaker-field">
+    <label class="speaker-field-label" for="paper-sort">{{ p18n.sortLabel }}</label>
+    <select id="paper-sort" data-paper-sort>
+      <option value="edition-desc">{{ p18n.sortEditionDesc }}</option>
+      <option value="edition-asc">{{ p18n.sortEditionAsc }}</option>
+      <option value="title">{{ p18n.sortTitle }}</option>
+    </select>
+  </div>
   <div class="speaker-field speaker-field--check">
     <label class="speaker-field-label--check" for="paper-published">
       <input type="checkbox" id="paper-published" data-paper-published data-label="{{ p18n.publishedOnly }}">
@@ -52,6 +64,15 @@
   </div>
   <button type="button" class="btn btn-sm speaker-clear" data-paper-clear hidden>{{ p18n.clear }}</button>
 </div>
+
+{# Edition jump nav (#1643), the by-paper twin of the A to Z nav on the
+   by-person view. Hidden by paper-filter.js when the list is sorted by title,
+   where an edition anchor points at nothing in particular. #}
+<nav class="paper-editions" aria-label="{{ p18n.jumpToEdition }}" data-paper-editions>
+  {%- for ed in paperIndex.editions %}
+  <a href="#ed-{{ ed.key | replace("/", "") | replace(".html", "") }}">{{ ed.label }}{% if ed.year %} {{ ed.year }}{% endif %}</a>
+  {%- endfor %}
+</nav>
 
 {# Filter status, announced to assistive tech (role=status → polite live
    region). The data-msg-* strings are the localised templates
@@ -83,10 +104,28 @@
 </div>
 
 <ol class="paper-index" role="list" data-paper-list>
+  {#- Grouped under an edition heading (#1643), the by-paper twin of the letter
+      rows on the by-person view. paper-filter.js hides a heading whose papers
+      have all been filtered out, the way speaker-filter.js already hides an
+      empty letter.
+
+      Driven by paperIndex.editions rather than by watching the edition change
+      down paperIndex.papers. That list is ordered by year, and a year that
+      held a joint event as well as the annual conference interleaves the two:
+      2024 alternates between /2024.html, /joint-2024.html and /Ukraine.html,
+      and 2019 between /2019.html and /JPW2019.html. Reading the order would
+      have produced 47 headings for 12 editions, with `id="ed-2024"` repeated
+      a dozen times and every jump link landing on the first copy. -#}
+  {%- for ed in paperIndex.editions %}
+  <li class="paper-edition-row" data-paper-edition="{{ ed.key }}">
+    <h2 id="ed-{{ ed.key | replace("/", "") | replace(".html", "") }}" class="paper-edition-h">{{ ed.label }}{% if ed.year %} {{ ed.year }}{% endif %}</h2>
+  </li>
   {%- for p in paperIndex.papers %}
+  {%- if p.conferenceUrl == ed.key %}
   <li class="paper-entry" data-paper-entry
       {% if p.slug %}id="paper-{{ p.slug }}"{% endif %}
       data-event="{{ p.conferenceUrl }}"
+      data-sort-title="{{ p.title }}"
       data-themes="{{ p.theme | join('|') }}"
       data-search="{{ p.title }} {{ p.authors | join(' ') }} {{ p.affiliations | join(' ') }}"
       {% if p.publishedUrl %}data-published="1"{% endif %}
@@ -118,6 +157,8 @@
       {%- endif %}
     </article>
   </li>
+  {%- endif %}
+  {%- endfor %}
   {%- endfor %}
 </ol>
 
