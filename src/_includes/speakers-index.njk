@@ -44,13 +44,15 @@
 </nav>
 
 {# Filter status, announced to assistive tech (role=status → polite live
-   region). Empty when nothing is filtered. The data-msg-* strings are
-   the localised templates speaker-filter.js fills in. #}
-<p class="speaker-status" role="status" aria-live="polite" data-speaker-status hidden
+   region). The data-msg-* strings are the localised templates
+   speaker-filter.js fills in. Server-rendered with the unfiltered count
+   rather than starting hidden (#1640), same treatment as the by-paper view. #}
+<p class="speaker-status" role="status" aria-live="polite" data-speaker-status
+   data-msg-all="{{ s18n.resultsAll }}"
    data-msg-none="{{ s18n.noMatch }}"
    data-msg-one="{{ s18n.resultsOne }}"
    data-msg-many="{{ s18n.resultsMany }}"
-   data-msg-matching="{{ s18n.matching }}"></p>
+   data-msg-matching="{{ s18n.matching }}">{{ s18n.resultsAll | replace("{n}", corpus.stats.speakerCount) }}</p>
 
 <ol class="speaker-index" role="list" data-speaker-list>
   {%- for s in corpus.speakers %}

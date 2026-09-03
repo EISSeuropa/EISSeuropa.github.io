@@ -750,6 +750,7 @@ const locales = {
       note: "Assembled from the published conference programmes. Names are matched conservatively, so a person who appears under noticeably different spellings across years may show more than once. Themes are inferred from the panel each paper sat in (the nine permanent EISS sections plus recurring themes). Names and affiliations stay in their original language. The research themes are our own vocabulary, so they are translated.",
       // Live-region status strings, read by speaker-filter.js. {n}/{q}
       // are substituted client-side.
+      resultsAll: "All {n} speakers",
       resultsOne: "{n} speaker",
       resultsMany: "{n} speakers",
       noMatch: "No speakers match.",
@@ -785,6 +786,7 @@ const locales = {
       note: "Assembled from the published conference programmes. Themes are inferred from the panel each paper sat in (the nine permanent EISS sections plus recurring themes), so a paper may carry more than one or none. Titles, author names and affiliations stay in their original language. The research themes are our own vocabulary, so they are translated.",
       // Live-region status strings, read by paper-filter.js. {n}/{q} are
       // substituted client-side.
+      resultsAll: "All {n} papers",
       resultsOne: "{n} paper",
       resultsMany: "{n} papers",
       noMatch: "No papers match.",
@@ -1445,6 +1447,7 @@ const locales = {
       contributionOne: "communication",
       contributionMany: "communications",
       note: "Constitué à partir des programmes publiés des conférences. Les noms sont rapprochés avec prudence : une personne apparaissant sous des graphies sensiblement différentes selon les années peut figurer plusieurs fois. Les thèmes sont déduits du panel dans lequel chaque communication a été présentée (les neuf sections permanentes de l'EISS et des thèmes récurrents). Les noms et les affiliations restent dans leur langue d'origine. Les thèmes de recherche relèvent de notre propre vocabulaire et sont donc traduits.",
+      resultsAll: "Les {n} intervenants",
       resultsOne: "{n} intervenant",
       resultsMany: "{n} intervenants",
       noMatch: "Aucun intervenant ne correspond.",
@@ -1475,6 +1478,7 @@ const locales = {
       prizeOnly: "European Security Studies Prize",
       clear: "Effacer",
       note: "Constitué à partir des programmes publiés des conférences. Les thèmes sont déduits du panel dans lequel chaque communication a été présentée (les neuf sections permanentes de l'EISS et des thèmes récurrents) : une communication peut en porter plusieurs ou aucun. Les titres, les noms d'auteurs et les affiliations restent dans leur langue d'origine. Les thèmes de recherche relèvent de notre propre vocabulaire et sont donc traduits.",
+      resultsAll: "Les {n} communications",
       resultsOne: "{n} communication",
       resultsMany: "{n} communications",
       noMatch: "Aucune communication ne correspond.",
@@ -2130,6 +2134,7 @@ const locales = {
       contributionOne: "Beitrag",
       contributionMany: "Beiträge",
       note: "Zusammengestellt aus den veröffentlichten Konferenzprogrammen. Namen werden konservativ zusammengeführt: Wer über die Jahre unter deutlich verschiedenen Schreibweisen auftritt, kann mehrfach erscheinen. Themen werden aus dem Panel abgeleitet, in dem der jeweilige Beitrag stand (die neun ständigen EISS-Sektionen sowie wiederkehrende Themen). Namen und Zugehörigkeiten bleiben in ihrer Originalsprache. Die Forschungsthemen sind unser eigenes Vokabular und werden daher übersetzt.",
+      resultsAll: "Alle {n} Vortragenden",
       resultsOne: "{n} Vortragende:r",
       resultsMany: "{n} Vortragende",
       noMatch: "Keine Vortragenden gefunden.",
@@ -2160,6 +2165,7 @@ const locales = {
       prizeOnly: "Best-Paper-Preis",
       clear: "Zurücksetzen",
       note: "Zusammengestellt aus den veröffentlichten Konferenzprogrammen. Themen werden aus dem Panel abgeleitet, in dem der jeweilige Beitrag stand (die neun ständigen EISS-Sektionen sowie wiederkehrende Themen): ein Beitrag kann mehrere oder gar keines tragen. Titel, Autorennamen und Zugehörigkeiten bleiben in ihrer Originalsprache. Die Forschungsthemen sind unser eigenes Vokabular und werden daher übersetzt.",
+      resultsAll: "Alle {n} Beiträge",
       resultsOne: "{n} Beitrag",
       resultsMany: "{n} Beiträge",
       noMatch: "Keine Beiträge gefunden.",

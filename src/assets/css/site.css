@@ -4220,6 +4220,18 @@ a.programme-live-tag:focus-visible {
   align-items: flex-start;
   padding: var(--space-3) 0;
   border-bottom: 1px solid var(--border);
+  /* Skip layout and paint for the rows that are off screen (#1639). The
+     Anthology renders around 1,000 list items in one document, and that cost
+     is paid on first render and again on every filter pass, which is where a
+     phone stalls. The `auto` keyword on contain-intrinsic-size makes the
+     browser remember each row's real height once it has been rendered, so the
+     estimate below only governs rows nobody has scrolled to yet and the
+     scrollbar settles as they are. The number is the measured median row
+     height at 1280px (132px to 260px across the 494 entries), so the starting
+     estimate is close rather than nominal: at 108px the document reported
+     69,871px against a true 100,327px and the A to Z jumps landed short. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 186px;
 }
 /* `display: flex` above overrides the UA `[hidden] { display: none }`
    rule, so the filter JS (which toggles the hidden attribute) could not
@@ -4636,6 +4648,11 @@ a.speaker-paper-title:hover {
   display: grid;
   gap: var(--space-3);
   max-width: 52rem;
+}
+/* Same off-screen render skipping as .speaker-entry (#1639). */
+.paper-entry {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 158px;
 }
 /* The card uses `display: block`, but toggling the hidden attribute on the
    list item should still hide it. Be explicit (mirrors .speaker-entry). */
