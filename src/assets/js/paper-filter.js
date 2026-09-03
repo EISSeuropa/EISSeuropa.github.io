@@ -13,6 +13,9 @@
  *   - a search box narrows by title / author / affiliation (diacritic-
  *     insensitive, and every whitespace-separated word has to match
  *     somewhere in the row, so "deterrence sciences po" works);
+ *   - a sort <select> reorders the list by edition (either direction) or by
+ *     title, and the edition headings + jump nav step aside for the title
+ *     order, where an edition anchor means nothing (#1642, #1643);
  *   - all combine (AND);
  *   - a role=status region carries the count at all times and announces a
  *     change to assistive tech (no focus move);
@@ -38,9 +41,61 @@
   var findEl = document.querySelector("[data-paper-find]");
   var pubCheck = document.querySelector("[data-paper-published]");
   var prizeCheck = document.querySelector("[data-paper-prize]");
+  var sortEl = document.querySelector("[data-paper-sort]");
+  var editionsNavEl = document.querySelector("[data-paper-editions]");
   var clearEl = document.querySelector("[data-paper-clear]");
   var statusEl = document.querySelector("[data-paper-status]");
   var entries = [].slice.call(list.querySelectorAll("[data-paper-entry]"));
+  var headings = [].slice.call(list.querySelectorAll("[data-paper-edition]"));
+
+  // The list as it arrives: edition headings, each followed by its papers,
+  // newest edition first. Captured once, so reordering is a matter of
+  // re-appending known groups rather than re-reading the DOM (#1642).
+  var groups = headings.map(function (h) {
+    var rows = [];
+    var node = h.nextElementSibling;
+    while (node && !node.hasAttribute("data-paper-edition")) {
+      if (node.hasAttribute("data-paper-entry")) rows.push(node);
+      node = node.nextElementSibling;
+    }
+    return { heading: h, rows: rows };
+  });
+
+  // Built on first use, not here: norm() is declared below, and sorting by
+  // title is the order nobody starts on.
+  var titleSorted = null;
+  function byTitle() {
+    if (!titleSorted) {
+      titleSorted = entries.slice().sort(function (a, b) {
+        return norm(a.getAttribute("data-sort-title"))
+          .localeCompare(norm(b.getAttribute("data-sort-title")));
+      });
+    }
+    return titleSorted;
+  }
+
+  var currentOrder = null;
+
+  function order(sort) {
+    if (sort === currentOrder) return;
+    currentOrder = sort;
+    var frag = document.createDocumentFragment();
+    if (sort === "title") {
+      byTitle().forEach(function (el) { frag.appendChild(el); });
+    } else {
+      var seq = sort === "edition-asc" ? groups.slice().reverse() : groups;
+      seq.forEach(function (g) {
+        frag.appendChild(g.heading);
+        g.rows.forEach(function (el) { frag.appendChild(el); });
+      });
+    }
+    list.appendChild(frag);
+    // An edition anchor points at nothing in a title order, and a heading
+    // between two unrelated titles is a false grouping.
+    var byEdition = sort !== "title";
+    headings.forEach(function (h) { h.hidden = !byEdition; });
+    if (editionsNavEl) editionsNavEl.hidden = !byEdition;
+  }
 
   var norm = function (s) {
     return String(s || "")
@@ -72,6 +127,8 @@
     var prize = prizeCheck && prizeCheck.checked;
     var q = norm(findEl && findEl.value);
     var tokens = tokenise(q);
+    var sort = sortEl ? sortEl.value : "edition-desc";
+    order(sort);
     var visible = 0;
     entries.forEach(function (el) {
       var okEvent = !event || el.getAttribute("data-event") === event;
@@ -83,6 +140,13 @@
       el.hidden = !show;
       if (show) visible++;
     });
+    // Hide an edition heading when every paper under it is filtered out, the
+    // way speaker-filter.js already hides an empty letter (#1643).
+    if (sort !== "title") {
+      groups.forEach(function (g) {
+        g.heading.hidden = !g.rows.some(function (el) { return !el.hidden; });
+      });
+    }
 
     var filtering = !!(event || theme || pub || prize || q);
     if (clearEl) clearEl.hidden = !filtering;
@@ -151,6 +215,8 @@
     else url.searchParams.delete("prize");
     if (findEl && findEl.value.trim()) url.searchParams.set("q", findEl.value.trim());
     else url.searchParams.delete("q");
+    if (sortEl && sortEl.value && sortEl.value !== "edition-desc") url.searchParams.set("sort", sortEl.value);
+    else url.searchParams.delete("sort");
     history.replaceState(null, "", url.pathname + url.search + url.hash);
   }
 
@@ -158,6 +224,7 @@
   if (themeSel) themeSel.addEventListener("change", function () { syncUrl(); apply(); });
   if (pubCheck) pubCheck.addEventListener("change", function () { syncUrl(); apply(); });
   if (prizeCheck) prizeCheck.addEventListener("change", function () { syncUrl(); apply(); });
+  if (sortEl) sortEl.addEventListener("change", function () { syncUrl(); apply(); });
   // replaceState on every keystroke rather than pushState, so typing swaps the
   // current entry instead of filling the history stack.
   if (findEl) findEl.addEventListener("input", function () { syncUrl(); apply(); });
@@ -182,6 +249,7 @@
   }
   restore("event", eventSel);
   restore("theme", themeSel);
+  restore("sort", sortEl);
   if (pubCheck && new URL(window.location.href).searchParams.get("published") === "1") pubCheck.checked = true;
   if (prizeCheck && new URL(window.location.href).searchParams.get("prize") === "1") prizeCheck.checked = true;
   var qParam = new URL(window.location.href).searchParams.get("q");
