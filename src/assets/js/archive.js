@@ -161,3 +161,22 @@
   revealTarget(false);
   window.addEventListener("hashchange", function () { revealTarget(false); });
 })();
+
+/* Collapse the theme chips on a narrow viewport (#1644 follow-up).
+ *
+ * Seventeen chips are 206px tall at 1280px and 685px on a 375px phone, where
+ * they wrap to one or two per line, so on a phone they put 685px between the
+ * view toggle and the first row of the list. The disclosure ships `open`, so
+ * the page without scripting shows every chip the way it always did, and this
+ * closes it where the summary is the visible control.
+ *
+ * Set once, at load, the same as the Atlas filter disclosure. Watching for a
+ * resize across the breakpoint would also mean deciding whether to override a
+ * reader who had opened it by hand, which is a rule nobody has asked for.
+ */
+(function () {
+  "use strict";
+  var doors = document.querySelector("[data-theme-doors]");
+  if (!doors || !window.matchMedia) return;
+  if (window.matchMedia("(max-width: 640px)").matches) doors.open = false;
+})();

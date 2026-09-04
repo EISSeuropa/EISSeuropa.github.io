@@ -80,29 +80,6 @@
       {% include "atlas-signpost.njk" %}
     </div>
 
-    {# Doors into the corpus by subject (#1644). The page opened on stats, two
-       disclosures and then a wall of around 500 rows, and the only way to
-       start from a subject was a <select> further down inside the filters. The
-       seventeen theme pages built by #1255 were reachable from the Atlas and
-       the sitemap and from nothing a reader of this page would find.
-
-       They point at the theme's Atlas page rather than at
-       ?view=papers&theme=…, which is the richer destination and links back to
-       the filtered list itself. Locale suffix built here rather than carried
-       on the data, since atlasThemePages is locale-agnostic and the theme
-       pages are per locale (#1495).
-       data-pagefind-ignore: a nav affordance pointing at pages that index
-       themselves. #}
-    <nav class="theme-doors" aria-labelledby="theme-doors-h" data-pagefind-ignore>
-      <h2 class="theme-doors__h" id="theme-doors-h">{{ n18n.themeDoorsHeading }}</h2>
-      <ul class="theme-doors__list">
-        {%- set sfx = "" if (lang or "en") == "en" else "." + lang %}
-        {%- for th in atlasThemePages %}
-        <li><a href="/anthology-atlas/theme/{{ th.slug }}{{ sfx }}.html">{{ th.label[lang or "en"] or th.name }} <span class="theme-doors__n muted">{{ th.count }}</span></a></li>
-        {%- endfor %}
-      </ul>
-    </nav>
-
     {# Per-year abstract coverage, collapsed by default (native <details>, no
        JS). Bars render from paperIndex.years; coverage = abstracts on file /
        papers eligible for one. #}
@@ -221,6 +198,45 @@
               id="archive-tab-papers" aria-controls="archive-panel-papers"
               aria-selected="{{ 'true' if defaultView == 'papers' else 'false' }}">{{ n18n.byPaper }}</button>
     </div>
+
+    {# Doors into the corpus by subject (#1644). The page opened on stats, two
+       disclosures and then a wall of around 500 rows, and the only way to
+       start from a subject was a <select> further down inside the filters. The
+       seventeen theme pages built by #1255 were reachable from the Atlas and
+       the sitemap and from nothing a reader of this page would find.
+
+       Below the view toggle rather than up in the header beside the Atlas
+       signpost: seventeen chips is a wide block, and on a phone it pushed the
+       toggle and the list itself off the first screen.
+
+       They point at the theme's Atlas page rather than at
+       ?view=papers&theme=…, which is the richer destination and links back to
+       the filtered list itself. Locale suffix built here rather than carried
+       on the data, since atlasThemePages is locale-agnostic and the theme
+       pages are per locale (#1495).
+       data-pagefind-ignore: a nav affordance pointing at pages that index
+       themselves. #}
+    {# Rendered open, and archive.js closes it on a narrow viewport. Seventeen
+       chips are 206px tall at 1280px and 685px on a 375px phone, one or two
+       per line, which put 685px between the view toggle and the first row of
+       the list. Same shape as the Atlas filter disclosure: open in the markup
+       so the no-JS page shows everything, the script does the collapsing, and
+       the summary is hidden by CSS at the width where nothing collapses. #}
+    <details class="theme-doors" id="theme-doors" data-theme-doors open>
+      <summary class="theme-doors__summary">
+        <span class="theme-doors__chevron" aria-hidden="true">{{ icon("chevron-down") }}</span>
+        <span class="theme-doors__h" id="theme-doors-h">{{ n18n.themeDoorsHeading }}</span>
+        <span class="theme-doors__count muted">{{ atlasThemePages | length }}</span>
+      </summary>
+      <nav aria-labelledby="theme-doors-h" data-pagefind-ignore>
+        <ul class="theme-doors__list">
+          {%- set sfx = "" if (lang or "en") == "en" else "." + lang %}
+          {%- for th in atlasThemePages %}
+          <li><a href="/anthology-atlas/theme/{{ th.slug }}{{ sfx }}.html">{{ th.label[lang or "en"] or th.name }} <span class="theme-doors__n muted">{{ th.count }}</span></a></li>
+          {%- endfor %}
+        </ul>
+      </nav>
+    </details>
 
     {# Only the default view is server-rendered (#1641). The other panel used
        to ship in full behind `hidden` and `data-pagefind-ignore`, which is

@@ -4548,19 +4548,60 @@ a.speaker-paper-title:hover {
   color: var(--accent);
 }
 /* Doors into the corpus by subject (#1644): the seventeen research themes as
-   links to their own Atlas pages, under the Atlas signpost in the Anthology
-   header. Reuses the chip shape the filters and the paper cards already use,
-   with the count in the muted ink so the label stays the thing being read. */
+   links to their own Atlas pages, sitting between the view toggle and the
+   list. Reuses the chip shape the filters and the paper cards already use,
+   with the count in the muted ink so the label stays the thing being read.
+   Margins on both sides now that it has a neighbour below it. */
 .theme-doors {
-  margin: var(--space-5) 0 0;
+  margin: var(--space-4) 0 var(--space-5);
 }
 .theme-doors__h {
-  margin: 0 0 var(--space-2);
   font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
+}
+/* The summary is a control, so it looks like one, the same reasoning and the
+   same chevron idiom as the Atlas filter disclosure (#1508). It only appears
+   where the block actually collapses: above 640px the details stays open and
+   the row would be a control that does nothing worth doing. */
+.theme-doors__summary {
+  display: none;
+}
+.theme-doors__count {
+  font-size: var(--fs-xs);
+  margin-inline-start: auto;
+}
+@media (max-width: 640px) {
+  .theme-doors__summary {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    padding: 0.6rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+  /* `display: flex` drops the browser's own marker, so the chevron is the
+     only affordance and has to be there. */
+  .theme-doors__summary::-webkit-details-marker { display: none; }
+  .theme-doors__summary::marker { content: ""; }
+  .theme-doors__summary:hover { border-color: var(--border-strong); }
+  .theme-doors__summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .theme-doors__chevron {
+    display: inline-flex;
+    color: var(--accent);
+    inline-size: 14px;
+    block-size: 14px;
+    transition: transform var(--motion-fast) var(--ease-out);
+  }
+  .theme-doors__chevron .icon { inline-size: 14px; block-size: 14px; }
+  .theme-doors[open] .theme-doors__chevron { transform: rotate(180deg); }
+  .theme-doors__list { margin-block-start: var(--space-3); }
+}
+.theme-doors > nav {
+  margin-block-start: var(--space-2);
 }
 .theme-doors__list {
   list-style: none;
