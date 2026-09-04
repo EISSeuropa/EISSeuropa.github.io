@@ -25,6 +25,12 @@ permissions:
 jobs:
   drift:
     name: Verify translations match their English sources
+    # ponytail: the `*/auto` refresh PRs merge a second after they open, so this
+    # run dies before it dispatches a job and GitHub reports a jobless failure.
+    # Skipping gates nothing (the master ruleset requires no status checks, so
+    # these never blocked an auto-PR); a bad refresh still trips the `master`
+    # push runs, where the failure alarm sees it.
+    if: ${{ !endsWith(github.head_ref, '/auto') }}
     runs-on: ubuntu-latest
     # Caps a hung job at minutes rather than the 6-hour default. Real runs
     # finish in about one minute; this is headroom, not a target.
