@@ -1,6 +1,6 @@
 ---
 name: release-cross-check
-description: Release-time five-point cross-check for EISS: the roadmap, sitemap, translations, repo docs and Anthology abstract-coverage surfaces to verify before cutting a minor or major release, plus milestone hygiene. Use when cutting a release, running scripts/release.sh, or asked what to check before a release. Skip for patch releases.
+description: "Release-time five-point cross-check for EISS: the roadmap, sitemap, translations, repo docs and Anthology abstract-coverage surfaces to verify before cutting a minor or major release, plus milestone hygiene. Use when cutting a release, running scripts/release.sh, or asked what to check before a release. Skip for patch releases."
 ---
 
 # 5. Release-time five-point cross-check (minor / major only)

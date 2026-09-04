@@ -1,6 +1,6 @@
 ---
 name: cross-repo-project
-description: The private GitHub Project spanning open enhancement issues across the EISS and NetSec repos: its scope, its boundary against milestones, the single Effort field, the manual add step, and the retirement threshold. Use when asked about the cross-repo Project board.
+description: "The private GitHub Project spanning open enhancement issues across the EISS and NetSec repos: its scope, its boundary against milestones, the single Effort field, the manual add step, and the retirement threshold. Use when asked about the cross-repo Project board."
 ---
 
 # 13. Cross-repo Project
