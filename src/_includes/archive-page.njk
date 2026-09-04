@@ -231,8 +231,10 @@
       <nav aria-labelledby="theme-doors-h" data-pagefind-ignore>
         <ul class="theme-doors__list">
           {%- set sfx = "" if (lang or "en") == "en" else "." + lang %}
-          {%- for th in atlasThemePages %}
-          <li><a href="/anthology-atlas/theme/{{ th.slug }}{{ sfx }}.html">{{ th.label[lang or "en"] or th.name }} <span class="theme-doors__n muted">{{ th.count }}</span></a></li>
+          {#- The dot is the theme's Atlas hue (#1660). These doors open the map,
+              so they are where a reader first meets the palette. #}
+          {%- for th in atlasThemePages %}{% set dot = paperIndex.themeDot[th.name] %}
+          <li><a href="/anthology-atlas/theme/{{ th.slug }}{{ sfx }}.html"{% if dot %} style="--chip-dot: {{ dot }}"{% endif %}>{{ th.label[lang or "en"] or th.name }} <span class="theme-doors__n muted">{{ th.count }}</span></a></li>
           {%- endfor %}
         </ul>
       </nav>

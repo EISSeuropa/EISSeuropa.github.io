@@ -103,7 +103,10 @@
       {%- endif %}
       {%- if s.themes.length %}
       <p class="speaker-themes">
-        {%- for th in s.themes %}<span class="speaker-theme-chip">{{ corpus.themeLabels[th][lang or "en"] or corpus.themeLabels[th].en }}</span>{% endfor %}
+        {#- Same Atlas hue as the by-paper chips (#1660). These hold the stable
+            theme key rather than the English name, so they join the wheel
+            through the English label, which is the key everywhere else. #}
+        {%- for th in s.themes %}{% set dot = paperIndex.themeDot[corpus.themeLabels[th].en] %}<span class="speaker-theme-chip"{% if dot %} style="--chip-dot: {{ dot }}"{% endif %}>{{ corpus.themeLabels[th][lang or "en"] or corpus.themeLabels[th].en }}</span>{% endfor %}
       </p>
       {%- endif %}
       {%- if s.count %}

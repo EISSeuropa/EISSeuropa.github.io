@@ -142,11 +142,23 @@
   const cssVar = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 
   // A stable colour per theme hub, drawn from a small brand-adjacent wheel so
-  // the ring of hubs is legible rather than monochrome. Same wheel the NetSec
-  // Atlas uses for its theme lens.
-  const THEME_WHEEL = ['#0973de', '#10b981', '#8457ea', '#f59e0b', '#e2568c',
-    '#0aa2c0', '#7a9a01', '#b3562e', '#5867dd', '#2e9e6a', '#a855f7', '#d97706',
-    '#3b82f6', '#14b8a6', '#ef4444', '#6366f1', '#059669'];
+  // the ring of hubs is legible rather than monochrome. The wheel lives in
+  // site.css as --atlas-wheel-N (#1660), because the theme chips on the
+  // Anthology lists and the paper pages carry the same hue as a dot and a
+  // second copy here would drift. Read once per theme change and cached on
+  // `theme`: hubColour runs per node per frame, so it must not reach for
+  // getComputedStyle itself.
+  function readWheel() {
+    const out = [];
+    for (let i = 0; ; i++) {
+      const c = cssVar('--atlas-wheel-' + i);
+      if (!c) break;
+      out.push(c);
+    }
+    // A stylesheet that failed to load leaves the map monochrome rather than
+    // colourless, which is legible and says something is wrong.
+    return out.length ? out : ['#0973de'];
+  }
 
   // Effective theme: honour the site's manual toggle (data-theme), else the
   // OS preference — mirrors theme.js's currentEffective().
@@ -170,6 +182,7 @@
       // the map and its key cannot drift apart.
       edge: cssVar('--atlas-edge') || '#2f9fe0',
       inactive: cssVar('--atlas-inactive') || '#9aa7bd',
+      wheel: readWheel(),
     };
   }
 
@@ -225,7 +238,7 @@
 
   const items = () => (lens === 'authors' ? authors : papers);
 
-  function hubColour(h) { return THEME_WHEEL[h.wheel % THEME_WHEEL.length]; }
+  function hubColour(h) { return theme.wheel[h.wheel % theme.wheel.length]; }
   function hubFill(h) { return h.type === 'untagged' ? theme.inactive : hubColour(h); }
 
   function nodeVisible(n) {

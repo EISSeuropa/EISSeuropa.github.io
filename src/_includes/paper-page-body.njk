@@ -49,9 +49,10 @@
     {%- if paper.themes and paper.themes.length %}
     {# Research-theme tags (#1149). Each links to the by-paper view filtered to
        that theme (paper-filter.js restores it from the URL). Reuses the
-       list view's chip styling; the anchor variant is styled alongside it. #}
+       list view's chip styling; the anchor variant is styled alongside it.
+       The dot carries the theme's Atlas hue (#1660). #}
     <p class="paper-themes">
-      {%- for th in paper.themes %}<a class="paper-theme-chip" lang="en" href="/anthology.html?view=papers&theme={{ th | urlencode }}">{{ th }}</a>{% endfor %}
+      {%- for th in paper.themes %}{% set dot = paperIndex.themeDot[th] %}<a class="paper-theme-chip" lang="en"{% if dot %} style="--chip-dot: {{ dot }}"{% endif %} href="/anthology.html?view=papers&theme={{ th | urlencode }}">{{ th }}</a>{% endfor %}
     </p>
     {%- endif %}
   </div>

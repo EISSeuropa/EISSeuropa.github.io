@@ -152,7 +152,10 @@
       <p class="paper-themes">
         {#- The chip shows the reader's own language now that the filter above
             does (#1492), so it drops the lang="en" it used to carry. -#}
-        {%- for th in p.theme %}<span class="paper-theme-chip">{{ paperIndex.themeLabels[th][lang or "en"] or th }}</span>{% endfor %}
+        {#- The dot carries the theme's Atlas hue (#1660), so a reader who has
+            learned the map keeps the palette on the page. Decorative: the
+            label is the meaning. #}
+        {%- for th in p.theme %}{% set dot = paperIndex.themeDot[th] %}<span class="paper-theme-chip"{% if dot %} style="--chip-dot: {{ dot }}"{% endif %}>{{ paperIndex.themeLabels[th][lang or "en"] or th }}</span>{% endfor %}
       </p>
       {%- endif %}
     </article>

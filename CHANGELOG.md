@@ -127,13 +127,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- Research themes wear their Atlas colour everywhere in the Anthology. The theme doors, the chips on the by-paper and by-person lists and the tags on a paper's own page each carry the hue the map gives that theme, as a small dot beside the label, so a reader who has learned the palette on the Atlas keeps it after clicking through. The wheel moved out of the Atlas script into `site.css` as `--atlas-wheel-*` tokens, which is what stops the map and the pages drifting onto two palettes. Closes [#1660](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1660).
 - The internship page sets out three meetings across the two months rather than a weekly call: onboarding in the first week, a review at the halfway point, and an exit review with a short feedback survey. Updated in all three languages.
-
-
 - The SKOS theme vocabulary states its own version and issue date. The concept scheme in `/vocab/themes.ttl` and `/vocab/themes.jsonld` now carries `owl:versionInfo` and `dct:issued`, so a deposited or downloaded copy can be dated and told apart from another copy without the record it came from. The version is the vocabulary's own, moving when a concept is added, retired or relabelled rather than when the site releases, and a build-time guard fails the build if the concepts move and the version does not.
-
 - The Anthology's two lists skip the rendering work for the rows that are off screen. The page holds around 1,000 entries across the by-person and by-paper views, and the browser laid out and painted every one of them on first render and again on each pass of the filters, which is where a phone slowed down. Closes [#1639](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1639).
-
 - The Anthology's two lists carry their count in every state. The line under the filters appeared only once something was filtered, so the unfiltered page gave no total anywhere near the list and clearing a filter confirmed nothing. It now reads "All 511 papers" until a filter narrows it, comes from the server so it is there without scripting, and stays silent for a screen reader while the text is unchanged. Closes [#1640](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1640).
 
 ## [2.28.0] · 2026-08-29 — A usable Atlas, and a citable theme vocabulary

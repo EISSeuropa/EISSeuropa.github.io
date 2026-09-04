@@ -276,6 +276,14 @@ module.exports = {
   themeLabels: Object.fromEntries(
     THEME_ORDER.map((name) => [name, themeLabelByEnglishName.get(name) || { en: name }])
   ),
+  // English name to the theme's colour, as a reference to the wheel token in
+  // site.css (#1660). The index is the theme's position in `themes`, which is
+  // also its Atlas hub index, since anthologyAtlas.js builds `data.themes`
+  // from this same array: a chip that sets --chip-dot from here wears the hue
+  // its hub wears, and the two cannot disagree by construction. A ready CSS
+  // value rather than the bare index, so a template can test it for truth
+  // without index 0 reading as absent.
+  themeDot: Object.fromEntries(themes.map((t, i) => [t.name, `var(--atlas-wheel-${i})`])),
   stats: {
     paperCount: papers.length,
     editions: [...new Set(papers.map((p) => p.programmeUrl))].filter(Boolean).length,
