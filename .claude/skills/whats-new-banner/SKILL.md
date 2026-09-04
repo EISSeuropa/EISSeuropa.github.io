@@ -1,6 +1,6 @@
 ---
 name: whats-new-banner
-description: Discipline for the site-wide "What's New" announcement banner driven by src/_data/whats-new.json: when activating it is justified, when it is not, the 3-4 per year cadence, and how to update the file. Use when asked to activate, update, or retire the banner.
+description: "Discipline for the site-wide \"What's New\" announcement banner driven by src/_data/whats-new.json: when activating it is justified, when it is not, the 3-4 per year cadence, and how to update the file. Use when asked to activate, update, or retire the banner."
 ---
 
 # 12. "What's New" banner discipline
