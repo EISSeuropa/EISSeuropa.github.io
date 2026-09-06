@@ -343,52 +343,9 @@ the issue template (rule §3) and the planned releases on the roadmap.
 Without it the backlog drifts, and a release cannot be assembled from a
 query.
 
-### The milestone set (version-tied, SemVer)
-
-EISS uses **version-numbered milestones** matching the planned
-releases on the roadmap, plus a single catch-all for uncommitted
-work. This mirrors the sister NetSec site. EISS switched from
-thematic milestones to this scheme after v2.24.0, so the milestone
-now answers "which release is this for?" rather than "what kind of
-work is this?". The set:
-
-- **One milestone per planned release** (`v2.25.0`, `v2.26.0`,
-  `v2.27.0`, …), created from the version-tagged rows of the roadmap
-  (the *At a glance* timeline in [`docs/roadmap-2026.md`](docs/roadmap-2026.md),
-  surfaced publicly on `/roadmap.html`). A patch milestone
-  (`v2.24.1`) exists only when a reactive patch is anticipated, such
-  as the post-conference cut.
-- **`Backlog — Under watch`**: items waiting on an external trigger
-  (Indico write-API access, NetSec coordination, source research) or
-  with no committed release. Mirrors the *Under watch* section of the
-  roadmap.
-
-**Every milestone title is a SemVer version, or the backlog.** No
-sentence-titled milestones. A conference cycle has phases with their own
-deadlines (*save the date*, *call for papers*, *selection and
-notifications*, *programme and logistics*, *conference*), and those are
-real, but they are named in the roadmap and in the issues rather than
-minted as milestones. The prep work rides whichever release is open when
-its deadline falls, which is what NetSec does and says in its own §10.
-
-This was tried the other way in August 2026 and reverted the same month:
-five `ESSC 2027: <phase>` milestones existed briefly, and the reason
-against them is that they answer a different question from the rest of
-the set. A milestone here answers "which release is this for?", and a
-board where some rows answer that and others answer "which phase of a
-conference is this?" cannot be read as one queue. The phase rows live in
-[`docs/roadmap-2026.md`](docs/roadmap-2026.md) beside the release
-timeline, which is where a date owned by somebody else belongs.
-
-Due dates on the version milestones come from the roadmap timeline.
-When the roadmap shifts a planned release, **bump the milestone's due
-date in the same commit that updates the roadmap row**: they are two
-views of one schedule. A conference deadline that lands between releases
-moves the nearest release's date or waits for it, and the roadmap says
-which.
-
-Create a new version milestone when the roadmap gains a release row.
-Don't pre-create far-future majors.
+The milestone set itself, the SemVer-only titling rule, the due dates
+that track the roadmap and when to create a new milestone are in the
+`milestone-tagging` skill.
 
 ### When to set the milestone
 
@@ -617,7 +574,7 @@ and report, never to run git or write.
 
 ## Lazy-loaded procedures
 
-Three task-specific procedures live as skills rather than in this file, so they
+Four task-specific procedures live as skills rather than in this file, so they
 load when invoked instead of costing context every session. Invoke by name.
 
 - `release-cross-check` — the five-point cross-check before cutting a minor or
@@ -626,6 +583,8 @@ load when invoked instead of costing context every session. Invoke by name.
   how (was §12).
 - `cross-repo-project` — the EISS + NetSec GitHub Project, its scope and its
   boundary against milestones (was §13).
+- `milestone-tagging` — the milestone set, its SemVer titles and its due dates
+  (was half of §10). §10 keeps the resident rule and the when-to-set list.
 
 ---
 
