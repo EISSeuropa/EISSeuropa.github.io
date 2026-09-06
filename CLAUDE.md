@@ -601,6 +601,18 @@ machine translation as a shortcut (§1): FR/DE are hand-translated or they
 do not ship. Mark deliberate simplifications with a `ponytail:` comment
 (fits the existing one-line `# label` comment style).
 
+### Delegate reads, keep the decisions
+
+A broad search (which partial defines a class, where a string sits across
+the FR and DE variants) goes to an `Explore` subagent at `model: haiku`, so
+the files it opens never enter this session's context and are never resent.
+`src/_data/archiveProgrammes.js` at 10,463 lines and
+`src/assets/css/site.css` at 8,633 are what this is for, and
+`.claude/hooks/guard-bulk-read.py` refuses to read either whole. Editing and
+the decisions stay here, since a cheap reader finds surface patterns and
+stops. Explore lacks Edit and Write. It does have Bash, so tell it to read
+and report, never to run git or write.
+
 ---
 
 ## Lazy-loaded procedures
