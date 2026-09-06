@@ -97,3 +97,11 @@ jobs:
       # exits non-zero on any finding (issue #602).
       - name: Run accessibility lint
         run: python3 scripts/a11y_lint.py
+
+      # The Claude bulk-read guard, which refuses a whole-file read of
+      # anything over 800 lines. It lives outside src/ and matches no path
+      # filter, which is one of the reasons this job runs unfiltered. Two
+      # seconds, stdlib only, and it pins the pair that matters: the guard
+      # fires on a bulk read and stays out of the way of a targeted one.
+      - name: Self-check the bulk-read guard
+        run: python3 scripts/test-guard-bulk-read.py

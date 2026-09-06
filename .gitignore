@@ -5,12 +5,16 @@ npm-debug.log*
 .cache/
 .eleventy-cache/
 # Machine-local Claude state (settings.local.json, worktrees, caches) stays out
-# of the repo, but `.claude/skills/` is shared project guidance: three
+# of the repo, but three things under .claude/ are shared project guidance and
+# are checked in for the same reason CLAUDE.md is. `.claude/skills/` holds the
 # task-specific procedures that used to live in CLAUDE.md and were moved out so
-# they load on invocation instead of costing context every session. They are
-# checked in for the same reason CLAUDE.md is, and CLAUDE.md points at them.
+# they load on invocation instead of costing context every session, and
+# CLAUDE.md points at them. `.claude/settings.json` and `.claude/hooks/` carry
+# the bulk-read guard, which has to travel with the repo to be worth anything.
 .claude/*
 !.claude/skills/
+!.claude/settings.json
+!.claude/hooks/
 __pycache__/
 *.pyc
 
