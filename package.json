@@ -15,6 +15,6 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.6",
-    "acorn": "^8.16.0"
+    "acorn": "^8.18.0"
   }
 }
