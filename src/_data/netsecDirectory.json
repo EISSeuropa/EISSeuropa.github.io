@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-28T17:26:17+00:00",
-  "count": 84,
+  "generated_at": "2026-09-04T09:36:24+00:00",
+  "count": 85,
   "source": "https://netsec-cost.eu/directory-index.json",
   "members": [
     {
@@ -439,7 +439,7 @@
       "slug": "john-helferich",
       "url": "https://netsec-cost.eu/people/john-helferich.html",
       "orcid": "0000-0002-9085-846X",
-      "role": "WG2 Leader",
+      "role": "WG2 Leader · Science Communication Coordinator Co-Leader",
       "affiliation": "University of Oxford",
       "photo": "https://netsec-cost.eu/assets/images/people/john-helferich.jpg"
     },
@@ -662,6 +662,17 @@
       "role": "Action Chair",
       "affiliation": "LMU Munich",
       "photo": "https://netsec-cost.eu/assets/images/people/moritz-weiss.jpg"
+    },
+    {
+      "name": "Dr Mykhailo Mosora",
+      "name_key": "mykhailo mosora",
+      "aliases": [],
+      "slug": "mykhailo-mosora",
+      "url": "https://netsec-cost.eu/people/mykhailo-mosora.html",
+      "orcid": "0000-0002-5990-9687",
+      "role": null,
+      "affiliation": "Carpathian Institute of Analytics \"FrankoLytics\"",
+      "photo": "https://netsec-cost.eu/assets/images/people/mykhailo-mosora.jpg"
     },
     {
       "name": "Dr Niklas Karlén",
