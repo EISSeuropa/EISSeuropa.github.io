@@ -433,6 +433,12 @@
     "letter": "R",
     "works": [
       {
+        "title": "A Few Good Women? Gendered Socialization and Norms of Civilian Protection in United States Military Training",
+        "year": 2026,
+        "journal": "Perspectives on Politics",
+        "doi": "https://doi.org/10.1017/S1537592726105908"
+      },
+      {
         "title": "Rituals without Rapprochement? Managing Hostility at the Tripartite Meetings in the United Nations Mission in Lebanon",
         "year": 2026,
         "journal": "Global Studies Quarterly",
@@ -455,12 +461,6 @@
         "year": 2023,
         "journal": "The Journal of Imperial and Commonwealth History",
         "doi": "https://doi.org/10.1080/03086534.2022.2084937"
-      },
-      {
-        "title": "Meaning-Making in Peacekeeping Missions: Mandate interpretation and multinational collaboration in the UN mission in Mali",
-        "year": 2023,
-        "journal": null,
-        "doi": "https://doi.org/10.61880/MCFN7493"
       }
     ]
   },
