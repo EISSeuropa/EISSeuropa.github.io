@@ -223,7 +223,7 @@ src/2022.njk:74 displays /assets/images/hertie-logo-4c-en.svg in a figure capped
 
 #### `print-01` — Conference photo galleries print in full, wasting pages of colour ink
 **Dimension:** Print & reduced-motion  
-**Fix path:** `/Users/NewArthur/Documents/GitHub/EISSeuropa.github.io/.claude/worktrees/ecstatic-merkle-6867ff/src/assets/css/site.css`
+**Fix path:** `src/assets/css/site.css`
 
 The print block in site.css (lines 4949-5160) is explicitly target-narrow on /YYYY conference pages (comment at 4946-4948) and deliberately hides ink-heavy non-text content there: it hides `.film` (line 5009, "video has no place on paper") and uses `#programme ~ *` (line 5016) to drop everything after the programme grid. But `.photo-gallery` (defined at site.css:1763) is never hidden or constrained in the print block. On four conference pages the gallery sits in the DOM BEFORE the `#programme` section, so the `#programme ~ *` sibling rule does not reach it and the full grid of 3:2 cover-cropped photos prints: 2019 (10 imgs), 2021 (10 imgs), 2022 (4 imgs), 2025 (9 imgs). JPW2019 and NDC also have galleries but escape only by accident of ordering (their gallery falls after `#programme`, so it is hidden) — not by any rule, exactly the sibling-coverage trap CLAUDE.md §14 warns about. A printed conference programme therefore opens with several pages of full-size photographs before the timetable. Fix: add `.photo-gallery` (or `section:has(.photo-gallery)`) to the `display: none !important` list in the print block alongside `.film`, so galleries are hidden on paper regardless of DOM order.
 
