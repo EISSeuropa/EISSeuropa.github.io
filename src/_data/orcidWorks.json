@@ -7,6 +7,12 @@
     "letter": "C",
     "works": [
       {
+        "title": "Crossing the Valley of Death: Why Some EU Technology Initiatives Fail Before Operationalisation",
+        "year": 2026,
+        "journal": "JCMS: Journal of Common Market Studies",
+        "doi": "https://doi.org/10.1111/jcms.70158"
+      },
+      {
         "title": "European cloud computing policy: failing in Europe to succeed nationally?",
         "year": 2026,
         "journal": "West European Politics",
@@ -29,12 +35,6 @@
         "year": 2025,
         "journal": "Contemporary Security Policy",
         "doi": "https://doi.org/10.1080/13523260.2025.2553654"
-      },
-      {
-        "title": "Shifting Grounds? On the Need to Rethink Europe’s AI Ambitions and Competitiveness",
-        "year": 2025,
-        "journal": null,
-        "doi": null
       }
     ]
   },
