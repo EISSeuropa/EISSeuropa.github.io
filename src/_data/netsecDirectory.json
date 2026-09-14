@@ -1,8 +1,19 @@
 {
-  "generated_at": "2026-09-04T09:36:24+00:00",
-  "count": 85,
+  "generated_at": "2026-09-12T06:40:02+00:00",
+  "count": 92,
   "source": "https://netsec-cost.eu/directory-index.json",
   "members": [
+    {
+      "name": "Mr Adam Hanzel",
+      "name_key": "adam hanzel",
+      "aliases": [],
+      "slug": "adam-hanzel",
+      "url": "https://netsec-cost.eu/people/adam-hanzel.html",
+      "orcid": "0000-0002-4602-6199",
+      "role": null,
+      "affiliation": "Metropolitan University Prague",
+      "photo": null
+    },
     {
       "name": "Dr Alexander Lanoszka",
       "name_key": "alexander lanoszka",
@@ -356,6 +367,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/giulia-biselli.jpg"
     },
     {
+      "name": "Dr Henrique Garbino",
+      "name_key": "henrique garbino",
+      "aliases": [],
+      "slug": "henrique-garbino",
+      "url": "https://netsec-cost.eu/people/henrique-garbino.html",
+      "orcid": "0000-0002-2544-8683",
+      "role": "Management Committee · Sweden",
+      "affiliation": "Swedish Defence University",
+      "photo": "https://netsec-cost.eu/assets/images/people/henrique-garbino.jpg"
+    },
+    {
       "name": "Prof. Huw Bennett",
       "name_key": "huw bennett",
       "aliases": [],
@@ -409,6 +431,17 @@
       "role": null,
       "affiliation": "ETH Zürich, Center for Security Studies",
       "photo": "https://netsec-cost.eu/assets/images/people/ivan-zaccagnini.jpg"
+    },
+    {
+      "name": "Mr Jacob Grech",
+      "name_key": "jacob grech",
+      "aliases": [],
+      "slug": "jacob-grech",
+      "url": "https://netsec-cost.eu/people/jacob-grech.html",
+      "orcid": null,
+      "role": null,
+      "affiliation": "European University Institute",
+      "photo": null
     },
     {
       "name": "Prof. Joe Burton",
@@ -488,6 +521,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/kire-babanoski.jpg"
     },
     {
+      "name": "Dr Laura Íñigo Álvarez",
+      "name_key": "laura alvarez",
+      "aliases": [],
+      "slug": "laura-inigo-alvarez",
+      "url": "https://netsec-cost.eu/people/laura-inigo-alvarez.html",
+      "orcid": null,
+      "role": "Management Committee · Portugal",
+      "affiliation": "Universidade Nova de Lisboa",
+      "photo": "https://netsec-cost.eu/assets/images/people/laura-inigo-alvarez.jpg"
+    },
+    {
       "name": "Ms Laura Lisboa",
       "name_key": "laura lisboa",
       "aliases": [],
@@ -541,6 +585,17 @@
       "role": null,
       "affiliation": "IFSH",
       "photo": "https://netsec-cost.eu/assets/images/people/lucian-bumeder.jpg"
+    },
+    {
+      "name": "Dr Ludovica Castelli",
+      "name_key": "ludovica castelli",
+      "aliases": [],
+      "slug": "ludovica-castelli",
+      "url": "https://netsec-cost.eu/people/ludovica-castelli.html",
+      "orcid": null,
+      "role": null,
+      "affiliation": "Harvard's Belfer Center",
+      "photo": "https://netsec-cost.eu/assets/images/people/ludovica-castelli.jpg"
     },
     {
       "name": "Mr Marco Cifra",
@@ -752,6 +807,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/pieter-zhao.jpg"
     },
     {
+      "name": "Dr Rafael Hurtado-Valdivieso",
+      "name_key": "rafael valdivieso",
+      "aliases": [],
+      "slug": "rafael-hurtado-valdivieso",
+      "url": "https://netsec-cost.eu/people/rafael-hurtado-valdivieso.html",
+      "orcid": "0009-0000-8677-7598",
+      "role": null,
+      "affiliation": "Colombian Navy",
+      "photo": "https://netsec-cost.eu/assets/images/people/rafael-hurtado-valdivieso.jpg"
+    },
+    {
       "name": "Dr Revecca Pedi",
       "name_key": "revecca pedi",
       "aliases": [],
@@ -761,6 +827,17 @@
       "role": "WG4 Leader · Management Committee · Greece",
       "affiliation": "University of Macedonia",
       "photo": "https://netsec-cost.eu/assets/images/people/revecca-pedi.jpg"
+    },
+    {
+      "name": "Mr Richard Skalt",
+      "name_key": "richard skalt",
+      "aliases": [],
+      "slug": "richard-skalt",
+      "url": "https://netsec-cost.eu/people/richard-skalt.html",
+      "orcid": "0009-0001-0492-0889",
+      "role": null,
+      "affiliation": "TÜV SÜD",
+      "photo": "https://netsec-cost.eu/assets/images/people/richard-skalt.jpg"
     },
     {
       "name": "Ms Rusudan Zabakhidze",
