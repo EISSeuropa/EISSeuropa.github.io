@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-12T06:40:02+00:00",
-  "count": 92,
+  "generated_at": "2026-09-19T09:28:29+00:00",
+  "count": 98,
   "source": "https://netsec-cost.eu/directory-index.json",
   "members": [
     {
@@ -34,6 +34,17 @@
       "orcid": null,
       "role": null,
       "affiliation": "Swedish Defence University",
+      "photo": null
+    },
+    {
+      "name": "Dr Aliaksei Kazharski",
+      "name_key": "aliaksei kazharski",
+      "aliases": [],
+      "slug": "aliaksei-kazharski",
+      "url": "https://netsec-cost.eu/people/aliaksei-kazharski.html",
+      "orcid": "0000-0002-9782-7746",
+      "role": null,
+      "affiliation": "Charles University",
       "photo": null
     },
     {
@@ -92,6 +103,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/anna-seliverstova.jpg"
     },
     {
+      "name": "Ms Antonia-Laura Pup",
+      "name_key": "antonia pup",
+      "aliases": [],
+      "slug": "antonia-laura-pup",
+      "url": "https://netsec-cost.eu/people/antonia-laura-pup.html",
+      "orcid": null,
+      "role": null,
+      "affiliation": "European University Institute",
+      "photo": "https://netsec-cost.eu/assets/images/people/antonia-laura-pup.jpg"
+    },
+    {
       "name": "Mr Archishman Goswami",
       "name_key": "archishman goswami",
       "aliases": [],
@@ -134,6 +156,17 @@
       "role": null,
       "affiliation": "Ankara University & Mersin University",
       "photo": "https://netsec-cost.eu/assets/images/people/avnihan-k-r-s-k.jpg"
+    },
+    {
+      "name": "Dr Betul Dogan Akkas",
+      "name_key": "betul akkas",
+      "aliases": [],
+      "slug": "betul-dogan-akkas",
+      "url": "https://netsec-cost.eu/people/betul-dogan-akkas.html",
+      "orcid": "0000-0001-6933-8139",
+      "role": null,
+      "affiliation": "Ankara University",
+      "photo": "https://netsec-cost.eu/assets/images/people/betul-dogan-akkas.jpg"
     },
     {
       "name": "Carla Sofia Ferreira Fernandes",
@@ -354,6 +387,17 @@
       "role": null,
       "affiliation": "Bar Ilan and UC Berkeley",
       "photo": "https://netsec-cost.eu/assets/images/people/gil-baram.jpg"
+    },
+    {
+      "name": "Prof. Giray SADIK",
+      "name_key": "giray sadik",
+      "aliases": [],
+      "slug": "giray-sadik",
+      "url": "https://netsec-cost.eu/people/giray-sadik.html",
+      "orcid": null,
+      "role": null,
+      "affiliation": "Ankara Yildirim Beyazit University (AYBU)",
+      "photo": "https://netsec-cost.eu/assets/images/people/giray-sadik.jpg"
     },
     {
       "name": "Ms Giulia Biselli",
@@ -598,6 +642,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/ludovica-castelli.jpg"
     },
     {
+      "name": "Mr Mahmoud Javadi",
+      "name_key": "mahmoud javadi",
+      "aliases": [],
+      "slug": "mahmoud-javadi",
+      "url": "https://netsec-cost.eu/people/mahmoud-javadi.html",
+      "orcid": "0000-0003-1047-8422",
+      "role": null,
+      "affiliation": "Vrije Universiteit Brussel (VUB)",
+      "photo": "https://netsec-cost.eu/assets/images/people/mahmoud-javadi.jpg"
+    },
+    {
       "name": "Mr Marco Cifra",
       "name_key": "marco cifra",
       "aliases": [],
@@ -783,6 +838,17 @@
       "role": "Management Committee · Poland",
       "affiliation": "Akademia WSB, WSB University",
       "photo": "https://netsec-cost.eu/assets/images/people/paulina-polko.jpg"
+    },
+    {
+      "name": "Mr Pavle Nedić",
+      "name_key": "pavle nedic",
+      "aliases": [],
+      "slug": "pavle-nedic",
+      "url": "https://netsec-cost.eu/people/pavle-nedic.html",
+      "orcid": "0000-0002-7055-0628",
+      "role": null,
+      "affiliation": "Institute of International Politics and Economics",
+      "photo": "https://netsec-cost.eu/assets/images/people/pavle-nedic.jpg"
     },
     {
       "name": "Prof. Pavlosioannis Koktsidis",
