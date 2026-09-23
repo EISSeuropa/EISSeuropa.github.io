@@ -176,7 +176,7 @@ const locales = {
       colourBrandName: "Brand blue",
       colourBrandUse: "Wordmark and tagline",
       typographyHeading: "Typography",
-      typographyLead: "The site sets its copy in Inter, a humanist sans-serif chosen for clarity on screen at small sizes. Where Inter is unavailable, fall back to the system sans-serif stack.",
+      typographyLead: "The site sets its copy in Inter, a humanist sans-serif. Where Inter is unavailable, fall back to the system sans-serif stack.",
       doDontHeading: "Do and don't",
       doHeading: "Please do",
       dontHeading: "Please don't",
@@ -303,7 +303,7 @@ const locales = {
       addToCalendar: "Add to calendar",
       lastSynced: "Last refreshed",
       noEventsTitle: "No upcoming events on Indico yet",
-      noEventsBody: "When EISS, NetSec, or partner institutions publish events through indico.eiss-europa.com, they'll appear here automatically.",
+      noEventsBody: "New events from EISS, NetSec and partner institutions will be listed here.",
     },
 
     pastEvents: {
@@ -322,7 +322,7 @@ const locales = {
       // shared across locales). These keys localise the framing + the
       // dual-affiliation tag under each person.
       leadEyebrow: "EISS people leading NetSec",
-      leadIntro: "The two organisations share more than a founding link. Almost everyone steering NetSec also sits on the EISS board, holding a role in each.",
+      leadIntro: "Almost everyone steering NetSec also sits on the EISS board.",
       dualBoard: "EISS board",
       dualSupport: "EISS support team",
       officerRoles: {
@@ -388,7 +388,7 @@ const locales = {
       // always live; this block is the archival / printable artefact.
       pdfHeading: "Final programme (printable PDF)",
       pdfHeadingDraft: "Working programme (printable PDF, subject to change)",
-      pdfDescription: "A polished, print-friendly version of the programme.",
+      pdfDescription: "A printable version of the programme.",
       pdfDescriptionDraft: "A working version of the programme. The live grid above reflects the latest changes.",
       pdfOpen: "Open in new tab",
       pdfDownload: "Download",
@@ -433,7 +433,7 @@ const locales = {
       // someone hits a typo'd URL or follows a stale link.
       eyebrow: "404",
       heading: "We couldn't find that page",
-      body: "The page you tried to reach doesn't exist, or it moved during the migration off Mobirise. The links below cover most of what people look for.",
+      body: "The page you tried to reach doesn't exist, or it has moved. The links below cover most of what people look for.",
       backHome: "Back to the home page",
       tryInstead: "Try one of these instead",
       quickLinks: {
@@ -503,7 +503,7 @@ const locales = {
       backWhole: "The whole Atlas",
       beta: "Beta",
       yearRangeJoiner: "to",
-      ledeWhole: "The {link} as a structure rather than a catalogue. Every paper presented at an EISS conference or workshop since 2017 sits here as a dot, drawn toward the research themes it touches, so the clusters and the bridges between them become visible.",
+      ledeWhole: "The {link} drawn as a map. Every paper presented at an EISS conference or workshop since 2017 is a dot, pulled toward the research themes it touches. Papers that share themes cluster together, and papers that span two themes sit between them.",
       ledeLinkText: "European Security Studies Anthology",
       ledeTheme: "{count} papers on {lower}, presented at EISS conferences and workshops from {range} by {authors} authors. They sit here inside the whole {link}, so you can see which other themes this one reaches into.",
       welcomeAria: "First time on the Atlas",
@@ -628,7 +628,7 @@ const locales = {
       matrixSummary: "How the research themes overlap ({used} of {all} pairs)",
       matrixCell: "{a} and {b}, {n} {noun}",
       matrixSelf: "{name}, {n} {noun} in total",
-      matrixNote: "Each cell counts the papers both themes tag, and opens them on the map. The diagonal is a theme's own total. A theme is inferred from the panel or the abstract, so a pair reads as two fields meeting in one room rather than as a claim about any one paper's subject.",
+      matrixNote: "Each cell counts the papers both themes tag, and opens them on the map. The diagonal is a theme's own total. A theme is inferred from the panel or the abstract, so a pair shows where two fields met, not what any one paper is about.",
       // The same pairs ranked, which is the readable shape on a phone. Only
       // one of the two is in the accessibility tree at a time (site.css).
       matrixRankedAria: "Theme pairs, most shared papers first",
@@ -689,7 +689,7 @@ const locales = {
       // from the data behind it.
       earlyAccessBadge: "Still filling in",
       editionRangeJoiner: "to",
-      earlyAccessBody: "The {in} editions are all but complete, at {min}% abstract coverage or better, with citation details and a link to the published version where there is one. The {out} editions are still filling in, {missing} abstracts of {eligible} outstanding. Found a gap or a mistake?",
+      earlyAccessBody: "The {in} editions are all but complete, at {min}% abstract coverage or better, with citation details and a link to the published version where there is one. The {out} editions are still filling in: {missing} of {eligible} abstracts are outstanding. Found a gap or a mistake?",
       earlyAccessCta: "Let us know",
       // Abstract-coverage stat + the per-year breakdown beneath the header.
       // {a}/{b} are substituted in the template (abstracts on file / papers
@@ -697,7 +697,7 @@ const locales = {
       statAbstracts: "abstracts on file",
       coverageTip: "{a} of {b} eligible papers carry an abstract. Roundtables, keynotes, posters and workshop sessions are not counted.",
       coverageSummary: "Abstract coverage by year",
-      coverageNote: "Coverage is highest for recent editions, which sync from Indico. Earlier years are being recovered edition by edition.",
+      coverageNote: "Coverage is highest for recent editions. Earlier years are being recovered edition by edition.",
       // Renewal and collaboration by edition (#1566). The rows come from
       // corpusRenewal.js, so only this chrome is translated.
       renewalSummary: "Renewal and collaboration by edition",
@@ -815,9 +815,9 @@ const locales = {
       networkIntro: "The network's own outputs: the book series, policy briefs, white papers, and survey results. This catalogue is being assembled.",
       globalRisksLabel: "Global Risks to the EU — survey results",
       membersHeading: "Recent publications by our members",
-      membersIntro: "Distinct from the network's own publications above, these are recent works our board and community members have published in their own right, drawn live from their public ORCID records.",
+      membersIntro: "Distinct from the network's own publications above, these are recent works our board and community members have published in their own right.",
       membersAll: "See all member publications",
-      membersPageLead: "Recent works our board and community members have published in their own right, drawn automatically from their public ORCID records. These are personal publications, distinct from the papers presented at EISS conferences, which live in the Anthology.",
+      membersPageLead: "Recent works our board and community members have published in their own right. Papers presented at EISS conferences are in the Anthology.",
       filterFind: "Find",
       filterPlaceholder: "Author, title or journal",
       filterYear: "Year",
@@ -827,7 +827,7 @@ const locales = {
       filterOne: "Showing 1 publication.",
       filterMany: "Showing {n} publications.",
       stats: "{works} publications · {members} members",
-      sourceNote: "Pulled from members' public ORCID records and refreshed weekly. Members who add their ORCID iD to the directory form appear here automatically.",
+      sourceNote: "From members' public ORCID records. Members who add their ORCID iD to the directory form are listed here.",
       empty: "No member works to show yet.",
     },
 
@@ -993,7 +993,7 @@ const locales = {
       colourBrandName: "Bleu de marque",
       colourBrandUse: "Logotype et signature",
       typographyHeading: "Typographie",
-      typographyLead: "Le site compose son texte en Inter, une sans-serif humaniste choisie pour sa lisibilité à l’écran en petites tailles. Là où Inter n’est pas disponible, on revient à la pile sans-serif du système.",
+      typographyLead: "Le site compose son texte en Inter, une sans-serif humaniste. Là où Inter n’est pas disponible, on revient à la pile sans-serif du système.",
       doDontHeading: "À faire et à éviter",
       doHeading: "À faire",
       dontHeading: "À éviter",
@@ -1102,7 +1102,7 @@ const locales = {
       addToCalendar: "Ajouter au calendrier",
       lastSynced: "Dernière mise à jour",
       noEventsTitle: "Pas encore d'événements à venir sur Indico",
-      noEventsBody: "Lorsque EISS, NetSec ou nos institutions partenaires publient des événements via indico.eiss-europa.com, ils apparaîtront ici automatiquement.",
+      noEventsBody: "Les prochains événements d'EISS, de NetSec et des institutions partenaires seront annoncés ici.",
     },
 
     pastEvents: {
@@ -1113,7 +1113,7 @@ const locales = {
 
     netsec: {
       leadEyebrow: "Des membres d'EISS à la direction de NetSec",
-      leadIntro: "Les deux organisations partagent bien plus qu'un lien fondateur. Presque toutes les personnes qui pilotent NetSec siègent aussi au bureau d'EISS, avec une fonction dans chacune.",
+      leadIntro: "Presque toutes les personnes qui pilotent NetSec siègent aussi au bureau d'EISS.",
       dualBoard: "Bureau d'EISS",
       dualSupport: "Équipe de soutien d'EISS",
       officerRoles: {
@@ -1161,7 +1161,7 @@ const locales = {
       livestreamNoteCta: "Suivre en ligne sur Indico",
       pdfHeading: "Programme final — PDF imprimable",
       pdfHeadingDraft: "Programme provisoire — PDF imprimable (susceptible de changer)",
-      pdfDescription: "Une version mise en page et imprimable du programme.",
+      pdfDescription: "Une version imprimable du programme.",
       pdfDescriptionDraft: "Une version provisoire du programme — la grille en direct ci-dessus reflète les dernières modifications.",
       pdfOpen: "Ouvrir dans un nouvel onglet",
       pdfDownload: "Télécharger",
@@ -1193,7 +1193,7 @@ const locales = {
     notFound: {
       eyebrow: "404",
       heading: "Page introuvable",
-      body: "La page que vous cherchez n'existe pas, ou a été déplacée lors de la migration depuis Mobirise. Les liens ci-dessous couvrent la plupart des destinations recherchées.",
+      body: "La page que vous cherchez n'existe pas, ou a été déplacée. Les liens ci-dessous couvrent la plupart des destinations recherchées.",
       backHome: "Retour à l'accueil",
       tryInstead: "Essayez plutôt l'une de ces pages",
       quickLinks: {
@@ -1246,7 +1246,7 @@ const locales = {
       backWhole: "L'Atlas complet",
       beta: "Bêta",
       yearRangeJoiner: "à",
-      ledeWhole: "L'{link} vue comme une structure plutôt que comme un catalogue. Chaque communication présentée lors d'une conférence ou d'un atelier de l'EISS depuis 2017 y figure sous forme de point, attiré vers les thèmes de recherche qu'elle aborde, ce qui fait apparaître les regroupements et les ponts entre eux.",
+      ledeWhole: "L'{link} dessinée comme une carte. Chaque communication présentée lors d'une conférence ou d'un atelier de l'EISS depuis 2017 est un point, attiré vers les thèmes de recherche qu'elle aborde. Les communications qui partagent des thèmes se regroupent, et celles qui relient deux thèmes se placent entre eux.",
       ledeLinkText: "Anthologie des études de sécurité européennes",
       ledeTheme: "{count} communications sur {lower}, présentées lors des conférences et ateliers de l'EISS de {range} par {authors} auteurs. Elles s'inscrivent ici dans l'ensemble de l'{link}, ce qui permet de voir vers quels autres thèmes celui-ci s'étend.",
       welcomeAria: "Première visite de l'Atlas",
@@ -1368,7 +1368,7 @@ const locales = {
       matrixSummary: "Comment les thèmes de recherche se recoupent ({used} paires sur {all})",
       matrixCell: "{a} et {b}, {n} {noun}",
       matrixSelf: "{name}, {n} {noun} au total",
-      matrixNote: "Chaque case compte les communications rattachées aux deux thèmes à la fois et les ouvre sur la carte. La diagonale indique le total propre à chaque thème. Les thèmes sont déduits du panel ou du résumé : une paire signale donc deux champs réunis dans une même salle, et non un jugement sur le sujet d'une communication.",
+      matrixNote: "Chaque case compte les communications rattachées aux deux thèmes à la fois et les ouvre sur la carte. La diagonale indique le total propre à chaque thème. Les thèmes sont déduits du panel ou du résumé : une paire indique donc où deux champs se sont rencontrés, et non le sujet d'une communication.",
       matrixRankedAria: "Paires de thèmes, des plus partagées aux moins partagées",
       themesNavVocab: "Ces dix-sept thèmes sont publiés sous forme de vocabulaire citable.",
       vocabConcept: "Identifiant permanent",
@@ -1412,12 +1412,12 @@ const locales = {
       initiativeLink: "Parcourez chaque intervenant et chaque communication dans l'Anthologie",
       earlyAccessBadge: "En cours de complétion",
       editionRangeJoiner: "à",
-      earlyAccessBody: "Les éditions {in} sont quasi complètes : au moins {min} % des communications concernées ont un résumé, avec les références de citation et un lien vers la version publiée lorsqu'elle existe. Les éditions {out} sont encore en cours de complétion, {missing} résumés manquants sur {eligible}. Les pages individuelles des communications sont consultables en anglais. Vous avez repéré un manque ou une erreur ?",
+      earlyAccessBody: "Les éditions {in} sont quasi complètes : au moins {min} % des communications concernées ont un résumé, avec les références de citation et un lien vers la version publiée lorsqu'elle existe. Les éditions {out} sont encore en cours de complétion : il manque {missing} résumés sur {eligible}. Les pages individuelles des communications sont consultables en anglais. Vous avez repéré un manque ou une erreur ?",
       earlyAccessCta: "Signalez-le-nous",
       statAbstracts: "résumés disponibles",
       coverageTip: "{a} des {b} communications éligibles comportent un résumé. Les tables rondes, les conférences plénières, les sessions de posters et les ateliers ne sont pas comptabilisés.",
       coverageSummary: "Couverture des résumés par année",
-      coverageNote: "La couverture est la plus complète pour les éditions récentes, synchronisées depuis Indico. Les années antérieures sont récupérées édition après édition.",
+      coverageNote: "La couverture est la plus complète pour les éditions récentes. Les années antérieures sont récupérées édition après édition.",
       renewalSummary: "Renouvellement et collaboration par édition",
       renewalColEdition: "Édition",
       renewalColPapers: "Communications",
@@ -1513,9 +1513,9 @@ const locales = {
       networkIntro: "Les productions propres du réseau : la collection d'ouvrages, des notes d'analyse, des livres blancs et des résultats d'enquêtes. Ce catalogue est en cours de constitution.",
       globalRisksLabel: "Risques globaux pour l'UE — résultats de l'enquête",
       membersHeading: "Publications récentes de nos membres",
-      membersIntro: "Distinctes des publications propres du réseau ci-dessus, voici des travaux récents que les membres de notre bureau et de notre communauté ont publiés à titre personnel, tirés en direct de leurs fiches ORCID publiques.",
+      membersIntro: "Distinctes des publications propres du réseau ci-dessus, voici des travaux récents que les membres de notre bureau et de notre communauté ont publiés à titre personnel.",
       membersAll: "Voir toutes les publications des membres",
-      membersPageLead: "Travaux récents que les membres de notre bureau et de notre communauté ont publiés à titre personnel, tirés automatiquement de leurs fiches ORCID publiques. Ce sont des publications personnelles, distinctes des communications présentées aux conférences de l'EISS, réunies dans l'Anthologie.",
+      membersPageLead: "Travaux récents que les membres de notre bureau et de notre communauté ont publiés à titre personnel. Les communications présentées aux conférences de l'EISS figurent dans l'Anthologie.",
       filterFind: "Rechercher",
       filterPlaceholder: "Auteur, titre ou revue",
       filterYear: "Année",
@@ -1525,7 +1525,7 @@ const locales = {
       filterOne: "1 publication affichée.",
       filterMany: "{n} publications affichées.",
       stats: "{works} publications · {members} membres",
-      sourceNote: "Extrait des fiches ORCID publiques des membres et actualisé chaque semaine. Les membres qui ajoutent leur identifiant ORCID au formulaire du répertoire apparaissent ici automatiquement.",
+      sourceNote: "D'après les fiches ORCID publiques des membres. Les membres qui ajoutent leur identifiant ORCID au formulaire du répertoire figurent ici.",
       empty: "Aucune publication de membre à afficher pour l'instant.",
     },
 
@@ -1688,7 +1688,7 @@ const locales = {
       colourBrandName: "Markenblau",
       colourBrandUse: "Schriftzug und Claim",
       typographyHeading: "Typografie",
-      typographyLead: "Die Website setzt ihren Text in Inter, einer humanistischen serifenlosen Schrift, die für die Lesbarkeit am Bildschirm in kleinen Größen gewählt wurde. Wo Inter nicht verfügbar ist, greift der serifenlose System-Schriftstapel.",
+      typographyLead: "Die Website setzt ihren Text in Inter, einer humanistischen serifenlosen Schrift. Wo Inter nicht verfügbar ist, greift der serifenlose System-Schriftstapel.",
       doDontHeading: "Bitte beachten",
       doHeading: "Bitte tun",
       dontHeading: "Bitte vermeiden",
@@ -1797,7 +1797,7 @@ const locales = {
       addToCalendar: "Zum Kalender hinzufügen",
       lastSynced: "Zuletzt aktualisiert",
       noEventsTitle: "Noch keine kommenden Veranstaltungen auf Indico",
-      noEventsBody: "Wenn EISS, NetSec oder Partnerinstitutionen Veranstaltungen über indico.eiss-europa.com veröffentlichen, erscheinen sie hier automatisch.",
+      noEventsBody: "Neue Veranstaltungen von EISS, NetSec und Partnerinstitutionen werden hier angekündigt.",
     },
 
     pastEvents: {
@@ -1808,7 +1808,7 @@ const locales = {
 
     netsec: {
       leadEyebrow: "EISS-Mitglieder in der NetSec-Leitung",
-      leadIntro: "Die beiden Organisationen verbindet mehr als die gemeinsame Gründung. Fast alle, die NetSec leiten, sitzen auch im EISS-Vorstand und üben in beiden eine Funktion aus.",
+      leadIntro: "Fast alle, die NetSec leiten, sitzen auch im EISS-Vorstand.",
       dualBoard: "EISS-Vorstand",
       dualSupport: "EISS-Unterstützungsteam",
       officerRoles: {
@@ -1856,7 +1856,7 @@ const locales = {
       livestreamNoteCta: "Online auf Indico teilnehmen",
       pdfHeading: "Endgültiges Programm — druckbares PDF",
       pdfHeadingDraft: "Arbeitsversion des Programms — druckbares PDF (Änderungen vorbehalten)",
-      pdfDescription: "Eine gestaltete und druckfreundliche Version des Programms.",
+      pdfDescription: "Eine druckbare Version des Programms.",
       pdfDescriptionDraft: "Eine Arbeitsversion des Programms — das Live-Raster oben zeigt den aktuellen Stand.",
       pdfOpen: "In neuem Tab öffnen",
       pdfDownload: "Herunterladen",
@@ -1888,7 +1888,7 @@ const locales = {
     notFound: {
       eyebrow: "404",
       heading: "Seite nicht gefunden",
-      body: "Die gesuchte Seite existiert nicht oder wurde während der Migration von Mobirise verschoben. Die folgenden Links decken die meisten Ziele ab.",
+      body: "Die gesuchte Seite existiert nicht oder wurde verschoben. Die folgenden Links decken die meisten Ziele ab.",
       backHome: "Zurück zur Startseite",
       tryInstead: "Versuchen Sie stattdessen eine dieser Seiten",
       quickLinks: {
@@ -1941,7 +1941,7 @@ const locales = {
       backWhole: "Der ganze Atlas",
       beta: "Beta",
       yearRangeJoiner: "bis",
-      ledeWhole: "Die {link} als Struktur statt als Katalog. Jeder Beitrag, der seit 2017 auf einer EISS-Konferenz oder einem Workshop vorgestellt wurde, steht hier als Punkt, gezogen zu den Forschungsthemen, die er berührt, sodass die Häufungen und die Brücken zwischen ihnen sichtbar werden.",
+      ledeWhole: "Die {link} als Karte gezeichnet. Jeder Beitrag, der seit 2017 auf einer EISS-Konferenz oder einem Workshop vorgestellt wurde, ist ein Punkt, gezogen zu den Forschungsthemen, die er berührt. Beiträge mit gemeinsamen Themen bilden Häufungen. Beiträge, die zwei Themen verbinden, liegen dazwischen.",
       ledeLinkText: "Anthologie der europäischen Sicherheitsstudien",
       ledeTheme: "{count} Beiträge zu {lower}, vorgestellt auf EISS-Konferenzen und -Workshops von {range} von {authors} Autorinnen und Autoren. Sie stehen hier im Zusammenhang der gesamten {link}, sodass sichtbar wird, in welche anderen Themen dieses hineinreicht.",
       welcomeAria: "Zum ersten Mal im Atlas",
@@ -2063,7 +2063,7 @@ const locales = {
       matrixSummary: "Wie sich die Forschungsthemen überschneiden ({used} von {all} Paaren)",
       matrixCell: "{a} und {b}, {n} {noun}",
       matrixSelf: "{name}, {n} {noun} insgesamt",
-      matrixNote: "Jede Zelle zählt die Beiträge, die beide Themen zugleich tragen, und öffnet sie auf der Karte. Die Diagonale nennt die Gesamtzahl eines Themas. Themen werden aus dem Panel oder dem Abstract abgeleitet: Ein Paar zeigt also, dass sich zwei Felder in einem Raum begegnet sind, und ist keine Aussage über das Thema eines einzelnen Beitrags.",
+      matrixNote: "Jede Zelle zählt die Beiträge, die beide Themen zugleich tragen, und öffnet sie auf der Karte. Die Diagonale nennt die Gesamtzahl eines Themas. Themen werden aus dem Panel oder dem Abstract abgeleitet: Ein Paar zeigt also, wo sich zwei Felder begegnet sind, nicht das Thema eines einzelnen Beitrags.",
       matrixRankedAria: "Themenpaare, nach gemeinsamen Beiträgen geordnet",
       themesNavVocab: "Diese siebzehn Themen sind als zitierfähiges Vokabular veröffentlicht.",
       vocabConcept: "Dauerhafte Kennung",
@@ -2107,12 +2107,12 @@ const locales = {
       initiativeLink: "Durchsuchen Sie jeden Vortragenden und jeden Beitrag in der Anthologie",
       earlyAccessBadge: "Wird noch ergänzt",
       editionRangeJoiner: "bis",
-      earlyAccessBody: "Die Jahrgänge {in} sind nahezu vollständig: mindestens {min} % der infrage kommenden Beiträge haben ein Abstract, dazu Zitationsangaben und einen Link auf die veröffentlichte Fassung, sofern vorhanden. Die Jahrgänge {out} werden noch ergänzt, {missing} von {eligible} Abstracts fehlen. Die einzelnen Beitragsseiten sind auf Englisch verfügbar. Eine Lücke oder einen Fehler entdeckt?",
+      earlyAccessBody: "Die Jahrgänge {in} sind nahezu vollständig: mindestens {min} % der infrage kommenden Beiträge haben ein Abstract, dazu Zitationsangaben und einen Link auf die veröffentlichte Fassung, sofern vorhanden. Die Jahrgänge {out} werden noch ergänzt: {missing} von {eligible} Abstracts fehlen. Die einzelnen Beitragsseiten sind auf Englisch verfügbar. Eine Lücke oder einen Fehler entdeckt?",
       earlyAccessCta: "Sagen Sie uns Bescheid",
       statAbstracts: "Abstracts vorhanden",
       coverageTip: "{a} von {b} infrage kommenden Beiträgen tragen ein Abstract. Podiumsdiskussionen, Keynotes, Postersessions und Workshops werden nicht mitgezählt.",
       coverageSummary: "Abstract-Abdeckung nach Jahr",
-      coverageNote: "Die Abdeckung ist bei den jüngeren Ausgaben am vollständigsten, die aus Indico synchronisiert werden. Frühere Jahre werden Ausgabe für Ausgabe ergänzt.",
+      coverageNote: "Die Abdeckung ist bei den jüngeren Ausgaben am vollständigsten. Frühere Jahre werden Ausgabe für Ausgabe ergänzt.",
       renewalSummary: "Erneuerung und Zusammenarbeit nach Ausgabe",
       renewalColEdition: "Ausgabe",
       renewalColPapers: "Beiträge",
@@ -2208,9 +2208,9 @@ const locales = {
       networkIntro: "Die eigenen Ergebnisse des Netzwerks: die Buchreihe, Policy Briefs, Weißbücher und Umfrageergebnisse. Dieser Katalog wird derzeit zusammengestellt.",
       globalRisksLabel: "Globale Risiken für die EU — Umfrageergebnisse",
       membersHeading: "Neueste Veröffentlichungen unserer Mitglieder",
-      membersIntro: "Anders als die eigenen Publikationen des Netzwerks oben sind dies neuere Arbeiten, die unsere Vorstands- und Community-Mitglieder in eigenem Namen veröffentlicht haben, live aus ihren öffentlichen ORCID-Datensätzen gezogen.",
+      membersIntro: "Anders als die eigenen Publikationen des Netzwerks oben sind dies neuere Arbeiten, die unsere Vorstands- und Community-Mitglieder in eigenem Namen veröffentlicht haben.",
       membersAll: "Alle Publikationen der Mitglieder ansehen",
-      membersPageLead: "Neuere Arbeiten, die unsere Vorstands- und Community-Mitglieder in eigenem Namen veröffentlicht haben, automatisch aus ihren öffentlichen ORCID-Datensätzen übernommen. Dies sind persönliche Publikationen, getrennt von den auf EISS-Konferenzen vorgestellten Beiträgen, die in der Anthologie versammelt sind.",
+      membersPageLead: "Neuere Arbeiten, die unsere Vorstands- und Community-Mitglieder in eigenem Namen veröffentlicht haben. Die auf EISS-Konferenzen vorgestellten Beiträge stehen in der Anthologie.",
       filterFind: "Suchen",
       filterPlaceholder: "Autor, Titel oder Zeitschrift",
       filterYear: "Jahr",
@@ -2220,7 +2220,7 @@ const locales = {
       filterOne: "1 Veröffentlichung angezeigt.",
       filterMany: "{n} Veröffentlichungen angezeigt.",
       stats: "{works} Veröffentlichungen · {members} Mitglieder",
-      sourceNote: "Aus den öffentlichen ORCID-Datensätzen der Mitglieder gezogen und wöchentlich aktualisiert. Mitglieder, die ihre ORCID-iD im Verzeichnisformular angeben, erscheinen hier automatisch.",
+      sourceNote: "Nach den öffentlichen ORCID-Datensätzen der Mitglieder. Mitglieder, die ihre ORCID-iD im Verzeichnisformular angeben, werden hier aufgeführt.",
       empty: "Noch keine Mitgliederpublikationen anzuzeigen.",
     },
 

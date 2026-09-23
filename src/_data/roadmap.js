@@ -139,9 +139,9 @@ const roadmap = {
             de: "ESSC 2026 — Stockholm",
           },
           desc: {
-            en: "The 9th Annual European Security Studies Conference at Stockholm University. The flagship gathering of the year; the website is the canonical entry point for new arrivals.",
-            fr: "La 9e Conférence annuelle d’études de sécurité européenne à l’Université de Stockholm. Le grand rendez-vous de l’année ; le site web en est le point d’entrée de référence.",
-            de: "Die 9. Jährliche Konferenz für Europäische Sicherheitsstudien an der Universität Stockholm. Das wichtigste Treffen des Jahres; die Website ist der zentrale Einstiegspunkt für Neuankömmlinge.",
+            en: "The 9th Annual European Security Studies Conference at Stockholm University. The flagship gathering of the year.",
+            fr: "La 9e Conférence annuelle d’études de sécurité européenne à l’Université de Stockholm. Le grand rendez-vous de l’année.",
+            de: "Die 9. Jährliche Konferenz für Europäische Sicherheitsstudien an der Universität Stockholm. Das wichtigste Treffen des Jahres.",
           },
         },
         {
