@@ -105,6 +105,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- The home page and the Activities page no longer contradict each other on membership. The home page said members get exclusive access to online and hybrid events, while Activities lists network events as free and open to all. Membership covers members' events, the seminars and book talks hosted by the community, and both pages now say so, in all three languages. Closes [#1698](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1698).
 - The conference film can be paused from the keyboard, and says so. The control was the video itself, dressed up with a role it is not allowed to carry, and the real button beside it disappeared while the film played, which is exactly when a pause control is wanted. The button is the control now, named "Play the film" or "Pause the film" as the state changes, and it stays reachable while the film runs.
 - The Atlas "Clear" button moved out of the filters disclosure and up beside "Copy link to this view". It was a button inside the control that opens the panel, so a press had to fight the disclosure for the click, and it vanished whenever the panel was collapsed. It now sits with the other action on the current view and stays put.
 - Links inside muted paragraphs are underlined. The link colour is 1.76:1 against the grey text around it, so colour alone was not telling a reader where the links were.
