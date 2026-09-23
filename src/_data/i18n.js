@@ -313,7 +313,7 @@ const locales = {
       // the refresh is tracked in issue #401.
       sectionEyebrow: "Past events",
       sectionHeading: "Members' events",
-      sectionLead: "A record of recent members' events, the seminars and book talks proposed and hosted by the EISS community.",
+      sectionLead: "Recent members' events: seminars and book talks proposed and hosted by the EISS community, open to EISS members.",
     },
 
     netsec: {
@@ -1108,7 +1108,7 @@ const locales = {
     pastEvents: {
       sectionEyebrow: "Événements passés",
       sectionHeading: "Événements des membres",
-      sectionLead: "Un aperçu des événements récents des membres, séminaires et présentations d'ouvrages proposés et organisés par la communauté EISS.",
+      sectionLead: "Événements récents des membres : séminaires et présentations d'ouvrages proposés et organisés par la communauté EISS, ouverts aux membres de l'EISS.",
     },
 
     netsec: {
@@ -1803,7 +1803,7 @@ const locales = {
     pastEvents: {
       sectionEyebrow: "Vergangene Veranstaltungen",
       sectionHeading: "Veranstaltungen der Mitglieder",
-      sectionLead: "Ein Rückblick auf die jüngsten Veranstaltungen der Mitglieder, Seminare und Buchvorstellungen, die von der EISS-Gemeinschaft vorgeschlagen und ausgerichtet wurden.",
+      sectionLead: "Jüngste Mitgliederveranstaltungen: Seminare und Buchvorstellungen, von der EISS-Gemeinschaft vorgeschlagen und ausgerichtet, offen für EISS-Mitglieder.",
     },
 
     netsec: {
