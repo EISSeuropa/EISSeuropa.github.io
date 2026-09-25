@@ -38,7 +38,9 @@ on:
       # output (orcidWorks.json) to avoid a self-feeding PR loop, the
       # same trap documented in roadmap-refresh.yml.
       - 'src/_data/board.json'
-      - 'scripts/sync-orcid.py'
+            - 'scripts/sync-orcid.py'
+      - 'scripts/test-sync-orcid.py'
+
       - '.github/workflows/sync-orcid.yml'
   # Weekly refresh: 06:30 UTC Monday, sequenced after the daily
   # sync-indico (03:45), scheduled-rebuild (04:15), and sync-roadmap
@@ -73,7 +75,11 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r scripts/requirements.txt
 
+            - name: Self-check the title cleaner
+        run: python3 scripts/test-sync-orcid.py
+
       - name: Refresh member ORCID works
+
         run: |
           set -o pipefail
           python3 scripts/sync-orcid.py | tee /tmp/sync-orcid.txt

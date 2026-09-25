@@ -25,6 +25,7 @@ Run by the weekly board-sync workflow (a step after sync-board.py) and
 on demand: `python3 scripts/sync-orcid.py`.
 """
 
+import html
 import json
 import re
 import sys
@@ -55,6 +56,31 @@ _NON_SUBSTANTIVE = {
     "list of contributors", "about the authors", "about the contributors",
     "abstract", "editorial", "comment", "reply", "erratum", "corrigendum",
 }
+
+
+_TAG = re.compile(r"<[^>]+>")
+# ASCII whitespace only: a French no-break space before ":" is typography.
+_WS = re.compile(r"[ \t\r\n\f\v]+")
+
+
+def _squash(text):
+    return _WS.sub(" ", html.unescape(text)).strip()
+
+
+def clean_title(title):
+    """Plain-text title: no inline markup, no entities, single spaces.
+
+    Some Crossref-fed ORCID records append a marked-up copy of the subtitle
+    after the plain one ("… RAND's Hedgemony as a Tool <i>Hedgemony</i> as
+    a Tool", #1699). When the text from the first tag onward already appears
+    before it, that tail is the duplicate and is dropped."""
+    m = _TAG.search(title)
+    if m:
+        head = _squash(title[: m.start()])
+        tail = _squash(_TAG.sub("", title[m.start():]))
+        if tail and tail in head:
+            return head
+    return _squash(_TAG.sub("", title))
 
 
 def _substantive(title):
@@ -117,7 +143,7 @@ def parse_works(payload):
         if not summaries:
             continue
         s = summaries[0]
-        title = _val(s, "title", "title", "value")
+        title = clean_title(_val(s, "title", "title", "value") or "")
         if not title or not _substantive(title):
             continue
         if (s.get("type") or "").lower() in _SKIP_TYPES:
@@ -133,7 +159,7 @@ def parse_works(payload):
                     break
         works.append(
             {
-                "title": title.strip(),
+                "title": title,
                 "year": int(year) if (year or "").isdigit() else None,
                 "journal": journal.strip() if journal else None,
                 "doi": doi,
