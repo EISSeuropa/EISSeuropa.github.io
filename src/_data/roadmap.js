@@ -10,7 +10,8 @@
  * hand-translated per CLAUDE.md §1 (no machine translation). FR / DE
  * roadmap pages carry the `status: beta` ribbon accordingly.
  *
- * Card statuses: "shipped" | "in-progress" | "planned" | "deferred".
+ * Card statuses: "shipped" | "in-progress" | "planned" | "deferred",
+ * plus "held" for an event card once the conference has taken place.
  * - `version`  — the SemVer tag; drives the GitHub release-notes link
  *                on shipped cards.
  * - `milestone`— set on planned / in-progress cards so the in-flight
@@ -130,7 +131,7 @@ const roadmap = {
           },
         },
         {
-          status: "planned",
+          status: "held",
           event: true,
           when: { en: "11 - 12 June 2026 · Stockholm", fr: "11 - 12 juin 2026 · Stockholm", de: "11. - 12. Juni 2026 · Stockholm" },
           title: {
@@ -269,9 +270,9 @@ const roadmap = {
             de: "Europäische Konferenz für Sicherheitsstudien 2027",
           },
           desc: {
-            en: "The tenth annual conference, two days of panels and roundtables, run jointly with the COST Action NetSec and the host university. The organising group confirms the dates and the venue in September 2026.",
-            fr: "La dixième conférence annuelle, deux jours de panels et de tables rondes, organisée conjointement avec l’Action COST NetSec et l’université hôte. Le comité d’organisation confirme les dates et le lieu en septembre 2026.",
-            de: "Die zehnte Jahreskonferenz, zwei Tage mit Panels und Runden Tischen, gemeinsam mit der COST-Aktion NetSec und der gastgebenden Universität ausgerichtet. Die Organisationsgruppe bestätigt Termin und Veranstaltungsort im September 2026.",
+            en: "The tenth annual conference, two days of panels and roundtables, run jointly with the COST Action NetSec and the host university. Dates and venue to be announced.",
+            fr: "La dixième conférence annuelle, deux jours de panels et de tables rondes, organisée conjointement avec l’Action COST NetSec et l’université hôte. Dates et lieu à annoncer.",
+            de: "Die zehnte Jahreskonferenz, zwei Tage mit Panels und Runden Tischen, gemeinsam mit der COST-Aktion NetSec und der gastgebenden Universität ausgerichtet. Termin und Veranstaltungsort werden noch bekannt gegeben.",
           },
         },
         {

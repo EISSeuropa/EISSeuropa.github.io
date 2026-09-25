@@ -7378,7 +7378,7 @@ a.joint-orgs-card:hover .joint-orgs-name {
   border: 1px solid var(--rm-bd, var(--border));
 }
 .rm-dot { width: 0.5em; height: 0.5em; border-radius: 50%; background: currentColor; flex: 0 0 auto; }
-.rm-pill.shipped { --rm-c: hsl(140 50% 30%); --rm-bg: hsl(140 50% 45% / 0.12); --rm-bd: hsl(140 50% 45% / 0.28); }
+.rm-pill.shipped, .rm-pill.held { --rm-c: hsl(140 50% 30%); --rm-bg: hsl(140 50% 45% / 0.12); --rm-bd: hsl(140 50% 45% / 0.28); }
 .rm-pill.in-progress { --rm-c: var(--accent); --rm-bg: var(--accent-soft); --rm-bd: hsl(203 100% 39% / 0.3); }
 .rm-pill.planned { --rm-c: var(--text-subtle); --rm-bg: var(--surface); --rm-bd: var(--border); }
 .rm-pill.deferred { --rm-c: hsl(33 78% 38%); --rm-bg: hsl(36 95% 50% / 0.12); --rm-bd: hsl(36 90% 50% / 0.3); }
@@ -7399,7 +7399,7 @@ a.joint-orgs-card:hover .joint-orgs-name {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius-md); padding: var(--space-5); box-shadow: var(--shadow-1);
 }
-.rm-entry.shipped .rm-card { opacity: 0.93; }
+.rm-entry.shipped .rm-card, .rm-entry.held .rm-card { opacity: 0.93; }
 .rm-entry.in-progress .rm-card { border-color: hsl(203 100% 39% / 0.4); box-shadow: var(--shadow-2); }
 .rm-milestone .rm-card { background: var(--bg-tinted); border-style: dashed; }
 
@@ -7452,10 +7452,10 @@ a.joint-orgs-card:hover .joint-orgs-name {
 .rm-cta-links { display: flex; flex-wrap: wrap; gap: var(--space-3); }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .rm-pill.shipped { --rm-c: hsl(140 55% 68%); --rm-bg: hsl(140 55% 55% / 0.18); --rm-bd: hsl(140 55% 55% / 0.32); }
+  :root:not([data-theme="light"]) .rm-pill.shipped, :root:not([data-theme="light"]) .rm-pill.held { --rm-c: hsl(140 55% 68%); --rm-bg: hsl(140 55% 55% / 0.18); --rm-bd: hsl(140 55% 55% / 0.32); }
   :root:not([data-theme="light"]) .rm-pill.deferred { --rm-c: hsl(40 90% 66%); --rm-bg: hsl(40 90% 55% / 0.16); --rm-bd: hsl(40 90% 55% / 0.32); }
 }
-[data-theme="dark"] .rm-pill.shipped { --rm-c: hsl(140 55% 68%); --rm-bg: hsl(140 55% 55% / 0.18); --rm-bd: hsl(140 55% 55% / 0.32); }
+[data-theme="dark"] .rm-pill.shipped, [data-theme="dark"] .rm-pill.held { --rm-c: hsl(140 55% 68%); --rm-bg: hsl(140 55% 55% / 0.18); --rm-bd: hsl(140 55% 55% / 0.32); }
 [data-theme="dark"] .rm-pill.deferred { --rm-c: hsl(40 90% 66%); --rm-bg: hsl(40 90% 55% / 0.16); --rm-bd: hsl(40 90% 55% / 0.32); }
 
 @media (prefers-reduced-motion: reduce) {
