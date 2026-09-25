@@ -2,6 +2,7 @@
 layout: base.njk
 permalink: /index.html
 title: false
+homeTitle: European Initiative for Security Studies (EISS)
 description: We are the largest and most diverse European gathering of scholars and practitioners on security issues.
 metaImage: /assets/images/index-meta.jpg
 navKey: home
@@ -14,32 +15,41 @@ alternates:
 {% from "icons.njk" import icon %}
 
 <section class="hero" aria-labelledby="hero-title">
+  {%- set heroImg = conferences.heroEdition.heroImage if conferences.heroEdition %}
+  {%- if heroImg %}
   <div class="hero-bg" aria-hidden="true">
-    <img src="/assets/images/8e43301e-7945-4a0c-aac2-04719ac702a8-1600x900.jpg"
-         srcset="/assets/images/8e43301e-7945-4a0c-aac2-04719ac702a8-480x270.jpg 480w,
-                 /assets/images/8e43301e-7945-4a0c-aac2-04719ac702a8-800x450.jpg 800w,
-                 /assets/images/8e43301e-7945-4a0c-aac2-04719ac702a8-1600x900.jpg 1600w"
+    <img src="{{ heroImg }}-1600x900.jpg"
+         srcset="{{ heroImg }}-480x270.jpg 480w,
+                 {{ heroImg }}-800x450.jpg 800w,
+                 {{ heroImg }}-1600x900.jpg 1600w"
          sizes="100vw"
          alt=""
          loading="eager"
          fetchpriority="high"
          width="1600" height="900">
   </div>
+  {%- endif %}
   <div class="container hero-inner">
     <h1 id="hero-title" class="reveal">The European Initiative for Security Studies</h1>
     <p class="hero-tagline reveal reveal-delay-1">
       The largest and most diverse European gathering of scholars and practitioners on security issues.
     </p>
     <div class="hero-actions reveal reveal-delay-2">
-      <a class="btn btn-primary" href="/2026.html">Discover ESSC 2026 {{ icon("arrow-right") }}</a>
+      {%- if conferences.next %}
+      <a class="btn btn-primary" href="/{{ conferences.next.slug }}.html">Discover ESSC {{ conferences.next.year }} {{ icon("arrow-right") }}</a>
+      {%- else %}
+      {# Between editions there is no conference page to point at yet, so the
+         newsletter (where the next one is announced first) takes the slot. #}
+      <a class="btn btn-primary" href="{{ site.newsletterUrl }}" target="_blank" rel="noopener">{{ icon("bell") }} Subscribe to our newsletter</a>
+      {%- endif %}
       <a class="btn btn-ghost" href="/initiative.html">About the initiative</a>
     </div>
-    <p class="reveal reveal-delay-3" style="margin-top: var(--space-6); font-size: var(--fs-sm); color: hsl(0 0% 100% / 0.85);">
-      <a href="{{ site.newsletterUrl }}" target="_blank" rel="noopener" style="color: inherit;">{{ icon("bell", "icon-inline") }}Subscribe to our newsletter</a>
-      <span aria-hidden="true">&nbsp;·&nbsp;</span>
-      <a href="{{ site.social.youtube }}" target="_blank" rel="noopener" style="color: inherit;">{{ icon("youtube", "icon-inline") }}Follow our YouTube channel</a>
-      <span aria-hidden="true">&nbsp;·&nbsp;</span>
-      <a href="mailto:{{ site.contactEmail }}" style="color: inherit;">{{ icon("mail", "icon-inline") }}Contact us</a>
+    <p class="hero-links reveal reveal-delay-3">
+      {%- if conferences.next %}
+      <a href="{{ site.newsletterUrl }}" target="_blank" rel="noopener">{{ icon("bell", "icon-inline") }}Subscribe to our newsletter</a>
+      {%- endif %}
+      <a href="{{ site.social.youtube }}" target="_blank" rel="noopener">{{ icon("youtube", "icon-inline") }}Follow our YouTube channel</a>
+      <a href="mailto:{{ site.contactEmail }}">{{ icon("mail", "icon-inline") }}Contact us</a>
     </p>
   </div>
 </section>
@@ -119,7 +129,7 @@ alternates:
         Tickets to our Annual Conference already include a one-year membership.
       </p>
       <div class="join-actions">
-        <a class="btn btn-primary" href="/membership.html#content19-b9">{{ icon("user-plus") }} Become a member</a>
+        <a class="btn btn-primary" href="/membership.html#become-a-member">{{ icon("user-plus") }} Become a member</a>
         <a class="btn btn-secondary" href="https://billing.stripe.com/p/login/3cscOuaesfHceC4dQQ" target="_blank" rel="noopener">
           Manage my membership {{ icon("external-link") }}
         </a>

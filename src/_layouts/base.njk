@@ -23,7 +23,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>{% if title %}{{ title }} — {{ site.title }}{% else %}{{ site.fullName }}{% endif %}</title>
+  <title>{% if title %}{{ title }} — {{ site.title }}{% else %}{{ homeTitle or site.fullName }}{% endif %}</title>
   <meta name="description" content="{{ description or site.description }}">
 
   {% if redirectTo %}
@@ -177,7 +177,7 @@
   {%- set ogLocale = {"en": "en_GB", "fr": "fr_FR", "de": "de_DE"}[lang] or "en_GB" -%}
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="{{ site.title }}">
-  <meta property="og:title" content="{{ title or site.fullName }}">
+  <meta property="og:title" content="{{ title or homeTitle or site.fullName }}">
   <meta property="og:description" content="{{ description or site.description }}">
   <meta property="og:url" content="{{ site.url }}{{ redirectTo or page.url }}">
   <meta property="og:locale" content="{{ ogLocale }}">
@@ -185,14 +185,14 @@
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="{{ title or site.fullName }}">
+  <meta property="og:image:alt" content="{{ title or homeTitle or site.fullName }}">
 
   {# Twitter / X Card #}
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ title or site.fullName }}">
+  <meta name="twitter:title" content="{{ title or homeTitle or site.fullName }}">
   <meta name="twitter:description" content="{{ description or site.description }}">
   <meta name="twitter:image" content="{{ site.url }}{{ localisedMeta }}">
-  <meta name="twitter:image:alt" content="{{ title or site.fullName }}">
+  <meta name="twitter:image:alt" content="{{ title or homeTitle or site.fullName }}">
   {% if site.social.twitterHandle %}<meta name="twitter:site" content="{{ site.social.twitterHandle }}">{% endif %}
 
   {# JSON-LD Organization schema — gives Google the canonical signal

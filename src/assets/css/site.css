@@ -818,7 +818,9 @@ h4 { font-size: var(--fs-lg); }
 }
 
 .section {
-  padding-block: var(--space-9);
+  /* 6rem on wide screens, easing to 3rem on a phone so stacked sections
+     don't leave a near-empty screen between them. */
+  padding-block: clamp(var(--space-7), 5vw + 1.5rem, var(--space-9));
 }
 
 .section-tight {
@@ -1285,6 +1287,23 @@ h4 { font-size: var(--fs-lg); }
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
+}
+
+/* Newsletter / YouTube / contact row under the hero buttons. Each link is
+   a 44px-tall tap target; the row wraps instead of relying on separators. */
+.hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--space-5);
+  margin-top: var(--space-5);
+  font-size: var(--fs-sm);
+}
+
+.hero-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: hsl(0 0% 100% / 0.85);
 }
 
 /* ---------- buttons ---------- */

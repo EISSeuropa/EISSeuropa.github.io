@@ -55,6 +55,7 @@ Prepend a new object to the `conferences` array, newest first:
   monthLabel: { en: "June", fr: "Juin", de: "Juni" },
   dayRange: "23–24",
   yearLine: "<YEAR> · <CITY>",
+  heroImage: "/assets/images/<STEM>",  // optional, see below
   displayCity: { en: "<CITY>", fr: "<CITY>", de: "<CITY>" },
   hasOwnPage: true,
 },
@@ -62,6 +63,19 @@ Prepend a new object to the `conferences` array, newest first:
 
 After this lands, the homepage featured card and `/past` archive list
 update on the next build. No template edits needed.
+
+The homepage hero follows the same entry. Its primary button reads
+"Discover ESSC <YEAR>" and links to `/<YEAR>.html` whenever there is a
+`next` edition. Between editions (no `next`), the button becomes the
+newsletter sign-up and the photo stays on the most recent edition that
+has one.
+
+`heroImage` is the path stem of a 16:9 JPEG exported three times, as
+`<STEM>-480x270.jpg`, `<STEM>-800x450.jpg` and `<STEM>-1600x900.jpg`
+under `src/assets/images/`. Set it to put the host city's photo in the
+homepage hero. Leave it out and the hero keeps the previous edition's
+photo (`conferences.heroEdition` picks the next edition with a
+`heroImage`, else the most recent one).
 
 ## 2. Create the per-year page
 
@@ -210,7 +224,7 @@ one to keep, e.g. correct British spelling) or fix the typo in
 also a release-time cross-check (the `release-cross-check` skill), and the
 `abstract-coverage.yml` workflow runs the same check every four months.
 
-If you want to keep the just-past year visible in the homepage hero
+If you want to keep the just-past year's button in the homepage hero
 for a few days after, edit `src/_data/conferences.js` and bump that
 year's `endDate` to a date a week or two later. Reset when you're
 ready to switch the highlight to next year.
