@@ -30,7 +30,7 @@ const sharedImage = {
 
 module.exports = {
   // Set to false to hide the announcement section entirely.
-  visible: true,
+  visible: false,
 
   en: {
     eyebrow: "Leadership announcement · 13 July 2026",

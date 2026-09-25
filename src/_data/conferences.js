@@ -78,6 +78,10 @@ const conferences = [
     },
     dayRange: "11 - 12",     // for the featured-card .day block
     yearLine: "2026 · Stockholm",
+    // Homepage hero photo: the path stem of a 16:9 JPEG exported at
+    // -480x270, -800x450 and -1600x900. The hero shows the next edition's
+    // photo, or the most recent edition's until the next one sets its own.
+    heroImage: "/assets/images/8e43301e-7945-4a0c-aac2-04719ac702a8",
     // Optional polished programme PDF. The live grid on /YYYY is the
     // primary programme display (pulled daily from Indico); the PDF is
     // the designer-made, print-friendly companion. See
@@ -401,6 +405,10 @@ const navEditions = [
   isNext: Boolean(c.isNext),
 }));
 
+// The edition whose photo fills the homepage hero: the next one when it has
+// a heroImage, else the most recent edition that does.
+const heroEdition = [...upcomingOrCurrent, ...past].find((c) => c.heroImage) || null;
+
 module.exports = {
   all: conferences,
   byYear,
@@ -408,6 +416,7 @@ module.exports = {
   upcoming: upcomingOrCurrent,
   past,
   navEditions,
+  heroEdition,
   editionCount,
   today,
 };
