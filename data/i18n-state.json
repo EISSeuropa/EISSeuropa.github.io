@@ -32,14 +32,14 @@
     "src/membership.njk": {
       "fr": {
         "file": "src/membership.fr.njk",
-        "source_sha1": "508b5ae0f2f2adac2c893d03affc3c88de052f02",
-        "translated_on": "2026-09-25",
+        "source_sha1": "6916ed226fcd7736a46f7e4d485013ec013c99ee",
+        "translated_on": "2026-09-26",
         "status": "beta"
       },
       "de": {
         "file": "src/membership.de.njk",
-        "source_sha1": "508b5ae0f2f2adac2c893d03affc3c88de052f02",
-        "translated_on": "2026-09-25",
+        "source_sha1": "6916ed226fcd7736a46f7e4d485013ec013c99ee",
+        "translated_on": "2026-09-26",
         "status": "beta"
       }
     },
