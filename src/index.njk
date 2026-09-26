@@ -54,6 +54,8 @@ alternates:
   </div>
 </section>
 
+{% include "home-stats.njk" %}
+
 {# Featured card: the next-upcoming (or currently-running) conference,
    chosen from src/_data/conferences.js based on today's date. The card
    disappears entirely if there's no upcoming conference. #}
@@ -117,7 +119,11 @@ alternates:
 {# Latest news (#96): most recent items, decayed to ~18 months. #}
 {% include "news-latest.njk" %}
 
-{# Conference Navigator entry point: stats-backed link into the ESSC corpus. #}
+{% include "home-film.njk" %}
+
+{% include "home-paper.njk" %}
+
+{% set promoHideStats = true %}
 {% include "navigator-promo.njk" %}
 
 <section class="section" aria-labelledby="join-title">

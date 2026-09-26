@@ -55,6 +55,8 @@ alternates:
   </div>
 </section>
 
+{% include "home-stats.njk" %}
+
 {% set conf = conferences.next %}
 {% if conf %}
 <section class="section" aria-labelledby="featured-title">
@@ -106,7 +108,11 @@ alternates:
 
 {% include "news-latest.njk" %}
 
-{# Conference Navigator entry point: stats-backed link into the ESSC corpus. #}
+{% include "home-film.njk" %}
+
+{% include "home-paper.njk" %}
+
+{% set promoHideStats = true %}
 {% include "navigator-promo.njk" %}
 
 <section class="section" aria-labelledby="join-title">

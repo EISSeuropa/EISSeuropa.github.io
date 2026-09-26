@@ -147,6 +147,12 @@ const locales = {
       ctaReleases: "All releases",
     },
 
+    // Homepage film band (home-film.njk).
+    home: {
+      reviewEyebrow: "In review",
+      learnMore: "Learn more about ESSC {year}",
+    },
+
     film: {
       tapForSound: "Tap for sound",
       toggleSound: "Toggle sound",
@@ -965,6 +971,12 @@ const locales = {
       ctaReleases: "Toutes les versions",
     },
 
+    // Homepage film band (home-film.njk).
+    home: {
+      reviewEyebrow: "En rétrospective",
+      learnMore: "En savoir plus sur l'ESSC {year}",
+    },
+
     film: {
       tapForSound: "Touchez pour le son",
       toggleSound: "Activer ou couper le son",
@@ -1659,6 +1671,12 @@ const locales = {
       ctaIssue: "Vorschlagen oder melden",
       ctaMilestones: "Meilensteine ansehen",
       ctaReleases: "Alle Versionen",
+    },
+
+    // Homepage film band (home-film.njk).
+    home: {
+      reviewEyebrow: "Rückblick",
+      learnMore: "Mehr über die ESSC {year} erfahren",
     },
 
     film: {
