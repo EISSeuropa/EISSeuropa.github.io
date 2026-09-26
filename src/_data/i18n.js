@@ -147,6 +147,18 @@ const locales = {
       ctaReleases: "All releases",
     },
 
+    // Host-city map (essc-map.njk), on /initiative and the homepage. The
+    // strings are the /initiative ESSC section's own, moved here to be shared.
+    esscMap: {
+      title: "ESSC host cities across Europe, {span}",
+      desc: "A stylized map showing the European cities that have hosted the annual ESSC conference since 2017, with dots marking each host location.",
+      next: "next",
+      eyebrow: "Flagship event",
+      heading: "ESSC — The European Security Studies Conference",
+      lead: "The conference moves to a different European city and host institution each year.",
+      archive: "Full conference archive",
+    },
+
     // Homepage film band (home-film.njk).
     home: {
       reviewEyebrow: "In review",
@@ -971,6 +983,18 @@ const locales = {
       ctaReleases: "Toutes les versions",
     },
 
+    // Host-city map (essc-map.njk), on /initiative and the homepage. The
+    // strings are the /initiative ESSC section's own, moved here to be shared.
+    esscMap: {
+      title: "Villes hôtes de l'ESSC en Europe, {span}",
+      desc: "Carte stylisée montrant les villes européennes qui ont accueilli la conférence annuelle ESSC depuis 2017, avec des points marquant chaque lieu d'accueil.",
+      next: "à venir",
+      eyebrow: "Événement phare",
+      heading: "ESSC — La conférence européenne sur les études de sécurité",
+      lead: "La conférence change de ville et d'institution hôte chaque année.",
+      archive: "Archive complète des conférences",
+    },
+
     // Homepage film band (home-film.njk).
     home: {
       reviewEyebrow: "En rétrospective",
@@ -1671,6 +1695,18 @@ const locales = {
       ctaIssue: "Vorschlagen oder melden",
       ctaMilestones: "Meilensteine ansehen",
       ctaReleases: "Alle Versionen",
+    },
+
+    // Host-city map (essc-map.njk), on /initiative and the homepage. The
+    // strings are the /initiative ESSC section's own, moved here to be shared.
+    esscMap: {
+      title: "Gastgeberstädte der ESSC in Europa, {span}",
+      desc: "Stilisierte Karte mit den europäischen Städten, die seit 2017 die jährliche ESSC-Konferenz ausgerichtet haben, mit Punkten für jeden Veranstaltungsort.",
+      next: "kommend",
+      eyebrow: "Flaggschiff-Veranstaltung",
+      heading: "ESSC — Die Europäische Konferenz für Sicherheitsstudien",
+      lead: "Die Konferenz wechselt jedes Jahr Stadt und gastgebende Institution.",
+      archive: "Vollständiges Konferenz-Archiv",
     },
 
     // Homepage film band (home-film.njk).

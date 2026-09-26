@@ -1377,6 +1377,29 @@ h4 { font-size: var(--fs-lg); }
   max-width: 65ch;
 }
 
+/* ---------- home-map ----------
+   Homepage host-city section (home-map.njk): text beside the shared
+   essc-map.njk on wide screens, stacked on narrow ones. */
+.home-map {
+  display: grid;
+  gap: var(--space-6);
+  align-items: center;
+}
+@media (min-width: 860px) {
+  .home-map {
+    grid-template-columns: 1fr minmax(0, 32rem);
+  }
+}
+.home-map__text h2 {
+  margin: var(--space-2) 0 var(--space-3);
+}
+/* Scoped under .home-map to outrank .card's own padding, which is
+   declared later in the file. */
+.home-map .home-map__figure {
+  margin: 0;
+  padding: var(--space-3);
+}
+
 /* ---------- buttons ---------- */
 .btn {
   display: inline-flex;

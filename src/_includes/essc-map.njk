@@ -1,0 +1,34 @@
+{# ESSC host-city map: a stylised Europe outline with one linked dot per host
+   city, drawn from conferences.mapCities (positions in MAP_POINTS in
+   src/_data/conferences.js). Used on /initiative and the homepage in three
+   locales, so a new edition, and which one is "next", updates both on its
+   own. Renders the <svg> only; the caller supplies the figure and caption.
+
+   viewBox 1000 x 980: the Natural Earth outline is a plain Plate-Carree
+   projection, scaled 1.4x in y to sit close to familiar map proportions,
+   and the dot positions are pre-multiplied to match. #}
+{%- set _lang = lang or "en" -%}
+{%- set t = i18n[_lang] -%}
+<svg viewBox="0 0 1000 980" class="essc-map" role="group" aria-labelledby="essc-map-title essc-map-desc" preserveAspectRatio="xMidYMid meet">
+  <title id="essc-map-title">{{ t.esscMap.title | replace("{span}", conferences.mapSpan) }}</title>
+  <desc id="essc-map-desc">{{ t.esscMap.desc }}</desc>
+
+  <g class="essc-map-outline" aria-hidden="true" transform="scale(1, 1.4)">
+    {%- include "europe-outline.njk" %}
+  </g>
+
+  <g class="essc-map-dots">
+    {%- for m in conferences.mapCities %}
+    {%- set _name = m.cityLabel[_lang] if m.cityLabel else m.city %}
+    {%- set _p = m.point %}
+    {%- set _mod = " essc-map-dot--next" if m.isNext else (" essc-map-dot--inaugural" if m.inaugural else "") %}
+    {%- set _end = " essc-map-label--end" if _p.end else "" %}
+    <a href="{{ ('/' + m.slug + '.html') | localizedHref(_lang) }}" class="essc-map-link">
+      <title>{{ _name }} — {{ m.yearsList }}{% if m.isNext %} ({{ t.esscMap.next }}){% endif %}</title>
+      <circle cx="{{ _p.cx }}" cy="{{ _p.cy }}" r="{{ 14 if m.inaugural else (11 if m.isNext else 9) }}" class="essc-map-dot{{ _mod }}"/>
+      <text x="{{ _p.lx }}" y="{{ _p.ly }}" font-size="26" class="essc-map-label{{ _end }}">{{ _name }}</text>
+      <text x="{{ _p.lx }}" y="{{ _p.ly + 32 }}" font-size="20" class="essc-map-years{{ ' essc-map-years--end' if _p.end }}">{{ m.yearsLabel }}{% if m.isNext %} · {{ t.esscMap.next }}{% endif %}</text>
+    </a>
+    {%- endfor %}
+  </g>
+</svg>
