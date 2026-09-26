@@ -1,0 +1,23 @@
+{# Homepage featured paper (src/_data/featuredPaper.js): one Anthology paper
+   a day, with its authors and the opening of its abstract, linking to its
+   Anthology page. Paper pages and metadata are English-only, hence lang="en"
+   on the paper's own text. Hidden when the pool is empty. #}
+{% from "icons.njk" import icon %}
+{%- set _lang = lang or "en" -%}
+{%- set t = i18n[_lang] -%}
+{%- set fp = featuredPaper.paper -%}
+{%- if fp %}
+<section class="section-tight" aria-labelledby="home-paper-title">
+  <div class="container">
+    <article class="card home-paper">
+      <div class="featured-eyebrow">{{ t.nav.anthology }} · {{ fp.conferenceLabel }} {{ fp.year }}</div>
+      <h2 id="home-paper-title" class="home-paper__title" lang="en">
+        <a href="{{ fp.paperUrl }}">{{ fp.title }}</a>
+      </h2>
+      <p class="home-paper__authors" lang="en">{{ fp.authors | join(", ") }}</p>
+      <p class="home-paper__abstract" lang="en">{{ fp.abstract | striptags | truncate(320) }}</p>
+      <a class="link-arrow" href="{{ fp.paperUrl }}" aria-describedby="home-paper-title">{{ t.prizes.readEntry }} {{ icon("arrow-right", "icon-inline") }}</a>
+    </article>
+  </div>
+</section>
+{%- endif %}

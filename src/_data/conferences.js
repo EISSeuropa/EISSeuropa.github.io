@@ -417,6 +417,49 @@ const navEditions = [
   isNext: Boolean(c.isNext),
 }));
 
+// Host-city map (essc-map.njk, on /initiative and the homepage). Dot and
+// label positions in the map's 1000x980 viewBox, per host city: the Europe
+// outline is lat[35,71]/lon[-12,32] Plate-Carree, scaled 1.4x in y, so
+// cx = (lon + 12) / 44 * 1000 and cy = (71 - lat) / 36 * 700 * 1.4.
+// `end: true` sets the label to the left of the dot. A new host city needs
+// a row here, or it is left off the map (docs/new-conference.md).
+const MAP_POINTS = {
+  Paris: { cx: 326, cy: 603, lx: 346, ly: 602 },
+  Lisbon: { cx: 65, cy: 879, lx: 85, ly: 878 },
+  Berlin: { cx: 577, cy: 503, lx: 597, ly: 502 },
+  Barcelona: { cx: 322, cy: 806, lx: 342, ly: 805 },
+  Prague: { cx: 601, cy: 570, lx: 621, ly: 569 },
+  Thessaloniki: { cx: 794, cy: 826, lx: 784, ly: 846, end: true },
+  Stockholm: { cx: 683, cy: 318, lx: 703, ly: 317 },
+};
+
+// One dot per host city, oldest first, carrying its editions. The dot links
+// to the city's most recent edition; `isNext` marks the upcoming one and
+// `inaugural` the city of the first edition. Consecutive years read as a
+// range ("2017 - 2019"), others as a list.
+const nextSlug = upcomingOrCurrent[0] && upcomingOrCurrent[0].slug;
+const editions = conferences.filter((c) => !c.deferred).sort((a, b) => a.year - b.year);
+const mapCities = [];
+for (const c of editions) {
+  if (!MAP_POINTS[c.city]) continue;
+  let city = mapCities.find((m) => m.city === c.city);
+  if (!city) {
+    city = { city: c.city, cityLabel: c.cityLabel || null, point: MAP_POINTS[c.city], years: [] };
+    mapCities.push(city);
+  }
+  city.years.push(c.year);
+  city.slug = c.slug;
+  city.isNext = c.slug === nextSlug;
+}
+for (const m of mapCities) {
+  const ys = m.years;
+  const consecutive = ys.length > 2 && ys.every((y, i) => !i || y === ys[i - 1] + 1);
+  m.yearsLabel = consecutive ? `${ys[0]} - ${ys[ys.length - 1]}` : ys.join(", ");
+  m.yearsList = ys.join(", ");
+  m.inaugural = ys[0] === editions[0].year;
+}
+const mapSpan = editions.length ? `${editions[0].year} - ${editions[editions.length - 1].year}` : "";
+
 // The edition whose photo fills the homepage hero: the next one when it has
 // a heroImage, else the most recent edition that does.
 const heroEdition = [...upcomingOrCurrent, ...past].find((c) => c.heroImage) || null;
@@ -432,6 +475,8 @@ module.exports = {
   past,
   navEditions,
   heroEdition,
+  mapCities,
+  mapSpan,
   filmEdition,
   editionCount,
   today,

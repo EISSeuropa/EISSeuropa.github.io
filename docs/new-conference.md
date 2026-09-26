@@ -83,6 +83,12 @@ when the conference film exists, as
 and the homepage film band (`home-film.njk`) moves to it on the next build.
 Until then the band keeps showing the most recent edition that has one.
 
+The host-city map (`essc-map.njk`, on `/initiative` and the homepage)
+reads the same list: one dot per host city, the upcoming edition marked
+"next". A city that has not hosted before needs a row in `MAP_POINTS` in
+`conferences.js` (the formula for its position is in the comment above),
+or it is left off the map. A returning city needs nothing.
+
 ## 2. Create the per-year page
 
 Copy `src/2026.njk` to `src/<YEAR>.njk` (and its FR/DE siblings) and:
