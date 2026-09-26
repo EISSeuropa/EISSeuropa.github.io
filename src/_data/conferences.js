@@ -82,6 +82,18 @@ const conferences = [
     // -480x270, -800x450 and -1600x900. The hero shows the next edition's
     // photo, or the most recent edition's until the next one sets its own.
     heroImage: "/assets/images/8e43301e-7945-4a0c-aac2-04719ac702a8",
+    // Conference film, shown in the homepage film band while this is the
+    // most recent edition with one. Same file the /2026 page plays; the
+    // title is that page's heading in each locale.
+    film: {
+      src: "/assets/video/essc-2026.mp4",
+      poster: "/assets/images/2026/essc-2026-film-poster.jpg",
+      title: {
+        en: "Two days in Stockholm",
+        fr: "Deux jours à Stockholm",
+        de: "Zwei Tage in Stockholm",
+      },
+    },
     // Optional polished programme PDF. The live grid on /YYYY is the
     // primary programme display (pulled daily from Indico); the PDF is
     // the designer-made, print-friendly companion. See
@@ -409,6 +421,9 @@ const navEditions = [
 // a heroImage, else the most recent edition that does.
 const heroEdition = [...upcomingOrCurrent, ...past].find((c) => c.heroImage) || null;
 
+// The most recent held edition with a film, for the homepage film band.
+const filmEdition = past.find((c) => c.film) || null;
+
 module.exports = {
   all: conferences,
   byYear,
@@ -417,6 +432,7 @@ module.exports = {
   past,
   navEditions,
   heroEdition,
+  filmEdition,
   editionCount,
   today,
 };

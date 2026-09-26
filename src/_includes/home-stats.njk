@@ -1,0 +1,26 @@
+{# Homepage proof strip, directly under the hero: the live Anthology counts,
+   each linking to where the reader can see them. Same figures and labels as
+   navigator-promo.njk, which drops its own copy on the homepage
+   (promoHideStats) so the page doesn't print them twice. #}
+{%- set _lang = lang or "en" -%}
+{%- set t = i18n[_lang] -%}
+{%- set _anth = "/anthology.html" | localizedHref(_lang) -%}
+<section class="home-stats" aria-label="{{ t.navigator.eyebrow }}">
+  <div class="container">
+    <ul class="home-stats__list" role="list">
+      <li><a class="home-stats__item" href="{{ _anth }}">
+        <span class="home-stats__num">{{ corpus.stats.speakerCount }}</span>
+        <span class="home-stats__label">{{ t.speakers.statSpeakers }}</span>
+      </a></li>
+      <li><a class="home-stats__item" href="{{ _anth }}?view=papers">
+        {# Deduplicated count, matching the Anthology's by-paper list. #}
+        <span class="home-stats__num">{{ paperIndex.stats.paperCount }}</span>
+        <span class="home-stats__label">{{ t.speakers.statPapers }}</span>
+      </a></li>
+      <li><a class="home-stats__item" href="{{ '/past.html' | localizedHref(_lang) }}">
+        <span class="home-stats__num">{{ corpus.stats.editions }}</span>
+        <span class="home-stats__label">{{ t.speakers.statConferences }} {{ t.speakers.statConferencesSince }}</span>
+      </a></li>
+    </ul>
+  </div>
+</section>

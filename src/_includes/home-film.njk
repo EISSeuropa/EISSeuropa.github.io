@@ -1,0 +1,27 @@
+{# Homepage film band: the most recent held edition's conference film
+   (conferences.filmEdition), beside its dates, venue and organisers. Hidden
+   when no edition has a `film` entry. Reuses the /YYYY page's film-feature
+   layout and film-embed.njk, so playback behaves exactly as it does there. #}
+{% from "icons.njk" import icon %}
+{%- set _lang = lang or "en" -%}
+{%- set t = i18n[_lang] -%}
+{%- set fc = conferences.filmEdition -%}
+{%- if fc %}
+<section class="section" aria-labelledby="home-film-title">
+  <div class="container">
+    <div class="film-feature">
+      <div class="film-feature-body">
+        <div class="featured-eyebrow">{{ t.home.reviewEyebrow }}</div>
+        <h2 id="home-film-title">{{ fc.film.title[_lang] }}</h2>
+        <p class="muted">{{ fc.dates[_lang] }} · {{ fc.venue[_lang] }}</p>
+        <p>{{ fc.organisers[_lang] }}</p>
+        <a class="btn btn-secondary" href="{{ ('/' + fc.slug + '.html') | localizedHref(_lang) }}">{{ t.home.learnMore | replace("{year}", fc.year) }} {{ icon("arrow-right") }}</a>
+      </div>
+      {%- set filmSrc = fc.film.src -%}
+      {%- set filmPoster = fc.film.poster -%}
+      {%- set filmCaption = "ESSC " + fc.year + ", " + fc.city + "." -%}
+      {% include "film-embed.njk" %}
+    </div>
+  </div>
+</section>
+{%- endif %}

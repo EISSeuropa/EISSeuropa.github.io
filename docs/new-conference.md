@@ -77,6 +77,12 @@ homepage hero. Leave it out and the hero keeps the previous edition's
 photo (`conferences.heroEdition` picks the next edition with a
 `heroImage`, else the most recent one).
 
+`film` is optional too, and only matters once the edition is over. Add it
+when the conference film exists, as
+`{ src: "/assets/video/essc-<YEAR>.mp4", poster: "<poster path>", title: { en, fr, de } }`,
+and the homepage film band (`home-film.njk`) moves to it on the next build.
+Until then the band keeps showing the most recent edition that has one.
+
 ## 2. Create the per-year page
 
 Copy `src/2026.njk` to `src/<YEAR>.njk` (and its FR/DE siblings) and:
