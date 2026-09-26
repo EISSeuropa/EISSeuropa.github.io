@@ -1774,36 +1774,80 @@ h4 { font-size: var(--fs-lg); }
   color: var(--text-muted);
 }
 
-/* ---------- join CTA ---------- */
-.join {
-  text-align: center;
-  padding: clamp(var(--space-7), 3vw + 1rem, var(--space-9)) var(--space-5);
+/* ---------- home-join ----------
+   Homepage join panel (home-join.njk): the membership offer on its accent
+   panel, with a newsletter card beside it from 860px, stacked below. */
+.home-join {
+  display: grid;
+  gap: var(--space-5);
+}
+@media (min-width: 860px) {
+  .home-join { grid-template-columns: 1.6fr 1fr; align-items: stretch; }
+}
+.home-join__member {
+  padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));
   background:
-    radial-gradient(900px circle at 50% 0%, var(--accent-soft) 0%, transparent 60%),
+    radial-gradient(900px circle at 0% 0%, var(--accent-soft) 0%, transparent 60%),
     var(--bg-elev);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-2);
 }
-
-.join h2 {
+.home-join__member h2 {
   font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.6rem);
-  margin-bottom: var(--space-4);
+  margin: 0 0 var(--space-3);
 }
-
-.join p {
-  max-width: 38rem;
-  margin-inline: auto;
-  margin-bottom: var(--space-6);
+.home-join__lead {
   color: var(--text-muted);
   font-size: var(--fs-lg);
+  margin: 0 0 var(--space-5);
+  max-width: 38rem;
 }
-
-.join-actions {
-  display: inline-flex;
+.home-join__tiers {
+  margin: 0 0 var(--space-5);
+  padding: 0;
+  list-style: none;
+  max-width: 32rem;
+}
+.home-join__tiers li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--border);
+}
+.home-join__tiers strong {
+  white-space: nowrap;
+  color: var(--accent);
+}
+.home-join__event {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0 0 var(--space-6);
+  font-size: var(--fs-sm);
+}
+.home-join__event time {
+  color: var(--text-muted);
+}
+.home-join__actions {
+  display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
+}
+.home-join .home-join__news {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
+  gap: var(--space-4);
+}
+.home-join__icon {
+  display: inline-flex;
+  font-size: 2rem;
+  color: var(--accent);
+}
+.home-join__news-title {
+  margin: 0;
 }
 
 /* ---------- footer ---------- */

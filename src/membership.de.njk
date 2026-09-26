@@ -75,7 +75,7 @@ alternates:
 
     <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));">
       <article class="tile">
-        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">30 € / Jahr</div>
+        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">{{ i18n[lang].membership.perYear | replace("{n}", site.membershipPrices.student) }}</div>
         <h3>Student</h3>
         <p>Bachelor- und Masterstudierende.</p>
         <p style="margin-top: var(--space-4);">
@@ -83,7 +83,7 @@ alternates:
         </p>
       </article>
       <article class="tile">
-        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">50 € / Jahr</div>
+        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">{{ i18n[lang].membership.perYear | replace("{n}", site.membershipPrices.early) }}</div>
         <h3>Doktorand &amp; Nachwuchswissenschaftler</h3>
         <p>Doktoranden und Postdoktoranden (innerhalb von drei Jahren nach dem Abschluss).</p>
         <p style="margin-top: var(--space-4);">
@@ -91,7 +91,7 @@ alternates:
         </p>
       </article>
       <article class="tile">
-        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">80 € / Jahr</div>
+        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">{{ i18n[lang].membership.perYear | replace("{n}", site.membershipPrices.established) }}</div>
         <h3>Etablierte Akademiker oder Fachleute</h3>
         <p>Akademiker, Entscheidungsträger, Journalisten und andere Fachleute.</p>
         <p style="margin-top: var(--space-4);">

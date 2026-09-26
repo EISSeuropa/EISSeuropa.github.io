@@ -130,19 +130,4 @@ alternates:
 {% set promoHideStats = true %}
 {% include "navigator-promo.njk" %}
 
-<section class="section" aria-labelledby="join-title">
-  <div class="container">
-    <div class="join">
-      <h2 id="join-title">Join us today</h2>
-      <p>
-        Tickets to our Annual Conference already include a one-year membership.
-      </p>
-      <div class="join-actions">
-        <a class="btn btn-primary" href="/membership.html#become-a-member">{{ icon("user-plus") }} Become a member</a>
-        <a class="btn btn-secondary" href="https://billing.stripe.com/p/login/3cscOuaesfHceC4dQQ" target="_blank" rel="noopener">
-          Manage my membership {{ icon("external-link") }}
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
+{% include "home-join.njk" %}
