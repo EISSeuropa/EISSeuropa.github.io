@@ -1306,6 +1306,48 @@ h4 { font-size: var(--fs-lg); }
   color: hsl(0 0% 100% / 0.85);
 }
 
+/* ---------- home-stats ----------
+   Proof strip under the homepage hero (home-stats.njk): the Anthology
+   counts, each a link. Three columns at every width; the labels wrap. */
+.home-stats {
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.home-stats__list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.home-stats__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  height: 100%;
+  padding: var(--space-5) var(--space-2);
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+}
+.home-stats__item:hover .home-stats__label,
+.home-stats__item:focus-visible .home-stats__label {
+  text-decoration: underline;
+}
+.home-stats__num {
+  font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+}
+.home-stats__label {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: var(--lh-snug);
+}
+
 /* ---------- buttons ---------- */
 .btn {
   display: inline-flex;
@@ -5984,6 +6026,9 @@ body.search-open { overflow: hidden; }
 .navigator-promo__stats .stat > dd .muted {
   display: block;
   font-size: var(--fs-xs);
+}
+.navigator-promo--solo {
+  grid-template-columns: 1fr;
 }
 @media (max-width: 720px) {
   .navigator-promo {
