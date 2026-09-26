@@ -159,6 +159,34 @@ const locales = {
       archive: "Full conference archive",
     },
 
+    // Homepage activities row (home-pillars.njk). The network strings are the
+    // /events page's own, the members' line the homepage join paragraph's.
+    homePillars: {
+      heading: "Activities",
+      networkTitle: "Network events",
+      networkBody: "Online and hybrid events organised by EISS, the COST Action NetSec, and partner institutions.",
+      membersBody: "Members get access to members' events: seminars and book talks hosted by the EISS community.",
+    },
+
+    // Membership tiers (fees are site.membershipPrices) and the homepage join
+    // panel (home-join.njk). Moved from /membership and the homepage.
+    membership: {
+      perYear: "€{n} / year",
+      tiers: {
+        student: "Student",
+        early: "PhD & Early-Career Academic",
+        established: "Established Academic or Professional",
+      },
+    },
+    homeJoin: {
+      heading: "Join us today",
+      ticketLine: "Tickets to our Annual Conference already include a one-year membership.",
+      become: "Become a member",
+      manage: "Manage my membership",
+      subscribe: "Subscribe to our newsletter",
+      youtube: "Follow our YouTube channel",
+    },
+
     // Homepage film band (home-film.njk).
     home: {
       reviewEyebrow: "In review",
@@ -995,6 +1023,34 @@ const locales = {
       archive: "Archive complète des conférences",
     },
 
+    // Homepage activities row (home-pillars.njk). The network strings are the
+    // /events page's own, the members' line the homepage join paragraph's.
+    homePillars: {
+      heading: "Activités",
+      networkTitle: "Événements du réseau",
+      networkBody: "Événements en ligne et hybrides organisés par EISS, l'Action COST NetSec et nos institutions partenaires.",
+      membersBody: "Les membres ont accès aux événements des membres : séminaires et présentations d'ouvrages organisés par la communauté EISS.",
+    },
+
+    // Membership tiers (fees are site.membershipPrices) and the homepage join
+    // panel (home-join.njk). Moved from /membership and the homepage.
+    membership: {
+      perYear: "{n} € / an",
+      tiers: {
+        student: "Étudiant·e",
+        early: "Doctorant·e & jeune chercheur·euse",
+        established: "Universitaire ou professionnel·le établi·e",
+      },
+    },
+    homeJoin: {
+      heading: "Rejoignez-nous",
+      ticketLine: "Les billets pour notre conférence annuelle incluent déjà une adhésion d'un an.",
+      become: "Devenir membre",
+      manage: "Gérer mon adhésion",
+      subscribe: "S'abonner à notre lettre d'information",
+      youtube: "Suivre notre chaîne YouTube",
+    },
+
     // Homepage film band (home-film.njk).
     home: {
       reviewEyebrow: "En rétrospective",
@@ -1707,6 +1763,34 @@ const locales = {
       heading: "ESSC — Die Europäische Konferenz für Sicherheitsstudien",
       lead: "Die Konferenz wechselt jedes Jahr Stadt und gastgebende Institution.",
       archive: "Vollständiges Konferenz-Archiv",
+    },
+
+    // Homepage activities row (home-pillars.njk). The network strings are the
+    // /events page's own, the members' line the homepage join paragraph's.
+    homePillars: {
+      heading: "Aktivitäten",
+      networkTitle: "Netzwerk-Veranstaltungen",
+      networkBody: "Online- und Hybridveranstaltungen, organisiert von EISS, der COST-Aktion NetSec und Partnerinstitutionen.",
+      membersBody: "Mitglieder erhalten Zugang zu den Mitgliederveranstaltungen: Seminare und Buchvorstellungen, die von der EISS-Gemeinschaft ausgerichtet werden.",
+    },
+
+    // Membership tiers (fees are site.membershipPrices) and the homepage join
+    // panel (home-join.njk). Moved from /membership and the homepage.
+    membership: {
+      perYear: "{n} € / Jahr",
+      tiers: {
+        student: "Student",
+        early: "Doktorand & Nachwuchswissenschaftler",
+        established: "Etablierte Akademiker oder Fachleute",
+      },
+    },
+    homeJoin: {
+      heading: "Werden Sie Mitglied",
+      ticketLine: "Tickets für unsere Jahreskonferenz beinhalten bereits eine einjährige Mitgliedschaft.",
+      become: "Mitglied werden",
+      manage: "Mitgliedschaft verwalten",
+      subscribe: "Newsletter abonnieren",
+      youtube: "Unserem YouTube-Kanal folgen",
     },
 
     // Homepage film band (home-film.njk).

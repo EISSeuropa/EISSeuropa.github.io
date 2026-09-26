@@ -75,7 +75,7 @@ alternates:
 
     <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));">
       <article class="tile">
-        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">30 € / an</div>
+        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">{{ i18n[lang].membership.perYear | replace("{n}", site.membershipPrices.student) }}</div>
         <h3>Étudiant·e</h3>
         <p>Étudiants en licence et en master.</p>
         <p style="margin-top: var(--space-4);">
@@ -83,7 +83,7 @@ alternates:
         </p>
       </article>
       <article class="tile">
-        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">50 € / an</div>
+        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">{{ i18n[lang].membership.perYear | replace("{n}", site.membershipPrices.early) }}</div>
         <h3>Doctorant·e &amp; jeune chercheur·euse</h3>
         <p>Chercheurs doctoraux et post-doctoraux (dans les trois ans suivant l'obtention).</p>
         <p style="margin-top: var(--space-4);">
@@ -91,7 +91,7 @@ alternates:
         </p>
       </article>
       <article class="tile">
-        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">80 € / an</div>
+        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">{{ i18n[lang].membership.perYear | replace("{n}", site.membershipPrices.established) }}</div>
         <h3>Universitaire ou professionnel·le établi·e</h3>
         <p>Universitaires, décideurs politiques, journalistes et autres professionnels.</p>
         <p style="margin-top: var(--space-4);">

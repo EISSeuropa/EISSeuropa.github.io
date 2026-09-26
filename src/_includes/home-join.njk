@@ -1,0 +1,43 @@
+{# Homepage join panel: the membership offer (tiers with their fees, the
+   latest members' event, the join and manage buttons) beside a newsletter
+   card. The newsletter button opens Mailchimp's own sign-up page, so this
+   site collects no addresses (see /policy). Fees come from
+   site.membershipPrices, which /membership reads too. #}
+{% from "icons.njk" import icon %}
+{%- set _lang = lang or "en" -%}
+{%- set t = i18n[_lang] -%}
+{%- set hj = t.homeJoin -%}
+{%- set ev = pastEvents[0] -%}
+<section class="section" aria-labelledby="join-title">
+  <div class="container home-join">
+    <div class="home-join__member">
+      <h2 id="join-title">{{ hj.heading }}</h2>
+      <p class="home-join__lead">{{ hj.ticketLine }}</p>
+      <ul class="home-join__tiers" role="list">
+        {%- for key in ["student", "early", "established"] %}
+        <li>
+          <span>{{ t.membership.tiers[key] }}</span>
+          <strong>{{ t.membership.perYear | replace("{n}", site.membershipPrices[key]) }}</strong>
+        </li>
+        {%- endfor %}
+      </ul>
+      {%- if ev %}
+      <p class="home-join__event">
+        <span class="featured-eyebrow">{{ t.pastEvents.sectionHeading }}</span>
+        <a href="{{ ev.href }}" target="_blank" rel="noopener" lang="en">{{ ev.title }}</a>
+        <time datetime="{{ ev.date }}">{{ ev.date | newsDate(_lang) }}</time>
+      </p>
+      {%- endif %}
+      <div class="home-join__actions">
+        <a class="btn btn-primary" href="{{ '/membership.html' | localizedHref(_lang) }}#become-a-member">{{ icon("user-plus") }} {{ hj.become }}</a>
+        <a class="btn btn-secondary" href="{{ site.membershipPortalUrl }}" target="_blank" rel="noopener">{{ hj.manage }} {{ icon("external-link") }}</a>
+      </div>
+    </div>
+    <div class="home-join__news card">
+      <span class="home-join__icon" aria-hidden="true">{{ icon("bell") }}</span>
+      <h2 class="home-join__news-title">{{ t.nav.newsletter }}</h2>
+      <a class="btn btn-primary" href="{{ site.newsletterUrl }}" target="_blank" rel="noopener">{{ hj.subscribe }} {{ icon("external-link") }}</a>
+      <a class="link-arrow" href="{{ site.social.youtube }}" target="_blank" rel="noopener">{{ icon("youtube", "icon-inline") }}{{ hj.youtube }}</a>
+    </div>
+  </div>
+</section>

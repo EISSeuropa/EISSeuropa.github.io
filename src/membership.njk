@@ -74,7 +74,7 @@ alternates:
 
     <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));">
       <article class="tile">
-        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">€30 / year</div>
+        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">{{ i18n[lang].membership.perYear | replace("{n}", site.membershipPrices.student) }}</div>
         <h3>Student</h3>
         <p>Undergraduates and Master's students.</p>
         <p style="margin-top: var(--space-4);">
@@ -82,7 +82,7 @@ alternates:
         </p>
       </article>
       <article class="tile">
-        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">€50 / year</div>
+        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">{{ i18n[lang].membership.perYear | replace("{n}", site.membershipPrices.early) }}</div>
         <h3>PhD &amp; Early-Career Academic</h3>
         <p>Doctoral and post-doctoral researchers (within three years of obtention).</p>
         <p style="margin-top: var(--space-4);">
@@ -90,7 +90,7 @@ alternates:
         </p>
       </article>
       <article class="tile">
-        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">€80 / year</div>
+        <div class="featured-eyebrow" style="margin-bottom: var(--space-3);">{{ i18n[lang].membership.perYear | replace("{n}", site.membershipPrices.established) }}</div>
         <h3>Established Academic or Professional</h3>
         <p>Academics, policy-makers, journalists, and other professionals.</p>
         <p style="margin-top: var(--space-4);">

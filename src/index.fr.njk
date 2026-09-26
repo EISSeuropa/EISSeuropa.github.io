@@ -57,6 +57,8 @@ alternates:
 
 {% include "home-stats.njk" %}
 
+{% include "home-pillars.njk" %}
+
 {% set conf = conferences.next %}
 {% if conf %}
 <section class="section" aria-labelledby="featured-title">
@@ -117,20 +119,4 @@ alternates:
 {% set promoHideStats = true %}
 {% include "navigator-promo.njk" %}
 
-<section class="section" aria-labelledby="join-title">
-  <div class="container">
-    <div class="join">
-      <h2 id="join-title">Rejoignez-nous</h2>
-      <p>
-        Les membres ont accès aux événements des membres : séminaires et présentations d'ouvrages organisés par la communauté EISS.
-        Les billets pour notre conférence annuelle incluent déjà une adhésion d'un an.
-      </p>
-      <div class="join-actions">
-        <a class="btn btn-primary" href="/membership.fr.html#become-a-member">{{ icon("user-plus") }} Devenir membre</a>
-        <a class="btn btn-secondary" href="https://billing.stripe.com/p/login/3cscOuaesfHceC4dQQ" target="_blank" rel="noopener">
-          Gérer mon adhésion {{ icon("external-link") }}
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
+{% include "home-join.njk" %}

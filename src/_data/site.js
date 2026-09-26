@@ -104,6 +104,10 @@ module.exports = {
     linkedin: "https://www.linkedin.com/company/eiss-europa/",
   },
   newsletterUrl,
+  // Annual membership fees in euros, per tier. Read by /membership and the
+  // homepage join panel, so a price change is made once, here.
+  membershipPrices: { student: 30, early: 50, established: 80 },
+  membershipPortalUrl: "https://billing.stripe.com/p/login/3cscOuaesfHceC4dQQ",
 
   // Top-nav order follows arrival intent (#1319): the Conference, which is
   // why most visitors come, then the Anthology as the citable research
