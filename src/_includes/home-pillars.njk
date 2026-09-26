@@ -1,0 +1,29 @@
+{# Homepage activities row, under the stats strip: what the EISS does, one
+   card each, linking on. Every string is existing hand-translated copy
+   (nav labels, prizes.lead, esscMap.lead, homePillars.*), so the row adds
+   nothing for the translators. The heading is for assistive technology;
+   sighted readers get the cards. #}
+{% from "icons.njk" import icon %}
+{%- set _lang = lang or "en" -%}
+{%- set t = i18n[_lang] -%}
+{%- set hp = t.homePillars -%}
+{%- set _items = [
+  { icon: "globe", title: t.nav.conferences, body: t.esscMap.lead, href: "/past.html" | localizedHref(_lang) },
+  { icon: "award", title: t.nav.prizes, body: t.prizes.lead, href: "/prizes.html" | localizedHref(_lang) },
+  { icon: "users", title: hp.networkTitle, body: hp.networkBody, href: ("/events.html" | localizedHref(_lang)) + "#network-events-heading" },
+  { icon: "users-round", title: t.pastEvents.sectionHeading, body: hp.membersBody, href: ("/membership.html" | localizedHref(_lang)) + "#become-a-member" }
+] -%}
+<section class="section-tight" aria-labelledby="home-pillars-title">
+  <div class="container">
+    <h2 id="home-pillars-title" class="sr-only">{{ hp.heading }}</h2>
+    <ul class="home-pillars" role="list">
+      {%- for it in _items %}
+      <li class="home-pillars__item card">
+        <span class="home-pillars__icon" aria-hidden="true">{{ icon(it.icon) }}</span>
+        <h3 class="home-pillars__title"><a href="{{ it.href }}">{{ it.title }}</a></h3>
+        <p class="home-pillars__body">{{ it.body }}</p>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</section>

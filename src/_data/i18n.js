@@ -159,6 +159,15 @@ const locales = {
       archive: "Full conference archive",
     },
 
+    // Homepage activities row (home-pillars.njk). The network strings are the
+    // /events page's own, the members' line the homepage join paragraph's.
+    homePillars: {
+      heading: "Activities",
+      networkTitle: "Network events",
+      networkBody: "Online and hybrid events organised by EISS, the COST Action NetSec, and partner institutions.",
+      membersBody: "Members get access to members' events: seminars and book talks hosted by the EISS community.",
+    },
+
     // Homepage film band (home-film.njk).
     home: {
       reviewEyebrow: "In review",
@@ -995,6 +1004,15 @@ const locales = {
       archive: "Archive complète des conférences",
     },
 
+    // Homepage activities row (home-pillars.njk). The network strings are the
+    // /events page's own, the members' line the homepage join paragraph's.
+    homePillars: {
+      heading: "Activités",
+      networkTitle: "Événements du réseau",
+      networkBody: "Événements en ligne et hybrides organisés par EISS, l'Action COST NetSec et nos institutions partenaires.",
+      membersBody: "Les membres ont accès aux événements des membres : séminaires et présentations d'ouvrages organisés par la communauté EISS.",
+    },
+
     // Homepage film band (home-film.njk).
     home: {
       reviewEyebrow: "En rétrospective",
@@ -1707,6 +1725,15 @@ const locales = {
       heading: "ESSC — Die Europäische Konferenz für Sicherheitsstudien",
       lead: "Die Konferenz wechselt jedes Jahr Stadt und gastgebende Institution.",
       archive: "Vollständiges Konferenz-Archiv",
+    },
+
+    // Homepage activities row (home-pillars.njk). The network strings are the
+    // /events page's own, the members' line the homepage join paragraph's.
+    homePillars: {
+      heading: "Aktivitäten",
+      networkTitle: "Netzwerk-Veranstaltungen",
+      networkBody: "Online- und Hybridveranstaltungen, organisiert von EISS, der COST-Aktion NetSec und Partnerinstitutionen.",
+      membersBody: "Mitglieder erhalten Zugang zu den Mitgliederveranstaltungen: Seminare und Buchvorstellungen, die von der EISS-Gemeinschaft ausgerichtet werden.",
     },
 
     // Homepage film band (home-film.njk).
