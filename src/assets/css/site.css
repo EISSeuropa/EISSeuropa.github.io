@@ -1461,6 +1461,30 @@ h4 { font-size: var(--fs-lg); }
   .home-pillars__body { display: none; }
 }
 
+/* ---------- home-partners ----------
+   Homepage partner strip (home-partners.njk): the shared joint-orgs
+   component, kept three across on a phone with smaller logo slots and
+   the names read to assistive technology only, so the strip stays one
+   row instead of stacking three cards. */
+@media (max-width: 720px) {
+  .home-partners .joint-orgs-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2);
+  }
+  .home-partners .joint-orgs-logo-slot {
+    height: 64px;
+    padding: var(--space-2);
+  }
+  .home-partners .joint-orgs-name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+}
+
 /* ---------- buttons ---------- */
 .btn {
   display: inline-flex;

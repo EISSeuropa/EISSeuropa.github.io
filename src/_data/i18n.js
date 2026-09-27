@@ -187,6 +187,12 @@ const locales = {
       youtube: "Follow our YouTube channel",
     },
 
+    // Homepage partner strip (home-partners.njk): the opening words of
+    // prizes.partner, hand-translated there.
+    homePartners: {
+      label: "In partnership with",
+    },
+
     // Homepage film band (home-film.njk).
     home: {
       reviewEyebrow: "In review",
@@ -1051,6 +1057,12 @@ const locales = {
       youtube: "Suivre notre chaîne YouTube",
     },
 
+    // Homepage partner strip (home-partners.njk): the opening words of
+    // prizes.partner, hand-translated there.
+    homePartners: {
+      label: "En partenariat avec",
+    },
+
     // Homepage film band (home-film.njk).
     home: {
       reviewEyebrow: "En rétrospective",
@@ -1791,6 +1803,12 @@ const locales = {
       manage: "Mitgliedschaft verwalten",
       subscribe: "Newsletter abonnieren",
       youtube: "Unserem YouTube-Kanal folgen",
+    },
+
+    // Homepage partner strip (home-partners.njk): the opening words of
+    // prizes.partner, hand-translated there.
+    homePartners: {
+      label: "In Partnerschaft mit",
     },
 
     // Homepage film band (home-film.njk).

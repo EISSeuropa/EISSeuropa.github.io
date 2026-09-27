@@ -108,6 +108,27 @@ module.exports = {
   // homepage join panel, so a price change is made once, here.
   membershipPrices: { student: 30, early: 50, established: 80 },
   membershipPortalUrl: "https://billing.stripe.com/p/login/3cscOuaesfHceC4dQQ",
+  // Homepage partner strip (home-partners.njk). Only partners whose logo is
+  // already published on the site, with their agreement: add one when both
+  // the file and the OK are in hand. Names in each locale are the forms the
+  // conference organiser lines already use.
+  homePartners: [
+    {
+      name: { en: "COST Action NetSec", fr: "Action COST NetSec", de: "COST-Aktion NetSec" },
+      url: "https://netsec-cost.eu/",
+      logo: "/assets/images/partners/netsec.svg",
+    },
+    {
+      name: { en: "Journal of Strategic Studies", fr: "Journal of Strategic Studies", de: "Journal of Strategic Studies" },
+      url: "https://www.tandfonline.com/journals/fjss20",
+      logo: "/assets/images/brand/jss-logo.svg",
+    },
+    {
+      name: { en: "Stockholm University", fr: "Université de Stockholm", de: "Universität Stockholm" },
+      url: "https://www.su.se/",
+      logo: "/assets/images/partners/stockholm-university.svg",
+    },
+  ],
 
   // Top-nav order follows arrival intent (#1319): the Conference, which is
   // why most visitors come, then the Anthology as the citable research
