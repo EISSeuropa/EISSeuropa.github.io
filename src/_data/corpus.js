@@ -123,7 +123,6 @@ function canonicalKey(name) {
 }
 
 // ── Surname parsing (for a by-lastname index) ───────────────────────────
-const HONORIFIC_DISP = /^(Prof(?:essor)?\.?|Dr\.?|Sir|Dame|Mr\.?|Mrs\.?|Ms\.?|Mx\.?)\s+/;
 const PARTICLES = new Set([
   "van", "von", "de", "der", "den", "del", "della", "di", "da", "dos",
   "das", "du", "la", "le", "el", "al", "ten", "ter", "bin", "ibn",
@@ -131,15 +130,7 @@ const PARTICLES = new Set([
 const stripDiacritics = (s) =>
   String(s).normalize("NFD").replace(/[̀-ͯ]/g, "");
 
-function cleanDisplay(name) {
-  let s = String(name).trim();
-  let prev;
-  do {
-    prev = s;
-    s = s.replace(HONORIFIC_DISP, "");
-  } while (s !== prev);
-  return s.trim();
-}
+const cleanDisplay = require("./cleanName.js");
 
 // Split a "Given … Surname" string into given + surname, folding a
 // trailing particle run into the surname ("Paul van Hooft" → given "Paul",
@@ -410,7 +401,9 @@ for (const { slug, slot, c } of iterContributions()) {
   if (!c.title) continue;
   const conf = confMeta(slug);
   const authors = (c.authors && c.authors.length ? c.authors : c.speakers || []).map(
-    (a) => ({ name: a.name, affiliation: a.affiliation || null, isSpeaker: !!a.isSpeaker })
+    // Honorifics off the displayed name (#1715), as the speaker list already
+    // does; matching is unaffected, since keyOf() drops them too.
+    (a) => ({ name: a.name && cleanDisplay(a.name), affiliation: a.affiliation || null, isSpeaker: !!a.isSpeaker })
   );
   const sessionTitle = slot.title || slot.slotTitle || null;
   // Prefer the longest abstract available across the inline source (the live

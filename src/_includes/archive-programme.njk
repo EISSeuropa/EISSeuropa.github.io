@@ -86,7 +86,7 @@
               <p class="programme-slot-meta">
                 <strong>{{ t.programme.chairedBy }}:</strong>
                 {%- for c in slot.conveners -%}
-                  {{ c.name }}{% if c.affiliation %} <span class="muted">({{ c.affiliation }})</span>{% endif %}{% if not loop.last %}, {% endif %}
+                  {{ c.name | cleanName }}{% if c.affiliation %} <span class="muted">({{ c.affiliation }})</span>{% endif %}{% if not loop.last %}, {% endif %}
                 {%- endfor -%}
               </p>
               {%- endif %}
@@ -95,7 +95,7 @@
               <p class="programme-slot-meta">
                 <strong>{{ t.programme.discussants }}:</strong>
                 {%- for p in slot.discussants -%}
-                  {{ p.name }}{% if p.affiliation %} <span class="muted">({{ p.affiliation }})</span>{% endif %}{% if not loop.last %}, {% endif %}
+                  {{ p.name | cleanName }}{% if p.affiliation %} <span class="muted">({{ p.affiliation }})</span>{% endif %}{% if not loop.last %}, {% endif %}
                 {%- endfor -%}
               </p>
               {%- endif %}
@@ -121,7 +121,7 @@
                         {%- for a in c.authors -%}
                           <span class="programme-author{% if a.isSpeaker %} programme-author--speaker{% endif %}">
                             {%- if a.isSpeaker %}<span class="programme-author-mic" title="{{ t.programme.presenter }}">{{ icon("mic") }}</span><span class="sr-only">{{ t.programme.presenter }}: </span>{% endif -%}
-                            {{ a.name }}{% if a.affiliation %} <em>({{ a.affiliation }})</em>{% endif %}</span>{% if not loop.last %} · {% endif %}
+                            {{ a.name | cleanName }}{% if a.affiliation %} <em>({{ a.affiliation }})</em>{% endif %}</span>{% if not loop.last %} · {% endif %}
                         {%- endfor -%}
                       </p>
                       {%- endif %}
