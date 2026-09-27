@@ -1,5 +1,6 @@
-{# Homepage host-city map: the ESSC's travels across Europe, beside a short
-   lead and a link to the archive. The map is the shared essc-map.njk that
+{# Homepage host-city map: the ESSC's travels across Europe, beside a link to
+   the archive. (Its one-line lead opens the Conference card in
+   home-pillars.njk, higher up.) The map is the shared essc-map.njk that
    /initiative uses, so both follow conferences.js. #}
 {% from "icons.njk" import icon %}
 {%- set _lang = lang or "en" -%}
@@ -10,7 +11,6 @@
     <div class="home-map__text">
       <span class="eyebrow">{{ t.esscMap.eyebrow }}</span>
       <h2 id="home-map-title">{{ t.esscMap.heading }}</h2>
-      <p class="lead">{{ t.esscMap.lead }}</p>
       <a class="btn btn-secondary" href="{{ '/past.html' | localizedHref(_lang) }}">{{ t.esscMap.archive }} {{ icon("arrow-right") }}</a>
     </div>
     <figure class="home-map__figure card">

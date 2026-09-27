@@ -1,0 +1,14 @@
+{# Homepage partner strip: site.homePartners through the shared joint-orgs
+   component (logo cards, each linking out). The label is the opening words
+   of prizes.partner in each locale. #}
+{%- set _lang = lang or "en" -%}
+{%- set jointOrgs = [] -%}
+{%- for p in site.homePartners -%}
+  {%- set _ = jointOrgs.push({ name: p.name[_lang], url: p.url, logo: p.logo }) -%}
+{%- endfor -%}
+{%- set jointOrgsLabel = i18n[_lang].homePartners.label -%}
+<section class="section-tight home-partners">
+  <div class="container">
+    {% include "joint-orgs.njk" %}
+  </div>
+</section>

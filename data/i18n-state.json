@@ -4,14 +4,14 @@
     "src/index.njk": {
       "fr": {
         "file": "src/index.fr.njk",
-        "source_sha1": "21b210f653371a9c69e5d7f905a858e0151ba721",
-        "translated_on": "2026-09-26",
+        "source_sha1": "30974a90d627206d265ef029dfd08960791e189e",
+        "translated_on": "2026-09-27",
         "status": "beta"
       },
       "de": {
         "file": "src/index.de.njk",
-        "source_sha1": "21b210f653371a9c69e5d7f905a858e0151ba721",
-        "translated_on": "2026-09-26",
+        "source_sha1": "30974a90d627206d265ef029dfd08960791e189e",
+        "translated_on": "2026-09-27",
         "status": "beta"
       }
     },
@@ -32,14 +32,14 @@
     "src/membership.njk": {
       "fr": {
         "file": "src/membership.fr.njk",
-        "source_sha1": "6916ed226fcd7736a46f7e4d485013ec013c99ee",
-        "translated_on": "2026-09-26",
+        "source_sha1": "4ad16e526642df7d1f9c0e6397332aafd0ab7ebd",
+        "translated_on": "2026-09-27",
         "status": "beta"
       },
       "de": {
         "file": "src/membership.de.njk",
-        "source_sha1": "6916ed226fcd7736a46f7e4d485013ec013c99ee",
-        "translated_on": "2026-09-26",
+        "source_sha1": "4ad16e526642df7d1f9c0e6397332aafd0ab7ebd",
+        "translated_on": "2026-09-27",
         "status": "beta"
       }
     },
