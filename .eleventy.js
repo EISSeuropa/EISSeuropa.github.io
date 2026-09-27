@@ -153,6 +153,10 @@ module.exports = function (eleventyConfig) {
   //   - non-html targets     (PDFs, assets, mailto:, tel:)
   //   - anchor-only          (starts with "#")
   //   - missing href         (empty string or null)
+  // Leading honorifics off a person's printed name, for the programme grids
+  // (#1715). Same helper corpus.js uses for the Anthology.
+  eleventyConfig.addFilter("cleanName", require("./src/_data/cleanName.js"));
+
   eleventyConfig.addFilter("localizedHref", (href, lang) => {
     if (!href || typeof href !== "string") return href;
     if (lang === "en") return href;

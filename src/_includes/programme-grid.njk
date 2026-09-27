@@ -128,7 +128,7 @@
                 <strong>{{ t.programme.chairedBy }}:</strong>
 <span lang="en">
                 {%- for c in slot.conveners -%}
-                  {{ c.name }}{% if c.affiliation %} <span class="muted">({{ c.affiliation }})</span>{% endif %}{% if not loop.last %}, {% endif %}
+                  {{ c.name | cleanName }}{% if c.affiliation %} <span class="muted">({{ c.affiliation }})</span>{% endif %}{% if not loop.last %}, {% endif %}
                 {%- endfor -%}</span>
               </p>
               {%- endif %}
@@ -140,7 +140,7 @@
                 <strong>{{ t.programme.discussants }}:</strong>
 <span lang="en">
                 {%- for p in slot.discussants -%}
-                  {{ p.name }}{% if p.affiliation %} <span class="muted">({{ p.affiliation }})</span>{% endif %}{% if not loop.last %}, {% endif %}
+                  {{ p.name | cleanName }}{% if p.affiliation %} <span class="muted">({{ p.affiliation }})</span>{% endif %}{% if not loop.last %}, {% endif %}
                 {%- endfor -%}</span>
               </p>
               {%- endif %}
@@ -170,14 +170,14 @@
                         {%- for a in c.authors -%}
                           <span class="programme-author{% if a.isSpeaker %} programme-author--speaker{% endif %}">
                             {%- if a.isSpeaker %}<span class="programme-author-mic" title="{{ t.programme.presenter }}">{{ icon("mic") }}</span><span class="sr-only">{{ t.programme.presenter }}: </span>{% endif -%}
-                            <span lang="en">{{ a.name }}{% if a.affiliation %} <em>({{ a.affiliation }})</em>{% endif %}</span></span>{% if not loop.last %} · {% endif %}
+                            <span lang="en">{{ a.name | cleanName }}{% if a.affiliation %} <em>({{ a.affiliation }})</em>{% endif %}</span></span>{% if not loop.last %} · {% endif %}
                         {%- endfor -%}
                       </p>
                       {%- elif c.speakers and c.speakers.length %}
                       <p class="programme-contrib-speakers muted">
 <span lang="en">
                         {%- for sp in c.speakers -%}
-                          {{ sp.name }}{% if sp.affiliation %} <em>({{ sp.affiliation }})</em>{% endif %}{% if not loop.last %} · {% endif %}
+                          {{ sp.name | cleanName }}{% if sp.affiliation %} <em>({{ sp.affiliation }})</em>{% endif %}{% if not loop.last %} · {% endif %}
                         {%- endfor -%}</span>
                       </p>
                       {%- endif %}
@@ -207,7 +207,7 @@
               <p class="programme-slot-meta">
 <span lang="en">
                 {%- for sp in slot.speakers -%}
-                  {{ sp.name }}{% if sp.affiliation %} <span class="muted">({{ sp.affiliation }})</span>{% endif %}{% if not loop.last %} · {% endif %}
+                  {{ sp.name | cleanName }}{% if sp.affiliation %} <span class="muted">({{ sp.affiliation }})</span>{% endif %}{% if not loop.last %} · {% endif %}
                 {%- endfor -%}</span>
               </p>
               {%- endif %}
