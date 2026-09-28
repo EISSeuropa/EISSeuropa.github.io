@@ -3,8 +3,11 @@
 A repeatable Go/No-Go pass for two moments: **cutting a release** and the
 **run-up to an ESSC** (when traffic peaks and stale copy or a broken link
 is most costly). It strings the tools EISS already owns into one audit.
-It does **not** assume tools the repo lacks (no axe-core CLI, no
-Lighthouse score floors) — only what's in `scripts/`.
+It does **not** assume tools the repo lacks (no Lighthouse score floors),
+only what's in `scripts/`. Accessibility runs twice: `a11y_lint.py` reads the
+built HTML, and `check-a11y-browser.mjs` runs axe-core in headless Chrome,
+which is the only check here that sees layout, computed colour, a phone
+viewport and scripted markup (#1626).
 
 Pair this with the release-time five-point cross-check, which now lives in
 the `release-cross-check` skill rather than in CLAUDE.md (roadmap, sitemap,
@@ -16,7 +19,9 @@ translations, repo docs, Anthology abstract coverage). This doc is the
 ```bash
 npx @11ty/eleventy                       # 1. clean build (no errors)
 python3 scripts/check-i18n-drift.py      # 2. FR/DE in sync with EN sources
-python3 scripts/a11y_lint.py             # 3. accessibility lint
+python3 scripts/a11y_lint.py             # 3. accessibility lint (static HTML)
+node scripts/check-a11y-browser.mjs      # 3b. axe in headless Chrome, 375 + 1280,
+                                         #     light + dark, against data/a11y-baseline.json
 ./scripts/check-links.sh                 # 4. internal + external links resolve in _site/
 node scripts/check-build-sanity.mjs      # 5. undefined CSS classes, cross-block class
                                          #    collisions, sitemap coverage, share cards
@@ -31,8 +36,8 @@ Notes:
   Google Maps", a Google Form on `/register`, a `youtube-nocookie`
   player that only loads on click) is fine and expected — eyeball each
   hit rather than treating any match as a fail.
-- CI already runs the build, drift checker, link checker and build-sanity
-  on every PR (and CodeQL). This phase is the *local, all-at-once*
+- CI already runs the build, drift checker, link checker, build-sanity
+  and the browser accessibility pass on every PR (and CodeQL). This phase is the *local, all-at-once*
   rehearsal before stamping a release or the day before a conference.
 - `check-build-sanity.mjs` takes upwards of ten minutes locally against
   well under two on CI, so it is fair to let CI hold that gate and run the
@@ -47,7 +52,8 @@ Notes:
 |---|---|---|
 | Build | `eleventy` | any build error |
 | Translation drift | `check-i18n-drift.py` | any FR/DE page stale against its EN source |
-| Accessibility | `a11y_lint.py` | new errors vs the last clean run |
+| Accessibility (static) | `a11y_lint.py` | new errors vs the last clean run |
+| Accessibility (rendered) | `check-a11y-browser.mjs` | any violation new or worse against `data/a11y-baseline.json`. When a fix lowers a count, re-run with `--update-baseline` in the same PR so the improvement is locked in |
 | Links | `check-links.sh` | any internal link 404s; external 404s triaged (some are flaky) |
 | Privacy | the grep above | any **load-time** third-party request that isn't click-gated |
 | Build sanity | `check-build-sanity.mjs` | any undefined CSS class, cross-block class collision, or missing paper page in the sitemap |
