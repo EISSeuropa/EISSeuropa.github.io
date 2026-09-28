@@ -62,9 +62,15 @@ Sampled from the source PDF:
   dark panel side by side.
 - **`#007bc6`** — brand blue (EiSS wordmark + tagline)
 
-The site's `--accent` design token is the brand blue: light mode is
-`hsl(203 100% 39%)` (= `#007bc6`, hue 203), so the logo and the UI
-accents read as one blue. Dark mode lifts the lightness to
+The site's `--accent` design token is a text-safe shade of the brand blue:
+light mode is `hsl(203 100% 36%)` (= `#0071b8`, hue 203), three points
+darker than the logo's `#007bc6` so that it reads as the same blue. The
+logo blue is 4.51:1 on white, 0.01 above the WCAG AA floor, and failed on
+every tinted card ([#1624](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1624)).
+The accent is **5.18:1 on white and 4.66:1 on the `#f0f3fa` tinted
+surface**. Headroom is still modest: check contrast before putting the
+accent on any new tint or at reduced opacity. The logo itself, the
+favicon, the share cards and the press-kit swatch keep `#007bc6`. Dark mode lifts the lightness to
 `hsl(203 100% 66%)` for contrast on the dark canvas, and the print
 stylesheet darkens it to `hsl(203 100% 38%)` for ink, both keeping the
 brand hue. The whole blue family in `site.css` sits on hue 203; the
