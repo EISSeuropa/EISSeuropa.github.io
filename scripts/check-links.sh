@@ -131,6 +131,11 @@ SKIP_HOSTS = {
                                 # unrecognised User-Agent strings.
                                 # The transit-info page works for
                                 # visitors heading to ESSC 2022.
+    "www.su.se",                # Stockholm University (partner strip on
+                                # the home page, #1721) answers 200 to a
+                                # browser and to curl from a desktop, but
+                                # 307 to the GitHub runner, the same
+                                # anti-bot class as the hosts above.
     "eur-lex.europa.eu",        # EU's official law portal returns 403
                                 # to automated HEAD/GET regardless of
                                 # UA. The GDPR citation in the privacy

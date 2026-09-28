@@ -1,0 +1,22 @@
+{
+  "axe": "4.13.0",
+  "pages": 51,
+  "configs": [
+    "375-light",
+    "375-dark",
+    "1280-light",
+    "1280-dark"
+  ],
+  "violations": {
+    "/ 1280-light color-contrast": 5,
+    "/ 375-light color-contrast": 5,
+    "/board.html 1280-light color-contrast": 52,
+    "/board.html 375-light color-contrast": 52,
+    "/index.de.html 1280-light color-contrast": 5,
+    "/index.de.html 375-light color-contrast": 5,
+    "/index.fr.html 1280-light color-contrast": 5,
+    "/index.fr.html 375-light color-contrast": 5,
+    "/news.html 1280-light color-contrast": 5,
+    "/news.html 375-light color-contrast": 5
+  }
+}

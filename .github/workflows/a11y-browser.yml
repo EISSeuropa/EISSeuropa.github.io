@@ -1,0 +1,53 @@
+# Browser accessibility pass (#1626).
+#
+# Runs scripts/check-a11y-browser.mjs: axe-core in headless Chrome over the
+# built site, 51 pages at 375px and 1280px in light and dark. It exists
+# because the static checks (a11y_lint.py, axe under jsdom) read HTML and
+# cannot see layout, computed colour, a phone viewport or scripted markup,
+# which is where the #1623 defects and the #1624 contrast failures lived.
+#
+# Status: gating on anything new or worse than data/a11y-baseline.json.
+# Known violations live in the baseline, so it passes on the current tree
+# and only fires on a regression.
+#
+# Unfiltered, like sanity-check.yml and for the same reasons (#1343, #501):
+# the pass takes under a minute locally, and a path-filtered check that is
+# later made required would sit pending forever on PRs it skips.
+#
+# Node 22 for the built-in WebSocket the CDP driver uses. Chrome is the
+# runner image's own google-chrome. SHA-pinned actions per CLAUDE.md §2.
+name: Accessibility (browser)
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  axe:
+    name: axe-core in headless Chrome
+    # The */auto refresh PRs merge a second after they open (see
+    # sanity-check.yml); skipping them gates nothing.
+    if: ${{ !endsWith(github.head_ref, '/auto') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v6
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Build site
+        run: npm run build
+
+      - name: Run axe in headless Chrome
+        run: node scripts/check-a11y-browser.mjs

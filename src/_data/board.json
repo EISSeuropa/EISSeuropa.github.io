@@ -54,6 +54,22 @@
       "workingGroups": "WG1"
     },
     {
+      "name": "Dr Louise Beaumais",
+      "role": "Treasurer",
+      "alt": "Dr Louise Beaumais",
+      "photo": "/assets/images/board/louise-beaumais.jpg",
+      "position": "Postdoc",
+      "institution": "INALCO",
+      "country": "France",
+      "bio": "Louise Beaumais holds a PhD in Political Science (International Relations) from CERI, Sciences Po. Her work questions legitimate knowledge in international affairs as well as ongoing security dynamics in the Arctic. She is currently a postdoctoral researcher at INALCO, where she studies tensions and contestations surrounding Indigenous Peoples’ knowledge within UN institutions.",
+      "themes": "Arctic ; knowledge ; quantification ; conflit ; representations",
+      "links": {
+        "orcid": "https://orcid.org/0000-0001-5458-1566",
+        "linkedin": "https://www.linkedin.com/in/louise-beaumais-25b33717a/"
+      },
+      "workingGroups": "None yet"
+    },
+    {
       "name": "Dr Marie Robin",
       "role": "Treasurer",
       "photo": "/assets/images/screenshot-2024-03-25-at-18.29.49-348x391.png",
