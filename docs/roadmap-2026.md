@@ -501,7 +501,8 @@ Where the site stands today, so the plan above makes sense:
   ([#157](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/157)).
 - **Design**: Apple-style glass, auto + manual dark mode, Inter font,
   reveal animations gated on `prefers-reduced-motion`. Brand-blue
-  (`#007bc6`) is the canonical accent.
+  (`#007bc6`) is the logo colour, and the UI accent is its text-safe shade
+  `#0071b8` ([#1624](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1624)).
 - **Accessibility**: `/accessibility.html` §7 declares **partial**
   conformance with WCAG 2.1 AA, aligned with EN 301 549. axe-core is
   clean across light and dark. The limitation that is ours is the

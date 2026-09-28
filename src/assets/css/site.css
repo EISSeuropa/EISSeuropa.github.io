@@ -115,9 +115,13 @@
      from the brand source rather than converted to hsl(), so the rendered
      colour is provably unchanged. */
   --brand-network: #73caff;
-  --accent: hsl(203 100% 39%);
-  --accent-hover: hsl(203 100% 33%);
-  --accent-soft: hsl(203 100% 39% / 0.1);
+  /* Brand blue three points darker (#0071b8), for AA text contrast (#1624).
+     The logo's #007bc6 is 4.51:1 on white and failed on every tinted card
+     (52 nodes on /board). This is 5.18:1 on white and 4.66:1 on the #f0f3fa
+     tint. The logo keeps #007bc6. Hover stays six points below. */
+  --accent: hsl(203 100% 36%);
+  --accent-hover: hsl(203 100% 30%);
+  --accent-soft: hsl(203 100% 36% / 0.1);
   --accent-text: hsl(0 0% 100%);
   --warning: hsl(36 95% 50%);
   /* Anthology Atlas co-author edge. An edge is the constellation line at map

@@ -154,25 +154,14 @@ alternates:
           des boutons HTML classiques accessibles au clavier, portant un état
           <code>aria-pressed</code> lorsqu'ils fonctionnent par bascule.
         </li>
-        <li>
-          <strong>Couleur des liens et des libellés sur fonds teintés.</strong> Le bleu
-          d'accentuation utilisé pour les liens et les libellés de rôle mesure 4,51:1 sur du
-          blanc, soit un centième au-dessus du minimum AA. Sur une surface teintée plutôt que
-          blanche, il passe en dessous : les libellés de rôle et les liens de profil de la page
-          Les personnes mesurent 3,99:1, et les pastilles de catégorie de la page d'accueil et
-          de la page actualités mesurent 4,05:1.
-          <em>Atténuation :</em> aucune qui laisse la couleur inchangée ; ce point est donc
-          corrigé plutôt que contourné. Suivi dans le
-          <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1624" target="_blank" rel="noopener">ticket&nbsp;#1624</a>.
-        </li>
       </ol>
 
       <h2>4. Fonctionnalités d'accessibilité mises en œuvre</h2>
       <ul>
         <li>Repères sémantiques (<code>&lt;header&gt;</code>, <code>&lt;nav aria-label="Primary"&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>) et un lien d'évitement vers le contenu comme premier élément focusable sur chaque page</li>
         <li>Indicateurs de focus visibles via <code>:focus-visible</code> sur chaque contrôle interactif</li>
-        <li>Schémas de couleurs clair et sombre respectant les ratios de contraste WCAG&nbsp;AA pour le texte et les contrôles d'interface, à l'exception du cas consigné au §3</li>
-        <li>Liens soulignés dans les paragraphes gris, où l'accentuation n'atteint que 1,76:1 face au texte qui les entoure et où la couleur seule ne suffirait pas à les distinguer (WCAG&nbsp;1.4.1)</li>
+        <li>Schémas de couleurs clair et sombre respectant les ratios de contraste WCAG&nbsp;AA pour le texte et les contrôles d'interface</li>
+        <li>Liens soulignés dans les paragraphes gris, où l'accentuation n'atteint que 1,53:1 face au texte qui les entoure et où la couleur seule ne suffirait pas à les distinguer (WCAG&nbsp;1.4.1)</li>
         <li>Film de la conférence pouvant être mis en pause au clavier, par un contrôle nommé qui reste atteignable pendant la lecture</li>
         <li>Mode sombre automatique via <code>prefers-color-scheme</code>, avec une bascule manuelle persistante dans <code>localStorage</code></li>
         <li>Toutes les animations conditionnées à <code>prefers-reduced-motion</code> — lorsque l'utilisateur le désactive, les transitions et animations de révélation sont désactivées</li>
@@ -230,8 +219,7 @@ alternates:
         <strong>Conformité partielle</strong> avec WCAG&nbsp;2.1 Niveau&nbsp;AA, alignée avec
         EN&nbsp;301&nbsp;549. Tous les modèles du site respectent la norme ; le label de conformité
         partielle résiduelle reflète les limites documentées au §3 (PDF intégrés, surfaces translucides,
-        texte alt générique sur certaines photos d'archive, la couleur d'accentuation sur fonds
-        teintés). Le lint statique et les
+        texte alt générique sur certaines photos d'archive). Le lint statique et les
         analyses au niveau du balisage ne signalent aucune violation, et les éléments qu'ils
         placent en « revue manuelle » ont été individuellement vérifiés conformes. La passe de
         septembre&nbsp;2026 menée dans un navigateur constitue l'évaluation en vigueur, et ce

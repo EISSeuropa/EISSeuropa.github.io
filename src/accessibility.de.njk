@@ -156,24 +156,14 @@ alternates:
           HTML-Schaltflächen, die mit der Tastatur erreichbar sind und einen
           <code>aria-pressed</code>-Zustand tragen, wo sie umschalten.
         </li>
-        <li>
-          <strong>Link- und Bezeichnungsfarbe auf getönten Flächen.</strong> Das Akzentblau für
-          Links und Rollenbezeichnungen misst 4,51:1 auf Weiß und liegt damit ein Hundertstel
-          über dem AA-Minimum. Auf einer getönten statt weißen Fläche fällt es darunter: die
-          Rollenbezeichnungen und Profillinks auf der Seite Die Menschen messen 3,99:1, die
-          Kategorie-Chips auf der Startseite und der Aktuelles-Seite 4,05:1.
-          <em>Abhilfe:</em> keine, die die Farbe unangetastet lässt; dieser Punkt wird daher
-          behoben statt umgangen. Nachverfolgt in
-          <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1624" target="_blank" rel="noopener">Ticket&nbsp;#1624</a>.
-        </li>
       </ol>
 
       <h2>4. Implementierte Barrierefreiheitsfunktionen</h2>
       <ul>
         <li>Semantische Landmarken (<code>&lt;header&gt;</code>, <code>&lt;nav aria-label="Primary"&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>) und ein Skip-to-Content-Link als erstes fokussierbares Element auf jeder Seite</li>
         <li>Sichtbare Fokusindikatoren über <code>:focus-visible</code> auf jedem interaktiven Steuerelement</li>
-        <li>Helles und dunkles Farbschema, die die WCAG&nbsp;AA-Kontrastverhältnisse für Fließtext und Bedienelemente erfüllen, mit Ausnahme des in §3 festgehaltenen Falls</li>
-        <li>Unterstrichene Links in grauen Absätzen, wo der Akzent gegenüber dem umgebenden Text nur 1,76:1 erreicht und Farbe allein sie nicht unterscheidbar machen würde (WCAG&nbsp;1.4.1)</li>
+        <li>Helles und dunkles Farbschema, die die WCAG&nbsp;AA-Kontrastverhältnisse für Fließtext und Bedienelemente erfüllen</li>
+        <li>Unterstrichene Links in grauen Absätzen, wo der Akzent gegenüber dem umgebenden Text nur 1,53:1 erreicht und Farbe allein sie nicht unterscheidbar machen würde (WCAG&nbsp;1.4.1)</li>
         <li>Der Konferenzfilm lässt sich mit der Tastatur anhalten, über ein benanntes Bedienelement, das während der Wiedergabe erreichbar bleibt</li>
         <li>Automatischer Dunkelmodus über <code>prefers-color-scheme</code>, mit manueller Übersteuerung, die in <code>localStorage</code> persistiert wird</li>
         <li>Alle Animationen auf <code>prefers-reduced-motion</code> gestaffelt — wenn der Nutzer dies deaktiviert, werden Übergänge und Reveal-Animationen ausgeschaltet</li>
@@ -228,8 +218,7 @@ alternates:
         <strong>Teilweise Konformität</strong> mit WCAG&nbsp;2.1 Stufe&nbsp;AA, ausgerichtet auf
         EN&nbsp;301&nbsp;549. Alle Vorlagen der Website erfüllen den Standard; das Label
         „teilweise Konformität" spiegelt die in §3 dokumentierten Einschränkungen wider (eingebettete
-        PDFs, transluzente Flächen, generischer Alt-Text auf einigen Archivfotos, die
-        Akzentfarbe auf getönten Flächen). Das
+        PDFs, transluzente Flächen, generischer Alt-Text auf einigen Archivfotos). Das
         statische Lint und die Prüfungen auf Auszeichnungsebene melden keine Verstöße, und die
         Elemente, die sie in „manuelle Überprüfung" geben, wurden einzeln als konform
         verifiziert. Der im Browser durchgeführte Durchlauf vom September&nbsp;2026 ist die
