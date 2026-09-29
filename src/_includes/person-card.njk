@@ -5,9 +5,9 @@
                   the computed `isEsscActive` boolean.
 
    Optional fields on `person`:
-     - functionalResponsibility — secondary role label, rendered as a
-       quiet pill next to the primary role (e.g. for Arthur:
-       "BOARD MEMBER" + a "Technology Coordinator" pill).
+     - functionalResponsibility — secondary role labels, comma-separated,
+       each rendered as a quiet pill next to the primary role (e.g. for
+       Arthur: "BOARD MEMBER" + a "Technology Coordinator" pill).
      - bio — narrative paragraph, rendered as a teaser with a
        Read-more <details> expander when longer than ~200 chars.
      - affiliation — single line above the bio.
@@ -45,9 +45,10 @@
          indicating the year the person was active with EISS. #}
       <span class="person-active-year">· {{ person.activeYear }}</span>
       {%- endif %}
-      {%- if person.functionalResponsibility %}
-      <span class="person-functional-resp">{{ person.functionalResponsibility }}</span>
-      {%- endif %}
+      {#- ponytail: comma-separated, as a Google Forms checkbox question writes it #}
+      {%- for resp in (person.functionalResponsibility or "").split(", ") %}{% if resp %}
+      <span class="person-functional-resp">{{ resp }}</span>
+      {%- endif %}{% endfor %}
       {%- if person.isEsscActive %}
       <span class="person-essc-speaker"
             data-tooltip="{{ t.boardPage.esscSpeakerTitle }}"
