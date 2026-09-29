@@ -126,7 +126,10 @@ async function launch() {
     "--remote-debugging-port=0", `--user-data-dir=${profile}`, "about:blank",
   ], { stdio: "ignore" });
   const portFile = path.join(profile, "DevToolsActivePort");
-  for (let i = 0; i < 200 && !fs.existsSync(portFile); i++) await new Promise((r) => setTimeout(r, 50));
+  // 30 s: a cold CI runner once took longer than the old 10 s and the job
+  // died on ENOENT before axe ran (PR #1743).
+  for (let i = 0; i < 600 && !fs.existsSync(portFile); i++) await new Promise((r) => setTimeout(r, 50));
+  if (!fs.existsSync(portFile)) throw new Error("Chrome did not start within 30 s (no DevToolsActivePort).");
   const [port, wsPath] = fs.readFileSync(portFile, "utf8").trim().split("\n");
   const ws = new WebSocket(`ws://127.0.0.1:${port}${wsPath}`);
   await new Promise((ok, ko) => { ws.onopen = ok; ws.onerror = ko; });
