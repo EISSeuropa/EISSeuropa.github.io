@@ -49,7 +49,7 @@ just don't merge.
 | 1 | **Title** | Dropdown — see *Q1 options* below | ✅ |
 | 2 | **Full name** | Short answer | ✅ |
 | 3 | **What is your role at EISS?** | Dropdown — see *Q3 options* below | ✅ |
-| 4 | **Do you have functional responsibilities?** | Dropdown — see *Q4 options* below | ⬜ |
+| 4 | **Do you have functional responsibilities?** | Checkboxes — see *Q4 options* below | ⬜ |
 | 5 | **Position or current role (e.g. PhD candidate, Associate Professor, Policy analyst)** | Short answer | ✅ |
 | 6 | **Institution or organisation** | Short answer | ✅ |
 | 7 | **Country** | Short answer | ✅ |
@@ -92,13 +92,16 @@ than a hard constraint:
 
 **Q4 options**, which must match values in `scripts/board-source.json` →
 `functional_responsibilities` list. A member can hold a Functional
-Responsibility independently of their formal role (Arthur is both a
-Board Member AND the Technology Coordinator):
+Responsibility independently of their formal role, and can hold several
+(Arthur is a Board Member and the Technology, Conference and
+Volunteering coordinator). Google Forms writes ticked checkboxes as one
+comma-separated cell, and the card renders one pill per value:
 
-- *(None — leave blank)*
 - Technology Coordinator
 - Events Coordinator
 - Communications Coordinator
+- Conference Coordinator
+- Volunteering Coordinator
 
 > **Role vs Functional Responsibility.** *Role* drives which section
 > the card lands in (Leadership / Board Members / Support Staff) and

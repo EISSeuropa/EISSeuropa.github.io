@@ -70,7 +70,7 @@
         <p class="person-role">
           <span class="person-role-primary">{% if person.isFormer %}Former {% endif %}{{ person.role }}</span>
           {%- if person.activeYear %}<span class="person-active-year">· {{ person.activeYear }}</span>{%- endif %}
-          {%- if person.functionalResponsibility %}<span class="person-functional-resp">{{ person.functionalResponsibility }}</span>{%- endif %}
+          {%- for resp in (person.functionalResponsibility or "").split(", ") %}{% if resp %}<span class="person-functional-resp">{{ resp }}</span>{% endif %}{%- endfor %}
         </p>
         <h1 class="profile-name">{{ person.name }}</h1>
         {%- if person.position %}<p class="person-position" lang="en">{{ person.position | safe }}</p>{%- endif %}
