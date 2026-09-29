@@ -163,7 +163,10 @@ async function launch() {
     try { ws.close(); } catch {}
     proc.kill();
     await exited;
-    fs.rmSync(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+    // Best effort: Chrome's helper processes can still be writing into the
+    // profile after the main one exits (ENOTEMPTY on CI, #1745). A leftover
+    // temp dir must not fail the audit.
+    try { fs.rmSync(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 }); } catch {}
   };
   return { send, next, close };
 }
