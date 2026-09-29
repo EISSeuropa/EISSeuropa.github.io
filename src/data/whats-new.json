@@ -13,8 +13,8 @@
   "cta": {
     "href": {
       "en": "/blog/introducing-belvedere.html",
-      "fr": "/blog/introducing-belvedere.html",
-      "de": "/blog/introducing-belvedere.html"
+      "fr": "/blog/introducing-belvedere.fr.html",
+      "de": "/blog/introducing-belvedere.de.html"
     },
     "external": false,
     "i18n": {

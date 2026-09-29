@@ -9,14 +9,16 @@ lang: en
    volunteers and interns with no board.json entry, and building an author-page
    system for a byline would be the wrong size of solution. #}
 {% from "icons.njk" import icon %}
+{%- set bt = i18n[lang or "en"] -%}
+{%- set blogHref = "/blog.html" | localizedHref(lang) -%}
 
 <header class="page-header">
   <div class="container">
-    <span class="eyebrow"><a href="/blog.html">Belvedere – the EISS Blog</a></span>
+    <span class="eyebrow"><a href="{{ blogHref }}">{{ bt.nav.blog }}</a></span>
     <h1>{{ title }}</h1>
     <p class="blog-byline">
-      By {{ author }}{% if authorNote %}, {{ authorNote }}{% endif %}.
-      <time datetime="{{ page.date.toISOString().slice(0, 10) }}">{{ page.date.toISOString() | newsDate("en") }}</time>
+      {{ bt.blogPost.by }} {{ author }}{% if authorNote %}, {{ authorNote }}{% endif %}.
+      <time datetime="{{ page.date.toISOString().slice(0, 10) }}">{{ page.date.toISOString() | newsDate(lang) }}</time>
     </p>
   </div>
 </header>
@@ -28,7 +30,7 @@ lang: en
     </div>
 
     <p class="blog-back">
-      <a href="/blog.html">{{ icon("arrow-left") }} All posts</a>
+      <a href="{{ blogHref }}">{{ icon("arrow-left") }} {{ bt.blogPost.allPosts }}</a>
     </p>
   </div>
 </section>
