@@ -1,5 +1,38 @@
 [
   {
+    "name": "Dr Louise Beaumais",
+    "slug": "dr-louise-beaumais",
+    "orcid": "https://orcid.org/0000-0001-5458-1566",
+    "surname": "Beaumais",
+    "letter": "B",
+    "works": [
+      {
+        "title": "Do Humanitarian Workers Really Trust Numbers? An Assessment of the Use of Quantitative Data in the Humanitarian Field",
+        "year": 2023,
+        "journal": "Journal of humanitarian affairs",
+        "doi": "https://doi.org/10.7227/JHA.100"
+      },
+      {
+        "title": "Les systèmes d’alerte précoce ou l’illusion de l’objectivation",
+        "year": 2023,
+        "journal": "Cités : Philosophie, politique, Histoire",
+        "doi": "https://doi.org/10.3917/cite.095.0083"
+      },
+      {
+        "title": "Diplomats, Soldiers, and Armed Conflict Databases: Another French Exception?",
+        "year": 2023,
+        "journal": "Global Studies Quarterly",
+        "doi": "https://doi.org/10.1093/isagsq/ksad027"
+      },
+      {
+        "title": "Exploring Practices of Conflict Data Production, Analysis, Dissemination, and Practitioner Reception: Methodological Framework and Preliminary Findings",
+        "year": 2021,
+        "journal": null,
+        "doi": null
+      }
+    ]
+  },
+  {
     "name": "Prof. Antonio Calcara",
     "slug": "prof-antonio-calcara",
     "orcid": "https://orcid.org/0000-0001-8636-6465",
@@ -472,6 +505,12 @@
     "letter": "S",
     "works": [
       {
+        "title": "How Scenario-Based Interventions Transform Cybersecurity Mental Models in Danish Defence SMEs",
+        "year": 2026,
+        "journal": null,
+        "doi": "https://doi.org/10.1145/3829807.3829812"
+      },
+      {
         "title": "'It's Confusing, Insecure, and Messy' -- Mapping the Gaps Between Stakeholders’ Cybersecurity Mental Models in the Danish Defence Sector",
         "year": 2026,
         "journal": null,
@@ -494,12 +533,6 @@
         "year": 2025,
         "journal": "Law & Geoeconomics",
         "doi": "https://doi.org/10.1163/29505720-bja00007"
-      },
-      {
-        "title": "When Military Interventions Decrease Military Power. Evidence from the French Case",
-        "year": 2025,
-        "journal": "Defence and Peace Economics",
-        "doi": "https://doi.org/10.1080/10242694.2023.2263722"
       }
     ]
   },
@@ -510,6 +543,12 @@
     "surname": "Verschuren",
     "letter": "V",
     "works": [
+      {
+        "title": "Why interstate arms collaborations fail: The commitment-implementation paradox in the context of NATO BMD",
+        "year": 2026,
+        "journal": "Journal of Strategic Studies",
+        "doi": "https://doi.org/10.1080/01402390.2026.2720233"
+      },
       {
         "title": "Writing IR after COVID-19: Reassessing Political Possibilities, Good Faith, and Policy-Relevant Scholarship on Climate Change Mitigation and Nuclear Disarmament",
         "year": 2023,
