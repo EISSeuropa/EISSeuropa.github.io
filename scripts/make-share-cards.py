@@ -193,7 +193,7 @@ CARDS = [
     # English only, like the blog itself (#1259). Posts inherit it through
     # src/blog/blog.11tydata.js.
     {"slug": "blog", "i18n": {
-        "en": {"eyebrow": "The EISS blog", "title": "Belvedere",
+        "en": {"eyebrow": "The EISS Blog", "title": "Belvedere",
                "subtitle": "Writing from the EISS network on European security studies"},
     }, "motif": "belvedere-mark.svg", "motif_opacity": 1},
     {"slug": "roadmap", "i18n": {
