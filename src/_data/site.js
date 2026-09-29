@@ -173,6 +173,7 @@ module.exports = {
         { href: "/initiative.html", text: "The Initiative", key: "initiative" },
         { href: "/board.html", text: "The People", key: "people" },
         { href: "/news.html", text: "News", key: "news" },
+        { href: "/blog.html", text: "Belvedere – the EISS Blog", key: "blog" },
         { href: "/prizes.html", text: "European Security Studies Prize", key: "prizes" },
         { href: "/publications.html", text: "Members' publications", key: "publications" },
         { href: "/press-kit.html", text: "Press kit", key: "pressKit" },

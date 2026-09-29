@@ -190,6 +190,12 @@ CARDS = [
         "de": {"eyebrow": "Aktuelles", "title": "Aktuelles",
                "subtitle": "Konferenzen · Publikationen · Preise · Partnerschaften"},
     }},
+    # English only, like the blog itself (#1259). Posts inherit it through
+    # src/blog/blog.11tydata.js.
+    {"slug": "blog", "i18n": {
+        "en": {"eyebrow": "The EISS Blog", "title": "Belvedere",
+               "subtitle": "Writing from the EISS network on European security studies"},
+    }, "motif": "belvedere-mark.svg", "motif_opacity": 1},
     {"slug": "roadmap", "i18n": {
         "en": {"eyebrow": "Development", "title": "Roadmap",
                "subtitle": "Shipped · in progress · planned"},
@@ -314,7 +320,7 @@ TEMPLATE = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" wi
 
   <!-- Soft constellation motif (the real network mark) bleeding off the
        top-right of the visible band, as a faint watermark. -->
-  <g opacity="0.5">{motif}</g>
+  <g opacity="{motif_opacity}">{motif}</g>
 
   <!-- The official EISS lockup (constellation + EiSS wordmark), top-left,
        in brand blue on the light field. -->
@@ -419,6 +425,10 @@ def build_lockup() -> str:
     )
 
 
+# Sub-brand marks: square, with a currentColor part pinned to the brand blue.
+SQUARE_MARKS = {"anthology-mark.svg", "belvedere-mark.svg"}
+
+
 def build_motif(name: str = "logo-mark.svg") -> str:
     """The constellation mark, large and bleeding off the top-right of the
     visible band, used at low opacity as a background texture.
@@ -429,15 +439,18 @@ def build_motif(name: str = "logo-mark.svg") -> str:
     gets its own box rather than being letterboxed into the wide one."""
     view_box, inner = brand_svg_inner(name)
     box = (
-        'x="800" y="120" width="400" height="400"'
-        if name == "anthology-mark.svg"
+        # The Belvedere arch only reads whole, so it sits inside the band.
+        'x="820" y="370" width="320" height="320"'
+        if name == "belvedere-mark.svg"
+        else 'x="800" y="120" width="400" height="400"'
+        if name in SQUARE_MARKS
         else 'x="610" y="150" width="760" height="341"'
     )
     # anthology-mark.svg paints its hub with fill="currentColor" so one asset
     # can recolour per surface. Inside this card there is nothing to inherit
     # from, so the hub rendered grey against a blue network. Pin it to the
     # brand blue, which is what the mark shows everywhere else on the site.
-    colour = ' color="#007bc6"' if name == "anthology-mark.svg" else ""
+    colour = ' color="#007bc6"' if name in SQUARE_MARKS else ""
     return (
         f'<svg {box} viewBox="{view_box}"{colour} '
         f'preserveAspectRatio="xMidYMid meet">{inner}</svg>'
@@ -463,7 +476,8 @@ def build_title_block(title: str) -> tuple[str, int]:
     return markup, TITLE_TOP + (len(lines) - 1) * spacing
 
 
-def render(strings: dict, lockup: str, motif: str, font_face: str) -> Path:
+def render(strings: dict, lockup: str, motif: str, font_face: str,
+           motif_opacity: float = 0.5) -> Path:
     """Write the template SVG with the given language's strings, return the
     temp-file path. `strings` has `eyebrow`, `title`, and optional
     `subtitle`. `lockup`/`motif`/`font_face` are built once in main()."""
@@ -480,6 +494,7 @@ def render(strings: dict, lockup: str, motif: str, font_face: str) -> Path:
         font_face=font_face,
         lockup=lockup,
         motif=motif,
+        motif_opacity=motif_opacity,
         eyebrow=escape(strings["eyebrow"]).upper(),
         title_block=title_block,
         subtitle_block=subtitle_block,
@@ -580,7 +595,8 @@ def main() -> None:
             continue
         card_motif = build_motif(card["motif"]) if card.get("motif") else motif
         for lang, strings in card["i18n"].items():
-            svg = render(strings, lockup, card_motif, font_face)
+            # A card whose mark is its subject (the blog) shows it at full strength.
+            svg = render(strings, lockup, card_motif, font_face, card.get("motif_opacity", 0.5))
             try:
                 out = rasterize(svg, dest_filename(card["slug"], lang))
                 size_kb = out.stat().st_size // 1024
