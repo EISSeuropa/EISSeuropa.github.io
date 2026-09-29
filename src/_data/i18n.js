@@ -86,6 +86,7 @@ const locales = {
       initiative: "The Initiative",
       people: "The People",
       news: "News",
+      blog: "Blog",
       prizes: "European Security Studies Prize",
       publications: "Members' publications",
       pressKit: "Press kit",
@@ -955,6 +956,7 @@ const locales = {
       initiative: "L'Initiative",
       people: "L'équipe",
       news: "Actualités",
+      blog: "Blog",
       // Le nom du prix n'est pas traduit : c'est son intitulé officiel.
       prizes: "European Security Studies Prize",
       publications: "Publications des membres",
@@ -1703,6 +1705,7 @@ const locales = {
       initiative: "Die Initiative",
       people: "Die Personen",
       news: "Aktuelles",
+      blog: "Blog",
       // Der Name des Preises bleibt unübersetzt: das ist seine offizielle Bezeichnung.
       prizes: "European Security Studies Prize",
       publications: "Publikationen der Mitglieder",

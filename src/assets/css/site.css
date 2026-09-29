@@ -8903,6 +8903,16 @@ html.atlas-welcome .atlas-welcome[hidden] { display: flex; }
   max-width: 62ch;
 }
 
+/* The Belvedere mark above the index eyebrow. Same recolouring contract as
+   the Atlas mark: structure follows --accent, the constellation holds. */
+.blog-mark { display: block; color: var(--accent); margin-bottom: var(--space-3); }
+.blog-mark svg { width: 4rem; height: 4rem; display: block; }
+/* The dark accent is nearly the constellation blue, so the arch steps to text. */
+[data-theme="dark"] .blog-mark { color: var(--text); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .blog-mark { color: var(--text); }
+}
+
 /* Post page: the byline under the title, and the return link. */
 .blog-byline {
   margin: var(--space-3) 0 0;
