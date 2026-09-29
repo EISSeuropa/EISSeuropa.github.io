@@ -62,14 +62,21 @@ repo they would strand the daily automation:
    docs-only PRs either — another way a required check fails to report.
 
 **To enable required checks safely (Phase 3):**
-- Switch the bots' `peter-evans/create-pull-request` token from
-  `GITHUB_TOKEN` to a **fine-grained PAT** (or a GitHub App). PRs opened
-  with a PAT trigger the full `pull_request` CI, so the bots report the
-  same checks as a human PR.
-- Then add a **single always-run "CI gate" aggregator job** (one that
-  `needs:` the real jobs and passes when they pass *or* are skipped) and
-  require **only that one context** — this sidesteps the path-filter
-  problem and the multiple-context matching.
+- **Done:** the six bot workflows pass `secrets.AUTOPR_TOKEN || secrets.GITHUB_TOKEN`
+  to `create-pull-request`, so they switch to a PAT the moment the secret
+  exists and keep working on `GITHUB_TOKEN` until then.
+- **Maintainer step:** create a fine-grained PAT (this repo, contents +
+  pull-requests read/write) and save it as the repo secret `AUTOPR_TOKEN`.
+  NetSec already runs on the same pattern. PRs opened with a PAT trigger
+  the full `pull_request` CI.
+- **Then:** require these four contexts in the Phase 2 ruleset (`17259266`),
+  with `strict_required_status_checks_policy: false`. All four run on every
+  `pull_request` with no path filter, so no aggregator job is needed:
+  `build`, `axe-core in headless Chrome`,
+  `Verify translations match their English sources`,
+  `Duplicate data keys + empty href/src`.
+  Link-check stays out: it is path-filtered on purpose (third-party
+  bandwidth). CodeQL stays out: it reports failure when cancelled.
 - Optionally add a **merge queue** (serialises merges; also mitigates the
   §4 CHANGELOG concurrent-merge race).
 

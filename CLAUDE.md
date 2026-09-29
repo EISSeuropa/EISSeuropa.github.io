@@ -30,9 +30,10 @@ authoritative for EISS.
 ## 2. Pull-request workflow
 
 - **Auto-merge by default.** Open the PR with `gh pr create`, then arm
-  auto-merge with `gh pr merge --auto --squash`. CI checks (the i18n
-  drift checker on every HTML-touching PR, plus CodeQL) hold the merge
-  if something is wrong.
+  auto-merge with `gh pr merge --auto --squash`. **Until #501 makes checks
+  required, nothing holds it:** GitHub merges at once, before CI reports
+  (#1744 did exactly that). So until then, merge only after `gh pr checks`
+  is green.
 - **Carve-out: visual changes need preview review.** When the PR
   changes something a human will see (layout shifts, new components,
   copy that's visible above the fold, anything affecting brand
