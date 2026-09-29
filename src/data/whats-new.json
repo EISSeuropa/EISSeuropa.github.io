@@ -7,14 +7,14 @@
   "_active_reason": "Launch of Belvedere – the EISS Blog, a new section visitors would not otherwise find. Turn off by 10 November 2026, six weeks on.",
   "headline": {
     "en": "Belvedere – the EISS Blog is open.",
-    "fr": "Belvedere – le blog de l'EISS est ouvert.",
+    "fr": "Belvédère – le blog de l'EISS est ouvert.",
     "de": "Belvedere – der EISS-Blog ist online."
   },
   "cta": {
     "href": {
-      "en": "/blog/why-belvedere.html",
-      "fr": "/blog/why-belvedere.html",
-      "de": "/blog/why-belvedere.html"
+      "en": "/blog/introducing-belvedere.html",
+      "fr": "/blog/introducing-belvedere.html",
+      "de": "/blog/introducing-belvedere.html"
     },
     "external": false,
     "i18n": {
