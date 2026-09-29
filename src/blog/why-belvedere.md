@@ -1,7 +1,8 @@
 ---
 title: Why Belvedere
 date: 2026-09-29
-author: The EISS
+author: Arthur Laudrain
+authorNote: Editor
 summary: What this blog is for, and where its name comes from.
 ---
 
@@ -9,6 +10,6 @@ A belvedere is a lookout: a small tower or an open gallery on a villa or a city 
 
 That is the aim of this blog. People in the EISS network step back from the news and take the longer view, of a debate in the field or of a question European security has not settled.
 
-The word is the same in English, French, German and Italian. Our mark shows an arched lookout opening onto the EISS constellation.
+The word is the same in English, French, German and Italian. The mark shows an arched lookout with the EISS constellation beyond it, and one star past the frame.
 
 The first posts come from the three volunteers joining the EISS this autumn. New posts appear on this page and in the [site feed](/feed.xml).
