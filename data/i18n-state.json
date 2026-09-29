@@ -224,6 +224,34 @@
         "translated_on": "2026-09-29",
         "status": "beta"
       }
+    },
+    "src/blog.njk": {
+      "fr": {
+        "file": "src/blog.fr.njk",
+        "source_sha1": "1f794b61c729a22945a02f8e426265a0a26aee7f",
+        "translated_on": "2026-09-29",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/blog.de.njk",
+        "source_sha1": "1f794b61c729a22945a02f8e426265a0a26aee7f",
+        "translated_on": "2026-09-29",
+        "status": "beta"
+      }
+    },
+    "src/blog/introducing-belvedere.md": {
+      "fr": {
+        "file": "src/blog/introducing-belvedere.fr.md",
+        "source_sha1": "add87a17c8979085938dff8d2d6558874eff0ded",
+        "translated_on": "2026-09-29",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/blog/introducing-belvedere.de.md",
+        "source_sha1": "add87a17c8979085938dff8d2d6558874eff0ded",
+        "translated_on": "2026-09-29",
+        "status": "beta"
+      }
     }
   }
 }

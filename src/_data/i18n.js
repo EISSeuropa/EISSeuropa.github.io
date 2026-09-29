@@ -35,6 +35,7 @@
 
 const locales = {
   en: {
+    blogPost: { by: "By", allPosts: "All posts" },
     code: "en",
     name: "English",
     htmlLang: "en",
@@ -907,6 +908,7 @@ const locales = {
   },
 
   fr: {
+    blogPost: { by: "Par", allPosts: "Tous les billets" },
     code: "fr",
     news: {
       eyebrow: "Actualités",
@@ -1656,6 +1658,7 @@ const locales = {
   },
 
   de: {
+    blogPost: { by: "Von", allPosts: "Alle Beiträge" },
     code: "de",
     news: {
       eyebrow: "Aktuelles",

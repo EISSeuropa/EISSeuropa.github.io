@@ -195,6 +195,10 @@ CARDS = [
     {"slug": "blog", "i18n": {
         "en": {"eyebrow": "The EISS Blog", "title": "Belvedere",
                "subtitle": "Writing from the EISS network on European security studies"},
+        "fr": {"eyebrow": "Le blog de l'EISS", "title": "Belvédère",
+               "subtitle": "Des textes du réseau EISS sur les études de sécurité européennes"},
+        "de": {"eyebrow": "Der EISS-Blog", "title": "Belvedere",
+               "subtitle": "Beiträge aus dem EISS-Netzwerk zu europäischen Sicherheitsstudien"},
     }, "motif": "belvedere-mark.svg", "motif_opacity": 1},
     {"slug": "roadmap", "i18n": {
         "en": {"eyebrow": "Development", "title": "Roadmap",

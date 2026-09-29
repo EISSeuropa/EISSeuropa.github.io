@@ -91,6 +91,10 @@ module.exports = function (eleventyConfig) {
     }).format(d);
   });
 
+  // Blog posts in one language (#1740). A post without `lang` is English.
+  eleventyConfig.addFilter("byLang", (items, lang) =>
+    (items || []).filter((i) => (i.data.lang || "en") === lang));
+
   eleventyConfig.addFilter("bust", (url) => {
     try {
       const rel = String(url).replace(/^\//, "").split("?")[0];

@@ -1,47 +1,43 @@
 ---
 layout: base.njk
-permalink: /blog.html
-title: Belvedere – the EISS Blog
-description: Belvedere – the EISS Blog, with writing from the EISS network on European security studies by our volunteers and interns.
-lang: en
+permalink: /blog.de.html
+title: Belvedere – der EISS-Blog
+description: "Belvedere – der EISS-Blog: Beiträge aus dem EISS-Netzwerk zu europäischen Sicherheitsstudien, verfasst von unseren Ehrenamtlichen und Praktikantinnen und Praktikanten."
+lang: de
 navKey: blog
+status: beta
 metaImage: /assets/images/blog-meta.jpg
 alternates:
   en: /blog.html
   fr: /blog.fr.html
   de: /blog.de.html
 ---
-{# The blog index (#1259). The launch post promises every post in EN, FR and
-   DE, hand-translated (rule §1). The FR/DE pages and chrome are #1740.
-
-   Posts come from the `blog` tag, set for the whole directory in
-   src/blog/blog.11tydata.js, so publishing needs no edit to this file. #}
 {% from "icons.njk" import icon %}
 
 <header class="page-header">
   <div class="container">
     {#- The Belvedere mark (brand/belvedere-mark.svg). Decorative: the h1 names the page. #}
     <span class="blog-mark" aria-hidden="true">{% inlineSvg "assets/images/brand/belvedere-mark.svg" %}</span>
-    <span class="eyebrow">The EISS Blog</span>
+    <span class="eyebrow">Der EISS-Blog</span>
     <h1>Belvedere</h1>
     <p class="page-lead">
-      Writing from the network on European security studies.
+      Beiträge aus dem Netzwerk zu europäischen Sicherheitsstudien.
     </p>
     <p style="margin-top: var(--space-4);">
-      <a class="btn btn-secondary btn-sm" href="/feed.xml">{{ icon("rss") }} Subscribe by feed</a>
+      <a class="btn btn-secondary btn-sm" href="/feed.xml">{{ icon("rss") }} Feed abonnieren</a>
     </p>
   </div>
 </header>
 
 <section class="section">
   <div class="container">
-    {%- set posts = collections.blog | byLang("en") | reverse %}
+    {%- set posts = collections.blog | byLang("de") | reverse %}
     {%- if posts.length %}
     <ul class="blog-list">
       {%- for post in posts %}
       <li class="blog-item">
         <time class="blog-date" datetime="{{ post.date.toISOString().slice(0, 10) }}">
-          {{ post.date.toISOString() | newsDate("en") }}
+          {{ post.date.toISOString() | newsDate("de") }}
         </time>
         <h2 class="blog-item-title"><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
         <p class="blog-item-byline">
@@ -54,8 +50,8 @@ alternates:
     {%- else %}
     {#- Live state until the first piece lands. -#}
     <p class="muted" style="max-width: 44rem;">
-      Nothing published here yet. The first pieces will come from the volunteers joining us this
-      autumn.
+      Hier ist noch nichts erschienen. Die ersten Beiträge kommen von den Ehrenamtlichen, die in
+      diesem Herbst zu uns stoßen.
     </p>
     {%- endif %}
   </div>
@@ -65,17 +61,18 @@ alternates:
   <div class="container">
     <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
       <div class="prose" style="margin-inline: 0;">
-        <h2>Writing for us</h2>
+        <h2>Für Belvedere schreiben</h2>
         <p>
-          Volunteers and interns are offered a piece here as part of their placement. The
-          <a href="/internship.html">volunteering page</a> covers how that works.
+          Ehrenamtliche und Praktikantinnen und Praktikanten können hier im Rahmen ihres Einsatzes einen
+          Beitrag veröffentlichen. Wie das funktioniert, steht auf der
+          <a href="/internship.de.html">Seite Ehrenamt und Praktika</a>.
         </p>
         <p>
-          Posts are edited before publication, and we may decline one.
+          Beiträge werden vor der Veröffentlichung redigiert, und wir können einen Beitrag ablehnen.
         </p>
         <p>
-          Posts appear in English, French and German. We translate by hand, so the French and
-          German versions may follow a little after the English.
+          Beiträge erscheinen auf Englisch, Französisch und Deutsch. Wir übersetzen von Hand, daher
+          können die französische und die deutsche Fassung etwas später als die englische erscheinen.
         </p>
       </div>
     </article>

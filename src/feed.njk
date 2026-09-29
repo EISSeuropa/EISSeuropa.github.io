@@ -25,7 +25,7 @@ eleventyExcludeFromCollections: true
     summary: item.excerpt
   }) -%}
 {%- endfor -%}
-{%- for post in collections.blog -%}
+{%- for post in collections.blog | byLang("en") -%}
   {%- set _ = entries.push({
     title: post.data.title,
     link: site.url + post.url,
