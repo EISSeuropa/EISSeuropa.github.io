@@ -21,6 +21,7 @@
 module.exports = {
   layout: "post.njk",
   tags: "blog",
+  metaImage: "/assets/images/blog-meta.jpg",
   permalink: "/blog/{{ page.fileSlug }}.html",
   eleventyComputed: {
     // base.njk reads `description` for <title>'s meta and the share card.

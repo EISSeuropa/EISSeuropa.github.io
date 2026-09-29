@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-labelledby="t-belv d-belv">
+<title id="t-belv">Belvedere, the EISS blog</title>
+<desc id="d-belv">An arched lookout with a balustrade, opening onto a horizon and the EISS constellation beyond it.</desc>
+<g class="logo-network" fill="none" stroke="var(--brand-network, #73caff)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M27 64 Q37 57 47 61 T73 58"></path><line x1="36" y1="45" x2="49" y2="31"></line><line x1="49" y1="31" x2="63" y2="40"></line><line x1="49" y1="31" x2="54" y2="50"></line><line x1="36" y1="45" x2="54" y2="50"></line><line x1="63" y1="40" x2="54" y2="50"></line></g>
+<g class="logo-network" fill="var(--brand-network, #73caff)"><circle cx="36" cy="45" r="3.4"></circle><circle cx="63" cy="40" r="3"></circle><circle cx="54" cy="50" r="2.6"></circle></g>
+<g class="logo-text" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 90 V46 A30 30 0 0 1 80 46 V90" stroke-width="7"></path><line x1="12" y1="90" x2="88" y2="90" stroke-width="7"></line><line x1="20" y1="72" x2="80" y2="72" stroke-width="4"></line><line x1="32" y1="72" x2="32" y2="90" stroke-width="3.4"></line><line x1="44" y1="72" x2="44" y2="90" stroke-width="3.4"></line><line x1="56" y1="72" x2="56" y2="90" stroke-width="3.4"></line><line x1="68" y1="72" x2="68" y2="90" stroke-width="3.4"></line></g>
+<g class="logo-text" fill="currentColor"><circle cx="49" cy="31" r="4.4"></circle></g>
+</svg>
