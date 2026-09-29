@@ -1,9 +1,10 @@
 ---
 layout: base.njk
 permalink: /blog.html
-title: Blog
-description: Writing from the EISS network on European security studies, including work by our volunteers and interns published under their own names.
+title: Belvedere, the EISS blog
+description: Belvedere is the EISS blog, with writing from the EISS network on European security studies by our volunteers and interns.
 lang: en
+metaImage: /assets/images/blog-meta.jpg
 ---
 {# The blog index (#1259). English only, and the page says so rather than
    implying a translation is coming: rule §1 forbids machine translation, so
@@ -16,12 +17,13 @@ lang: en
 
 <header class="page-header">
   <div class="container">
-    <span class="eyebrow">Blog</span>
-    <h1>Blog</h1>
+    {#- The Belvedere mark (brand/belvedere-mark.svg). Decorative: the h1 names the page. #}
+    <span class="blog-mark" aria-hidden="true">{% inlineSvg "assets/images/brand/belvedere-mark.svg" %}</span>
+    <span class="eyebrow">The EISS blog</span>
+    <h1>Belvedere</h1>
     <p class="page-lead">
       Writing from the network on European security studies, drawn from the
-      <a href="/anthology.html">Anthology</a>. Volunteers and interns publish here under their own
-      names.
+      <a href="/anthology.html">Anthology</a>.
     </p>
     <p style="margin-top: var(--space-4);">
       <a class="btn btn-secondary btn-sm" href="/feed.xml">{{ icon("rss") }} Subscribe by feed</a>
@@ -50,8 +52,8 @@ lang: en
     {%- else %}
     {#- Live state until the first piece lands. -#}
     <p class="muted" style="max-width: 44rem;">
-      Nothing published here yet. The first pieces will come from the volunteers and interns
-      joining us in the new year.
+      Nothing published here yet. The first pieces will come from the volunteers joining us this
+      autumn.
     </p>
     {%- endif %}
   </div>
