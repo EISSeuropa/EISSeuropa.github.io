@@ -1,26 +1,26 @@
 {
   "_documentation": "What's New banner — sparingly-used site-wide announcement, used per CLAUDE.md §12. When `active: true`, every page renders a small dismissible banner fixed at the top of the viewport. Visitors who dismiss it don't see it again until `version` changes. High bar for activation: a new section visitors would find without reading the CHANGELOG, a major feature visible above the fold, or a milestone (live conference programme, brand launch). NOT used for quality patches, structural refactors, infra, or copy edits. Flip active true → false manually after 4–6 weeks, or sooner once the announcement is no longer fresh.",
-  "active": false,
-  "version": "v2.23.0-essc-r2",
-  "_active_since": "2026-05-28",
-  "_active_until": "2026-06-13",
-  "_active_reason": "Pointed visitors to the live ESSC 2026 programme ahead of Stockholm (11–12 June). Turned off on 2026-06-13, the day after the conference closed: the programme is no longer live and the 2026 page has become an archive.",
+  "active": true,
+  "version": "v2.29.0-belvedere",
+  "_active_since": "2026-09-29",
+  "_active_until": "2026-11-10",
+  "_active_reason": "Launch of Belvedere – the EISS Blog, a new section visitors would not otherwise find. Turn off by 10 November 2026, six weeks on.",
   "headline": {
-    "en": "The full ESSC 2026 programme is live.",
-    "fr": "Le programme complet de l'ESSC 2026 est en ligne.",
-    "de": "Das vollständige ESSC-2026-Programm ist online."
+    "en": "Belvedere – the EISS Blog is open.",
+    "fr": "Belvedere – le blog de l'EISS est ouvert.",
+    "de": "Belvedere – der EISS-Blog ist online."
   },
   "cta": {
     "href": {
-      "en": "/2026.html",
-      "fr": "/2026.fr.html",
-      "de": "/2026.de.html"
+      "en": "/blog/why-belvedere.html",
+      "fr": "/blog/why-belvedere.html",
+      "de": "/blog/why-belvedere.html"
     },
     "external": false,
     "i18n": {
-      "en": "View the programme →",
-      "fr": "Voir le programme →",
-      "de": "Zum Programm →"
+      "en": "Read the first post →",
+      "fr": "Lire le premier billet →",
+      "de": "Zum ersten Beitrag →"
     }
   }
 }
