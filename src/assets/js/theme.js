@@ -326,7 +326,10 @@
     });
     banner.appendChild(close);
 
-    document.body.insertBefore(banner, document.body.firstChild);
+    // After the skip link, so it stays the first focusable element: axe's
+    // region rule only exempts a skip link that comes first.
+    var skip = document.querySelector(".skip-link");
+    document.body.insertBefore(banner, skip ? skip.nextSibling : document.body.firstChild);
 
     var syncH = function () {
       var h = banner.offsetHeight;
