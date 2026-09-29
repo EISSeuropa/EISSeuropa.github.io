@@ -71,7 +71,7 @@
     },
     {
       "name": "Dr Marie Robin",
-      "role": "Treasurer",
+      "role": "Board Member",
       "photo": "/assets/images/screenshot-2024-03-25-at-18.29.49-348x391.png",
       "alt": "Dr Marie Robin",
       "themes": "Revenge in international relations, Strategic use of emotions, Evolution of conflictuality, Ethics of war.",
@@ -137,6 +137,7 @@
     {
       "name": "Prof. Filip Ejdus",
       "role": "Board Member",
+      "functionalResponsibility": "ESSC27 Conference Coordinator",
       "photo": "/assets/images/ejdus-photo-253x253.jpg",
       "alt": "Prof. Filip Ejdus",
       "themes": "Identity, memory, and emotions, International interventions, Civil-military relations, Security sector reform.",
@@ -252,7 +253,7 @@
       "role": "Board Member",
       "alt": "Dr Arthur PB Laudrain",
       "photo": "/assets/images/board/arthur-laudrain.jpg",
-      "functionalResponsibility": "Technology Coordinator",
+      "functionalResponsibility": "Technology Coordinator, Volunteers Coordinator, ESSC27 Conference Coordinator",
       "position": "Team Lead and Senior Researcher",
       "institution": "ETH Zürich, Center for Security Studies",
       "country": "Switzerland",
