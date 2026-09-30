@@ -70,19 +70,6 @@
       "workingGroups": "None yet"
     },
     {
-      "name": "Dr Marie Robin",
-      "role": "Board Member",
-      "photo": "/assets/images/screenshot-2024-03-25-at-18.29.49-348x391.png",
-      "alt": "Dr Marie Robin",
-      "themes": "Revenge in international relations, Strategic use of emotions, Evolution of conflictuality, Ethics of war.",
-      "country": "Netherlands",
-      "position": "Assistant Professor of War Studies",
-      "institution": "Leiden University",
-      "links": {
-        "orcid": "https://orcid.org/0000-0002-3195-9631"
-      }
-    },
-    {
       "name": "Prof. Nicolas Blarel",
       "role": "Board Member",
       "photo": "/assets/images/d200x250-3.jpeg",
@@ -302,6 +289,19 @@
       }
     },
     {
+      "name": "Dr Marie Robin",
+      "role": "Board Member",
+      "photo": "/assets/images/screenshot-2024-03-25-at-18.29.49-348x391.png",
+      "alt": "Dr Marie Robin",
+      "themes": "Revenge in international relations, Strategic use of emotions, Evolution of conflictuality, Ethics of war.",
+      "country": "Netherlands",
+      "position": "Assistant Professor of War Studies",
+      "institution": "Leiden University",
+      "links": {
+        "orcid": "https://orcid.org/0000-0002-3195-9631"
+      }
+    },
+    {
       "name": "Prof. Olivier Schmitt",
       "role": "Board Member",
       "photo": "/assets/images/schmitt-olivier-2-213x320.jpg",
@@ -504,6 +504,21 @@
       "institution": "Sciences Po",
       "country": "France",
       "roleEndDate": "2023-09-29"
+    },
+    {
+      "name": "M Irina Sofronie",
+      "role": "Support Staff",
+      "alt": "M Irina Sofronie",
+      "photo": "/assets/images/board/m-irina-sofronie.jpg",
+      "position": "Anthropology undergraduate student",
+      "institution": "University College London",
+      "country": "United Kingdom",
+      "links": {
+        "publicEmail": "irinasofronie@icloud.com",
+        "linkedin": "https://www.linkedin.com/in/irina-sofronie-108407297"
+      },
+      "workingGroups": "None yet",
+      "roleEndDate": "2026-11-30"
     },
     {
       "name": "Robin Staes-Polet",
