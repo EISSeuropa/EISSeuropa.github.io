@@ -421,6 +421,23 @@
       "roleEndDate": "2025-04-17"
     },
     {
+      "name": "Giovanni Guerra",
+      "role": "Support Staff",
+      "alt": "Giovanni Guerra",
+      "photo": "/assets/images/board/giovanni-guerra.jpg",
+      "position": "Policy analyst",
+      "institution": "EISS",
+      "country": "Italy",
+      "bio": "Giovanni Guerra is a Political Science graduate from LUISS Guido Carli, where he graduated with 110/110 cum laude. His research interests focus on European integration and EU governance, particularly the institutional rules and allocation of competences that shape collective European decision-making. He is also interested in EU foreign and security policy, strategic autonomy and European defence governance. He previously worked as a Research Assistant at the European Youth Think Tank. His current research examines institutional reform and member-state influence in EU foreign policy, including the implications of decision-making rules such as qualified majority voting. He is also developing Europa, an independent research and writing platform dedicated to European integration, competitiveness and strategic autonomy, designed to publish research memos, analytical notes and longer-form essays on the political and institutional development of Europe.",
+      "themes": "European integration, EU governance, EU foreign and security policy, strategic autonomy, European defence governance",
+      "links": {
+        "publicEmail": "giovanniguerraa04@gmail.com",
+        "linkedin": "https://www.linkedin.com/in/giovanni-guerra-526373214/"
+      },
+      "workingGroups": "None yet",
+      "roleEndDate": "2026-12-31"
+    },
+    {
       "name": "Kim Hirsch-Hoffmann",
       "role": "Support Staff",
       "alt": "Kim Hirsch-Hoffmann",
@@ -504,6 +521,21 @@
       "institution": "Sciences Po",
       "country": "France",
       "roleEndDate": "2023-09-29"
+    },
+    {
+      "name": "M Irina Sofronie",
+      "role": "Support Staff",
+      "alt": "M Irina Sofronie",
+      "photo": "/assets/images/board/m-irina-sofronie.jpg",
+      "position": "Anthropology undergraduate student",
+      "institution": "University College London",
+      "country": "United Kingdom",
+      "links": {
+        "publicEmail": "irinasofronie@icloud.com",
+        "linkedin": "https://www.linkedin.com/in/irina-sofronie-108407297"
+      },
+      "workingGroups": "None yet",
+      "roleEndDate": "2026-11-30"
     },
     {
       "name": "M Irina Sofronie",
