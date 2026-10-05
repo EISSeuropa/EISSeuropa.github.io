@@ -28,9 +28,11 @@ WHAT IT NEVER PRINTS
 
 HOW TO RUN
 ==========
-Actions → "Probe Indico API (manual)" → Run workflow. Paste the
-output back to Claude; the next PR wires the winning endpoint into
-the daily sync.
+Locally:  INDICO_API_TOKEN=… python3 scripts/probe-indico-api.py
+Paste the output back to Claude; the next PR wires the winning endpoint
+into the daily sync. (The Actions wrapper was retired once the answer was
+recorded. Restore .github/workflows/probe-indico-api.yml from git history
+if needed.)
 """
 from __future__ import annotations
 
