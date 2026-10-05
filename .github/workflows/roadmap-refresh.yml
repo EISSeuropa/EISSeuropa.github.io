@@ -51,7 +51,7 @@
 name: Refresh roadmap surfaces
 
 on:
-  # 05:00 UTC daily, after the daily sync-indico (03:45) and scheduled-rebuild
+  # 05:00 UTC daily, after the daily sync-indico (03:45) and scheduled deploy
   # (04:15), so the day's refresh sees anything they changed rather than
   # trailing it by 24 hours. Clear of the Monday 06:00-07:00 cluster.
   schedule:

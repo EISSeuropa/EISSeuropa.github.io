@@ -42,7 +42,7 @@ on:
       - 'scripts/test-sync-orcid.py'
       - '.github/workflows/sync-orcid.yml'
   # Weekly refresh: 06:30 UTC Monday, sequenced after the daily
-  # sync-indico (03:45), scheduled-rebuild (04:15), and sync-roadmap
+  # sync-indico (03:45), the scheduled deploy (04:15), and sync-roadmap
   # (06:00) so the Monday-morning sync jobs don't collide.
   schedule:
     - cron: '30 6 * * 1'

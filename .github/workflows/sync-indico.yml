@@ -14,7 +14,7 @@
 #   - Timestamp only      → nothing to commit. `syncedAt` is internal
 #     metadata that nothing on the site renders, so a daily timestamp
 #     bump isn't worth a commit. If a "Last refreshed" line is ever
-#     surfaced, derive it from the daily scheduled-rebuild's build time
+#     surfaced, derive it from the daily scheduled deploy's build time
 #     rather than committing a timestamp every day.
 #
 # (History: this path used to direct-commit the timestamp to master, and
@@ -34,7 +34,7 @@ name: Sync events from Indico
 
 on:
   schedule:
-    # 03:45 UTC daily, 30 minutes BEFORE scheduled-rebuild (04:15 UTC).
+    # 03:45 UTC daily, 30 minutes BEFORE the scheduled deploy (04:15 UTC).
     - cron: "45 3 * * *"
   workflow_dispatch:
 

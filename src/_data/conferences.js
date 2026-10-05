@@ -32,7 +32,7 @@
  * `next` is whichever entry has the earliest `startDate` that's strictly
  * in the future relative to the build's wall-clock day. `past` is everything
  * with `endDate` < today. Eleventy builds happen on every push and on a
- * daily cron (.github/workflows/scheduled-rebuild.yml), so the cut-off
+ * daily cron (the schedule in .github/workflows/deploy.yml), so the cut-off
  * advances within ~24 hours of a conference ending without any manual edit.
  */
 
@@ -366,7 +366,7 @@ const conferences = [
 ];
 
 // Build-time cut-off. Eleventy re-runs this whenever the build runs;
-// the scheduled-rebuild workflow guarantees a daily build so the
+// the deploy workflow's daily schedule guarantees a daily build so the
 // cut-off advances even on quiet weeks.
 const today = new Date().toISOString().slice(0, 10);
 

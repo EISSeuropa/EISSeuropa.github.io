@@ -64,9 +64,8 @@ successor inherits through the handover in section 4.
   `gh run list --workflow=deploy.yml` shows no run at the merge
   timestamp. Cure: `gh workflow run deploy.yml --ref master` from a
   real user account, or push any commit (an empty one works). The
-  daily *Scheduled rebuild*
-  ([`scheduled-rebuild.yml`](../.github/workflows/scheduled-rebuild.yml),
-  04:15 UTC) re-dispatches the deploy so the site never stays stale
+  deploy also runs daily on a schedule
+  ([`deploy.yml`](../.github/workflows/deploy.yml), 04:15 UTC) so the site never stays stale
   more than ~24 hours regardless.
 
 ### Domain and DNS: eiss-europa.com

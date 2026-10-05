@@ -116,7 +116,7 @@ is ambient rather than topical, and belongs on the panel side only.
   `netsecDirectory.json` (NetSec member directory, for the Anthology
   cross-links; weekly + a `repository_dispatch` fast path). See
   `netsec-directory-integration.md`.
-- **`scheduled-rebuild.yml`** redeploys daily so build-time values
+- **`deploy.yml`** also runs on a daily schedule so build-time values
   (countdown, registration status) don't drift between content changes.
 
 **Outbound contracts (EISS publishes, siblings consume).** Two build-time
