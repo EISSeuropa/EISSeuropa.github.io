@@ -97,7 +97,7 @@ def norm_email(s: str) -> str:
 # (e.g. "Lt Gen Dr Thomas Nilsson") are stripped via the two-pass loop
 # in identity_key().
 HONORIFIC_RE = re.compile(
-    r"^(?:dr|prof(?:essor)?|pr|mr|ms|mrs|mx|"
+    r"^(?:dr|prof(?:essor)?|pr|m|mr|ms|mrs|mx|"
     r"lic|lt\s+gen(?:eral)?|lieutenant\s+general|general|"
     r"colonel|admiral)\.?\s+",
     re.IGNORECASE,
@@ -1085,6 +1085,17 @@ def main() -> None:
         print("Headshot file(s) updated on disk:")
         for p in PHOTOS_CHANGED:
             print(f"  ~ {p}")
+
+    # Two entries for one person break the Eleventy build (duplicate
+    # /search/bios/ permalink), and this PR auto-merges without CI, so a
+    # duplicate would take the site down (#1755). Fail the sync instead:
+    # the failure alarm files an issue and the live site stays up.
+    seen: dict[str, str] = {}
+    for e in new_data.get("members", []) + new_data.get("support", []):
+        key = slugify(e.get("name", ""))
+        if key in seen:
+            sys.exit(f"Refusing to write board.json: {e.get('name')!r} duplicates {seen[key]!r}.")
+        seen[key] = e.get("name", "")
 
     BOARD.write_text(
         json.dumps(new_data, indent=2, ensure_ascii=False) + "\n",
