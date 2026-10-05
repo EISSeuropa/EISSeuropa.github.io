@@ -27,7 +27,8 @@ Maintainer-facing docs for [eiss-europa.com](https://eiss-europa.com)
 | [netsec-directory-integration.md](netsec-directory-integration.md) | Anthology authors ↔ NetSec member directory cross-links (both directions): the two JSON contracts, the name-key join, the sync, per-author addressability. |
 | [internship-handbook.md](internship-handbook.md) | For volunteers and interns: first week, claiming a task, the two review jobs in detail, house style, how writing gets published. The operational half of `/internship.html`. |
 | [roadmap-2026.md](roadmap-2026.md) | The internal roadmap (autostamped from the CHANGELOG). |
-| [branch-protection.md](branch-protection.md) | The `master` rulesets (force-push/deletion/linear + PR gate), the bypass design, and the deferred required-checks plan. |
+| [branch-protection.md](branch-protection.md) | The `master` rulesets (force-push/deletion/linear + PR gate + four required checks) and the bypass design. |
+| [pdf/EISS-website-documentation.pdf](pdf/EISS-website-documentation.pdf) | The documentation pack: a printable A4 overview of architecture, design system, translation, SEO, admin handover and security, for readers who will not open the repository. Source `pdf/documentation.html`, built by `pdf/build.sh`, refreshed on minor and major releases. |
 
 Project-wide conventions (British English, the PR / merge workflow,
 release format, milestone tagging, verification habits) live in the

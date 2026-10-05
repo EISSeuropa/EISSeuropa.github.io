@@ -1,0 +1,1191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>EISS: Website Documentation Pack v1.0.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<style>
+/* ───────────────────────────────────────────────────────────────
+   EISS — Documentation Pack (PDF source stylesheet)
+   ───────────────────────────────────────────────────────────────
+   Built to be rendered by Chrome headless --print-to-pdf.
+   Uses the same colour tokens and type pairing as the live site
+   (see src/assets/css/site.css), translated for paper:
+     - Glass cards become solid white cards with a tinted border.
+     - Backdrop-filter is dropped.
+     - Body type bumps to 10pt with 1.55 line-height for print.
+     - Each top-level section forces a page break.
+*/
+
+:root{
+  --ink:#161b27;
+  --ink-2:#2f3747;
+  --muted:#495165;
+  --line:rgba(11,18,32,.12);
+  --line-strong:rgba(11,18,32,.20);
+  --accent:#0071b8;     /* EISS accent, hsl(203 100% 36%) */
+  --accent-2:#005e99;   /* EISS accent hover, hsl(203 100% 30%) */
+  --network:#73caff;    /* EISS constellation blue, --brand-network */
+  --tint:#f0f3fa;
+  --tint-2:#f8fafc;
+  --paper:#ffffff;
+}
+
+@page {
+  size: A4;
+  margin: 18mm 16mm 22mm 16mm;
+  /* Page number bottom-right. Plain numeral; the rest of the
+     running-foot space is reserved for future additions if the pack
+     grows section-aware navigation later. Chrome renders the
+     @bottom-right margin box even with the build script's
+     --no-pdf-header-footer flag (that flag only suppresses Chrome's
+     own built-in header/footer, not CSS-paged-media margin boxes). */
+  @bottom-right {
+    content: counter(page);
+    font-family: 'Inter', sans-serif;
+    font-size: 8pt;
+    color: #495165;
+    margin-top: 6mm;
+  }
+}
+/* The cover is full-bleed, so it carries no page number. */
+@page :first       { margin: 0; @bottom-right { content: ""; } }
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--paper);color:var(--ink)}
+body{
+  font-family:'Inter',sans-serif;
+  font-size:10pt;
+  line-height:1.55;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+
+/* ── Headings ───────────────────────────────────────────────── */
+h1,h2,h3,h4,h5{
+  font-family:'Inter',sans-serif;
+  font-weight:600;
+  letter-spacing:-.015em;
+  line-height:1.2;
+  color:var(--ink);
+  margin:0 0 .6rem;
+  break-after:avoid-page;
+}
+h1{font-size:28pt;font-weight:700;letter-spacing:-.025em;margin:0 0 1rem}
+h2{
+  font-size:18pt;margin:1.4rem 0 .8rem;color:var(--accent);
+  /* Keep the heading with its first content block. Without this,
+     a sub-heading like "The ESSC live programme in practice"
+     followed by a tall snapshot strands the heading on the
+     page before. Both syntaxes for Chrome's varying support. */
+  break-after:avoid-page;
+  page-break-after:avoid;
+}
+h3{font-size:13pt;margin:1.1rem 0 .4rem;break-after:avoid-page;page-break-after:avoid}
+h4{font-size:11pt;margin:.9rem 0 .3rem;color:var(--ink-2);break-after:avoid-page;page-break-after:avoid}
+/* Changelog appendix — older entries accumulate fast; tighten the
+   per-entry typography so the appendix stays scannable as the
+   release history grows. The current revision keeps full hybrid
+   format (lede + themes + index); older revisions compress to a
+   single summary paragraph each. Scope to the wrapper so the rest
+   of the document keeps its larger reading size. */
+.changelog-entries{font-size:9.5pt;line-height:1.5;color:var(--ink-2)}
+.changelog-entries h2{font-size:13pt;margin:1.4rem 0 .35rem;color:var(--ink)}
+.changelog-entries h2.current{color:var(--accent)}
+.changelog-entries h3{font-size:10.5pt;margin:.7rem 0 .25rem;color:var(--ink-2)}
+.changelog-entries p{margin:0 0 .45rem}
+.changelog-entries ul{margin:.3rem 0 .8rem;padding-left:1.1rem}
+.changelog-entries li{margin:0 0 .25rem}
+.changelog-entries .cl-lede{font-style:italic;color:var(--ink);margin:.2rem 0 .9rem}
+.changelog-entries .cl-summary{margin:0 0 .9rem}
+
+p{margin:0 0 .7rem;color:var(--ink-2)}
+strong{color:var(--ink)}
+em{font-style:italic}
+a{color:var(--accent-2);text-decoration:none}
+
+/* ── Layout primitives ──────────────────────────────────────── */
+.page{
+  /* Each top-level section becomes a "page" container. We use a
+     manual break-before so sections never start mid-page. */
+  break-before:page;
+  padding-top:6mm;
+}
+.page:first-of-type{break-before:auto;padding-top:0}
+
+.eyebrow{
+  display:inline-block;
+  font-size:7.5pt;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--accent);
+  padding:3px 10px;
+  background:var(--tint);
+  border-radius:999px;
+  margin:0 0 .6rem;
+}
+
+ul,ol{margin:.4rem 0 1rem;padding-left:20px;color:var(--ink-2)}
+li{margin-bottom:.25rem}
+li::marker{color:var(--accent)}
+
+hr{
+  border:0;border-top:1px solid var(--line);
+  margin:1.4rem 0;
+}
+
+/* ── Glass-equivalent card for print ────────────────────────── */
+/* All cards share a single neutral surface: pure white, hairline
+   border, no fill tint. Differentiation comes from the left-edge
+   accent strip (for callouts) or a top-edge accent strip (for the
+   highlighted "audience" cards), so the eye gets a colour cue
+   without the body of the card going grey-blue. */
+.card{
+  background:#ffffff;
+  border:1px solid var(--line);
+  border-radius:10pt;
+  padding:14pt 16pt;
+  margin:.6rem 0 1rem;
+  box-shadow:0 1pt 3pt rgba(20,35,80,.05);
+  break-inside:avoid-page;
+}
+.card.tint{
+  /* No fill tint any more — instead, a 3pt accent strip across
+     the top of the card. Visually marks the card as "highlighted"
+     while keeping the body white. */
+  background:#ffffff;
+  border-top:3pt solid var(--accent-2);
+  padding-top:11pt;
+}
+.card.callout{
+  background:#ffffff;
+  border-left:3pt solid var(--accent);
+  padding-left:14pt;
+}
+.card.callout h4{margin-top:0;color:var(--accent)}
+
+/* ── Tables ─────────────────────────────────────────────────── */
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin:.6rem 0 1rem;
+  font-size:9pt;
+  /* Allow tables to split across pages. The earlier
+     break-inside:avoid-page kept short tables (~10 rows) together
+     with the preceding h2, which under that combination pushed the
+     pair to a fresh page when the chapter's banner + intro consumed
+     the top of the current page. Symptom: Section 05 SEO's "What's
+     in place" h2 + 10-row table both moved to the next page,
+     leaving the banner + intro paragraph alone on the chapter's
+     first page. With break-inside:auto the table starts in whatever
+     space remains and continues on the next page. */
+  break-inside:auto;
+}
+/* Rows themselves stay intact — split between rows, not mid-row. */
+tr{break-inside:avoid-page;page-break-inside:avoid}
+thead th{
+  text-align:left;
+  font-family:'Inter',sans-serif;
+  font-weight:600;font-size:8.5pt;letter-spacing:.04em;
+  text-transform:uppercase;
+  color:var(--paper);
+  background:var(--accent);
+  padding:7pt 9pt;
+}
+thead th:first-child{border-top-left-radius:6pt}
+thead th:last-child{border-top-right-radius:6pt}
+tbody td{
+  padding:7pt 9pt;
+  border-bottom:1px solid var(--line);
+  vertical-align:top;
+  color:var(--ink-2);
+  background:#fff;
+}
+/* No alternating row tint — clean white rows separated by hairline
+   rules read more cleanly in print than the earlier grey-blue stripe. */
+tbody tr:last-child td{border-bottom:0}
+
+/* ── Code & file paths ──────────────────────────────────────── */
+code{
+  font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  font-size:8.7pt;
+  background:var(--tint);
+  color:var(--accent);
+  padding:1px 5px;
+  border-radius:3px;
+}
+pre{
+  font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  font-size:8.4pt;line-height:1.5;
+  background:#0b1220;color:#dde6f5;
+  padding:12pt 14pt;
+  border-radius:8pt;
+  overflow:hidden;
+  break-inside:avoid-page;
+  margin:.6rem 0 1rem;
+}
+pre code{background:transparent;color:inherit;padding:0;font-size:inherit}
+
+/* ── Mermaid diagrams ───────────────────────────────────────── */
+.diagram{
+  /* Plain-white surround removes the grey-ish look the tinted bg
+     gave the previous draft. The border + soft shadow alone is
+     enough to read as "this is a figure". */
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:10pt;
+  padding:14pt 10pt;
+  margin:.8rem 0 1.1rem;
+  text-align:center;
+  break-inside:avoid-page;
+  box-shadow:0 1pt 3pt rgba(20,35,80,.05);
+}
+.diagram .mermaid{display:block;color:var(--ink)}
+.diagram .mermaid svg{
+  /* Force the rendered SVG to fill the figure width so flowcharts
+     and sequence diagrams don't shrink to ~40% of the page width. */
+  width:100% !important;
+  max-width:100% !important;
+  height:auto !important;
+}
+.diagram.wide{margin-left:-10pt;margin-right:-10pt}
+.diagram-caption{
+  font-size:8.5pt;color:var(--muted);
+  margin-top:6pt;text-align:center;
+  font-style:italic;
+}
+
+/* ── Snapshots (site screenshots) ───────────────────────────── */
+.snapshot{
+  margin:.6rem 0 1rem;
+  break-inside:avoid-page;
+}
+.snapshot img{
+  width:100%;
+  border-radius:8pt;
+  border:1px solid var(--line-strong);
+  box-shadow:0 2pt 8pt rgba(20,35,80,.10);
+  display:block;
+}
+/* Crop-from-top variant. Pages with significant below-the-fold
+   content (ESSC programme, Network directory) would render at
+   full height as figures and span more than one PDF page,
+   stranding the heading on the page before. A child .clip div
+   carries the height cap so the caption stays outside the
+   overflow context and renders normally. */
+.snapshot.cropped .clip{
+  max-height:170mm;
+  overflow:hidden;
+  border-radius:8pt;
+  border:1px solid var(--line-strong);
+  box-shadow:0 2pt 8pt rgba(20,35,80,.10);
+}
+.snapshot.cropped .clip img{
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+}
+.snapshot .caption{
+  font-size:8.5pt;color:var(--muted);
+  margin-top:6pt;text-align:center;
+  font-style:italic;
+}
+
+/* ── Two-up grid for principles/cards ───────────────────────── */
+.grid-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12pt;
+  margin:.5rem 0 1rem;
+  /* Keep the two cards together. If the grid doesn't fit on the
+     current page (eg. the v1.9.0 Feature inventory which is two
+     dense cards), move the whole grid to the next page rather than
+     splitting one card onto each page and leaving a half-grid. */
+  break-inside:avoid-page;
+}
+
+/* ── Chip / pill ────────────────────────────────────────────── */
+.chip{
+  display:inline-block;
+  font-size:8pt;font-weight:600;letter-spacing:-.005em;
+  color:var(--accent);
+  background:var(--tint);
+  padding:3pt 9pt;
+  border-radius:999px;
+  margin:0 4pt 4pt 0;
+}
+
+/* ── Cover page ─────────────────────────────────────────────── */
+.cover{
+  position:relative;
+  width:100%;height:297mm;
+  /* Cover is full-bleed: kill page margins via the @page :first
+     rule above, then add our own inset. */
+  padding:38mm 22mm 22mm;
+  display:flex;flex-direction:column;justify-content:space-between;
+  color:#fff;
+  background:
+    radial-gradient(900px 700px at 20% -10%, rgba(255,255,255,.18), transparent 60%),
+    radial-gradient(700px 600px at 100% 110%, rgba(115,202,255,.45), transparent 60%),
+    linear-gradient(160deg, #0b1a33 0%, #0b3a66 45%, #0071b8 100%);
+  break-after:page;
+}
+.cover-mark{
+  display:flex;align-items:center;gap:14pt;
+  font-family:'Inter',sans-serif;font-weight:700;
+}
+.cover-mark .ns{
+  width:36pt;height:36pt;border-radius:9pt;
+  display:grid;place-items:center;
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.4);
+  color:#fff;font-size:14pt;letter-spacing:-.02em;
+  backdrop-filter:blur(8pt);
+  overflow:hidden;
+}
+.cover-mark .ns img{width:82%;height:82%;object-fit:contain;display:block}
+.cover-mark .wordmark{font-size:18pt;letter-spacing:-.01em;color:#fff}
+.cover-title{
+  font-family:'Inter',sans-serif;
+}
+.cover-title .eyebrow{
+  background:rgba(255,255,255,.16);
+  color:#fff;font-size:8pt;
+  border:1px solid rgba(255,255,255,.35);
+  padding:4pt 12pt;
+}
+.cover-title h1{
+  font-size:46pt;line-height:1.05;
+  color:#fff;margin:14pt 0 8pt;
+  letter-spacing:-.03em;
+}
+.cover-title h2{
+  /* Sized so that the full "Architecture, design system, and admin
+     handover" fits on one line at the cover's content width, with
+     "for the COST Action NetSec website." dropping cleanly to a
+     second line via the inline <br>. */
+  font-size:17pt;font-weight:400;color:rgba(255,255,255,.85);
+  margin:0;letter-spacing:-.01em;line-height:1.35;
+  max-width:none;
+}
+.cover-meta{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16pt;
+  margin-top:24pt;font-size:9pt;
+}
+.cover-meta .item .label{
+  font-size:7.5pt;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.65);font-weight:600;
+}
+.cover-meta .item .value{
+  margin-top:3pt;color:#fff;font-weight:500;font-size:10pt;
+}
+.cover-foot{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  gap:24pt;
+}
+.cover-foot .url{
+  font-family:'JetBrains Mono',monospace;font-size:9pt;
+  color:rgba(255,255,255,.85);letter-spacing:-.005em;
+  background:rgba(255,255,255,.10);
+  padding:6pt 10pt;border-radius:6pt;
+  border:1px solid rgba(255,255,255,.18);
+}
+
+/* ── TOC ────────────────────────────────────────────────────── */
+.toc{margin-top:1rem}
+.toc ol{list-style:none;padding:0;margin:0;counter-reset:tocnum}
+.toc ol > li{
+  counter-increment:tocnum;
+  display:grid;grid-template-columns:24pt 1fr auto;
+  gap:8pt;
+  padding:10pt 0;
+  border-bottom:1px dashed var(--line);
+  font-size:11pt;
+}
+.toc ol > li .pagenum{
+  align-self:start;
+  font-family:'Inter',sans-serif;font-weight:600;
+  color:var(--muted);font-size:10pt;letter-spacing:-.01em;
+  padding-left:12pt;
+}
+.toc ol > li::before{
+  content:counter(tocnum,decimal-leading-zero);
+  font-family:'Inter',sans-serif;font-weight:600;
+  color:var(--accent);font-size:11pt;letter-spacing:-.01em;
+}
+.toc ol > li .title{font-weight:600;color:var(--ink)}
+.toc ol > li .desc{display:block;color:var(--muted);font-size:9pt;font-weight:400;margin-top:1pt}
+
+/* ── Misc utility ───────────────────────────────────────────── */
+.muted{color:var(--muted)}
+.center{text-align:center}
+.small{font-size:8.5pt}
+.kbd{
+  font-family:'JetBrains Mono',monospace;font-size:8.4pt;
+  background:#fff;border:1px solid var(--line-strong);
+  border-bottom-width:2px;border-radius:4px;
+  padding:1px 5px;color:var(--ink);
+}
+
+/* ── Section header banner ──────────────────────────────────── */
+.section-banner{
+  display:flex;align-items:baseline;gap:16pt;
+  padding:0 0 16pt;
+  border-bottom:2pt solid var(--accent);
+  margin-bottom:18pt;
+  /* Stay with the chapter's first content block. Without this, if
+     the first content after the banner is a large block with
+     break-inside:avoid-page (eg. a long table or diagram), that
+     block pushes itself to the next page and leaves the banner
+     alone on a near-empty page. Symptom: Section 5 SEO landed its
+     banner + intro paragraph on a short page, then the "What's in
+     place" table on the next page. */
+  break-after:avoid-page;
+}
+.section-banner .num{
+  font-family:'Inter',sans-serif;font-weight:700;
+  font-size:36pt;line-height:1;color:var(--accent);letter-spacing:-.03em;
+}
+.section-banner .head h1{
+  font-size:24pt;color:var(--ink);margin:0;letter-spacing:-.02em;
+}
+.section-banner .head .sub{
+  font-size:10pt;color:var(--muted);margin-top:3pt;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════
+     COVER
+     ════════════════════════════════════════════════════════════ -->
+<section class="cover">
+
+  <header class="cover-mark">
+    <span class="ns"><img src="../../src/assets/images/brand/logo-mark.svg" alt="EISS constellation mark"></span>
+    <span class="wordmark">European Initiative for Security Studies</span>
+  </header>
+
+  <div class="cover-title">
+    <span class="eyebrow">Documentation Pack</span>
+    <h1>The EISS <br>website</h1>
+    <h2>Architecture, design system, and admin&nbsp;handover<br>for eiss-europa.com.</h2>
+
+    <div class="cover-meta">
+      <div class="item">
+        <div class="label">Pack version &amp; date</div>
+        <div class="value">v1.0.0 · October 2026</div>
+      </div>
+      <div class="item">
+        <div class="label">Website version</div>
+        <div class="value">v2.28.0, with the October 2026 CI work</div>
+      </div>
+      <div class="item">
+        <div class="label">Author</div>
+        <div class="value">Dr Arthur Laudrain<br><span style="font-weight:400;color:rgba(255,255,255,.7)">EISS Technology Coordinator</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="cover-foot">
+    <span class="url">eiss-europa.com</span>
+  </footer>
+
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     CONTENTS
+     Page numbers are filled in by hand after a render: build, read
+     the PDF, update each .pagenum.
+     ════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <span class="eyebrow">Contents</span>
+  <h1 style="font-size:24pt;color:var(--ink)">What's in this document</h1>
+  <p class="muted">A self-contained reference for anyone who maintains, inherits or evaluates the EISS website. Each chapter stands alone. Read it end to end for a tour, or go straight to the section you need. Each pipeline also has its own document under <code>docs/</code> in the repository, and where the two disagree, the repository document is newer.</p>
+
+  <nav class="toc">
+    <ol>
+      <li><div><span class="title">Overview &amp; purpose</span><span class="desc">What the site is, who reads it, and the principles behind its design.</span></div><span class="pagenum">3</span></li>
+      <li><div><span class="title">Architecture</span><span class="desc">Tech stack, site structure, feature inventory, the data pipelines and the repository layout.</span></div><span class="pagenum">5</span></li>
+      <li><div><span class="title">Design system</span><span class="desc">Brand marks, colour and type tokens, components, motion and the accessibility checklist.</span></div><span class="pagenum">15</span></li>
+      <li><div><span class="title">Translation &amp; multilingual posture</span><span class="desc">How the French and German pages work, the drift checker, and the no-machine-translation rule.</span></div><span class="pagenum">17</span></li>
+      <li><div><span class="title">SEO &amp; discoverability</span><span class="desc">Metadata, structured data, feeds, the sitemap and site search.</span></div><span class="pagenum">18</span></li>
+      <li><div><span class="title">Admin guide</span><span class="desc">Every account and asset the site depends on, routine tasks, escalation and the handover checklist.</span></div><span class="pagenum">20</span></li>
+      <li><div><span class="title">Security &amp; DevSecOps</span><span class="desc">Threat model, disclosure policy, GitHub security automation, branch protection and the failure alarm.</span></div><span class="pagenum">23</span></li>
+      <li><div><span class="title">Appendix A · Accessibility</span><span class="desc">Conformance target, how the site is audited, and the known limitations.</span></div><span class="pagenum">25</span></li>
+      <li><div><span class="title">Appendix B · Licensing</span><span class="desc">Code under MIT, content under CC&nbsp;BY&nbsp;4.0, and the carve-outs.</span></div><span class="pagenum">26</span></li>
+      <li><div><span class="title">Appendix C · Changelog</span><span class="desc">What each revision of this pack records. Kept last, so the newest revision is the final page.</span></div><span class="pagenum">27</span></li>
+    </ol>
+  </nav>
+
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 1 — OVERVIEW
+     ════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="section-banner">
+    <div class="num">01</div>
+    <div class="head">
+      <h1>Overview &amp; purpose</h1>
+      <div class="sub">What the site is, who reads it, and the principles behind its design.</div>
+    </div>
+  </div>
+
+  <h2>What this site is</h2>
+  <p>The EISS website is the public home of the <strong>European Initiative for Security Studies</strong>, served at <a href="https://eiss-europa.com">eiss-europa.com</a>. It carries the annual European Security Studies Conference (ESSC) from the call for papers to the archive, the board and its support staff, the Anthology of every paper presented since 2017, the Belvedere blog, news, and the Initiative's membership and prizes.</p>
+  <p>It is a static site. Eleventy builds it from templates and data files, GitHub Pages serves it, and scheduled GitHub Actions keep its data in step with the systems that own it: Indico for the programme, a Google Form for board biographies, ORCID for members' publications, and the NetSec directory for cross-links. There is no database, no content management system and no server of the Initiative's own.</p>
+
+  <h2>Who reads it</h2>
+  <p>None of the site's readers are developers, and none of them should need to know how it is built.</p>
+  <div class="grid-2">
+    <div class="card tint">
+      <h4>Scholars</h4>
+      <p style="margin:0">Prospective and returning conference participants, and researchers using the Anthology, the Atlas and the paper pages as a record of the field.</p>
+    </div>
+    <div class="card tint">
+      <h4>Journalists</h4>
+      <p style="margin:0">Looking for an expert, a press kit or a quotable fact about European security studies.</p>
+    </div>
+    <div class="card tint">
+      <h4>Prospective board and community members</h4>
+      <p style="margin:0">Reading the board page, the internship and volunteering pages, and how to become a member.</p>
+    </div>
+    <div class="card tint">
+      <h4>Partner-institution staff</h4>
+      <p style="margin:0">Hosts and co-organisers of past and future conferences, and the NetSec COST Action, which links into the Anthology from its own site.</p>
+    </div>
+  </div>
+
+  <h2>Design principles</h2>
+  <ol>
+    <li><strong>Content before mechanism.</strong> Most new needs are content: a page, an entry in a data file, a reuse of an existing include. A new component is built when a second page needs it, not before.</li>
+    <li><strong>Native HTML and CSS before JavaScript.</strong> Disclosure is <code>&lt;details&gt;</code>, deep links are anchors, embeds load on click. Script is added only where the page still works without it.</li>
+    <li><strong>One data file, one include.</strong> A block repeated across pages reads a file under <code>src/_data/</code> through a single partial, so the copies cannot drift apart.</li>
+    <li><strong>Hand translation or none.</strong> French and German pages are translated by people. A page without a translation stays in English.</li>
+    <li><strong>Accessible by default.</strong> WCAG 2.1 AA is the target, and an axe-core audit runs on every pull request.</li>
+    <li><strong>British English</strong> in everything a reader sees.</li>
+  </ol>
+
+  <div class="snapshot cropped">
+    <div class="clip"><img src="snap-home.jpg" alt="The eiss-europa.com home page."></div>
+    <div class="caption">Figure 1 · The home page. The main button and the hero photo follow the conference list, so they always point at the next edition.</div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 2 — ARCHITECTURE
+     ════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="section-banner">
+    <div class="num">02</div>
+    <div class="head">
+      <h1>Architecture</h1>
+      <div class="sub">Tech stack, site structure, data pipelines and repository layout.</div>
+    </div>
+  </div>
+
+  <h2>Tech stack at a glance</h2>
+  <p>The build is <strong>Eleventy 3</strong> with <strong>Nunjucks</strong> templates, plus <strong>Pagefind</strong> for site search. The site has three npm development dependencies (Eleventy, the <code>acorn</code> parser used by a build check, and <code>axe-core</code> for the accessibility audit) and no runtime dependency at all. There is no front-end framework, no bundler and no transpiler. The data pipelines are short Python and Node scripts under <code>scripts/</code>.</p>
+
+  <div class="diagram">
+    <div class="mermaid">
+flowchart LR
+    V["Visitor's browser"] -->|HTTPS| P["GitHub Pages"]
+    R["EISSeuropa.github.io<br/>repository"] -->|deploy.yml<br/>build + Pagefind| P
+    I["Indico<br/>indico.eiss-europa.com"] -.->|daily| SI["sync-indico"]
+    F["Google Form"] --> S["Google Sheet"]
+    S -.->|on demand| SB["sync-board"]
+    O["ORCID"] -.->|weekly| SO["sync-orcid"]
+    N["NetSec<br/>directory-index.json"] -.->|weekly| SN["sync-netsec-directory"]
+    SI -->|PR| R
+    SB -->|PR| R
+    SO -->|PR| R
+    SN -->|PR| R
+    R -->|anthology-index.json<br/>authors-index.json| NS["NetSec site"]
+
+    style P fill:#0071b8,stroke:#0071b8,color:#fff
+    style R fill:#0b3a66,stroke:#0b3a66,color:#fff
+    </div>
+    <div class="diagram-caption">Figure 2 · End-to-end stack. Solid lines are requests and pushes, dashed lines are scheduled or on-demand sync jobs. Every sync lands as a pull request, never as a direct push to <code>master</code>.</div>
+  </div>
+
+  <p>Three points to take from the diagram:</p>
+  <ul>
+    <li><strong>No back end of the Initiative's own.</strong> Everything a visitor sees is HTML built ahead of time. The programme grid, the board page and the Anthology are all rendered at build time from data files.</li>
+    <li><strong>Each upstream system stays authoritative.</strong> Indico owns the programme, the Form owns the biographies, ORCID owns the publications. The website is a view over them.</li>
+    <li><strong>Every change passes through a pull request</strong> and the same four required checks, whether a person or a sync job opened it.</li>
+  </ul>
+
+  <h2>What the deploy builds</h2>
+  <p><code>.github/workflows/deploy.yml</code> runs on every push to <code>master</code>, once a day at 04:15 UTC, and on demand. It installs the npm dependencies, runs the Eleventy build into <code>_site/</code>, builds the Pagefind search index into <code>_site/pagefind/</code> with a pinned Pagefind version, uploads <code>_site/</code> as a Pages artefact and deploys it. The search index exists only on the deployed site, so search on a local build shows as unavailable.</p>
+  <p>The daily run matters because some pages depend on the date. <code>src/_data/conferences.js</code> sorts editions into next, upcoming and past by today's date, and the countdown and registration badge follow from that. Without a daily build, the home page would keep pointing at a conference that had already happened.</p>
+  <p>Static assets are cache-busted by a <code>bust</code> filter, which appends the first eight hex digits of the file's SHA-256 (<code>site.css?v=…</code>). A change to a shared asset therefore touches every page, and the translation drift checker and the link checker both see it.</p>
+
+  <h2>Site structure</h2>
+  <p>The site is built from about seventy English templates under <code>src/</code>, twenty-seven of them with French and German siblings. Paginated templates expand into many pages: one per paper (315 paper pages, each with BibTeX and RIS exports), one per research theme with its own Atom feed (seventeen), and one search stub per person per language. A full build writes about 1,460 files.</p>
+
+  <div class="diagram">
+    <div class="mermaid">
+flowchart TB
+    H["<b>index · Home</b>"]
+    C["<b>/2026, /2027</b><br/>Conference pages"]
+    PA["<b>past · programmes</b><br/>Archive 2017 to 2025"]
+    A["<b>anthology</b><br/>The Anthology"]
+    AT["<b>anthology-atlas</b><br/>The Atlas"]
+    PP["<b>papers/&lt;slug&gt;</b><br/>315 paper pages"]
+    B["<b>board</b><br/>Board and support staff"]
+    BL["<b>blog</b><br/>Belvedere"]
+    NW["<b>news · feed.xml</b>"]
+    I["<b>initiative · membership<br/>prizes · outputs</b>"]
+    RM["<b>roadmap</b>"]
+    ST["<b>accessibility · licensing<br/>policy · terms</b>"]
+
+    H --> C
+    H --> A
+    H --> B
+    H --> NW
+    H --> I
+    C --> PA
+    A --> AT
+    A --> PP
+    PA --> PP
+    H --> BL
+    H -.->|footer| RM
+    H -.->|footer| ST
+
+    style H fill:#0071b8,stroke:#0071b8,color:#fff
+    </div>
+    <div class="diagram-caption">Figure 3 · The main paths through the site. Solid arrows are the navigation and in-page links, dashed arrows are footer links. Ticketing, legacy and redirect pages are left out.</div>
+  </div>
+
+  <h2>Feature inventory</h2>
+  <table>
+    <thead><tr><th>Feature</th><th>Where</th><th>Fed by</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Live conference programme</strong>, registration badge, livestream block</td><td><code>/2026</code> and later year pages</td><td>Indico, through <code>indico.json</code></td></tr>
+      <tr><td><strong>Conference archive</strong>, every past programme in the live grid's shape</td><td><code>/past</code>, <code>/YYYY</code></td><td><code>archiveProgrammes.js</code>, transcribed from the final programmes</td></tr>
+      <tr><td><strong>The Anthology</strong>: every paper since 2017, filterable by theme, year and person</td><td><code>/anthology</code>, <code>/papers/&lt;slug&gt;</code></td><td><code>corpus.js</code> over the programmes, plus <code>paperAbstracts.json</code></td></tr>
+      <tr><td><strong>The Atlas</strong>, a network map of the field's seventeen themes</td><td><code>/anthology-atlas</code></td><td><code>anthologyAtlas.js</code></td></tr>
+      <tr><td><strong>Board and support staff</strong>, with past members folded away</td><td><code>/board</code></td><td>The Google Form, through <code>board.json</code></td></tr>
+      <tr><td><strong>Members' publications</strong></td><td><code>/publications</code></td><td>ORCID, through <code>orcidWorks.json</code></td></tr>
+      <tr><td><strong>Published versions of conference papers</strong></td><td>Paper pages</td><td><code>paperLinks.json</code>, matched by <code>match-publications.mjs</code></td></tr>
+      <tr><td><strong>Belvedere</strong>, the EISS blog</td><td><code>/blog</code></td><td>Markdown posts under <code>src/blog/</code></td></tr>
+      <tr><td><strong>News</strong> and the Atom feed</td><td><code>/news</code>, <code>/feed.xml</code></td><td><code>news.json</code>, or an issue labelled <code>news</code></td></tr>
+      <tr><td><strong>Site search</strong>, pages and people</td><td>Search modal on every page</td><td>Pagefind, built at deploy</td></tr>
+      <tr><td><strong>Public roadmap</strong> with progress bars</td><td><code>/roadmap</code></td><td><code>roadmap.js</code> and <code>roadmap-progress.json</code></td></tr>
+      <tr><td><strong>Machine-readable corpus</strong>: theme vocabulary, paper and author indexes</td><td><code>/data/…</code>, <code>/vocab/…</code></td><td>Built from <code>corpus.js</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="snapshot cropped">
+    <div class="clip"><img src="snap-conference.jpg" alt="The ESSC 2026 conference page with its programme grid."></div>
+    <div class="caption">Figure 4 · The ESSC 2026 page after the conference, cropped from the top. Its programme grid, further down the page, is drawn from Indico at build time.</div>
+  </div>
+
+  <h2>Data flow: how a board biography reaches the site</h2>
+  <div class="diagram">
+    <div class="mermaid">
+sequenceDiagram
+    participant M as Board member
+    participant F as Google Form + Sheet
+    participant W as sync-board.yml
+    participant R as Repository
+    participant D as deploy.yml
+    M->>F: Submits or updates a biography
+    Note over W: Run from the Actions tab
+    W->>F: Reads the published CSV
+    W->>W: Rebuilds board.json, downloads new headshots,<br/>refuses to write a duplicate person
+    W->>R: Opens a PR on board-sync/auto
+    Note over R: Four required checks run on the PR
+    R->>R: Maintainer reviews and merges
+    R->>D: Push to master
+    D-->>M: /board updated within minutes
+    </div>
+    <div class="diagram-caption">Figure 5 · The board biography pipeline. Departures are recorded by setting <code>roleEndDate</code>, never by deleting the entry.</div>
+  </div>
+  <p>The sync matches a submission to an existing entry by first and last name, ignoring titles, so a person who adds a middle initial or a title is not duplicated. Since October 2026 it also refuses to write <code>board.json</code> if two entries would share a name: a duplicate once stopped the build for four days. Full setup in <code>docs/board-bios-setup.md</code>.</p>
+
+  <div class="snapshot cropped">
+    <div class="clip"><img src="snap-board.jpg" alt="The board page with leadership, board members and support staff."></div>
+    <div class="caption">Figure 6 · The board page. Initials stand in where a member has not uploaded a photograph.</div>
+  </div>
+
+  <h2>Data flow: Indico to the live programme</h2>
+  <div class="diagram">
+    <div class="mermaid">
+flowchart LR
+    IN["Indico timetable<br/>and registration"] -->|export API,<br/>read-only token| SY["sync-indico.py<br/>daily 03:45 UTC"]
+    SY -->|substantive change| PR["PR on<br/>indico-sync/auto"]
+    SY -->|timestamp only| NO["No commit"]
+    PR --> M["master"]
+    M --> DP["deploy.yml"]
+    DP --> PG["/2026 programme grid,<br/>registration badge"]
+    </div>
+    <div class="diagram-caption">Figure 7 · The Indico pipeline. Without its token the sync runs in anonymous mode and still carries the public timetable, so an expired token degrades the site rather than breaking it.</div>
+  </div>
+  <p>The token belongs to a dedicated service account on Indico, never to a person's login. Its lifecycle is in <code>docs/indico-api-token.md</code>, and adding a conference year is in <code>docs/new-conference.md</code>.</p>
+
+  <h2>The other pipelines</h2>
+  <table>
+    <thead><tr><th>Workflow</th><th>When</th><th>What it maintains</th></tr></thead>
+    <tbody>
+      <tr><td><code>sync-orcid.yml</code></td><td>Weekly</td><td>Members' recent public ORCID works, in <code>orcidWorks.json</code>.</td></tr>
+      <tr><td><code>sync-publications.yml</code></td><td>Weekly</td><td>Published versions of conference papers. High-confidence matches publish automatically. A mid-confidence band waits for a person to confirm it, because a wrong match mis-cites.</td></tr>
+      <tr><td><code>sync-netsec-directory.yml</code></td><td>Weekly, and on a signal from NetSec</td><td>A mirror of the NetSec directory, so an Anthology author with a NetSec profile links to it.</td></tr>
+      <tr><td><code>roadmap-refresh.yml</code></td><td>Daily</td><td>The <code>[Unreleased]</code> count in the roadmap document and the milestone progress bars on <code>/roadmap</code>.</td></tr>
+      <tr><td><code>news-publish.yml</code></td><td>When an issue is labelled <code>news</code></td><td>Appends the issue to <code>news.json</code>. A title starting <code>[test]</code> opens the PR without merging it.</td></tr>
+      <tr><td><code>abstract-coverage.yml</code></td><td>Every four months</td><td>A report of which papers still lack an abstract.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Outbound contracts with NetSec</h2>
+  <p>The two sites link to each other through published index files rather than by scraping each other's pages. EISS publishes <code>/data/anthology-index.json</code> (one record per paper) and <code>/data/authors-index.json</code> (one per author), rebuilt from the corpus on every deploy. NetSec publishes <code>directory-index.json</code>, which the EISS sync mirrors. A change to either file's shape is a change to a contract the other site depends on. See <code>docs/netsec-directory-integration.md</code>.</p>
+
+  <div class="snapshot cropped">
+    <div class="clip"><img src="snap-anthology.jpg" alt="The Anthology landing page with its filters and paper list."></div>
+    <div class="caption">Figure 8 · The Anthology. Every paper presented at an EISS conference since 2017, with theme, year and person filters and a page per paper.</div>
+  </div>
+
+  <h2>Repository layout</h2>
+  <table>
+    <thead><tr><th>Path</th><th>Holds</th></tr></thead>
+    <tbody>
+      <tr><td><code>src/*.njk</code></td><td>Pages. English is <code>page.njk</code>, translations are <code>page.fr.njk</code> and <code>page.de.njk</code>.</td></tr>
+      <tr><td><code>src/_layouts/base.njk</code></td><td>The frame around every page: head and metadata, navigation, footer, search modal, ribbons.</td></tr>
+      <tr><td><code>src/_includes/</code></td><td>Shared partials, one per component.</td></tr>
+      <tr><td><code>src/_data/</code></td><td>Data files, hand-kept or written by a sync.</td></tr>
+      <tr><td><code>src/assets/</code></td><td>The one stylesheet <code>site.css</code>, scripts, images and fonts.</td></tr>
+      <tr><td><code>scripts/</code></td><td>Sync jobs, build checks and <code>release.sh</code>.</td></tr>
+      <tr><td><code>.github/workflows/</code></td><td>Deploy, the CI checks, the syncs and the failure alarm.</td></tr>
+      <tr><td><code>docs/</code></td><td>Maintainer documentation, this pack included under <code>docs/pdf/</code>.</td></tr>
+      <tr><td><code>CHANGELOG.md</code></td><td>Release history. Every user-visible change adds a bullet under <code>[Unreleased]</code> in the same pull request.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Conventions worth knowing</h2>
+  <ul>
+    <li><strong>One class prefix per component.</strong> <code>site.css</code> is a single global stylesheet. Two components sharing a class name once broke the live programme grid, so each component owns a prefix and a build check flags a class styled in two sections.</li>
+    <li><strong>A green build is not a working feature.</strong> A class used in markup but defined nowhere in the stylesheet fails the sanity check, and new interface work is checked in a browser at desktop and phone width.</li>
+    <li><strong>Squash merges only.</strong> Every pull request lands as one commit on <code>master</code>.</li>
+    <li><strong>Every issue and pull request carries a milestone</strong>, which is how a release is assembled.</li>
+  </ul>
+
+  <div class="snapshot cropped">
+    <div class="clip"><img src="snap-roadmap.jpg" alt="The public roadmap page with progress bars per release."></div>
+    <div class="caption">Figure 9 · The public roadmap. The progress bars are refreshed daily from the repository's milestones.</div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 3 — DESIGN SYSTEM
+     ════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="section-banner">
+    <div class="num">03</div>
+    <div class="head">
+      <h1>Design system</h1>
+      <div class="sub">Brand marks, tokens, components, motion and accessibility.</div>
+    </div>
+  </div>
+
+  <p>The rendered style guide is a page of the site itself, at <code>/design-system.html</code>, and <code>docs/design-system.md</code> lists every token and component. This section is the summary.</p>
+
+  <h2>Brand marks</h2>
+  <p>The EISS identity is a constellation: network-blue nodes and lines beside the EiSS wordmark. The web variants live in <code>src/assets/images/brand/</code> and are derived from the canonical brand bundle by <code>scripts/derive-logo-variants.py</code>. The text parts of each mark follow the surrounding colour, while the constellation keeps <code>#73caff</code> on every surface, in light and dark mode alike.</p>
+  <table>
+    <thead><tr><th>Mark</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td><code>logo-mark.svg</code></td><td>The constellation alone: mobile header, favicon.</td></tr>
+      <tr><td><code>logo-lockup.svg</code></td><td>Constellation and wordmark: desktop header.</td></tr>
+      <tr><td><code>logo-full.svg</code></td><td>With the tagline: press kit, share-card watermark.</td></tr>
+      <tr><td><code>anthology-mark.svg</code></td><td>The Anthology and Atlas sub-brand, drawn from the corpus co-authorship graph.</td></tr>
+      <tr><td><code>belvedere-mark.svg</code></td><td>The Belvedere blog: an arched lookout with the constellation seen through it.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Colour tokens</h2>
+  <p>Every colour is a custom property on <code>:root</code> in <code>site.css</code>, redefined for dark mode.</p>
+  <table>
+    <thead><tr><th>Token</th><th>Light value</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td><code>--brand-network</code></td><td><code>#73caff</code></td><td>The constellation. No dark-mode override.</td></tr>
+      <tr><td><code>--accent</code></td><td><code>hsl(203 100% 36%)</code></td><td>Links, buttons, focus rings.</td></tr>
+      <tr><td><code>--text</code></td><td><code>hsl(222 28% 12%)</code></td><td>Body text.</td></tr>
+      <tr><td><code>--text-muted</code></td><td><code>hsl(222 16% 34%)</code></td><td>Secondary text.</td></tr>
+      <tr><td><code>--bg</code></td><td><code>hsl(210 33% 98%)</code></td><td>Page background.</td></tr>
+      <tr><td><code>--surface</code></td><td>White at 72%</td><td>The glass cards that carry most content.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Typography</h2>
+  <p>One typeface, <strong>Inter</strong>, self-hosted, for display and body alike. The type scale runs from <code>--fs-xs</code> (0.8125rem) to <code>--fs-4xl</code> (4rem), with display headings set tight (<code>--tracking-display</code>, −0.03em). Body text sits at 1.0625rem on a 1.55 line height, and prose is held to a 42rem measure.</p>
+
+  <h2>Components</h2>
+  <p>Glass cards are the unit of layout. The shared chrome on every page comes from <code>base.njk</code>: the sticky navigation, the language switcher, the search modal, the footer, the beta ribbon on translated pages and the site-wide announcement banner, which is driven by <code>whats-new.json</code> and used three or four times a year. Domain components include the programme grid, person cards with hovercards, the paper card, the Atlas, and the click-to-load video embed. Each owns its class prefix.</p>
+
+  <h2>Motion</h2>
+  <p>Transitions run at 150, 240 or 420 milliseconds on two easing curves, and hover lifts stay within a few pixels. Every animation is switched off under <code>prefers-reduced-motion</code>.</p>
+
+  <h2>Accessibility checklist for new work</h2>
+  <ul>
+    <li>Every interactive element is reachable and operable by keyboard, with a visible focus ring.</li>
+    <li>Tap targets are at least 44 pixels on a phone.</li>
+    <li>Text and controls meet WCAG AA contrast in both colour schemes. Links inside grey paragraphs are underlined, since colour alone would not tell them apart.</li>
+    <li>Images carry meaningful <code>alt</code> text, or empty <code>alt</code> when decorative.</li>
+    <li>Headings run in order without gaps, and every page has one <code>&lt;main&gt;</code>.</li>
+    <li>The axe-core audit in CI passes. It runs in real headless Chrome, because static linting reported zero findings while real defects shipped.</li>
+  </ul>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 4 — TRANSLATION
+     ════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="section-banner">
+    <div class="num">04</div>
+    <div class="head">
+      <h1>Translation &amp; multilingual posture</h1>
+      <div class="sub">English first, French and German by hand.</div>
+    </div>
+  </div>
+
+  <h2>How a language switch happens</h2>
+  <p>Each translated page is a sibling template with the same name stem: <code>membership.njk</code>, <code>membership.fr.njk</code>, <code>membership.de.njk</code>, published at <code>/membership.html</code>, <code>/membership.fr.html</code> and <code>/membership.de.html</code>. Every page declares its alternates, the language switcher links between them, and each carries <code>hreflang</code> links for search engines. Interface strings (navigation, footer, search, badges) come from one catalogue, <code>src/_data/i18n.js</code>, and a check keeps its English, French and German key sets identical.</p>
+
+  <h2>What is translated, and what is not</h2>
+  <p>Twenty-seven pages have French and German versions, among them the home page, the Initiative, membership, the board, the Anthology, the blog, and the accessibility, licensing and privacy pages. Archive year pages, special events and individual paper pages stay in English. Translated pages carry a beta ribbon that says they are translated by hand.</p>
+  <div class="card callout">
+    <h4>No machine translation, ever</h4>
+    <p style="margin:0">French and German copy is written by people. A page without a hand translation stays in English rather than gaining a machine one.</p>
+  </div>
+
+  <h2>Keeping translations in step: the drift checker</h2>
+  <p><code>scripts/check-i18n-drift.py</code> records, for every translated page, a hash of the English source it was translated from (<code>data/i18n-state.json</code>). When the English page changes, the hash no longer matches and the check fails on the pull request. That is the signal to refresh the French and German pages, or, for a change that does not affect meaning, to re-stamp the hash as a deliberate decision:</p>
+  <pre><code>python3 scripts/check-i18n-drift.py --mark-fresh src/initiative.njk fr
+python3 scripts/check-i18n-drift.py --mark-fresh src/initiative.njk de</code></pre>
+  <p>The check is one of the four required on every pull request. Full mechanics, including adding a new translation, are in <code>docs/i18n.md</code>.</p>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 5 — SEO
+     ════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="section-banner">
+    <div class="num">05</div>
+    <div class="head">
+      <h1>SEO &amp; discoverability</h1>
+      <div class="sub">How the site is found, shared and searched.</div>
+    </div>
+  </div>
+
+  <h2>What's in place</h2>
+  <ul>
+    <li><strong>Page metadata</strong> from <code>base.njk</code>: title, description, a canonical URL, Open Graph and Twitter Card tags, and a share image per page or per edition.</li>
+    <li><strong>Structured data</strong>: a JSON-LD block describing the organisation, with the high-resolution logo for search engines' knowledge panels.</li>
+    <li><strong>Language alternates</strong>: <code>hreflang</code> links on every translated page, so search engines serve the reader's language.</li>
+    <li><strong>A sitemap</strong> at <code>/sitemap.xml</code>, with a human-readable version at <code>/sitemap.html</code>. Pages without a real content date omit <code>&lt;lastmod&gt;</code>, since the daily build would otherwise make every page look freshly changed.</li>
+    <li><strong>Atom feeds</strong>: one for news at <code>/feed.xml</code> and one per research theme under <code>/feeds/themes/</code>. Entry dates come from the content, never from the build.</li>
+    <li><strong>Citation exports</strong>: every paper page offers BibTeX and RIS, checked for well-formedness on every pull request.</li>
+    <li><strong>A published vocabulary</strong> of the seventeen research themes, in SKOS (Turtle and JSON-LD), so other projects can reuse the terms.</li>
+  </ul>
+
+  <h2>Site search</h2>
+  <p>Pagefind indexes the built site at deploy time and runs entirely in the browser, with no search service to host. Each board member also gets a small search stub per language, so a search for a name lands on that person's card rather than on the whole board page. The stubs are hidden from search engines. See <code>docs/search.md</code>.</p>
+
+  <h2>Adding a new page</h2>
+  <ol>
+    <li>Create <code>src/&lt;page&gt;.njk</code> with a <code>permalink</code>, <code>title</code> and <code>description</code> in its front matter.</li>
+    <li>If it has translations, add the siblings and the <code>alternates</code> block to all three, and register them with the drift checker.</li>
+    <li>Link it from somewhere a reader will find it. The link checker fails on links that do not resolve, not on pages that nothing links to.</li>
+    <li>Build, and check the page at desktop and phone width.</li>
+  </ol>
+
+  <h2>Known limits of GitHub Pages</h2>
+  <p>Pages serves static files only. It cannot set custom HTTP headers (so no Content-Security-Policy header), cannot redirect on the server (old Mobirise addresses are kept as small pages that send the reader on), and cannot run server code. None of these has been a blocker for this site.</p>
+
+  <div class="snapshot cropped">
+    <div class="clip"><img src="snap-blog.jpg" alt="The Belvedere blog index."></div>
+    <div class="caption">Figure 10 · Belvedere, the EISS blog, published in English, French and German.</div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 6 — ADMIN GUIDE
+     ════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="section-banner">
+    <div class="num">06</div>
+    <div class="head">
+      <h1>Admin guide</h1>
+      <div class="sub">What the site depends on, how to run it, and how to hand it on.</div>
+    </div>
+  </div>
+
+  <p>The site runs on a one-person bus factor: the maintainer holds the access and the operating knowledge. This section, with <code>docs/admin-guide.md</code>, exists so the site survives that person being unavailable. No secret, token or password appears here. The section records where each credential lives, not its value.</p>
+
+  <h2>Accounts &amp; assets</h2>
+  <table>
+    <thead><tr><th>Asset</th><th>What it controls</th><th>Where access lives</th></tr></thead>
+    <tbody>
+      <tr><td><strong>GitHub organisation and repository</strong> (<code>EISSeuropa/EISSeuropa.github.io</code>)</td><td>Source, build, every workflow, the issue backlog</td><td>Organisation owners. Keep at least two, so it can never be orphaned.</td></tr>
+      <tr><td><strong>Domain</strong> <code>eiss-europa.com</code></td><td>The public address and its DNS records</td><td>The registrar account, in the maintainer's password manager. <strong>The most important transfer in a handover.</strong></td></tr>
+      <tr><td><strong>GitHub Pages</strong></td><td>What visitors see, and the TLS certificate</td><td>Tied to the repository. The certificate renews itself.</td></tr>
+      <tr><td><strong>Google account</strong></td><td>The board Form, its Sheet and the photo folder</td><td>The maintainer's Google account.</td></tr>
+      <tr><td><strong>Indico</strong> <code>indico.eiss-europa.com</code></td><td>The programme, registration, the sync bot account</td><td>Indico administrators. The bot's token is the repository secret <code>INDICO_API_TOKEN</code>.</td></tr>
+      <tr><td><strong><code>AUTOPR_TOKEN</code></strong></td><td>Lets the sync jobs open and merge their pull requests so that CI runs on them and their merges deploy</td><td>A fine-grained personal access token of the <code>EISSeuropa</code> account, limited to this repository. It has an expiry date.</td></tr>
+      <tr><td><strong>Mailchimp</strong></td><td>The newsletter and its subscribers</td><td>The maintainer's password manager. The repository holds only the sign-up link.</td></tr>
+      <tr><td><strong>Social accounts</strong>: YouTube, X, LinkedIn</td><td>The Initiative's channels</td><td>The maintainer's password manager.</td></tr>
+      <tr><td><strong><code>contact@eiss-europa.com</code></strong></td><td>The public contact address</td><td>Wherever the domain's mail is hosted.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Routine tasks</h2>
+  <h3>Publish a board biography</h3>
+  <p>Run <em>Actions → Sync board bios from Google Form</em>. If anything changed, a pull request opens on <code>board-sync/auto</code> with a readable summary of the change. Read it, wait for the four checks, and squash-merge. The board page updates within minutes.</p>
+  <h3>Record a departure</h3>
+  <p>Set the person's <code>roleEndDate</code> in <code>board.json</code>. After a seven-day grace period the build moves them into the <em>EISS community</em> section at the foot of the board page. An entry is never deleted, so the record of who served stays intact.</p>
+  <h3>Publish a news item</h3>
+  <p>File an issue and label it <code>news</code>. The title becomes the headline, the first paragraph the excerpt, and optional <code>Type:</code>, <code>URL:</code> and <code>Date:</code> lines at the top steer the rest. The pull request merges once the checks pass. Start the title with <code>[test]</code> to see the result without publishing it.</p>
+  <h3>Copy-edit a translated page</h3>
+  <p>Edit the English page, carry the change into the French and German pages by hand, and re-stamp the drift checker (Section 04).</p>
+  <h3>Cut a release</h3>
+  <p>With the work merged and <code>[Unreleased]</code> in <code>CHANGELOG.md</code> filled in, run <code>scripts/release.sh X.Y.Z "Title"</code> from an up-to-date <code>master</code>. The script prints the release notes before publishing them: read them, because a published GitHub Release is harder to take back than a merge. Minor and major releases also refresh this pack (Appendix C).</p>
+
+  <h2>Escalation</h2>
+  <table>
+    <thead><tr><th>Symptom</th><th>First response</th></tr></thead>
+    <tbody>
+      <tr><td>An issue titled <strong>CI alarm: … failed</strong> arrives</td><td>Open the run linked in the issue. On <code>master</code>, the live site is still serving the last good build, so fix forward on a branch. On a <code>…/auto</code> branch, the sync's pull request is held unmerged until the cause is fixed. Close the issue once it is.</td></tr>
+      <tr><td>The build fails</td><td>Reproduce locally with <code>npm install</code> and <code>npm run build</code>. Eleventy names the template and line.</td></tr>
+      <tr><td>The site is unreachable</td><td>Check the latest deploy under <em>Actions</em> first. If deploys are green, check DNS: <code>src/CNAME</code>, the registrar's records, and <em>Settings → Pages</em>.</td></tr>
+      <tr><td>Sync pull requests stop merging, or show checks waiting for approval</td><td><code>AUTOPR_TOKEN</code> is missing or expired. Create a new token and save it under the same name.</td></tr>
+      <tr><td>The programme stops showing registration details</td><td>The Indico token expired and the sync fell back to anonymous mode. Issue a new one under the bot account (<code>docs/indico-api-token.md</code>).</td></tr>
+      <tr><td>The translation check fails</td><td>An English page changed. Refresh the translations, or re-stamp deliberately (Section 04).</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Handover checklist</h2>
+  <ul>
+    <li>☐ Add the successor as an <strong>owner</strong> of the <code>EISSeuropa</code> GitHub organisation.</li>
+    <li>☐ Transfer the <strong>domain registrar</strong> login.</li>
+    <li>☐ Transfer the Google account behind the board Form, the Indico administrator and bot logins, Mailchimp, the social accounts and the contact mailbox.</li>
+    <li>☐ Rotate <code>INDICO_API_TOKEN</code>, and replace <code>AUTOPR_TOKEN</code> with a token from an account the successor controls.</li>
+    <li>☐ Read <code>docs/admin-guide.md</code>, the per-pipeline documents it links to, and <code>CLAUDE.md</code>.</li>
+    <li>☐ As a dry run, trigger the board sync and the Indico sync, then make a one-character edit and take it through a pull request to the live site.</li>
+  </ul>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 7 — SECURITY
+     ════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="section-banner">
+    <div class="num">07</div>
+    <div class="head">
+      <h1>Security &amp; DevSecOps</h1>
+      <div class="sub">What could go wrong, and what stands in the way.</div>
+    </div>
+  </div>
+
+  <h2>Threat model in one paragraph</h2>
+  <p>A static site has no server, database or login to attack, so the risk sits in the supply chain and the accounts around it. The realistic threats are a compromised GitHub account or token pushing content, a malicious dependency or Action running in CI, a lapsed domain being taken over, and personal data on the board page being published wrongly. The controls below are aimed at those.</p>
+
+  <h2>Coordinated disclosure</h2>
+  <p><code>SECURITY.md</code> at the repository root sets out what is in scope (the <code>master</code> branch, the deployed site, the workflows, the sync scripts and the personal data in <code>board.json</code>), where to report privately, and which third-party services to report to directly.</p>
+
+  <h2>GitHub-native security automation</h2>
+  <ul>
+    <li><strong>Dependabot</strong> watches three ecosystems (GitHub Actions, npm and pip) and opens security updates automatically.</li>
+    <li><strong>CodeQL</strong> analyses the JavaScript, Python and workflow code on every pull request and push.</li>
+    <li><strong>Secret scanning with push protection</strong> blocks a push that contains a recognisable credential.</li>
+  </ul>
+
+  <h2>Supply-chain hardening</h2>
+  <ul>
+    <li><strong>Every Action is pinned to a full commit SHA</strong>, with the version in a trailing comment. Dependabot keeps the pins current.</li>
+    <li><strong>Few dependencies.</strong> Three npm development dependencies and no runtime one. A new dependency needs a reason, because each is another update lane and another audit line.</li>
+    <li><strong>Least privilege.</strong> Each workflow declares the permissions it needs. <code>AUTOPR_TOKEN</code> is limited to this repository and expires, and the Indico token belongs to a read-only service account.</li>
+  </ul>
+
+  <h2>Branch protection</h2>
+  <p>Two GitHub rulesets protect <code>master</code>. The first forbids deleting it, force-pushing to it and merge commits, for everyone. The second requires every change to arrive through a pull request and, since October 2026, requires four checks to pass first:</p>
+  <table>
+    <thead><tr><th>Required check</th><th>What it proves</th></tr></thead>
+    <tbody>
+      <tr><td><code>build</code></td><td>The site builds.</td></tr>
+      <tr><td><code>axe-core in headless Chrome</code></td><td>No accessibility violations on the audited pages.</td></tr>
+      <tr><td><code>Verify translations match their English sources</code></td><td>No French or German page has fallen behind its English source.</td></tr>
+      <tr><td><code>Duplicate data keys + empty href/src</code></td><td>The build sanity checks: no duplicate data, no empty links, every class defined, every paper in the sitemap, valid citations and feeds.</td></tr>
+    </tbody>
+  </table>
+  <p>The checks run on the sync jobs' pull requests too, so a bad sync stops at its pull request and never reaches the live site. Administrators can still push a release commit directly and can override a stuck check, but auto-merge always waits.</p>
+
+  <h2>The failure alarm</h2>
+  <div class="diagram">
+    <div class="mermaid">
+flowchart LR
+    W["A watched workflow<br/>fails or times out"] --> Q{"On master,<br/>or on a sync's<br/>…/auto branch?"}
+    Q -->|no: a person's own PR| X["No alarm.<br/>The author sees it."]
+    Q -->|yes| E{"Open alarm issue<br/>with this title?"}
+    E -->|yes| C["Comment on it"]
+    E -->|no| N["Open an issue, labelled<br/>bug + automated,<br/>assigned to the maintainers"]
+    </div>
+    <div class="diagram-caption">Figure 11 · <code>failure-alarm.yml</code>. Assignment is what sends the notification. Cancelled runs are ignored, since the deploy cancels superseded runs on purpose.</div>
+  </div>
+  <p>The alarm watches the deploy, the required checks and every sync. It exists because a failed scheduled job used to be visible only in the Actions tab: in October 2026 the site went four days without deploying before anyone noticed. Every workflow it watches is started by a push, a schedule, a person or <code>AUTOPR_TOKEN</code>, because GitHub tells no other workflow about a run that a workflow started with its own built-in token.</p>
+
+  <h2>Web-platform hardening</h2>
+  <ul>
+    <li>HTTPS is enforced by GitHub Pages, with a certificate that renews itself.</li>
+    <li>The site sets no cookies of its own and uses no analytics or tracking. The reader's theme and language choices are kept in the browser's own storage.</li>
+    <li>YouTube's player loads only when the reader clicks, from the privacy-enhanced <code>youtube-nocookie.com</code>. Until then the page fetches nothing from YouTube but the thumbnail image.</li>
+  </ul>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     APPENDIX A — ACCESSIBILITY
+     ════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="section-banner">
+    <div class="num">A</div>
+    <div class="head">
+      <h1>Appendix · Accessibility</h1>
+      <div class="sub">Target, method and known limitations.</div>
+    </div>
+  </div>
+
+  <p>The site targets <strong>WCAG 2.1 Level AA</strong>, aligned with the European standard EN&nbsp;301&nbsp;549, and currently reports <strong>partial conformance</strong>. The full statement, in three languages, is at <code>/accessibility.html</code>, and it is updated with every release that changes the audit results or the list of limitations.</p>
+
+  <h2>How the site is audited</h2>
+  <p>axe-core runs in real headless Chrome on every pull request, as one of the four required checks. A static accessibility lint runs alongside it inside the sanity check. Full manual audits are recorded under <code>docs/</code>, the most recent in August 2026.</p>
+
+  <h2>Known limitations</h2>
+  <ul>
+    <li>Contrast on the translucent glass cards cannot be computed reliably by automated tools, so it is checked by hand.</li>
+    <li>Some archive material is embedded as PDF files, which do not all meet the standard.</li>
+  </ul>
+  <p>Barriers can be reported through the route given in the statement.</p>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     APPENDIX B — LICENSING
+     ════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="section-banner">
+    <div class="num">B</div>
+    <div class="head">
+      <h1>Appendix · Licensing</h1>
+      <div class="sub">How the site may be reused.</div>
+    </div>
+  </div>
+
+  <p>The site's <strong>code</strong> is released under the <strong>MIT licence</strong>, and its <strong>content</strong> under <strong>Creative Commons Attribution 4.0</strong> (CC&nbsp;BY&nbsp;4.0). Members' photographs are excluded from the content licence and stay with the people pictured. Third-party assets bundled with the site keep their own licences. The terms, the attribution string and the list of bundled assets are at <code>/licensing.html</code>.</p>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     APPENDIX C — CHANGELOG
+     ════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="section-banner">
+    <div class="num">C</div>
+    <div class="head">
+      <h1>Appendix · Changelog</h1>
+      <div class="sub">What each revision of this pack records. Kept last, so the newest revision is the final page.</div>
+    </div>
+  </div>
+
+  <p>This changelog tracks the documentation pack, not the website. Website history is in <code>CHANGELOG.md</code> and the GitHub Releases. Pack versions are stamped on the cover and follow Semantic Versioning. The pack is refreshed on minor and major website releases, and patch releases skip it.</p>
+
+  <div class="changelog-entries">
+  <h2 class="current">v1.0.0 · October 2026 · First edition</h2>
+  <p class="cl-summary">First edition of the EISS documentation pack, modelled on the NetSec pack and built the same way: <code>docs/pdf/documentation.html</code> printed to A4 by headless Chrome through <code>docs/pdf/build.sh</code>. Seven chapters (overview, architecture, design system, translation, SEO, admin guide, security) and three appendices, with eleven figures: six screenshots of the live site and five diagrams. It records the site as of website v2.28.0 together with the October 2026 CI work: required checks on <code>master</code>, the sync jobs moving to <code>AUTOPR_TOKEN</code>, and the widened failure alarm.</p>
+  </div>
+
+  <hr style="margin-top:36pt">
+
+  <p class="small muted center" style="margin-top:24pt">
+    European Initiative for Security Studies · eiss-europa.com<br>
+    Documentation pack v1.0.0 · Compiled October 2026 by Dr Arthur Laudrain, EISS Technology Coordinator.
+  </p>
+</section>
+
+
+<script>
+  // Mermaid rendering, themed against the site's colour tokens.
+  //
+  // Sizing rationale: the previous draft rendered diagrams at
+  // Mermaid's defaults (small for an A4 figure). Here we bump font
+  // sizes, actor margins, and the sequence-diagram "width" so the
+  // resulting SVG has a natural size that fills the print figure
+  // width comfortably. Unstyled nodes get pure white fills with a
+  // blue border (was light-blue, which read as grey on paper).
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      fontFamily: "'Inter',sans-serif",
+      fontSize: '16px',
+      primaryColor: '#ffffff',
+      primaryTextColor: '#161b27',
+      primaryBorderColor: '#0071b8',
+      lineColor: '#2f3747',
+      secondaryColor: '#ffffff',
+      tertiaryColor: '#ffffff',
+      // Sequence diagrams
+      actorBkg: '#0b3a66',
+      actorTextColor: '#ffffff',
+      actorBorder: '#0b3a66',
+      actorLineColor: '#0071b8',
+      signalColor: '#161b27',
+      signalTextColor: '#161b27',
+      labelBoxBkgColor: '#ffffff',
+      labelBoxBorderColor: '#0071b8',
+      labelTextColor: '#161b27',
+      loopTextColor: '#161b27',
+      noteBkgColor: '#fff8d6',
+      noteTextColor: '#161b27',
+      noteBorderColor: '#d8c269',
+    },
+    flowchart: {
+      htmlLabels: true,
+      curve: 'basis',
+      useMaxWidth: true,
+      nodeSpacing: 55,
+      rankSpacing: 70,
+      padding: 18,
+    },
+    sequence: {
+      useMaxWidth: true,
+      showSequenceNumbers: false,
+      mirrorActors: false,
+      wrap: true,
+      actorFontSize: 15,
+      actorFontWeight: 600,
+      messageFontSize: 14,
+      noteFontSize: 13,
+      actorMargin: 80,
+      messageMargin: 38,
+      boxMargin: 12,
+      width: 200,
+      height: 50,
+    },
+  });
+</script>
+
+</body>
+</html>

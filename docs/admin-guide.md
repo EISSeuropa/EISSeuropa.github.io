@@ -45,18 +45,23 @@ successor inherits through the handover in section 4.
   orphaned (see section 4). The automated PRs are assigned to the
   maintainer's GitHub handle so the assignee notification reaches them.
 - **Secrets.** Repository secrets live under *Settings → Secrets and
-  variables → Actions*. The only custom one is `INDICO_API_TOKEN` (see
-  below). `GITHUB_TOKEN` is the runner's built-in token, minted per run.
+  variables → Actions*. `INDICO_API_TOKEN` (see below) is the Indico
+  sync's read-only token. `AUTOPR_TOKEN` is a fine-grained personal
+  access token of the `EISSeuropa` account, limited to this repository,
+  that the sync jobs use to open and merge their PRs so CI runs on them
+  and their merges deploy. It expires: when it does, the syncs fail and
+  the failure alarm says so. `GITHUB_TOKEN` is the runner's built-in
+  token, minted per run.
 
 ### GitHub Pages deploy
 
 - **What it is.** The build-and-deploy pipeline in
   [`.github/workflows/deploy.yml`](../.github/workflows/deploy.yml).
-  It runs `npm run build`, uploads `_site/` as a Pages artefact, and
-  deploys to the `github-pages` environment.
+  It runs `npm run build`, builds the Pagefind index, uploads `_site/`
+  as a Pages artefact, and deploys to the `github-pages` environment.
 - **What it controls.** What visitors actually see at the domain. It
-  fires on every push to `master`, on pull requests (build validation
-  only, no deploy), and on manual dispatch.
+  fires on every push to `master`, daily at 04:15 UTC, on pull requests
+  (build validation only, no deploy), and on manual dispatch.
 - **Access.** Tied to the repo. No separate login.
 - **Known gotcha.** GitHub does not cascade a deploy when a workflow's
   own `GITHUB_TOKEN` resolves an auto-merge (the sync-roadmap loop is
@@ -200,10 +205,11 @@ How a member leaves depends on which kind they are.
   action. The daily rebuild advances the cut-off.
 - **A board member or leadership departure, by hand.** Their terms are
   open-ended, so expiry is a deliberate edit. Open
-  `src/_data/board.json`, find the entry, and either set its
-  `roleEndDate` to the departure date (to fold it into the past-members
-  footer after the grace window) or delete the entry outright. Open a
-  small PR, review, squash-merge.
+  `src/_data/board.json`, find the entry, and set its `roleEndDate` to
+  the departure date. After the grace window it moves into the *EISS
+  community* section at the foot of `/board`. Don't delete the entry:
+  the record of who served stays on the page. Open a small PR, review,
+  squash-merge.
 - **Full removal.** Two steps, both deliberate. First delete the
   member's row in the Google Sheet, or the next sync re-adds them.
   Then remove their entry from `board.json` in a PR. The sync never
