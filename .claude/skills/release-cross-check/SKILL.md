@@ -76,6 +76,19 @@ same release. If yes but too big to fit, open a tracking issue
   documented?
 - `BRAND.md` and the brand SVGs under `src/assets/images/brand/`:
   refresh if the visual identity changes.
+- The documentation pack (`docs/pdf/EISS-website-documentation.pdf`,
+  source `docs/pdf/documentation.html`, built by `docs/pdf/build.sh`).
+  Minor / major releases only, patches skip it. Same two-tier cadence as
+  NetSec's pack:
+  - **Cover bump** on every minor / major: update the website version and
+    the pack version on the cover, and add an Appendix C entry. Deferring
+    the section-level catch-up is fine if that entry says so.
+  - **Section-level catch-up** every two or three minor releases: refresh
+    the page graph, feature inventory and pipeline tables, and re-capture
+    the screenshots with `./docs/pdf/build.sh --shots`.
+  - After any rebuild, check the contents page numbers against the PDF:
+    they are typed by hand. Figures stay JPEG at device scale 1 (the NetSec
+    pack reached 24.6 MB on full-resolution PNGs).
 
 ### 5. Abstract coverage (Anthology)
 

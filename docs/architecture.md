@@ -111,7 +111,7 @@ is ambient rather than topical, and belongs on the panel side only.
 - **`sync-publications.yml`** → `match-publications.mjs` +
   `confirm-publication.mjs --auto-high` → `paperLinks.json` (high-confidence
   matches, published) + `data/publication-candidates.json` (review band,
-  queued; monthly). See `publication-matching.md`.
+  queued; weekly). See `publication-matching.md`.
 - **`sync-netsec-directory.yml`** → `sync-netsec-directory.mjs` →
   `netsecDirectory.json` (NetSec member directory, for the Anthology
   cross-links; weekly + a `repository_dispatch` fast path). See
@@ -125,19 +125,22 @@ permalinks let the NetSec site link into EISS: `/data/anthology-index.json`
 for directory profile links). Both regenerate from `corpus.js` every build.
 See `netsec-directory-integration.md`.
 
-Each sync opens an auto-PR (auto-merge armed, CI-gated) rather than
-pushing to `master`. `sync-publications.yml` auto-merges too, but only the
+Each sync opens an auto-PR rather than pushing to `master`, using the
+`AUTOPR_TOKEN` PAT so the four required checks run on it. The five that
+auto-merge (roadmap, ORCID, publications, NetSec directory, news) merge
+once those checks pass. Board and Indico PRs wait for a person. `sync-publications.yml` auto-merges too, but only the
 **high-confidence** matches are published; its mid-confidence "review band"
 rides along as queue data and is published only when a human confirms it by
 hand (`confirm-publication.mjs <slug>`), since a wrong match mis-cites.
 
-**`failure-alarm.yml`** watches those scheduled workflows plus the
-deploy: on a `failure` conclusion it opens (or threads a comment onto)
-a `CI alarm` tracking issue, labelled `automated` + `bug`, so a silent
-cron failure surfaces instead of going unnoticed. It ignores
-`cancelled` (the sync workflows use `cancel-in-progress` concurrency,
-so supersession is normal). Pure `gh` CLI, no third-party actions
-(#56).
+**`failure-alarm.yml`** watches the syncs, the deploy and the required
+checks. On a `failure`, `timed_out` or `startup_failure` on `master`, or
+on a sync's `*/auto` PR branch, it opens (or threads a comment onto) a
+`CI alarm` issue, labelled `automated` + `bug` and assigned to the
+maintainer accounts so it arrives as a notification. It ignores
+`cancelled`, since superseded runs are cancelled on purpose, and a
+person's own PRs. Pure `gh` CLI, no third-party actions (#56, #1762,
+#1776).
 
 ## CI gates (on PRs)
 
