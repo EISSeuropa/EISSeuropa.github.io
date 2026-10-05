@@ -8,7 +8,7 @@ public [`/roadmap.html`](https://eiss-europa.com/roadmap.html).
 v2.28.0 after the autostamp flagged the drift, #1619).**
 
 <!-- AUTOSTAMP:BEGIN -->
-> _Auto-tracked: **43 entries** in [`[Unreleased]`](../CHANGELOG.md#unreleased) since **v2.28.0** (11 Added, 8 Changed, 1 Removed, 23 Fixed). Last refresh by `scripts/sync-roadmap.py`: 4 Oct 2026. Prose in the timeline below may lag; the maintainer resynthesises on release-time §5 sweep._
+> _Auto-tracked: **45 entries** in [`[Unreleased]`](../CHANGELOG.md#unreleased) since **v2.28.0** (11 Added, 8 Changed, 1 Removed, 25 Fixed). Last refresh by `scripts/sync-roadmap.py`: 5 Oct 2026. Prose in the timeline below may lag; the maintainer resynthesises on release-time §5 sweep._
 <!-- AUTOSTAMP:END -->
 
 > **Sync convention.** This file is the authoritative planning source.
