@@ -169,8 +169,8 @@ check the featured card and archive list. Commit, push, merge.
 
 The page placement is automatic: the `endDate` field in `conferences.js`
 moves the entry from `next`/`upcoming` to `past` on the next build, and
-the daily-rebuild workflow
-([`.github/workflows/scheduled-rebuild.yml`](../.github/workflows/scheduled-rebuild.yml))
+the deploy workflow's daily schedule
+([`.github/workflows/deploy.yml`](../.github/workflows/deploy.yml))
 advances the cut-off within ~24 hours of the end date without any manual
 action.
 

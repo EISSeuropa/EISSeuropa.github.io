@@ -1,7 +1,16 @@
 # Build and deploy site to GitHub Pages.
 #
 # Triggers on push-to-master, on PR-into-master (for build validation),
-# and via manual dispatch from the Actions tab.
+# daily on a schedule, and via manual dispatch from the Actions tab.
+#
+# The daily run keeps build-time values current between content changes
+# (conferences.js sorts editions into next / upcoming / past by today's
+# date) and caps how long a missed cascade (gotcha below) leaves the site
+# stale. It used to live in scheduled-rebuild.yml, which dispatched this
+# workflow with its GITHUB_TOKEN. GitHub never fires `workflow_run` for a
+# run started that way, so the failure alarm could not see it, and from
+# 2 to 4 October 2026 three failed daily rebuilds went unreported (#1755).
+# A `schedule` trigger here has no such blind spot.
 #
 # Known gotcha: GitHub Actions intentionally does NOT cascade workflow
 # runs when a workflow's GITHUB_TOKEN does the merging. So if a PR is
@@ -36,6 +45,9 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
+  schedule:
+    # 04:15 UTC daily, after the 03:45 Indico sync.
+    - cron: "15 4 * * *"
   workflow_dispatch:
 
 permissions:
@@ -44,7 +56,7 @@ permissions:
   id-token: write
 
 concurrency:
-  # Real deploys (push, workflow_dispatch) share the single `pages` group and
+  # Real deploys (push, schedule, workflow_dispatch) share the single `pages` group and
   # never cancel in flight. PR validation builds get a group per head branch
   # and do cancel, so a second push to a branch supersedes the first instead
   # of queueing behind it. Keeping the two apart is the fix for #1261.
