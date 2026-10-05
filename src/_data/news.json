@@ -40,5 +40,12 @@
     "title": "EISS 2025: the annual conference in Thessaloniki",
     "url": "/2025.html",
     "excerpt": "The 2025 edition met at the University of Macedonia. The full programme and a photo gallery are in the archive."
+  },
+  {
+    "date": "2026-10-06",
+    "type": "event",
+    "title": "[test] News pipeline dry run",
+    "url": "/events.html",
+    "excerpt": "Dry run of the issue-to-news pipeline (#1764). The PR this opens should not merge. Close both after checking."
   }
 ]
