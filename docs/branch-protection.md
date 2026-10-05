@@ -62,11 +62,12 @@ repo they would strand the daily automation:
    docs-only PRs either — another way a required check fails to report.
 
 **To enable required checks safely (Phase 3):**
-- **Done:** the six bot workflows pass `secrets.AUTOPR_TOKEN || secrets.GITHUB_TOKEN`
-  to `create-pull-request`, so they switch to a PAT the moment the secret
-  exists and keep working on `GITHUB_TOKEN` until then.
-- **Maintainer step:** create a fine-grained PAT (this repo, contents +
-  pull-requests read/write) and save it as the repo secret `AUTOPR_TOKEN`.
+- **Done:** the seven bot workflows pass `secrets.AUTOPR_TOKEN || secrets.GITHUB_TOKEN`
+  to `create-pull-request`, and the five that auto-merge arm it with the same
+  token, so the merge's push starts the deploy. They fall back to
+  `GITHUB_TOKEN` if the secret is ever missing.
+- **Done (5 October 2026):** a fine-grained PAT (this repo, contents +
+  pull-requests read/write) is saved as the repo secret `AUTOPR_TOKEN`.
   NetSec already runs on the same pattern. PRs opened with a PAT trigger
   the full `pull_request` CI.
 - **Then:** require these four contexts in the Phase 2 ruleset (`17259266`),

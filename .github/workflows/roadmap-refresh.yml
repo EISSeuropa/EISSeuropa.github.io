@@ -146,7 +146,9 @@ jobs:
       - name: Arm auto-merge on the auto-PR
         if: steps.create-pr.outputs.pull-request-number
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # The PAT, so the merge's push to master starts the deploy (a
+          # GITHUB_TOKEN merge starts nothing). Falls back until it exists.
+          GH_TOKEN: ${{ secrets.AUTOPR_TOKEN || secrets.GITHUB_TOKEN }}
         run: |
           # Arm auto-merge, retrying transient GitHub API hiccups (e.g. a
           # 504 Gateway Timeout on the enable-auto-merge call, which has

@@ -22,6 +22,9 @@
 # 5` shows no run at the timestamp of the merge. Cure: push any commit
 # manually (an empty commit works) or run this workflow via
 # `gh workflow run deploy.yml --ref master` from a real user account.
+# Since October 2026 the bots arm auto-merge with AUTOPR_TOKEN, a PAT, so
+# their merges do start this workflow. The gotcha returns only if that
+# secret is missing or expired, and the daily schedule still catches it.
 #
 # Second known gotcha, same symptom, different cause (#1261). This
 # workflow used to put every run in one `pages` concurrency group with

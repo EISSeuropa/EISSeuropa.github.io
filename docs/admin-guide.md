@@ -63,10 +63,12 @@ successor inherits through the handover in section 4.
   the usual culprit). Master moves, the live site stays stale, and
   `gh run list --workflow=deploy.yml` shows no run at the merge
   timestamp. Cure: `gh workflow run deploy.yml --ref master` from a
-  real user account, or push any commit (an empty one works). The
-  deploy also runs daily on a schedule
-  ([`deploy.yml`](../.github/workflows/deploy.yml), 04:15 UTC) so the site never stays stale
-  more than ~24 hours regardless.
+  real user account, or push any commit (an empty one works). Since
+  October 2026 the bots arm auto-merge with the `AUTOPR_TOKEN` PAT, so
+  their merges deploy. This only recurs if that secret is missing or
+  expired. The deploy also runs daily on a schedule
+  ([`deploy.yml`](../.github/workflows/deploy.yml), 04:15 UTC), so the
+  site never stays stale more than ~24 hours regardless.
 
 ### Domain and DNS: eiss-europa.com
 

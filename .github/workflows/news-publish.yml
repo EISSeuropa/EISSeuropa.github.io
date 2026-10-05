@@ -91,7 +91,9 @@ jobs:
         # the pipeline can be checked without publishing. Close the PR after.
         if: steps.create-pr.outputs.pull-request-number && !startsWith(github.event.issue.title, '[test]')
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # The PAT, so the merge's push to master starts the deploy (a
+          # GITHUB_TOKEN merge starts nothing). Falls back until it exists.
+          GH_TOKEN: ${{ secrets.AUTOPR_TOKEN || secrets.GITHUB_TOKEN }}
         run: |
           pr="${{ steps.create-pr.outputs.pull-request-number }}"
           repo="${{ github.repository }}"
