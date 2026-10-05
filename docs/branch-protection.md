@@ -37,52 +37,26 @@ just remove the foot-guns.
   still direct-push. To force even yourself through PRs, drop this bypass
   and route releases through a PR instead.
 
-Auto-merge stays enabled and still waits for whatever CI runs on a PR
-(`build`, `link-check`, `i18n` drift, `build-sanity`, CodeQL), so those
-checks continue to gate the normal merge path.
+### Phase 3: required status checks (live since 5 October 2026)
 
-## What's deferred to Phase 3, and why
+_Closed [#501](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/501)._ The same ruleset (`17259266`) adds **`required_status_checks`** for four contexts from the GitHub Actions app (integration id `15368`):
 
-_Tracked in [#501](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/501)._
+- `build` (`deploy.yml`)
+- `axe-core in headless Chrome` (`a11y-browser.yml`)
+- `Verify translations match their English sources` (`i18n-drift.yml`)
+- `Duplicate data keys + empty href/src` (`sanity-check.yml`)
 
-**Required status checks are intentionally *not* enforced yet.** On this
-repo they would strand the daily automation:
+All four run on every `pull_request` with no path filter, so none can fail to report. `strict_required_status_checks_policy` is `false` (see below). Auto-merge now waits for the four to pass before merging.
 
-1. **The sync bots open PRs with `GITHUB_TOKEN`** (roadmap, board, indico,
-   via `peter-evans/create-pull-request`). Such PRs do **not** trigger the
-   `pull_request` workflows, so `build` / `link-check` / `build-sanity` /
-   `i18n` never report on them. A required check that never reports blocks
-   the PR forever → the bot's auto-merge hangs.
-2. **CodeQL reports `NEUTRAL` on those bot PRs** (only the `Analyze (…)`
-   sub-jobs succeed), so even requiring CodeQL is unsafe.
-3. **The GitHub Actions app cannot be added to the bypass list** on a
-   *user-owned* repo (GitHub rejects it: "must be part of the ruleset
-   source or owner organization"), so we can't simply exempt the bots.
-4. Several checks are **path-filtered** (`src/**`), so they don't run on
-   docs-only PRs either — another way a required check fails to report.
+**Bot PRs.** The sync bots open and merge their PRs with the `AUTOPR_TOKEN` fine-grained PAT (this repo, contents + pull-requests read/write), so their `pull_request` runs start without an approval. The four jobs skip on `*/auto` branches, a skipped job counts as passing, and the bot's auto-merge goes through in seconds. If the secret goes missing the bots fall back to `GITHUB_TOKEN`, whose PRs wait for an approval nobody gives, so their auto-merge would hang. When the PAT expires, the sync workflows fail and the failure alarm assigns an issue.
 
-**To enable required checks safely (Phase 3):**
-- **Done:** the seven bot workflows pass `secrets.AUTOPR_TOKEN || secrets.GITHUB_TOKEN`
-  to `create-pull-request`, and the five that auto-merge arm it with the same
-  token, so the merge's push starts the deploy. They fall back to
-  `GITHUB_TOKEN` if the secret is ever missing.
-- **Done (5 October 2026):** a fine-grained PAT (this repo, contents +
-  pull-requests read/write) is saved as the repo secret `AUTOPR_TOKEN`.
-  NetSec already runs on the same pattern. PRs opened with a PAT trigger
-  the full `pull_request` CI.
-- **Then:** require these four contexts in the Phase 2 ruleset (`17259266`),
-  with `strict_required_status_checks_policy: false`. All four run on every
-  `pull_request` with no path filter, so no aggregator job is needed:
-  `build`, `axe-core in headless Chrome`,
-  `Verify translations match their English sources`,
-  `Duplicate data keys + empty href/src`.
-  Link-check stays out: it is path-filtered on purpose (third-party
-  bandwidth). CodeQL stays out: it reports failure when cancelled.
-- Optionally add a **merge queue** (serialises merges; also mitigates the
-  §4 CHANGELOG concurrent-merge race).
+**Left out on purpose.** Link-check is path-filtered (third-party bandwidth), so it would not report on every PR. CodeQL reports failure when cancelled and neutral on bot PRs.
+
+**Admin bypass.** The Admin role still bypasses the ruleset, so `release.sh` can push the release commit, and an admin can override a stuck check from the merge box. Auto-merge never bypasses: it always waits.
 
 ## Not enabled (and why)
 - **Required reviews / approvals** — would deadlock a solo repo.
+- **Merge queue.** Not needed at this volume. It would serialise merges and ease the §4 CHANGELOG race if that ever recurs.
 - **"Require branches up to date before merging"** — without a merge
   queue, the bot volume causes constant re-run thrash, and it aggravates
   the §4 CHANGELOG concurrency trap.

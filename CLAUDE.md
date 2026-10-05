@@ -30,10 +30,9 @@ authoritative for EISS.
 ## 2. Pull-request workflow
 
 - **Auto-merge by default.** Open the PR with `gh pr create`, then arm
-  auto-merge with `gh pr merge --auto --squash`. **Until #501 makes checks
-  required, nothing holds it:** GitHub merges at once, before CI reports
-  (#1744 did exactly that). So until then, merge only after `gh pr checks`
-  is green.
+  auto-merge with `gh pr merge --auto --squash`. Four checks are required
+  (#501, `docs/branch-protection.md`), so auto-merge waits for them. An
+  admin `gh pr merge` without `--auto` bypasses them: don't.
 - **Carve-out: visual changes need preview review.** When the PR
   changes something a human will see (layout shifts, new components,
   copy that's visible above the fold, anything affecting brand
