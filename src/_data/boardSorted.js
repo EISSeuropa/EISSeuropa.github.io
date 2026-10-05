@@ -37,9 +37,9 @@ const boardSource = require("../../scripts/board-source.json");
 //     the EISS board; trade-off for the simpler keying.
 //   - Honorifics that aren't comma-separated and the rest of the
 //     world's titles. The honorific-stripping regex covers Dr, Prof,
-//     Mr/Ms/Mrs/Mx, and the military ranks that have shown up in
+//     M/Mr/Ms/Mrs/Mx, and the military ranks that have shown up in
 //     ESSC programmes (Lt Gen, General, Colonel, Admiral).
-const HONORIFIC_RE = /^(?:dr|prof(?:essor)?|mr|ms|mrs|mx|lt\s+gen(?:eral)?|lieutenant\s+general|general|colonel|admiral)\.?\s+/i;
+const HONORIFIC_RE = /^(?:dr|prof(?:essor)?|m|mr|ms|mrs|mx|lt\s+gen(?:eral)?|lieutenant\s+general|general|colonel|admiral)\.?\s+/i;
 function identityKey(name) {
   if (!name) return "";
   let n = String(name).trim();
