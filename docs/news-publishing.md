@@ -37,8 +37,10 @@ File a GitHub issue, give it the **`news`** label. The
 `Publish news from issue` workflow
 ([`.github/workflows/news-publish.yml`](../.github/workflows/news-publish.yml))
 runs [`scripts/news-from-issue.py`](../scripts/news-from-issue.py), which
-appends an item and opens an auto-merging PR (CI-gated). The PR body carries
-`Closes #<issue>`, so the merge closes the issue.
+appends an item and opens an auto-merging PR. The PR body carries
+`Closes #<issue>`, so the merge closes the issue. With no required checks yet
+(#501), the PR merges as soon as auto-merge is armed, so check the issue
+before labelling it.
 
 - **Title** → the headline (a leading `news:` is stripped).
 - **Body** → the excerpt (first paragraph), unless it opens with optional
@@ -53,8 +55,12 @@ appends an item and opens an auto-merging PR (CI-gated). The PR body carries
   ```
 
   All three header lines are optional. `Type` defaults to `news`, `Date` to
-  today, `URL` to none. The PR is editable before it merges, so a typo in the
-  issue is a one-line fix on the branch rather than a re-file.
+  today, `URL` to none. A typo that has already merged is a one-line edit to
+  `src/_data/news.json`.
+
+- **Dry run.** Start the title with `[test]` and the workflow opens the PR
+  without arming auto-merge, so nothing publishes. Read the PR, then close it
+  and the issue.
 
 ### 2. Edit the JSON directly
 

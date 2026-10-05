@@ -122,12 +122,16 @@ issue, included in a screenshot, etc.):
 
 If the daily sync's auto-detected fields ever stop populating (or you
 want to confirm which Indico endpoints respond to this token's scope),
-trigger the **Probe Indico API (manual)** workflow:
+run the probe script:
 
-1. Actions → *Probe Indico API (manual)* → **Run workflow**.
-2. Read the log. The summary table shows status codes + content-type
+1. `INDICO_API_TOKEN=… python3 scripts/probe-indico-api.py` with the
+   bot user's token. Its Actions wrapper was retired in October 2026
+   once the answer was wired in. Restore
+   `.github/workflows/probe-indico-api.yml` from git history to run it
+   with the repo secret instead.
+2. Read the output. The summary table shows status codes + content-type
    for each candidate endpoint. **Bodies are never printed**, so even
-   if registration data is exposed, it doesn't leak into Actions logs.
+   if registration data is exposed, it doesn't leak into a log.
 3. If anything returned 2xx, share the table with Claude, who will
    wire the winning endpoint into the next sync release.
 

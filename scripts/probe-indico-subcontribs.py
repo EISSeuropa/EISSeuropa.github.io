@@ -31,7 +31,8 @@ WHAT IT NEVER PRINTS
 HOW TO RUN
 ==========
 Locally:  INDICO_API_TOKEN=… python3 scripts/probe-indico-subcontribs.py
-Or:       Actions → "Probe Indico subcontributions (manual)" → Run workflow.
+(The Actions wrapper was retired once the answer was recorded. Restore
+.github/workflows/probe-indico-subcontribs.yml from git history if needed.)
 Paste the output back; the follow-up PR wires the winning endpoint into
 sync-abstracts.mjs.
 """
