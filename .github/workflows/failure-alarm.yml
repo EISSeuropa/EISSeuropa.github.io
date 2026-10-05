@@ -7,11 +7,11 @@
 # programme could quietly go stale. This workflow turns any failure
 # into a tracking issue the maintainer actually sees.
 #
-# Mechanics: `workflow_run` fires when a listed workflow completes (it
-# only triggers for runs on the default branch, which is exactly the
-# scheduled/deploy population). It does not fire for a run another
-# workflow started with its GITHUB_TOKEN, so every listed workflow must be
-# started by push, schedule or a person, never dispatched by a bot (#1755).
+# Mechanics: `workflow_run` fires when a listed workflow completes, on
+# any branch (the `if:` below keeps master runs and bot-PR runs). It
+# does not fire for a run another workflow started with its GITHUB_TOKEN,
+# so every listed workflow must be started by push, schedule, a person or
+# the AUTOPR_TOKEN PAT, never dispatched with GITHUB_TOKEN (#1755).
 # On a failure it opens an issue titled after the failed workflow, or
 # comments on the existing open one so repeat failures thread instead of
 # spamming. Issues carry
@@ -28,6 +28,9 @@ on:
   workflow_run:
     workflows:
       - Build and deploy site
+      - Accessibility (browser)
+      - i18n drift check
+      - Build sanity
       - Sync events from Indico
       - Sync board bios from Google Form
       - Sync NetSec directory links
@@ -45,7 +48,10 @@ jobs:
     name: Open or update the alarm issue
     # timed_out and startup_failure (a broken workflow file) are failures
     # too. cancelled is not: the deploy's concurrency group cancels on purpose.
-    if: contains(fromJSON('["failure","timed_out","startup_failure"]'), github.event.workflow_run.conclusion)
+    # PR runs alarm only on the bots' `*/auto` branches: a failed required
+    # check leaves the bot PR open and unmerged with nobody watching it. A
+    # person's own PR shows its failures to that person.
+    if: contains(fromJSON('["failure","timed_out","startup_failure"]'), github.event.workflow_run.conclusion) && (github.event.workflow_run.event != 'pull_request' || endsWith(github.event.workflow_run.head_branch, '/auto'))
     runs-on: ubuntu-latest
     steps:
       - name: File or thread the failure
@@ -55,11 +61,17 @@ jobs:
           RUN_URL: ${{ github.event.workflow_run.html_url }}
           RUN_STARTED: ${{ github.event.workflow_run.run_started_at }}
           RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+          RUN_EVENT: ${{ github.event.workflow_run.event }}
+          RUN_BRANCH: ${{ github.event.workflow_run.head_branch }}
           # Maintainer accounts. Comma-separated, as `gh --assignee` takes them.
           ALARM_ASSIGNEES: EISSeuropa,APB-LDN
         run: |
           set -euo pipefail
           title="CI alarm: \"${WF_NAME}\" failed"
+          # A bot PR's failure gets its own thread, apart from master's.
+          if [ "$RUN_EVENT" = "pull_request" ]; then
+            title="${title} on ${RUN_BRANCH}"
+          fi
           body="The **${WF_NAME}** workflow failed.
 
           - Run: ${RUN_URL} (attempt ${RUN_ATTEMPT})

@@ -28,9 +28,6 @@ permissions:
 jobs:
   axe:
     name: axe-core in headless Chrome
-    # The */auto refresh PRs merge a second after they open (see
-    # sanity-check.yml); skipping them gates nothing.
-    if: ${{ !endsWith(github.head_ref, '/auto') }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
