@@ -1,8 +1,8 @@
 ---
 layout: base.njk
 permalink: /2027.html
-title: 2027 Conference — Stockholm
-description: European Security Studies Conference, 11 - 12 June 2027 at Stockholm University. Jointly organised by the COST Action NetSec, EISS, and Stockholm University.
+title: 2027 Conference — Belgrade
+description: European Security Studies Conference, 10 - 11 June 2027 at the University of Belgrade, Faculty of Political Science. Jointly organised by the COST Action NetSec, EISS, and the University of Belgrade.
 metaImage: /assets/images/2027-meta.jpg
 navKey: conferences
 lang: en
@@ -11,27 +11,13 @@ alternates:
   fr: /2027.fr.html
   de: /2027.de.html
 ---
-{# ============================================================
-   HIDDEN TEMPLATE — ESSC 2027 (not built; listed in .eleventyignore).
-
-   A copy of the live ESSC 2026 page with every "2026" bumped to
-   "2027", kept so the next edition starts from a working page
-   rather than a blank file. To activate, follow docs/new-conference.md:
-
-     1. Add the 2027 entry to src/_data/conferences.js.
-     2. Replace the Stockholm-specific copy below: city, venue,
-        dates, hero image, the neighbourhoods/travel tiles, the
-        host & venue card, and the map embed.
-     3. Generate the 2027 share card (scripts/make-share-cards.py)
-        and confirm metaImage points at /assets/images/2027-meta.jpg.
-     4. Register the FR/DE translations in data/i18n-state.json and
-        run check-i18n-drift.py --mark-fresh.
-     5. Remove this file (and its FR/DE siblings) from .eleventyignore
-        so it builds.
-
-   Until step 5 this file is inert: Eleventy never renders it, so the
-   2027 conference data it references not yet existing is harmless.
-   ============================================================ #}
+{# ESSC 2027, save-the-date state. Dates and venue are confirmed; the call
+   for papers, the programme and travel guidance are not out yet, so the
+   page carries no programme grid and no travel tiles. When the call for
+   papers is published, add it here (#1526). When the programme exists,
+   bring back the speaking-chairing, programme-grid and programme-pdf
+   includes from /2026, and add a Belgrade hero photo and travel section
+   (docs/new-conference.md). #}
 {% from "icons.njk" import icon %}
 
 {# schema.org Event structured data for this edition (built from
@@ -40,17 +26,6 @@ alternates:
 {% include "event-jsonld.njk" %}
 
 <section class="hero" aria-labelledby="hero-title-2027">
-  <div class="hero-bg" aria-hidden="true">
-    <img src="/assets/images/8e43301e-7945-4a0c-aac2-04719ac702a8-1600x900.jpg"
-         srcset="/assets/images/8e43301e-7945-4a0c-aac2-04719ac702a8-480x270.jpg 480w,
-                 /assets/images/8e43301e-7945-4a0c-aac2-04719ac702a8-800x450.jpg 800w,
-                 /assets/images/8e43301e-7945-4a0c-aac2-04719ac702a8-1600x900.jpg 1600w"
-         sizes="100vw"
-         alt=""
-         loading="eager"
-         fetchpriority="high"
-         width="1600" height="900">
-  </div>
   <div class="container hero-inner">
     <p class="reveal" style="font-size: var(--fs-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: hsl(0 0% 100% / 0.85); margin-bottom: var(--space-3);">
       Next Annual Conference
@@ -60,47 +35,23 @@ alternates:
     </h1>
     <p class="hero-tagline reveal reveal-delay-2">
       Jointly organised by the COST Action NetSec, the European Initiative for Security Studies (EISS),
-      and Stockholm University.
+      and the University of Belgrade, Faculty of Political Science.
     </p>
-    {%- set _live2027 = conferences.byYear["2027"] -%}
-    {%- set _liveShown = _live2027 and _live2027.livestreamUrl and _live2027.endDate >= conferences.today -%}
     <div class="hero-actions reveal reveal-delay-3">
-      {%- if _liveShown %}
-      <a class="btn btn-primary hero-watch-live" href="{{ _live2027.livestreamUrl }}" target="_blank" rel="noopener">
-        <span class="hero-watch-live__dot" aria-hidden="true"></span>{{ icon("video") }} Livestream {{ icon("external-link") }}
-      </a>
-      {%- endif %}
-      <a class="btn {{ 'btn-ghost' if _liveShown else 'btn-primary' }}" href="#programme">{{ icon("file-text") }} View programme</a>
+      <a class="btn btn-primary" href="#call-for-papers">{{ icon("file-text") }} Call for papers</a>
       <a class="btn btn-ghost" href="#venue">{{ icon("map-pin") }} Host &amp; venue</a>
     </div>
     <p class="reveal reveal-delay-3" style="margin-top: var(--space-6); font-size: var(--fs-sm); color: hsl(0 0% 100% / 0.9);">
-      <strong>11 - 12 June 2027</strong>
+      <strong>10 - 11 June 2027</strong>
       <span aria-hidden="true">&nbsp;·&nbsp;</span>
-      Stockholm University, Sweden
+      University of Belgrade, Serbia
     </p>
-    {# Live registration-status badge. Computed from today vs. the
-       conference dates in src/_data/conferences.js; CTA URL comes
-       from the Indico sync in src/_data/indico.json. #}
-    {% set year = "2027" %}
     <div class="reveal reveal-delay-3 conf-status-row">
-      {% include "registration-badge.njk" %}
       {% include "countdown.njk" %}
     </div>
-    {%- set _reg2027 = conferences.byYear["2027"] -%}
-    {%- if _reg2027 and _reg2027.registrationStatus == "closed" -%}
-    <p class="reveal reveal-delay-3" style="margin-top: var(--space-4); font-size: var(--fs-sm); color: hsl(0 0% 100% / 0.9); max-width: 42rem;">
-      Registration has closed. You can still follow along: the <a href="#programme" style="color:#fff;text-decoration:underline;">programme</a> below marks the livestreamed sessions.
-    </p>
-    {%- endif -%}
   </div>
 </section>
 
-{# Joint-organisers strip. Restates the collaboration footprint as a
-   structured component below the hero, so the relationship reads
-   visually rather than as a sentence buried in the tagline. Logo
-   paths are placeholders for now (partial gracefully falls back to
-   text-only when `logo` is absent); operator fills in real logo
-   files when they're available. See issue #198. #}
 <section class="section" aria-label="Conference organisers" style="padding-block: var(--space-5);">
   <div class="container">
     {%- set jointOrgs = [
@@ -115,96 +66,68 @@ alternates:
         "logo": "/assets/images/partners/netsec.svg"
       },
       {
-        "name": "Stockholm University",
-        "url": "https://www.su.se/",
-        "logo": "/assets/images/partners/stockholm-university.svg"
+        "name": "University of Belgrade, Faculty of Political Science",
+        "url": "https://www.fpn.bg.ac.rs/"
       }
     ] -%}
     {% include "joint-orgs.njk" %}
   </div>
 </section>
 
-{# "Speaking or chairing?" card for speakers and chairs, just before the
-   programme. The old standalone "Livestreamed sessions" block was removed
-   so it doesn't distract from the programme: the grid now signposts the
-   livestreamed sessions inline and tags each with a "Livestream" pill. #}
-{% set year = "2027" %}
-{% include "speaking-chairing.njk" %}
+<section class="section-tight" aria-labelledby="week-title">
+  <div class="container">
+    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div class="featured-eyebrow">One week in Belgrade</div>
+      <h2 id="week-title">Two events, back to back</h2>
+      <p class="lead">
+        EISS and the COST Action NetSec invite you to two events at the University of Belgrade,
+        Faculty of Political Science.
+      </p>
+      <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr)); margin-block: var(--space-5) 0;">
+        <article class="tile">
+          <div class="tile-icon" aria-hidden="true">{{ icon("calendar") }}</div>
+          <h3>European Security Studies Conference</h3>
+          <p><strong>10 - 11 June 2027</strong>. The tenth annual conference.</p>
+        </article>
+        <article class="tile">
+          <div class="tile-icon" aria-hidden="true">{{ icon("calendar") }}</div>
+          <h3>NetSec Training School</h3>
+          <p><strong>8 - 11 June 2027</strong>, in parallel with the conference. Details will follow on
+            <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">netsec-cost.eu</a>.</p>
+        </article>
+      </div>
+    </article>
+  </div>
+</section>
 
-{# Live programme grid pulled from the Indico timetable, refreshed
-   daily. See docs/indico-programme-integration.md for the
-   pre-event-vs-post-event design rationale. #}
-{% include "programme-grid.njk" %}
-
-{# Polished designer-made PDF — the printable archival companion to
-   the live grid above. The partial hides itself when no programmePdf
-   is set on the conferences.js entry. Operator flips the entry's
-   `status` from "draft" to "final" when the polished version ships. #}
-{% include "programme-pdf.njk" %}
+<section class="section-tight" id="call-for-papers" aria-labelledby="cfp-title">
+  <div class="container">
+    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div class="featured-eyebrow">Call for papers</div>
+      <h2 id="cfp-title">Coming in early November 2026</h2>
+      <p class="lead">
+        The call for papers will be published here in early November 2026 at the latest. It will set out
+        the themes and the submission deadline.
+      </p>
+      <p>
+        <a class="btn btn-secondary btn-sm" href="{{ site.newsletterUrl }}" target="_blank" rel="noopener">
+          {{ icon("mail") }} Get it by email {{ icon("external-link") }}
+        </a>
+      </p>
+    </article>
+  </div>
+</section>
 
 <section class="section" id="venue" aria-labelledby="venue-title">
   <div class="container">
     <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
       <div class="featured-eyebrow">Host &amp; venue</div>
-      <h2 id="venue-title">Stockholm University</h2>
+      <h2 id="venue-title">University of Belgrade, Faculty of Political Science</h2>
       <p class="lead">
-        Each year, the European Security Studies Conference is organised in a different European country.
-        The 2027 conference will be held at Stockholm University, as part of the COST Action NetSec.
+        Each year, the European Security Studies Conference is held in a different European country.
+        The 2027 conference takes place at the Faculty of Political Science of the University of Belgrade, in Serbia.
       </p>
-      {% set year = "2027" %}
-      {% if conferences.byYear[year].mapEmbed %}
-        {% include "map-embed.njk" %}
-      {% endif %}
-    </article>
-  </div>
-</section>
-
-<section class="section-tight" id="travel" aria-labelledby="travel-title">
-  <div class="container">
-    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <div class="featured-eyebrow">Travel &amp; accommodation</div>
-      <h2 id="travel-title">Getting around Stockholm</h2>
-      <p class="lead">
-        The conference venue, Stockholm University main campus, is located along the
-        <strong>“red line”</strong> of public transport for the city.
-      </p>
-      <p>
-        We recommend looking for accommodation in town, in one of the following neighbourhoods:
-      </p>
-      <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr)); margin-block: var(--space-5) var(--space-6);">
-        <article class="tile">
-          <div class="tile-icon" aria-hidden="true">{{ icon("map-pin") }}</div>
-          <h3>Södermalm</h3>
-          <p>
-            Metros <strong>Hornstull</strong>, <strong>Zinkensdamm</strong>,
-            <strong>Mariatorget</strong>, <strong>Slussen</strong>. Generally cheaper than other
-            districts, with more hostel options.
-          </p>
-        </article>
-        <article class="tile">
-          <div class="tile-icon" aria-hidden="true">{{ icon("map-pin") }}</div>
-          <h3>Gamla stan</h3>
-          <p>The Old Town, Stockholm’s historic centre on its own small island.</p>
-        </article>
-        <article class="tile">
-          <div class="tile-icon" aria-hidden="true">{{ icon("map-pin") }}</div>
-          <h3>T-centralen</h3>
-          <p>Stockholm City station, the central transport hub.</p>
-        </article>
-        <article class="tile">
-          <div class="tile-icon" aria-hidden="true">{{ icon("map-pin") }}</div>
-          <h3>Östermalmstorg</h3>
-          <p>An elegant central district to the north-east.</p>
-        </article>
-        <article class="tile">
-          <div class="tile-icon" aria-hidden="true">{{ icon("map-pin") }}</div>
-          <h3>Stadion</h3>
-          <p>Near Stockholm’s 1912 Olympic Stadium, a short hop from the venue.</p>
-        </article>
-      </div>
-      <p class="muted" style="font-size: var(--fs-sm);">
-        Accommodation is generally cheaper at Södermalm, where you’ll also find more hostels.
-      </p>
+      <p class="muted">Travel and accommodation guidance will follow.</p>
     </article>
   </div>
 </section>

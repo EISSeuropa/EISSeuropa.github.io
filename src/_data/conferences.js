@@ -41,6 +41,48 @@
 // localising via a date-format library — adding a conference is annual).
 const conferences = [
   {
+    slug: "2027",
+    year: 2027,
+    ordinal: 10,
+    startDate: "2027-06-10",
+    endDate: "2027-06-11",
+    city: "Belgrade",
+    country: "Serbia",
+    venue: {
+      en: "University of Belgrade, Faculty of Political Science",
+      fr: "Université de Belgrade, Faculté de sciences politiques",
+      de: "Universität Belgrad, Fakultät für Politikwissenschaften",
+    },
+    dates: {
+      en: "10 - 11 June 2027",
+      fr: "10 - 11 juin 2027",
+      de: "10. - 11. Juni 2027",
+    },
+    archiveMeta: {
+      en: "10th Annual Conference · 10 - 11 June 2027 · University of Belgrade, Faculty of Political Science, Belgrade",
+      fr: "10e conférence annuelle · 10 - 11 juin 2027 · Université de Belgrade, Faculté de sciences politiques, Belgrade",
+      de: "10. Jahreskonferenz · 10. - 11. Juni 2027 · Universität Belgrad, Fakultät für Politikwissenschaften, Belgrad",
+    },
+    organisers: {
+      en: "Jointly organised by the COST Action NetSec, the European Initiative for Security Studies (EISS), and the University of Belgrade, Faculty of Political Science.",
+      fr: "Organisée conjointement par l'Action COST NetSec, l'Initiative européenne pour les études de sécurité (EISS), et la Faculté de sciences politiques de l'Université de Belgrade.",
+      de: "Gemeinsam organisiert von der COST-Aktion NetSec, der Europäischen Initiative für Sicherheitsstudien (EISS) und der Fakultät für Politikwissenschaften der Universität Belgrad.",
+    },
+    monthLabel: {
+      en: "June",
+      fr: "Juin",
+      de: "Juni",
+    },
+    dayRange: "10 - 11",
+    yearLine: "2027 · Belgrade",
+    cityLabel: { fr: "Belgrade", de: "Belgrad" },
+    displayCity: { en: "Belgrade", fr: "Belgrade", de: "Belgrad" },
+    // ponytail: no heroImage yet, so the homepage hero keeps the Stockholm
+    // photo. Add a Belgrade stem (-480x270, -800x450, -1600x900) when one
+    // is chosen (docs/new-conference.md step 1).
+    hasOwnPage: true,
+  },
+  {
     slug: "2026",
     year: 2026,
     ordinal: 9,
@@ -431,6 +473,7 @@ const MAP_POINTS = {
   Prague: { cx: 601, cy: 570, lx: 621, ly: 569 },
   Thessaloniki: { cx: 794, cy: 826, lx: 784, ly: 846, end: true },
   Stockholm: { cx: 683, cy: 318, lx: 703, ly: 317 },
+  Belgrade: { cx: 738, cy: 713, lx: 758, ly: 712 },
 };
 
 // One dot per host city, oldest first, carrying its editions. The dot links
