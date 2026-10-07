@@ -280,7 +280,8 @@ pre code{background:transparent;color:inherit;padding:0;font-size:inherit}
   overflow:hidden;
   border-radius:8pt;
   border:1px solid var(--line-strong);
-  box-shadow:0 2pt 8pt rgba(20,35,80,.10);
+  /* No box-shadow: Chrome paints it on the page before the break
+     when the figure is pushed over, leaving a grey band. */
 }
 .snapshot.cropped .clip img{
   border:0;
@@ -976,7 +977,7 @@ python3 scripts/check-i18n-drift.py --mark-fresh src/initiative.njk de</code></p
   </table>
 
   <h2>Handover checklist</h2>
-  <ul>
+  <ul style="list-style:none">
     <li>☐ Add the successor as an <strong>owner</strong> of the <code>EISSeuropa</code> GitHub organisation.</li>
     <li>☐ Transfer the <strong>domain registrar</strong> login.</li>
     <li>☐ Transfer the Google account behind the board Form, the Indico administrator and bot logins, Mailchimp, the social accounts and the contact mailbox.</li>
