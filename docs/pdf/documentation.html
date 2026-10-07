@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>EISS: Website Documentation Pack v1.0.0</title>
+<title>EISS: Website Documentation Pack v1.0.1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -240,14 +240,12 @@ pre code{background:transparent;color:inherit;padding:0;font-size:inherit}
   margin:.8rem 0 1.1rem;
   text-align:center;
   break-inside:avoid-page;
-  box-shadow:0 1pt 3pt rgba(20,35,80,.05);
 }
 .diagram .mermaid{display:block;color:var(--ink)}
 .diagram .mermaid svg{
-  /* Force the rendered SVG to fill the figure width so flowcharts
-     and sequence diagrams don't shrink to ~40% of the page width. */
-  width:100% !important;
-  max-width:100% !important;
+  /* Mermaid's useMaxWidth renders at natural size, capped at the
+     column. Diagrams are shaped narrow enough that the cap rarely
+     bites, so labels stay near their 16px (12pt) size. */
   height:auto !important;
 }
 .diagram.wide{margin-left:-10pt;margin-right:-10pt}
@@ -266,7 +264,6 @@ pre code{background:transparent;color:inherit;padding:0;font-size:inherit}
   width:100%;
   border-radius:8pt;
   border:1px solid var(--line-strong);
-  box-shadow:0 2pt 8pt rgba(20,35,80,.10);
   display:block;
 }
 /* Crop-from-top variant. Pages with significant below-the-fold
@@ -280,12 +277,12 @@ pre code{background:transparent;color:inherit;padding:0;font-size:inherit}
   overflow:hidden;
   border-radius:8pt;
   border:1px solid var(--line-strong);
-  box-shadow:0 2pt 8pt rgba(20,35,80,.10);
+  /* No box-shadow: Chrome paints it on the page before the break
+     when the figure is pushed over, leaving a grey band. */
 }
 .snapshot.cropped .clip img{
   border:0;
   border-radius:0;
-  box-shadow:none;
 }
 .snapshot .caption{
   font-size:8.5pt;color:var(--muted);
@@ -415,6 +412,7 @@ pre code{background:transparent;color:inherit;padding:0;font-size:inherit}
   font-family:'Inter',sans-serif;font-weight:600;
   color:var(--accent);font-size:11pt;letter-spacing:-.01em;
 }
+.toc a{color:inherit;text-decoration:none}
 .toc ol > li .title{font-weight:600;color:var(--ink)}
 .toc ol > li .desc{display:block;color:var(--muted);font-size:9pt;font-weight:400;margin-top:1pt}
 
@@ -471,13 +469,13 @@ pre code{background:transparent;color:inherit;padding:0;font-size:inherit}
 
   <div class="cover-title">
     <span class="eyebrow">Documentation Pack</span>
-    <h1>The EISS <br>website</h1>
-    <h2>Architecture, design system, and admin&nbsp;handover<br>for eiss-europa.com.</h2>
+    <h1>The EISS&nbsp;<br>website</h1>
+    <h2>Architecture, design system, and admin&nbsp;handover&nbsp;<br>for eiss-europa.com.</h2>
 
     <div class="cover-meta">
       <div class="item">
         <div class="label">Pack version &amp; date</div>
-        <div class="value">v1.0.0 · October 2026</div>
+        <div class="value">v1.0.1 · October 2026</div>
       </div>
       <div class="item">
         <div class="label">Website version</div>
@@ -509,16 +507,16 @@ pre code{background:transparent;color:inherit;padding:0;font-size:inherit}
 
   <nav class="toc">
     <ol>
-      <li><div><span class="title">Overview &amp; purpose</span><span class="desc">What the site is, who reads it, and the principles behind its design.</span></div><span class="pagenum">3</span></li>
-      <li><div><span class="title">Architecture</span><span class="desc">Tech stack, site structure, feature inventory, the data pipelines and the repository layout.</span></div><span class="pagenum">5</span></li>
-      <li><div><span class="title">Design system</span><span class="desc">Brand marks, colour and type tokens, components, motion and the accessibility checklist.</span></div><span class="pagenum">15</span></li>
-      <li><div><span class="title">Translation &amp; multilingual posture</span><span class="desc">How the French and German pages work, the drift checker, and the no-machine-translation rule.</span></div><span class="pagenum">17</span></li>
-      <li><div><span class="title">SEO &amp; discoverability</span><span class="desc">Metadata, structured data, feeds, the sitemap and site search.</span></div><span class="pagenum">18</span></li>
-      <li><div><span class="title">Admin guide</span><span class="desc">Every account and asset the site depends on, routine tasks, escalation and the handover checklist.</span></div><span class="pagenum">20</span></li>
-      <li><div><span class="title">Security &amp; DevSecOps</span><span class="desc">Threat model, disclosure policy, GitHub security automation, branch protection and the failure alarm.</span></div><span class="pagenum">23</span></li>
-      <li><div><span class="title">Appendix A · Accessibility</span><span class="desc">Conformance target, how the site is audited, and the known limitations.</span></div><span class="pagenum">25</span></li>
-      <li><div><span class="title">Appendix B · Licensing</span><span class="desc">Code under MIT, content under CC&nbsp;BY&nbsp;4.0, and the carve-outs.</span></div><span class="pagenum">26</span></li>
-      <li><div><span class="title">Appendix C · Changelog</span><span class="desc">What each revision of this pack records. Kept last, so the newest revision is the final page.</span></div><span class="pagenum">27</span></li>
+      <li><a class="toc-entry" href="#overview"><span class="title">Overview &amp; purpose</span><span class="desc">What the site is, who reads it, and the principles behind its design.</span></a><a class="pagenum" href="#overview">3</a></li>
+      <li><a class="toc-entry" href="#architecture"><span class="title">Architecture</span><span class="desc">Tech stack, site structure, feature inventory, the data pipelines and the repository layout.</span></a><a class="pagenum" href="#architecture">5</a></li>
+      <li><a class="toc-entry" href="#design-system"><span class="title">Design system</span><span class="desc">Brand marks, colour and type tokens, components, motion and the accessibility checklist.</span></a><a class="pagenum" href="#design-system">16</a></li>
+      <li><a class="toc-entry" href="#translation"><span class="title">Translation &amp; multilingual posture</span><span class="desc">How the French and German pages work, the drift checker, and the no-machine-translation rule.</span></a><a class="pagenum" href="#translation">18</a></li>
+      <li><a class="toc-entry" href="#seo"><span class="title">SEO &amp; discoverability</span><span class="desc">Metadata, structured data, feeds, the sitemap and site search.</span></a><a class="pagenum" href="#seo">19</a></li>
+      <li><a class="toc-entry" href="#admin-guide"><span class="title">Admin guide</span><span class="desc">Every account and asset the site depends on, routine tasks, escalation and the handover checklist.</span></a><a class="pagenum" href="#admin-guide">21</a></li>
+      <li><a class="toc-entry" href="#security"><span class="title">Security &amp; DevSecOps</span><span class="desc">Threat model, disclosure policy, GitHub security automation, branch protection and the failure alarm.</span></a><a class="pagenum" href="#security">24</a></li>
+      <li><a class="toc-entry" href="#appendix-a"><span class="title">Appendix A · Accessibility</span><span class="desc">Conformance target, how the site is audited, and the known limitations.</span></a><a class="pagenum" href="#appendix-a">26</a></li>
+      <li><a class="toc-entry" href="#appendix-b"><span class="title">Appendix B · Licensing</span><span class="desc">Code under MIT, content under CC&nbsp;BY&nbsp;4.0, and the carve-outs.</span></a><a class="pagenum" href="#appendix-b">27</a></li>
+      <li><a class="toc-entry" href="#appendix-c"><span class="title">Appendix C · Changelog</span><span class="desc">What each revision of this pack records. Kept last, so the newest revision is the final page.</span></a><a class="pagenum" href="#appendix-c">28</a></li>
     </ol>
   </nav>
 
@@ -528,7 +526,7 @@ pre code{background:transparent;color:inherit;padding:0;font-size:inherit}
 <!-- ════════════════════════════════════════════════════════════
      SECTION 1 — OVERVIEW
      ════════════════════════════════════════════════════════════ -->
-<section class="page">
+<section class="page" id="overview">
   <div class="section-banner">
     <div class="num">01</div>
     <div class="head">
@@ -553,7 +551,7 @@ pre code{background:transparent;color:inherit;padding:0;font-size:inherit}
       <p style="margin:0">Looking for an expert, a press kit or a quotable fact about European security studies.</p>
     </div>
     <div class="card tint">
-      <h4>Prospective board and community members</h4>
+      <h4>Prospective board and community&nbsp;<br>members</h4>
       <p style="margin:0">Reading the board page, the internship and volunteering pages, and how to become a member.</p>
     </div>
     <div class="card tint">
@@ -582,7 +580,7 @@ pre code{background:transparent;color:inherit;padding:0;font-size:inherit}
 <!-- ════════════════════════════════════════════════════════════
      SECTION 2 — ARCHITECTURE
      ════════════════════════════════════════════════════════════ -->
-<section class="page">
+<section class="page" id="architecture">
   <div class="section-banner">
     <div class="num">02</div>
     <div class="head">
@@ -596,7 +594,8 @@ pre code{background:transparent;color:inherit;padding:0;font-size:inherit}
 
   <div class="diagram">
     <div class="mermaid">
-flowchart LR
+%%{init: {"flowchart": {"rankSpacing": 40, "nodeSpacing": 30}}}%%
+flowchart TB
     V["Visitor's browser"] -->|HTTPS| P["GitHub Pages"]
     R["EISSeuropa.github.io<br/>repository"] -->|deploy.yml<br/>build + Pagefind| P
     I["Indico<br/>indico.eiss-europa.com"] -.->|daily| SI["sync-indico"]
@@ -633,7 +632,8 @@ flowchart LR
 
   <div class="diagram">
     <div class="mermaid">
-flowchart TB
+%%{init: {"flowchart": {"rankSpacing": 40, "nodeSpacing": 30}}}%%
+flowchart LR
     H["<b>index · Home</b>"]
     C["<b>/2026, /2027</b><br/>Conference pages"]
     PA["<b>past · programmes</b><br/>Archive 2017 to 2025"]
@@ -647,14 +647,14 @@ flowchart TB
     RM["<b>roadmap</b>"]
     ST["<b>accessibility · licensing<br/>policy · terms</b>"]
 
-    H --> C
     H --> A
+    A --> AT
+    A --> PP
+    H --> C
     H --> B
     H --> NW
     H --> I
     C --> PA
-    A --> AT
-    A --> PP
     PA --> PP
     H --> BL
     H -.->|footer| RM
@@ -720,13 +720,13 @@ sequenceDiagram
   <h2>Data flow: Indico to the live programme</h2>
   <div class="diagram">
     <div class="mermaid">
+%%{init: {"flowchart": {"rankSpacing": 40, "nodeSpacing": 30}}}%%
 flowchart LR
-    IN["Indico timetable<br/>and registration"] -->|export API,<br/>read-only token| SY["sync-indico.py<br/>daily 03:45 UTC"]
-    SY -->|substantive change| PR["PR on<br/>indico-sync/auto"]
-    SY -->|timestamp only| NO["No commit"]
-    PR --> M["master"]
-    M --> DP["deploy.yml"]
-    DP --> PG["/2026 programme grid,<br/>registration badge"]
+    IN["Indico export API:<br/>timetable and<br/>registration"] --> SY["sync-indico.py,<br/>daily 03:45 UTC,<br/>read-only token"]
+    SY -->|changed| PR["PR on<br/>indico-sync/auto"]
+    SY --> NO["Timestamp only:<br/>no commit"]
+    PR --> DP["merged,<br/>deploy.yml"]
+    DP --> PG["/2026 programme<br/>grid, registration<br/>badge"]
     </div>
     <div class="diagram-caption">Figure 7 · The Indico pipeline. Without its token the sync runs in anonymous mode and still carries the public timetable, so an expired token degrades the site rather than breaking it.</div>
   </div>
@@ -787,7 +787,7 @@ flowchart LR
 <!-- ════════════════════════════════════════════════════════════
      SECTION 3 — DESIGN SYSTEM
      ════════════════════════════════════════════════════════════ -->
-<section class="page">
+<section class="page" id="design-system">
   <div class="section-banner">
     <div class="num">03</div>
     <div class="head">
@@ -849,7 +849,7 @@ flowchart LR
 <!-- ════════════════════════════════════════════════════════════
      SECTION 4 — TRANSLATION
      ════════════════════════════════════════════════════════════ -->
-<section class="page">
+<section class="page" id="translation">
   <div class="section-banner">
     <div class="num">04</div>
     <div class="head">
@@ -879,7 +879,7 @@ python3 scripts/check-i18n-drift.py --mark-fresh src/initiative.njk de</code></p
 <!-- ════════════════════════════════════════════════════════════
      SECTION 5 — SEO
      ════════════════════════════════════════════════════════════ -->
-<section class="page">
+<section class="page" id="seo">
   <div class="section-banner">
     <div class="num">05</div>
     <div class="head">
@@ -923,7 +923,7 @@ python3 scripts/check-i18n-drift.py --mark-fresh src/initiative.njk de</code></p
 <!-- ════════════════════════════════════════════════════════════
      SECTION 6 — ADMIN GUIDE
      ════════════════════════════════════════════════════════════ -->
-<section class="page">
+<section class="page" id="admin-guide">
   <div class="section-banner">
     <div class="num">06</div>
     <div class="head">
@@ -976,7 +976,7 @@ python3 scripts/check-i18n-drift.py --mark-fresh src/initiative.njk de</code></p
   </table>
 
   <h2>Handover checklist</h2>
-  <ul>
+  <ul style="list-style:none">
     <li>☐ Add the successor as an <strong>owner</strong> of the <code>EISSeuropa</code> GitHub organisation.</li>
     <li>☐ Transfer the <strong>domain registrar</strong> login.</li>
     <li>☐ Transfer the Google account behind the board Form, the Indico administrator and bot logins, Mailchimp, the social accounts and the contact mailbox.</li>
@@ -990,7 +990,7 @@ python3 scripts/check-i18n-drift.py --mark-fresh src/initiative.njk de</code></p
 <!-- ════════════════════════════════════════════════════════════
      SECTION 7 — SECURITY
      ════════════════════════════════════════════════════════════ -->
-<section class="page">
+<section class="page" id="security">
   <div class="section-banner">
     <div class="num">07</div>
     <div class="head">
@@ -1035,12 +1035,13 @@ python3 scripts/check-i18n-drift.py --mark-fresh src/initiative.njk de</code></p
   <h2>The failure alarm</h2>
   <div class="diagram">
     <div class="mermaid">
+%%{init: {"flowchart": {"rankSpacing": 40, "nodeSpacing": 30}}}%%
 flowchart LR
-    W["A watched workflow<br/>fails or times out"] --> Q{"On master,<br/>or on a sync's<br/>…/auto branch?"}
-    Q -->|no: a person's own PR| X["No alarm.<br/>The author sees it."]
-    Q -->|yes| E{"Open alarm issue<br/>with this title?"}
+    W["A watched workflow<br/>fails or times out"] --> Q{"On master or<br/>a …/auto branch?"}
+    Q -->|no| X["A person's own PR:<br/>no alarm, the<br/>author sees it."]
+    Q -->|yes| E{"Alarm issue<br/>already open?"}
     E -->|yes| C["Comment on it"]
-    E -->|no| N["Open an issue, labelled<br/>bug + automated,<br/>assigned to the maintainers"]
+    E -->|no| N["Open an issue,<br/>bug + automated,<br/>assigned to the<br/>maintainers"]
     </div>
     <div class="diagram-caption">Figure 11 · <code>failure-alarm.yml</code>. Assignment is what sends the notification. Cancelled runs are ignored, since the deploy cancels superseded runs on purpose.</div>
   </div>
@@ -1058,7 +1059,7 @@ flowchart LR
 <!-- ════════════════════════════════════════════════════════════
      APPENDIX A — ACCESSIBILITY
      ════════════════════════════════════════════════════════════ -->
-<section class="page">
+<section class="page" id="appendix-a">
   <div class="section-banner">
     <div class="num">A</div>
     <div class="head">
@@ -1084,7 +1085,7 @@ flowchart LR
 <!-- ════════════════════════════════════════════════════════════
      APPENDIX B — LICENSING
      ════════════════════════════════════════════════════════════ -->
-<section class="page">
+<section class="page" id="appendix-b">
   <div class="section-banner">
     <div class="num">B</div>
     <div class="head">
@@ -1100,7 +1101,7 @@ flowchart LR
 <!-- ════════════════════════════════════════════════════════════
      APPENDIX C — CHANGELOG
      ════════════════════════════════════════════════════════════ -->
-<section class="page">
+<section class="page" id="appendix-c">
   <div class="section-banner">
     <div class="num">C</div>
     <div class="head">
@@ -1112,7 +1113,10 @@ flowchart LR
   <p>This changelog tracks the documentation pack, not the website. Website history is in <code>CHANGELOG.md</code> and the GitHub Releases. Pack versions are stamped on the cover and follow Semantic Versioning. The pack is refreshed on minor and major website releases, and patch releases skip it.</p>
 
   <div class="changelog-entries">
-  <h2 class="current">v1.0.0 · October 2026 · First edition</h2>
+  <h2 class="current">v1.0.1 · October 2026 · Render fixes</h2>
+  <p class="cl-summary">Layout corrections, no change of substance. The diagrams are reshaped so their labels print at 7 pt or larger, up from 5. The contents entries link to their chapters, and the PDF carries a bookmark outline. A grey band that appeared at the foot of the page before some screenshots is gone. The pack is now 28 pages.</p>
+
+  <h2>v1.0.0 · October 2026 · First edition</h2>
   <p class="cl-summary">First edition of the EISS documentation pack, modelled on the NetSec pack and built the same way: <code>docs/pdf/documentation.html</code> printed to A4 by headless Chrome through <code>docs/pdf/build.sh</code>. Seven chapters (overview, architecture, design system, translation, SEO, admin guide, security) and three appendices, with eleven figures: six screenshots of the live site and five diagrams. It records the site as of website v2.28.0 together with the October 2026 CI work: required checks on <code>master</code>, the sync jobs moving to <code>AUTOPR_TOKEN</code>, and the widened failure alarm.</p>
   </div>
 
@@ -1120,7 +1124,7 @@ flowchart LR
 
   <p class="small muted center" style="margin-top:24pt">
     European Initiative for Security Studies · eiss-europa.com<br>
-    Documentation pack v1.0.0 · Compiled October 2026 by Dr Arthur Laudrain, EISS Technology Coordinator.
+    Documentation pack v1.0.1 · Compiled October 2026 by Dr Arthur Laudrain, EISS Technology Coordinator.
   </p>
 </section>
 
@@ -1178,10 +1182,10 @@ flowchart LR
       actorFontWeight: 600,
       messageFontSize: 14,
       noteFontSize: 13,
-      actorMargin: 80,
+      actorMargin: 40,
       messageMargin: 38,
       boxMargin: 12,
-      width: 200,
+      width: 160,
       height: 50,
     },
   });
