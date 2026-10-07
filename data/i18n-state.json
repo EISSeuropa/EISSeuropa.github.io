@@ -102,14 +102,14 @@
     "src/sitemap.njk": {
       "fr": {
         "file": "src/sitemap.fr.njk",
-        "source_sha1": "f64360c187547a63c392486d6b639676c28262d3",
-        "translated_on": "2026-09-29",
+        "source_sha1": "8a3c6d163f3f13deb11c0f4805244ce4b5ac3acf",
+        "translated_on": "2026-10-06",
         "status": "beta"
       },
       "de": {
         "file": "src/sitemap.de.njk",
-        "source_sha1": "f64360c187547a63c392486d6b639676c28262d3",
-        "translated_on": "2026-09-29",
+        "source_sha1": "8a3c6d163f3f13deb11c0f4805244ce4b5ac3acf",
+        "translated_on": "2026-10-06",
         "status": "beta"
       }
     },
@@ -250,6 +250,20 @@
         "file": "src/blog/introducing-belvedere.de.md",
         "source_sha1": "add87a17c8979085938dff8d2d6558874eff0ded",
         "translated_on": "2026-09-29",
+        "status": "beta"
+      }
+    },
+    "src/2027.njk": {
+      "fr": {
+        "file": "src/2027.fr.njk",
+        "source_sha1": "2db1f9f7183f53f9576acc34780fd2b816b330f6",
+        "translated_on": "2026-10-06",
+        "status": "beta"
+      },
+      "de": {
+        "file": "src/2027.de.njk",
+        "source_sha1": "2db1f9f7183f53f9576acc34780fd2b816b330f6",
+        "translated_on": "2026-10-06",
         "status": "beta"
       }
     }

@@ -87,13 +87,21 @@ CARDS = [
     # Conference cards split two ways (see #536):
     #   - The upcoming / live edition gets its OWN card, titled with the
     #     full conference name ("European Security Studies Conference"),
-    #     below as the `2026` slug; /2026 (+ .fr/.de) point their metaImage
-    #     at 2026-meta.*.
+    #     below as the `2027` slug; /2027 (+ .fr/.de) point their metaImage
+    #     at 2027-meta.*.
     #   - The archived years (/2025, /2024) and the /past index share the
     #     `past` card, titled "EISS Annual Conference".
-    # Rollover: when this edition becomes past, repoint /2026 to past-meta
+    # Rollover: when this edition becomes past, repoint /2027 to past-meta
     # and add the next edition here under its own slug. See
     # docs/new-conference.md.
+    {"slug": "2027", "i18n": {
+        "en": {"eyebrow": "ESSC 2027", "title": "European Security Studies Conference",
+               "subtitle": "10–11 June 2027 · University of Belgrade"},
+        "fr": {"eyebrow": "ESSC 2027", "title": "Conférence européenne d'études de sécurité",
+               "subtitle": "10–11 juin 2027 · Université de Belgrade"},
+        "de": {"eyebrow": "ESSC 2027", "title": "Europäische Konferenz für Sicherheitsstudien",
+               "subtitle": "10.–11. Juni 2027 · Universität Belgrad"},
+    }},
     {"slug": "board", "i18n": {
         "en": {"eyebrow": "About", "title": "The People",
                "subtitle": "The EISS board and support team"},
