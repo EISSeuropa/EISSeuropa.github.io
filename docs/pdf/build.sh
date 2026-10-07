@@ -82,7 +82,7 @@ fi
 # Build the PDF -----------------------------------------------------------
 echo "→ Building EISS-website-documentation.pdf"
 "$CHROME" --headless --no-sandbox --disable-gpu --hide-scrollbars \
-  --no-pdf-header-footer \
+  --no-pdf-header-footer --generate-pdf-document-outline \
   --virtual-time-budget=30000 \
   --print-to-pdf="$HERE/EISS-website-documentation.pdf" \
   "file://$HERE/documentation.html" 2>&1 | grep -E '(written|ERROR)' || true
