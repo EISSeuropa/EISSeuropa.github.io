@@ -12,11 +12,12 @@ alternates:
   de: /2027.de.html
 ---
 {# ESSC 2027, save-the-date state. Dates and venue are confirmed; the call
-   for papers, the programme and travel guidance are not out yet, so the
-   page carries no programme grid and no travel tiles. When the call for
-   papers is published, add it here (#1526). When the programme exists,
-   bring back the speaking-chairing, programme-grid and programme-pdf
-   includes from /2026, and add a Belgrade hero photo and travel section
+   for papers and the programme are not out yet, so the page carries no
+   programme grid. Travel guidance lives once, on NetSec's ESSC 2027 page
+   (#practical), and the venue card links to it rather than copying it.
+   When the call for papers is published, add it here (#1526). When the
+   programme exists, bring back the speaking-chairing, programme-grid and
+   programme-pdf includes from /2026, and add a Belgrade hero photo
    (docs/new-conference.md). #}
 {% from "icons.njk" import icon %}
 
@@ -127,7 +128,11 @@ alternates:
         Each year, the European Security Studies Conference is held in a different European country.
         The 2027 conference takes place at the Faculty of Political Science of the University of Belgrade, in Serbia.
       </p>
-      <p class="muted">Travel and accommodation guidance will follow.</p>
+      <p>
+        <a class="btn btn-secondary btn-sm" href="https://netsec-cost.eu/essc-2027.html#practical" target="_blank" rel="noopener">
+          {{ icon("map-pin") }} Practical information {{ icon("external-link") }}
+        </a>
+      </p>
     </article>
   </div>
 </section>
