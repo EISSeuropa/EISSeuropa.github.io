@@ -35,6 +35,8 @@
     var el = panel.querySelector("[data-archive-status]");
     if (!el) return;
     var msg = toggle.getAttribute(key);
+    // The only message written here is the failure, so it interrupts (RGAA 7.5.2).
+    el.setAttribute("role", "alert");
     el.textContent = msg || fallback;
   }
 

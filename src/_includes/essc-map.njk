@@ -19,7 +19,7 @@
 
   <g class="essc-map-dots">
     {%- for m in conferences.mapCities %}
-    {%- set _name = m.cityLabel[_lang] if m.cityLabel else m.city %}
+    {%- set _name = (m.cityLabel and m.cityLabel[_lang]) or m.city %}
     {%- set _p = m.point %}
     {%- set _mod = " essc-map-dot--next" if m.isNext else (" essc-map-dot--inaugural" if m.inaugural else "") %}
     {%- set _end = " essc-map-label--end" if _p.end else "" %}

@@ -69,9 +69,11 @@
    by-person view. Hidden by paper-filter.js when the list is sorted by title,
    where an edition anchor points at nothing in particular. #}
 <nav class="paper-editions" aria-label="{{ p18n.jumpToEdition }}" data-paper-editions>
+  <ul>
   {%- for ed in paperIndex.editions %}
-  <a href="#ed-{{ ed.key | replace("/", "") | replace(".html", "") }}">{{ ed.label }}{% if ed.year %} {{ ed.year }}{% endif %}</a>
+    <li><a href="#ed-{{ ed.key | replace("/", "") | replace(".html", "") }}">{{ ed.label }}{% if ed.year %} {{ ed.year }}{% endif %}</a></li>
   {%- endfor %}
+  </ul>
 </nav>
 
 {# Filter status, announced to assistive tech (role=status → polite live

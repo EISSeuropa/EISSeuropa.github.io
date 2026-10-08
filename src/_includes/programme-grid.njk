@@ -64,13 +64,17 @@
 
     {%- if _programme.days.length > 1 %}
     <nav class="programme-days" aria-label="{{ t.programme.daysNav }}">
+      <ul>
       {%- for day in _programme.days %}
-      <a class="programme-day-chip" href="#day-{{ day.date }}">
-        {{ day.label }} <span class="muted">· {{ day.date }}</span>
-      </a>
+        <li><a class="programme-day-chip" href="#day-{{ day.date }}">
+          {{ day.label }} <span class="muted">· {{ day.date }}</span>
+        </a></li>
       {%- endfor %}
+      </ul>
     </nav>
     {%- endif %}
+    {# Visible key for the mic icon, which is otherwise explained only by a hover title (RGAA 12.11). #}
+    <p class="programme-legend muted"><span class="programme-author-mic" aria-hidden="true">{{ icon("mic") }}</span> {{ t.programme.presenter }}</p>
 
     {# Per-paper deep-link anchors (#676 / #738), emitted once per slug so the
        Anthology by-paper / by-person views can link to a paper's exact slot.
@@ -101,13 +105,13 @@
               {%- endif %}
 
               {%- elif slot.kind == "session" %}
-              <p class="programme-slot-title" lang="en">
+              <h4 class="programme-slot-title" lang="en">
                 {%- if slot.url -%}
                 <a href="{{ slot.url }}" target="_blank" rel="noopener">{{ slot.title }}</a>
                 {%- else -%}
                 {{ slot.title }}
                 {%- endif -%}
-              </p>
+              </h4>
               {%- if slot.slotTitle and slot.slotTitle != slot.title %}
               <p class="programme-slot-subtitle muted" lang="en">{{ slot.slotTitle }}</p>
               {%- endif %}
@@ -170,19 +174,19 @@
                         {%- for a in c.authors -%}
                           <span class="programme-author{% if a.isSpeaker %} programme-author--speaker{% endif %}">
                             {%- if a.isSpeaker %}<span class="programme-author-mic" title="{{ t.programme.presenter }}">{{ icon("mic") }}</span><span class="sr-only">{{ t.programme.presenter }}: </span>{% endif -%}
-                            <span lang="en">{{ a.name | cleanName }}{% if a.affiliation %} <em>({{ a.affiliation }})</em>{% endif %}</span></span>{% if not loop.last %} · {% endif %}
+                            <span lang="en">{{ a.name | cleanName }}{% if a.affiliation %} <span class="programme-aff">({{ a.affiliation }})</span>{% endif %}</span></span>{% if not loop.last %} · {% endif %}
                         {%- endfor -%}
                       </p>
                       {%- elif c.speakers and c.speakers.length %}
                       <p class="programme-contrib-speakers muted">
 <span lang="en">
                         {%- for sp in c.speakers -%}
-                          {{ sp.name | cleanName }}{% if sp.affiliation %} <em>({{ sp.affiliation }})</em>{% endif %}{% if not loop.last %} · {% endif %}
+                          {{ sp.name | cleanName }}{% if sp.affiliation %} <span class="programme-aff">({{ sp.affiliation }})</span>{% endif %}{% if not loop.last %} · {% endif %}
                         {%- endfor -%}</span>
                       </p>
                       {%- endif %}
                       {%- if c.abstract %}
-                      <p class="programme-contrib-abstract">{{ c.abstract }}
+                      <p class="programme-contrib-abstract">{{ c.abstract | markQuotes | safe }}
                       {%- if c.hasFullAbstract -%}
                         {% if c.url %} <a href="{{ c.url }}" target="_blank" rel="noopener">{{ t.programme.readFullAbstract }}</a>{% endif %}
                       {%- endif -%}
@@ -196,13 +200,13 @@
               {%- endif %}
 
               {%- elif slot.kind == "contribution" %}
-              <p class="programme-slot-title" lang="en">
+              <h4 class="programme-slot-title" lang="en">
                 {%- if slot.url -%}
                 <a href="{{ slot.url }}" target="_blank" rel="noopener">{{ slot.title }}</a>
                 {%- else -%}
                 {{ slot.title }}
                 {%- endif -%}
-              </p>
+              </h4>
               {%- if slot.speakers and slot.speakers.length %}
               <p class="programme-slot-meta">
 <span lang="en">

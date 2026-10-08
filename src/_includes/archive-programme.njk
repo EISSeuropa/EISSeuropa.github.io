@@ -40,11 +40,15 @@
 
     {%- if _prog.days.length > 1 %}
     <nav class="programme-days" aria-label="{{ t.programme.daysNav }}">
+      <ul>
       {%- for day in _prog.days %}
-      <a class="programme-day-chip" href="#day-{{ loop.index }}">{{ day.label }}</a>
+        <li><a class="programme-day-chip" href="#day-{{ loop.index }}">{{ day.label }}</a></li>
       {%- endfor %}
+      </ul>
     </nav>
     {%- endif %}
+    {# Visible key for the mic icon, which is otherwise explained only by a hover title (RGAA 12.11). #}
+    <p class="programme-legend muted"><span class="programme-author-mic" aria-hidden="true">{{ icon("mic") }}</span> {{ t.programme.presenter }}</p>
 
     {%- for day in _prog.days %}
     <div class="programme-day" id="day-{{ loop.index }}">
@@ -78,7 +82,7 @@
               {%- endif %}
 
               {%- else %}
-              <p class="programme-slot-title">{{ slot.title }}</p>
+              <h4 class="programme-slot-title">{{ slot.title }}</h4>
               {%- if slot.room %}
               <p class="programme-slot-meta programme-slot-room programme-slot-room--cx">{{ icon("map-pin") }} {{ slot.room }}</p>
               {%- endif %}
@@ -121,7 +125,7 @@
                         {%- for a in c.authors -%}
                           <span class="programme-author{% if a.isSpeaker %} programme-author--speaker{% endif %}">
                             {%- if a.isSpeaker %}<span class="programme-author-mic" title="{{ t.programme.presenter }}">{{ icon("mic") }}</span><span class="sr-only">{{ t.programme.presenter }}: </span>{% endif -%}
-                            {{ a.name | cleanName }}{% if a.affiliation %} <em>({{ a.affiliation }})</em>{% endif %}</span>{% if not loop.last %} · {% endif %}
+                            {{ a.name | cleanName }}{% if a.affiliation %} <span class="programme-aff">({{ a.affiliation }})</span>{% endif %}</span>{% if not loop.last %} · {% endif %}
                         {%- endfor -%}
                       </p>
                       {%- endif %}
@@ -131,7 +135,7 @@
                          no JS the full abstract shows and the toggle stays
                          hidden. programme-abstracts.js runs on first panel open. #}
                       <div class="programme-contrib-abstract" data-abstract>
-                        <p class="programme-contrib-abstract-text" data-abstract-text>{{ c.abstract }}</p>
+                        <p class="programme-contrib-abstract-text" data-abstract-text>{{ c.abstract | markQuotes | safe }}</p>
                         <button type="button" class="programme-abstract-toggle" data-abstract-toggle
                                 aria-expanded="false" hidden
                                 data-expand-label="{{ t.programme.readFullAbstract }}"

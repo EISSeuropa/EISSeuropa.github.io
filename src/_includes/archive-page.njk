@@ -105,9 +105,9 @@
        columns of counts is what the question needs and a screen reader gets
        the header association for free. Rows from corpusRenewal.js. #}
     <details class="coverage-detail renewal-detail">
-      <summary>{{ n18n.renewalSummary }}</summary>
+      <summary id="renewal-summary">{{ n18n.renewalSummary }}</summary>
       <div class="renewal-scroll">
-        <table class="renewal-table">
+        <table class="renewal-table" aria-labelledby="renewal-summary">
           <thead>
             <tr>
               <th scope="col">{{ n18n.renewalColEdition }}</th>
@@ -258,7 +258,7 @@
       {%- if defaultView == 'people' %}
       {% include "speakers-index.njk" %}
       {%- else %}
-      <p class="archive-panel__status" data-archive-status>{{ n18n.loadingView }}</p>
+      <p class="archive-panel__status" role="status" data-archive-status>{{ n18n.loadingView }}</p>
       {%- endif %}
     </div>
 
@@ -268,7 +268,7 @@
       {%- if defaultView == 'papers' %}
       {% include "papers-page.njk" %}
       {%- else %}
-      <p class="archive-panel__status" data-archive-status>{{ n18n.loadingView }}</p>
+      <p class="archive-panel__status" role="status" data-archive-status>{{ n18n.loadingView }}</p>
       {%- endif %}
     </div>
 

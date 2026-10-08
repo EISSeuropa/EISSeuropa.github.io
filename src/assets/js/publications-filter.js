@@ -63,11 +63,11 @@
     if (clearEl) clearEl.hidden = !filtering;
     if (statusEl) {
       statusEl.classList.toggle("speaker-status--empty", filtering && visible === 0);
+      // The region stays in the page and only its text changes: unhiding it
+      // in the same step as filling it is not announced (RGAA 7.5).
       if (!filtering) {
-        statusEl.hidden = true;
         statusEl.textContent = "";
       } else {
-        statusEl.hidden = false;
         var d = statusEl.dataset;
         if (visible === 0) {
           statusEl.textContent = d.msgNone || "No publications match.";

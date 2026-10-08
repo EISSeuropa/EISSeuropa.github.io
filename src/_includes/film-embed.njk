@@ -7,6 +7,8 @@
                    + attachment, which iOS refuses to play inline)
      filmPoster  — poster image path
      filmCaption — already-localised caption line (optional)
+   A text description of the film comes from i18n film.desc, keyed by the
+   MP4's file name (RGAA 4.1); add one for every new film.
 
    theme.js sets the src and muted-autoplay-loops it only when it scrolls
    into view (nothing downloads otherwise; pauses off-screen). The film is
@@ -35,5 +37,14 @@
   </div>
   {%- if filmCaption %}
   <figcaption class="film-caption muted">{{ filmCaption }}</figcaption>
+  {%- endif %}
+  {#- Text alternative to the picture track (RGAA 4.1, 4.5), keyed by the file
+      name in i18n film.desc. A film without an entry shows none. #}
+  {%- set _filmKey = filmSrc | replace("/assets/video/", "") | replace(".mp4", "") %}
+  {%- if t.film.desc and t.film.desc[_filmKey] %}
+  <details class="film-desc">
+    <summary>{{ t.film.descLabel }}</summary>
+    <p>{{ t.film.desc[_filmKey] }}</p>
+  </details>
   {%- endif %}
 </figure>

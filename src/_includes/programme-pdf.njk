@@ -25,9 +25,9 @@
       <header class="pdf-doc-header">
         <span class="pdf-doc-icon" aria-hidden="true">PDF</span>
         <div class="pdf-doc-meta">
-          <p class="pdf-doc-title" id="programme-pdf-title">
+          <h2 class="pdf-doc-title" id="programme-pdf-title">
             {% if _pdf.status == "final" %}{{ t.programme.pdfHeading }}{% else %}{{ t.programme.pdfHeadingDraft }}{% endif %}
-          </p>
+          </h2>
           <p class="pdf-doc-subtitle">
             {%- if _pdf.pages %}<span>{{ _pdf.pages }}&nbsp;{% if _lang == "de" %}Seiten{% else %}pages{% endif %}</span><span aria-hidden="true"> · </span>{% endif %}
             {%- if _pdf.sizeKb %}<span>{{ _pdf.sizeKb }}&nbsp;{% if _lang == "fr" %}Ko{% else %}KB{% endif %}</span><span aria-hidden="true"> · </span>{% endif %}

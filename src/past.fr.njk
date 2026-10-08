@@ -71,20 +71,20 @@ alternates:
   <div class="container">
     <h2 id="archive-title" style="margin-bottom: var(--space-5);">Archive</h2>
     <div class="archive-layout">
-    <div class="conference-list">
+    <ul class="conference-list">
       {%- for c in conferences.past %}
       {%- if c.hasOwnPage %}
-      <a class="conference" href="/{{ c.slug }}.html">
+      <li><a class="conference" href="/{{ c.slug }}.html">
         <span class="conference-year">{{ c.year }}</span>
-        <span>
+        <div>
           <strong>{{ c.displayCity.fr or c.city }}</strong>
           <div class="conference-meta">{{ c.archiveMeta.fr }}</div>
-        </span>
+        </div>
         <span class="conference-arrow" aria-hidden="true">→</span>
-      </a>
+      </a></li>
       {%- endif %}
       {%- endfor %}
-    </div>
+    </ul>
     <div class="archive-film">
       {%- set filmSrc = "/assets/video/essc-2025.mp4" -%}
       {%- set filmPoster = "/assets/images/2025/essc-2025-film-poster.jpg" -%}

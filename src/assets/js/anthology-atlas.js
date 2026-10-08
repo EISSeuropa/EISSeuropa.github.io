@@ -844,9 +844,18 @@
     // afterwards, so hover stops driving the card while one is up (#1431).
     if (pinned) return;
     hovered = nodeAt(mx, my);
+    // Escape dismissed this card: keep it shut until the pointer reaches another node.
+    if (hovered && hovered === escDismissed) hovered = null; else escDismissed = null;
     canvas.classList.toggle('is-link', !!(hovered && (hovered.type === 'paper' || hovered.type === 'author') && hovered.url));
     showCard(hovered, mx, my);
     draw();
+  });
+  // A hover card closes on Escape without moving the pointer (RGAA 10.13,
+  // WCAG 1.4.13). The pinned card has its own Escape on the canvas.
+  var escDismissed = null;
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape' || pinned || !hovered) return;
+    escDismissed = hovered; hovered = null; showCard(null); draw();
   });
   canvas.addEventListener('pointerleave', () => {
     if (pinned) return;
@@ -1009,6 +1018,7 @@
     if (!shareBtnEl) return;
     const original = shareBtnEl.textContent;
     shareBtnEl.textContent = text;
+    announce(text); // the label swap alone is not announced (RGAA 7.5)
     setTimeout(() => { shareBtnEl.textContent = original; }, 1600);
   }
 
@@ -1147,6 +1157,7 @@
         || String(a.title).localeCompare(String(b.title)));
   }
 
+  var listRenderedOnce; // var, no initialiser: renderList can run during init, before this line
   function renderList() {
     resetKeyCursor();
     if (!listItemsEl) return;
@@ -1186,6 +1197,15 @@
       listSummaryEl.textContent = fill(t('listSummary', 'Browse this view as a list ({count} {noun})'),
         { count: sorted.length, noun: noun });
     }
+    // A filter or lens change is silent on the canvas, so say how many are left
+    // (RGAA 7.5). Not on first paint, and appended when the same change has
+    // just announced something else ("Filters cleared…").
+    const countText = fill(t('liveCount', '{count} {noun} in this view.'), { count: sorted.length, noun: noun });
+    if (listRenderedOnce) {
+      if (Date.now() - announcedAt < 100 && liveEl && liveEl.textContent) liveEl.textContent += ' ' + countText;
+      else announce(countText);
+    }
+    listRenderedOnce = true;
     if (listMoreEl) {
       const over = sorted.length > LIST_CAP;
       listMoreEl.hidden = !over;
@@ -1410,9 +1430,11 @@
 
   // Anyone who cannot see the map move gets told what happened (#1446). The
   // region is polite, so it waits its turn rather than cutting across.
+  var announcedAt; // var, no initialiser: announce() can run during init, before this line
   function announce(text) {
     if (!liveEl) return;
     liveEl.textContent = text || '';
+    announcedAt = Date.now();
   }
 
   // The card is a stack of divs, so its raw textContent runs each row into the
@@ -1905,7 +1927,7 @@
     rows.forEach(([b, s]) => {
       const el = document.createElement('div');
       el.className = 'atlas-stat';
-      const bb = document.createElement('b'); bb.textContent = b;
+      const bb = document.createElement('span'); bb.className = 'atlas-stat-value'; bb.textContent = b;
       const ss = document.createElement('span'); ss.textContent = s;
       el.append(bb, ss);
       statsEl.appendChild(el);

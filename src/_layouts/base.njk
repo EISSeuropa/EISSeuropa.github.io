@@ -301,7 +301,7 @@
      strings ride on a data-attribute so the no-framework JS can read them
      without a second i18n round-trip. #}
   {% include "search-modal.njk" %}
-  <span data-search-strings='{"noResults":"{{ t.search.noResults }}","unavailable":"{{ t.search.unavailable }}","searching":"{{ t.search.searching }}"}' hidden></span>
+  <span data-search-strings='{"noResults":"{{ t.search.noResults }}","unavailable":"{{ t.search.unavailable }}","searching":"{{ t.search.searching }}","results":"{{ t.search.results }}"}' hidden></span>
 
   <script src="{{ '/assets/js/theme.js' | bust }}" defer></script>
   <script src="{{ '/assets/js/search.js' | bust }}" defer></script>

@@ -4,7 +4,7 @@
 // deploy time by `pagefind --site _site`, so it only exists on the
 // published site. On local dev the import fails and the modal shows the
 // "unavailable" notice rather than throwing. The header trigger and the
-// keyboard shortcuts (Cmd/Ctrl-K, "/") still open the modal locally so the
+// keyboard shortcut (Cmd/Ctrl-K) still opens the modal locally so the
 // chrome can be checked, they just can't return results without the index.
 //
 // Accessibility: the dialog is a real modal (background set `inert` while
@@ -39,6 +39,7 @@
       noResults: "No results found.",
       unavailable: "Search is available on the published site.",
       searching: "Searching…",
+      results: "Results: {n}",
     }, parsed);
   })();
 
@@ -103,9 +104,10 @@
       setStatus(strings.noResults);
       return;
     }
-    setStatus("");
     // Cap the rendered set so a broad query doesn't flood the listbox.
     const top = results.slice(0, 8);
+    // Say how many came back (RGAA 7.5): the listbox appearing is silent.
+    setStatus(strings.results.replace("{n}", String(top.length)));
     const data = await Promise.all(top.map((r) => r.data()));
     const frag = document.createDocumentFragment();
     data.forEach((d, i) => {
@@ -285,16 +287,8 @@
       open();
       return;
     }
-    // "/" opens, unless the user is typing in a field.
-    if (e.key === "/" && !e.metaKey && !e.ctrlKey && !e.altKey) {
-      const tag = (e.target.tagName || "").toLowerCase();
-      const typing = tag === "input" || tag === "textarea" || tag === "select" || e.target.isContentEditable;
-      if (!typing && overlay.hidden) {
-        e.preventDefault();
-        open();
-      }
-      return;
-    }
+    // No single-key "/" shortcut: a one-character shortcut fires on speech
+    // input and stray keypresses and cannot be switched off (RGAA 12.10).
     if (e.key === "Escape" && !overlay.hidden) {
       close();
     }
