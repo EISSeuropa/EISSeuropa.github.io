@@ -262,6 +262,12 @@
     "letter": "H",
     "works": [
       {
+        "title": "From the Bayeux Tapestry to a New Entente? The Prospects for Franco-British Leadership in Europe",
+        "year": 2026,
+        "journal": "UK in a Changing Europe",
+        "doi": null
+      },
+      {
         "title": "Trapped in the grey zone: NATO-CSDP relations in a new era of European security governance",
         "year": 2025,
         "journal": "International Politics",
@@ -284,12 +290,6 @@
         "year": 2022,
         "journal": "Europe at a Crossroads of the Past and Future",
         "doi": null
-      },
-      {
-        "title": "Conséquences du Brexit sur l’Otan et les Nations unies",
-        "year": 2022,
-        "journal": "Après-demain",
-        "doi": "https://doi.org/10.3917/apdem.062.0037"
       }
     ]
   },
