@@ -7,7 +7,10 @@
    without a clickable link.
 
    Status thresholds:
-     - today  < startDate              → "upcoming"  (with N-days countdown)
+     - today  < startDate              → "upcoming" only when
+                                          registrationStatus is "open",
+                                          else "registration-closed" or
+                                          "not-yet-open" (the default)
      - start <= today <= endDate       → "happening-now"
      - today  > endDate                → "past"
 
@@ -40,7 +43,10 @@
   {%- elif _conf.registrationStatus == "open" -%}
     {%- set _status = "upcoming" -%}
   {%- else -%}
-    {%- set _status = "upcoming" -%}
+    {# Unset means not open yet: the badge never claims an open form
+       until someone has flipped it by hand (ESSC 2027 said "open"
+       eight months early). #}
+    {%- set _status = "not-yet-open" -%}
   {%- endif -%}
 
   {# Days countdown — Eleventy 3 ships `Date` helpers via Nunjucks's globals.
@@ -61,6 +67,14 @@
     {%- if _indico and not hideBadgeCta %}
   <a class="registration-badge__cta" href="{{ _indico.url }}" target="_blank" rel="noopener">
     {{ t.registrationBadge.registerOnIndico }} {{ icon("external-link") }}
+  </a>
+    {%- endif %}
+  {%- elif _status == "not-yet-open" %}
+  <span class="registration-badge__dot" aria-hidden="true"></span>
+  <span class="registration-badge__label">{{ t.registrationBadge.notYetOpen }}</span>
+    {%- if _indico and not hideBadgeCta %}
+  <a class="registration-badge__cta" href="{{ _indico.url }}" target="_blank" rel="noopener">
+    {{ t.registrationBadge.onIndico }} {{ icon("external-link") }}
   </a>
     {%- endif %}
   {%- elif _status == "registration-closed" %}
