@@ -25,26 +25,30 @@
 {%- set t = i18n[_lang] -%}
 <figure class="film">
   <div class="film-frame">
-    <video class="film-video" playsinline webkit-playsinline muted loop preload="none"
+    <video class="film-video" playsinline muted loop preload="none"
            poster="{{ filmPoster | bust }}"
            data-film="{{ filmSrc }}"
            aria-label="{{ filmCaption or t.film.play }}"></video>
     <button class="film-play" type="button" data-film-play hidden data-state="paused"
             data-label-play="{{ t.film.play }}" data-label-pause="{{ t.film.pause }}"
             aria-label="{{ t.film.play }}">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      <svg class="film-play-glyph-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      <svg class="film-play-glyph-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
     </button>
   </div>
-  {%- if filmCaption %}
-  <figcaption class="film-caption muted">{{ filmCaption }}</figcaption>
-  {%- endif %}
   {#- Text alternative to the picture track (RGAA 4.1, 4.5), keyed by the file
-      name in i18n film.desc. A film without an entry shows none. #}
+      name in i18n film.desc. A film without an entry shows none. It sits inside
+      the figcaption, which must be the figure's first or last child (RGAA 8.2). #}
   {%- set _filmKey = filmSrc | replace("/assets/video/", "") | replace(".mp4", "") %}
-  {%- if t.film.desc and t.film.desc[_filmKey] %}
-  <details class="film-desc">
-    <summary>{{ t.film.descLabel }}</summary>
-    <p>{{ t.film.desc[_filmKey] }}</p>
-  </details>
+  {%- set _filmDesc = t.film.desc and t.film.desc[_filmKey] %}
+  {%- if filmCaption or _filmDesc %}
+  <figcaption class="film-caption muted">{{ filmCaption }}
+    {%- if _filmDesc %}
+    <details class="film-desc">
+      <summary>{{ t.film.descLabel }}</summary>
+      <p>{{ _filmDesc }}</p>
+    </details>
+    {%- endif %}
+  </figcaption>
   {%- endif %}
 </figure>
