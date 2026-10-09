@@ -108,7 +108,10 @@
                  only some panels carry one, so rendering them made the
                  programme look uneven. Hidden for consistency (#903). The
                  per-paper contribution abstracts below are unaffected. #}
+              {%- endif %}
 
+              {# Outside the break/session branch, so a poster session (a break
+                 that holds contributions) lists its posters too. #}
               {%- if slot.contributions and slot.contributions.length %}
               <details class="programme-contribs">
                 <summary>{{ t.programme.showContributions }} <span class="muted">({{ slot.contributions.length }})</span></summary>
@@ -150,7 +153,6 @@
                   {%- endfor %}
                 </ol>
               </details>
-              {%- endif %}
               {%- endif %}
 
             </article>
