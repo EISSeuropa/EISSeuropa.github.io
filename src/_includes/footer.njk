@@ -92,7 +92,9 @@
           <ul class="footer-meta-list">
             <li><a href="{{ '/terms.html' | localizedHref(lang) }}">{{ t.footer.legalLinks.terms }}</a></li>
             <li><a href="{{ '/policy.html' | localizedHref(lang) }}">{{ t.footer.legalLinks.privacy }}</a></li>
-            <li><a href="{{ '/accessibility.html' | localizedHref(lang) }}">{{ t.footer.legalLinks.accessibility }}</a></li>
+            {#- The RGAA mention ("Accessibilité : partiellement conforme"), on every
+                page and linked to the declaration. Status from rgaaAudit.json. #}
+            <li><a href="{{ '/accessibility.html' | localizedHref(lang) }}#rgaa">{{ t.footer.legalLinks.rgaa[rgaaAudit.status] }}</a></li>
             <li><a href="{{ '/sitemap.html' | localizedHref(lang) }}">{{ t.footer.legalLinks.sitemap }}</a></li>
             <li><a href="{{ '/licensing.html' | localizedHref(lang) }}">{{ t.footer.legalLinks.licensing }}</a></li>
             <li><a href="{{ '/roadmap.html' | localizedHref(lang) }}">{{ t.footer.legalLinks.roadmap }}</a></li>
