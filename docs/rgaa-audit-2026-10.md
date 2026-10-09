@@ -227,3 +227,101 @@ C conformant, NC non-conformant, NA not applicable. The first column links each 
 | [13.11](https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#13.11) | C | C | Pointer-triggered actions complete on up/click: native links and buttons everywhere, Atlas node activation runs in pointerup (pointerdown only starts a pan or a hub drag, and a moved gesture is not treated as a click), tour backdrop uses click. No mousedown/touchstart/pointerdown handler commits an action (grep over src/assets/js and templates). |
 | [13.12](https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#13.12) | NA | NA | No use of devicemotion, deviceorientation, accelerometer, shake or vibrate in src (the only 'accelerometer' string is the Permissions allow attribute for the YouTube embed, third party). No motion-actuated feature on any sampled page. |
 
+
+## Screen-reader pass
+
+The checks in #1796, the ones the grid above judged from Chrome's accessibility tree. The declaration stays **partially conformant** until a person has run the VoiceOver + Safari script below and the NVDA + Firefox equivalent. Only the flashing check has a result so far.
+
+### Flashing (13.7), 9 October 2026: pass
+
+Both films were checked frame by frame against the WCAG 2.3.1 thresholds that RGAA 13.7 uses, going further than the mean-luma estimate recorded under 13.7 in the grid.
+
+- **Files.** `src/assets/video/essc-2025.mp4` (720 × 1280, 50 fps, 91.5 s, 4,573 frames) and `src/assets/video/essc-2026.mp4` (1080 × 1920, 25 fps, 46.5 s, 1,162 frames).
+- **Method.** Every frame decoded with ffmpeg and downscaled to 36 × 64 by area averaging. Relative luminance from linearised sRGB per pixel, then averaged over sliding regions of one ninth of the frame (a third of the width by a third of the height, stepped by half a region), which is about the size of the 341 × 256 px area WCAG names for a 1024 × 768 screen. A general flash is a pair of opposing luminance changes of at least 0.1 where the darker state is below 0.8. A red flash is a pair of opposing changes of at least 20 in (R − G − B) × 320 on pixels where R / (R + G + B) ≥ 0.8. Flashes were counted in every one-second window of every region.
+- **Control.** A generated black and white strobe at 6.25 Hz and a red strobe at the same rate both read as 6 flashes in a second, so the check catches what it is meant to catch.
+- **Result.** At most 1 general flash in any second in any region of either film, and no red flash. The limit is 3. Pass.
+
+This is still an automated reading. Watching both films once with the script below (step 5) confirms it by eye.
+
+### VoiceOver + Safari script (to run)
+
+Run on the deployed site, `https://eiss-europa.com`, which carries the fixes from PR #1798. The search count needs the Pagefind index, which only the deployed site has. Fill in the **Heard** and **Result** lines with what VoiceOver actually said, not what it should have said. VO means Control + Option.
+
+**Setup.**
+
+1. Record the macOS and Safari versions: Apple menu → About This Mac, and Safari → About Safari.
+2. Safari → Settings → Advanced: tick "Press Tab to highlight each item on a webpage", or Tab skips links.
+3. Turn VoiceOver on with Command + F5. Turn the caption panel on with VO + Command + F10, so the spoken text can be read and copied.
+4. VoiceOver Utility → Speech → Voices: check that a French and an Italian voice are installed, or the language checks cannot pass.
+5. Make sure Quick Nav is off (press Left and Right arrows together until VoiceOver says "Quick Nav off"), so arrow keys reach the Atlas.
+
+**1. Atlas (1.1, 4.8, 4.9, 4.12, 4.13, 7.5).** Open `/anthology-atlas.html`. Close the welcome panel if it shows.
+
+- a. Tab until the map has focus. Expected: the label starting "Force-directed map of the European Security Studies Anthology", announced as an application or web application, then the hint "Use the arrow keys to move through the map, Enter to open, Escape to close."
+  Heard: ______ Result: ______
+- b. Press Right Arrow, then Right Arrow again. Expected: a paper card read out each time, ending "· 1 of 511" then "· 2 of 511". Press Escape: the card closes.
+  Heard: ______ Result: ______
+- c. Press Tab once from the map. Expected: "Browse this view as a list, link". Press VO + Space. Expected: focus lands on "Browse this view as a list (511 papers)", one or two keystrokes from the map.
+  Heard: ______ Result: ______
+- d. Shift + Tab back up to the edition chips, Tab to the "2026" toggle button and press Space. Expected, without moving focus: "441 papers in this view." Then switch to the "Authors" lens. Expected: a count ending "authors in this view."
+  Heard: ______ Result: ______
+
+**2. Films (4.1, 4.3, 4.7).** Open `/2026.html`, then `/2025.html`, then `/`.
+
+- a. Move with VO + Right Arrow through the film block. Expected: the video named "ESSC 2026, Stockholm." (or "EISS 2025, Thessaloniki."), the "Play the film" button, the caption, then a collapsed disclosure "What the film shows". Press VO + Space on it. Expected: "expanded", and the description reads on.
+  Heard (2026): ______ Heard (2025): ______ Heard (home): ______ Result: ______
+- b. Open `/assets/video/essc-2025.mp4` directly in a Safari tab with the sound on and listen to the whole film once. Expected: music only, no speech and no sound that carries information.
+  Heard: ______ Result: ______
+
+**3. Mobile menu (7.1, 12.8).** Safari → Develop → Enter Responsive Design Mode, pick a 375 px wide iPhone preset, and open `/`. VoiceOver on iOS Safari is the better test if an iPhone is to hand.
+
+- a. Tab to the menu button. Expected: "EISS — menu, button, collapsed". Press Space. Expected: "expanded" and focus on the first drawer item, "Conference".
+  Heard: ______ Result: ______
+- b. Tab on through the drawer, then press Escape. Expected: Anthology, Activities, About and Get involved in order, then Escape closes the drawer and focus returns to the menu button.
+  Heard: ______ Result: ______
+
+**4. Status messages (7.5).**
+
+- a. Open `/papers/2018-a-weapon-of-the-weak-cyberwarfare-and-china-s-threat-perception.html`, Tab to the "Copy" button under the BibTeX and press Space. Expected, without moving focus: "Copied".
+  Heard: ______ Result: ______
+- b. On any page, activate "Search the site" (or press Command + K) and type `nuclear`. Expected: "Searching…" then "Results:" and a number. Deployed site only.
+  Heard: ______ Result: ______
+- c. Open `/publications.html` and type in the filter field. Expected: "Showing N publications." as the list narrows.
+  Heard: ______ Result: ______
+
+**5. Flashing (13.7).** Watch both films once from start to end (`/2026.html` and `/2025.html`). Expected: no flashing, in line with the frame-level check above.
+  Seen: ______ Result: ______
+
+**6. Language changes (8.7, 8.8).** VO + F opens VoiceOver's find, which jumps to a phrase.
+
+- a. On `/`, go to the end of the footer and read the legal sentence with VO + Right Arrow. Expected: the English sentence in the English voice, then "L'EISS est une association loi 1901…" in a French voice.
+  Heard: ______ Result: ______
+- b. On `/2026.html`, find "Plus ça change". Expected: the quotation read in a French voice, the rest of the abstract in English.
+  Heard: ______ Result: ______
+- c. On `/publications.html`, find "Les systèmes d’alerte précoce" and then "L’Europa nell’era dell’IA". Expected: the first title in a French voice, the second in an Italian voice.
+  Heard: ______ Result: ______
+
+**7. Link names (6.1).**
+
+- a. On `/board.html`, open the rotor with VO + U and move to the Links list. Expected: entries such as "View profile: Dr Hugo Meijer", every one naming its person.
+  Heard: ______ Result: ______
+- b. On `/anthology.html`, the same. Expected: entries such as "NetSec profile: Vasiliki Plessia Aravani on the NetSec member directory (opens in a new tab)".
+  Heard: ______ Result: ______
+- c. Turn VoiceOver off and Voice Control on (System Settings → Accessibility → Voice Control). On `/board.html` say "Click View profile", and on `/anthology.html` say "Click NetSec profile". Expected: Voice Control finds the links (it numbers them when several match).
+  Result: ______
+
+### NVDA + Firefox (to run)
+
+NVDA runs only on Windows, so it needs a Windows machine and a person. Run the same seven steps there with the latest NVDA and Firefox, using NVDA's own keys (Insert + F7 for the elements list, browse mode for reading, focus mode on the Atlas map).
+
+### Results so far
+
+| Check | VoiceOver + Safari | NVDA + Firefox |
+|---|---|---|
+| 1. Atlas | to run | to run |
+| 2. Films | to run | to run |
+| 3. Mobile menu | to run | to run |
+| 4. Status messages | to run (search needs the deployed site) | to run |
+| 5. Flashing | pass by frame-level analysis (above). Watching once still to do | not screen-reader dependent |
+| 6. Language changes | to run | to run |
+| 7. Link names and voice control | to run | to run |
