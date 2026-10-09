@@ -451,7 +451,8 @@ def build_motif(name: str = "logo-mark.svg") -> str:
     gets its own box rather than being letterboxed into the wide one."""
     view_box, inner = brand_svg_inner(name)
     box = (
-        # The Belvedere arch only reads whole, so it sits inside the band.
+        # The Belvedere viewpoint only reads with its hub, so the whole mark
+        # sits inside the band rather than bleeding off the top.
         'x="820" y="370" width="320" height="320"'
         if name == "belvedere-mark.svg"
         else 'x="800" y="120" width="400" height="400"'

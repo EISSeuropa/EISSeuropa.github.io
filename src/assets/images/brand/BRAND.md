@@ -18,7 +18,7 @@ from the source PDF if the brand kit changes (the script needs only
 | `logo-full-1024.png` | High-res raster — Schema.org `logo` URL (Google Knowledge Panel), OG card overlays | ~63 KB |
 | `logo-lockup-512.png` | Header raster fallback for any context that can't use SVG | ~17 KB |
 | `anthology-mark.svg` | Anthology / Atlas sub-brand constellation — the Atlas signpost on `/anthology` (all locales) and the `/anthology-atlas` masthead | ~1.5 KB |
-| `belvedere-mark.svg` | Belvedere (the EISS blog) sub-brand: an arched lookout on its terrace, with part of the EISS constellation seen through it and one star beyond the frame. Drawn on the Claude Design canvas against the EISS design handoff. `/blog.html` masthead and the blog share card | ~1.5 KB |
+| `belvedere-mark.svg` | Belvedere (the EISS blog) sub-brand: one viewpoint (the hub, `currentColor`) with lines of sight running out to part of the EISS constellation. Where the Anthology mark is the field seen from its centre, this is one view out from its edge. The narrow cone sits on the diagonal with equal margins, and the spokes are at least 14° apart so they stay separate at 32 px. Below about 24 px it closes up, so a favicon would need its own cut. `/blog.html` masthead and the blog share card | ~1.3 KB |
 
 ### The Anthology and Atlas mark
 
