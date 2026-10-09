@@ -158,8 +158,9 @@ const conferences = [
     //   "open"   — show the "Registration open" pill regardless of dates
     //   "closed" — show "Registration closed"; useful between the form
     //              closing and the conference starting (the date-only
-    //              fallback would incorrectly say "open" in that window)
-    //   null / unset — derive from today vs. start/end dates
+    //              fallback would say "not yet open" in that window)
+    //   null / unset — "Registration not yet open" until the start date,
+    //              then "Happening now" / "Past edition" from the dates
     // We don't pull this from Indico because the anonymous API doesn't
     // expose registration-form state. Flip it by hand when the form
     // opens or closes; the daily rebuild picks up the change.

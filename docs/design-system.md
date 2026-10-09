@@ -303,9 +303,10 @@ the rendered style guide cannot disagree.
 - **`archive-programme.njk`** — past programmes in the **same** `.programme-*`
   markup, keyed by `archiveSlug` into `archiveProgrammes.js`. Used by
   every `/YYYY` archive page + `/Ukraine` + `/JPW2019` + `/joint-2024`.
-- **`registration-badge.njk`** — status pill (`upcoming` / `registration-closed`
-  / `happening-now` / `past`) computed from `conferences.js` dates +
-  `registrationStatus`. On `/2026` and the homepage featured card.
+- **`registration-badge.njk`** — status pill (`not-yet-open` / `upcoming` /
+  `registration-closed` / `happening-now` / `past`) computed from
+  `conferences.js` dates + `registrationStatus`. Only `"open"` shows
+  "Registration open". Unset means not yet open. On `/2026` and the homepage featured card.
 - **`countdown.njk`** — "N days until ESSC" pill; rendered at build
   (`daysUntil`) and recomputed live in theme.js.
 - **`conference-media.njk`** — data-driven "Session recordings" block;

@@ -542,6 +542,7 @@ const locales = {
       // registration-form state). The Indico URL comes from
       // src/_data/indico.json (annualConferences[year].url).
       upcoming: "Registration open",
+      notYetOpen: "Registration not yet open",
       closed: "Registration closed",
       happeningNow: "Happening now",
       past: "Past edition",
@@ -1351,6 +1352,7 @@ const locales = {
 
     registrationBadge: {
       upcoming: "Inscriptions ouvertes",
+      notYetOpen: "Inscriptions pas encore ouvertes",
       closed: "Inscriptions fermées",
       happeningNow: "En cours",
       past: "Édition passée",
@@ -2111,6 +2113,7 @@ const locales = {
 
     registrationBadge: {
       upcoming: "Anmeldung offen",
+      notYetOpen: "Anmeldung noch nicht geöffnet",
       closed: "Anmeldung geschlossen",
       happeningNow: "Findet jetzt statt",
       past: "Vergangene Ausgabe",
