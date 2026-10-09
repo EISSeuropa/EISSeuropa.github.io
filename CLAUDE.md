@@ -33,6 +33,14 @@ authoritative for EISS.
   auto-merge with `gh pr merge --auto --squash`. Four checks are required
   (#501, `docs/branch-protection.md`), so auto-merge waits for them. Only
   `gh pr merge --admin` bypasses them: don't.
+- **Turn on Auto-fix for every PR.** Right after `gh pr create` (and
+  `bind_pr` if the app has not picked the PR up), switch on the desktop
+  app's Auto-fix with `set_monitor`, whether or not auto-merge is armed.
+  It wakes the session on CI failures, merge conflicts and review
+  comments. A CI or conflict fix goes to the PR's own branch: a failing
+  required check or a conflict blocks the merge, which is the
+  frozen-branch exception below. Anything else it surfaces (a review
+  tweak, a refinement) still takes a fresh branch and a fresh PR.
 - **Carve-out: visual changes need preview review.** When the PR
   changes something a human will see (layout shifts, new components,
   copy that's visible above the fold, anything affecting brand
