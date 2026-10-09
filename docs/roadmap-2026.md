@@ -4,8 +4,9 @@ A planning document to help the maintainer think through what's worth
 doing next, in what order, and at what effort. Organised by **release
 version** (SemVer), the same axis as the GitHub milestones and the
 public [`/roadmap.html`](https://eiss-europa.com/roadmap.html).
-**Last update: 1 September 2026 (resynchronised with v2.27.0 and
-v2.28.0 after the autostamp flagged the drift, #1619).**
+**Last update: 9 October 2026 (resynchronised with the work landed
+against v2.29.0 since the v2.28.0 cut, and v2.31.0 moved to two weeks
+after the conference).**
 
 <!-- AUTOSTAMP:BEGIN -->
 > _Auto-tracked: **48 entries** in [`[Unreleased]`](../CHANGELOG.md#unreleased) since **v2.28.0** (12 Added, 9 Changed, 1 Removed, 26 Fixed). Last refresh by `scripts/sync-roadmap.py`: 8 Oct 2026. Prose in the timeline below may lag; the maintainer resynthesises on release-time §5 sweep._
@@ -57,18 +58,18 @@ other way round, so this is where a new release first appears.
 | v2.28.0 | 29 Aug 2026 | **Shipped** | A usable Atlas, and a citable theme vocabulary |
 | v2.29.0 | 8 Dec 2026 | Planned | The corpus in French, and the data behind it |
 | v2.30.0 | 30 Apr 2027 | Planned | ESSC 2027 programme and logistics |
-| v2.31.0 | 11 Jun 2027 | Planned | ESSC 2027, and the archive rollover after it |
+| v2.31.0 | 25 Jun 2027 | Planned | ESSC 2027, and the archive rollover after it |
 
 (`v2.24.1` was planned as a pre-ESSC patch but the work grew into a feature-rich minor, so it shipped as the **v2.25.0** *Ready for Stockholm* release instead; the `v2.24.1` milestone is closed as superseded.)
 
 ### ESSC 2027 preparation
 
 The next European Security Studies Conference is jointly organised
-with the COST Action NetSec and its host university. The joint
-organising group met in August 2026 and meets again on 7 September
-2026 to settle the panels and the roundtables. Dates and venue are
-confirmed at that meeting, and this repository carries two different
-placeholder editions until then (see issue #1522).
+with the COST Action NetSec and the University of Belgrade, Faculty of
+Political Science, and runs on 10 and 11 June 2027. The edition is
+settled in `conferences.js` (#1522) and `/2027` is live in all three
+languages, in its save-the-date state: no call for papers and no
+programme yet.
 
 The prep work rides the release milestones rather than a calendar of
 its own (CLAUDE.md §10), so each phase lands in whichever release is
@@ -77,9 +78,9 @@ issues, and they are the organising group's, not ours.
 
 | Release | Due | Conference work in it |
 | --- | --- | --- |
-| v2.29.0 | 8 Dec 2026 | *Save the date*, due 30 September: the edition settled and entered in `conferences.js` (#1522) · *Call for papers*, due 6 November: the parked 2027 page activated (#1524), the edition share cards generated (#1525), the call published and announced (#1526) · *Selection and notifications*, due 31 December: the prize jury confirmed and the terms published (#1527) |
+| v2.29.0 | 8 Dec 2026 | *Save the date*, due 30 September: the edition settled and entered in `conferences.js` (#1522, done) · *Call for papers*, due 6 November: the parked 2027 page activated (#1524, live, issue still open), the edition share cards generated (#1525), the call published and announced (#1526) · *Selection and notifications*, due 31 December: the prize jury confirmed and the terms published (#1527) |
 | v2.30.0 | 30 Apr 2027 | *Programme and logistics*: programme content once the accepted papers are known (#1528) |
-| v2.31.0 | 11 Jun 2027 | *The conference itself*: the archive rollover and the abstract pull afterwards (#1529) |
+| v2.31.0 | 25 Jun 2027 | *The conference itself*: the archive rollover and the abstract pull afterwards (#1529), cut two weeks after the conference so the pull has the final Indico data |
 
 The phase names are the joint group's vocabulary and the NetSec
 roadmap uses the same five, so a deadline can be named across the two
@@ -300,17 +301,33 @@ turns the corpus into something other projects can analyse and cite.
 Two further strands ride this release. The first three ESSC 2027 phases
 land here because their deadlines fall inside it, and the accessibility
 declaration lands here as the follow-through the Atlas owes (rule §9).
+Neither of the two named strands has shipped yet, but a good deal else
+has landed against this milestone since the v2.28.0 cut (see *Landed so
+far* below).
 
 The
 [v2.29.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/24)
-is the queryable commitment (rule §10). It holds **16** open issues,
-which is more than one December cut can carry, so part of preparing this
+is the queryable commitment (rule §10). On 9 October it holds **16**
+open issues against 120 closed, and the open ones are more than one
+December cut can carry, so part of preparing this
 release is deciding what does not make it. Two things cannot be the
 answer: the ESSC 2027 phases have dates owned by the joint organising
 group, and the French scope is what the release is named after.
 Everything else is negotiable, and the negotiation belongs to the
 release rather than to this document.
 
+- **Landed so far** — already on `master` and in `[Unreleased]`.
+  Belvedere, the EISS blog, has its first post in English, French and
+  German ([#1740](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1740),
+  [#1748](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1748)),
+  with a What's New banner that comes down by 10 November
+  ([#1739](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1739)).
+  The home page was rebuilt around the conference film, the Anthology's
+  figures, a paper of the day, the host-city map, the partners and the
+  membership fees. The Anthology gained a way in by subject and a
+  sortable by-paper view. The RGAA self-audit and its fixes shipped,
+  with the declaration below. The `/2027` page for Belgrade is live, and
+  automated data PRs are checked before they merge.
 - **Persistent identifiers and long-term archiving (shipped in v2.27.0)** — the corpus is
   deposited on Zenodo as a *dataset* in the `eiss` community, under the
   concept DOI [10.5281/zenodo.21776209](https://doi.org/10.5281/zenodo.21776209),
@@ -375,27 +392,30 @@ release rather than to this document.
   ([#1251](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1251), M).
 - **ESSC 2027, the first three phases** — *save the date*, *call for
   papers* and *selection and notifications*, five issues with deadlines
-  between 30 September and 31 December. These are set out in the *ESSC
+  between 30 September and 31 December. *Save the date* is done (#1522)
+  and the page is live, which leaves the share cards (#1525), the call
+  itself (#1526) and the prize jury (#1527). These are set out in the *ESSC
   2027 preparation* table above rather than repeated here, because the
   dates belong to the joint organising group.
-- **Accessibility, conformant rather than partial** — the statement
-  declares partial conformance today, which is the honest label while
-  the Atlas's canvas has a mitigation rather than an equivalent. Closing
-  that, and declaring against RGAA 4.1 alongside EN 301 549, is
-  [#1225](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1225)
-  (L). It pairs with the French strand: RGAA is the framework applicable
-  to a French-registered organisation, and it requires a declaration to
-  name its escalation route.
+- **Accessibility, declared against RGAA** — done in substance
+  ([#1225](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1225),
+  closed). An RGAA 4.1.2 self-audit of 25 pages found 33 non-conforming
+  criteria, all fixed and re-tested, and the accessibility statement now
+  declares against RGAA in a new §8 in all three languages, with the
+  RGAA mention in every footer. The label stays *partially conformant*
+  until a screen-reader pass confirms the self-audit
+  ([#1796](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1796)).
 
-Also carried in the milestone and not belonging to any strand:
-the joint-event programmes for `/JPW2019` and a new `/joint-2024`
-([#328](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/328)),
-the HAL collection and the Software Heritage software deposit that the
+Also carried in the milestone and not belonging to any strand: the
+HAL collection and the Software Heritage software deposit that the
 identifier strand still owes
 ([#1222](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1222),
-[#1223](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1223)),
-and the resynchronisation of this document
-([#1619](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1619)).
+[#1223](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1223)).
+The joint-event programmes for `/JPW2019` and `/joint-2024`
+([#328](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/328))
+and the previous resynchronisation of this document
+([#1619](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1619))
+are closed.
 
 The French strand depends on a reviewer's time, which is the main risk
 to the date. If it slips, the ESSC 2027 phases still have to land on
