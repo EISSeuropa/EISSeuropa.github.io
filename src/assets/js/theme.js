@@ -511,7 +511,10 @@
       // policy), surface the centre play button so a tap can start it.
       if (p && p.then) { p.then(function () { showPlay(false); }, function () { showPlay(true); }); }
     }
-    function toggle() { if (v.paused) { tryPlay(); } else { v.pause(); } }
+    // A pause the reader chose sticks: scrolling away and back must not
+    // restart the film (WCAG 2.2.2, RGAA 13.8).
+    var userPaused = false;
+    function toggle() { if (v.paused) { userPaused = false; tryPlay(); } else { userPaused = true; v.pause(); } }
 
     if (reduce) {
       // Native controls take over, so the overlay button would be a second
@@ -530,7 +533,7 @@
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
-          if (e.isIntersecting) { tryPlay(); }
+          if (e.isIntersecting) { if (!userPaused) tryPlay(); }
           else if (!v.paused) { v.pause(); }
         });
       }, { threshold: 0.4 }).observe(v);
