@@ -15,8 +15,10 @@
       <span class="search-bar-icon" aria-hidden="true">
         {% from "icons.njk" import icon %}{{ icon("search") }}
       </span>
+      {#- type="text": the validator allows role="combobox" on a text input only (RGAA 8.2). enterkeyhint keeps the search key on phones. #}
       <input class="search-input"
-             type="search"
+             type="text"
+             enterkeyhint="search"
              data-search-input
              role="combobox"
              aria-expanded="false"

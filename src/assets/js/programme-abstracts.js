@@ -29,7 +29,10 @@
     btn.addEventListener("click", function () {
       var expanded = wrap.classList.toggle("is-expanded");
       btn.setAttribute("aria-expanded", expanded ? "true" : "false");
-      btn.textContent = expanded
+      // Only the visible label changes. The hidden paper title after it keeps
+      // the 70-odd toggles on a page distinguishable in a buttons list (RGAA 11.9).
+      var label = btn.querySelector("[data-abstract-toggle-label]") || btn;
+      label.textContent = expanded
         ? btn.getAttribute("data-collapse-label") || "Show less"
         : btn.getAttribute("data-expand-label") || "Read full abstract";
     });

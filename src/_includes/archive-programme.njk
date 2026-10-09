@@ -139,7 +139,7 @@
                         <button type="button" class="programme-abstract-toggle" data-abstract-toggle
                                 aria-expanded="false" hidden
                                 data-expand-label="{{ t.programme.readFullAbstract }}"
-                                data-collapse-label="{{ t.programme.showLess }}">{{ t.programme.readFullAbstract }}</button>
+                                data-collapse-label="{{ t.programme.showLess }}"><span data-abstract-toggle-label>{{ t.programme.readFullAbstract }}</span><span class="sr-only">: <span lang="{{ c.title | titleLang }}">{{ c.title }}</span></span></button>
                       </div>
                       {%- endif %}
                       {%- if c.paperUrl %}

@@ -828,6 +828,12 @@ h4 { font-size: var(--fs-lg); }
   top: 1rem;
   text-decoration: none;
   color: var(--accent-text);
+  /* The link lands on the What's New banner, which is the same blue. A ring in
+     the link's own ink, then one in the accent, keeps it apart from the banner
+     and from the page in both themes (RGAA 10.7). */
+  outline: 2px solid var(--accent-text);
+  outline-offset: 0;
+  box-shadow: 0 0 0 4px var(--accent);
 }
 
 /* ---------- layout primitives ---------- */
@@ -5650,7 +5656,12 @@ a.paper-theme-chip:focus-visible { border-color: var(--accent); color: var(--acc
 .film-play[data-state="playing"] { opacity: 0; }
 .film-frame:hover .film-play[data-state="playing"],
 .film-play[data-state="playing"]:focus-visible { opacity: 1; }
-.film-play svg { width: 1.75rem; height: 1.75rem; margin-left: 2px; }
+.film-play svg { width: 1.75rem; height: 1.75rem; }
+/* The glyph follows the state the name announces: a triangle while paused,
+   two bars while playing (RGAA 4.11). The nudge centres the triangle optically. */
+.film-play-glyph-play { margin-left: 2px; }
+.film-play[data-state="playing"] .film-play-glyph-play,
+.film-play[data-state="paused"] .film-play-glyph-pause { display: none; }
 .film-caption { margin-top: var(--space-3); text-align: center; font-size: var(--fs-sm); }
 
 /* Subtle "tap for sound" hint, bottom-left so it never collides with the
@@ -5774,7 +5785,6 @@ body.search-open { overflow: hidden; }
    and the focus ring (RGAA 3.3, 10.7). */
 .search-bar { box-shadow: inset 0 0 0 1px var(--text-subtle); border-radius: var(--radius-md); margin: var(--space-2); }
 .search-bar:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
-.search-input::-webkit-search-cancel-button { -webkit-appearance: none; }
 .search-input::placeholder,
 .speaker-field input::placeholder { color: var(--text-subtle); opacity: 1; }
 .search-close { flex: none; }
@@ -7227,7 +7237,7 @@ a.open-panel-link:focus-visible {
 }
 
 /* Film text description under the frame (RGAA 4.1). Same measure as the frame. */
-.film-desc { margin-top: var(--space-3); font-size: var(--fs-sm); color: var(--text-muted); }
+.film-desc { margin-top: var(--space-3); font-size: var(--fs-sm); color: var(--text-muted); text-align: start; }
 .film-desc summary { cursor: pointer; font-weight: 600; color: var(--text); }
 .film-desc p { margin: var(--space-2) 0 0; }
 

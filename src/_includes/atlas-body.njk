@@ -391,7 +391,7 @@
             {# Into the bridge view (#1468), which already has its own URL
                (#1473). The English name is the join key the map filters on,
                here as everywhere. #}
-            <td class="atlas-matrix__on" style="--cell: {{ c.weight }}"><a href="{{ atlasHref }}?bridge={{ r.name | urlencode }}|{{ c.other | urlencode }}" title="{{ cellLabel }}" aria-label="{{ cellLabel }}">{{ c.n }}</a></td>
+            <td class="atlas-matrix__on" style="--cell: {{ c.weight }}"><a href="{{ atlasHref }}?bridge={{ r.name | urlencode }}%7C{{ c.other | urlencode }}" title="{{ cellLabel }}" aria-label="{{ cellLabel }}">{{ c.n }}</a></td>
             {%- else %}
             <td></td>
             {%- endif %}
@@ -418,7 +418,7 @@
            sentence form is ambiguous on the page. The accessible name is the
            visible text (RGAA 6.1.5, WCAG 2.5.3): an aria-label sentence read
            differently from what a speech-input user sees and says. #}
-        <a href="{{ atlasHref }}?bridge={{ p.a | urlencode }}|{{ p.b | urlencode }}"
+        <a href="{{ atlasHref }}?bridge={{ p.a | urlencode }}%7C{{ p.b | urlencode }}"
 >{{ nameA }} · {{ nameB }} <span class="atlas-matrix__count muted">{{ p.n }} {{ noun }}</span></a>
       </li>
       {%- endfor %}

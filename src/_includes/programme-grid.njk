@@ -188,7 +188,7 @@
                       {%- if c.abstract %}
                       <p class="programme-contrib-abstract">{{ c.abstract | markQuotes | safe }}
                       {%- if c.hasFullAbstract -%}
-                        {% if c.url %} <a href="{{ c.url }}" target="_blank" rel="noopener">{{ t.programme.readFullAbstract }}</a>{% endif %}
+                        {% if c.url %} <a href="{{ c.url }}" target="_blank" rel="noopener">{{ t.programme.readFullAbstract }}<span class="sr-only">: <span lang="{{ c.title | titleLang }}">{{ c.title }}</span></span></a>{% endif %}
                       {%- endif -%}
                       </p>
                       {%- endif %}
