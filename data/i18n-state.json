@@ -186,14 +186,14 @@
     "src/roadmap.njk": {
       "fr": {
         "file": "src/roadmap.fr.njk",
-        "source_sha1": "143165a41f4cdbe64bab38f259ec0ee441bf9e60",
-        "translated_on": "2026-08-08",
+        "source_sha1": "c4e977c5c271666156a3f823e6337b0efe65ba7c",
+        "translated_on": "2026-10-09",
         "status": "beta"
       },
       "de": {
         "file": "src/roadmap.de.njk",
-        "source_sha1": "143165a41f4cdbe64bab38f259ec0ee441bf9e60",
-        "translated_on": "2026-08-08",
+        "source_sha1": "c4e977c5c271666156a3f823e6337b0efe65ba7c",
+        "translated_on": "2026-10-09",
         "status": "beta"
       }
     },
