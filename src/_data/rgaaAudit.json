@@ -1,5 +1,5 @@
 {
-  "_comment": "RGAA 4.1.2 self-audit behind §8 of the accessibility statement (#1225). The full grid is docs/rgaa-audit-2026-10.md, linked through the docs folder (a link to the file itself 404s on the PR that adds it). Update both together.",
+  "_comment": "RGAA 4.1.2 self-audit behind §8 of the accessibility statement (#1225). The full grid is docs/rgaa-audit-2026-10.md, linked through the docs folder (a link to the file itself 404s on the PR that adds it). Update both together. status is partial, total or none: it also sets the RGAA mention in the footer of every page.",
   "version": "4.1.2",
   "date": "2026-10-09",
   "conformant": 84,

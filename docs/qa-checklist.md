@@ -65,7 +65,7 @@ Notes:
 Check a release against what `/accessibility.html` actually declares, not against a general idea of "accessible":
 
 - **WCAG 2.1 AA, §7:** partial conformance, aligned with EN 301 549, with the limitations listed in §3.
-- **RGAA 4.1.2, §8:** partially conformant. The self-audit of 9 October 2026 met 100 % of applicable criteria on 25 pages (84 conformant, 22 not applicable), and the status stays partial until the screen-reader checks in #1796 pass. The grid is `docs/rgaa-audit-2026-10.md` and the figures the page prints come from `src/_data/rgaaAudit.json`.
+- **RGAA 4.1.2, §8:** partially conformant. The self-audit of 9 October 2026 met 100 % of applicable criteria on 25 pages (84 conformant, 22 not applicable), and the status stays partial until the screen-reader checks in #1796 pass. The grid is `docs/rgaa-audit-2026-10.md` and the figures the page prints come from `src/_data/rgaaAudit.json`, whose `status` also sets the RGAA mention in the footer of every page ("Accessibilité : partiellement conforme").
 
 A release that adds a template, a form, a media player or a scripted component either brings it into the sample and re-tests the criteria it touches, or records why it is out of scope. A failure found later makes the §8 figures wrong until it is fixed or the declaration is updated. Annual review: re-run the audit before 9 October 2027.
 
