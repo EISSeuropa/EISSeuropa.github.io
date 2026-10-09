@@ -73,7 +73,7 @@ const conferences = [
       fr: "Juin",
       de: "Juni",
     },
-    dayRange: "10 - 11",
+    dayRange: "10–11",
     yearLine: "2027 · Belgrade",
     cityLabel: { fr: "Belgrade", de: "Belgrad" },
     displayCity: { en: "Belgrade", fr: "Belgrade", de: "Belgrad" },
@@ -118,7 +118,7 @@ const conferences = [
       fr: "Juin",
       de: "Juni",
     },
-    dayRange: "11 - 12",     // for the featured-card .day block
+    dayRange: "11–12",     // for the featured-card .day block
     yearLine: "2026 · Stockholm",
     // Homepage hero photo: the path stem of a 16:9 JPEG exported at
     // -480x270, -800x450 and -1600x900. The hero shows the next edition's
