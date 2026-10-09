@@ -413,7 +413,8 @@
       n.hubs.forEach((id) => {
         const h = hubById[id];
         if (!activeHubs.has(id)) return;
-        const litEdge = lit && (focus.type !== 'theme' && focus.type !== 'untagged' || focus.id === id);
+        // A spotlight set (author view, find=) lights nodes with no focus node.
+        const litEdge = lit && (!focus || focus.type !== 'theme' && focus.type !== 'untagged' || focus.id === id);
         ctx.strokeStyle = hubFill(h);
         ctx.globalAlpha = litEdge ? 0.5 : (hoverIds ? 0.035 : (theme.dark ? 0.14 : 0.11));
         ctx.lineWidth = litEdge ? 1.3 : 1;
@@ -2099,7 +2100,8 @@
         } else if (urlFind) { findEl.value = urlFind; applyFind(urlFind); }
       }
     })
-    .catch(() => {
+    .catch((e) => {
+      console.error(e);
       // The corpus figures moved below the map in #1430, so a failure message
       // dropped in there would sit under an empty stage, off the fold. It
       // belongs where the map should have been.
