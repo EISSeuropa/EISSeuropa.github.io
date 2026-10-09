@@ -37,6 +37,8 @@
   const shareRowEl = document.getElementById('atlas-shareopts');
   const shareBtnEl = document.getElementById('atlas-share');
   const listEl = document.getElementById('atlas-list');
+  // The link after the canvas lands on the list, so open it on the way (RGAA 1.1.8).
+  document.querySelector('[data-atlas-list-jump]')?.addEventListener('click', () => { if (listEl) listEl.open = true; });
   const listSummaryEl = document.getElementById('atlas-list-summary');
   const listItemsEl = document.getElementById('atlas-list-items');
   const listHeadEl = document.getElementById('atlas-list-head');
@@ -177,7 +179,7 @@
       subtle: cssVar('--text-subtle') || '#7a8598',
       accent: cssVar('--accent') || '#0a84ff',
       ink: cssVar('--text') || '#0b1220',
-      warning: cssVar('--warning') || '#f59e0b',
+      warning: cssVar('--atlas-prize') || cssVar('--warning') || '#f59e0b',
       // Graph chrome, read from the same tokens the legend swatches use, so
       // the map and its key cannot drift apart.
       edge: cssVar('--atlas-edge') || '#2f9fe0',

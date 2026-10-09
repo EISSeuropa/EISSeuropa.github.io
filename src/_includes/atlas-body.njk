@@ -228,6 +228,9 @@
        role=application so a screen reader in browse mode passes those keys
        through, and the localised name points at the table below (RGAA 1.1, 4.8). #}
     <canvas id="atlas-canvas" tabindex="0" role="application" aria-describedby="atlas-kbd-hint" aria-label="{{ a.canvasLabel }}"></canvas>
+    {#- The link RGAA 1.1.8 and 4.8 ask for straight after the canvas: it opens
+        the table of the current view. Shown on keyboard focus. #}
+    <a class="atlas-list-jump" href="#atlas-list-summary" data-atlas-list-jump>{{ a.listJump }}</a>
     <p class="sr-only" id="atlas-kbd-hint">{{ a.kbdHint }}</p>
     <div class="atlas-card" id="atlas-card" aria-hidden="true"></div>
   </div>

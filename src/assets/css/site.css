@@ -129,6 +129,7 @@
      carry. --brand-network itself is too pale to hold a hairline on white, so
      light mode deepens it. */
   --atlas-edge: hsl(203 76% 52%);
+  --atlas-prize: hsl(36 95% 36%); /* prize ring: --warning is 2.2:1 on white */
   /* Anthology Atlas absence marker: a paper with no Anthology page, or an
      author with no co-author. A blue-grey on the neutral hue, so it reads as
      "nothing here yet" rather than as a category of its own. */
@@ -195,6 +196,7 @@
     --accent-text: hsl(222 30% 8%);
     --warning: hsl(36 95% 60%);
     --atlas-edge: hsl(203 90% 70%);
+    --atlas-prize: hsl(36 95% 60%);
     --atlas-inactive: hsl(220 12% 52%);
     --hero-overlay: linear-gradient(180deg, hsl(220 50% 4% / 0.45) 0%, hsl(220 50% 4% / 0.75) 100%);
 
@@ -227,6 +229,7 @@
   --accent-text: hsl(222 30% 8%);
   --warning: hsl(36 95% 60%);
   --atlas-edge: hsl(203 90% 70%);
+  --atlas-prize: hsl(36 95% 60%);
   --atlas-inactive: hsl(220 12% 52%);
   --hero-overlay: linear-gradient(180deg, hsl(220 50% 4% / 0.45) 0%, hsl(220 50% 4% / 0.75) 100%);
 
@@ -266,6 +269,7 @@ html {
 
 body {
   margin: 0;
+  overflow-wrap: break-word; /* a long word wraps rather than widening the page */
   padding-top: var(--whats-new-h, 0px);
   font-family: var(--font-sans);
   font-size: var(--fs-base);
@@ -280,6 +284,13 @@ body {
   text-rendering: optimizeLegibility;
   min-height: 100vh;
 }
+
+/* French and German compounds are longer than a 320px column. Hyphenate
+   them so grid and flex items can shrink (RGAA 10.11). English is left alone. */
+:root:lang(fr) main,
+:root:lang(de) main,
+:root:lang(fr) .whats-new-banner,
+:root:lang(de) .whats-new-banner { hyphens: auto; }
 
 img,
 svg,
@@ -671,6 +682,8 @@ h4 { font-size: var(--fs-lg); }
 @media (max-width: 560px) {
   .whats-new-banner { padding: 10px 14px; font-size: .86rem; gap: 8px; }
   .whats-new-text   { min-width: 120px; }
+  /* A German call to action is longer than a phone is wide (RGAA 10.11). */
+  .whats-new-cta    { white-space: normal; }
 }
 
 @media print {
@@ -2440,6 +2453,7 @@ a[href^="http"]:not([class]) {
 .cite-corpus > summary {
   cursor: pointer;
   width: max-content;
+  max-width: 100%;
   font-size: var(--fs-sm);
   color: var(--accent);
 }
@@ -2623,7 +2637,8 @@ a[href^="http"]:not([class]) {
 .page-lead a,
 .atlas-lede a,
 .speaker-coauthors a,
-.page-credit a {
+.page-credit a,
+.card p a:not([class]) {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
@@ -5170,7 +5185,6 @@ a.speaker-paper-title:hover {
 }
 .paper-edition {
   font-weight: 600;
-  white-space: nowrap;
 }
 .paper-panel {
   min-width: 0;
@@ -6136,6 +6150,7 @@ body.search-open { overflow: hidden; }
 .coverage-detail > summary {
   cursor: pointer;
   width: max-content;
+  max-width: 100%; /* the German label is wider than a phone (RGAA 10.11) */
   font-size: var(--fs-sm);
   color: var(--accent);
 }
@@ -8217,7 +8232,12 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-find[aria-invalid="true"] { border-color: var(--warning); }
 .atlas-find__msg { font-size: .78rem; color: var(--text-muted); }
 .atlas-find__msg:empty { display: none; }
-.atlas-stage { position: relative; border-radius: var(--radius-lg); overflow: hidden; background: radial-gradient(120% 90% at 50% 0%, var(--accent-soft), transparent 60%), var(--bg-elev); border: 1px solid var(--border); }
+/* Link to the list straight after the canvas: off-screen until keyboard focus. */
+.atlas-list-jump { position: absolute; left: 12px; bottom: 12px; z-index: 5; padding: 6px 12px; border-radius: var(--radius-full); background: var(--bg-elev); color: var(--accent-hover); font-size: var(--fs-sm); font-weight: 600; transform: translateY(200%); opacity: 0; }
+.atlas-list-jump:focus-visible { transform: none; opacity: 1; outline: 2px solid var(--accent); outline-offset: 2px; }
+/* Plain surface, no accent tint: the dots and edges are measured against it
+   and every hue clears 3:1 on it in both themes (RGAA 3.3). */
+.atlas-stage { position: relative; border-radius: var(--radius-lg); overflow: hidden; background: var(--bg-elev); border: 1px solid var(--border); }
 /* `touch-action: none` was here for hub dragging, and it made the map a
    scroll trap on phones: a 480px-tall canvas that neither scrolled the page
    nor pinch-zoomed under a finger. `pan-y pinch-zoom` gives both back. A
@@ -8555,7 +8575,7 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-legend .sw-page { background: var(--text-muted); }
 .atlas-legend .sw-nopage { background: transparent; box-shadow: inset 0 0 0 2px var(--text-muted); }
 .atlas-legend .sw-ring { background: transparent; border: 2px solid; }
-.atlas-legend .sw-prize { border-color: var(--warning); }
+.atlas-legend .sw-prize { border-color: var(--atlas-prize); }
 .atlas-legend .sw-pub { background: transparent; box-shadow: inset 0 0 0 2px var(--text-muted); width: 9px; height: 9px; }
 .atlas-legend .sw-collab { background: var(--accent); box-shadow: 0 0 0 1.5px var(--surface-strong); }
 .atlas-legend .sw-solo { background: var(--atlas-inactive); }
