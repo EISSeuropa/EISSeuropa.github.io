@@ -46,6 +46,10 @@ alternates:
         partielle</strong> : la plupart des critères de succès sont satisfaits, avec un petit nombre
         de limites documentées (voir <a href="#known-limitations">§3 Limites connues</a>).
       </p>
+      <p>
+        L'EISS est enregistrée en France, et le site est aussi évalué au regard du référentiel
+        français, le RGAA&nbsp;4.1.2. La déclaration figure au <a href="#rgaa">§8</a>.
+      </p>
 
       <h2>2. Résultats de l'audit</h2>
       <p>
@@ -112,6 +116,14 @@ alternates:
         la conférence, le panneau de filtres de l'Atlas, les liens dans les paragraphes gris,
         et un tableau qui défilait sans être atteignable au clavier.
       </p>
+      <p>
+        En <strong>octobre&nbsp;2026</strong>, nous avons audité le site au regard de chaque critère
+        du RGAA&nbsp;4.1.2, le référentiel français, sur 25&nbsp;pages choisies selon sa méthode, dans
+        un vrai navigateur, à largeur de téléphone et d'ordinateur, dans les deux thèmes et au clavier.
+        La première passe a relevé <strong>33&nbsp;critères</strong> non respectés. Tous ont été
+        corrigés puis testés à nouveau, et chaque page de premier niveau en anglais, en français et en
+        allemand a ensuite été vérifiée à 320&nbsp;pixels. Le résultat figure au <a href="#rgaa">§8</a>.
+      </p>
 
       <h2 id="known-limitations">3. Limites connues</h2>
       <ol>
@@ -152,7 +164,8 @@ alternates:
           tape ainsi que la communication ou l'auteur trouvé par une recherche. Tous les contrôles
           autour de la carte, les deux vues, les filtres, la recherche, les boutons de zoom, sont
           des boutons HTML classiques accessibles au clavier, portant un état
-          <code>aria-pressed</code> lorsqu'ils fonctionnent par bascule.
+          <code>aria-pressed</code> lorsqu'ils fonctionnent par bascule. Un lien placé juste après
+          la carte ouvre la liste.
         </li>
       </ol>
 
@@ -221,9 +234,8 @@ alternates:
         partielle résiduelle reflète les limites documentées au §3 (PDF intégrés, surfaces translucides,
         texte alt générique sur certaines photos d'archive). Le lint statique et les
         analyses au niveau du balisage ne signalent aucune violation, et les éléments qu'ils
-        placent en « revue manuelle » ont été individuellement vérifiés conformes. La passe de
-        septembre&nbsp;2026 menée dans un navigateur constitue l'évaluation en vigueur, et ce
-        qu'elle laisse ouvert est listé au §3 plutôt que résumé ici.
+        placent en « revue manuelle » ont été individuellement vérifiés conformes. L'audit RGAA
+        d'octobre&nbsp;2026, au <a href="#rgaa">§8</a>, constitue l'évaluation en vigueur.
       </p>
       <p>
         <a class="wcag-badge"
@@ -237,8 +249,89 @@ alternates:
           </span>
         </a>
       </p>
+      <h2 id="rgaa">8. Déclaration d'accessibilité RGAA {{ rgaaAudit.version }}</h2>
+      <p>
+        L'European Initiative for Security Studies est une association loi 1901 enregistrée sous le
+        numéro W751263001. Elle s'engage à rendre son site accessible. Cette déclaration s'applique à
+        <a href="{{ site.url }}">eiss-europa.com</a> et se réfère au
+        <a href="https://accessibilite.numerique.gouv.fr/" target="_blank" rel="noopener">RGAA</a>,
+        version {{ rgaaAudit.version }}.
+      </p>
+
+      <h3>État de conformité</h3>
+      <p>
+        eiss-europa.com est <strong>partiellement conforme</strong> avec le RGAA&nbsp;{{ rgaaAudit.version }}.
+      </p>
+      <p>
+        Un audit interne réalisé le <strong>9 octobre 2026</strong> établit que
+        <strong>{{ rgaaAudit.rate }}&nbsp;% des critères applicables sont respectés</strong> sur les pages
+        listées ci-dessous : {{ rgaaAudit.conformant }} critères conformes,
+        {{ rgaaAudit.notApplicable }} non applicables, aucun non conforme. Les tests qui demandent un
+        lecteur d'écran ont été évalués à partir de l'arbre d'accessibilité du navigateur et n'ont pas
+        encore été repris avec NVDA et VoiceOver. L'état passera à « totalement conforme » une fois
+        ces vérifications faites
+        (<a href="{{ rgaaAudit.pendingIssue }}" target="_blank" rel="noopener" lang="en">suivi public</a>).
+      </p>
+
+      <h3>Contenus non accessibles</h3>
+      <ul>
+        <li><strong>Non-conformités :</strong> aucune relevée sur les pages auditées. Les limites du §3 restent valables.</li>
+        <li><strong>Dérogations pour charge disproportionnée :</strong> aucune.</li>
+        <li>
+          <strong>Contenus non soumis à l'obligation d'accessibilité :</strong> les services d'autres
+          plateformes vers lesquels le site renvoie, à savoir la plateforme de conférence
+          indico.eiss-europa.com, Stripe pour les paiements, Mailchimp pour la lettre d'information et
+          YouTube. Les programmes PDF des éditions passées sont accompagnés, sur la page de chaque
+          édition, d'un programme en HTML qui en constitue la version accessible.
+        </li>
+      </ul>
+
+      <h3>Établissement de cette déclaration</h3>
+      <ul>
+        <li><strong>Date :</strong> 9 octobre 2026.</li>
+        <li><strong>Technologies utilisées pour la réalisation du site :</strong> HTML5, CSS, JavaScript, WAI-ARIA, SVG.</li>
+        <li>
+          <strong>Environnement de test :</strong> Google Chrome sans interface, à 320, 375 et 1280
+          pixels de large, en thème clair et sombre, avec de vraies saisies au clavier et l'arbre
+          d'accessibilité de Chrome. Aucun lecteur d'écran n'a été utilisé pour cet audit.
+        </li>
+        <li>
+          <strong>Outils pour évaluer l'accessibilité :</strong> axe-core&nbsp;4.13, les contrôles propres
+          au site lors de la construction et dans le navigateur, et des rapports de contraste calculés à
+          partir des couleurs affichées.
+        </li>
+        <li>
+          <strong>Pages du site ayant fait l'objet de la vérification de conformité :</strong>
+          {% for p in rgaaAudit.pages %}<a href="{{ p }}">{{ p }}</a>{% if not loop.last %}, {% endif %}{% endfor %},
+          ainsi que le document {% for d in rgaaAudit.documents %}<a href="{{ d }}">{{ d }}</a>{% endfor %}.
+        </li>
+        <li>
+          <strong>Résultats par critère :</strong> la
+          <a href="{{ rgaaAudit.grid }}" target="_blank" rel="noopener">grille d'audit</a>, dans la documentation
+          publiée avec le code source du site (<code>rgaa-audit-2026-10.md</code>).
+        </li>
+      </ul>
+
+      <h3>Retour d'information et contact</h3>
+      <p>
+        Si vous ne parvenez pas à accéder à un contenu ou à un service, écrivez à
+        <strong>{{ site.contactEmail }}</strong> et nous vous le fournirons sous une autre forme.
+      </p>
+
+      <h3>Voies de recours</h3>
+      <p>
+        Si vous nous avez signalé un défaut d'accessibilité et que notre réponse ne vous satisfait pas,
+        vous pouvez saisir le Défenseur des droits :
+      </p>
+      <ul>
+        <li>par le <a href="https://www.defenseurdesdroits.fr/demander-de-laide-au-defenseur-des-droits-146" target="_blank" rel="noopener">formulaire de demande en ligne</a>,</li>
+        <li>auprès d'un <a href="https://www.defenseurdesdroits.fr/carte-des-delegues" target="_blank" rel="noopener">délégué près de chez vous</a>,</li>
+        <li>par téléphone au 09&nbsp;69&nbsp;39&nbsp;00&nbsp;00,</li>
+        <li>par courrier, gratuitement et sans affranchissement : Défenseur des droits, Libre réponse 71120, 75342 Paris CEDEX 07.</li>
+      </ul>
+
       <p class="meta">
-        Déclaration préparée : 14 mai 2026 · Dernière revue : 2 septembre 2026 · Prochaine revue prévue :
+        Déclaration préparée : 14 mai 2026 · Dernière revue : 9 octobre 2026 · Prochaine revue prévue :
         14 mai 2027 ou lors d'un changement majeur de conception.
       </p>
     </article>

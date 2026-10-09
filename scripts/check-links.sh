@@ -127,6 +127,10 @@ SKIP_HOSTS = {
                                 # browser. Skipping covers every current
                                 # and future synced DOI without a per-link
                                 # allowlist.
+    "oasth.gr",                 # Thessaloniki public transport (2025
+                                # venue directions). 403 to curl and to
+                                # urllib whatever the User-Agent, the
+                                # same anti-bot class as the host below.
     "www.berlin-airport.de",    # Anti-bot UA filter, returns 403 to
                                 # unrecognised User-Agent strings.
                                 # The transit-info page works for

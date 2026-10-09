@@ -42,6 +42,10 @@ alternates:
         compliance</strong>: most success criteria are met, with a small number of documented
         limitations (see <a href="#known-limitations">§3 Known limitations</a>).
       </p>
+      <p>
+        EISS is registered in France, and the site is also assessed against the French framework,
+        RGAA&nbsp;4.1.2. The declaration is in <a href="#rgaa">§8</a>.
+      </p>
 
       <h2>2. Audit results</h2>
       <p>
@@ -105,6 +109,14 @@ alternates:
         film&rsquo;s control, the Atlas filter panel, links inside grey paragraphs, and a
         table that scrolled without being reachable from the keyboard.
       </p>
+      <p>
+        In <strong>October&nbsp;2026</strong> we audited the site against every criterion of
+        RGAA&nbsp;4.1.2, the French framework, on 25&nbsp;pages chosen by its method, in a real
+        browser at phone and desktop widths, in both colour schemes and from the keyboard. The first
+        pass found <strong>33&nbsp;criteria</strong> not met. All were fixed and tested again, and every
+        top-level page in English, French and German was then checked at 320&nbsp;pixels. The result
+        is in <a href="#rgaa">§8</a>.
+      </p>
 
       <h2 id="known-limitations">3. Known limitations</h2>
       <ol>
@@ -143,7 +155,8 @@ alternates:
           column. A live region announces the details card a tap opens and the paper or author a
           search lands on. Every control around the map, the two lenses, the filter chips, Find,
           the zoom buttons, is a regular HTML button reachable from the keyboard, carrying
-          <code>aria-pressed</code> state where it toggles.
+          <code>aria-pressed</code> state where it toggles. A link straight after the map opens the
+          list.
         </li>
       </ol>
 
@@ -210,8 +223,7 @@ alternates:
         translucent surfaces, generic alt text on some archive photos). The static lint and the
         markup-level scans report zero violations, and the items they raise for
         &ldquo;manual review&rdquo; have been individually verified compliant. The
-        September&nbsp;2026 browser-based pass is the current assessment, and what it found
-        still open is listed in §3 rather than summarised here.
+        October&nbsp;2026 RGAA audit in <a href="#rgaa">§8</a> is the current assessment.
       </p>
       <p>
         <a class="wcag-badge"
@@ -225,8 +237,85 @@ alternates:
           </span>
         </a>
       </p>
+      <h2 id="rgaa">8. Declaration against RGAA {{ rgaaAudit.version }}</h2>
+      <p>
+        The European Initiative for Security Studies is an association under the French law of 1901,
+        registered as W751263001. This declaration applies to
+        <a href="{{ site.url }}">eiss-europa.com</a> and follows the French accessibility framework,
+        the <a href="https://accessibilite.numerique.gouv.fr/" target="_blank" rel="noopener" lang="fr">RGAA</a>,
+        version {{ rgaaAudit.version }}.
+      </p>
+
+      <h3>Conformance status</h3>
+      <p>
+        eiss-europa.com is <strong>partially conformant</strong> with RGAA&nbsp;{{ rgaaAudit.version }}.
+      </p>
+      <p>
+        An internal audit on <strong>9 October 2026</strong> found <strong>{{ rgaaAudit.rate }}&nbsp;% of the
+        applicable criteria met</strong> on the pages listed below: {{ rgaaAudit.conformant }} criteria
+        conformant, {{ rgaaAudit.notApplicable }} not applicable, none non-conformant. The tests that call
+        for a screen reader were judged from the browser's accessibility tree and have not yet been repeated
+        with NVDA and VoiceOver. The status will read fully conformant once they have
+        (<a href="{{ rgaaAudit.pendingIssue }}" target="_blank" rel="noopener">tracked in public</a>).
+      </p>
+
+      <h3>Content that is not accessible</h3>
+      <ul>
+        <li><strong>Non-conformities:</strong> none found on the audited pages. The limitations in §3 still apply.</li>
+        <li><strong>Exemptions for disproportionate burden:</strong> none claimed.</li>
+        <li>
+          <strong>Content outside the scope of this declaration:</strong> services on other platforms that
+          the site links to, namely the conference platform at indico.eiss-europa.com, Stripe for payments,
+          Mailchimp for the newsletter and YouTube. The programme PDFs of past editions sit beside an HTML
+          programme on each edition's page, which is their accessible version.
+        </li>
+      </ul>
+
+      <h3>How this declaration was prepared</h3>
+      <ul>
+        <li><strong>Date:</strong> 9 October 2026.</li>
+        <li><strong>Technologies the site relies on:</strong> HTML5, CSS, JavaScript, WAI-ARIA, SVG.</li>
+        <li>
+          <strong>Test environment:</strong> Google Chrome, headless, at 320, 375 and 1280 pixels wide, in the
+          light and dark colour schemes, with real keyboard input and Chrome's accessibility tree. No screen
+          reader was used for this audit.
+        </li>
+        <li>
+          <strong>Tools:</strong> axe-core&nbsp;4.13, the site's own checks in the build and in the browser,
+          and contrast ratios computed from rendered colours.
+        </li>
+        <li>
+          <strong>Audited pages:</strong>
+          {% for p in rgaaAudit.pages %}<a href="{{ p }}">{{ p }}</a>{% if not loop.last %}, {% endif %}{% endfor %},
+          and the document {% for d in rgaaAudit.documents %}<a href="{{ d }}">{{ d }}</a>{% endfor %}.
+        </li>
+        <li>
+          <strong>Results by criterion:</strong> the
+          <a href="{{ rgaaAudit.grid }}" target="_blank" rel="noopener">audit grid</a>, in the documentation
+          published with the site's source (<code>rgaa-audit-2026-10.md</code>).
+        </li>
+      </ul>
+
+      <h3>Feedback and contact</h3>
+      <p>
+        If a page or a service is out of your reach, write to <strong>{{ site.contactEmail }}</strong> and we
+        will provide the content another way.
+      </p>
+
+      <h3>Remedies</h3>
+      <p>
+        If you have reported a barrier and our answer does not resolve it, you can refer the matter to the
+        <span lang="fr">Défenseur des droits</span>, the French rights ombudsman:
+      </p>
+      <ul>
+        <li>through the <a href="https://www.defenseurdesdroits.fr/demander-de-laide-au-defenseur-des-droits-146" target="_blank" rel="noopener">online request form</a>,</li>
+        <li>through a <a href="https://www.defenseurdesdroits.fr/carte-des-delegues" target="_blank" rel="noopener">local delegate</a>,</li>
+        <li>by phone on 09&nbsp;69&nbsp;39&nbsp;00&nbsp;00, or +33&nbsp;9&nbsp;69&nbsp;39&nbsp;00&nbsp;00 from outside France,</li>
+        <li>by post, free of charge from France: <span lang="fr">Défenseur des droits, Libre réponse 71120, 75342 Paris CEDEX 07</span>.</li>
+      </ul>
+
       <p class="meta">
-        Statement prepared: 14 May 2026 · Last reviewed: 2 September 2026 · Next scheduled review:
+        Statement prepared: 14 May 2026 · Last reviewed: 9 October 2026 · Next scheduled review:
         14 May 2027 or upon major design change.
       </p>
     </article>
