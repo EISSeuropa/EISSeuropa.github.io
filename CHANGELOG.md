@@ -166,6 +166,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- The roadmap is current again. The ESSC 2027 card gives the dates and the Belgrade venue instead of "to be announced", the v2.29.0 card separates what is already on the site (the Belvedere blog, the new home page, the RGAA declaration, the 2027 page) from what is still to come, and the page no longer describes its horizon as the end of 2026. In all three languages.
 - The venue card on `/2027` links to the practical information for Belgrade (visas, the airport, getting around, money and places to stay) on the NetSec ESSC 2027 page, in the matching language, in place of the line saying travel guidance would follow.
 - The volunteering page describes the Belvedere task as a signed post on a topic of the volunteer's choice, not a brief drawn from the Anthology's themes. In all three languages.
 - The board page lists the current officers and coordinators. Louise Beaumais is the Treasurer, and Marie Robin stays on as a Board Member. Arthur Laudrain adds Volunteering Coordinator to Technology Coordinator, and he and Filip Ejdus are the Conference Coordinators for ESSC27. A card and a profile page now show one pill per functional responsibility, so a member holding several gets several pills.

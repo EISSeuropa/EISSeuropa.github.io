@@ -34,7 +34,7 @@ const roadmap = {
   issuesUrl: `${REPO}/issues/new/choose`,
   milestonesUrl: `${REPO}/milestones`,
   releasesUrl: `${REPO}/releases`,
-  updated: { en: "21 August 2026", fr: "21 août 2026", de: "21. August 2026" },
+  updated: { en: "9 October 2026", fr: "9 octobre 2026", de: "9. Oktober 2026" },
 
   quarters: [
     {
@@ -149,6 +149,7 @@ const roadmap = {
           status: "shipped",
           version: "v2.26.0",
           notesUrl: notes("v2.26.0"),
+          changes: 94,
           when: { en: "25 June 2026 · v2.26.0", fr: "25 juin 2026 · v2.26.0", de: "25. Juni 2026 · v2.26.0" },
           title: {
             en: "Introducing the Anthology",
@@ -189,9 +190,6 @@ const roadmap = {
           },
         },
         {
-          // Planned until the release exists. scripts/release.sh offers to flip
-          // this card, which is what adds the notes link, and a notesUrl written
-          // ahead of the tag is a 404 the link checker rightly fails on.
           status: "shipped",
           version: "v2.28.0",
           notesUrl: notes("v2.28.0"),
@@ -219,6 +217,9 @@ const roadmap = {
       },
       entries: [
         {
+          // Planned until the release exists. scripts/release.sh offers to flip
+          // this card, which is what adds the notes link, and a notesUrl written
+          // ahead of the tag is a 404 the link checker rightly fails on.
           status: "planned",
           version: "v2.29.0",
           milestone: "v2.29.0",
@@ -229,9 +230,9 @@ const roadmap = {
             de: "Das Korpus auf Französisch, und die Daten dahinter",
           },
           desc: {
-            en: "The French Anthology leaves beta on a declared scope: the interface, the seventeen theme labels, and the abstracts of papers with at least one French-affiliated author, with a check that fails when an entry in scope loses its translation. The corpus gains an analytical export for research use, covering affiliation shares by country, thematic distribution and co-authorship, with author affiliations matched to the standard registry of research organisations and the theme vocabulary published in a form other projects can cite. The accessibility work carries through to a declaration against the French RGAA standard, and an annual French-language note on the corpus rounds out the release. The next conference opens in the same window: the edition is settled and entered in the conference data, the 2027 page is published to carry the call for papers, and the prize jury is confirmed in time for it.",
-            fr: "L’Anthologie en français sort de sa version bêta sur un périmètre déclaré : l’interface, les dix-sept intitulés de thèmes, et les résumés des communications comptant au moins un auteur affilié en France, avec un contrôle qui échoue lorsqu’une entrée du périmètre perd sa traduction. Le corpus reçoit un export analytique destiné à la recherche, couvrant la répartition des affiliations par pays, la distribution thématique et les co-signatures, avec les affiliations rapprochées du registre standard des organismes de recherche et le vocabulaire des thèmes publié sous une forme que d’autres projets peuvent citer. Le travail d’accessibilité aboutit à une déclaration de conformité au RGAA, et une note annuelle en français sur le corpus complète la version. La prochaine conférence s’ouvre dans la même fenêtre : l’édition est arrêtée et saisie dans les données de la conférence, la page 2027 est mise en ligne pour accueillir l’appel à communications, et le jury du prix est confirmé à temps.",
-            de: "Die französische Anthologie verlässt den Beta-Status für einen erklärten Umfang: die Oberfläche, die siebzehn Themenbezeichnungen und die Abstracts aller Beiträge mit mindestens einer französischen Zugehörigkeit, samt einer Prüfung, die anschlägt, sobald ein Eintrag im Umfang seine Übersetzung verliert. Das Korpus erhält einen analytischen Export für die Forschung mit Zugehörigkeitsanteilen nach Ländern, thematischer Verteilung und Ko-Autorschaft, wobei die Zugehörigkeiten dem Standardregister der Forschungseinrichtungen zugeordnet werden und das Themenvokabular in einer zitierfähigen Form erscheint. Die Arbeit an der Barrierefreiheit mündet in eine Konformitätserklärung nach dem französischen RGAA, und eine jährliche französische Notiz zum Korpus rundet die Version ab. Im selben Zeitraum beginnt die nächste Konferenz: die Ausgabe wird festgelegt und in die Konferenzdaten eingetragen, die Seite 2027 wird für den Call for Papers veröffentlicht, und die Preisjury steht rechtzeitig fest.",
+            en: "Already on the site for this release: Belvedere, the EISS blog, in three languages, a home page that now shows the conference film, a paper of the day and the host cities, a declaration against the French RGAA accessibility standard, and the page for ESSC 2027 in Belgrade. Still to come: the French Anthology leaves beta on a declared scope (the interface, the seventeen theme labels and the abstracts of papers with at least one French-affiliated author), the corpus gains an analytical export with author affiliations matched to the standard registry of research organisations, the corpus is deposited in HAL and Recherche Data Gouv and the source code in Software Heritage, and an annual French-language note on the corpus rounds out the release. The 2027 call for papers opens in the same window, with the prize jury confirmed in time for it.",
+            fr: "Déjà en ligne pour cette version : Belvédère, le blog de l’EISS, en trois langues, une page d’accueil qui présente désormais le film de la conférence, une communication du jour et les villes hôtes, une déclaration de conformité au RGAA, et la page de l’ESSC 2027 à Belgrade. Reste à venir : l’Anthologie en français sort de sa version bêta sur un périmètre déclaré (l’interface, les dix-sept intitulés de thèmes et les résumés des communications comptant au moins un auteur affilié en France), le corpus reçoit un export analytique avec les affiliations rapprochées du registre standard des organismes de recherche, le corpus est déposé dans HAL et Recherche Data Gouv et le code source dans Software Heritage, et une note annuelle en français sur le corpus complète la version. L’appel à communications pour 2027 s’ouvre dans la même fenêtre, et le jury du prix est confirmé à temps.",
+            de: "Bereits auf der Website für diese Version: Belvedere, der EISS-Blog, in drei Sprachen, eine Startseite, die nun den Konferenzfilm, einen Beitrag des Tages und die Gastgeberstädte zeigt, eine Konformitätserklärung nach dem französischen RGAA und die Seite der ESSC 2027 in Belgrad. Noch ausstehend: Die französische Anthologie verlässt den Beta-Status für einen erklärten Umfang (die Oberfläche, die siebzehn Themenbezeichnungen und die Abstracts aller Beiträge mit mindestens einer französischen Zugehörigkeit), das Korpus erhält einen analytischen Export, dessen Zugehörigkeiten dem Standardregister der Forschungseinrichtungen zugeordnet sind, das Korpus wird in HAL und Recherche Data Gouv hinterlegt und der Quellcode in Software Heritage, und eine jährliche französische Notiz zum Korpus rundet die Version ab. Im selben Zeitraum öffnet der Call for Papers für 2027, und die Preisjury steht rechtzeitig fest.",
           },
         },
       ],
@@ -263,16 +264,16 @@ const roadmap = {
         {
           status: "planned",
           event: true,
-          when: { en: "June 2027 · ESSC 2027", fr: "juin 2027 · ESSC 2027", de: "Juni 2027 · ESSC 2027" },
+          when: { en: "10–11 June 2027 · Belgrade", fr: "10–11 juin 2027 · Belgrade", de: "10.–11. Juni 2027 · Belgrad" },
           title: {
             en: "European Security Studies Conference 2027",
             fr: "Conférence européenne d’études de sécurité 2027",
             de: "Europäische Konferenz für Sicherheitsstudien 2027",
           },
           desc: {
-            en: "The tenth annual conference, two days of panels and roundtables, run jointly with the COST Action NetSec and the host university. Dates and venue to be announced.",
-            fr: "La dixième conférence annuelle, deux jours de panels et de tables rondes, organisée conjointement avec l’Action COST NetSec et l’université hôte. Dates et lieu à annoncer.",
-            de: "Die zehnte Jahreskonferenz, zwei Tage mit Panels und Runden Tischen, gemeinsam mit der COST-Aktion NetSec und der gastgebenden Universität ausgerichtet. Termin und Veranstaltungsort werden noch bekannt gegeben.",
+            en: "The tenth annual conference, two days of panels and roundtables at the University of Belgrade, Faculty of Political Science, run jointly with the COST Action NetSec.",
+            fr: "La dixième conférence annuelle, deux jours de panels et de tables rondes à la Faculté de sciences politiques de l’Université de Belgrade, organisée conjointement avec l’Action COST NetSec.",
+            de: "Die zehnte Jahreskonferenz, zwei Tage mit Panels und Runden Tischen an der Fakultät für Politikwissenschaften der Universität Belgrad, gemeinsam mit der COST-Aktion NetSec ausgerichtet.",
           },
         },
         {
