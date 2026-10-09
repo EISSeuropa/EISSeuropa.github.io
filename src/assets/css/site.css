@@ -5776,8 +5776,7 @@ body.search-open { overflow: hidden; }
 .search-bar:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
 .search-input::-webkit-search-cancel-button { -webkit-appearance: none; }
 .search-input::placeholder,
-.speaker-field input::placeholder,
-.atlas-find::placeholder { color: var(--text-subtle); opacity: 1; }
+.speaker-field input::placeholder { color: var(--text-subtle); opacity: 1; }
 .search-close { flex: none; }
 .search-status {
   padding: var(--space-3) var(--space-4) 0;
@@ -8229,6 +8228,7 @@ a.profile-pub-title:hover { text-decoration: underline; }
   min-width: min(260px, 100%);
 }
 .atlas-find:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.atlas-find::placeholder { color: var(--text-subtle); opacity: 1; } /* UA grey is 3.9:1 on dark fields, RGAA 3.2 */
 .atlas-find[aria-invalid="true"] { border-color: var(--warning); }
 .atlas-find__msg { font-size: .78rem; color: var(--text-muted); }
 .atlas-find__msg:empty { display: none; }
