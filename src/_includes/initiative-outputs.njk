@@ -36,7 +36,7 @@
     <ul class="member-works" role="list">
       {%- for w in (_latest | sort(true, false, "year")) %}
       <li class="member-work">
-        <span class="member-work-title" lang="en">{% if w.doi %}<a href="{{ w.doi | extLink }}" target="_blank" rel="noopener">{{ w.title }}</a>{% else %}{{ w.title }}{% endif %}</span>
+        <span class="member-work-title" lang="{{ w.title | titleLang }}">{% if w.doi %}<a href="{{ w.doi | extLink }}" target="_blank" rel="noopener">{{ w.title }}</a>{% else %}{{ w.title }}{% endif %}</span>
         <span class="member-work-meta muted" lang="en"><a href="/board/{{ w.slug }}.html">{{ w.author }}</a>{% if w.journal %} &middot; {{ w.journal }}{% endif %}{% if w.year %} &middot; {{ w.year }}{% endif %}</span>
       </li>
       {%- endfor %}

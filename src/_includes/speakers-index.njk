@@ -38,9 +38,11 @@
 </div>
 
 <nav class="speaker-az" aria-label="{{ s18n.jumpToLetter }}">
+  <ul>
   {%- for L in corpus.letters %}
-  <a href="#ltr-{{ L }}">{{ L }}</a>
+    <li><a href="#ltr-{{ L }}">{{ L }}</a></li>
   {%- endfor %}
+  </ul>
 </nav>
 
 {# Filter status, announced to assistive tech (role=status → polite live
@@ -75,7 +77,7 @@
         {%- else %}{{ s.display }}{% endif %}
         {%- if s.profileUrl %} <span class="speaker-badge speaker-badge--{{ s.category or 'board' }}">{{ s18n.staffBadge if s.category == 'staff' else s18n.boardBadge }}</span>{% endif %}
         {%- if s.netsec %} <span class="speaker-netsec" data-no-hovercard>
-          <a class="speaker-netsec-link" href="{{ s.netsec.url | extLink }}" target="_blank" rel="noopener" aria-label="{{ s18n.netsecProfileAria | replace('{name}', s.name) }}">{{ icon("external-link") }} <span aria-hidden="true">{{ s18n.netsecProfile }}</span></a>
+          <a class="speaker-netsec-link" href="{{ s.netsec.url | extLink }}" target="_blank" rel="noopener" >{{ icon("external-link") }} {{ s18n.netsecProfile }}<span class="sr-only">: {{ s18n.netsecProfileAria | replace('{name}', s.name) }}</span></a>
           {%- if s.netsec.role or s.netsec.affiliation or s.netsec.photo %}
           {# Hovercard, aria-hidden (the chip link carries the accessible name).
              The photo is deferred by the card's display:none until hover/focus,
@@ -97,7 +99,8 @@
       <p class="speaker-aff muted" lang="en">{{ s.affiliation }}</p>
       {%- endif %}
       {%- if s.years.length %}
-      <p class="speaker-years" aria-label="{{ s18n.attendedLabel }}">
+      <p class="speaker-years">
+        <span class="sr-only">{{ s18n.attendedLabel }}: </span>
         {%- for y in s.years %}<span class="speaker-year-pill">{{ y }}</span>{% endfor %}
       </p>
       {%- endif %}

@@ -21,14 +21,36 @@
     return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   };
 
+  // CSS-only tooltips (.coverage-tip, the NetSec chip card, the board ESSC
+  // speaker badge) open on hover and focus but cannot close themselves:
+  // Escape hides the one in use until the pointer or focus leaves it
+  // (RGAA 10.13, WCAG 1.4.13). The people hovercards have their own.
+  const TIPS = ".coverage-tip, .speaker-netsec, .person-essc-speaker";
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    document.querySelectorAll(TIPS).forEach((tip) => {
+      if (!tip.matches(":hover") && !tip.contains(document.activeElement)) return;
+      tip.setAttribute("data-tip-dismissed", "");
+      const reset = () => {
+        tip.removeAttribute("data-tip-dismissed");
+        tip.removeEventListener("mouseleave", reset);
+        tip.removeEventListener("focusout", reset);
+      };
+      tip.addEventListener("mouseleave", reset);
+      tip.addEventListener("focusout", reset);
+    });
+  });
+
   const init = () => {
     const btn = document.querySelector("[data-theme-toggle]");
     if (!btn) return;
 
     const updateLabel = () => {
       const next = currentEffective() === "dark" ? "light" : "dark";
-      btn.setAttribute("aria-label", `Switch to ${next} theme`);
-      btn.setAttribute("title", `Switch to ${next} theme`);
+      // Localised strings from theme-toggle.njk; the English fallback only fires on markup without them.
+      const label = (next === "dark" ? btn.dataset.labelDark : btn.dataset.labelLight) || `Switch to ${next} theme`;
+      btn.setAttribute("aria-label", label);
+      btn.setAttribute("title", label);
     };
     updateLabel();
 
@@ -74,7 +96,11 @@
       };
       closeMenu = () => setOpen(false);
       menuBtn.addEventListener("click", () => {
-        setOpen(menu.getAttribute("data-open") !== "true");
+        const open = menu.getAttribute("data-open") !== "true";
+        setOpen(open);
+        // The drawer sits before its toggle in the DOM, so Tab from the toggle
+        // would go to the page behind it: move focus in (RGAA 12.8).
+        if (open) menu.querySelector("a[href], summary, button")?.focus();
       });
       menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeMenu));
       // Escape closes the open menu and returns focus to the toggle.
@@ -485,7 +511,10 @@
       // policy), surface the centre play button so a tap can start it.
       if (p && p.then) { p.then(function () { showPlay(false); }, function () { showPlay(true); }); }
     }
-    function toggle() { if (v.paused) { tryPlay(); } else { v.pause(); } }
+    // A pause the reader chose sticks: scrolling away and back must not
+    // restart the film (WCAG 2.2.2, RGAA 13.8).
+    var userPaused = false;
+    function toggle() { if (v.paused) { userPaused = false; tryPlay(); } else { userPaused = true; v.pause(); } }
 
     if (reduce) {
       // Native controls take over, so the overlay button would be a second
@@ -504,7 +533,7 @@
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
-          if (e.isIntersecting) { tryPlay(); }
+          if (e.isIntersecting) { if (!userPaused) tryPlay(); }
           else if (!v.paused) { v.pause(); }
         });
       }, { threshold: 0.4 }).observe(v);

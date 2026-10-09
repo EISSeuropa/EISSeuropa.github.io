@@ -73,7 +73,7 @@
     {# Filter status, announced to assistive tech (role=status → polite live
        region). Empty when nothing is filtered; publications-filter.js fills the
        localised data-msg-* templates and marks the empty state. #}
-    <p class="speaker-status" role="status" aria-live="polite" data-pub-status hidden
+    <p class="speaker-status" role="status" aria-live="polite" data-pub-status
        data-msg-none="{{ o.filterNone }}"
        data-msg-one="{{ o.filterOne }}"
        data-msg-many="{{ o.filterMany }}"></p>
@@ -81,7 +81,7 @@
     {# A–Z jump rail, same design as the Anthology by-person view. Members are
        surname-sorted (sync-orcid), so the letters run in order. #}
     <nav class="speaker-az" aria-label="{{ t.speakers.jumpToLetter }}">
-      {%- for L in _letters %}<a href="#ltr-{{ L }}">{{ L }}</a>{% endfor %}
+      <ul>{%- for L in _letters %}<li><a href="#ltr-{{ L }}">{{ L }}</a></li>{% endfor %}</ul>
     </nav>
 
     <div class="member-pubs" data-pub-list>
@@ -99,7 +99,7 @@
         <ul class="member-works" role="list">
           {%- for w in m.works %}
           <li class="member-work" data-pub-entry data-year="{{ w.year }}" data-search="{{ m.name }} {{ w.title }} {{ w.journal }}">
-            <span class="member-work-title" lang="en">{% if w.doi %}<a href="{{ w.doi | extLink }}" target="_blank" rel="noopener">{{ w.title }}</a>{% else %}{{ w.title }}{% endif %}</span>
+            <span class="member-work-title" lang="{{ w.title | titleLang }}">{% if w.doi %}<a href="{{ w.doi | extLink }}" target="_blank" rel="noopener">{{ w.title }}</a>{% else %}{{ w.title }}{% endif %}</span>
             <span class="member-work-meta muted" lang="en">{% if w.journal %}{{ w.journal }}{% endif %}{% if w.journal and w.year %} &middot; {% endif %}{% if w.year %}{{ w.year }}{% endif %}</span>
           </li>
           {%- endfor %}

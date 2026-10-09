@@ -1,0 +1,42 @@
+{
+  "_comment": "RGAA 4.1.2 self-audit behind §8 of the accessibility statement (#1225). The full grid is docs/rgaa-audit-2026-10.md, linked through the docs folder (a link to the file itself 404s on the PR that adds it). Update both together.",
+  "version": "4.1.2",
+  "date": "2026-10-09",
+  "conformant": 84,
+  "nonConformant": 0,
+  "notApplicable": 22,
+  "rate": 100,
+  "status": "partial",
+  "pendingIssue": "https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1796",
+  "grid": "https://github.com/EISSeuropa/EISSeuropa.github.io/tree/master/docs",
+  "pages": [
+    "/",
+    "/accessibility.html",
+    "/sitemap.html",
+    "/policy.html",
+    "/terms.html",
+    "/2026.html",
+    "/2027.html",
+    "/2025.html",
+    "/2021.html",
+    "/past.html",
+    "/board.html",
+    "/board/alisa-kerschbaum.html",
+    "/anthology.html",
+    "/papers/2018-a-weapon-of-the-weak-cyberwarfare-and-china-s-threat-perception.html",
+    "/anthology-atlas.html",
+    "/anthology-atlas/theme/arms-acquisition-and-transfer.html",
+    "/news.html",
+    "/blog.html",
+    "/membership.html",
+    "/register.html",
+    "/speakers.html",
+    "/publications.html",
+    "/press-kit.html",
+    "/index.fr.html",
+    "/404.html"
+  ],
+  "documents": [
+    "/assets/files/EISS-2026-programme.pdf"
+  ]
+}

@@ -108,7 +108,7 @@
       {%- endif %}
       {%- if paper.abstract %}
       <h2>Abstract</h2>
-      <p>{{ paper.abstract }}</p>
+      <p>{{ paper.abstract | markQuotes | safe }}</p>
       {%- endif %}
       {%- if paper.panel %}
       {# Panel title links to that panel's anchor in the edition programme. #}

@@ -224,8 +224,13 @@
     {# tabindex + a described hint (#1646). The map was one tab stop short of
        being operable: the chips, the Find box and the list under it all took
        keyboard input and the canvas itself took none, so its nodes were
-       pointer-only. The arrow keys now walk the same order the list uses. #}
-    <canvas id="atlas-canvas" tabindex="0" aria-describedby="atlas-kbd-hint" aria-label="Force-directed map of the European Security Studies Anthology: every paper drawn toward the research themes it touches and coloured by them, with an Authors lens mapping co-authorship between the same people. The same papers and authors are available as filterable lists on the Anthology page."></canvas>
+       pointer-only. The arrow keys now walk the same order the list uses.
+       role=application so a screen reader in browse mode passes those keys
+       through, and the localised name points at the table below (RGAA 1.1, 4.8). #}
+    <canvas id="atlas-canvas" tabindex="0" role="application" aria-describedby="atlas-kbd-hint" aria-label="{{ a.canvasLabel }}"></canvas>
+    {#- The link RGAA 1.1.8 and 4.8 ask for straight after the canvas: it opens
+        the table of the current view. Shown on keyboard focus. #}
+    <a class="atlas-list-jump" href="#atlas-list-summary" data-atlas-list-jump>{{ a.listJump }}</a>
     <p class="sr-only" id="atlas-kbd-hint">{{ a.kbdHint }}</p>
     <div class="atlas-card" id="atlas-card" aria-hidden="true"></div>
   </div>
@@ -278,7 +283,7 @@
        fragment after a title. The header row is rewritten per lens by the
        script, since the Authors lens has its own two columns. #}
     <div class="atlas-list__scroll">
-      <table class="atlas-list__table" id="atlas-list-table">
+      <table class="atlas-list__table" id="atlas-list-table" aria-labelledby="atlas-list-summary">
         <thead id="atlas-list-head">
           <tr><th scope="col">{{ a.colPaper }}</th><th scope="col">{{ a.colAuthors }}</th><th scope="col">{{ a.colYear }}</th></tr>
         </thead>
@@ -360,9 +365,9 @@
      289-cell table would be weight for nothing. #}
   {%- if not atlasTheme %}
   <details class="atlas-matrix">
-    <summary class="atlas-matrix__summary">{{ a.matrixSummary | replace("{used}", themeMatrix.pairsUsed) | replace("{all}", themeMatrix.pairsPossible) }}</summary>
+    <summary class="atlas-matrix__summary" id="atlas-matrix-summary">{{ a.matrixSummary | replace("{used}", themeMatrix.pairsUsed) | replace("{all}", themeMatrix.pairsPossible) }}</summary>
     <div class="atlas-matrix__scroll">
-      <table class="atlas-matrix__table">
+      <table class="atlas-matrix__table" aria-labelledby="atlas-matrix-summary">
         <thead>
           <tr>
             <td></td>
@@ -410,10 +415,11 @@
       <li>
         {# The visible line separates the two names with a dot rather than the
            word "and": several theme names contain "and" themselves, so the
-           sentence form is ambiguous on the page. Speech gets the sentence,
-           through the accessible name. #}
+           sentence form is ambiguous on the page. The accessible name is the
+           visible text (RGAA 6.1.5, WCAG 2.5.3): an aria-label sentence read
+           differently from what a speech-input user sees and says. #}
         <a href="{{ atlasHref }}?bridge={{ p.a | urlencode }}|{{ p.b | urlencode }}"
-           aria-label="{{ a.matrixCell | replace("{a}", nameA) | replace("{b}", nameB) | replace("{n}", p.n) | replace("{noun}", noun) }}">{{ nameA }} <span aria-hidden="true">·</span> {{ nameB }} <span class="atlas-matrix__count muted">{{ p.n }} {{ noun }}</span></a>
+>{{ nameA }} · {{ nameB }} <span class="atlas-matrix__count muted">{{ p.n }} {{ noun }}</span></a>
       </li>
       {%- endfor %}
     </ol>

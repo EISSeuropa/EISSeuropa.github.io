@@ -64,7 +64,8 @@
       tooltip.setAttribute('role', 'dialog');
       tooltip.setAttribute('aria-modal', 'true');
       tooltip.setAttribute('aria-live', 'polite');
-      tooltip.setAttribute('aria-label', labels.closeLabel);
+      // Named by the current step's title (render() sets the id), not by an action label.
+      tooltip.setAttribute('aria-labelledby', 'tour-title');
       document.body.appendChild(backdrop);
       document.body.appendChild(spotlight);
       document.body.appendChild(tooltip);
@@ -172,6 +173,7 @@
         .replace('%1', String(idx + 1)).replace('%2', String(steps.length));
       tooltip.innerHTML = '';
       const titleEl = $el('h3', 'tour-title');
+      titleEl.id = 'tour-title';
       titleEl.textContent = step.title || '';
       const bodyEl = $el('p', 'tour-body');
       bodyEl.textContent = step.body || '';

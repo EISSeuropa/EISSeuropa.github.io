@@ -47,6 +47,10 @@ alternates:
         einer geringen Anzahl dokumentierter Einschränkungen (siehe
         <a href="#known-limitations">§3 Bekannte Einschränkungen</a>).
       </p>
+      <p>
+        Die EISS ist in Frankreich eingetragen, und die Website wird auch am französischen Standard
+        RGAA&nbsp;4.1.2 gemessen. Die Erklärung steht in <a href="#rgaa">§8</a>.
+      </p>
 
       <h2>2. Auditergebnisse</h2>
       <p>
@@ -112,6 +116,15 @@ alternates:
         Bedienelement des Konferenzfilms, das Filterfeld des Atlas, Links in grauen Absätzen und
         eine Tabelle, die scrollte, ohne mit der Tastatur erreichbar zu sein.
       </p>
+      <p>
+        Im <strong>Oktober&nbsp;2026</strong> haben wir die Website an jedem Kriterium des
+        RGAA&nbsp;4.1.2, des französischen Standards, geprüft, auf 25&nbsp;nach seiner Methode
+        ausgewählten Seiten, in einem echten Browser bei Telefon- und Desktopbreite, in beiden
+        Farbschemata und mit der Tastatur. Der erste Durchgang fand <strong>33&nbsp;Kriterien</strong>
+        nicht erfüllt. Alle wurden behoben und erneut geprüft, und danach wurde jede Seite der obersten
+        Ebene auf Englisch, Französisch und Deutsch bei 320&nbsp;Pixeln kontrolliert. Das Ergebnis
+        steht in <a href="#rgaa">§8</a>.
+      </p>
 
       <h2 id="known-limitations">3. Bekannte Einschränkungen</h2>
       <ol>
@@ -154,7 +167,8 @@ alternates:
           Person, den eine Suche findet. Alle Bedienelemente rund um die Karte, die beiden
           Ansichten, die Filter-Chips, die Suche, die Zoom-Schaltflächen, sind reguläre
           HTML-Schaltflächen, die mit der Tastatur erreichbar sind und einen
-          <code>aria-pressed</code>-Zustand tragen, wo sie umschalten.
+          <code>aria-pressed</code>-Zustand tragen, wo sie umschalten. Ein Link direkt nach der Karte
+          öffnet die Liste.
         </li>
       </ol>
 
@@ -221,15 +235,14 @@ alternates:
         PDFs, transluzente Flächen, generischer Alt-Text auf einigen Archivfotos). Das
         statische Lint und die Prüfungen auf Auszeichnungsebene melden keine Verstöße, und die
         Elemente, die sie in „manuelle Überprüfung" geben, wurden einzeln als konform
-        verifiziert. Der im Browser durchgeführte Durchlauf vom September&nbsp;2026 ist die
-        geltende Bewertung; was er offen lässt, ist in §3 aufgeführt statt hier
-        zusammengefasst.
+        verifiziert. Das RGAA-Audit vom Oktober&nbsp;2026 in <a href="#rgaa">§8</a> ist die
+        geltende Bewertung.
       </p>
       <p>
         <a class="wcag-badge"
            href="https://www.w3.org/TR/WCAG21/#level-aa-conformance"
            target="_blank" rel="noopener"
-           aria-label="WCAG 2.1 Stufe AA — Web Content Accessibility Guidelines, siehe W3C-Referenz">
+           aria-label="WCAG 2.1 AA: Web Content Accessibility Guidelines, Stufe AA, W3C-Referenz">
           <span class="wcag-badge-wcag" aria-hidden="true">WCAG</span>
           <span class="wcag-badge-vert" aria-hidden="true">
             <span class="wcag-badge-version">2.1</span>
@@ -237,8 +250,88 @@ alternates:
           </span>
         </a>
       </p>
+      <h2 id="rgaa">8. Erklärung nach RGAA {{ rgaaAudit.version }}</h2>
+      <p>
+        Die European Initiative for Security Studies ist ein Verein nach französischem Recht
+        (<span lang="fr">association loi 1901</span>), eingetragen unter der Nummer W751263001. Diese
+        Erklärung gilt für <a href="{{ site.url }}">eiss-europa.com</a> und folgt dem französischen
+        Barrierefreiheitsstandard
+        <a href="https://accessibilite.numerique.gouv.fr/" target="_blank" rel="noopener" lang="fr">RGAA</a>,
+        Version {{ rgaaAudit.version }}.
+      </p>
+
+      <h3>Stand der Konformität</h3>
+      <p>
+        eiss-europa.com ist <strong>teilweise konform</strong> mit dem RGAA&nbsp;{{ rgaaAudit.version }}.
+      </p>
+      <p>
+        Ein internes Audit vom <strong>9. Oktober 2026</strong> ergab, dass auf den unten aufgeführten
+        Seiten <strong>{{ rgaaAudit.rate }}&nbsp;% der anwendbaren Kriterien erfüllt</strong> sind:
+        {{ rgaaAudit.conformant }} Kriterien konform, {{ rgaaAudit.notApplicable }} nicht anwendbar,
+        keines nicht konform. Die Prüfungen, die einen Screenreader erfordern, wurden anhand des
+        Barrierefreiheitsbaums des Browsers bewertet und noch nicht mit NVDA und VoiceOver wiederholt.
+        Der Stand lautet „vollständig konform", sobald das geschehen ist
+        (<a href="{{ rgaaAudit.pendingIssue }}" target="_blank" rel="noopener" lang="en">öffentlich verfolgt</a>).
+      </p>
+
+      <h3>Nicht barrierefreie Inhalte</h3>
+      <ul>
+        <li><strong>Nicht konforme Kriterien:</strong> auf den geprüften Seiten keine. Die Einschränkungen in §3 gelten weiterhin.</li>
+        <li><strong>Ausnahmen wegen unverhältnismäßiger Belastung:</strong> keine.</li>
+        <li>
+          <strong>Inhalte außerhalb dieser Erklärung:</strong> Dienste anderer Plattformen, auf die die
+          Website verweist, nämlich die Konferenzplattform indico.eiss-europa.com, Stripe für Zahlungen,
+          Mailchimp für den Newsletter und YouTube. Neben den PDF-Programmen früherer Ausgaben steht auf
+          der Seite jeder Ausgabe ein Programm in HTML, das ihre barrierefreie Fassung ist.
+        </li>
+      </ul>
+
+      <h3>Erstellung dieser Erklärung</h3>
+      <ul>
+        <li><strong>Datum:</strong> 9. Oktober 2026.</li>
+        <li><strong>Technologien, auf denen die Website beruht:</strong> HTML5, CSS, JavaScript, WAI-ARIA, SVG.</li>
+        <li>
+          <strong>Testumgebung:</strong> Google Chrome ohne Oberfläche, bei 320, 375 und 1280 Pixeln
+          Breite, im hellen und im dunklen Farbschema, mit echter Tastatureingabe und dem
+          Barrierefreiheitsbaum von Chrome. Für dieses Audit wurde kein Screenreader verwendet.
+        </li>
+        <li>
+          <strong>Werkzeuge:</strong> axe-core&nbsp;4.13, die eigenen Prüfungen der Website beim Erstellen
+          und im Browser sowie aus den dargestellten Farben berechnete Kontrastverhältnisse.
+        </li>
+        <li>
+          <strong>Geprüfte Seiten:</strong>
+          {% for p in rgaaAudit.pages %}<a href="{{ p }}">{{ p }}</a>{% if not loop.last %}, {% endif %}{% endfor %},
+          sowie das Dokument {% for d in rgaaAudit.documents %}<a href="{{ d }}">{{ d }}</a>{% endfor %}.
+        </li>
+        <li>
+          <strong>Ergebnisse nach Kriterium:</strong> das
+          <a href="{{ rgaaAudit.grid }}" target="_blank" rel="noopener">Auditraster</a>, in der mit dem
+          Quellcode der Website veröffentlichten Dokumentation (<code>rgaa-audit-2026-10.md</code>).
+        </li>
+      </ul>
+
+      <h3>Rückmeldung und Kontakt</h3>
+      <p>
+        Wenn eine Seite oder ein Dienst für Sie nicht erreichbar ist, schreiben Sie an
+        <strong>{{ site.contactEmail }}</strong>, und wir stellen Ihnen den Inhalt auf anderem Weg bereit.
+      </p>
+
+      <h3>Rechtsbehelfe</h3>
+      <p>
+        Wenn Sie uns eine Barriere gemeldet haben und unsere Antwort sie nicht behebt, können Sie sich an
+        den <span lang="fr">Défenseur des droits</span> wenden, die französische
+        Ombudsstelle für Bürgerrechte:
+      </p>
+      <ul>
+        <li>über das <a href="https://www.defenseurdesdroits.fr/demander-de-laide-au-defenseur-des-droits-146" target="_blank" rel="noopener">Online-Formular</a>,</li>
+        <li>über eine <a href="https://www.defenseurdesdroits.fr/carte-des-delegues" target="_blank" rel="noopener">örtliche Vertretung</a>,</li>
+        <li>telefonisch unter +33&nbsp;9&nbsp;69&nbsp;39&nbsp;00&nbsp;00,</li>
+        <li>per Post, gebührenfrei innerhalb Frankreichs: <span lang="fr">Défenseur des droits, Libre réponse 71120, 75342 Paris CEDEX 07</span>.</li>
+      </ul>
+
       <p class="meta">
-        Erklärung erstellt: 14. Mai 2026 · Zuletzt überprüft: 2. September 2026 · Nächste geplante
+        Erklärung erstellt: 14. Mai 2026 · Zuletzt überprüft: 9. Oktober 2026 · Nächste geplante
         Überprüfung: 14. Mai 2027 oder bei einer größeren Designänderung.
       </p>
     </article>

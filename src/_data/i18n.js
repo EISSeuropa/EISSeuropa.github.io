@@ -113,6 +113,7 @@ const locales = {
       noResults: "No results found. Try a different search.",
       unavailable: "Search is available on the published site.",
       searching: "Searching…",
+      results: "Results: {n}",
     },
 
     langSwitcher: {
@@ -206,6 +207,11 @@ const locales = {
       toggleSound: "Toggle sound",
       watchOnYouTube: "Watch on YouTube",
       play: "Play the film",
+      descLabel: "What the film shows",
+      desc: {
+        "essc-2025": "A 90-second montage set to music, with no speech, from the 2025 conference at the University of Macedonia in Thessaloniki: the lecture theatre before the opening, participants talking over coffee, full panel sessions with speakers at their microphones, a researcher presenting a poster in the corridor, and the certificate of the European Security Studies Best Paper Prize.",
+        "essc-2026": "A 45-second silent montage from the 2026 conference at Stockholm University: the conference poster outside room 8, a panel on contemporary and future warfare, participants climbing the stairs between sessions, a view over Stockholm's old town, and the poster session. It closes on the logos of NetSec, EISS, Stockholm University and COST, with the line Funded by the European Union.",
+      },
       pause: "Pause the film",
     },
 
@@ -292,6 +298,7 @@ const locales = {
         contact: "Contact",
       },
       followUs: "Follow us",
+      legalNav: "Legal and site information",
       socialLabel: {
         linkedin: "EISS on LinkedIn",
         twitter: "EISS on Twitter / X",
@@ -606,7 +613,7 @@ const locales = {
       zoomIn: "Zoom in",
       zoomOut: "Zoom out",
       zoomReset: "Reset",
-      canvasLabel: "Force-directed map of the European Security Studies Anthology: every paper drawn toward the research themes it touches and coloured by them, with an Authors lens mapping co-authorship between the same people. The same papers and authors are available as filterable lists on the Anthology page.",
+      canvasLabel: "Force-directed map of the European Security Studies Anthology: every paper drawn toward the research themes it touches and coloured by them, with an Authors lens mapping co-authorship between the same people. The papers or authors in the current view are listed in a table below the map.",
       cardReadMore: "Read more →",
       cardReadPaper: "Read this paper →",
       cardMapPapers: "{verb} to map their papers →",
@@ -632,6 +639,7 @@ const locales = {
       hintHub: "click a theme hub for its figures, or drag it to rearrange the map",
       hintZoom: "pinch or ctrl-scroll to zoom, or use the buttons on the map",
       listSummary: "Browse this view as a list ({count} {noun})",
+      listJump: "Browse this view as a list",
       listLede: "The whole corpus, unfiltered, is browsable in {link}.",
       listLedeLink: "the Anthology",
       listMore: "Showing the first {cap} of {count}. Narrow the editions or themes to see the rest here.",
@@ -675,6 +683,7 @@ const locales = {
       loadFailed: "The atlas data could not be loaded.",
       loadFailedHint: "Every paper and author on this map is browsable in the Anthology.",
       liveCleared: "Filters cleared. The whole corpus is on the map.",
+      liveCount: "{count} {noun} in this view.",
       liveOnly: "The map now shows only {name}.",
       liveEvery: "The map shows every theme again.",
       // Theme co-occurrence matrix (#1567). {used}/{all} are the pairs that
@@ -985,6 +994,7 @@ const locales = {
       noResults: "Aucun résultat. Essayez une autre recherche.",
       unavailable: "La recherche est disponible sur le site publié.",
       searching: "Recherche en cours…",
+      results: "Résultats : {n}",
     },
 
     langSwitcher: {
@@ -1078,6 +1088,11 @@ const locales = {
       toggleSound: "Activer ou couper le son",
       watchOnYouTube: "Voir sur YouTube",
       play: "Lire le film",
+      descLabel: "Ce que montre le film",
+      desc: {
+        "essc-2025": "Un montage de 90 secondes en musique, sans paroles, tourné lors de la conférence 2025 à l'Université de Macédoine, à Thessalonique : l'amphithéâtre avant l'ouverture, des participants qui discutent autour d'un café, des sessions pleines avec les intervenants au micro, la présentation d'un poster dans le couloir, et le diplôme du prix du meilleur article en études de sécurité européennes.",
+        "essc-2026": "Un montage muet de 45 secondes tourné lors de la conférence 2026 à l'Université de Stockholm : l'affiche de la conférence devant la salle 8, un panel sur la guerre contemporaine et future, des participants qui montent l'escalier entre deux sessions, une vue sur la vieille ville de Stockholm et la session de posters. Il se termine sur les logos de NetSec, de l'EISS, de l'Université de Stockholm et de COST, avec la mention « Financé par l'Union européenne ».",
+      },
       pause: "Mettre le film en pause",
     },
 
@@ -1164,6 +1179,7 @@ const locales = {
         contact: "Contact",
       },
       followUs: "Suivez-nous",
+      legalNav: "Informations légales et sur le site",
       socialLabel: {
         linkedin: "EISS sur LinkedIn",
         twitter: "EISS sur Twitter / X",
@@ -1404,7 +1420,7 @@ const locales = {
       zoomIn: "Zoomer",
       zoomOut: "Dézoomer",
       zoomReset: "Réinitialiser",
-      canvasLabel: "Carte dynamique de l'Anthologie des études de sécurité européennes : chaque communication est attirée vers les thèmes de recherche qu'elle aborde et colorée par ceux-ci, et une vue Auteurs cartographie les co-signatures entre les mêmes personnes. Les mêmes communications et auteurs sont disponibles sous forme de listes filtrables sur la page de l'Anthologie.",
+      canvasLabel: "Carte dynamique de l'Anthologie des études de sécurité européennes : chaque communication est attirée vers les thèmes de recherche qu'elle aborde et colorée par ceux-ci, et une vue Auteurs cartographie les co-signatures entre les mêmes personnes. Les communications ou auteurs de la vue en cours sont listés dans un tableau sous la carte.",
       cardReadMore: "En savoir plus →",
       cardReadPaper: "Lire cette communication →",
       cardMapPapers: "{verb} pour cartographier ses communications →",
@@ -1430,6 +1446,7 @@ const locales = {
       hintHub: "cliquez sur un pôle thématique pour ses chiffres, ou faites-le glisser pour réorganiser la carte",
       hintZoom: "pincez ou faites ctrl-molette pour zoomer, ou utilisez les boutons sur la carte",
       listSummary: "Parcourir cette vue sous forme de liste ({count} {noun})",
+      listJump: "Parcourir cette vue sous forme de liste",
       listLede: "L'ensemble du corpus, sans filtre, est consultable dans {link}.",
       listLedeLink: "l'Anthologie",
       listMore: "Affichage des {cap} premières sur {count}. Restreignez les éditions ou les thèmes pour voir les suivantes ici.",
@@ -1473,6 +1490,7 @@ const locales = {
       loadFailed: "Les données de l'atlas n'ont pas pu être chargées.",
       loadFailedHint: "Toutes les communications et tous les auteurs de cette carte sont consultables dans l'Anthologie.",
       liveCleared: "Filtres réinitialisés. L'ensemble du corpus est sur la carte.",
+      liveCount: "{count} {noun} dans cette vue.",
       liveOnly: "La carte n'affiche plus que {name}.",
       liveEvery: "La carte affiche à nouveau tous les thèmes.",
       matrixSummary: "Comment les thèmes de recherche se recoupent ({used} paires sur {all})",
@@ -1735,6 +1753,7 @@ const locales = {
       noResults: "Keine Ergebnisse. Versuchen Sie eine andere Suche.",
       unavailable: "Die Suche ist auf der veröffentlichten Website verfügbar.",
       searching: "Suche läuft…",
+      results: "Ergebnisse: {n}",
     },
 
     langSwitcher: {
@@ -1828,6 +1847,11 @@ const locales = {
       toggleSound: "Ton ein- oder ausschalten",
       watchOnYouTube: "Auf YouTube ansehen",
       play: "Film abspielen",
+      descLabel: "Was der Film zeigt",
+      desc: {
+        "essc-2025": "Eine 90-sekündige Montage mit Musik und ohne Sprache von der Konferenz 2025 an der Universität Makedonien in Thessaloniki: der Hörsaal vor der Eröffnung, Teilnehmende im Gespräch beim Kaffee, volle Panels mit Vortragenden am Mikrofon, die Vorstellung eines Posters im Flur und die Urkunde des Preises für den besten Beitrag in europäischen Sicherheitsstudien.",
+        "essc-2026": "Eine 45-sekündige stumme Montage von der Konferenz 2026 an der Universität Stockholm: das Konferenzplakat vor Raum 8, ein Panel über gegenwärtige und künftige Kriegführung, Teilnehmende auf der Treppe zwischen zwei Sitzungen, ein Blick über die Stockholmer Altstadt und die Postersession. Am Ende stehen die Logos von NetSec, EISS, der Universität Stockholm und COST mit dem Hinweis „Finanziert von der Europäischen Union“.",
+      },
       pause: "Film anhalten",
     },
 
@@ -1914,6 +1938,7 @@ const locales = {
         contact: "Kontakt",
       },
       followUs: "Folgen Sie uns",
+      legalNav: "Rechtliches und Informationen zur Website",
       socialLabel: {
         linkedin: "EISS auf LinkedIn",
         twitter: "EISS auf Twitter / X",
@@ -2154,7 +2179,7 @@ const locales = {
       zoomIn: "Vergrößern",
       zoomOut: "Verkleinern",
       zoomReset: "Zurücksetzen",
-      canvasLabel: "Dynamische Karte der Anthologie der europäischen Sicherheitsstudien: jeder Beitrag wird zu den Forschungsthemen gezogen, die er berührt, und danach eingefärbt, und eine Autorenansicht kartiert die Ko-Autorschaft zwischen denselben Personen. Dieselben Beiträge und Personen stehen als filterbare Listen auf der Anthologie-Seite zur Verfügung.",
+      canvasLabel: "Dynamische Karte der Anthologie der europäischen Sicherheitsstudien: jeder Beitrag wird zu den Forschungsthemen gezogen, die er berührt, und danach eingefärbt, und eine Autorenansicht kartiert die Ko-Autorschaft zwischen denselben Personen. Die Beiträge oder Personen der aktuellen Ansicht stehen in einer Tabelle unter der Karte.",
       cardReadMore: "Mehr erfahren →",
       cardReadPaper: "Diesen Beitrag lesen →",
       cardMapPapers: "{verb}, um ihre Beiträge zu kartieren →",
@@ -2180,6 +2205,7 @@ const locales = {
       hintHub: "auf einen Themenpol klicken für seine Zahlen, oder ihn ziehen, um die Karte umzuordnen",
       hintZoom: "zum Zoomen zwei Finger oder Strg und Mausrad, oder die Schaltflächen auf der Karte",
       listSummary: "Diese Ansicht als Liste durchgehen ({count} {noun})",
+      listJump: "Diese Ansicht als Liste durchgehen",
       listLede: "Das gesamte Korpus, ungefiltert, steht in {link} zur Verfügung.",
       listLedeLink: "der Anthologie",
       listMore: "Es werden die ersten {cap} von {count} angezeigt. Grenzen Sie Jahrgänge oder Themen ein, um die übrigen hier zu sehen.",
@@ -2223,6 +2249,7 @@ const locales = {
       loadFailed: "Die Atlas-Daten konnten nicht geladen werden.",
       loadFailedHint: "Alle Beiträge und Personen dieser Karte sind in der Anthologie zu finden.",
       liveCleared: "Filter zurückgesetzt. Das gesamte Korpus ist auf der Karte.",
+      liveCount: "{count} {noun} in dieser Ansicht.",
       liveOnly: "Die Karte zeigt jetzt nur noch {name}.",
       liveEvery: "Die Karte zeigt wieder alle Themen.",
       matrixSummary: "Wie sich die Forschungsthemen überschneiden ({used} von {all} Paaren)",

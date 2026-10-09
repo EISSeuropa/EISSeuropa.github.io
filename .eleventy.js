@@ -160,6 +160,10 @@ module.exports = function (eleventyConfig) {
   // Leading honorifics off a person's printed name, for the programme grids
   // (#1715). Same helper corpus.js uses for the Anthology.
   eleventyConfig.addFilter("cleanName", require("./src/_data/cleanName.js"));
+  // lang attribute for an ORCID work title, which may be French or Italian (RGAA 8.8).
+  eleventyConfig.addFilter("titleLang", require("./src/_data/titleLang.js"));
+  // Escaped abstract text with “quoted” passages marked as <q> (RGAA 9.4). Use with | safe.
+  eleventyConfig.addFilter("markQuotes", require("./src/_data/markQuotes.js"));
 
   eleventyConfig.addFilter("localizedHref", (href, lang) => {
     if (!href || typeof href !== "string") return href;

@@ -94,9 +94,9 @@
       {%- for w in recentWorks %}
       <li class="profile-pub">
         {%- if w.doi %}
-        <a class="profile-pub-title" href="{{ w.doi }}" target="_blank" rel="noopener" lang="en">{{ w.title }}</a>
+        <a class="profile-pub-title" href="{{ w.doi }}" target="_blank" rel="noopener" lang="{{ w.title | titleLang }}">{{ w.title }}</a>
         {%- else %}
-        <span class="profile-pub-title" lang="en">{{ w.title }}</span>
+        <span class="profile-pub-title" lang="{{ w.title | titleLang }}">{{ w.title }}</span>
         {%- endif %}
         {%- if w.year or w.journal %}
         <span class="profile-pub-meta muted">{% if w.year %}{{ w.year }}{% endif %}{% if w.year and w.journal %} · {% endif %}{% if w.journal %}<span lang="en">{{ w.journal }}</span>{% endif %}</span>

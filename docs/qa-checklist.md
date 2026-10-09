@@ -58,6 +58,16 @@ Notes:
 | Privacy | the grep above | any **load-time** third-party request that isn't click-gated |
 | Build sanity | `check-build-sanity.mjs` | any undefined CSS class, cross-block class collision, or missing paper page in the sitemap |
 | Working tree | `git status` | stray scratch / probe files staged (CLAUDE.md §8) |
+| Accessibility claim | §7 and §8 of `/accessibility.html` | the release changes a page in the RGAA sample (`src/_data/rgaaAudit.json`) or a component on it, and the affected criteria in `docs/rgaa-audit-2026-10.md` have not been re-checked |
+
+## What the accessibility statement claims
+
+Check a release against what `/accessibility.html` actually declares, not against a general idea of "accessible":
+
+- **WCAG 2.1 AA, §7:** partial conformance, aligned with EN 301 549, with the limitations listed in §3.
+- **RGAA 4.1.2, §8:** partially conformant. The self-audit of 9 October 2026 met 100 % of applicable criteria on 25 pages (84 conformant, 22 not applicable), and the status stays partial until the screen-reader checks in #1796 pass. The grid is `docs/rgaa-audit-2026-10.md` and the figures the page prints come from `src/_data/rgaaAudit.json`.
+
+A release that adds a template, a form, a media player or a scripted component either brings it into the sample and re-tests the criteria it touches, or records why it is out of scope. A failure found later makes the §8 figures wrong until it is fixed or the declaration is updated. Annual review: re-run the audit before 9 October 2027.
 
 ## The Anthology Atlas (open a browser, at two widths)
 

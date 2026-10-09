@@ -32,10 +32,21 @@
     });
   });
 
+  // One polite live region for the confirmation: a label swap on the button
+  // is not announced (RGAA 7.5).
+  var live;
   function flash(btn, msg) {
     var label = btn.querySelector("[data-cite-label]") || btn;
     var prev = label.textContent;
     label.textContent = msg;
+    if (!live) {
+      live = document.createElement("span");
+      live.className = "sr-only";
+      live.setAttribute("role", "status");
+      document.body.appendChild(live);
+    }
+    live.textContent = "";
+    setTimeout(function () { live.textContent = msg; }, 50);
     setTimeout(function () { label.textContent = prev; }, 1500);
   }
 

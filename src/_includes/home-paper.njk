@@ -15,7 +15,7 @@
         <a href="{{ fp.paperUrl }}">{{ fp.title }}</a>
       </h2>
       <p class="home-paper__authors" lang="en">{{ fp.authors | join(", ") }}</p>
-      <p class="home-paper__abstract" lang="en">{{ fp.abstract | striptags | truncate(320) }}</p>
+      <p class="home-paper__abstract" lang="en">{{ fp.abstract | striptags | truncate(320) | markQuotes | safe }}</p>
       <a class="link-arrow" href="{{ fp.paperUrl }}" aria-describedby="home-paper-title">{{ t.prizes.readEntry }} {{ icon("arrow-right", "icon-inline") }}</a>
     </article>
   </div>

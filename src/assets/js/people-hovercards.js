@@ -40,7 +40,7 @@
   }
 
   // ── The shared hovercard element ─────────────────────────────────────────
-  var card, cardImg, cardName, cardRole, cardAff, cardLink, hideTimer, activeRef;
+  var card, cardImg, cardName, cardRole, cardAff, hideTimer, activeRef;
 
   function buildCard() {
     card = document.createElement("div");
@@ -54,14 +54,14 @@
       '<p class="person-hovercard-name"></p>' +
       '<p class="person-hovercard-role"></p>' +
       '<p class="person-hovercard-aff"></p>' +
-      '<a class="person-hovercard-link" href="#"></a>' +
       "</div>";
     cardImg = card.querySelector(".person-hovercard-media");
     cardName = card.querySelector(".person-hovercard-name");
     cardRole = card.querySelector(".person-hovercard-role");
     cardAff = card.querySelector(".person-hovercard-aff");
-    cardLink = card.querySelector(".person-hovercard-link");
-    // Keep the card open while the pointer is over it (so the link is reachable).
+    // Keep the card open while the pointer is over it (hoverable, WCAG 1.4.13).
+    // No link inside: a tooltip holds no interactive content, and the trigger
+    // is already the link to the same profile (RGAA 7.1).
     card.addEventListener("mouseenter", function () { clearTimeout(hideTimer); });
     card.addEventListener("mouseleave", scheduleHide);
     document.body.appendChild(card);
@@ -82,8 +82,6 @@
     cardRole.hidden = !person.role;
     cardAff.textContent = person.affiliation || "";
     cardAff.hidden = !person.affiliation;
-    cardLink.href = profileUrl(person);
-    cardLink.textContent = "View profile";
   }
 
   function positionCard(ref) {

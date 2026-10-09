@@ -129,10 +129,11 @@
      carry. --brand-network itself is too pale to hold a hairline on white, so
      light mode deepens it. */
   --atlas-edge: hsl(203 76% 52%);
+  --atlas-prize: hsl(36 95% 36%); /* prize ring: --warning is 2.2:1 on white */
   /* Anthology Atlas absence marker: a paper with no Anthology page, or an
      author with no co-author. A blue-grey on the neutral hue, so it reads as
      "nothing here yet" rather than as a category of its own. */
-  --atlas-inactive: hsl(220 14% 64%);
+  --atlas-inactive: hsl(220 14% 56%);
   /* Anthology Atlas theme wheel: one stable hue per research theme, indexed by
      the theme's position in `paperIndex.themes`. The Atlas colours its hubs and
      their papers from this, and the theme chips on the Anthology lists and the
@@ -140,10 +141,12 @@
      wherever a reader meets it (#1660). Defined here rather than in
      anthology-atlas.js so the map and the templates read one palette. Same
      wheel the NetSec Atlas uses for its theme lens. */
+  /* Every hue clears 3:1 on the light stage and on the dark one (RGAA 3.3).
+     1, 3 and 13 were darkened for it: #10b981, #f59e0b, #14b8a6. */
   --atlas-wheel-0: #0973de; /* Transformations of warfare and conflict */
-  --atlas-wheel-1: #10b981; /* Emerging domains: cyber and technology */
+  --atlas-wheel-1: #0d9f6e; /* Emerging domains: cyber and technology */
   --atlas-wheel-2: #8457ea; /* Arms acquisition and transfer */
-  --atlas-wheel-3: #f59e0b; /* Private military actors */
+  --atlas-wheel-3: #a16207; /* Private military actors */
   --atlas-wheel-4: #e2568c; /* Defence cooperation and military assistance */
   --atlas-wheel-5: #0aa2c0; /* Military interventions */
   --atlas-wheel-6: #7a9a01; /* Non-proliferation and arms control */
@@ -153,7 +156,7 @@
   --atlas-wheel-10: #a855f7; /* Intelligence */
   --atlas-wheel-11: #d97706; /* European and transatlantic security */
   --atlas-wheel-12: #3b82f6; /* Regional security and area studies */
-  --atlas-wheel-13: #14b8a6; /* Civil–military relations and the armed forces */
+  --atlas-wheel-13: #0d9488; /* Civil–military relations and the armed forces */
   --atlas-wheel-14: #ef4444; /* Climate and security */
   --atlas-wheel-15: #6366f1; /* Gender and security */
   --atlas-wheel-16: #059669; /* Political economy of security */
@@ -193,6 +196,7 @@
     --accent-text: hsl(222 30% 8%);
     --warning: hsl(36 95% 60%);
     --atlas-edge: hsl(203 90% 70%);
+    --atlas-prize: hsl(36 95% 60%);
     --atlas-inactive: hsl(220 12% 52%);
     --hero-overlay: linear-gradient(180deg, hsl(220 50% 4% / 0.45) 0%, hsl(220 50% 4% / 0.75) 100%);
 
@@ -225,6 +229,7 @@
   --accent-text: hsl(222 30% 8%);
   --warning: hsl(36 95% 60%);
   --atlas-edge: hsl(203 90% 70%);
+  --atlas-prize: hsl(36 95% 60%);
   --atlas-inactive: hsl(220 12% 52%);
   --hero-overlay: linear-gradient(180deg, hsl(220 50% 4% / 0.45) 0%, hsl(220 50% 4% / 0.75) 100%);
 
@@ -264,6 +269,7 @@ html {
 
 body {
   margin: 0;
+  overflow-wrap: break-word; /* a long word wraps rather than widening the page */
   padding-top: var(--whats-new-h, 0px);
   font-family: var(--font-sans);
   font-size: var(--fs-base);
@@ -278,6 +284,13 @@ body {
   text-rendering: optimizeLegibility;
   min-height: 100vh;
 }
+
+/* French and German compounds are longer than a 320px column. Hyphenate
+   them so grid and flex items can shrink (RGAA 10.11). English is left alone. */
+:root:lang(fr) main,
+:root:lang(de) main,
+:root:lang(fr) .whats-new-banner,
+:root:lang(de) .whats-new-banner { hyphens: auto; }
 
 img,
 svg,
@@ -630,16 +643,18 @@ h4 { font-size: var(--fs-lg); }
 .whats-new-text    { flex: 1; min-width: 200px; font-weight: 500; }
 
 .whats-new-cta {
-  color: #fff;
+  /* The banner's theme-aware ink, not #fff: white is 2.08:1 on the dark-mode
+     accent (RGAA 3.2). */
+  color: inherit;
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 1.5px;
-  text-decoration-color: rgba(255, 255, 255, .7);
+  text-decoration-color: currentColor;
   font-weight: 600;
   white-space: nowrap;
 }
 
-.whats-new-cta:hover { text-decoration-color: #fff; opacity: 1; }
+.whats-new-cta:hover { text-decoration-thickness: 2.5px; opacity: 1; }
 
 .whats-new-close {
   display: inline-flex;
@@ -649,21 +664,26 @@ h4 { font-size: var(--fs-lg); }
   height: 30px;
   border-radius: 50%;
   border: 0;
-  background: rgba(255, 255, 255, .12);
-  color: #fff;
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  color: inherit;
   cursor: pointer;
   margin-left: auto;
   flex-shrink: 0;
   transition: background .15s var(--ease, cubic-bezier(.2, .7, .2, 1));
 }
 
-.whats-new-close:hover        { background: rgba(255, 255, 255, .22); }
-.whats-new-close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.whats-new-close:hover        { background: color-mix(in srgb, currentColor 22%, transparent); }
+/* The global ring is the accent, which is the banner's own colour (1:1).
+   Ink-coloured instead, in both themes (RGAA 10.7). */
+.whats-new-banner a:focus-visible,
+.whats-new-close:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; box-shadow: none; }
 .whats-new-close svg          { width: 14px; height: 14px; }
 
 @media (max-width: 560px) {
   .whats-new-banner { padding: 10px 14px; font-size: .86rem; gap: 8px; }
   .whats-new-text   { min-width: 120px; }
+  /* A German call to action is longer than a phone is wide (RGAA 10.11). */
+  .whats-new-cta    { white-space: normal; }
 }
 
 @media print {
@@ -719,7 +739,7 @@ h4 { font-size: var(--fs-lg); }
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: hsl(35, 85%, 50%);
+  background: hsl(35, 85%, 32%); /* 5.4:1 under the white β (RGAA 3.2) */
   color: white;
   font-size: 12px;
   font-weight: 800;
@@ -795,7 +815,7 @@ h4 { font-size: var(--fs-lg); }
   position: absolute;
   left: 1rem;
   top: -10rem;
-  z-index: 100;
+  z-index: 300; /* above the What's New banner (200), RGAA 12.7 */
   padding: var(--space-3) var(--space-5);
   background: var(--accent);
   color: var(--accent-text);
@@ -972,7 +992,7 @@ h4 { font-size: var(--fs-lg); }
 }
 
 .nav-link[aria-current="page"] {
-  color: var(--accent);
+  color: var(--accent-hover); /* accent-hover: plain accent is 4.2:1 on its own tint (RGAA 3.2) */
   background: var(--accent-soft);
 }
 
@@ -1137,7 +1157,7 @@ h4 { font-size: var(--fs-lg); }
 }
 
 .nav-group-summary[data-section-current="true"] {
-  color: var(--accent);
+  color: var(--accent-hover); /* accent-hover: plain accent is 4.2:1 on its own tint (RGAA 3.2) */
   background: var(--accent-soft);
 }
 
@@ -1260,6 +1280,14 @@ h4 { font-size: var(--fs-lg); }
   inset: 0;
   background: var(--hero-overlay);
 }
+/* On a phone the tagline sits high, where the overlay is lightest: 4.2:1 at
+   320px. Darker at the top there (RGAA 3.2). */
+@media (max-width: 30rem) {
+  .hero-bg::after { background: linear-gradient(180deg, hsl(220 50% 8% / 0.55) 0%, hsl(220 50% 8% / 0.78) 100%); }
+}
+/* A hero without its photo yet (/2027 until a Belgrade image exists) keeps
+   white type, so it needs a dark ground of its own (RGAA 3.2). */
+.hero:not(:has(.hero-bg)) { background: hsl(220 50% 14%); }
 
 .hero-inner {
   max-width: 52rem;
@@ -1319,7 +1347,9 @@ h4 { font-size: var(--fs-lg); }
 }
 .home-stats__list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* minmax(0, …): "communications présentées" must not push the third
+     column off a 320px screen (RGAA 10.11). */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1350,6 +1380,8 @@ h4 { font-size: var(--fs-lg); }
   font-size: var(--fs-sm);
   color: var(--text-muted);
   line-height: var(--lh-snug);
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
 
 /* ---------- home-paper ----------
@@ -1715,7 +1747,7 @@ h4 { font-size: var(--fs-lg); }
   font-size: var(--fs-xs);
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-hover); /* accent-hover: plain accent is 4.2:1 on its own tint (RGAA 3.2) */
   font-weight: 700;
   margin-bottom: var(--space-2);
 }
@@ -1984,7 +2016,8 @@ h4 { font-size: var(--fs-lg); }
   line-height: var(--lh-relaxed);
 }
 
-.footer-fineprint p { margin-bottom: var(--space-3); }
+.footer-fineprint p,
+.footer-fineprint .footer-meta { margin-bottom: var(--space-3); }
 
 /* Bottom-most row in the footer: legal links on the left, authorship
    credit on the right. Wraps to two lines on narrow viewports so the
@@ -2000,6 +2033,21 @@ h4 { font-size: var(--fs-lg); }
 .footer-meta-links {
   flex: 1 1 auto;
 }
+
+/* Legal links: a real list (RGAA 9.3), dots drawn by CSS instead of typed between links. */
+.footer-meta-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.footer-meta-list li + li::before {
+  content: "\00a0·\00a0";
+  content: "\00a0·\00a0" / "";
+}
+
+.footer-credit { font-style: italic; }
 
 .footer-authorship {
   flex: 0 1 auto;
@@ -2111,8 +2159,11 @@ a[href^="http"]:not([class]) {
 
 .pdf-doc-title {
   margin: 0 0 var(--space-1);
+  font-family: inherit;
   font-weight: 600;
   font-size: var(--fs-base);
+  line-height: inherit;
+  letter-spacing: normal;
   color: var(--text);
   /* Wrap on word boundaries, never mid-word, even in the narrowest column. */
   overflow-wrap: break-word;
@@ -2134,6 +2185,9 @@ a[href^="http"]:not([class]) {
 
 .pdf-doc-subtitle > span {
   white-space: nowrap;
+}
+@media (max-width: 22rem) {
+  .pdf-doc-subtitle > span { white-space: normal; } /* RGAA 10.11 at 320px */
 }
 
 .pdf-doc-subtitle > span[aria-hidden="true"] {
@@ -2337,11 +2391,8 @@ a[href^="http"]:not([class]) {
   color: var(--text-muted);
 }
 .paper-prevnext__title {
+  /* No clamp: the full title must survive zoom and text spacing (RGAA 10.11, 10.12). */
   font-weight: 600;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
 }
 
 /* Early-access notice on the Anthology index (#889 follow-on). An amber-left
@@ -2382,8 +2433,8 @@ a[href^="http"]:not([class]) {
    colour alone, and the accent is only 1.76:1 against --text-muted and 1.38:1
    against --text-subtle, well under the 3:1 that lets colour carry the job on
    its own (WCAG 1.4.1, axe link-in-text-block, #1625). An underline is the
-   second cue. Links in full-strength body text clear 3:1 in light mode and
-   keep the site's underline-on-hover treatment. */
+   second cue. Links in full-strength body text are underlined by the
+   prose-link rule further down. */
 .anthology-notice-text a,
 .muted a {
   text-decoration: underline;
@@ -2402,6 +2453,7 @@ a[href^="http"]:not([class]) {
 .cite-corpus > summary {
   cursor: pointer;
   width: max-content;
+  max-width: 100%;
   font-size: var(--fs-sm);
   color: var(--accent);
 }
@@ -2575,11 +2627,18 @@ a[href^="http"]:not([class]) {
 }
 
 /* Body-text links must not rely on colour alone (WCAG 1.4.1). Underline them
-   in prose contexts; buttons and nav links remain unadorned by their shape. */
+   in prose contexts; buttons and nav links remain unadorned by their shape.
+   The accent is 1.5:1 against body text in light mode and 1.06:1 in dark, so
+   no link sitting inside a sentence can go without it (RGAA 3.1, 10.6). */
 .prose a,
 .featured-orgs a,
 .announcement a:not(.btn),
-.footer-fineprint a {
+.footer-fineprint a,
+.page-lead a,
+.atlas-lede a,
+.speaker-coauthors a,
+.page-credit a,
+.card p a:not([class]) {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
@@ -3043,7 +3102,11 @@ a[href^="http"]:not([class]) {
 .person-essc-speaker::after {
   content: attr(data-tooltip);
   position: absolute;
-  bottom: calc(100% + 6px);
+  /* Flush with the icon, the gap drawn as a transparent border so the
+     pointer can cross onto the tip (RGAA 10.13). */
+  bottom: 100%;
+  border-bottom: 6px solid transparent;
+  background-clip: padding-box;
   right: 0;
   max-width: 14rem;
   background: hsl(220 30% 12%);
@@ -3061,7 +3124,7 @@ a[href^="http"]:not([class]) {
               transform var(--motion-fast) var(--ease-out);
   transform: translateY(2px);
   z-index: 100;
-  box-shadow: 0 4px 12px hsl(220 30% 0% / 0.18);
+  filter: drop-shadow(0 4px 6px hsl(220 30% 0% / 0.18)); /* follows the painted box, not the transparent border */
 }
 .person-essc-speaker::before {
   /* Small arrow on the underside of the tooltip pointing at the icon. */
@@ -3082,6 +3145,7 @@ a[href^="http"]:not([class]) {
 .person-essc-speaker:focus-visible::after {
   opacity: 1;
   transform: translateY(0);
+  pointer-events: auto; /* hoverable once shown */
 }
 .person-essc-speaker:hover::before,
 .person-essc-speaker:focus-visible::before {
@@ -3347,13 +3411,6 @@ a[href^="http"]:not([class]) {
   align-items: stretch;
 }
 
-/* Clamp the research-themes line so a long list doesn't make cards uneven. */
-.person-themes {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
 
 /* ---------- /board — mobile compact card layout --------------------
    At narrow widths (≤ 36 rem, ~576 px) the default vertical card
@@ -3425,15 +3482,6 @@ a[href^="http"]:not([class]) {
     margin-block-end: var(--space-1);
   }
 
-  .person-position,
-  .person-institution {
-    /* Truncate to one line each on mobile — institution name + flag
-       can wrap awkwardly otherwise. The full text is still in the
-       DOM so screen readers and copy-paste work. */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
 
   /* Hover-lift transform is jarring on touch (transform fires on tap)
      so drop it at this breakpoint — pointer:coarse devices don't
@@ -3492,6 +3540,8 @@ a[href^="http"]:not([class]) {
   display: grid;
   gap: var(--space-5);
   margin-block: var(--space-6);
+  list-style: none;
+  padding: 0;
 }
 
 .conference {
@@ -3803,10 +3853,15 @@ a[href^="http"]:not([class]) {
 */
 
 .programme-days {
+  margin-bottom: var(--space-5);
+}
+.programme-days ul {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-  margin-bottom: var(--space-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .programme-day-chip {
@@ -3892,9 +3947,16 @@ a[href^="http"]:not([class]) {
 
 .programme-slot-title {
   margin: 0 0 var(--space-2);
+  font-family: inherit;
   font-weight: 600;
   font-size: var(--fs-base);
+  line-height: inherit;
+  letter-spacing: normal;
 }
+.programme-aff { font-style: italic; }
+.programme-legend { font-size: var(--fs-sm); margin: 0 0 var(--space-4); }
+/* Abstract quotations (markQuotes filter): the typed marks stay in the text. */
+q.quote-inline { quotes: none; }
 
 .programme-slot-title a {
   color: inherit;
@@ -4340,6 +4402,7 @@ a.programme-live-tag:focus-visible {
   font-weight: 600;
   color: var(--text-muted);
 }
+.pub-match-meta a { color: var(--accent-hover); } /* on the tinted match card, RGAA 3.2 */
 .pub-match-meta dd {
   margin: 0;
   min-width: 0;
@@ -4448,10 +4511,15 @@ a.programme-live-tag:focus-visible {
    Alphabetical list of everyone who has presented across ESSC editions,
    built from the corpus.js data spine. */
 .speaker-az {
+  margin-bottom: var(--space-6);
+}
+.speaker-az ul {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
-  margin-bottom: var(--space-6);
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 .speaker-az a {
   display: inline-flex;
@@ -4657,6 +4725,12 @@ a.programme-live-tag:focus-visible {
 }
 .speaker-netsec:hover .speaker-netsec-card,
 .speaker-netsec:focus-within .speaker-netsec-card { display: flex; }
+/* Bridge the 6px gap so the pointer can reach the card (RGAA 10.13). */
+.speaker-netsec-card::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 8px; }
+/* Escape closes any of the CSS tooltips (theme.js, RGAA 10.13). */
+[data-tip-dismissed] .speaker-netsec-card,
+[data-tip-dismissed]::after,
+[data-tip-dismissed]::before { display: none !important; }
 .speaker-netsec-card-photo {
   flex: none;
   width: 48px;
@@ -4791,7 +4865,8 @@ a.speaker-paper-title:hover {
 .speaker-field select {
   font: inherit;
   padding: 0.45rem 0.6rem;
-  border: 1px solid var(--border);
+  /* A field's edge needs 3:1 against the page (RGAA 3.3); --border is 1.5:1. */
+  border: 1px solid var(--text-subtle);
   border-radius: var(--radius-sm);
   background: var(--bg-elev);
   color: var(--text);
@@ -4922,6 +4997,7 @@ a.speaker-paper-title:hover {
   font-size: var(--fs-sm);
   margin: 0 0 var(--space-4);
 }
+.speaker-status:empty { margin: 0; }
 /* When a filter leaves nothing, give the message presence so the blank list
    below it doesn't read as a broken page. Toggled by the filter JS. */
 .speaker-status--empty {
@@ -4944,7 +5020,7 @@ a.speaker-paper-title:hover {
 .speaker-year-pill {
   font-size: var(--fs-xs);
   font-weight: 600;
-  color: var(--accent);
+  color: var(--accent-hover); /* accent-hover: plain accent is 4.2:1 on its own tint (RGAA 3.2) */
   background: var(--accent-soft);
   border-radius: 999px;
   padding: 0.05rem 0.5rem;
@@ -5032,10 +5108,15 @@ a.speaker-paper-title:hover {
    and .speaker-letter-h. Wider labels than a single letter, so the pills wrap
    rather than sitting on a min-width. */
 .paper-editions {
+  margin-bottom: var(--space-5);
+}
+.paper-editions ul {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
-  margin-bottom: var(--space-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 .paper-editions[hidden] {
   display: none;
@@ -5104,7 +5185,6 @@ a.speaker-paper-title:hover {
 }
 .paper-edition {
   font-weight: 600;
-  white-space: nowrap;
 }
 .paper-panel {
   min-width: 0;
@@ -5690,7 +5770,13 @@ body.search-open { overflow: hidden; }
   color: var(--text);
 }
 .search-input:focus { outline: none; }
+/* The input is borderless inside the bar, so the bar carries the field edge
+   and the focus ring (RGAA 3.3, 10.7). */
+.search-bar { box-shadow: inset 0 0 0 1px var(--text-subtle); border-radius: var(--radius-md); margin: var(--space-2); }
+.search-bar:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
 .search-input::-webkit-search-cancel-button { -webkit-appearance: none; }
+.search-input::placeholder,
+.speaker-field input::placeholder { color: var(--text-subtle); opacity: 1; }
 .search-close { flex: none; }
 .search-status {
   padding: var(--space-3) var(--space-4) 0;
@@ -6021,7 +6107,11 @@ body.search-open { overflow: hidden; }
 .coverage-tip::after {
   content: attr(data-tooltip);
   position: absolute;
-  bottom: calc(100% + 8px);
+  /* Flush with the icon, the 8px gap drawn as a transparent border, so the
+     pointer can move onto the tip without it closing (RGAA 10.13). */
+  bottom: 100%;
+  border-bottom: 8px solid transparent;
+  background-clip: padding-box;
   left: 50%;
   transform: translateX(-50%) translateY(2px);
   width: max-content;
@@ -6035,7 +6125,6 @@ body.search-open { overflow: hidden; }
   line-height: 1.45;
   text-align: left;
   letter-spacing: normal;
-  pointer-events: none;
   z-index: 100;
   /* display:none, not opacity:0. An absolutely-positioned box still counts
      toward its ancestors' scrollable overflow while it is merely transparent,
@@ -6060,6 +6149,7 @@ body.search-open { overflow: hidden; }
 .coverage-detail > summary {
   cursor: pointer;
   width: max-content;
+  max-width: 100%; /* the German label is wider than a phone (RGAA 10.11) */
   font-size: var(--fs-sm);
   color: var(--accent);
 }
@@ -6993,26 +7083,28 @@ a.open-panel-link:focus-visible {
   filter: drop-shadow(0 2px 6px hsl(203 100% 39% / 0.4));
 }
 
-.essc-map-dot--inaugural {
-  fill: hsl(36 90% 52%);
+.essc-map-dot--inaugural,
+.essc-map-dot--next {
+  fill: var(--map-dot);
   stroke: hsl(0 0% 100%);
+}
+/* 3:1 against the country fill in each theme (RGAA 3.3): the light map
+   needs darker dots than the dark one. */
+.essc-map-dot--inaugural { --map-dot: hsl(36 90% 36%); }
+.essc-map-dot--next { --map-dot: hsl(150 60% 36%); }
+[data-theme="dark"] .essc-map-dot--inaugural { --map-dot: hsl(36 90% 52%); }
+[data-theme="dark"] .essc-map-dot--next { --map-dot: hsl(150 60% 42%); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .essc-map-dot--inaugural { --map-dot: hsl(36 90% 52%); }
+  :root:not([data-theme="light"]) .essc-map-dot--next { --map-dot: hsl(150 60% 42%); }
 }
 
 .essc-map-link:hover .essc-map-dot--inaugural,
-.essc-map-link:focus-visible .essc-map-dot--inaugural {
-  fill: hsl(36 90% 52%);
-  filter: drop-shadow(0 2px 6px hsl(36 90% 52% / 0.5));
-}
-
-.essc-map-dot--next {
-  fill: hsl(150 60% 42%);
-  stroke: hsl(0 0% 100%);
-}
-
+.essc-map-link:focus-visible .essc-map-dot--inaugural,
 .essc-map-link:hover .essc-map-dot--next,
 .essc-map-link:focus-visible .essc-map-dot--next {
-  fill: hsl(150 60% 42%);
-  filter: drop-shadow(0 2px 6px hsl(150 60% 42% / 0.5));
+  fill: var(--map-dot);
+  filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--map-dot) 50%, transparent));
 }
 
 /* Labels carry a halo stroke so the text stays readable when it
@@ -7085,7 +7177,7 @@ a.open-panel-link:focus-visible {
 .essc-map-link:focus-visible .essc-map-label,
 .essc-map-link:hover .essc-map-years,
 .essc-map-link:focus-visible .essc-map-years {
-  fill: var(--accent);
+  fill: var(--accent-hover); /* RGAA 3.2 against the country fill */
 }
 
 .essc-map-caption {
@@ -7133,6 +7225,11 @@ a.open-panel-link:focus-visible {
     r: 18;
   }
 }
+
+/* Film text description under the frame (RGAA 4.1). Same measure as the frame. */
+.film-desc { margin-top: var(--space-3); font-size: var(--fs-sm); color: var(--text-muted); }
+.film-desc summary { cursor: pointer; font-weight: 600; color: var(--text); }
+.film-desc p { margin: var(--space-2) 0 0; }
 
 /* ---------- YouTube lazy-embed (#197) ----------------------------------
    Poster + play button until clicked, iframe afterwards. The
@@ -7837,7 +7934,6 @@ a.joint-orgs-card:hover .joint-orgs-name {
 .person-hovercard-name { margin: 0; font-weight: 700; line-height: 1.25; }
 .person-hovercard-role { margin: 2px 0 0; color: var(--accent); font-size: var(--fs-sm); }
 .person-hovercard-aff  { margin: 2px 0 0; color: var(--text-muted); font-size: var(--fs-sm); }
-.person-hovercard-link { display: inline-block; margin-top: var(--space-2); font-size: var(--fs-sm); font-weight: 600; }
 
 @media print {
   .person-ref { border-bottom: 0; color: inherit; }
@@ -7977,7 +8073,7 @@ a.profile-pub-title:hover { text-decoration: underline; }
    sanity gate can see every class has a rule (§14 / #241). All values use the
    design tokens so the map reads native in light and dark. */
 .atlas-shell { max-width: var(--content-max); margin: 0 auto; padding: 28px 20px 72px; }
-.atlas-back { display: inline-block; margin-bottom: 6px; font-size: var(--fs-sm); color: var(--accent); text-decoration: none; }
+.atlas-back { display: inline-block; margin-bottom: 6px; font-size: var(--fs-sm); color: var(--accent-hover); text-decoration: none; } /* RGAA 3.2 on the tinted header */
 .atlas-back:hover { text-decoration: underline; }
 .atlas-masthead { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin: 8px 0 6px; }
 /* The shared Anthology/Atlas constellation beside the title. `align-self:
@@ -7988,7 +8084,7 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-mark svg { width: 2.75rem; height: 2.75rem; display: block; }
 
 .atlas-masthead h1 { font-size: var(--fs-2xl); margin: 0; color: var(--text); letter-spacing: -.02em; line-height: var(--lh-tight); }
-.atlas-proto-pill { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 4px 11px; border-radius: var(--radius-full); background: var(--accent-soft); border: 1px solid var(--accent); color: var(--accent); }
+.atlas-proto-pill { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 4px 11px; border-radius: var(--radius-full); background: var(--accent-soft); border: 1px solid var(--accent); color: var(--accent-hover); } /* RGAA 3.2 */
 .atlas-lede { color: var(--text-muted); max-width: 74ch; margin: 0 0 20px; font-size: var(--fs-base); line-height: var(--lh-normal); }
 .atlas-lede a { color: var(--accent); }
 /* The masthead is the biggest single cost on a narrow screen in a language
@@ -8020,7 +8116,7 @@ a.profile-pub-title:hover { text-decoration: underline; }
   backdrop-filter: saturate(var(--saturate)) blur(var(--blur-card));
   box-shadow: var(--shadow-2);
 }
-.atlas-stat b { display: block; font-size: var(--fs-xl); color: var(--text); line-height: 1.1; }
+.atlas-stat-value { display: block; font-size: var(--fs-xl); color: var(--text); line-height: 1.1; }
 .atlas-stat span { font-size: .76rem; color: var(--text-muted); }
 .atlas-controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 0 0 12px; }
 /* A flex/`display` rule beats the UA [hidden] style, so re-assert it for the
@@ -8126,16 +8222,22 @@ a.profile-pub-title:hover { text-decoration: underline; }
   font-size: .85rem;
   padding: 6px 13px;
   border-radius: var(--radius-full);
-  border: 1px solid var(--border-strong);
+  border: 1px solid var(--text-subtle); /* 3:1 field edge, RGAA 3.3 */
   background: var(--bg);
   color: var(--text);
   min-width: min(260px, 100%);
 }
 .atlas-find:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.atlas-find::placeholder { color: var(--text-subtle); opacity: 1; } /* UA grey is 3.9:1 on dark fields, RGAA 3.2 */
 .atlas-find[aria-invalid="true"] { border-color: var(--warning); }
 .atlas-find__msg { font-size: .78rem; color: var(--text-muted); }
 .atlas-find__msg:empty { display: none; }
-.atlas-stage { position: relative; border-radius: var(--radius-lg); overflow: hidden; background: radial-gradient(120% 90% at 50% 0%, var(--accent-soft), transparent 60%), var(--bg-elev); border: 1px solid var(--border); }
+/* Link to the list straight after the canvas: off-screen until keyboard focus. */
+.atlas-list-jump { position: absolute; left: 12px; bottom: 12px; z-index: 5; padding: 6px 12px; border-radius: var(--radius-full); background: var(--bg-elev); color: var(--accent-hover); font-size: var(--fs-sm); font-weight: 600; transform: translateY(200%); opacity: 0; }
+.atlas-list-jump:focus-visible { transform: none; opacity: 1; outline: 2px solid var(--accent); outline-offset: 2px; }
+/* Plain surface, no accent tint: the dots and edges are measured against it
+   and every hue clears 3:1 on it in both themes (RGAA 3.3). */
+.atlas-stage { position: relative; border-radius: var(--radius-lg); overflow: hidden; background: var(--bg-elev); border: 1px solid var(--border); }
 /* `touch-action: none` was here for hub dragging, and it made the map a
    scroll trap on phones: a 480px-tall canvas that neither scrolled the page
    nor pinch-zoomed under a finger. `pan-y pinch-zoom` gives both back. A
@@ -8473,7 +8575,7 @@ a.profile-pub-title:hover { text-decoration: underline; }
 .atlas-legend .sw-page { background: var(--text-muted); }
 .atlas-legend .sw-nopage { background: transparent; box-shadow: inset 0 0 0 2px var(--text-muted); }
 .atlas-legend .sw-ring { background: transparent; border: 2px solid; }
-.atlas-legend .sw-prize { border-color: var(--warning); }
+.atlas-legend .sw-prize { border-color: var(--atlas-prize); }
 .atlas-legend .sw-pub { background: transparent; box-shadow: inset 0 0 0 2px var(--text-muted); width: 9px; height: 9px; }
 .atlas-legend .sw-collab { background: var(--accent); box-shadow: 0 0 0 1.5px var(--surface-strong); }
 .atlas-legend .sw-solo { background: var(--atlas-inactive); }
@@ -8591,8 +8693,10 @@ html.atlas-welcome .atlas-welcome[hidden] { display: flex; }
               color var(--motion-fast) var(--ease-out);
 }
 .atlas-welcome-dismiss:hover, .atlas-welcome-dismiss:focus-visible {
-  background: var(--surface-strong); color: var(--text); outline: none;
+  background: var(--surface-strong); color: var(--text);
 }
+/* The tint alone is 1.05:1: keyboard focus gets the site's ring (RGAA 10.7). */
+.atlas-welcome-dismiss:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* Tour engine chrome — backdrop, spotlight ring, tooltip card, buttons.
    Positioned above every other layer (search modal is z-index 1000). */
