@@ -3954,6 +3954,10 @@ a[href^="http"]:not([class]) {
   border-style: dashed;
   color: var(--text-subtle);
 }
+/* A poster session is a break that lists papers: those read as content. */
+.programme-slot--break .programme-contribs {
+  color: var(--text);
+}
 
 .programme-when-time {
   font-weight: 600;

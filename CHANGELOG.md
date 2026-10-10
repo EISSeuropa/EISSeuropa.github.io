@@ -118,6 +118,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- **The 2025 posters are listed on `/2025.html`.** The poster session showed its title but none of its three posters. Appoline Roy's poster, which has no page of its own, linked from the Anthology Atlas to the top of `/2025.html`, where it did not appear. It now links to its entry in the programme.
 - **Atlas author links open the map again.** A link such as `/anthology-atlas.html?author=…` (the Atlas link on each Anthology author entry) showed "The atlas data could not be loaded" instead of the author's papers. Clicking an author on the map, or pressing Enter on one, froze the map the same way.
 - **The registration badge no longer says "Registration open" for ESSC 2027.** The homepage card for Belgrade showed the pill eight months before the form opens, because an edition with no manual status fell back to "open". The fallback now reads "Registration not yet open" ("Inscriptions pas encore ouvertes", "Anmeldung noch nicht geöffnet"), and only an edition marked `registrationStatus: "open"` in `conferences.js` shows "Registration open".
 - Conference date ranges read "10–11 June 2027" with an en dash across the site (conference pages from 2017 to 2027, the homepage card, `/past`, the site map, the roadmap and the initiative page), where they read "10 - 11 June 2027". In all three languages.

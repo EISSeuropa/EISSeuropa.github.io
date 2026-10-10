@@ -426,11 +426,11 @@ for (const { slug, slot, c } of iterContributions()) {
     conferenceSlug: conf.slug || slug,
     conferenceLabel: conf.label,
     conferenceUrl: conf.url,
-    // The programme grid only emits a `#paper-<slug>` anchor for contributions
-    // in a rendered (non-break) slot. A poster session is modelled as a break
-    // slot, whose papers the grid does not render, so they have no slot to
-    // deep-link to — guard the Anthology deep link off this (#738).
-    slotAnchored: slot.kind !== "break",
+    // A poster session is modelled as a break slot. The archive grid lists a
+    // break's contributions with their `#paper-<slug>` anchors, the live
+    // Indico grid does not, so only a live break paper has no slot to
+    // deep-link to (#738).
+    slotAnchored: slot.kind !== "break" || !liveIndicoSlugs.has(slug),
     // Eligible for an abstract = a regular paper slot. Keynotes, roundtables
     // and plenaries carry a subtype. The coverage stat (#abstract-coverage)
     // measures abstracts against this set, so sessions that never have an
