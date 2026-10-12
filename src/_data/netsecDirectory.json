@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-19T09:28:29+00:00",
-  "count": 98,
+  "generated_at": "2026-10-08T12:01:37+00:00",
+  "count": 102,
   "source": "https://netsec-cost.eu/directory-index.json",
   "members": [
     {
@@ -13,6 +13,17 @@
       "role": null,
       "affiliation": "Metropolitan University Prague",
       "photo": null
+    },
+    {
+      "name": "Prof. Alexander Evans",
+      "name_key": "alexander evans",
+      "aliases": [],
+      "slug": "alexander-evans",
+      "url": "https://netsec-cost.eu/people/alexander-evans.html",
+      "orcid": null,
+      "role": null,
+      "affiliation": "London School of Economics",
+      "photo": "https://netsec-cost.eu/assets/images/people/alexander-evans.jpg"
     },
     {
       "name": "Dr Alexander Lanoszka",
@@ -68,6 +79,17 @@
       "role": "Management Committee · Netherlands",
       "affiliation": "University of Amsterdam",
       "photo": "https://netsec-cost.eu/assets/images/people/alisa-kerschbaum.jpeg"
+    },
+    {
+      "name": "Prof. Ana E. Juncos",
+      "name_key": "ana juncos",
+      "aliases": [],
+      "slug": "ana-e-juncos",
+      "url": "https://netsec-cost.eu/people/ana-e-juncos.html",
+      "orcid": "0000-0002-6913-351X",
+      "role": null,
+      "affiliation": "University of Bristol",
+      "photo": null
     },
     {
       "name": "Dr Andriy Tyushka",
@@ -131,7 +153,7 @@
       "slug": "arthur-laudrain",
       "url": "https://netsec-cost.eu/people/arthur-laudrain.html",
       "orcid": "0000-0002-8642-2671",
-      "role": "Management Committee · Switzerland",
+      "role": "Management Committee · Switzerland · Science Communication Coordinator Co-Leader",
       "affiliation": "ETH Zürich, Center for Security Studies",
       "photo": "https://netsec-cost.eu/assets/images/people/arthur-laudrain.jpg"
     },
@@ -177,6 +199,17 @@
       "orcid": "0000-0002-2650-9759",
       "role": null,
       "affiliation": "Centre for Functional Ecology",
+      "photo": null
+    },
+    {
+      "name": "Dr Céline Rodrigues",
+      "name_key": "celine rodrigues",
+      "aliases": [],
+      "slug": "celine-rodrigues",
+      "url": "https://netsec-cost.eu/people/celine-rodrigues.html",
+      "orcid": "0009-0002-2924-4984",
+      "role": null,
+      "affiliation": "Universidade Portucalense, IPRI-NOVA",
       "photo": null
     },
     {
@@ -516,7 +549,7 @@
       "slug": "john-helferich",
       "url": "https://netsec-cost.eu/people/john-helferich.html",
       "orcid": "0000-0002-9085-846X",
-      "role": "WG2 Leader · Science Communication Coordinator Co-Leader",
+      "role": "WG2 Leader",
       "affiliation": "University of Oxford",
       "photo": "https://netsec-cost.eu/assets/images/people/john-helferich.jpg"
     },
@@ -651,6 +684,17 @@
       "role": null,
       "affiliation": "Vrije Universiteit Brussel (VUB)",
       "photo": "https://netsec-cost.eu/assets/images/people/mahmoud-javadi.jpg"
+    },
+    {
+      "name": "Dr Marcel Berni",
+      "name_key": "marcel berni",
+      "aliases": [],
+      "slug": "marcel-berni",
+      "url": "https://netsec-cost.eu/people/marcel-berni.html",
+      "orcid": "0000-0002-2932-8654",
+      "role": null,
+      "affiliation": "Military Academy at the Swiss Federal Institute of Technology (ETH) in Zurich",
+      "photo": null
     },
     {
       "name": "Mr Marco Cifra",
@@ -934,7 +978,7 @@
       "slug": "sarka-kolmasova",
       "url": "https://netsec-cost.eu/people/sarka-kolmasova.html",
       "orcid": null,
-      "role": "WG4 Co-Leader",
+      "role": null,
       "affiliation": "Metropolitan University Prague",
       "photo": "https://netsec-cost.eu/assets/images/people/sarka-kolmasova.jpeg"
     },
