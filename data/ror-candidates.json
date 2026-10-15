@@ -1,0 +1,3469 @@
+{
+  "generated": "2026-08-07",
+  "review": [
+    {
+      "affiliation": "Assistant Professor",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.75,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/048p7wk03",
+          "name": "Casa do Professor",
+          "country": {
+            "code": "PT",
+            "name": "Portugal"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Brussels School of Governance",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.82,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/038f7y939",
+          "name": "Universitair Ziekenhuis Brussel",
+          "country": {
+            "code": "BE",
+            "name": "Belgium"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.77,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03vr80018",
+          "name": "School of Sea",
+          "country": {
+            "code": "PT",
+            "name": "Portugal"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.76,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/0236dma10",
+          "name": "Centre on Governance",
+          "country": {
+            "code": "CA",
+            "name": "Canada"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Bundeswehr University Munich",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05591te55",
+          "name": "Ludwig-Maximilians-Universität München",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.88,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05t6wee76",
+          "name": "EU Business School, Munich",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.86,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04bm3wy68",
+          "name": "Hue University of Education",
+          "country": {
+            "code": "VN",
+            "name": "Vietnam"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "CIDE, Mexico City; Carlos III University, Madrid",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.93,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03ths8210",
+          "name": "Universidad Carlos III de Madrid",
+          "country": {
+            "code": "ES",
+            "name": "Spain"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.86,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02ktf7592",
+          "name": "City University Malaysia",
+          "country": {
+            "code": "MY",
+            "name": "Malaysia"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.82,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04fc53857",
+          "name": "Instituto de Investigación Tecnológica",
+          "country": {
+            "code": "ES",
+            "name": "Spain"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Cambridge University",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/013meh722",
+          "name": "University of Cambridge",
+          "country": {
+            "code": "GB",
+            "name": "United Kingdom"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00cbm0437",
+          "name": "Bridge University",
+          "country": {
+            "code": "SS",
+            "name": "South Sudan"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04bm3wy68",
+          "name": "Hue University of Education",
+          "country": {
+            "code": "VN",
+            "name": "Vietnam"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Centre for High Defence Studies (CASD)",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.94,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02g3h9440",
+          "name": "Centro Alti Studi per la Difesa (CASD)",
+          "country": {
+            "code": "IT",
+            "name": "Italy"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.86,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01rbbxp96",
+          "name": "Society for French Studies",
+          "country": {
+            "code": "GB",
+            "name": "United Kingdom"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.79,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01a9tn778",
+          "name": "National Centre for Earth Science Studies",
+          "country": {
+            "code": "IN",
+            "name": "India"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Centre for Security, Diplomacy and Strategy, Brussels",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.84,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/038f7y939",
+          "name": "Universitair Ziekenhuis Brussel",
+          "country": {
+            "code": "BE",
+            "name": "Belgium"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.84,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05q8m5985",
+          "name": "Center for Security Studies",
+          "country": {
+            "code": "GR",
+            "name": "Greece"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.77,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04bz1tk47",
+          "name": "The Strategy Unit",
+          "country": {
+            "code": "GB",
+            "name": "United Kingdom"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Centre for Social and Economic Progress – New Delhi",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.88,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04hwnke37",
+          "name": "Centre for Social Impact",
+          "country": {
+            "code": "AU",
+            "name": "Australia"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.88,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03pe74b89",
+          "name": "Max Weber Forum für Südasienstudien Delhi",
+          "country": {
+            "code": "IN",
+            "name": "India"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.86,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00h16dr76",
+          "name": "Center for Social and Economic Research",
+          "country": {
+            "code": "UA",
+            "name": "Ukraine"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Chair of the European Chapter of IAFIE (International Association For Intelligence Education)",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.82,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03z6jc082",
+          "name": "Non-governmental organization “International Association of Scientists”",
+          "country": {
+            "code": "UA",
+            "name": "Ukraine"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.82,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01c2d8v48",
+          "name": "International Association for Continuing Engineering Education",
+          "country": {
+            "code": "RU",
+            "name": "Russia"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.82,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03asesc74",
+          "name": "International Association of Engineers",
+          "country": {
+            "code": "HK",
+            "name": "Hong Kong"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "City, University of London",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04cw6st05",
+          "name": "University of London",
+          "country": {
+            "code": "GB",
+            "name": "United Kingdom"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.96,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/047ybhc09",
+          "name": "City St George's, University of London",
+          "country": {
+            "code": "GB",
+            "name": "United Kingdom"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.93,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/013609965",
+          "name": "City University",
+          "country": {
+            "code": "LB",
+            "name": "Lebanon"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "City, University of London, United Kingdom",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04cw6st05",
+          "name": "University of London",
+          "country": {
+            "code": "GB",
+            "name": "United Kingdom"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.96,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/047ybhc09",
+          "name": "City St George's, University of London",
+          "country": {
+            "code": "GB",
+            "name": "United Kingdom"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.93,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/013609965",
+          "name": "City University",
+          "country": {
+            "code": "LB",
+            "name": "Lebanon"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Control Risks, United States",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.89,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05xhmq411",
+          "name": "Control 2K",
+          "country": {
+            "code": "GB",
+            "name": "United Kingdom"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.88,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03yrpzn89",
+          "name": "Q2 (United States)",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.85,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00h7mt060",
+          "name": "HXI (United States)",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Cyber Chair of Saint-Cyr, France",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.68,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02fdb8q57",
+          "name": "Saint-Gobain (France)",
+          "country": {
+            "code": "FR",
+            "name": "France"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.68,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01h6pze39",
+          "name": "University of Saint Francis",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.67,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/0088v6m32",
+          "name": "Banque de France",
+          "country": {
+            "code": "FR",
+            "name": "France"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Erasmus University",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00467a196",
+          "name": "Sindh Madressatul Islam University",
+          "country": {
+            "code": "PK",
+            "name": "Pakistan"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02hx0yn76",
+          "name": "Quest University Canada",
+          "country": {
+            "code": "CA",
+            "name": "Canada"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00x4qp065",
+          "name": "He University",
+          "country": {
+            "code": "CN",
+            "name": "China"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "EuroMesco/Carnegie, Lebanon",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.82,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01h5a0582",
+          "name": "Carnegie Learning, Inc. (United States)",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.77,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05wx6v148",
+          "name": "Carnegie Hall",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.76,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/0107ygt22",
+          "name": "Bronx-Lebanon Hospital Center",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "European Council of Foreign Relations",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/001b17f86",
+          "name": "European Council",
+          "country": {
+            "code": "BE",
+            "name": "Belgium"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.96,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05s96xm34",
+          "name": "Council on Foreign Relations",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.93,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/049xxah85",
+          "name": "German Council on Foreign Relations",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "European Leadership Network",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.91,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00f7nwk73",
+          "name": "Hermansky Pudlak Syndrome Network",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.9,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05t5jk040",
+          "name": "PIE Network",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.89,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05apy4h12",
+          "name": "Energy Consulting Network (Denmark)",
+          "country": {
+            "code": "DK",
+            "name": "Denmark"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "European Union Institute for Security (EUISS), France",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/019w4f821",
+          "name": "European Union",
+          "country": {
+            "code": "BE",
+            "name": "Belgium"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/037x4qk98",
+          "name": "International Union Against Tuberculosis and Lung Disease",
+          "country": {
+            "code": "FR",
+            "name": "France"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.9,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/001fr6a82",
+          "name": "Union of Agricultural Cooperatives of Peza",
+          "country": {
+            "code": "GR",
+            "name": "Greece"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "FU Berlin",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/046ak2485",
+          "name": "Freie Universität Berlin",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02ynn6218",
+          "name": "Sigmund Freud Privatuniversität - Standort Berlin",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.94,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01hcx6992",
+          "name": "Humboldt-Universität zu Berlin",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Faculty of Security - Skopje, University \"St. Kliment Ohridski\" Bitola, North Macedonia",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.95,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04161ta68",
+          "name": "University \"St. Kliment Ohridski\" - Bitola",
+          "country": {
+            "code": "MK",
+            "name": "North Macedonia"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.9,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02jv3k292",
+          "name": "Sofia University \"St. Kliment Ohridski\"",
+          "country": {
+            "code": "BG",
+            "name": "Bulgaria"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.83,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00s8r8p14",
+          "name": "Faculty of Media",
+          "country": {
+            "code": "SI",
+            "name": "Slovenia"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Foreign Policy Council \"Ukrainian Prism\" & Ukraine Analytica",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.91,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00je4t102",
+          "name": "National Academy of Sciences of Ukraine",
+          "country": {
+            "code": "UA",
+            "name": "Ukraine"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.89,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/057q4c608",
+          "name": "Nexus Analytica (Egypt)",
+          "country": {
+            "code": "EG",
+            "name": "Egypt"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.89,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05rkj0r62",
+          "name": "Nexus Analytica (The Netherlands)",
+          "country": {
+            "code": "NL",
+            "name": "The Netherlands"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Franklin Venture Partners",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.87,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02hp35j69",
+          "name": "RDS Partners",
+          "country": {
+            "code": "AU",
+            "name": "Australia"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.86,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04xpyh310",
+          "name": "Social Venture Partners",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.86,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02czw4g92",
+          "name": "New Leaf Venture Partners",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Free University Berlin, Germany",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.94,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/046ak2485",
+          "name": "Freie Universität Berlin",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.9,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01prjcc04",
+          "name": "SRH University Berlin",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.89,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03v4gjf40",
+          "name": "Technische Universität Berlin",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "French Institute of Geopolitics / GEODE (Geopolitics of the Datasphere)",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.91,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01dyc1g81",
+          "name": "Institut Français d'Égypte",
+          "country": {
+            "code": "EG",
+            "name": "Egypt"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.85,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/045xd0268",
+          "name": "Institute of the Earth’s Crust",
+          "country": {
+            "code": "RU",
+            "name": "Russia"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.85,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03gcbhc33",
+          "name": "IFP Énergies nouvelles",
+          "country": {
+            "code": "FR",
+            "name": "France"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Full Professor",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.83,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/048p7wk03",
+          "name": "Casa do Professor",
+          "country": {
+            "code": "PT",
+            "name": "Portugal"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.71,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02mag1e82",
+          "name": "Full Fact",
+          "country": {
+            "code": "GB",
+            "name": "United Kingdom"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.6,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04prh3p48",
+          "name": "Full Plate Living",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Hebrew University",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00x4qp065",
+          "name": "He University",
+          "country": {
+            "code": "CN",
+            "name": "China"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.89,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04bm3wy68",
+          "name": "Hue University of Education",
+          "country": {
+            "code": "VN",
+            "name": "Vietnam"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.89,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/010zncz41",
+          "name": "JEI University",
+          "country": {
+            "code": "KR",
+            "name": "South Korea"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "IBEI",
+      "candidates": []
+    },
+    {
+      "affiliation": "IFSH",
+      "candidates": []
+    },
+    {
+      "affiliation": "IFSH & PRCP",
+      "candidates": []
+    },
+    {
+      "affiliation": "IRSEM-Paris 7 University",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.94,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04wez5e68",
+          "name": "Université Paris 8",
+          "country": {
+            "code": "FR",
+            "name": "France"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/0199hds37",
+          "name": "Université Sorbonne Paris Nord",
+          "country": {
+            "code": "FR",
+            "name": "France"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.8,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/043htjv09",
+          "name": "CY Cergy Paris Université",
+          "country": {
+            "code": "FR",
+            "name": "France"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Independent Researcher",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.9,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04ckn3152",
+          "name": "Independent Age",
+          "country": {
+            "code": "GB",
+            "name": "United Kingdom"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.84,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05vhwqa91",
+          "name": "Independent Sector",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.84,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00w7etd19",
+          "name": "Independent Dance",
+          "country": {
+            "code": "GB",
+            "name": "United Kingdom"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Institute for Strategic Research (IRSEM)",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.86,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00xzb4g06",
+          "name": "Center for Strategic Research",
+          "country": {
+            "code": "RU",
+            "name": "Russia"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.86,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04qc4xv44",
+          "name": "Institute for Strategic Dialogue",
+          "country": {
+            "code": "GB",
+            "name": "United Kingdom"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.84,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04664mr26",
+          "name": "Institute for Materials Research, Tohoku University",
+          "country": {
+            "code": "JP",
+            "name": "Japan"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Institute for Strategic Research (IRSEM), France",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.86,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00xzb4g06",
+          "name": "Center for Strategic Research",
+          "country": {
+            "code": "RU",
+            "name": "Russia"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.86,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04qc4xv44",
+          "name": "Institute for Strategic Dialogue",
+          "country": {
+            "code": "GB",
+            "name": "United Kingdom"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.84,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04664mr26",
+          "name": "Institute for Materials Research, Tohoku University",
+          "country": {
+            "code": "JP",
+            "name": "Japan"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Institute of International Relations, Prague",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03sew6f18",
+          "name": "Institute of International Relations",
+          "country": {
+            "code": "RU",
+            "name": "Russia"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04r72en83",
+          "name": "University of International Relations",
+          "country": {
+            "code": "CN",
+            "name": "China"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.98,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04hp42s89",
+          "name": "Institute of International Relations Prague",
+          "country": {
+            "code": "CZ",
+            "name": "Czechia"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Institute of Social Sciences Ivo Pilar, Regional Center Vukovar",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/046chmz66",
+          "name": "Institute of Social Sciences",
+          "country": {
+            "code": "RU",
+            "name": "Russia"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/020rfvw83",
+          "name": "Instituto de Ciências Sociais da Universidade de Lisboa",
+          "country": {
+            "code": "PT",
+            "name": "Portugal"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/040f8w440",
+          "name": "Institute of Social Sciences",
+          "country": {
+            "code": "IN",
+            "name": "India"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Joint IT Command of the Dutch Ministry of Defence",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/058fm6761",
+          "name": "Ministry of Defence",
+          "country": {
+            "code": "SI",
+            "name": "Slovenia"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05m38qe70",
+          "name": "Ministry of Defence",
+          "country": {
+            "code": "SG",
+            "name": "Singapore"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01mke9645",
+          "name": "Ministry of Defence",
+          "country": {
+            "code": "BR",
+            "name": "Brazil"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "KFG Berlin-Potsdam Research Group",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.91,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04z8qf553",
+          "name": "HPO Research Group",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.9,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00s89aq18",
+          "name": "Gesellschaft für Klinische Forschung",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.89,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/046ak2485",
+          "name": "Freie Universität Berlin",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "LMU",
+      "candidates": []
+    },
+    {
+      "affiliation": "LMU Munich",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.95,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05591te55",
+          "name": "Ludwig-Maximilians-Universität München",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.94,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05t6wee76",
+          "name": "EU Business School, Munich",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.82,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01a7snz60",
+          "name": "University of Television and Film Munich",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "LSE",
+      "candidates": []
+    },
+    {
+      "affiliation": "LUISS Rome",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.71,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01yr73893",
+          "name": "European Molecular Biology Laboratory",
+          "country": {
+            "code": "IT",
+            "name": "Italy"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.71,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05eva6s33",
+          "name": "Istituto Nazionale di Fisica Nucleare, Sezione di Roma I",
+          "country": {
+            "code": "IT",
+            "name": "Italy"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.71,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00ewnj302",
+          "name": "Deutsches Historisches Institut Rom",
+          "country": {
+            "code": "IT",
+            "name": "Italy"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "LUMSA University",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.93,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/011mzb617",
+          "name": "Masan University",
+          "country": {
+            "code": "KR",
+            "name": "South Korea"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.93,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00p43ne90",
+          "name": "Mahsa University",
+          "country": {
+            "code": "MY",
+            "name": "Malaysia"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.93,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04dqc4x73",
+          "name": "Osan University",
+          "country": {
+            "code": "KR",
+            "name": "South Korea"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Ludwig Maximilians University",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.93,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00j3qc684",
+          "name": "Ansal University",
+          "country": {
+            "code": "IN",
+            "name": "India"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00467a196",
+          "name": "Sindh Madressatul Islam University",
+          "country": {
+            "code": "PK",
+            "name": "Pakistan"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02hx0yn76",
+          "name": "Quest University Canada",
+          "country": {
+            "code": "CA",
+            "name": "Canada"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Ludwig-Maximilians-University Munich, Germany",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05591te55",
+          "name": "Ludwig-Maximilians-Universität München",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.84,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/042phe474",
+          "name": "SGS Germany GmbH (Germany)",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.8,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/014743444",
+          "name": "Forschungsinstitut für Wärmeschutz München",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "MIT",
+      "candidates": []
+    },
+    {
+      "affiliation": "Metropolitan University, Prague",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/046np5693",
+          "name": "Metropolitan University",
+          "country": {
+            "code": "VE",
+            "name": "Venezuela"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04hdrrs71",
+          "name": "Metropolitan University",
+          "country": {
+            "code": "BD",
+            "name": "Bangladesh"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00ewfne71",
+          "name": "Metropolitan University",
+          "country": {
+            "code": "RS",
+            "name": "Serbia"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "NATO Defence College",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.9,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/057pedz06",
+          "name": "Lee College",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.89,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02rkt9d51",
+          "name": "Baltic Defence College",
+          "country": {
+            "code": "EE",
+            "name": "Estonia"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.87,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03rbsqr59",
+          "name": "Diné College",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "NATO Defense College, Rome",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.82,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/042anhx64",
+          "name": "UCT Coatings (United States)",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.75,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01yr73893",
+          "name": "European Molecular Biology Laboratory",
+          "country": {
+            "code": "IT",
+            "name": "Italy"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.73,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/0395pak08",
+          "name": "AAB College",
+          "country": {
+            "code": "XK",
+            "name": "Kosovo"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "National School of Political and Administrative Studies, Bucharest, Romania",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.84,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05750v978",
+          "name": "National School of Political Science and Public Administration",
+          "country": {
+            "code": "RO",
+            "name": "Romania"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.84,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03x5g5f45",
+          "name": "National School of Public Policy",
+          "country": {
+            "code": "PK",
+            "name": "Pakistan"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.83,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00mjaaf25",
+          "name": "National School of Public Health",
+          "country": {
+            "code": "GR",
+            "name": "Greece"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "National University of Political Studies and Public Administration",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.84,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/054fdbt51",
+          "name": "Academy of Public Administration",
+          "country": {
+            "code": "AZ",
+            "name": "Azerbaijan"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.84,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03q8q9685",
+          "name": "Academy of Public Administration",
+          "country": {
+            "code": "MD",
+            "name": "Moldova"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.84,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/056ddyv20",
+          "name": "Panteion University",
+          "country": {
+            "code": "GR",
+            "name": "Greece"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Netherlands Faculty of Military Sciences",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.81,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00s8r8p14",
+          "name": "Faculty of Media",
+          "country": {
+            "code": "SI",
+            "name": "Slovenia"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.8,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05ct4s596",
+          "name": "PLA Academy of Military Science",
+          "country": {
+            "code": "CN",
+            "name": "China"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.79,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/051y5cb26",
+          "name": "Finnish Society of Military Sciences",
+          "country": {
+            "code": "FI",
+            "name": "Finland"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Newcastle University",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00eae9z71",
+          "name": "University of Newcastle Australia",
+          "country": {
+            "code": "AU",
+            "name": "Australia"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01kj2bm70",
+          "name": "Newcastle University",
+          "country": {
+            "code": "GB",
+            "name": "United Kingdom"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.96,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00x4qp065",
+          "name": "He University",
+          "country": {
+            "code": "CN",
+            "name": "China"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Northeastern University",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02ahky613",
+          "name": "Universidad del Noreste",
+          "country": {
+            "code": "MX",
+            "name": "Mexico"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03awzbc87",
+          "name": "Northeastern University",
+          "country": {
+            "code": "CN",
+            "name": "China"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04t5xt781",
+          "name": "Northeastern University",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Norwegian Institute for Defence Studies",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.89,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05snn5v50",
+          "name": "National Institute for Defense Studies",
+          "country": {
+            "code": "JP",
+            "name": "Japan"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.88,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/052x09g67",
+          "name": "Norwegian Film Institute",
+          "country": {
+            "code": "NO",
+            "name": "Norway"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.88,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01mjdf856",
+          "name": "EarthTech International (United States)",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Norwegian Institute for Defense Studies, Norway",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.88,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/052x09g67",
+          "name": "Norwegian Film Institute",
+          "country": {
+            "code": "NO",
+            "name": "Norway"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.86,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/055wgnw59",
+          "name": "Norwegian Nobel Institute",
+          "country": {
+            "code": "NO",
+            "name": "Norway"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.86,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03avf6522",
+          "name": "Norwegian Polar Institute",
+          "country": {
+            "code": "NO",
+            "name": "Norway"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Odesa Center for Nonproliferation",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.75,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02bpy7p61",
+          "name": "Center for Craft",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.74,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05ejsxx38",
+          "name": "Florida Center for Change",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.74,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02rgt2f70",
+          "name": "Center for Women Policy",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Peace Research Center Prague",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.9,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05549nv94",
+          "name": "FACT Research Center",
+          "country": {
+            "code": "IL",
+            "name": "Israel"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.9,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02acart68",
+          "name": "Ames Research Center",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.9,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03wmjs517",
+          "name": "Core Research Center",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Ph.D. Candidate, LUISS, University “Guido Carli” in Rome, Italy",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.94,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01q8b6q23",
+          "name": "Libera Università Internazionale degli Studi Sociali Guido Carli",
+          "country": {
+            "code": "IT",
+            "name": "Italy"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.82,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05eva6s33",
+          "name": "Istituto Nazionale di Fisica Nucleare, Sezione di Roma I",
+          "country": {
+            "code": "IT",
+            "name": "Italy"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.8,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/0558jee48",
+          "name": "World Health Organization - Italy",
+          "country": {
+            "code": "IT",
+            "name": "Italy"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Purdue University",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.96,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04bm3wy68",
+          "name": "Hue University of Education",
+          "country": {
+            "code": "VN",
+            "name": "Vietnam"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.96,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00x4qp065",
+          "name": "He University",
+          "country": {
+            "code": "CN",
+            "name": "China"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/010zncz41",
+          "name": "JEI University",
+          "country": {
+            "code": "KR",
+            "name": "South Korea"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Radboud University",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.93,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/034a2ss16",
+          "name": "Amoud University",
+          "country": {
+            "code": "SO",
+            "name": "Somalia"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04japw488",
+          "name": "Godfrey Okoye University",
+          "country": {
+            "code": "NG",
+            "name": "Nigeria"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/057ap5t09",
+          "name": "RK University",
+          "country": {
+            "code": "IN",
+            "name": "India"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Royal Danish Defense College",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/056vnsb08",
+          "name": "Royal Ottawa Mental Health Centre",
+          "country": {
+            "code": "CA",
+            "name": "Canada"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.96,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00h2bx184",
+          "name": "Royal Danish Defence College",
+          "country": {
+            "code": "DK",
+            "name": "Denmark"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.86,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/031gjxb79",
+          "name": "Royal Danish Academy – Architecture, Design, Conservation",
+          "country": {
+            "code": "DK",
+            "name": "Denmark"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Royal Holloway, University of London (Leverhulme Early Career Research Fellow)",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04cw6st05",
+          "name": "University of London",
+          "country": {
+            "code": "GB",
+            "name": "United Kingdom"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.97,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04g2vpn86",
+          "name": "Royal Holloway University of London",
+          "country": {
+            "code": "GB",
+            "name": "United Kingdom"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.89,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01xtthb56",
+          "name": "University of Oslo",
+          "country": {
+            "code": "NO",
+            "name": "Norway"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Royal Military Academy, Sandhurst",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02dnvjf04",
+          "name": "Netherlands Defence Academy",
+          "country": {
+            "code": "NL",
+            "name": "The Netherlands"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02vmnye06",
+          "name": "Royal Military Academy",
+          "country": {
+            "code": "BE",
+            "name": "Belgium"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03qfy7r49",
+          "name": "Carol I National Defence University",
+          "country": {
+            "code": "RO",
+            "name": "Romania"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "SAIS Johns Hopkins",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.84,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02wt5sv47",
+          "name": "Johns Hopkins University School of Advanced International Studies",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.82,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05cb1k848",
+          "name": "Johns Hopkins Hospital",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.73,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05d50hn21",
+          "name": "St. Johns Hospital",
+          "country": {
+            "code": "IE",
+            "name": "Ireland"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Sciences Po, Northern German Lutheran Church, Lithuanian Diakonija",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05fe7ax82",
+          "name": "Institut d'Etudes Politiques de Paris",
+          "country": {
+            "code": "FR",
+            "name": "France"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.87,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02h3vcz70",
+          "name": "Sciences Po Lyon",
+          "country": {
+            "code": "FR",
+            "name": "France"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.86,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/0406m4x33",
+          "name": "Sciences Po Aix",
+          "country": {
+            "code": "FR",
+            "name": "France"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "St Andrews University",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02wn5qz54",
+          "name": "University of St Andrews",
+          "country": {
+            "code": "GB",
+            "name": "United Kingdom"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04aaa2n62",
+          "name": "Andrews University",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.95,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00nb5xj61",
+          "name": "St. Andrews University",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "St Cyr Military Academy, France",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03qfy7r49",
+          "name": "Carol I National Defence University",
+          "country": {
+            "code": "RO",
+            "name": "Romania"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.82,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02dnvjf04",
+          "name": "Netherlands Defence Academy",
+          "country": {
+            "code": "NL",
+            "name": "The Netherlands"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.82,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/024ctqw02",
+          "name": "Korea Military Academy",
+          "country": {
+            "code": "KR",
+            "name": "South Korea"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Stiftung Neue Verantwortung",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.88,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02ntwx703",
+          "name": "Stiftung Irene",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.87,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05667pn42",
+          "name": "Stiftung FHNW",
+          "country": {
+            "code": "CH",
+            "name": "Switzerland"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.87,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01kptsc25",
+          "name": "Stiftung zur Förderung der Erforschung von Ersatz- und Ergänzungsmethoden zur Einschränkung von Tierversuchen",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Suleyman Demirel University, Galatasaray",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02s8x5a25",
+          "name": "Suleyman Demirel University",
+          "country": {
+            "code": "KZ",
+            "name": "Kazakhstan"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04fjtte88",
+          "name": "Süleyman Demirel Üniversitesi",
+          "country": {
+            "code": "TR",
+            "name": "Türkiye"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.93,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/038d7xb21",
+          "name": "Universidad ICEL",
+          "country": {
+            "code": "MX",
+            "name": "Mexico"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Technical University Braunschweig",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.93,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/010nsgg66",
+          "name": "Technische Universität Braunschweig",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.93,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00j7bab93",
+          "name": "Ho Technical University",
+          "country": {
+            "code": "GH",
+            "name": "Ghana"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.89,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00twb6c09",
+          "name": "Riga Technical University",
+          "country": {
+            "code": "LV",
+            "name": "Latvia"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "UNU-MERIT",
+      "candidates": []
+    },
+    {
+      "affiliation": "US Army War College",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.9,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03w0kj141",
+          "name": "Army Medical College",
+          "country": {
+            "code": "PK",
+            "name": "Pakistan"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.83,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01hehsy63",
+          "name": "Naval War College",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.79,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04vyfjp39",
+          "name": "National Defence College Nigeria",
+          "country": {
+            "code": "NG",
+            "name": "Nigeria"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "USMA West Point",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.8,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01jepya76",
+          "name": "United States Military Academy",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.76,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/002eet613",
+          "name": "Center Point",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.74,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02vzf2422",
+          "name": "United States Merchant Marine Academy",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "University Institute of Lisbon - ISCTE, Portugal",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.88,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/014837179",
+          "name": "Iscte – Instituto Universitário de Lisboa",
+          "country": {
+            "code": "PT",
+            "name": "Portugal"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.88,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00m9dvt07",
+          "name": "Teva Portugal (Portugal)",
+          "country": {
+            "code": "PT",
+            "name": "Portugal"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.86,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/054w7b348",
+          "name": "SHL Portugal (Portugal)",
+          "country": {
+            "code": "PT",
+            "name": "Portugal"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "University at Buffalo, SUNY",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.9,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01y64my43",
+          "name": "University at Buffalo, State University of New York",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.86,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/012zs8222",
+          "name": "University at Albany, State University of New York",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.82,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00fc1qt65",
+          "name": "Bucknell University",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "University of Auvergne (Clermont-Ferrand)",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.94,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02pg0e883",
+          "name": "University of Aizu",
+          "country": {
+            "code": "JP",
+            "name": "Japan"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.94,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/020we4134",
+          "name": "University of Wah",
+          "country": {
+            "code": "PK",
+            "name": "Pakistan"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.91,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03x3axr33",
+          "name": "University of Bacău",
+          "country": {
+            "code": "RO",
+            "name": "Romania"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "University of Cergy-Pontoise",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.94,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/034xkmw20",
+          "name": "University of Cebu",
+          "country": {
+            "code": "PH",
+            "name": "Philippines"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.94,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/006zjws59",
+          "name": "Universitat de Vic - Universitat Central de Catalunya",
+          "country": {
+            "code": "ES",
+            "name": "Spain"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.9,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03ddeer04",
+          "name": "University of Qom",
+          "country": {
+            "code": "IR",
+            "name": "Iran"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "University of Copenhagen",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/035b05819",
+          "name": "University of Copenhagen",
+          "country": {
+            "code": "DK",
+            "name": "Denmark"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02309jg23",
+          "name": "IT University of Copenhagen",
+          "country": {
+            "code": "DK",
+            "name": "Denmark"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.97,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03v0bz013",
+          "name": "Copenhagen Municipality",
+          "country": {
+            "code": "DK",
+            "name": "Denmark"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "University of Coventry",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.94,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/006zjws59",
+          "name": "Universitat de Vic - Universitat Central de Catalunya",
+          "country": {
+            "code": "ES",
+            "name": "Spain"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.91,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03ddeer04",
+          "name": "University of Qom",
+          "country": {
+            "code": "IR",
+            "name": "Iran"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.91,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/034xkmw20",
+          "name": "University of Cebu",
+          "country": {
+            "code": "PH",
+            "name": "Philippines"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "University of Defence, Czech Republic",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04mmq3h75",
+          "name": "University of Defence",
+          "country": {
+            "code": "RS",
+            "name": "Serbia"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04arkmn57",
+          "name": "University of Defence",
+          "country": {
+            "code": "CZ",
+            "name": "Czechia"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.91,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/013g68144",
+          "name": "GS1 Czech Republic",
+          "country": {
+            "code": "CZ",
+            "name": "Czechia"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "University of Information Science and Technology “St. Paul the Apostle”, Ohrid, N.Macedonia",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/022camr20",
+          "name": "University of Information Science",
+          "country": {
+            "code": "CU",
+            "name": "Cuba"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.99,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/0264mz016",
+          "name": "University of Information Science and Technology St. Paul The Apostle",
+          "country": {
+            "code": "MK",
+            "name": "North Macedonia"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02y0rxk19",
+          "name": "Nanjing University of Information Science and Technology",
+          "country": {
+            "code": "CN",
+            "name": "China"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "University of Kiel, Germany",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.84,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/042phe474",
+          "name": "SGS Germany GmbH (Germany)",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.8,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04v76ef78",
+          "name": "Christian-Albrechts-Universität zu Kiel",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.77,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03nqfwv49",
+          "name": "IDEA (Germany)",
+          "country": {
+            "code": "DE",
+            "name": "Germany"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "University of Leiden",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.94,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00wc07928",
+          "name": "University of Lomé",
+          "country": {
+            "code": "TG",
+            "name": "Togo"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.94,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03sz2k744",
+          "name": "National Law University, Delhi",
+          "country": {
+            "code": "IN",
+            "name": "India"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01gzemj61",
+          "name": "University of Liepāja",
+          "country": {
+            "code": "LV",
+            "name": "Latvia"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "University of Leiden, Netherlands",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.87,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/018dfmf50",
+          "name": "Open University of the Netherlands",
+          "country": {
+            "code": "NL",
+            "name": "The Netherlands"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.86,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00ssh1q19",
+          "name": "Reden (Netherlands)",
+          "country": {
+            "code": "NL",
+            "name": "The Netherlands"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.84,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00gnbgz55",
+          "name": "AMN (Netherlands)",
+          "country": {
+            "code": "NL",
+            "name": "The Netherlands"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "University of Macedonia",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05fg6gr82",
+          "name": "University of Macedonia",
+          "country": {
+            "code": "GR",
+            "name": "Greece"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.94,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02s6w8y22",
+          "name": "University of Bamako",
+          "country": {
+            "code": "ML",
+            "name": "Mali"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.94,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/052vng007",
+          "name": "University of Mkar",
+          "country": {
+            "code": "NG",
+            "name": "Nigeria"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "University of Naples, Italy",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.85,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02kqnpp86",
+          "name": "University of Campania \"Luigi Vanvitelli\"",
+          "country": {
+            "code": "IT",
+            "name": "Italy"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.77,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/02en9dz36",
+          "name": "Valeas (Italy)",
+          "country": {
+            "code": "IT",
+            "name": "Italy"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.76,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/056cswn75",
+          "name": "Tesi (Italy)",
+          "country": {
+            "code": "IT",
+            "name": "Italy"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "University of Tokyo",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.8,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/015e2vx95",
+          "name": "Italian Cultural Institute, Tokyo",
+          "country": {
+            "code": "JP",
+            "name": "Japan"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.8,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01cfpzw88",
+          "name": "Deutsches Institut für Japanstudien Tokyo",
+          "country": {
+            "code": "JP",
+            "name": "Japan"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.69,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05xbyzq55",
+          "name": "Tokyo Kasei University",
+          "country": {
+            "code": "JP",
+            "name": "Japan"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "University of the Peloponnese",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.94,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/008w8py05",
+          "name": "University of the People",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03jyr9x65",
+          "name": "The Open University of Japan",
+          "country": {
+            "code": "JP",
+            "name": "Japan"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.9,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01xhcza12",
+          "name": "University of the West",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Université François Rabelais-Tours, France",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.88,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/013cjyk83",
+          "name": "Université Paris Sciences et Lettres",
+          "country": {
+            "code": "FR",
+            "name": "France"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.88,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/059et2b68",
+          "name": "Université Oran 1 Ahmed Ben Bella",
+          "country": {
+            "code": "DZ",
+            "name": "Algeria"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.86,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05fq50484",
+          "name": "York University",
+          "country": {
+            "code": "CA",
+            "name": "Canada"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Université Libre Bruxelles",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/013cjyk83",
+          "name": "Université Paris Sciences et Lettres",
+          "country": {
+            "code": "FR",
+            "name": "France"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.88,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01r9htc13",
+          "name": "Université Libre de Bruxelles",
+          "country": {
+            "code": "BE",
+            "name": "Belgium"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.86,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/007y6q934",
+          "name": "Université TÉLUQ",
+          "country": {
+            "code": "CA",
+            "name": "Canada"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Université Paris-Sorbonne (Paris 1)",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.95,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/0268ecp52",
+          "name": "Paris-Est Sup",
+          "country": {
+            "code": "FR",
+            "name": "France"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.94,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04wez5e68",
+          "name": "Université Paris 8",
+          "country": {
+            "code": "FR",
+            "name": "France"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.94,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03z6jp965",
+          "name": "Université Sorbonne Nouvelle",
+          "country": {
+            "code": "FR",
+            "name": "France"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Université de Caen, France",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/03a64bh57",
+          "name": "University of Catania",
+          "country": {
+            "code": "IT",
+            "name": "Italy"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.9,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/0005w8d69",
+          "name": "Università di Camerino",
+          "country": {
+            "code": "IT",
+            "name": "Italy"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.89,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05d23ve83",
+          "name": "Colgate University",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "VU University Amsterdam",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.93,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04dkp9463",
+          "name": "University of Amsterdam",
+          "country": {
+            "code": "NL",
+            "name": "The Netherlands"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.91,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/008xxew50",
+          "name": "Vrije Universiteit Amsterdam",
+          "country": {
+            "code": "NL",
+            "name": "The Netherlands"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.89,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04bm3wy68",
+          "name": "Hue University of Education",
+          "country": {
+            "code": "VN",
+            "name": "Vietnam"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "Vrije Universiteit Brussel/US Army",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/006e5kg04",
+          "name": "Vrije Universiteit Brussel",
+          "country": {
+            "code": "BE",
+            "name": "Belgium"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.85,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04nbhqj75",
+          "name": "Hasselt University",
+          "country": {
+            "code": "BE",
+            "name": "Belgium"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.82,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/018dfmf50",
+          "name": "Open University of the Netherlands",
+          "country": {
+            "code": "NL",
+            "name": "The Netherlands"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "York Europe Campus, Business School",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.94,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04facnr46",
+          "name": "EU Business School, Geneva",
+          "country": {
+            "code": "CH",
+            "name": "Switzerland"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/050mwrs16",
+          "name": "ESE Business School",
+          "country": {
+            "code": "CL",
+            "name": "Chile"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.92,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/035fsmk47",
+          "name": "Institut Superieur de Gestion",
+          "country": {
+            "code": "FR",
+            "name": "France"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "independent researcher",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 0.9,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04ckn3152",
+          "name": "Independent Age",
+          "country": {
+            "code": "GB",
+            "name": "United Kingdom"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.84,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/00w7etd19",
+          "name": "Independent Dance",
+          "country": {
+            "code": "GB",
+            "name": "United Kingdom"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 0.84,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05vhwqa91",
+          "name": "Independent Sector",
+          "country": {
+            "code": "US",
+            "name": "United States"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "École Normale Supérieure, France",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04xtpyw05",
+          "name": "École Normale Supérieure d'Abidjan",
+          "country": {
+            "code": "CI",
+            "name": "Ivory Coast"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01dp7jr64",
+          "name": "École Normale Supérieure",
+          "country": {
+            "code": "BI",
+            "name": "Burundi"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05a0dhs15",
+          "name": "École Normale Supérieure - PSL",
+          "country": {
+            "code": "FR",
+            "name": "France"
+          }
+        }
+      ]
+    },
+    {
+      "affiliation": "École normale supérieure",
+      "candidates": [
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/01dp7jr64",
+          "name": "École Normale Supérieure",
+          "country": {
+            "code": "BI",
+            "name": "Burundi"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/04xtpyw05",
+          "name": "École Normale Supérieure d'Abidjan",
+          "country": {
+            "code": "CI",
+            "name": "Ivory Coast"
+          }
+        },
+        {
+          "chosen": false,
+          "score": 1,
+          "matchingType": "SINGLE SEARCH",
+          "rorId": "https://ror.org/05a0dhs15",
+          "name": "École Normale Supérieure - PSL",
+          "country": {
+            "code": "FR",
+            "name": "France"
+          }
+        }
+      ]
+    }
+  ]
+}
