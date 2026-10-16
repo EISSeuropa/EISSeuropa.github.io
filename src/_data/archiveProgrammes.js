@@ -8211,7 +8211,7 @@ module.exports = {
             "items": [
               {
                 "kind": "break",
-                "title": "Poster session / Coffee break",
+                "title": "Poster session / Coffee break (continued)",
                 "room": "Conference Room Foyer",
                 "contributions": [
                   {
