@@ -14,7 +14,7 @@
     "clean": "rm -rf _site"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.6",
+    "@11ty/eleventy": "^3.1.7",
     "acorn": "^8.19.0",
     "axe-core": "^4.14.0"
   }
