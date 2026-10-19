@@ -385,6 +385,22 @@
       "roleEndDate": "2024-05-31"
     },
     {
+      "name": "Mx Astha Dhal",
+      "role": "Support Staff",
+      "alt": "Mx Astha Dhal",
+      "photo": "/assets/images/board/astha-dhal.jpg",
+      "position": "Consultant",
+      "institution": "J-PAL South Asia",
+      "country": "India",
+      "themes": "Gender and security, AI governance, EU-India relations, information security and disinformation",
+      "links": {
+        "publicEmail": "astha.dhal@sciencespo.fr",
+        "linkedin": "https://www.linkedin.com/in/astha-dhal-sxc/"
+      },
+      "workingGroups": "None yet",
+      "roleEndDate": "2026-12-01"
+    },
+    {
       "name": "Francisco Ferreira",
       "role": "Support Staff",
       "alt": "Francisco Ferreira",
