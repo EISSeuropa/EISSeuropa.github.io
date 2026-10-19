@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-08T12:01:37+00:00",
-  "count": 102,
+  "generated_at": "2026-10-18T09:33:03+00:00",
+  "count": 105,
   "source": "https://netsec-cost.eu/directory-index.json",
   "members": [
     {
@@ -675,6 +675,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/ludovica-castelli.jpg"
     },
     {
+      "name": "Mr Lukas Wahden",
+      "name_key": "lukas wahden",
+      "aliases": [],
+      "slug": "lukas-wahden",
+      "url": "https://netsec-cost.eu/people/lukas-wahden.html",
+      "orcid": null,
+      "role": null,
+      "affiliation": "Sciences Po Paris (CERI)",
+      "photo": "https://netsec-cost.eu/assets/images/people/lukas-wahden.jpg"
+    },
+    {
       "name": "Mr Mahmoud Javadi",
       "name_key": "mahmoud javadi",
       "aliases": [],
@@ -950,6 +961,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/richard-skalt.jpg"
     },
     {
+      "name": "Dr Roie Yellinek",
+      "name_key": "roie yellinek",
+      "aliases": [],
+      "slug": "roie-yellinek",
+      "url": "https://netsec-cost.eu/people/roie-yellinek.html",
+      "orcid": "0000-0002-2966-1801",
+      "role": null,
+      "affiliation": "The Geopolitics Lab",
+      "photo": "https://netsec-cost.eu/assets/images/people/roie-yellinek.jpg"
+    },
+    {
       "name": "Ms Rusudan Zabakhidze",
       "name_key": "rusudan zabakhidze",
       "aliases": [],
@@ -1016,6 +1038,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/silvia-damato.jpeg"
     },
     {
+      "name": "Dr Sonja Stojanovic Gajic",
+      "name_key": "sonja gajic",
+      "aliases": [],
+      "slug": "sonja-stojanovic-gajic",
+      "url": "https://netsec-cost.eu/people/sonja-stojanovic-gajic.html",
+      "orcid": "0009-0000-4232-8133",
+      "role": null,
+      "affiliation": "Center for Advanced Studies, the University of Rijeka",
+      "photo": "https://netsec-cost.eu/assets/images/people/sonja-stojanovic-gajic.jpg"
+    },
+    {
       "name": "Dr Sophie Enos-Attali",
       "name_key": "sophie attali",
       "aliases": [],
@@ -1060,15 +1093,15 @@
       "photo": "https://netsec-cost.eu/assets/images/people/teodora-stoicescu.jpg"
     },
     {
-      "name": "Dr Tolga Çıkrıkçı",
-      "name_key": "tolga kc",
+      "name": "Dr Tolga Cikrikci",
+      "name_key": "tolga cikrikci",
       "aliases": [],
       "slug": "tolga-c-kr-kc",
       "url": "https://netsec-cost.eu/people/tolga-c-kr-kc.html",
       "orcid": "0000-0001-5102-0907",
       "role": null,
       "affiliation": "Giresun University",
-      "photo": null
+      "photo": "https://netsec-cost.eu/assets/images/people/tolga-c-kr-kc.jpg"
     },
     {
       "name": "Ms Vasiliki Plessia Aravani",
