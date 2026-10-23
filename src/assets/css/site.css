@@ -2695,6 +2695,18 @@ a[href^="http"]:not([class]) {
   margin-block: var(--space-7);
 }
 
+/* Illustrations in blog posts (see src/blog/blog.11tydata.js). A bare
+   Markdown image sits in a <p> and takes its spacing; a <figure> carries
+   a caption. */
+.prose img { border-radius: var(--radius-sm); }
+.prose figure { margin: var(--space-6) 0; }
+.prose figcaption {
+  margin-top: var(--space-2);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+  color: var(--text-muted);
+}
+
 .prose .meta {
   display: block;
   margin-top: var(--space-6);

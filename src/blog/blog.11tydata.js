@@ -15,6 +15,25 @@
  *               have no board.json entry and do not need a page.
  *   summary     one or two sentences, shown on /blog.html and in the feed
  *
+ * Illustrations go in src/assets/images/blog/<slug>/, exported at most
+ * 1600px wide (the column is narrower, so that covers high-density
+ * screens). Without a caption, plain Markdown:
+ *
+ *   ![What the image shows](/assets/images/blog/<slug>/figure-1.jpg)
+ *
+ * With a caption, HTML, which Markdown passes through:
+ *
+ *   <figure>
+ *     <img src="/assets/images/blog/<slug>/figure-1.jpg" alt="What the
+ *          image shows" width="1600" height="900" loading="lazy">
+ *     <figcaption>Caption. Source or credit.</figcaption>
+ *   </figure>
+ *
+ * Every image needs alt text that says what it shows (RGAA 1.2, 1.3). A
+ * purely decorative one takes alt="". width and height are the file's
+ * real pixels, so the page does not jump while it loads. FR and DE
+ * translations reuse the same file and translate only alt and caption.
+ *
  * ponytail: a directory data file, not a plugin and not a CMS. Eleventy
  * renders Markdown out of the box, so the blog is a folder.
  */
