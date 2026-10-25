@@ -31,7 +31,7 @@
       <span class="rm-pill deferred"><span class="rm-dot" aria-hidden="true"></span>{{ t.roadmap.status.deferred }}</span>
     </div>
 
-    {%- for q in roadmap.quarters %}
+    {%- for q in roadmap.timeline %}
     <div class="rm-quarter">
       <h2>{{ q.label[_lang] }}</h2>
       <span class="rm-quarter-sub">{{ q.sub[_lang] }}</span>

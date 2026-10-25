@@ -21,7 +21,7 @@
  * - `event: true` — a non-version calendar marker (e.g. the conference
  *                itself); renders without a version or progress bar.
  *
- * roadmap-progress.js auto-promotes the first still-planned version
+ * roadmap-progress.js auto-promotes the earliest still-planned version
  * card to "In progress", so we leave the next release as "planned"
  * here rather than hard-coding the in-progress state.
  */
@@ -34,7 +34,7 @@ const roadmap = {
   issuesUrl: `${REPO}/issues/new/choose`,
   milestonesUrl: `${REPO}/milestones`,
   releasesUrl: `${REPO}/releases`,
-  updated: { en: "9 October 2026", fr: "9 octobre 2026", de: "9. Oktober 2026" },
+  updated: { en: "25 October 2026", fr: "25 octobre 2026", de: "25. Oktober 2026" },
 
   quarters: [
     {
@@ -225,14 +225,14 @@ const roadmap = {
           milestone: "v2.29.0",
           when: { en: "8 December 2026 · v2.29.0", fr: "8 décembre 2026 · v2.29.0", de: "8. Dezember 2026 · v2.29.0" },
           title: {
-            en: "The corpus in French, and the data behind it",
-            fr: "Le corpus en français, et les données qui le sous-tendent",
-            de: "Das Korpus auf Französisch, und die Daten dahinter",
+            en: "Belvedere, and the call for papers for 2027",
+            fr: "Belvédère, et l’appel à communications pour 2027",
+            de: "Belvedere und der Call for Papers 2027",
           },
           desc: {
-            en: "Already on the site for this release: Belvedere, the EISS blog, in three languages, a home page that now shows the conference film, a paper of the day and the host cities, a declaration against the French RGAA accessibility standard, and the page for ESSC 2027 in Belgrade. Still to come: the French Anthology leaves beta on a declared scope (the interface, the seventeen theme labels and the abstracts of papers with at least one French-affiliated author), the corpus gains an analytical export with author affiliations matched to the standard registry of research organisations, the theme vocabulary is deposited on Zenodo and the corpus listed in Recherche Data Gouv, and an annual French-language note on the corpus rounds out the release. The 2027 call for papers opens in the same window, with the prize jury confirmed in time for it.",
-            fr: "Déjà en ligne pour cette version : Belvédère, le blog de l’EISS, en trois langues, une page d’accueil qui présente désormais le film de la conférence, une communication du jour et les villes hôtes, une déclaration de conformité au RGAA, et la page de l’ESSC 2027 à Belgrade. Reste à venir : l’Anthologie en français sort de sa version bêta sur un périmètre déclaré (l’interface, les dix-sept intitulés de thèmes et les résumés des communications comptant au moins un auteur affilié en France), le corpus reçoit un export analytique avec les affiliations rapprochées du registre standard des organismes de recherche, le vocabulaire des thèmes est déposé sur Zenodo et le corpus référencé dans Recherche Data Gouv, et une note annuelle en français sur le corpus complète la version. L’appel à communications pour 2027 s’ouvre dans la même fenêtre, et le jury du prix est confirmé à temps.",
-            de: "Bereits auf der Website für diese Version: Belvedere, der EISS-Blog, in drei Sprachen, eine Startseite, die nun den Konferenzfilm, einen Beitrag des Tages und die Gastgeberstädte zeigt, eine Konformitätserklärung nach dem französischen RGAA und die Seite der ESSC 2027 in Belgrad. Noch ausstehend: Die französische Anthologie verlässt den Beta-Status für einen erklärten Umfang (die Oberfläche, die siebzehn Themenbezeichnungen und die Abstracts aller Beiträge mit mindestens einer französischen Zugehörigkeit), das Korpus erhält einen analytischen Export, dessen Zugehörigkeiten dem Standardregister der Forschungseinrichtungen zugeordnet sind, das Themenvokabular wird bei Zenodo hinterlegt und das Korpus in Recherche Data Gouv verzeichnet, und eine jährliche französische Notiz zum Korpus rundet die Version ab. Im selben Zeitraum öffnet der Call for Papers für 2027, und die Preisjury steht rechtzeitig fest.",
+            en: "Already on the site for this release: Belvedere, the EISS blog, in three languages, a home page that now shows the conference film, a paper of the day and the host cities, a declaration against the French RGAA accessibility standard, and the page for ESSC 2027 in Belgrade. Still to come: the 2027 call for papers opens and is announced, with the prize jury and the terms for the edition confirmed in time for it.",
+            fr: "Déjà en ligne pour cette version : Belvédère, le blog de l’EISS, en trois langues, une page d’accueil qui présente désormais le film de la conférence, une communication du jour et les villes hôtes, une déclaration de conformité au RGAA, et la page de l’ESSC 2027 à Belgrade. Reste à venir : l’appel à communications pour 2027 s’ouvre et est annoncé, et le jury du prix comme le règlement de l’édition sont confirmés à temps.",
+            de: "Bereits auf der Website für diese Version: Belvedere, der EISS-Blog, in drei Sprachen, eine Startseite, die nun den Konferenzfilm, einen Beitrag des Tages und die Gastgeberstädte zeigt, eine Konformitätserklärung nach dem französischen RGAA und die Seite der ESSC 2027 in Belgrad. Noch ausstehend: Der Call for Papers für 2027 öffnet und wird angekündigt, und die Preisjury und die Bedingungen der Ausgabe stehen rechtzeitig fest.",
           },
         },
       ],
@@ -251,14 +251,14 @@ const roadmap = {
           milestone: "v2.30.0",
           when: { en: "30 April 2027 · v2.30.0", fr: "30 avril 2027 · v2.30.0", de: "30. April 2027 · v2.30.0" },
           title: {
-            en: "The 2027 programme on the page",
-            fr: "Le programme 2027 sur la page",
-            de: "Das Programm 2027 auf der Seite",
+            en: "The 2027 programme, and the corpus as open data",
+            fr: "Le programme 2027, et le corpus en données ouvertes",
+            de: "Das Programm 2027 und das Korpus als offene Daten",
           },
           desc: {
-            en: "Accepted papers become the programme for the next edition, with the keynote announced alongside it and the practical information written around what is actually arranged. The page agrees with the live programme NetSec renders from the same source.",
-            fr: "Les communications retenues deviennent le programme de la prochaine édition, la conférence inaugurale est annoncée en même temps et les informations pratiques sont rédigées à partir de ce qui est effectivement organisé. La page concorde avec le programme en direct que NetSec affiche depuis la même source.",
-            de: "Aus den angenommenen Beiträgen entsteht das Programm der nächsten Ausgabe, die Keynote wird zugleich bekanntgegeben und die praktischen Hinweise richten sich nach dem, was tatsächlich organisiert ist. Die Seite stimmt mit dem Live-Programm überein, das NetSec aus derselben Quelle rendert.",
+            en: "Accepted papers become the programme for the next edition, with the keynote announced alongside it and the practical information written around what is actually arranged. The page agrees with the live programme NetSec renders from the same source. The corpus work lands in the same release: the French Anthology leaves beta on a declared scope (the interface, the seventeen theme labels and the abstracts of papers with at least one French-affiliated author), the corpus gains an analytical export with author affiliations matched to the standard registry of research organisations, the theme vocabulary is published as a citable vocabulary, the corpus is deposited in a HAL collection and listed in Recherche Data Gouv, the source code is archived in Software Heritage, and an annual French-language note on the corpus rounds it out.",
+            fr: "Les communications retenues deviennent le programme de la prochaine édition, la conférence inaugurale est annoncée en même temps et les informations pratiques sont rédigées à partir de ce qui est effectivement organisé. La page concorde avec le programme en direct que NetSec affiche depuis la même source. Le travail sur le corpus arrive dans la même version : l’Anthologie en français sort de sa version bêta sur un périmètre déclaré (l’interface, les dix-sept intitulés de thèmes et les résumés des communications comptant au moins un auteur affilié en France), le corpus reçoit un export analytique avec les affiliations rapprochées du registre standard des organismes de recherche, le vocabulaire des thèmes est publié sous une forme citable, le corpus est déposé dans une collection HAL et référencé dans Recherche Data Gouv, le code source est archivé dans Software Heritage, et une note annuelle en français sur le corpus complète l’ensemble.",
+            de: "Aus den angenommenen Beiträgen entsteht das Programm der nächsten Ausgabe, die Keynote wird zugleich bekanntgegeben und die praktischen Hinweise richten sich nach dem, was tatsächlich organisiert ist. Die Seite stimmt mit dem Live-Programm überein, das NetSec aus derselben Quelle rendert. Die Arbeit am Korpus kommt in derselben Version: Die französische Anthologie verlässt den Beta-Status für einen erklärten Umfang (die Oberfläche, die siebzehn Themenbezeichnungen und die Abstracts aller Beiträge mit mindestens einer französischen Zugehörigkeit), das Korpus erhält einen analytischen Export, dessen Zugehörigkeiten dem Standardregister der Forschungseinrichtungen zugeordnet sind, das Themenvokabular erscheint in zitierfähiger Form, das Korpus wird in einer HAL-Sammlung hinterlegt und in Recherche Data Gouv verzeichnet, der Quellcode wird bei Software Heritage archiviert, und eine jährliche französische Notiz zum Korpus rundet das Ganze ab.",
           },
         },
         {
@@ -364,5 +364,15 @@ roadmap.lastShipped = roadmap.quarters
   .filter((e) => e.status === "shipped" && e.version)
   .map((e) => e.version)
   .pop() || null;
+
+// The page renders newest first, furthest-future release at the top. The
+// quarters above stay authored oldest first (flip-roadmap-card.mjs and the
+// lastShipped lookup read them in that order), so the reversal happens here.
+// Copies, not Array#reverse in place: Nunjucks' `reverse` filter mutates, and
+// the same data object renders three locales.
+roadmap.timeline = roadmap.quarters
+  .slice()
+  .reverse()
+  .map((q) => ({ ...q, entries: q.entries.slice().reverse() }));
 
 module.exports = roadmap;
