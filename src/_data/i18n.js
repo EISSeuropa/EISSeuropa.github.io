@@ -187,6 +187,8 @@ const locales = {
       ticketLine: "Tickets to our Annual Conference already include a one-year membership.",
       become: "Become a member",
       manage: "Manage my membership",
+      // Join band heading while a conference is next; {city} is its host.
+      seeYouIn: "See you in {city}.",
       subscribe: "Subscribe to our newsletter",
       youtube: "Follow our YouTube channel",
     },
@@ -1077,6 +1079,8 @@ const locales = {
       ticketLine: "Les billets pour notre conférence annuelle incluent déjà une adhésion d'un an.",
       become: "Devenir membre",
       manage: "Gérer mon adhésion",
+      // Awaiting a hand translation: null falls back to homeJoin.heading.
+      seeYouIn: null,
       subscribe: "S'abonner à notre lettre d'information",
       youtube: "Suivre notre chaîne YouTube",
     },
@@ -1844,6 +1848,8 @@ const locales = {
       ticketLine: "Tickets für unsere Jahreskonferenz beinhalten bereits eine einjährige Mitgliedschaft.",
       become: "Mitglied werden",
       manage: "Mitgliedschaft verwalten",
+      // Awaiting a hand translation: null falls back to homeJoin.heading.
+      seeYouIn: null,
       subscribe: "Newsletter abonnieren",
       youtube: "Unserem YouTube-Kanal folgen",
     },

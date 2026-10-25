@@ -1997,79 +1997,110 @@ h4 { font-size: var(--fs-lg); }
 }
 
 /* ---------- home-join ----------
-   Homepage join panel (home-join.njk): the membership offer on its accent
-   panel, with a newsletter card beside it from 860px, stacked below. */
+   Homepage join band (home-join.njk): one accent band holding the
+   membership offer and, from 860px, the newsletter beside it behind a
+   rule. Text, buttons and focus rings take --accent-text, the colour set
+   for type on --accent in each theme. */
 .home-join {
   display: grid;
-  gap: var(--space-5);
+  background: var(--accent);
+  color: var(--accent-text);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
 }
 @media (min-width: 860px) {
-  .home-join { grid-template-columns: 1.6fr 1fr; align-items: stretch; }
+  .home-join { grid-template-columns: 2fr 1fr; }
 }
-.home-join__member {
-  padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));
-  background:
-    radial-gradient(900px circle at 0% 0%, var(--accent-soft) 0%, transparent 60%),
-    var(--bg-elev);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-2);
+.home-join__member,
+.home-join__news {
+  padding: clamp(var(--space-6), 3vw + 1rem, var(--space-8));
 }
-.home-join__member h2 {
-  font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.6rem);
+.home-join__title {
   margin: 0 0 var(--space-3);
+  font-size: clamp(2rem, 1.2rem + 2.6vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: inherit;
 }
 .home-join__lead {
-  color: var(--text-muted);
-  font-size: var(--fs-lg);
-  margin: 0 0 var(--space-5);
   max-width: 38rem;
+  margin: 0 0 var(--space-5);
+  font-size: var(--fs-lg);
+  font-weight: 500;
 }
 .home-join__tiers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
   margin: 0 0 var(--space-5);
   padding: 0;
   list-style: none;
-  max-width: 32rem;
 }
 .home-join__tiers li {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-4);
-  padding-block: var(--space-2);
-  border-bottom: 1px solid var(--border);
-}
-.home-join__tiers strong {
-  white-space: nowrap;
-  color: var(--accent);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-full);
+  font-size: var(--fs-sm);
 }
 .home-join__event {
-  display: grid;
-  gap: var(--space-1);
   margin: 0 0 var(--space-6);
   font-size: var(--fs-sm);
 }
-.home-join__event time {
-  color: var(--text-muted);
+.home-join__eyebrow {
+  display: block;
+  margin-bottom: var(--space-1);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 .home-join__actions {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
 }
-.home-join .home-join__news {
+.home-join__news {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   gap: var(--space-4);
+  border-top: 1px solid currentColor;
 }
-.home-join__icon {
-  display: inline-flex;
-  font-size: 2rem;
-  color: var(--accent);
+@media (min-width: 860px) {
+  .home-join__news { border-top: 0; border-left: 1px solid currentColor; }
 }
 .home-join__news-title {
   margin: 0;
+  color: inherit;
+}
+.home-join__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-weight: 600;
+}
+.home-join a:not(.btn) {
+  color: inherit;
+  text-decoration: underline;
+}
+/* Inverted buttons on the band: filled in --accent-text, or outlined. */
+.home-join .btn-primary,
+.home-join .btn-primary:hover,
+.home-join .btn-primary:focus-visible {
+  background: var(--accent-text);
+  color: var(--accent);
+  border-color: var(--accent-text);
+}
+.home-join .btn-secondary,
+.home-join .btn-secondary:hover {
+  background: transparent;
+  color: var(--accent-text);
+  border: 2px solid var(--accent-text);
+}
+.home-join :focus-visible {
+  outline-color: var(--accent-text);
 }
 
 /* ---------- footer ---------- */
