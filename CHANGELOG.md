@@ -99,6 +99,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
+- `/roadmap.html` has a quarter rail in all three languages. On wide screens it is a vertical timeline beside the cards that stays in view while scrolling, with one node per quarter (filled for quarters already shipped, ringed for the quarter with the release in progress, hollow for those ahead) and the version range under each. On phones it is a strip of chips pinned under the menu bar. Each entry jumps to its quarter, and the quarter in view is highlighted.
 - `/2027` introduces the two conference chairs, Prof. Filip Ejdus and Dr Arthur Laudrain, with the photo and position each carries on the Board page. In all three languages.
 - Blog posts can carry illustrations. An image in a post fills the text column with rounded corners and space above and below, and a captioned illustration shows its caption in smaller muted text beneath it. The convention for authors (where the files go, export size, alt text, captions, and reusing one file across the three languages) is written at the top of `src/blog/blog.11tydata.js`.
 - The University of Belgrade's Faculty of Political Science logo sits beside EISS and NetSec in the organisers strip on `/2027`, in all three languages.
@@ -120,6 +121,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- In-page links no longer land under the menu bar while the What's New banner is showing. The scroll offset counted the menu bar's height but not the banner above it, so headings reached by an anchor sat about 45px under the bar on every page.
 - The second day of the 2025 programme names its poster session "Poster session / Coffee break (continued)". The published programme lists the session and its three posters on both days, so both stay, and each day now has its own link target. Closes [#902](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/902).
 - **The 2025 posters are listed on `/2025.html`.** The poster session showed its title but none of its three posters. Appoline Roy's poster, which has no page of its own, linked from the Anthology Atlas to the top of `/2025.html`, where it did not appear. It now links to its entry in the programme.
 - **Atlas author links open the map again.** A link such as `/anthology-atlas.html?author=…` (the Atlas link on each Anthology author entry) showed "The atlas data could not be loaded" instead of the author's papers. Clicking an author on the map, or pressing Enter on one, froze the map the same way.

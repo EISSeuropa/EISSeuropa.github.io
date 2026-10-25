@@ -388,7 +388,13 @@
   var GAP = 12; /* px of breathing room below the chrome */
   function sync() {
     var chrome = document.querySelector(".sticky-chrome");
-    var h = chrome ? chrome.getBoundingClientRect().height : 0;
+    /* The chrome sticks below the fixed What's New banner (top:
+       var(--whats-new-h)), so its stuck bottom edge is that offset plus
+       its own height. Height alone left anchors under the chrome while
+       the banner showed. */
+    var h = chrome
+      ? (parseFloat(getComputedStyle(chrome).top) || 0) + chrome.getBoundingClientRect().height
+      : 0;
     document.documentElement.style.scrollPaddingTop = (h > 0 ? h + GAP : 0) + "px";
   }
   window.eissSyncScrollPadding = sync;

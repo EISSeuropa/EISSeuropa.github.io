@@ -148,6 +148,7 @@ const locales = {
       ctaIssue: "Suggest or report",
       ctaMilestones: "Browse milestones",
       ctaReleases: "All releases",
+      railLabel: "Jump to a quarter",
     },
 
     // Host-city map (essc-map.njk), on /initiative and the homepage. The
@@ -1032,6 +1033,7 @@ const locales = {
       ctaIssue: "Proposer ou signaler",
       ctaMilestones: "Voir les jalons",
       ctaReleases: "Toutes les versions",
+      railLabel: "Aller à un trimestre",
     },
 
     // Host-city map (essc-map.njk), on /initiative and the homepage. The
@@ -1793,6 +1795,7 @@ const locales = {
       ctaIssue: "Vorschlagen oder melden",
       ctaMilestones: "Meilensteine ansehen",
       ctaReleases: "Alle Versionen",
+      railLabel: "Zu einem Quartal springen",
     },
 
     // Host-city map (essc-map.njk), on /initiative and the homepage. The
