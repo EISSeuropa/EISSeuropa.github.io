@@ -47,6 +47,25 @@ build step: it never runs during a site build, and the committed mark does not
 change when the corpus does. Its `data/mark-candidates/` output is gitignored.
 Tracked in [#1253](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1253).
 
+### The 10th-anniversary marks (2027)
+
+Two marks for the anniversary year, chosen in
+[#1852](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1852) after
+a survey of how peers marked theirs. Both keep the EISS lockup unaltered and
+add lettering in Inter, outlined so the files need no font.
+
+| File | Use |
+|---|---|
+| `eiss-10-lockup.svg` | The anniversary logo: lockup, hairline divider, a "10" as tall as the lockup, "YEARS" over 2017–2027. Email header, signature, social banners. The pattern ESO used for its 50th. |
+| `eiss-10-name.svg` | "EISS10": the lockup with "10" at the wordmark's cap height in the network blue, read as one word. Profile pictures, and the name behind the #EISS10 hashtag. The pattern of CERN70 and Wikipedia 20. |
+
+Both follow the recolouring contract below. The export set (transparent
+logos, profile pictures, banners for X, Mastodon, Bluesky and LinkedIn, email
+header and signature) is generated off-repo by
+`scripts/derive-anniversary-logo.py <export-dir>`, which also rewrites these
+two masters. It needs `pip install fonttools brotli Pillow` and headless
+Chrome. Retire both marks from public profiles on 1 January 2028.
+
 ## Colours
 
 Sampled from the source PDF:
