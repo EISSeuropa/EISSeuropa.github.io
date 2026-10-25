@@ -38,6 +38,10 @@ on:
       - Sync publication matches
       - Refresh roadmap surfaces
       - Abstract coverage report
+      - Anniversary social queue
+      - Offboarding prompt
+      - Campaign metrics
+      - Feed to Bluesky
     types: [completed]
 
 permissions:

@@ -1,0 +1,64 @@
+# Monthly #EISS10 campaign measures (#1870).
+#
+# On the first of each month from February 2027 to January 2028, opens an
+# issue with last month's measures: the ones an open API gives filled in by
+# scripts/campaign-metrics.py, LinkedIn and X followers left for a person to
+# type (their APIs are gated or paid). The closed issues are the record the
+# June and December reports to the board are copied from.
+#
+# Optional configuration, each skipped with a note when absent:
+#   vars.BLUESKY_HANDLE                       Bluesky followers (#1856)
+#   secrets.MAILCHIMP_API_KEY, vars.MAILCHIMP_LIST_ID   newsletter subscribers
+#
+# Issues carry the `automated` label and the nearest open release
+# milestone (rule §10), and are assigned to the maintainer accounts.
+name: Campaign metrics
+
+on:
+  schedule:
+    - cron: "0 7 1 * *"
+  workflow_dispatch:
+    inputs:
+      month:
+        description: "Month to report, YYYY-MM (default: last month)"
+        required: false
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Open the month's issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INPUT: ${{ inputs.month }}
+          BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
+          MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
+          MAILCHIMP_LIST_ID: ${{ vars.MAILCHIMP_LIST_ID }}
+          ASSIGNEES: EISSeuropa,APB-LDN
+        run: |
+          set -euo pipefail
+          month="${INPUT:-$(date -u -d "$(date -u +%Y-%m-01) -1 day" +%Y-%m)}"
+          # The campaign year only, unless run by hand.
+          if [ -z "$INPUT" ] && { [[ "$month" < "2027-01" ]] || [[ "$month" > "2027-12" ]]; }; then
+            echo "Outside the anniversary year"; exit 0
+          fi
+          title="Campaign metrics: ${month}"
+          if gh issue list --state all --search "\"${title}\" in:title" --json number --jq '.[0].number' | grep -q .; then
+            echo "Already filed"; exit 0
+          fi
+          ms=$(gh api "repos/${GITHUB_REPOSITORY}/milestones?state=open&sort=due_on&direction=asc" \
+            --jq '[.[] | select(.due_on != null and .due_on >= (now | todate))][0].title // "Backlog — Under watch"')
+          {
+            echo "Measures for ${month}. Type the LinkedIn and X follower counts into the table, then close the issue. Targets and baselines: the PR strategy doc, tracker #1871."
+            echo
+            python3 scripts/campaign-metrics.py "$month"
+          } > /tmp/body.md
+          gh issue create --title "$title" --label automated --milestone "$ms" \
+            --assignee "$ASSIGNEES" --body-file /tmp/body.md

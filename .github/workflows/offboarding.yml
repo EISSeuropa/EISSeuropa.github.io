@@ -1,0 +1,60 @@
+# Offboarding prompt (#1869).
+#
+# Departures are recorded in src/_data/board.json with a roleEndDate, and
+# entries are never deleted. Every Monday this workflow lists the roles
+# that ended in the previous seven days (scripts/offboarding-due.py) and
+# opens one issue per leaver with the steps no tool can take for us:
+# inviting them to the EISS Alumni LinkedIn group (#1861) and confirming
+# they are happy to stay listed under "EISS community" on /board.
+#
+# Idempotent: an issue that already exists for the person is left alone.
+# Issues carry the `automated` label and the nearest open release
+# milestone (rule §10), and are assigned to the maintainer accounts.
+#
+# No third-party actions beyond checkout: the steps use the preinstalled
+# python3 and gh CLI with the runner's GITHUB_TOKEN.
+name: Offboarding prompt
+
+on:
+  schedule:
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  prompt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Open an issue per leaver
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ASSIGNEES: EISSeuropa,APB-LDN
+        run: |
+          set -euo pipefail
+          python3 scripts/offboarding-due.py > /tmp/due.tsv
+          [ -s /tmp/due.tsv ] || { echo "Nobody left this week"; exit 0; }
+          ms=$(gh api "repos/${GITHUB_REPOSITORY}/milestones?state=open&sort=due_on&direction=asc" \
+            --jq '[.[] | select(.due_on != null and .due_on >= (now | todate))][0].title // "Backlog — Under watch"')
+          while IFS=$'\t' read -r name role end; do
+            title="Offboarding: ${name}"
+            if gh issue list --state all --search "\"${title}\" in:title" --json number --jq '.[0].number' | grep -q .; then
+              echo "Already filed: ${name}"; continue
+            fi
+            cat > /tmp/body.md <<BODY
+          ${name} (${role}) left on ${end}, per \`src/_data/board.json\`.
+
+          - [ ] Thank them, and ask whether they are happy to stay listed under *EISS community* on /board
+          - [ ] Invite them to the EISS Alumni LinkedIn group (#1861)
+          - [ ] Optional: a short thank-you post, if they agree
+
+          Close this issue once done. Filed by the Offboarding prompt workflow (#1869).
+          BODY
+            gh issue create --title "$title" --label automated --milestone "$ms" \
+              --assignee "$ASSIGNEES" --body-file /tmp/body.md
+          done < /tmp/due.tsv

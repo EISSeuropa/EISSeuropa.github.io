@@ -1,0 +1,40 @@
+# Feed to Bluesky (#1867).
+#
+# After each deploy of master, posts any /feed.xml entry from the last three
+# days that the EISS Bluesky account has not posted yet
+# (scripts/feed-to-bluesky.py). Dormant until the board opens the account
+# (#1856) and the maintainer adds vars.BLUESKY_HANDLE and
+# secrets.BLUESKY_APP_PASSWORD (an app password, never the account one).
+# Without them the job is skipped.
+#
+# No third-party actions beyond checkout: the script uses only the Python
+# standard library.
+name: Feed to Bluesky
+
+on:
+  workflow_run:
+    workflows: [Build and deploy site]
+    types: [completed]
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: feed-to-bluesky
+  cancel-in-progress: false
+
+jobs:
+  post:
+    if: vars.BLUESKY_HANDLE != '' && (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Post new entries
+        env:
+          BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+        run: python3 scripts/feed-to-bluesky.py
