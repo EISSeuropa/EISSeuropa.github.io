@@ -7833,6 +7833,78 @@ a.joint-orgs-card:hover .joint-orgs-name {
 .rm-cta p { color: var(--text-muted); margin: 0 0 var(--space-4); }
 .rm-cta-links { display: flex; flex-wrap: wrap; gap: var(--space-3); }
 
+/* Quarter rail: jump links to each quarter. A sticky vertical timeline
+   beside the cards on wide screens, a strip of chips on phones that
+   roadmap-rail.js pins under the sticky chrome (.is-pinned). The node
+   colour follows the quarter's phase, and aria-current marks the
+   quarter in view. */
+.rm-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
+.rm-main, .rm-rail { min-width: 0; }
+.rm-rail-list { list-style: none; margin: 0; padding: 0; position: relative; }
+.rm-rail-link {
+  display: grid; grid-template-columns: 1rem 1fr; column-gap: var(--space-3);
+  align-items: center; color: var(--text-muted); text-decoration: none;
+  border-radius: var(--radius-sm);
+}
+.rm-rail-link:hover { color: var(--text); }
+.rm-rail-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.rm-rail-label { font-size: var(--fs-sm); font-weight: 600; line-height: 1.4; }
+.rm-rail-meta { grid-column: 2; font-size: var(--fs-xs); color: var(--text-subtle); font-variant-numeric: tabular-nums; }
+.rm-rail-node {
+  width: 0.75rem; height: 0.75rem; border-radius: 50%; justify-self: center;
+  position: relative; z-index: 1; box-sizing: border-box;
+  border: 2px solid var(--border-strong); background: var(--bg);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.rm-rail-item--past .rm-rail-node { --rm-node: hsl(140 50% 38%); border-color: var(--rm-node); background: var(--rm-node); }
+.rm-rail-item--current .rm-rail-node { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+.rm-rail-item--watch .rm-rail-node { border-style: dashed; border-color: hsl(33 78% 45%); }
+.rm-rail-link[aria-current] { color: var(--accent); }
+.rm-rail-link[aria-current] .rm-rail-node { transform: scale(1.3); }
+
+@media (max-width: 55.99rem) {
+  .rm-rail { margin-inline: -1rem; padding-inline: 1rem; }
+  .rm-rail.is-pinned {
+    position: sticky; top: var(--rm-rail-top, 4.5rem); z-index: 10;
+    background: var(--bg); border-bottom: 1px solid var(--border);
+  }
+  .rm-rail-list {
+    display: flex; gap: var(--space-2); overflow-x: auto; padding: var(--space-2) 0;
+    scrollbar-width: none;
+  }
+  .rm-rail-list::-webkit-scrollbar { display: none; }
+  .rm-rail-link {
+    display: inline-flex; gap: var(--space-2); min-height: 44px; white-space: nowrap;
+    padding: 0 var(--space-3); border: 1px solid var(--border);
+    border-radius: var(--radius-full); background: var(--surface);
+  }
+  .rm-rail-meta { display: none; }
+  .rm-rail-link[aria-current] { border-color: var(--accent); background: var(--accent-soft); }
+  .rm-rail-link[aria-current] .rm-rail-node { transform: none; }
+  /* Room for the pinned strip on top of the chrome's scroll-padding. */
+  .rm-quarter { scroll-margin-top: 4.5rem; }
+}
+
+@media (min-width: 56rem) {
+  .rm-layout { grid-template-columns: 10.5rem minmax(0, 1fr); gap: var(--space-7); align-items: start; }
+  .rm-rail { position: sticky; top: 8rem; margin-top: var(--space-1); }
+  .rm-rail-item { position: relative; }
+  .rm-rail-link { padding: var(--space-2) 0; row-gap: 0.1rem; }
+  /* One segment per item, from its node down to the next one. Dashed
+     while the quarter is still ahead, solid once it is under way. */
+  .rm-rail-item::before {
+    content: ""; position: absolute; left: calc(0.5rem - 1px);
+    top: calc(var(--space-2) + 0.7rem); bottom: calc(-1 * (var(--space-2) + 0.7rem));
+    border-left: 2px solid var(--border);
+  }
+  .rm-rail-item--future::before { border-left-style: dashed; border-left-color: var(--border-strong); }
+  .rm-rail-item:last-child::before,
+  .rm-rail-item:has(+ .rm-rail-item--watch)::before { display: none; }
+  .rm-rail-item--watch { margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--border); }
+}
+
+@media print { .rm-rail { display: none; } }
+
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .rm-pill.shipped, :root:not([data-theme="light"]) .rm-pill.held { --rm-c: hsl(140 55% 68%); --rm-bg: hsl(140 55% 55% / 0.18); --rm-bd: hsl(140 55% 55% / 0.32); }
   :root:not([data-theme="light"]) .rm-pill.deferred { --rm-c: hsl(40 90% 66%); --rm-bg: hsl(40 90% 55% / 0.16); --rm-bd: hsl(40 90% 55% / 0.32); }
@@ -7841,7 +7913,7 @@ a.joint-orgs-card:hover .joint-orgs-name {
 [data-theme="dark"] .rm-pill.deferred { --rm-c: hsl(40 90% 66%); --rm-bg: hsl(40 90% 55% / 0.16); --rm-bd: hsl(40 90% 55% / 0.32); }
 
 @media (prefers-reduced-motion: reduce) {
-  .rm-progress-fill { transition: none; }
+  .rm-progress-fill, .rm-rail-node { transition: none; }
 }
 
 /* "Add to calendar" link on each Indico event row (issue #60). The row

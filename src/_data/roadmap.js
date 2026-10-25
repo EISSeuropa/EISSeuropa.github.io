@@ -370,9 +370,29 @@ roadmap.lastShipped = roadmap.quarters
 // lastShipped lookup read them in that order), so the reversal happens here.
 // Copies, not Array#reverse in place: Nunjucks' `reverse` filter mutates, and
 // the same data object renders three locales.
+//
+// Each quarter also carries what the jump rail beside the timeline needs: an
+// anchor id shared by all three locales ("q2-2027"), its version tags, and a
+// phase. "current" is the quarter holding the next planned release, the same
+// card roadmap-progress.js promotes to In progress.
+// Versions arrive oldest first: two read as a list, more as a range.
+const rangeLabel = (v) => (v.length > 2 ? `${v[0]}–${v[v.length - 1]}` : v.join(" · "));
+const nextUp = roadmap.quarters
+  .flatMap((q) => q.entries)
+  .find((e) => e.status === "planned" && e.version);
 roadmap.timeline = roadmap.quarters
   .slice()
   .reverse()
-  .map((q) => ({ ...q, entries: q.entries.slice().reverse() }));
+  .map((q) => ({
+    ...q,
+    entries: q.entries.slice().reverse(),
+    id: q.label.en.toLowerCase().replace(/\s+/g, "-"),
+    versions: rangeLabel(q.entries.filter((e) => e.version).map((e) => e.version)),
+    phase: q.entries.includes(nextUp)
+      ? "current"
+      : q.entries.every((e) => e.status === "shipped" || e.status === "held")
+        ? "past"
+        : "future",
+  }));
 
 module.exports = roadmap;
