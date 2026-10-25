@@ -7835,7 +7835,7 @@ a.joint-orgs-card:hover .joint-orgs-name {
 
 /* Quarter rail: jump links to each quarter. A sticky vertical timeline
    beside the cards on wide screens, a strip of chips on phones that
-   roadmap-rail.js pins under the sticky chrome (.is-pinned). The node
+   roadmap-rail.js pins under the sticky chrome (.rm-rail--pinned). The node
    colour follows the quarter's phase, and aria-current marks the
    quarter in view. */
 .rm-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
@@ -7864,7 +7864,7 @@ a.joint-orgs-card:hover .joint-orgs-name {
 
 @media (max-width: 55.99rem) {
   .rm-rail { margin-inline: -1rem; padding-inline: 1rem; }
-  .rm-rail.is-pinned {
+  .rm-rail--pinned {
     position: sticky; top: var(--rm-rail-top, 4.5rem); z-index: 10;
     background: var(--bg); border-bottom: 1px solid var(--border);
   }
@@ -7879,7 +7879,8 @@ a.joint-orgs-card:hover .joint-orgs-name {
     border-radius: var(--radius-full); background: var(--surface);
   }
   .rm-rail-meta { display: none; }
-  .rm-rail-link[aria-current] { border-color: var(--accent); background: var(--accent-soft); }
+  /* Body text on the tinted chip: accent on accent-soft fails AA in light mode. */
+  .rm-rail-link[aria-current] { color: var(--text); border-color: var(--accent); background: var(--accent-soft); }
   .rm-rail-link[aria-current] .rm-rail-node { transform: none; }
   /* Room for the pinned strip on top of the chrome's scroll-padding. */
   .rm-quarter { scroll-margin-top: 4.5rem; }

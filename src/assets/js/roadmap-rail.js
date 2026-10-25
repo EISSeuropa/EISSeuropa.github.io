@@ -26,7 +26,7 @@
   var chrome = document.querySelector(".sticky-chrome");
   var current = -1;
 
-  rail.classList.add("is-pinned");
+  rail.classList.add("rm-rail--pinned");
 
   function pin() {
     var bottom = chrome ? chrome.getBoundingClientRect().bottom : 0;
