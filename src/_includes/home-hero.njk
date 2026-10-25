@@ -1,0 +1,60 @@
+{# Homepage hero: the conferences.heroEdition photo behind the next
+   conference's host city in display type, with its dates, venue, organisers,
+   countdown and registration badge. Between editions (no conferences.next)
+   it falls back to the initiative's name and tagline, with the newsletter as
+   the call to action. The photo band stays dark in both themes so the white
+   type keeps its contrast. Shared by the three locales. #}
+{% from "icons.njk" import icon %}
+{%- set _lang = lang or "en" -%}
+{%- set t = i18n[_lang] -%}
+{%- set conf = conferences.next -%}
+{%- set heroImg = conferences.heroEdition.heroImage if conferences.heroEdition -%}
+<section class="hero home-hero{% if conf %} home-hero--next{% endif %}" aria-labelledby="hero-title">
+  {%- if heroImg %}
+  <div class="hero-bg" aria-hidden="true">
+    <img src="{{ heroImg }}-1600x900.jpg"
+         srcset="{{ heroImg }}-480x270.jpg 480w,
+                 {{ heroImg }}-800x450.jpg 800w,
+                 {{ heroImg }}-1600x900.jpg 1600w"
+         sizes="100vw"
+         alt=""
+         loading="eager"
+         fetchpriority="high"
+         width="1600" height="900">
+  </div>
+  {%- endif %}
+  <div class="container hero-inner home-hero__inner">
+    {%- if conf %}
+    <h1 id="hero-title" class="home-hero__title reveal">{{ t.home.title }}</h1>
+    <p class="home-hero__city reveal reveal-delay-1"><span class="home-hero__eyebrow">{{ t.home.nextConference }}</span> {{ (conf.cityLabel and conf.cityLabel[_lang]) or conf.city }}<span class="home-hero__stop" aria-hidden="true">.</span></p>
+    <div class="home-hero__row reveal reveal-delay-2">
+      <div class="home-hero__when">
+        <p class="home-hero__dates">{{ conf.dates[_lang] }} · {{ conf.venue[_lang] }}</p>
+        <p class="home-hero__orgs">{{ conf.organisers[_lang] }}</p>
+        <div class="home-hero__status">
+          {% set year = conf.year %}
+          {% include "countdown.njk" %}
+          {#- While the conference is current the Livestream pill is the call
+              to action, so the badge drops its own "View on Indico" link. #}
+          {%- set hideBadgeCta = conf.livestreamUrl and conf.endDate >= conferences.today -%}
+          {% include "registration-badge.njk" %}
+          {%- if conf.livestreamUrl and conf.endDate >= conferences.today %}
+          <a class="programme-live-tag" href="{{ conf.livestreamUrl }}" target="_blank" rel="noopener">{{ icon("video") }} Livestream {{ icon("external-link") }}</a>
+          {%- endif %}
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="{{ ('/' + conf.slug + '.html') | localizedHref(_lang) }}">{{ t.home.discover | replace("{year}", conf.year) }} {{ icon("arrow-right") }}</a>
+        <a class="btn btn-ghost" href="{{ site.newsletterUrl }}" target="_blank" rel="noopener">{{ icon("bell") }} {{ t.homeJoin.subscribe }}</a>
+      </div>
+    </div>
+    {%- else %}
+    <h1 id="hero-title" class="reveal">{{ t.home.title }}</h1>
+    <p class="hero-tagline reveal reveal-delay-1">{{ t.home.tagline }}</p>
+    <div class="hero-actions reveal reveal-delay-2">
+      <a class="btn btn-primary" href="{{ site.newsletterUrl }}" target="_blank" rel="noopener">{{ icon("bell") }} {{ t.homeJoin.subscribe }}</a>
+      <a class="btn btn-ghost" href="{{ '/initiative.html' | localizedHref(_lang) }}">{{ t.home.about }}</a>
+    </div>
+    {%- endif %}
+  </div>
+</section>

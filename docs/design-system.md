@@ -306,7 +306,7 @@ the rendered style guide cannot disagree.
 - **`registration-badge.njk`** — status pill (`not-yet-open` / `upcoming` /
   `registration-closed` / `happening-now` / `past`) computed from
   `conferences.js` dates + `registrationStatus`. Only `"open"` shows
-  "Registration open". Unset means not yet open. On `/2026` and the homepage featured card.
+  "Registration open". Unset means not yet open. On `/2026` and the homepage hero.
 - **`countdown.njk`** — "N days until ESSC" pill; rendered at build
   (`daysUntil`) and recomputed live in theme.js.
 - **`conference-media.njk`** — data-driven "Session recordings" block;
@@ -319,7 +319,7 @@ the rendered style guide cannot disagree.
   "Livestream" pills become links to it (the `.programme-live-tag`
   signpost and each streamed session's `.programme-slot-live`, each with
   an external-link icon), the hero gains a `.hero-watch-live` button
-  (pulsing live dot), and the homepage featured card shows the pill.
+  (pulsing live dot), and the homepage hero shows the pill.
   Plain outbound link, no embed; reverts to plain markers once the
   edition is past.
 - **`event-jsonld.njk`** — schema.org `Event` structured data built from
