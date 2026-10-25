@@ -111,7 +111,9 @@ module.exports = {
   // Homepage partner strip (home-partners.njk). Only partners whose logo is
   // already published on the site, with their agreement: add one when both
   // the file and the OK are in hand. Names in each locale are the forms the
-  // conference organiser lines already use.
+  // conference organiser lines already use. The strip sits under the
+  // host-city timeline and names the next conference's partners, so the
+  // host institution changes at each rollover (docs/new-conference.md).
   homePartners: [
     {
       name: { en: "COST Action NetSec", fr: "Action COST NetSec", de: "COST-Aktion NetSec" },
@@ -124,9 +126,13 @@ module.exports = {
       logo: "/assets/images/brand/jss-logo.svg",
     },
     {
-      name: { en: "Stockholm University", fr: "Université de Stockholm", de: "Universität Stockholm" },
-      url: "https://www.su.se/",
-      logo: "/assets/images/partners/stockholm-university.svg",
+      name: {
+        en: "University of Belgrade, Faculty of Political Science",
+        fr: "Université de Belgrade, Faculté de sciences politiques",
+        de: "Universität Belgrad, Fakultät für Politikwissenschaften",
+      },
+      url: "https://www.fpn.bg.ac.rs/",
+      logo: "/assets/images/partners/belgrade-fpn.png",
     },
   ],
 
