@@ -1344,18 +1344,165 @@ h4 { font-size: var(--fs-lg); }
   color: hsl(0 0% 100% / 0.85);
 }
 
+/* ---------- home-hero ----------
+   Homepage hero (home-hero.njk) while a conference is next: the host city
+   in display type at the foot of a tall photo band, with the dates, status
+   and actions beside it. Builds on the shared .hero. The band is dark in
+   both themes, so the type stays white. */
+.home-hero--next {
+  display: flex;
+  align-items: flex-end;
+  min-height: min(52rem, 88svh);
+  padding-block: var(--space-9) var(--space-7);
+}
+.home-hero--next .hero-bg::after {
+  background: linear-gradient(180deg, hsl(220 50% 6% / 0.5) 0%, hsl(220 50% 6% / 0.4) 30%, hsl(220 50% 6% / 0.88) 70%, hsl(220 50% 6% / 0.96) 100%);
+}
+/* Full container width (not .hero-inner's 52rem), and as a flex child it
+   needs the container's width restated. */
+.home-hero__inner {
+  width: min(100% - 2rem, var(--content-max));
+  max-width: none;
+}
+.home-hero--next .home-hero__title {
+  margin: 0 0 var(--space-5);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  letter-spacing: 0;
+  color: hsl(0 0% 100% / 0.88);
+}
+.home-hero__city {
+  margin: 0;
+  font-size: clamp(3.25rem, 0.5rem + 11vw, 12.5rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  color: white;
+  overflow-wrap: break-word;
+}
+.home-hero__eyebrow {
+  display: block;
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brand-network);
+}
+.home-hero__stop { color: var(--brand-network); }
+.home-hero__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-5) var(--space-7);
+  margin-top: var(--space-6);
+}
+.home-hero__when {
+  flex: 1 1 26rem;
+  min-width: 0;
+}
+.home-hero__dates {
+  margin: 0 0 var(--space-2);
+  font-size: clamp(var(--fs-lg), 0.9rem + 1vw, var(--fs-xl));
+  font-weight: 500;
+  line-height: var(--lh-snug);
+  color: white;
+}
+.home-hero__orgs {
+  max-width: 44rem;
+  margin: 0 0 var(--space-4);
+  font-size: var(--fs-sm);
+  color: hsl(0 0% 100% / 0.85);
+}
+.home-hero__status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+.home-hero__status .countdown { margin: 0; }
+
+/* ---------- home-map ----------
+   Homepage host-city timeline (home-map.njk): a ruled row of cities with a
+   dot on the rule for each, the next host in the accent. Wraps into rows on
+   narrow screens. */
+.home-map__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4) var(--space-7);
+  margin-bottom: var(--space-7);
+}
+.home-map__head h2 {
+  max-width: 24ch;
+  margin: var(--space-2) 0 0;
+  font-size: clamp(var(--fs-xl), 1rem + 2vw, var(--fs-2xl));
+  letter-spacing: var(--tracking-display);
+  text-wrap: balance;
+}
+.home-map__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  row-gap: var(--space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.home-map__stop {
+  position: relative;
+  padding: var(--space-5) var(--space-3) 0 0;
+  border-top: 2px solid var(--border-strong);
+}
+.home-map__stop::before {
+  content: "";
+  position: absolute;
+  top: -0.5rem;
+  left: 0;
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 50%;
+  background: var(--text-subtle);
+}
+.home-map__stop a {
+  display: block;
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+.home-map__stop a:hover,
+.home-map__stop a:focus-visible { text-decoration: underline; }
+.home-map__years {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+.home-map__stop--next { border-top-color: var(--accent); }
+.home-map__stop--next::before {
+  top: -0.625rem;
+  left: -0.125rem;
+  width: 1.125rem;
+  height: 1.125rem;
+  background: var(--accent);
+  box-shadow: 0 0 0 6px var(--accent-soft);
+}
+.home-map__stop--next a { color: var(--accent); }
+
 /* ---------- home-stats ----------
-   Proof strip under the homepage hero (home-stats.njk): the Anthology
-   counts, each a link. Three columns at every width; the labels wrap. */
+   Homepage figures (home-stats.njk): the Anthology counts in display type
+   between two rules, each a link. Three columns at every width, the labels
+   wrap. */
 .home-stats {
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
+  border-block: 1px solid var(--border);
 }
 .home-stats__list {
   display: grid;
   /* minmax(0, …): "communications présentées" must not push the third
      column off a 320px screen (RGAA 10.11). */
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1363,11 +1510,9 @@ h4 { font-size: var(--fs-lg); }
 .home-stats__item {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: var(--space-1);
+  gap: var(--space-2);
   height: 100%;
-  padding: var(--space-5) var(--space-2);
-  text-align: center;
+  padding-block: clamp(var(--space-6), 4vw, var(--space-8));
   text-decoration: none;
   color: inherit;
 }
@@ -1376,11 +1521,11 @@ h4 { font-size: var(--fs-lg); }
   text-decoration: underline;
 }
 .home-stats__num {
-  font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.75rem);
-  font-weight: 700;
+  font-size: clamp(2.25rem, 1rem + 5vw, 5.5rem);
+  font-weight: 800;
   line-height: 1;
-  letter-spacing: -0.02em;
-  color: var(--accent);
+  letter-spacing: -0.045em;
+  color: var(--text);
 }
 .home-stats__label {
   font-size: var(--fs-sm);
@@ -1390,117 +1535,118 @@ h4 { font-size: var(--fs-lg); }
   hyphens: auto;
 }
 
-/* ---------- home-paper ----------
-   Homepage featured Anthology paper (home-paper.njk): eyebrow, linked
-   title, authors, the opening of the abstract, and a link on. */
-.home-paper {
-  max-width: 52rem;
+/* ---------- home-record ----------
+   Homepage band for the record (home-record.njk): what the EISS does as a
+   ruled list beside the Anthology card, which holds a name search and the
+   paper of the day. Stacks below 960px. */
+.home-record {
+  padding-block: clamp(var(--space-8), 5vw, var(--space-9));
+  background: var(--bg-tinted);
+  border-block: 1px solid var(--border);
 }
-.home-paper__title {
-  font-size: var(--fs-xl);
-  margin: var(--space-2) 0 var(--space-2);
-  text-wrap: balance;
-}
-.home-paper__title a {
-  color: inherit;
-  text-decoration: none;
-}
-.home-paper__title a:hover,
-.home-paper__title a:focus-visible {
-  text-decoration: underline;
-}
-.home-paper__authors {
-  color: var(--text-muted);
-  font-size: var(--fs-sm);
-  margin: 0 0 var(--space-4);
-}
-.home-paper__abstract {
-  margin: 0 0 var(--space-4);
-  max-width: 65ch;
-}
-
-/* ---------- home-map ----------
-   Homepage host-city section (home-map.njk): text beside the shared
-   essc-map.njk on wide screens, stacked on narrow ones. */
-.home-map {
+.home-record__grid {
   display: grid;
-  gap: var(--space-6);
-  align-items: center;
+  gap: var(--space-8);
+  align-items: start;
 }
-@media (min-width: 860px) {
-  .home-map {
-    grid-template-columns: 1fr minmax(0, 32rem);
+@media (min-width: 960px) {
+  .home-record__grid {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: var(--space-9);
   }
 }
-.home-map__text h2 {
-  margin: var(--space-2) 0 var(--space-3);
+.home-record__label {
+  margin: 0 0 var(--space-4);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
-/* Scoped under .home-map to outrank .card's own padding, which is
-   declared later in the file. */
-.home-map .home-map__figure {
-  margin: 0;
-  padding: var(--space-3);
-}
-
-/* ---------- home-pillars ----------
-   Homepage activities row (home-pillars.njk): four linked cards, the
-   whole card clickable through the title link's ::after. */
-.home-pillars {
-  display: grid;
-  gap: var(--space-4);
+.home-record__list {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-/* 2, then 4 columns: four cards never leave an orphan. */
-@media (min-width: 560px) {
-  .home-pillars { grid-template-columns: repeat(2, 1fr); }
-}
-@media (min-width: 1100px) {
-  .home-pillars { grid-template-columns: repeat(4, 1fr); }
-}
-.home-pillars .home-pillars__item {
+.home-record__item {
   position: relative;
-  padding: var(--space-5);
+  padding: var(--space-4) 0 var(--space-5);
+  border-top: 2px solid var(--text);
 }
-.home-pillars__icon {
-  display: inline-flex;
-  font-size: 1.5rem;
-  color: var(--accent);
-  margin-bottom: var(--space-3);
-}
-.home-pillars__title {
+.home-record__title {
+  margin: 0 0 var(--space-1);
   font-size: var(--fs-lg);
-  margin: 0 0 var(--space-2);
 }
-.home-pillars__title a {
+.home-record__title a {
   color: inherit;
   text-decoration: none;
 }
-.home-pillars__title a::after {
+/* The whole row is the link, through the title's ::after. */
+.home-record__title a::after {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: inherit;
 }
-.home-pillars__item:hover .home-pillars__title a,
-.home-pillars__title a:focus-visible {
-  text-decoration: underline;
-}
-.home-pillars__body {
+.home-record__item:hover .home-record__title a,
+.home-record__title a:focus-visible { text-decoration: underline; }
+.home-record__body {
   margin: 0;
   font-size: var(--fs-sm);
   color: var(--text-muted);
 }
-/* Phone: a compact 2 x 2 of icon and title, the one-liners dropped, so
-   the row is a quarter of the height of four stacked cards. Last in the
-   section so it outranks the base rules above. */
-@media (max-width: 559px) {
-  .home-pillars { grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
-  .home-pillars .home-pillars__item { padding: var(--space-4); }
-  .home-pillars__icon { margin-bottom: var(--space-2); }
-  .home-pillars__title { font-size: var(--fs-base); margin: 0; }
-  .home-pillars__body { display: none; }
+/* Scoped under .home-record to outrank .card's own padding, which is
+   declared later in the file. */
+.home-record .home-record__anth {
+  padding: 0;
+  overflow: hidden;
+}
+.home-record__anth-main,
+.home-record__paper {
+  padding: clamp(var(--space-5), 4vw, var(--space-7));
+}
+.home-record__anth-title {
+  margin: var(--space-2) 0 var(--space-3);
+  font-size: clamp(var(--fs-xl), 1rem + 2vw, var(--fs-2xl));
+  letter-spacing: var(--tracking-display);
+  text-wrap: balance;
+}
+.home-record__search {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}
+.home-record__search input {
+  flex: 1 1 14rem;
+  min-width: 0;
+  min-height: 3rem;
+  padding: 0 var(--space-4);
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-full);
+}
+.home-record__paper { border-top: 1px solid var(--border); }
+.home-record__paper-title {
+  margin: var(--space-2) 0;
+  font-size: var(--fs-lg);
+  text-wrap: balance;
+}
+.home-record__paper-title a {
+  color: inherit;
+  text-decoration: none;
+}
+.home-record__paper-title a:hover,
+.home-record__paper-title a:focus-visible { text-decoration: underline; }
+.home-record__paper-authors {
+  margin: 0 0 var(--space-3);
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+.home-record__paper-abstract {
+  margin: 0 0 var(--space-3);
+  font-size: var(--fs-sm);
 }
 
 /* ---------- home-partners ----------

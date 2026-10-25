@@ -163,7 +163,7 @@ const locales = {
       archive: "Full conference archive",
     },
 
-    // Homepage activities row (home-pillars.njk). The network strings are the
+    // Homepage activities list (home-record.njk). The network strings are the
     // /events page's own, the members' line the homepage join paragraph's.
     homePillars: {
       heading: "Activities",
@@ -200,6 +200,11 @@ const locales = {
     // Homepage film band (home-film.njk).
     home: {
       reviewEyebrow: "In review",
+      title: "The European Initiative for Security Studies",
+      tagline: "The largest and most diverse European gathering of scholars and practitioners on security issues.",
+      nextConference: "Next conference",
+      discover: "Discover ESSC {year}",
+      about: "About the initiative",
       learnMore: "Learn more about ESSC {year}",
     },
 
@@ -1048,7 +1053,7 @@ const locales = {
       archive: "Archive complète des conférences",
     },
 
-    // Homepage activities row (home-pillars.njk). The network strings are the
+    // Homepage activities list (home-record.njk). The network strings are the
     // /events page's own, the members' line the homepage join paragraph's.
     homePillars: {
       heading: "Activités",
@@ -1085,6 +1090,11 @@ const locales = {
     // Homepage film band (home-film.njk).
     home: {
       reviewEyebrow: "En rétrospective",
+      title: "L'Initiative européenne pour les études de sécurité",
+      tagline: "Le plus grand et le plus divers rassemblement européen de chercheurs et praticiens sur les questions de sécurité.",
+      nextConference: "Prochaine conférence",
+      discover: "Découvrir l'ESSC {year}",
+      about: "À propos de l'Initiative",
       learnMore: "En savoir plus sur l'ESSC {year}",
     },
 
@@ -1810,7 +1820,7 @@ const locales = {
       archive: "Vollständiges Konferenz-Archiv",
     },
 
-    // Homepage activities row (home-pillars.njk). The network strings are the
+    // Homepage activities list (home-record.njk). The network strings are the
     // /events page's own, the members' line the homepage join paragraph's.
     homePillars: {
       heading: "Aktivitäten",
@@ -1847,6 +1857,11 @@ const locales = {
     // Homepage film band (home-film.njk).
     home: {
       reviewEyebrow: "Rückblick",
+      title: "Die Europäische Initiative für Sicherheitsstudien",
+      tagline: "Die größte und vielfältigste europäische Versammlung von Wissenschaftlern und Praktikern zu Sicherheitsfragen.",
+      nextConference: "Nächste Konferenz",
+      discover: "ESSC {year} entdecken",
+      about: "Über die Initiative",
       learnMore: "Mehr über die ESSC {year} erfahren",
     },
 

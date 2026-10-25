@@ -109,7 +109,7 @@ missing, not one that is out of date.
 
 ## Pre-conference extras (the weeks before an ESSC)
 
-- `/index` featured card and `/YYYY` show the correct **registration
+- `/index` hero and `/YYYY` show the correct **registration
   status** (`conferences.js` `registrationStatus`), and the countdown
   reads right.
 - The `/YYYY` **programme grid** reflects the latest Indico sync; the

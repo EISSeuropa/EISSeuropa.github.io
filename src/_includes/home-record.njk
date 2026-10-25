@@ -1,0 +1,55 @@
+{# Homepage band for the record between conferences: what the EISS does as a
+   ruled list (left) beside an Anthology card (right) holding a name search
+   that hands off to /anthology?q= and the featured paper of the day
+   (src/_data/featuredPaper.js). Every string is existing hand-translated
+   copy (nav labels, prizes.lead, esscMap.lead, homePillars.*, navigator.*,
+   speakers.find*). Paper metadata is English-only, hence lang="en" on it. #}
+{% from "icons.njk" import icon %}
+{%- set _lang = lang or "en" -%}
+{%- set t = i18n[_lang] -%}
+{%- set hp = t.homePillars -%}
+{%- set nav = t.navigator -%}
+{%- set _anth = "/anthology.html" | localizedHref(_lang) -%}
+{%- set fp = featuredPaper.paper -%}
+{%- set _items = [
+  { title: t.nav.conferences, body: t.esscMap.lead, href: "/past.html" | localizedHref(_lang) },
+  { title: t.nav.prizes, body: t.prizes.lead, href: "/prizes.html" | localizedHref(_lang) },
+  { title: hp.networkTitle, body: hp.networkBody, href: ("/events.html" | localizedHref(_lang)) + "#network-events-heading" },
+  { title: t.pastEvents.sectionHeading, body: hp.membersBody, href: ("/membership.html" | localizedHref(_lang)) + "#become-a-member" }
+] -%}
+<section class="home-record" aria-label="{{ hp.heading }}">
+  <div class="container home-record__grid">
+    <div>
+      <h2 class="home-record__label">{{ hp.heading }}</h2>
+      <ul class="home-record__list" role="list">
+        {%- for it in _items %}
+        <li class="home-record__item">
+          <h3 class="home-record__title"><a href="{{ it.href }}">{{ it.title }}</a></h3>
+          <p class="home-record__body">{{ it.body }}</p>
+        </li>
+        {%- endfor %}
+      </ul>
+    </div>
+    <div class="home-record__anth card">
+      <div class="home-record__anth-main">
+        <span class="eyebrow">{{ nav.eyebrow }}</span>
+        <h2 id="home-record-anth" class="home-record__anth-title">{{ nav.title }}</h2>
+        <p>{{ nav.promoBody }}</p>
+        <form class="home-record__search" action="{{ _anth }}" method="get" role="search" aria-labelledby="home-record-anth">
+          <label class="sr-only" for="home-record-q">{{ t.speakers.findLabel }}</label>
+          <input id="home-record-q" name="q" type="search" placeholder="{{ t.speakers.findPlaceholder }}" autocomplete="off">
+          <button class="btn btn-primary" type="submit">{{ icon("search") }} {{ nav.cta }}</button>
+        </form>
+      </div>
+      {%- if fp %}
+      <article class="home-record__paper" aria-labelledby="home-record-paper">
+        <div class="featured-eyebrow">{{ t.nav.anthology }} · {{ fp.conferenceLabel }} {{ fp.year }}</div>
+        <h3 id="home-record-paper" class="home-record__paper-title" lang="en"><a href="{{ fp.paperUrl }}">{{ fp.title }}</a></h3>
+        <p class="home-record__paper-authors" lang="en">{{ fp.authors | join(", ") }}</p>
+        <p class="home-record__paper-abstract" lang="en">{{ fp.abstract | striptags | truncate(240) | markQuotes | safe }}</p>
+        <a class="link-arrow" href="{{ fp.paperUrl }}" aria-describedby="home-record-paper">{{ t.prizes.readEntry }} {{ icon("arrow-right", "icon-inline") }}</a>
+      </article>
+      {%- endif %}
+    </div>
+  </div>
+</section>

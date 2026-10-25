@@ -18,7 +18,7 @@ content you have ready.**
 ## 1. Add a structured entry to `src/_data/conferences.js`
 
 This drives the "Next conference" card on the homepage and the archive
-list on `/past`. The featured-card UI on the homepage swaps automatically
+list on `/past`. The homepage hero swaps automatically
 once `startDate` is in the future relative to today.
 
 Prepend a new object to the `conferences` array, newest first:
@@ -61,7 +61,7 @@ Prepend a new object to the `conferences` array, newest first:
 },
 ```
 
-After this lands, the homepage featured card and `/past` archive list
+After this lands, the homepage hero and `/past` archive list
 update on the next build. No template edits needed.
 
 The homepage hero follows the same entry. Its primary button reads
@@ -83,11 +83,12 @@ when the conference film exists, as
 and the homepage film band (`home-film.njk`) moves to it on the next build.
 Until then the band keeps showing the most recent edition that has one.
 
-The host-city map (`essc-map.njk`, on `/initiative` and the homepage)
-reads the same list: one dot per host city, the upcoming edition marked
-"next". A city that has not hosted before needs a row in `MAP_POINTS` in
-`conferences.js` (the formula for its position is in the comment above),
-or it is left off the map. A returning city needs nothing.
+The host-city map (`essc-map.njk`, on `/initiative`) and the homepage's
+host-city timeline (`home-map.njk`) read the same list: one entry per host
+city, the upcoming edition marked "next". A city that has not hosted before
+needs a row in `MAP_POINTS` in `conferences.js` (the formula for its
+position is in the comment above), or it is left off both. A returning city
+needs nothing.
 
 ## 2. Create the per-year page
 
@@ -163,7 +164,7 @@ python3 scripts/check-i18n-drift.py
 ```
 
 Both should succeed. Open `_site/index.html` and `_site/past.html` to
-check the featured card and archive list. Commit, push, merge.
+check the homepage hero and archive list. Commit, push, merge.
 
 ## When the conference is over
 
