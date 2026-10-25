@@ -248,15 +248,14 @@ alternates:
 
       <h3>Conformance status</h3>
       <p>
-        eiss-europa.com is <strong>partially conformant</strong> with RGAA&nbsp;{{ rgaaAudit.version }}.
+        eiss-europa.com is <strong>fully conformant</strong> with RGAA&nbsp;{{ rgaaAudit.version }}.
       </p>
       <p>
         An internal audit on <strong>9 October 2026</strong> found <strong>{{ rgaaAudit.rate }}&nbsp;% of the
         applicable criteria met</strong> on the pages listed below: {{ rgaaAudit.conformant }} criteria
-        conformant, {{ rgaaAudit.notApplicable }} not applicable, none non-conformant. The tests that call
-        for a screen reader were judged from the browser's accessibility tree and have not yet been repeated
-        with NVDA and VoiceOver. The status will read fully conformant once they have
-        (<a href="{{ rgaaAudit.pendingIssue }}" target="_blank" rel="noopener">tracked in public</a>).
+        conformant, {{ rgaaAudit.notApplicable }} not applicable, none non-conformant. On 25 October 2026 the tests that call
+        for a screen reader were repeated by hand with VoiceOver in Safari on macOS, and all passed. They have
+        not been repeated with NVDA, JAWS or TalkBack, or in other browsers.
       </p>
 
       <h3>Content that is not accessible</h3>
@@ -273,12 +272,12 @@ alternates:
 
       <h3>How this declaration was prepared</h3>
       <ul>
-        <li><strong>Date:</strong> 9 October 2026.</li>
+        <li><strong>Date:</strong> 9 October 2026, screen-reader checks on 25 October 2026.</li>
         <li><strong>Technologies the site relies on:</strong> HTML5, CSS, JavaScript, WAI-ARIA, SVG.</li>
         <li>
           <strong>Test environment:</strong> Google Chrome, headless, at 320, 375 and 1280 pixels wide, in the
-          light and dark colour schemes, with real keyboard input and Chrome's accessibility tree. No screen
-          reader was used for this audit.
+          light and dark colour schemes, with real keyboard input and Chrome's accessibility tree. The screen-reader
+          checks were run separately, by hand, with VoiceOver and Safari on macOS (25 October 2026).
         </li>
         <li>
           <strong>Tools:</strong> axe-core&nbsp;4.13, the site's own checks in the build and in the browser,
@@ -315,7 +314,7 @@ alternates:
       </ul>
 
       <p class="meta">
-        Statement prepared: 14 May 2026 · Last reviewed: 9 October 2026 · Next scheduled review:
+        Statement prepared: 14 May 2026 · Last reviewed: 25 October 2026 · Next scheduled review:
         14 May 2027 or upon major design change.
       </p>
     </article>
