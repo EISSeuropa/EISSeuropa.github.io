@@ -95,6 +95,9 @@ needs nothing.
 Copy `src/2026.njk` to `src/<YEAR>.njk` (and its FR/DE siblings) and:
 
 - Replace dates / city / venue / partner-logo references in the prose
+- Swap the host institution in `homePartners` in `src/_data/site.js` for
+  the new one (name in EN / FR / DE, URL, logo). The homepage partner
+  strip under the host-city timeline names the next conference's partners.
 - Replace the neighbourhoods tile grid with the new city's neighbourhoods
   (or the equivalent travel guidance)
 - Update the programme PDF reference (or leave the path empty until
