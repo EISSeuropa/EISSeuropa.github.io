@@ -99,6 +99,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
+- `/2027` introduces the two conference chairs, Prof. Filip Ejdus and Dr Arthur Laudrain, with the photo and position each carries on the Board page. In all three languages.
 - Blog posts can carry illustrations. An image in a post fills the text column with rounded corners and space above and below, and a captioned illustration shows its caption in smaller muted text beneath it. The convention for authors (where the files go, export size, alt text, captions, and reusing one file across the three languages) is written at the top of `src/blog/blog.11tydata.js`.
 - The University of Belgrade's Faculty of Political Science logo sits beside EISS and NetSec in the organisers strip on `/2027`, in all three languages.
 - The footer of every page carries the RGAA accessibility mention, "Accessibility: partially conformant" ("Accessibilité : partiellement conforme", "Barrierefreiheit: teilweise konform"), in place of the plain Accessibility link, and it leads to the declaration in §8 of the accessibility statement. The wording follows the status recorded for the audit, so it changes with the declaration.
