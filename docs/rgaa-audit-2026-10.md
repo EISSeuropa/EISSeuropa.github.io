@@ -1,6 +1,6 @@
 # RGAA 4.1.2 self-audit, October 2026
 
-The criterion-by-criterion record behind §8 of `/accessibility.html` (#1225). The page states **partially conformant** until the screen-reader checks in #1796 have been run. Improvements the audit noted without failing anything are in #1797. When the declaration changes, update `src/_data/rgaaAudit.json` and this file together.
+The criterion-by-criterion record behind §8 of `/accessibility.html` (#1225). The page states **fully conformant** since the screen-reader checks in #1796 passed with VoiceOver and Safari on 25 October 2026. The statement says they were not repeated with NVDA, JAWS or TalkBack, or in other browsers. Improvements the audit noted without failing anything are in #1797. When the declaration changes, update `src/_data/rgaaAudit.json` and this file together.
 
 ## Result
 
@@ -230,7 +230,7 @@ C conformant, NC non-conformant, NA not applicable. The first column links each 
 
 ## Screen-reader pass
 
-The checks in #1796, the ones the grid above judged from Chrome's accessibility tree. The declaration stays **partially conformant** until a person has run the VoiceOver + Safari script below and the NVDA + Firefox equivalent. Only the flashing check has a result so far.
+The checks in #1796, the ones the grid above judged from Chrome's accessibility tree. The maintainer ran the VoiceOver + Safari script below on 25 October 2026 and every check passed, so the declaration moved to **fully conformant**, with the restriction stated on the page: VoiceOver and Safari on macOS only. The NVDA + Firefox pass has not been run. Running it, or any other screen reader, is welcome but does not block the declaration. A failure found there reopens it.
 
 ### Flashing (13.7), 9 October 2026: pass
 
@@ -243,7 +243,7 @@ Both films were checked frame by frame against the WCAG 2.3.1 thresholds that RG
 
 This is still an automated reading. Watching both films once with the script below (step 5) confirms it by eye.
 
-### VoiceOver + Safari script (to run)
+### VoiceOver + Safari script (run 25 October 2026)
 
 Run on the deployed site, `https://eiss-europa.com`, which carries the fixes from PR #1798. The search count needs the Pagefind index, which only the deployed site has. Fill in the **Heard** and **Result** lines with what VoiceOver actually said, not what it should have said. VO means Control + Option.
 
@@ -310,18 +310,18 @@ Run on the deployed site, `https://eiss-europa.com`, which carries the fixes fro
 - c. Turn VoiceOver off and Voice Control on (System Settings → Accessibility → Voice Control). On `/board.html` say "Click View profile", and on `/anthology.html` say "Click NetSec profile". Expected: Voice Control finds the links (it numbers them when several match).
   Result: ______
 
-### NVDA + Firefox (to run)
+### NVDA + Firefox (not run)
 
 NVDA runs only on Windows, so it needs a Windows machine and a person. Run the same seven steps there with the latest NVDA and Firefox, using NVDA's own keys (Insert + F7 for the elements list, browse mode for reading, focus mode on the Atlas map).
 
-### Results so far
+### Results
 
 | Check | VoiceOver + Safari | NVDA + Firefox |
 |---|---|---|
-| 1. Atlas | to run | to run |
-| 2. Films | to run | to run |
-| 3. Mobile menu | to run | to run |
-| 4. Status messages | to run (search needs the deployed site) | to run |
-| 5. Flashing | pass by frame-level analysis (above). Watching once still to do | not screen-reader dependent |
-| 6. Language changes | to run | to run |
-| 7. Link names and voice control | to run | to run |
+| 1. Atlas | pass | not run |
+| 2. Films | pass | not run |
+| 3. Mobile menu | pass | not run |
+| 4. Status messages | pass (deployed site) | not run |
+| 5. Flashing | pass, by frame-level analysis (above) and by watching once | not screen-reader dependent |
+| 6. Language changes | pass | not run |
+| 7. Link names and voice control | pass | not run |

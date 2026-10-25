@@ -262,16 +262,15 @@ alternates:
 
       <h3>Stand der Konformität</h3>
       <p>
-        eiss-europa.com ist <strong>teilweise konform</strong> mit dem RGAA&nbsp;{{ rgaaAudit.version }}.
+        eiss-europa.com ist <strong>vollständig konform</strong> mit dem RGAA&nbsp;{{ rgaaAudit.version }}.
       </p>
       <p>
         Ein internes Audit vom <strong>9. Oktober 2026</strong> ergab, dass auf den unten aufgeführten
         Seiten <strong>{{ rgaaAudit.rate }}&nbsp;% der anwendbaren Kriterien erfüllt</strong> sind:
         {{ rgaaAudit.conformant }} Kriterien konform, {{ rgaaAudit.notApplicable }} nicht anwendbar,
-        keines nicht konform. Die Prüfungen, die einen Screenreader erfordern, wurden anhand des
-        Barrierefreiheitsbaums des Browsers bewertet und noch nicht mit NVDA und VoiceOver wiederholt.
-        Der Stand lautet „vollständig konform", sobald das geschehen ist
-        (<a href="{{ rgaaAudit.pendingIssue }}" target="_blank" rel="noopener" lang="en">öffentlich verfolgt</a>).
+        keines nicht konform. Am 25. Oktober 2026 wurden die Prüfungen, die einen
+        Screenreader erfordern, von Hand mit VoiceOver in Safari unter macOS wiederholt und alle bestanden.
+        Mit NVDA, JAWS oder TalkBack und in anderen Browsern wurden sie nicht wiederholt.
       </p>
 
       <h3>Nicht barrierefreie Inhalte</h3>
@@ -288,12 +287,13 @@ alternates:
 
       <h3>Erstellung dieser Erklärung</h3>
       <ul>
-        <li><strong>Datum:</strong> 9. Oktober 2026.</li>
+        <li><strong>Datum:</strong> 9. Oktober 2026, Screenreader-Prüfungen am 25. Oktober 2026.</li>
         <li><strong>Technologien, auf denen die Website beruht:</strong> HTML5, CSS, JavaScript, WAI-ARIA, SVG.</li>
         <li>
           <strong>Testumgebung:</strong> Google Chrome ohne Oberfläche, bei 320, 375 und 1280 Pixeln
           Breite, im hellen und im dunklen Farbschema, mit echter Tastatureingabe und dem
-          Barrierefreiheitsbaum von Chrome. Für dieses Audit wurde kein Screenreader verwendet.
+          Barrierefreiheitsbaum von Chrome. Die Screenreader-Prüfungen erfolgten
+          getrennt davon, von Hand, mit VoiceOver und Safari unter macOS (25. Oktober 2026).
         </li>
         <li>
           <strong>Werkzeuge:</strong> axe-core&nbsp;4.13, die eigenen Prüfungen der Website beim Erstellen
@@ -331,7 +331,7 @@ alternates:
       </ul>
 
       <p class="meta">
-        Erklärung erstellt: 14. Mai 2026 · Zuletzt überprüft: 9. Oktober 2026 · Nächste geplante
+        Erklärung erstellt: 14. Mai 2026 · Zuletzt überprüft: 25. Oktober 2026 · Nächste geplante
         Überprüfung: 14. Mai 2027 oder bei einer größeren Designänderung.
       </p>
     </article>
