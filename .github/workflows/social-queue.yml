@@ -1,0 +1,94 @@
+# Quarterly social queue for the anniversary year (#1866).
+#
+# LinkedIn's page-posting API needs partner approval and X's API is paid,
+# so the #EISS10 posts are scheduled by hand in each platform's own
+# scheduler, a quarter at a time. On the first of December, March, June
+# and September this workflow renders the next quarter's cards and
+# captions with scripts/make-anniversary-posts.py (#1865), uploads the
+# cards as a run artifact and opens an issue holding every caption with a
+# checkbox per platform. Ticking them all and closing the issue means the
+# quarter is queued. Outside 2027 the script finds no posts and no issue
+# is opened.
+#
+# Issues carry the `automated` label and the nearest open release
+# milestone (rule §10), and are assigned to the maintainer accounts.
+name: Anniversary social queue
+
+on:
+  schedule:
+    - cron: "0 7 1 3,6,9,12 *"
+  workflow_dispatch:
+    inputs:
+      quarter:
+        description: "Quarter to queue, e.g. 2027Q1 (default: the next one)"
+        required: false
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  queue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Install Python dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Pick the quarter
+        id: q
+        env:
+          INPUT: ${{ inputs.quarter }}
+        run: |
+          if [ -n "$INPUT" ]; then q="$INPUT"; else
+            y=$(date -u +%Y); m=$(date -u +%-m); n=$(( (m - 1) / 3 + 2 ))
+            if [ "$n" -gt 4 ]; then n=1; y=$((y + 1)); fi
+            q="${y}Q${n}"
+          fi
+          echo "quarter=$q" >> "$GITHUB_OUTPUT"
+
+      - name: Render cards and captions
+        env:
+          CHROME: /usr/bin/google-chrome
+        run: python3 scripts/make-anniversary-posts.py queue-out --quarter "${{ steps.q.outputs.quarter }}"
+
+      - name: Upload the cards
+        id: upload
+        if: hashFiles('queue-out/*.png') != ''
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: eiss10-${{ steps.q.outputs.quarter }}
+          path: queue-out/
+          retention-days: 90
+
+      - name: Open the queue issue
+        if: steps.upload.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          QUARTER: ${{ steps.q.outputs.quarter }}
+          CARDS: ${{ steps.upload.outputs.artifact-url }}
+          ASSIGNEES: EISSeuropa,APB-LDN
+        run: |
+          set -euo pipefail
+          title="Social queue: ${QUARTER} #EISS10 posts"
+          if gh issue list --state all --search "\"${title}\" in:title" --json number --jq '.[0].number' | grep -q .; then
+            echo "Queue for ${QUARTER} already exists"; exit 0
+          fi
+          ms=$(gh api "repos/${GITHUB_REPOSITORY}/milestones?state=open&sort=due_on&direction=asc" \
+            --jq '[.[] | select(.due_on != null and .due_on >= (now | todate))][0].title // "Backlog — Under watch"')
+          {
+            echo "Cards for this quarter: [download the zip](${CARDS}) (kept 90 days). Campaign tracker: #1871."
+            echo
+            cat queue-out/queue.md
+          } > /tmp/body.md
+          gh issue create --title "$title" --label automated --milestone "$ms" \
+            --assignee "$ASSIGNEES" --body-file /tmp/body.md
