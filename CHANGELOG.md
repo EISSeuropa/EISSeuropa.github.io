@@ -121,6 +121,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- Below 1120px the homepage host-city timeline is one vertical rail, a city and its years per line, instead of a two-column grid that repeated the rail on every row.
 - In-page links no longer land under the menu bar while the What's New banner is showing. The scroll offset counted the menu bar's height but not the banner above it, so headings reached by an anchor sat about 45px under the bar on every page.
 - The second day of the 2025 programme names its poster session "Poster session / Coffee break (continued)". The published programme lists the session and its three posters on both days, so both stay, and each day now has its own link target. Closes [#902](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/902).
 - **The 2025 posters are listed on `/2025.html`.** The poster session showed its title but none of its three posters. Appoline Roy's poster, which has no page of its own, linked from the Anthology Atlas to the top of `/2025.html`, where it did not appear. It now links to its entry in the programme.

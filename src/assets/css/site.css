@@ -1489,6 +1489,39 @@ h4 { font-size: var(--fs-lg); }
   box-shadow: 0 0 0 6px var(--accent-soft);
 }
 .home-map__stop--next a { color: var(--accent); }
+/* Below 70rem the eight stops no longer fit one row, and a wrapped row of
+   rails reads as a table. So the list becomes one vertical rail down the
+   left, a city and its years per line. The dot centres on the 2px rail
+   (left edge of the padding box, minus half the rail and half the dot). */
+@media (max-width: 69.999rem) {
+  .home-map__list {
+    grid-template-columns: 1fr;
+    row-gap: 0;
+    max-width: 36rem;
+  }
+  .home-map__stop {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    column-gap: var(--space-3);
+    min-height: 2.75rem;
+    padding: var(--space-2) 0 var(--space-2) var(--space-5);
+    border-top: 0;
+    border-left: 2px solid var(--border-strong);
+  }
+  .home-map__stop::before {
+    top: 50%;
+    left: calc(-1px - 0.4375rem);
+    transform: translateY(-50%);
+  }
+  .home-map__stop a { font-size: var(--fs-md); }
+  .home-map__stop--next { border-left-color: var(--accent); }
+  .home-map__stop--next::before {
+    top: 50%;
+    left: calc(-1px - 0.5625rem);
+  }
+}
 
 /* ---------- home-stats ----------
    Homepage figures (home-stats.njk): the Anthology counts in display type
