@@ -3536,23 +3536,6 @@ a[href^="http"]:not([class]) {
   }
 }
 
-/* ---------- ESSC chairs (/2027) ---------- */
-/* Two wide board cards with the bio on the face. Above phone width the
-   photo sits in a fixed left column, so a long bio does not stretch a
-   4:5 photo to the card width. Phones get the /board compact layout. */
-.essc-chairs {
-  grid-template-columns: repeat(auto-fit, minmax(min(28rem, 100%), 1fr));
-}
-@media (min-width: 36.01rem) {
-  .essc-chairs .person { flex-direction: row; }
-  .essc-chairs .person-photo {
-    flex: none;
-    width: 10rem;
-    align-self: flex-start;
-    border-radius: calc(var(--radius-md) - 1px) 0 0 calc(var(--radius-md) - 1px);
-  }
-}
-
 /* ---------- definition-list rows (Who are you?, FAQ) ---------- */
 .definition-list {
   display: grid;

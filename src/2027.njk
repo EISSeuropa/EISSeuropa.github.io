@@ -123,12 +123,18 @@ alternates:
 <section class="section-tight" id="chairs" aria-labelledby="chairs-title">
   <div class="container">
     <h2 id="chairs-title">Conference Chairs</h2>
-    <div class="people-grid essc-chairs">
-      {%- set showBio = true %}
+    <div class="people-grid">
       {%- set boardPeople = boardSorted.leadership.concat(boardSorted.boardMembers) %}
       {%- for chairName in ["Prof. Filip Ejdus", "Dr Arthur Laudrain"] %}
         {%- for person in boardPeople %}{% if person.name == chairName %}
-          {%- include "person-card.njk" %}
+      <article class="person">
+        <img class="person-photo" src="{{ person.photo }}" alt="{{ person.alt or person.name }}" loading="lazy">
+        <div class="person-body">
+          <p class="person-name">{{ person.name }}</p>
+          <p class="person-position" lang="en">{{ person.position }}</p>
+          <p class="person-institution" lang="en">{{ person.institution }}</p>
+        </div>
+      </article>
         {%- endif %}{% endfor %}
       {%- endfor %}
     </div>

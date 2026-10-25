@@ -100,11 +100,6 @@
       <p class="person-affiliation" lang="en">{{ person.affiliation | safe }}{%- if iso or person.country %}&nbsp;{{ flag_inline(iso, person.country, icon) }}{%- endif %}</p>
     {%- endif %}
 
-    {#- ponytail: opt-in bio for one-off uses like the /2027 chairs; /board keeps identity-only cards #}
-    {%- if showBio and person.bio %}
-    <p class="person-bio" lang="en">{{ person.bio }}</p>
-    {%- endif %}
-
     {# The card face is identity only. Bio, recent ORCID publications and
        contact detail live on the member's profile page (/board/<slug>.html,
        built by board-profile.njk); the "View profile" link below points
