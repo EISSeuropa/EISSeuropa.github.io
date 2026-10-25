@@ -6,8 +6,7 @@
   "nonConformant": 0,
   "notApplicable": 22,
   "rate": 100,
-  "status": "partial",
-  "pendingIssue": "https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1796",
+  "status": "total",
   "grid": "https://github.com/EISSeuropa/EISSeuropa.github.io/tree/master/docs",
   "pages": [
     "/",

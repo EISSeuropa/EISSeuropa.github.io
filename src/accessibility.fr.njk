@@ -260,17 +260,15 @@ alternates:
 
       <h3>État de conformité</h3>
       <p>
-        eiss-europa.com est <strong>partiellement conforme</strong> avec le RGAA&nbsp;{{ rgaaAudit.version }}.
+        eiss-europa.com est <strong>totalement conforme</strong> avec le RGAA&nbsp;{{ rgaaAudit.version }}.
       </p>
       <p>
         Un audit interne réalisé le <strong>9 octobre 2026</strong> établit que
         <strong>{{ rgaaAudit.rate }}&nbsp;% des critères applicables sont respectés</strong> sur les pages
         listées ci-dessous : {{ rgaaAudit.conformant }} critères conformes,
-        {{ rgaaAudit.notApplicable }} non applicables, aucun non conforme. Les tests qui demandent un
-        lecteur d'écran ont été évalués à partir de l'arbre d'accessibilité du navigateur et n'ont pas
-        encore été repris avec NVDA et VoiceOver. L'état passera à « totalement conforme » une fois
-        ces vérifications faites
-        (<a href="{{ rgaaAudit.pendingIssue }}" target="_blank" rel="noopener" lang="en">suivi public</a>).
+        {{ rgaaAudit.notApplicable }} non applicables, aucun non conforme. Le 25 octobre 2026, les tests qui demandent un
+        lecteur d'écran ont été repris à la main avec VoiceOver dans Safari sur macOS, et tous sont
+        réussis. Ils n'ont pas été repris avec NVDA, JAWS ou TalkBack, ni dans d'autres navigateurs.
       </p>
 
       <h3>Contenus non accessibles</h3>
@@ -288,12 +286,13 @@ alternates:
 
       <h3>Établissement de cette déclaration</h3>
       <ul>
-        <li><strong>Date :</strong> 9 octobre 2026.</li>
+        <li><strong>Date :</strong> 9 octobre 2026, vérifications au lecteur d'écran le 25 octobre 2026.</li>
         <li><strong>Technologies utilisées pour la réalisation du site :</strong> HTML5, CSS, JavaScript, WAI-ARIA, SVG.</li>
         <li>
           <strong>Environnement de test :</strong> Google Chrome sans interface, à 320, 375 et 1280
           pixels de large, en thème clair et sombre, avec de vraies saisies au clavier et l'arbre
-          d'accessibilité de Chrome. Aucun lecteur d'écran n'a été utilisé pour cet audit.
+          d'accessibilité de Chrome. Les vérifications au lecteur d'écran ont été faites
+          à part, à la main, avec VoiceOver et Safari sur macOS (25 octobre 2026).
         </li>
         <li>
           <strong>Outils pour évaluer l'accessibilité :</strong> axe-core&nbsp;4.13, les contrôles propres
@@ -331,7 +330,7 @@ alternates:
       </ul>
 
       <p class="meta">
-        Déclaration préparée : 14 mai 2026 · Dernière revue : 9 octobre 2026 · Prochaine revue prévue :
+        Déclaration préparée : 14 mai 2026 · Dernière revue : 25 octobre 2026 · Prochaine revue prévue :
         14 mai 2027 ou lors d'un changement majeur de conception.
       </p>
     </article>
