@@ -5,7 +5,8 @@
  * roadmap-progress workflow) and, for each in-flight roadmap card
  * carrying data-milestone="vX.Y.Z":
  *   1. injects a progress bar (closed / total),
- *   2. promotes the first still-"planned" version card to "In progress".
+ *   2. promotes the next still-"planned" version card (the last one in
+ *      the newest-first timeline) to "In progress".
  *
  * Pure progressive enhancement: if the fetch fails or JS is off, the
  * cards still render, just without bars. All copy is passed in from
@@ -31,15 +32,21 @@
       var cards = Array.prototype.slice.call(
         section.querySelectorAll(".rm-card[data-milestone]")
       );
-      var promoted = false;
+      // The timeline runs newest first, so the next release up is the
+      // last still-planned version card in document order.
+      var plannedCards = cards.filter(function (card) {
+        var entry = card.closest(".rm-entry");
+        return entry && entry.classList.contains("planned");
+      });
+      var nextUp = plannedCards[plannedCards.length - 1];
 
       cards.forEach(function (card) {
         var key = card.getAttribute("data-milestone");
         var m = milestones[key];
         var entry = card.closest(".rm-entry");
 
-        // Promote the first still-planned version card to "In progress".
-        if (!promoted && entry && entry.classList.contains("planned")) {
+        // Promote the next release up to "In progress".
+        if (card === nextUp) {
           entry.classList.remove("planned");
           entry.classList.add("in-progress");
           var pill = card.querySelector(".rm-pill");
@@ -52,7 +59,6 @@
             if (dot) pill.appendChild(dot);
             pill.appendChild(document.createTextNode(inProgressLabel));
           }
-          promoted = true;
         }
 
         if (!m || !m.total || m.percent === null || m.percent === undefined) return;
