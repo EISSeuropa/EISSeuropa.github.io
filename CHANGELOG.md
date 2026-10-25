@@ -121,6 +121,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- An internal planning issue for the 2027 throwback series was published as a news item and in the feed by mistake, because it carried the `news` label. It is withdrawn, and the label is off the issue.
 - Below 1120px the homepage host-city timeline is one vertical rail, a city and its years per line, instead of a two-column grid that repeated the rail on every row.
 - In-page links no longer land under the menu bar while the What's New banner is showing. The scroll offset counted the menu bar's height but not the banner above it, so headings reached by an anchor sat about 45px under the bar on every page.
 - The second day of the 2025 programme names its poster session "Poster session / Coffee break (continued)". The published programme lists the session and its three posters on both days, so both stay, and each day now has its own link target. Closes [#902](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/902).
