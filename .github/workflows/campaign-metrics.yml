@@ -2,7 +2,7 @@
 #
 # On the first of each month from February 2027 to January 2028, opens an
 # issue with last month's measures: the ones an open API gives filled in by
-# scripts/campaign-metrics.py, LinkedIn and X followers left for a person to
+# scripts/campaign-metrics.py, LinkedIn followers left for a person to
 # type (their APIs are gated or paid). The closed issues are the record the
 # June and December reports to the board are copied from.
 #
@@ -56,7 +56,7 @@ jobs:
           ms=$(gh api "repos/${GITHUB_REPOSITORY}/milestones?state=open&sort=due_on&direction=asc" \
             --jq '[.[] | select(.due_on != null and .due_on >= (now | todate))][0].title // "Backlog — Under watch"')
           {
-            echo "Measures for ${month}. Type the LinkedIn and X follower counts into the table, then close the issue. Targets and baselines: the PR strategy doc, tracker #1871."
+            echo "Measures for ${month}. Type the LinkedIn follower count into the table, then close the issue. Targets and baselines: the PR strategy doc, tracker #1871."
             echo
             python3 scripts/campaign-metrics.py "$month"
           } > /tmp/body.md
