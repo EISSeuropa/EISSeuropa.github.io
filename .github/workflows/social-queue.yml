@@ -1,12 +1,12 @@
 # Quarterly social queue for the anniversary year (#1866).
 #
-# EISS posts on LinkedIn only (not X). LinkedIn's page-posting API needs
-# partner approval, so the #EISS10 posts are scheduled by hand in LinkedIn's
-# own scheduler, a quarter at a time. On the first of December, March, June
+# LinkedIn's page-posting API needs partner approval and X's API is paid,
+# so the #EISS10 posts are scheduled by hand in each platform's own
+# scheduler, a quarter at a time. On the first of December, March, June
 # and September this workflow renders the next quarter's cards and
 # captions with scripts/make-anniversary-posts.py (#1865), uploads the
 # cards as a run artifact and opens an issue holding every caption with a
-# checkbox per post. Ticking them all and closing the issue means the
+# checkbox per platform. Ticking them all and closing the issue means the
 # quarter is queued. Outside 2027 the script finds no posts and no issue
 # is opened.
 #

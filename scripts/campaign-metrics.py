@@ -7,7 +7,7 @@ Fills in what an open API allows and leaves the rest for a person:
                 items and Belvedere posts published last month (/feed.xml),
                 Bluesky followers ($BLUESKY_HANDLE, public API), newsletter
                 subscribers ($MAILCHIMP_API_KEY + $MAILCHIMP_LIST_ID)
-    by hand     LinkedIn followers (its API needs partner approval)
+    by hand     LinkedIn and X followers (their APIs are gated or paid)
 
 A source that is not configured or does not answer prints "not set up" or
 "unavailable" rather than failing the run.
@@ -85,6 +85,7 @@ def main() -> None:
     news, blog = counts if isinstance(counts, tuple) else (counts, counts)
     rows = [
         ("LinkedIn followers", "_type it in_"),
+        ("X followers", "_type it in_"),
         ("Newsletter subscribers", safe(mailchimp)),
         (f"News items published in {month}", news),
         (f"Belvedere posts published in {month}", blog),
@@ -92,7 +93,7 @@ def main() -> None:
         ("Alumni (past board and staff)", facts["people"]["alumni"]),
     ]
     if os.environ.get("BLUESKY_HANDLE"):  # Bluesky is put aside (#1856)
-        rows.insert(1, ("Bluesky followers", safe(bluesky)))
+        rows.insert(2, ("Bluesky followers", safe(bluesky)))
     print("| Measure | Value |\n| --- | --- |")
     for name, value in rows:
         print(f"| {name} | {value} |")

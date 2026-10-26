@@ -202,6 +202,9 @@ EXPORTS = {
     "banners/bluesky-3000x1000-blue": (canvas(L, "on-blue", 3000, 1000, 0.4, "right"), None),
     "banners/linkedin-company-2256x382": (canvas(L, "colour", 2256, 382, 0.5, "right", mesh=True), None),
     "banners/linkedin-company-2256x382-blue": (canvas(L, "on-blue", 2256, 382, 0.5, "right"), None),
+    # YouTube channel art: 2560 × 1440, but only the central 1546 × 423 shows on every device, so the logo stays inside it
+    "banners/youtube-2560x1440": (canvas(L, "colour", 2560, 1440, 0.175, mesh=True), None),
+    "banners/youtube-2560x1440-blue": (canvas(L, "on-blue", 2560, 1440, 0.175), None),
     # email: both at 2x, displayed at 600 and 300 px wide
     "email/email-header-1200x300": (canvas(L, "colour-on-white", 1200, 300, 0.5), None),
     "email/email-signature-600x150": (canvas(L, "colour-on-white", 600, 150, 0.8), None),
