@@ -221,13 +221,16 @@ def render(svg: Path, png: Path, width: int | None) -> None:
     w, h = (int(float(v)) for v in re.search(r'width="([\d.]+)" height="([\d.]+)"', src).groups())
     with tempfile.NamedTemporaryFile("w", suffix=".svg", delete=False) as tmp:
         tmp.write(src)
+    shot = png.with_suffix(".shot.png")  # Chrome can finish writing after it exits: crop from a copy
     subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars",
                     "--force-device-scale-factor=1", "--force-color-profile=srgb",
                     "--default-background-color=00000000", f"--window-size={w},{h + 400}",
-                    f"--screenshot={png}", f"file://{tmp.name}"],
+                    f"--screenshot={shot}", f"file://{tmp.name}"],
                    check=True, capture_output=True)
     os.unlink(tmp.name)
-    Image.open(png).crop((0, 0, w, h)).save(png, optimize=True)
+    Image.open(shot).crop((0, 0, w, h)).save(png, optimize=True)
+    shot.unlink()
+    assert Image.open(png).size == (w, h), png
 
 
 def main() -> None:
