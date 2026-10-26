@@ -7,9 +7,9 @@ Two marks, both built on the unaltered EISS lockup:
                      "YEARS" over 2017–2027. The anniversary logo proper:
                      email header, signature, banners.
 
-    eiss-10-name     "EISS10": the lockup with "10" at the wordmark's cap
-                     height in the network blue. Profile pictures and the
-                     #EISS10 hashtag.
+    eiss-10-roundel  a seal: the full name round the ring, the lockup and
+                     "10 YEARS" inside, 2017 · 2027 at the foot. Made for
+                     the circular crop of social profile pictures.
 
 New lettering is Inter (the brand typeface), outlined from the self-hosted
 woff2 so every SVG renders without the font installed.
@@ -28,6 +28,7 @@ build step: it never runs during a site build.
 """
 from __future__ import annotations
 
+import math
 import os
 import re
 import subprocess
@@ -108,12 +109,43 @@ def mark_lockup(theme: str):
     return body, (LOCKUP_BOX[0], LOCKUP_BOX[1], cx + max(wy, wd), BASE + 1)
 
 
-def mark_name(theme: str):
-    d10, w10 = text("10", CAP / INTER_CAP, 247, BASE, 800, -1)
-    return lockup(theme) + f'<path d="{d10}" {paint("logo-network", theme)}/>', (LOCKUP_BOX[0], LOCKUP_BOX[1], 247 + w10, BASE + 7)
+def arc(s: str, size: float, wght: int, track: float, r: float, top: bool, c: float = 200) -> str:
+    """Set `s` on a circle of radius r round (c, c), centred on its top or foot, reading left to right."""
+    total = text(s, size, 0, 0, wght, track)[1]
+    out, pos = [], 0.0
+    for ch in s:
+        adv = text(ch, size, 0, 0, wght)[1]
+        mid = pos + adv / 2 - total / 2
+        th = -math.pi / 2 + mid / r if top else math.pi / 2 - mid / r
+        rot = math.degrees(th) + (90 if top else -90)
+        d, _ = text(ch, size, -adv / 2, 0, wght)
+        out.append(f'<path transform="translate({c + r * math.cos(th):.2f} {c + r * math.sin(th):.2f}) rotate({rot:.2f})" d="{d}"/>')
+        pos += adv + track
+    return "".join(out)
 
 
-MARKS = {"eiss-10-lockup": mark_lockup, "eiss-10-name": mark_name}
+def mark_roundel(theme: str):
+    """The seal, in a 400 × 400 box: concept C of #1852."""
+    t, n, _ = THEMES[theme]
+    master = theme == "master"
+    ink = 'class="logo-text" fill="currentColor"' if master else f'fill="{t}"'
+    net = paint("logo-network", theme)
+    ring_t = 'class="logo-text" stroke="currentColor"' if master else f'stroke="{t}"'
+    ring_n = 'class="logo-network" stroke="var(--brand-network, #73caff)"' if master else f'stroke="{n}"'
+    s = 196 / (LOCKUP_BOX[2] - LOCKUP_BOX[0])
+    lock = f'<g transform="translate({200 - 98 + 6 - LOCKUP_BOX[0] * s:.2f} {124 - LOCKUP_BOX[1] * s:.2f}) scale({s:.4f})">{lockup(theme)}</g>'
+    w10 = text("10 YEARS", 32, 0, 0, 800, 1.5)[1]
+    d10, _ = text("10 YEARS", 32, 200 - w10 / 2, 268, 800, 1.5)
+    dots = "".join(f'<circle cx="{200 + 159 * math.cos(math.radians(a)):.2f}" cy="{200 + 159 * math.sin(math.radians(a)):.2f}" r="4" {net}/>' for a in (22, 158))
+    body = (f'<circle cx="200" cy="200" r="186" fill="none" {ring_t} stroke-width="5"/>'
+            f'<circle cx="200" cy="200" r="136" fill="none" {ring_n} stroke-width="2"/>'
+            f'<g {ink}>{arc("EUROPEAN INITIATIVE FOR SECURITY STUDIES", 20.5, 700, 1.6, 150, True)}'
+            f'{arc("2017 · 2027", 21, 700, 3, 165, False)}</g>'
+            + dots + lock + f'<path d="{d10}" {ink}/>')
+    return body, (11.5, 11.5, 388.5, 388.5)
+
+
+MARKS = {"eiss-10-lockup": mark_lockup, "eiss-10-roundel": mark_roundel}
 TITLE = "EISS, ten years, 2017–2027"
 
 
@@ -154,15 +186,15 @@ MESH = ('<defs>'
         '</defs><rect width="{w}" height="{h}" fill="hsl(210,33%,98%)"/>'
         '<rect width="{w}" height="{h}" fill="url(#m1)"/><rect width="{w}" height="{h}" fill="url(#m2)"/><rect width="{w}" height="{h}" fill="url(#m3)"/>')
 
-L, N = mark_lockup, mark_name
+L, R = mark_lockup, mark_roundel
 # path: (svg source, png width or None for the svg's own size)
 EXPORTS = {
     # logo files: transparent, for documents, slides and partner kits
     **{f"logo/eiss-10-lockup-{t}": (tight(L, t), 2400) for t in ("colour", "white", "black")},
-    **{f"logo/eiss-10-name-{t}": (tight(N, t), 2400) for t in ("colour", "white", "black")},
-    # profile pictures: the platforms crop to a circle, so the name fits inside it
-    "profile/profile-800-white": (canvas(N, "colour-on-white", 800, 800, 0.94, circle=True), None),
-    "profile/profile-800-blue": (canvas(N, "on-blue", 800, 800, 0.94, circle=True), None),
+    **{f"logo/eiss-10-roundel-{t}": (tight(R, t), 2400) for t in ("colour", "white", "black")},
+    # profile pictures: the platforms crop to a circle, and the roundel is one
+    "profile/profile-800-white": (canvas(R, "colour-on-white", 800, 800, 0.97), None),
+    "profile/profile-800-blue": (canvas(R, "on-blue", 800, 800, 0.97), None),
     # banners: the profile picture overlaps bottom left on all four platforms, so the logo sits right
     "banners/x-mastodon-1500x500": (canvas(L, "colour", 1500, 500, 0.4, "right", mesh=True), None),
     "banners/x-mastodon-1500x500-blue": (canvas(L, "on-blue", 1500, 500, 0.4, "right"), None),
