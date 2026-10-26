@@ -210,6 +210,13 @@ How a member leaves depends on which kind they are.
   community* section at the foot of `/board`. Don't delete the entry:
   the record of who served stays on the page. Open a small PR, review,
   squash-merge.
+- **Offboarding, either kind.** The Monday after a `roleEndDate`
+  passes, [`offboarding.yml`](../.github/workflows/offboarding.yml)
+  opens an *Offboarding: name* issue with the checklist: the alumni
+  LinkedIn invitation, the *EISS community* consent, the Drive file
+  transfer, the Intern handbook and the Proton Pass removal and
+  password rotation. Dry-run it for any date with
+  `python3 scripts/offboarding-due.py 2026-12-07`.
 - **Full removal.** Two steps, both deliberate. First delete the
   member's row in the Google Sheet, or the next sync re-adds them.
   Then remove their entry from `board.json` in a PR. The sync never
