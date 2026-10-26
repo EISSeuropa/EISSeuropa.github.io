@@ -211,14 +211,17 @@ def render(page: str, png: Path, size: int = 1200) -> None:
     --window-size, so render tall and crop."""
     from PIL import Image
 
+    shot = png.with_suffix(".shot.png")  # Chrome can finish writing after it exits: crop from a copy
     with tempfile.NamedTemporaryFile("w", suffix=".html", delete=False, encoding="utf-8") as tmp:
         tmp.write(page)
     subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--no-sandbox",
                     "--force-device-scale-factor=1", "--force-color-profile=srgb", "--allow-file-access-from-files",
-                    f"--window-size={size},{size + 400}", f"--screenshot={png}", Path(tmp.name).as_uri()],
+                    f"--window-size={size},{size + 400}", f"--screenshot={shot}", Path(tmp.name).as_uri()],
                    check=True, capture_output=True)
     os.unlink(tmp.name)
-    Image.open(png).convert("RGB").crop((0, 0, size, size)).save(png, optimize=True)
+    Image.open(shot).convert("RGB").crop((0, 0, size, size)).save(png, optimize=True)
+    shot.unlink()
+    assert Image.open(png).size == (size, size), png
 
 
 def quarter_range(q: str | None) -> tuple[dt.date, dt.date]:
