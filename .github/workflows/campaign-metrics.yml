@@ -2,13 +2,12 @@
 #
 # On the first of each month from February 2027 to January 2028, opens an
 # issue with last month's measures: the ones an open API gives filled in by
-# scripts/campaign-metrics.py, LinkedIn and X followers left for a person to
+# scripts/campaign-metrics.py, LinkedIn and X followers and newsletter subscribers left for a person to
 # type (their APIs are gated or paid). The closed issues are the record the
 # June and December reports to the board are copied from.
 #
 # Optional configuration, each skipped with a note when absent:
 #   vars.BLUESKY_HANDLE                       Bluesky followers (#1856)
-#   secrets.MAILCHIMP_API_KEY, vars.MAILCHIMP_LIST_ID   newsletter subscribers
 #
 # Issues carry the `automated` label and the nearest open release
 # milestone (rule §10), and are assigned to the maintainer accounts.
@@ -39,8 +38,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           INPUT: ${{ inputs.month }}
           BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
-          MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
-          MAILCHIMP_LIST_ID: ${{ vars.MAILCHIMP_LIST_ID }}
           ASSIGNEES: EISSeuropa,APB-LDN
         run: |
           set -euo pipefail
@@ -56,7 +53,7 @@ jobs:
           ms=$(gh api "repos/${GITHUB_REPOSITORY}/milestones?state=open&sort=due_on&direction=asc" \
             --jq '[.[] | select(.due_on != null and .due_on >= (now | todate))][0].title // "Backlog — Under watch"')
           {
-            echo "Measures for ${month}. Type the LinkedIn and X follower counts into the table, then close the issue. Targets and baselines: the PR strategy doc, tracker #1871."
+            echo "Measures for ${month}. Type the LinkedIn and X follower counts and the newsletter subscribers into the table, then close the issue. Targets and baselines: the PR strategy doc, tracker #1871."
             echo
             python3 scripts/campaign-metrics.py "$month"
           } > /tmp/body.md
