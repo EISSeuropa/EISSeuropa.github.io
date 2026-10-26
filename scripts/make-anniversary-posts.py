@@ -2,7 +2,7 @@
 """Generate the anniversary year's social posts from the site's data (#1865).
 
 Every 2027 #EISS10 post that can be written from data, as a 1200 × 1200 card
-plus a LinkedIn caption and a shorter X caption:
+plus a LinkedIn caption (EISS posts on LinkedIn only, not X):
 
     launch       13 January: the anniversary itself
     throwback    one past edition a month, no post in June or August (#1853)
@@ -104,7 +104,6 @@ def posts(data: dict) -> list[dict]:
                  f"Since then: {facts['conferences']['held']} conferences across Europe, {a['papers']} papers by {a['authors']} authors in the Anthology, "
                  f"and a COST Action, NetSec, that EISS co-founded. The tenth conference meets in Belgrade on 10–11 June 2027. "
                  f"Thank you to everyone who made the first ten years. {TAG}\n{SITE}/"),
-        short=f"Ten years ago today, the first EISS conference opened in Paris. {facts['conferences']['held']} conferences and {a['papers']} papers later, the tenth meets in Belgrade in June. {TAG} {SITE}/",
     ))
 
     for month, year in THROWBACKS.items():
@@ -116,7 +115,6 @@ def posts(data: dict) -> list[dict]:
                           lines=["Deferred by the pandemic", "Met in Lisbon, September 2021, in person and online"]),
                 caption=(f"{TAG} throwback: 2020. The conference planned for that year was deferred by the pandemic. "
                          f"It met a year later in Lisbon, on 3–4 September 2021, in person and online.\n{SITE}/2020.html"),
-                short=f"{TAG} throwback: 2020, the conference that waited a year. It met in Lisbon in September 2021, in person and online. {SITE}/2020.html",
             ))
             continue
         e = eds[year]
@@ -131,7 +129,6 @@ def posts(data: dict) -> list[dict]:
                              f"{e['papers']} papers, now in the Anthology"]),
             caption=(f"{TAG} throwback: {e['city']}, {when}. The {ORDINALS[e['ordinal'] - 1]} annual conference met {at}. "
                      f"{e['papers']} of its papers are in the Anthology.\n{SITE}/{year}.html"),
-            short=f"{TAG} throwback: {e['city']}, {year}, the {ORDINALS[e['ordinal'] - 1]} annual conference. {e['papers']} of its papers are in the Anthology. {SITE}/{year}.html",
         ))
 
     board = [m for m in data["members"] if not m.get("formerMember")][LEADERSHIP:]
@@ -142,7 +139,6 @@ def posts(data: dict) -> list[dict]:
             date=date, kind="board", slug=m.get("slug") or slugify(m["name"]), title=f"Meet the board: {m['name']}",
             card=dict(eyebrow="Meet the board", headline=m["name"], lines=[m["role"], where], photo=m.get("photo")),
             caption=f"{TAG} Meet the board: {m['name']}, {m['role'].lower()} of EISS. {where}.\n{SITE}/board.html",
-            short=f"{TAG} Meet the board: {m['name']}, {where}. {SITE}/board.html",
         ))
 
     themes = sorted(data["themes"], key=lambda t: -t["count"])
@@ -154,7 +150,6 @@ def posts(data: dict) -> list[dict]:
             card=dict(eyebrow="From the Anthology", headline=t["name"],
                       lines=[f"{t['count']} papers since {t['firstYear']}"], bars=t["byYear"]),
             caption=f"{TAG} From the Anthology: {t['count']} papers on “{t['name']}” have been presented at EISS conferences since {t['firstYear']}. Explore them in the Atlas.\n{url}",
-            short=f"{TAG} From the Anthology: {t['count']} papers on “{t['name']}” since {t['firstYear']}. {url}",
         ))
     return sorted(out, key=lambda p: (p["date"], p["kind"]))
 
@@ -238,15 +233,13 @@ def main() -> None:
     start, end = quarter_range(args.quarter)
     todo = [p for p in posts(load()) if start <= p["date"] <= end]
     args.out.mkdir(parents=True, exist_ok=True)
-    md = [f"{len(todo)} posts, {long_date(start)} to {long_date(end)}. Schedule each one in LinkedIn's and X's own schedulers, then tick it.\n"]
+    md = [f"{len(todo)} posts, {long_date(start)} to {long_date(end)}. Schedule each one in LinkedIn's own scheduler, then tick it.\n"]
     for p in todo:
         name = f"{p['date'].isoformat()}-{p['kind']}-{p['slug']}.png"
         if not args.no_images:
             render(card_html(p["card"]), args.out / name)
-        assert len(p["short"]) <= 280, (name, len(p["short"]))
         md.append(f"### {p['date'].strftime('%a')} {long_date(p['date'])} · {p['title']}\n\n"
-                  f"- [ ] LinkedIn\n- [ ] X\n\nImage: `{name}`\n\n**LinkedIn**\n\n```text\n{p['caption']}\n```\n\n"
-                  f"**X** ({len(p['short'])} characters)\n\n```text\n{p['short']}\n```\n")
+                  f"- [ ] Scheduled on LinkedIn\n\nImage: `{name}`\n\n```text\n{p['caption']}\n```\n")
         print(name)
     (args.out / "queue.md").write_text("\n".join(md), encoding="utf-8")
 
