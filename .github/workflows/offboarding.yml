@@ -4,10 +4,12 @@
 # entries are never deleted. Every Monday this workflow lists the roles
 # that ended in the previous seven days (scripts/offboarding-due.py) and
 # opens one issue per leaver with the steps no tool can take for us:
-# inviting them to the EISS Alumni LinkedIn group (#1861) and confirming
-# they are happy to stay listed under "EISS community" on /board.
+# inviting them to the EISS Alumni LinkedIn group (#1861), confirming
+# they are happy to stay listed under "EISS community" on /board, moving
+# their files into the EISS Team Drive folder, updating the Intern
+# handbook and cutting their Proton Pass access.
 #
-# Idempotent: an issue that already exists for the person is left alone.
+# Idempotent: an issue with exactly that title, open or closed, is left alone.
 # Issues carry the `automated` label and the nearest open release
 # milestone (rule §10), and are assigned to the maintainer accounts.
 #
@@ -44,7 +46,8 @@ jobs:
             --jq '[.[] | select(.due_on != null and .due_on >= (now | todate))][0].title // "Backlog — Under watch"')
           while IFS=$'\t' read -r name role end; do
             title="Offboarding: ${name}"
-            if gh issue list --state all --search "\"${title}\" in:title" --json number --jq '.[0].number' | grep -q .; then
+            # The search is fuzzy, so compare whole titles: "Offboarding: Ali" must not match "Offboarding: Ali Gohar".
+            if gh issue list --state all --limit 100 --search "\"${title}\" in:title" --json title --jq '.[].title' | grep -Fxq "$title"; then
               echo "Already filed: ${name}"; continue
             fi
             cat > /tmp/body.md <<BODY
@@ -53,6 +56,9 @@ jobs:
           - [ ] Thank them, and ask whether they are happy to stay listed under *EISS community* on /board
           - [ ] Invite them to the EISS Alumni LinkedIn group (#1861)
           - [ ] Optional: a short thank-you post, if they agree
+          - [ ] Move their EISS working files into the **EISS Team** folder on the EISS Drive and transfer ownership to eissnetwork@gmail.com (a file in a personal Gmail account leaves with its owner)
+          - [ ] Interns and volunteers only (board members skip this): update their role's section of the **Intern handbook** (EISS Team > Interns)
+          - [ ] Remove them from the EISS Proton Pass vaults (Admin, Team, and any items shared with them individually), then rotate every shared password they could see
 
           Close this issue once done. Filed by the Offboarding prompt workflow (#1869).
           BODY

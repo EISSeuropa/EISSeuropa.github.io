@@ -13,7 +13,7 @@ Every related issue and PR carries the `EISS10` label.
 | --- | --- | --- |
 | `social-queue.yml` | 1 March, June, September and December, 07:00 UTC | Renders the next quarter's post cards, uploads them as a 90-day run artifact, and opens an issue *Social queue: 2027Qn #EISS10 posts* with every caption and a checkbox per platform. |
 | `campaign-metrics.yml` | 1st of each month, 07:00 UTC | Opens *Campaign metrics: YYYY-MM* with last month's figures filled in where they can be read (news items and Belvedere posts from `/feed.xml`, Anthology abstract coverage, alumni count) and rows to type in by hand (LinkedIn and X followers, newsletter subscribers). Reports January to December 2027 only. |
-| `offboarding.yml` | Mondays, 07:00 UTC | Opens *Offboarding: name* for every `roleEndDate` in `src/_data/board.json` that passed in the previous seven days: invite to the EISS Alumni LinkedIn group, confirm the *EISS community* listing. |
+| `offboarding.yml` | Mondays, 07:00 UTC | Opens *Offboarding: name* for every `roleEndDate` in `src/_data/board.json` that passed in the previous seven days: invite to the EISS Alumni LinkedIn group, confirm the *EISS community* listing, move their files into the EISS Team Drive folder, update the Intern handbook, remove them from Proton Pass and rotate the shared passwords. |
 | `feed-to-bluesky.yml` | After each deploy of `master` | Dormant. Bluesky is put aside ([#1856](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1856)), and the job is skipped while `vars.BLUESKY_HANDLE` is unset. |
 
 All four are on the failure alarm list (`failure-alarm.yml`). Every issue they
