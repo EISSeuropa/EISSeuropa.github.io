@@ -21,6 +21,7 @@ Maintainer-facing docs for [eiss-europa.com](https://eiss-europa.com)
 | [indico-api-token.md](indico-api-token.md) | Indico API token setup for the authenticated sync. |
 | [new-conference.md](new-conference.md) | Per-year-page rollover procedure for a new ESSC. |
 | [news-publishing.md](news-publishing.md) | The News surface: the homepage "Latest" section, the `/news` archive, the Atom feed, and how an item gets added. |
+| [anniversary-2027.md](anniversary-2027.md) | The #EISS10 anniversary automation: the four workflows, the settings to fill in, regenerating the logos and post cards, and what to switch off in January 2028. |
 | [publication-matching.md](publication-matching.md) | Linking ESSC papers to their later-published versions: the matcher, the review queue, the confirm step, the monthly sync. |
 | [anthology-corpus-note.md](anthology-corpus-note.md) | The public corpus-description note: scope, sources, the theme vocabulary, co-authorship, coverage, limitations. Drafted for deposit. |
 | [corpus-archiving.md](corpus-archiving.md) | Depositing the Anthology outside the repo: the Zenodo concept vs version DOI, where the DOI surfaces, the versioning cadence, HAL. |
