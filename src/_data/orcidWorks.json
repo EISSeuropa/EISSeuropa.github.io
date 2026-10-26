@@ -118,6 +118,12 @@
     "letter": "D",
     "works": [
       {
+        "title": "Introducing the Counterterrorism Legislation Dataset (CTL): The Effect of Counterterrorism Legislation on Human Rights Practices",
+        "year": 2026,
+        "journal": "Terrorism and Political Violence",
+        "doi": "https://doi.org/10.1080/09546553.2026.2739956"
+      },
+      {
         "title": "Borderless Interventionism: The International Disaster Response in the Libyan Civil War",
         "year": 2026,
         "journal": "Global Studies Quarterly",
@@ -140,12 +146,6 @@
         "year": 2022,
         "journal": "European Security",
         "doi": "https://doi.org/10.1080/09662839.2022.2029847"
-      },
-      {
-        "title": "Reaching for allies? The dialectics and overlaps between international relations and area studies in the study of politics, security and conflicts",
-        "year": 2022,
-        "journal": "Italian Political Science Review/Rivista Italiana di Scienza Politica",
-        "doi": "https://doi.org/10.1017/ipo.2022.13"
       }
     ]
   },
@@ -505,6 +505,12 @@
     "letter": "S",
     "works": [
       {
+        "title": "Transforming strategic culture: France after the Russian invasion of Ukraine",
+        "year": 2026,
+        "journal": "Cooperation and Conflict",
+        "doi": "https://doi.org/10.1177/00108367261492861"
+      },
+      {
         "title": "How Scenario-Based Interventions Transform Cybersecurity Mental Models in Danish Defence SMEs",
         "year": 2026,
         "journal": null,
@@ -527,12 +533,6 @@
         "year": 2025,
         "journal": "International Politics",
         "doi": "https://doi.org/10.1057/s41311-024-00641-1"
-      },
-      {
-        "title": "Proxies, Partners or Opponents?",
-        "year": 2025,
-        "journal": "Law & Geoeconomics",
-        "doi": "https://doi.org/10.1163/29505720-bja00007"
       }
     ]
   },
