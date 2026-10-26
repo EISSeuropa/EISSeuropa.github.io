@@ -38,7 +38,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           INPUT: ${{ inputs.month }}
           BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
-          ASSIGNEES: EISSeuropa,APB-LDN
+          # vars.SOCIAL_ASSIGNEE: the social media owner's GitHub handle (#1884), added to the maintainers.
+          ASSIGNEES: "EISSeuropa,APB-LDN${{ vars.SOCIAL_ASSIGNEE && format(',{0}', vars.SOCIAL_ASSIGNEE) || '' }}"
         run: |
           set -euo pipefail
           month="${INPUT:-$(date -u -d "$(date -u +%Y-%m-01) -1 day" +%Y-%m)}"
