@@ -120,10 +120,12 @@ def posts(data: dict) -> list[dict]:
             ))
             continue
         e = eds[year]
-        when = e.get("dates") or long_date(dt.date.fromisoformat(e["startDate"]))
+        start = dt.date.fromisoformat(e["startDate"])
+        when = f"{MONTHS[start.month - 1]} {start.year}"
         ago = 2027 - year
         # Some venues are only "City, Country" in conferences.js: say "in" for those.
-        at = f"in {e['city']}" if e["venue"] == f"{e['city']}, {e['country']}" else f"at {e['venue']}"
+        venue = ("the " if e["venue"].startswith(("University of", "Hertie")) else "") + e["venue"]
+        at = f"in {e['city']}" if e["venue"] == f"{e['city']}, {e['country']}" else f"at {venue}"
         out.append(dict(
             date=date, kind="throwback", slug=str(year), title=f"Throwback: {e['city']} {year}",
             card=dict(eyebrow=f"Throwback · {ago} year{'s' if ago > 1 else ''} ago", headline=f"{e['city']} {year}",

@@ -34,7 +34,8 @@ jobs:
       - name: Open an issue per leaver
         env:
           GH_TOKEN: ${{ github.token }}
-          ASSIGNEES: EISSeuropa,APB-LDN
+          # vars.SOCIAL_ASSIGNEE: the social media owner's GitHub handle (#1884), added to the maintainers.
+          ASSIGNEES: "EISSeuropa,APB-LDN${{ vars.SOCIAL_ASSIGNEE && format(',{0}', vars.SOCIAL_ASSIGNEE) || '' }}"
         run: |
           set -euo pipefail
           python3 scripts/offboarding-due.py > /tmp/due.tsv

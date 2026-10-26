@@ -76,7 +76,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           QUARTER: ${{ steps.q.outputs.quarter }}
           CARDS: ${{ steps.upload.outputs.artifact-url }}
-          ASSIGNEES: EISSeuropa,APB-LDN
+          # vars.SOCIAL_ASSIGNEE: the social media owner's GitHub handle (#1884), added to the maintainers.
+          ASSIGNEES: "EISSeuropa,APB-LDN${{ vars.SOCIAL_ASSIGNEE && format(',{0}', vars.SOCIAL_ASSIGNEE) || '' }}"
         run: |
           set -euo pipefail
           title="Social queue: ${QUARTER} #EISS10 posts"
