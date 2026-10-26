@@ -57,7 +57,7 @@ add lettering in Inter, outlined so the files need no font.
 | File | Use |
 |---|---|
 | `eiss-10-lockup.svg` | The anniversary logo: lockup, hairline divider, a "10" as tall as the lockup, "YEARS" over 2017–2027. Email header, signature, social banners. The pattern ESO used for its 50th. |
-| `eiss-10-name.svg` | "EISS10": the lockup with "10" at the wordmark's cap height in the network blue, read as one word. Profile pictures, and the name behind the #EISS10 hashtag. The pattern of CERN70 and Wikipedia 20. |
+| `eiss-10-roundel.svg` | A seal for the circular crop of social profile pictures: "EUROPEAN INITIATIVE FOR SECURITY STUDIES" round the ring, the lockup and "10 YEARS" inside, 2017 · 2027 at the foot. The anniversary seal universities and learned societies use. The ring text drops out below about 64 px, where the lockup and "10" still carry. |
 
 Both follow the recolouring contract below. The export set (transparent
 logos, profile pictures, banners for X, Mastodon, Bluesky and LinkedIn, email
