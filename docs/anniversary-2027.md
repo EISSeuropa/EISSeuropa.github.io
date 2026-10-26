@@ -20,8 +20,10 @@ All four are on the failure alarm list (`failure-alarm.yml`). Every issue they
 open is labelled `automated`, gets the nearest open release milestone and is
 assigned to the maintainer accounts. A rerun never files the same issue twice.
 
-The monthly newsletter digest is not in the repository. Mailchimp builds it
-from `/feed.xml` as an RSS campaign, set up and owned by the newsletter owner
+The monthly newsletter is not in the repository and has no automation. Its
+eleven 2027 issues are drafted off-repo in the shared *EISS-10-years* folder
+(`newsletter-2027/`, one Mailchimp zip per issue), and Arthur Laudrain sends
+each one by hand. There is no RSS digest
 ([#1868](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1868)).
 
 ## Settings to fill in
