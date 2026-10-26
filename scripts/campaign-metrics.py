@@ -5,9 +5,8 @@ Fills in what an open API allows and leaves the rest for a person:
 
     automatic   Anthology papers and abstracts (src/_data/facts.js), news
                 items and Belvedere posts published last month (/feed.xml),
-                Bluesky followers ($BLUESKY_HANDLE, public API), newsletter
-                subscribers ($MAILCHIMP_API_KEY + $MAILCHIMP_LIST_ID)
-    by hand     LinkedIn and X followers (their APIs are gated or paid)
+                Bluesky followers ($BLUESKY_HANDLE, public API)
+    by hand     LinkedIn and X followers, newsletter subscribers
 
 A source that is not configured or does not answer prints "not set up" or
 "unavailable" rather than failing the run.
@@ -16,7 +15,6 @@ Usage: campaign-metrics.py YYYY-MM   (the month being reported)
 """
 from __future__ import annotations
 
-import base64
 import datetime as dt
 import json
 import os
@@ -59,16 +57,6 @@ def bluesky() -> str:
     return str(data["followersCount"])
 
 
-def mailchimp() -> str:
-    key, list_id = os.environ.get("MAILCHIMP_API_KEY"), os.environ.get("MAILCHIMP_LIST_ID")
-    if not (key and list_id):
-        return "not set up"
-    auth = base64.b64encode(f"eiss:{key}".encode()).decode()
-    data = json.loads(get(f"https://{key.split('-')[-1]}.api.mailchimp.com/3.0/lists/{list_id}",
-                          {"Authorization": f"Basic {auth}"}))
-    return str(data["stats"]["member_count"])
-
-
 def safe(fn, *args):
     try:
         return fn(*args)
@@ -86,7 +74,7 @@ def main() -> None:
     rows = [
         ("LinkedIn followers", "_type it in_"),
         ("X followers", "_type it in_"),
-        ("Newsletter subscribers", safe(mailchimp)),
+        ("Newsletter subscribers", "_type it in_"),
         (f"News items published in {month}", news),
         (f"Belvedere posts published in {month}", blog),
         ("Anthology papers with an abstract", f"{a['abstracts']} of {a['abstractsEligible']}"),
