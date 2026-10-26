@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-18T09:33:03+00:00",
-  "count": 105,
+  "generated_at": "2026-10-26T11:03:35+00:00",
+  "count": 110,
   "source": "https://netsec-cost.eu/directory-index.json",
   "members": [
     {
@@ -156,6 +156,17 @@
       "role": "Management Committee · Switzerland · Science Communication Coordinator Co-Leader",
       "affiliation": "ETH Zürich, Center for Security Studies",
       "photo": "https://netsec-cost.eu/assets/images/people/arthur-laudrain.jpg"
+    },
+    {
+      "name": "Dr Arzu Demirel",
+      "name_key": "arzu demirel",
+      "aliases": [],
+      "slug": "arzu-demirel",
+      "url": "https://netsec-cost.eu/people/arzu-demirel.html",
+      "orcid": "0000-0002-8544-7041",
+      "role": null,
+      "affiliation": "Hacettepe University",
+      "photo": null
     },
     {
       "name": "Dr Athanasios Skraparlis",
@@ -510,6 +521,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/ivan-zaccagnini.jpg"
     },
     {
+      "name": "Prof. Iztok Prezelj",
+      "name_key": "iztok prezelj",
+      "aliases": [],
+      "slug": "iztok-prezelj",
+      "url": "https://netsec-cost.eu/people/iztok-prezelj.html",
+      "orcid": "0000-0003-2725-7298",
+      "role": null,
+      "affiliation": "University of Ljubljana",
+      "photo": "https://netsec-cost.eu/assets/images/people/iztok-prezelj.jpg"
+    },
+    {
       "name": "Mr Jacob Grech",
       "name_key": "jacob grech",
       "aliases": [],
@@ -862,6 +884,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/nikolaos-tzifakis.jpg"
     },
     {
+      "name": "Dr Noela Mahmutaj",
+      "name_key": "noela mahmutaj",
+      "aliases": [],
+      "slug": "noela-mahmutaj",
+      "url": "https://netsec-cost.eu/people/noela-mahmutaj.html",
+      "orcid": null,
+      "role": "Management Committee · Albania",
+      "affiliation": "University of Tirana",
+      "photo": "https://netsec-cost.eu/assets/images/people/noela-mahmutaj.jpg"
+    },
+    {
       "name": "Dr Pınar Akgül",
       "name_key": "p akgul",
       "aliases": [],
@@ -983,6 +1016,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/rusudan-zabakhidze.jpg"
     },
     {
+      "name": "Dr Sandra Cvikić",
+      "name_key": "sandra cvikic",
+      "aliases": [],
+      "slug": "sandra-cvikic",
+      "url": "https://netsec-cost.eu/people/sandra-cvikic.html",
+      "orcid": null,
+      "role": "Management Committee · Croatia",
+      "affiliation": "Ivo Pilar Institut of Social Sciences, Regional Center Vukovar",
+      "photo": "https://netsec-cost.eu/assets/images/people/sandra-cvikic.jpg"
+    },
+    {
       "name": "Ms Sara Russo",
       "name_key": "sara russo",
       "aliases": [],
@@ -1091,6 +1135,17 @@
       "role": null,
       "affiliation": "National University of Political Studies and Public Administration",
       "photo": "https://netsec-cost.eu/assets/images/people/teodora-stoicescu.jpg"
+    },
+    {
+      "name": "Dr Tim Sweijs",
+      "name_key": "tim sweijs",
+      "aliases": [],
+      "slug": "tim-sweijs",
+      "url": "https://netsec-cost.eu/people/tim-sweijs.html",
+      "orcid": null,
+      "role": null,
+      "affiliation": "The Hague Centre for Strategic Studies",
+      "photo": "https://netsec-cost.eu/assets/images/people/tim-sweijs.jpg"
     },
     {
       "name": "Dr Tolga Cikrikci",
