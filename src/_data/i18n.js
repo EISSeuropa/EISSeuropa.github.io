@@ -102,6 +102,17 @@ const locales = {
       switchToLight: "Switch to light mode",
     },
 
+    staffMenu: {
+      label: "Staff sign-in",
+      heading: "EISS staff and interns",
+      mail: "Gmail",
+      calendar: "Calendar",
+      drive: "Drive",
+      groups: "Groups",
+      allApps: "All apps",
+      internForm: "Intern onboarding form",
+    },
+
     search: {
       buttonLabel: "Search the site",
       title: "Search",
@@ -994,6 +1005,17 @@ const locales = {
       switchToLight: "Passer au mode clair",
     },
 
+    staffMenu: {
+      label: "Connexion de l'équipe",
+      heading: "Équipe et stagiaires de l'EISS",
+      mail: "Gmail",
+      calendar: "Agenda",
+      drive: "Drive",
+      groups: "Groupes",
+      allApps: "Toutes les applications",
+      internForm: "Formulaire d'arrivée des stagiaires",
+    },
+
     search: {
       buttonLabel: "Rechercher sur le site",
       title: "Recherche",
@@ -1761,6 +1783,17 @@ const locales = {
     themeToggle: {
       switchToDark: "Zum dunklen Modus wechseln",
       switchToLight: "Zum hellen Modus wechseln",
+    },
+
+    staffMenu: {
+      label: "Anmeldung für das Team",
+      heading: "Für das EISS-Team",
+      mail: "Gmail",
+      calendar: "Kalender",
+      drive: "Drive",
+      groups: "Groups",
+      allApps: "Alle Apps",
+      internForm: "Onboarding-Formular für Praktika",
     },
 
     search: {

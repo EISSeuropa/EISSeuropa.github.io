@@ -155,6 +155,20 @@
       </button>
 
       {% include "theme-toggle.njk" %}
+
+      {# Staff sign-in: Workspace shortcuts and the intern form behind a
+         padlock, links in site.staffLinks. The same native `<details>` and
+         `data-nav-group` behaviour as the language menu above. #}
+      <details class="staff-menu" data-nav-group>
+        <summary class="icon-btn staff-menu-summary" aria-label="{{ t.staffMenu.label }}" title="{{ t.staffMenu.label }}">{{ icon("lock") }}</summary>
+        <div class="staff-menu-panel" role="group" aria-label="{{ t.staffMenu.label }}">
+          <span class="staff-menu-heading">{{ t.staffMenu.heading }}</span>
+          {% for link in site.staffLinks %}
+            {% if link.sep %}<hr class="staff-menu-sep">{% endif %}
+            <a class="staff-menu-link" href="{{ link.href }}" target="_blank" rel="noopener">{{ icon(link.icon) }}{{ t.staffMenu[link.key] }}</a>
+          {% endfor %}
+        </div>
+      </details>
       <button class="icon-btn nav-menu-toggle"
               type="button"
               data-menu-toggle

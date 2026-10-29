@@ -597,6 +597,80 @@ h4 { font-size: var(--fs-lg); }
   background: var(--accent-soft);
 }
 
+/* ---------- staff menu ----------
+   The padlock in the header bar: Google Workspace shortcuts for staff and
+   interns, and the intern onboarding form. A native `<details>` with
+   `data-nav-group`, like the language menu, and the same panel look. The
+   summary takes `.icon-btn` for its circle. */
+.staff-menu {
+  position: relative;
+}
+
+/* ponytail: hidden below 360 px, where a fifth 44 px circle squeezes the
+   logo to half its width again (#1322). Staff on those phones use the
+   Workspace dashboard directly. If they need it there, move the links into
+   the drawer as a nav group. */
+@media (max-width: 359px) {
+  .staff-menu {
+    display: none;
+  }
+}
+
+.staff-menu-summary {
+  list-style: none;
+}
+
+.staff-menu-summary::-webkit-details-marker {
+  display: none;
+}
+
+.staff-menu-panel {
+  position: absolute;
+  inset-block-start: calc(100% + var(--space-2));
+  inset-inline-end: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-2);
+  min-inline-size: 15rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-3);
+  z-index: 61;
+}
+
+.staff-menu-heading {
+  padding: var(--space-2) var(--space-3);
+  color: var(--text-subtle);
+  font-size: var(--fs-xs);
+}
+
+.staff-menu-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.staff-menu-link:hover {
+  color: var(--text);
+  background: var(--accent-soft);
+  text-decoration: none;
+}
+
+.staff-menu-sep {
+  margin: var(--space-1) 0;
+  border: 0;
+  border-block-start: 1px solid var(--border);
+}
+
 /* ---------- What's New banner ---------- */
 /* Sparingly-used site-wide announcement, driven by
    src/_data/whats-new.json (CLAUDE.md §12). Rendered by JS into

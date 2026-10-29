@@ -39,6 +39,9 @@
     Download                   → "download"
     Initiative / about         → "lightbulb"
     Security / mission         → "shield"
+    Staff sign-in              → "lock"
+    Drive / shared files       → "folder"
+    All apps / launcher        → "layout-grid"
 
   HOW TO ADD A NEW ICON
     1. Visit https://lucide.dev, search the name, click "Copy SVG".
@@ -63,6 +66,12 @@ class="{{ classes }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fil
 <svg {{ svgAttrs | safe }}><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
 {%- elif name == "users" -%}
 <svg {{ svgAttrs | safe }}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+{%- elif name == "lock" -%}
+<svg {{ svgAttrs | safe }}><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+{%- elif name == "folder" -%}
+<svg {{ svgAttrs | safe }}><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+{%- elif name == "layout-grid" -%}
+<svg {{ svgAttrs | safe }}><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
 {%- elif name == "user" -%}
 <svg {{ svgAttrs | safe }}><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
 {%- elif name == "user-plus" -%}
