@@ -104,8 +104,8 @@ const locales = {
 
     staffMenu: {
       label: "Staff sign-in",
-      heading: "EISS staff and interns",
-      mail: "Gmail",
+      heading: "Internal Dashboard",
+      mail: "Email",
       calendar: "Calendar",
       drive: "Drive",
       groups: "Groups",
@@ -1007,8 +1007,8 @@ const locales = {
 
     staffMenu: {
       label: "Connexion de l'équipe",
-      heading: "Équipe et stagiaires de l'EISS",
-      mail: "Gmail",
+      heading: "Tableau de bord interne",
+      mail: "Courriel",
       calendar: "Agenda",
       drive: "Drive",
       groups: "Groupes",
@@ -1787,8 +1787,8 @@ const locales = {
 
     staffMenu: {
       label: "Anmeldung für das Team",
-      heading: "Für das EISS-Team",
-      mail: "Gmail",
+      heading: "Internes Dashboard",
+      mail: "E-Mail",
       calendar: "Kalender",
       drive: "Drive",
       groups: "Groups",
