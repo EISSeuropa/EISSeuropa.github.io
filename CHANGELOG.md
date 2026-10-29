@@ -99,6 +99,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
+- A padlock button in the header, beside the theme toggle, opens a small menu for EISS staff and interns: Gmail, Calendar, Drive, Groups and the Workspace app launcher for eiss-europa.com, and the intern onboarding form. In all three languages. It is hidden below 360 px, where a fifth button would squeeze the logo.
 - `/roadmap.html` has a quarter rail in all three languages. On wide screens it is a vertical timeline beside the cards that stays in view while scrolling, with one node per quarter (filled for quarters already shipped, ringed for the quarter with the release in progress, hollow for those ahead) and the version range under each. On phones it is a strip of chips pinned under the menu bar. Each entry jumps to its quarter, and the quarter in view is highlighted.
 - `/2027` introduces the two conference chairs, Prof. Filip Ejdus and Dr Arthur Laudrain, with the photo and position each carries on the Board page. In all three languages.
 - Blog posts can carry illustrations. An image in a post fills the text column with rounded corners and space above and below, and a captioned illustration shows its caption in smaller muted text beneath it. The convention for authors (where the files go, export size, alt text, captions, and reusing one file across the three languages) is written at the top of `src/blog/blog.11tydata.js`.

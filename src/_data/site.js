@@ -196,4 +196,22 @@ module.exports = {
       ],
     },
   ]),
+
+  // The padlock menu in the header bar: Google Workspace for eiss-europa.com
+  // plus the intern onboarding form. Labels are `t.staffMenu.<key>`. The
+  // `/a/eiss-europa.com` form steers sign-in to the EISS account. The
+  // mail./groups. custom domains are http only, so they are not linked.
+  staffLinks: [
+    { href: "https://mail.google.com/a/eiss-europa.com", key: "mail", icon: "mail" },
+    { href: "https://calendar.google.com/a/eiss-europa.com", key: "calendar", icon: "calendar" },
+    { href: "https://drive.google.com/a/eiss-europa.com", key: "drive", icon: "folder" },
+    { href: "https://groups.google.com/a/eiss-europa.com", key: "groups", icon: "users" },
+    { href: "https://workspace.google.com/dashboard", key: "allApps", icon: "layout-grid" },
+    {
+      href: "https://docs.google.com/forms/d/e/1FAIpQLSevC0tbQwCA4ZNfdk_pCY5xUvmFjuQbIIpddDXLF5TdSoKfcw/viewform",
+      key: "internForm",
+      icon: "file-text",
+      sep: true,
+    },
+  ],
 };
