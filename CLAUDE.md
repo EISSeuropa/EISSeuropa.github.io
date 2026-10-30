@@ -413,7 +413,8 @@ surfaces in **one** auto-merged PR on `roadmap-refresh/auto`:
   the freshness date and anchoring against the most recent SemVer tag.
 - `scripts/sync-roadmap-progress.py` rewrites
   `src/data/roadmap-progress.json` from the repo's version milestones,
-  which drives the progress bars on `/roadmap.html`.
+  which drives the progress bars on `/roadmap.html`, and adds the open
+  issue, PR and `help wanted` counts shown on `/internal.html`.
 
 So the maintainer never has to refresh the count, the freshness stamp
 or the bars by hand. **What the automation does not do**: rewrite the

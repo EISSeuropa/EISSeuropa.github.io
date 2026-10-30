@@ -18,6 +18,9 @@ entry keyed by its title:
 progress metric. The `Backlog — Under watch` milestone is skipped: it
 has no dated roadmap card to attach a bar to.
 
+`counts` holds the open issue, open PR and `help wanted` totals shown on
+/internal.html, read at build time through src/_data/dashboard.js.
+
 Idempotent: the file is rewritten only when the milestone *data*
 changes, so a run with no closed issues produces no diff (and the
 auto-PR workflow opens nothing). `generatedAt` only advances when the
@@ -56,7 +59,7 @@ DOC = (
     "overwrites it whenever an issue or milestone changes. Keyed by "
     "milestone title (vMAJOR.MINOR.PATCH). percent = closed / total. "
     "assets/js/roadmap-progress.js renders a bar onto the card carrying "
-    "the matching data-milestone."
+    "the matching data-milestone. counts feeds /internal.html."
 )
 
 
@@ -69,7 +72,25 @@ def fetch_milestones() -> list[dict]:
     return json.loads(res.stdout)
 
 
-def build(milestones: list[dict], today: str) -> dict:
+def fetch_count(query: str) -> int:
+    """How many issues or PRs in this repo match a GitHub search query."""
+    res = subprocess.run(
+        ["gh", "api", "-X", "GET", "search/issues", "-f", f"q=repo:{REPO} {query}",
+         "-f", "per_page=1", "--jq", ".total_count"],
+        capture_output=True, text=True, check=True,
+    )
+    return int(res.stdout)
+
+
+def fetch_counts() -> dict:
+    return {
+        "openIssues": fetch_count("is:issue is:open"),
+        "openPRs": fetch_count("is:pr is:open"),
+        "helpWanted": fetch_count('is:issue is:open label:"help wanted"'),
+    }
+
+
+def build(milestones: list[dict], counts: dict, today: str) -> dict:
     """Pure: shape the milestone list into the JSON payload."""
     out: dict[str, dict] = {}
     for m in milestones:
@@ -97,18 +118,19 @@ def build(milestones: list[dict], today: str) -> dict:
         "_documentation": DOC,
         "generatedAt": today,
         "source": f"https://github.com/{REPO}/milestones",
+        "counts": counts,
         "milestones": ordered,
     }
 
 
 def _data_only(payload: dict) -> dict:
-    """The milestones dict, for change detection that ignores the date."""
-    return payload.get("milestones", {})
+    """Everything but the date, for change detection."""
+    return {k: payload.get(k, {}) for k in ("counts", "milestones")}
 
 
 def main() -> int:
     today = datetime.date.today().isoformat()
-    payload = build(fetch_milestones(), today)
+    payload = build(fetch_milestones(), fetch_counts(), today)
 
     old_data = {}
     if OUT.exists():
@@ -127,6 +149,7 @@ def main() -> int:
         encoding="utf-8",
     )
     print("roadmap progress: src/data/roadmap-progress.json updated")
+    print(f"  counts: {payload['counts']}")
     for title, m in payload["milestones"].items():
         bar = f"{m['closed']}/{m['total']}" if m["total"] else "no issues"
         suffix = f" ({m['percent']}%)" if m["percent"] is not None else ""

@@ -222,7 +222,22 @@ module.exports = {
       sep: true,
     },
     { href: "https://workspace.google.com/dashboard", key: "googleApps", icon: "layout-grid", roles: ["staff"] },
+    // Placeholder: set `href` to the Sheet's address to activate the tile, and
+    // drop `note`. The Sheet stays private, only the link goes here.
+    { href: null, label: "Task tracker", note: "Coming soon", icon: "file-text", roles: ["staff", "board"] },
   ],
+
+  // The guides on /internal.html. Roles work as in staffLinks.
+  guideLinks: [
+    { href: "https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/internship-handbook.md", label: "Internship handbook", icon: "graduation-cap", roles: ["staff", "volunteer"] },
+    { href: "https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/news-publishing.md", label: "Publishing news", icon: "rss", roles: ["staff"] },
+    { href: "https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/admin-guide.md", label: "Operator and handover guide", icon: "book-open", roles: ["staff", "board"] },
+  ],
+
+  // Hand-kept dates for the /internal.html list, added to the conference and
+  // the releases: { date: "2027-01-31", label: "...", roles: ["staff"] }. This
+  // page is public, so nothing confidential. Past dates drop off at build.
+  keyDates: [],
 
   // The unlisted /internal.html#admin view. Hidden from view, not secret: the
   // links are in the page source and each app's own sign-in protects it.
