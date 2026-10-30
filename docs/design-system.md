@@ -282,6 +282,10 @@ the rendered style guide cannot disagree.
   `.lang-chip`s led by a decorative `.lang-switcher-globe` so the group
   reads as a language control), and the search trigger
   (`[data-search-trigger]`).
+- **Staff menu** (`.staff-menu`, in `nav.njk`) — the padlock button
+  beside the theme toggle. A native `<details>` like the nav groups,
+  built from the `site.staffLinks` entries with `menu: true`, labels from
+  `t.staffMenu`. Hidden below 360 px.
 - **`footer.njk`** — co-branding, funding-style credit, legal-links row
   (terms / privacy / accessibility / sitemap / licensing / roadmap /
   press kit), socials. `data-pagefind-ignore`.
@@ -379,6 +383,11 @@ the rendered style guide cannot disagree.
 - **`announcement-card.njk`**, **`indico-events-list.njk`**,
   **`notfound-illustration.njk`** (the 404 broken-stars SVG),
   **`europe-outline.njk`**, **`redirect-body.njk`**.
+- **`internal.njk`** + `.apps-*` — the `/internal.html` dashboard. The
+  role filter is CSS `:has()` and the `#admin` view is CSS `:target`, so
+  both work without JavaScript. The script only adds the greeting, clock,
+  live figures, remembered role, card spotlight and hero constellation.
+  See `admin-guide.md` for the address and how to change the apps.
 - **`icons.njk`** — inline-SVG Lucide icon set via the `icon()` macro.
 
 ## Interaction inventory (theme.js)

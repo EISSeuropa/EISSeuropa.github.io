@@ -32,6 +32,10 @@ it. That is the whole of the expectation.
 4. **Have a look around the corpus.** [The Anthology](https://eiss-europa.com/anthology.html)
    is what most of the work here touches. Ten minutes clicking through
    it will make the task list mean something.
+5. **Bookmark the apps dashboard.** [internal.eiss-europa.com](https://internal.eiss-europa.com)
+   lists the apps EISS uses, such as Indico, Drive and Meet. Choose the
+   role that describes you to narrow the list. Each app asks for its own
+   sign-in.
 
 ## Claiming a task
 
