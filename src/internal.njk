@@ -94,7 +94,7 @@ eleventyExcludeFromCollections: true
           <li class="apps-card-wrap"{% if app.href %} data-apps-app{% endif %} data-roles="{{ app.roles | join(' ') }}" style="--n: {{ n }}">
             {% if app.href %}
               <a class="apps-tile" href="{{ app.href }}">
-                <span class="apps-icon">{{ icon(app.icon) }}</span>
+                <span class="apps-icon">{{ icon(app.icon) }}{% if app.badge %}<span class="apps-badge">{{ app.badge }}</span>{% endif %}</span>
                 <span class="apps-label">{{ app.label or t.staffMenu[app.key] }}</span>
                 {% if note %}<span class="apps-note">{{ note }}</span>{% endif %}
                 <span class="apps-go">{{ icon("arrow-right") }}</span>

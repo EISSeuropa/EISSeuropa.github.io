@@ -126,8 +126,12 @@ successor inherits through the handover in section 4.
   domain only, and the Sheet's *People* tab decides who gets in. The
   "EISS intern lifecycle" script adds each volunteer on approval and removes them
   at offboarding, handing their open tasks to the Technology Coordinator.
-  Add everyone else by hand. The tile shows for the *Staff*, *Management*
-  and *Volunteer* roles, and the Sheet itself, linked from `#admin`, stays
+  Add everyone else by hand. The *Role* column sets the
+  rules, enforced by the app: *Staff* and *Management* can create, assign
+  and edit anyone's tasks, and a *Volunteer* or a blank role only their
+  own, without handing them to someone else. The tile shows for the *Staff*, *Management*
+  and *Volunteer* roles and carries a *Beta* bubble (`badge` in
+  `staffLinks`), and the Sheet itself, linked from `#admin`, stays
   restricted, since edit access could change who gets in. The code is
   outside this repo, with its own README, in the maintainer's EISS folder
   under `task-tracker/`. Tasks stay out of this repo and this page, since
