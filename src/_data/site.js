@@ -229,7 +229,9 @@ module.exports = {
 
   // The guides on /internal.html. Roles work as in staffLinks.
   guideLinks: [
-    { href: "https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/internship-handbook.md", label: "Internship handbook", icon: "graduation-cap", roles: ["staff", "volunteer"] },
+    { href: "https://docs.google.com/document/d/1ETe9RCqFLRExvyRCouYKHyIl0xEZNXJ-aUIMZNpwue4/edit", label: "Start here", icon: "file-text", roles: ["staff", "management", "volunteer"] },
+    { href: "https://docs.google.com/document/d/1c3_KX7Hm-57OQZh3soo-JCQ_HaaEekqwlhXMW0C42Xs/edit", label: "Volunteer handbook", icon: "graduation-cap", roles: ["staff", "volunteer"] },
+    { href: "https://drive.google.com/drive/folders/1J2MqJ_1cwHgL9V2wNpPlU4sCT5SWwrcd", label: "Guides and procedures", icon: "folder", roles: ["staff", "management", "volunteer"] },
     { href: "https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/news-publishing.md", label: "Publishing news", icon: "rss", roles: ["staff"] },
     { href: "https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/admin-guide.md", label: "Operator and handover guide", icon: "book-open", roles: ["staff", "management", "board"] },
   ],
