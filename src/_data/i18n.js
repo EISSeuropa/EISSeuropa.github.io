@@ -112,7 +112,7 @@ const locales = {
       groups: "Shared inboxes",
       groupsNote: "contact@ and internship@",
       allApps: "All apps",
-      internForm: "Intern onboarding form",
+      internForm: "Volunteer onboarding form",
       indico: "Indico",
       meet: "Meet",
       googleApps: "All Google apps",

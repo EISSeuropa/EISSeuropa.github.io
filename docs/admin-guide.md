@@ -121,13 +121,13 @@ successor inherits through the handover in section 4.
   in `src/_data/site.js`. `src/_data/dashboard.js` assembles all of it.
 - **Guides.** Guides are `guideLinks` in `src/_data/site.js`.
 - **The task tracker.** The *Task tracker* tile opens an Apps Script web
-  app for interns, staff and management, owned by `admin@`, with the
+  app for staff, management and volunteers, owned by `admin@`, with the
   private Sheet "EISS task tracker" behind it. It is open to the EISS
   domain only, and the Sheet's *People* tab decides who gets in. The
-  intern lifecycle script adds each intern on approval and removes them
+  "EISS intern lifecycle" script adds each volunteer on approval and removes them
   at offboarding, handing their open tasks to the Technology Coordinator.
-  Add everyone else by hand. The tile shows for the *Staff or intern* and
-  *Management* roles, and the Sheet itself, linked from `#admin`, stays
+  Add everyone else by hand. The tile shows for the *Staff*, *Management*
+  and *Volunteer* roles, and the Sheet itself, linked from `#admin`, stays
   restricted, since edit access could change who gets in. The code is
   outside this repo, with its own README, in the maintainer's EISS folder
   under `task-tracker/`. Tasks stay out of this repo and this page, since

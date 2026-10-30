@@ -599,7 +599,7 @@ h4 { font-size: var(--fs-lg); }
 
 /* ---------- staff menu ----------
    The padlock in the header bar: Google Workspace shortcuts for staff and
-   interns, and the intern onboarding form. A native `<details>` with
+   volunteers, and the volunteer onboarding form. A native `<details>` with
    `data-nav-group`, like the language menu, and the same panel look. The
    summary takes `.icon-btn` for its circle. */
 .staff-menu {

@@ -206,10 +206,10 @@ module.exports = {
   // mail./groups. custom domains are http only, so they are not linked.
   staffLinks: [
     { href: "https://indico.eiss-europa.com", key: "indico", icon: "ticket", roles: ["staff", "management", "board", "volunteer"] },
-    { href: "https://mail.google.com/a/eiss-europa.com", key: "mail", icon: "mail", roles: ["staff", "management", "board"], menu: true },
+    { href: "https://mail.google.com/a/eiss-europa.com", key: "mail", icon: "mail", roles: ["staff", "management", "board", "volunteer"], menu: true },
     // contact@ and internship@ are collaborative inboxes, worked in Groups.
-    { href: "https://groups.google.com/a/eiss-europa.com", key: "groups", icon: "inbox", roles: ["staff", "management"], menu: true },
-    { href: "https://calendar.google.com/a/eiss-europa.com", key: "calendar", icon: "calendar", roles: ["staff", "management", "board"], menu: true },
+    { href: "https://groups.google.com/a/eiss-europa.com", key: "groups", icon: "inbox", roles: ["staff", "management", "volunteer"], menu: true },
+    { href: "https://calendar.google.com/a/eiss-europa.com", key: "calendar", icon: "calendar", roles: ["staff", "management", "board", "volunteer"], menu: true },
     { href: "https://drive.google.com/a/eiss-europa.com", key: "drive", icon: "folder", roles: ["staff", "management", "board", "volunteer"], menu: true },
     { href: "https://meet.google.com/", key: "meet", icon: "video", roles: ["staff", "management", "board", "volunteer"] },
     { href: "/internal.html", key: "allApps", icon: "layout-grid", menu: true },
@@ -222,9 +222,9 @@ module.exports = {
       sep: true,
     },
     { href: "https://workspace.google.com/dashboard", key: "googleApps", icon: "layout-grid", roles: ["staff"] },
-    // An Apps Script app open to the EISS domain only, for interns, staff and
-    // management. Its own People list decides who gets in.
-    { href: "https://script.google.com/a/macros/eiss-europa.com/s/AKfycbzlceXEY4CHShuTGgy9etowrkmnpv7R0u6XmF1-NgT7-ivepTibfllkyVR9tI9wcRI/exec", label: "Task tracker", icon: "file-text", roles: ["staff", "management"] },
+    // An Apps Script app open to the EISS domain only, for staff, management and
+    // volunteers. Its own People list decides who gets in.
+    { href: "https://script.google.com/a/macros/eiss-europa.com/s/AKfycbzlceXEY4CHShuTGgy9etowrkmnpv7R0u6XmF1-NgT7-ivepTibfllkyVR9tI9wcRI/exec", label: "Task tracker", icon: "file-text", roles: ["staff", "management", "volunteer"] },
   ],
 
   // The guides on /internal.html. Roles work as in staffLinks.
