@@ -953,6 +953,7 @@ h4 { font-size: var(--fs-lg); }
 }
 .apps-status-title { margin: 0 0 var(--space-3); font-size: 1rem; font-weight: 600; }
 .apps-release { margin: 0 0 var(--space-3); }
+.apps-release a { text-decoration: underline; }
 .apps-progress {
   display: block;
   width: 100%;

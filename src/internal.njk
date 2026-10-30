@@ -90,7 +90,7 @@ eleventyExcludeFromCollections: true
         {% set n = 0 %}
         {% for app in site.staffLinks %}{% if app.roles %}
           {% set note = app.note or t.staffMenu[app.key + "Note"] %}
-          <li class="apps-item apps-card-wrap{% if not app.href %} apps-item-soon{% endif %}" data-roles="{{ app.roles | join(' ') }}" style="--n: {{ n }}">
+          <li class="apps-card-wrap"{% if app.href %} data-apps-app{% endif %} data-roles="{{ app.roles | join(' ') }}" style="--n: {{ n }}">
             {% if app.href %}
               <a class="apps-tile" href="{{ app.href }}">
                 <span class="apps-icon">{{ icon(app.icon) }}</span>
@@ -174,7 +174,7 @@ eleventyExcludeFromCollections: true
     var saved = null;
     try { saved = localStorage.getItem(KEY); } catch (e) {}
     function tally() {
-      var shown = [].filter.call(document.querySelectorAll(".apps-item:not(.apps-item-soon)"), function (el) {
+      var shown = [].filter.call(document.querySelectorAll("[data-apps-app]"), function (el) {
         return getComputedStyle(el).display !== "none";
       }).length;
       total.textContent = shown + (shown === 1 ? " app" : " apps");

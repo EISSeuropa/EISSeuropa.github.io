@@ -237,7 +237,9 @@ module.exports = {
   // Hand-kept dates for the /internal.html list, added to the conference and
   // the releases: { date: "2027-01-31", label: "...", roles: ["staff"] }. This
   // page is public, so nothing confidential. Past dates drop off at build.
-  keyDates: [],
+  keyDates: [
+    { date: "2026-11-10", label: "ESSC 2027 call for papers deadline" },
+  ],
 
   // The unlisted /internal.html#admin view. Hidden from view, not secret: the
   // links are in the page source and each app's own sign-in protects it.
