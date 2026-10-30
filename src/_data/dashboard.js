@@ -6,7 +6,7 @@ const conferences = require("./conferences.js");
 const site = require("./site.js");
 
 const REPO = "https://github.com/EISSeuropa/EISSeuropa.github.io";
-const everyone = ["staff", "board", "volunteer"];
+const everyone = ["staff", "management", "board", "volunteer"];
 const today = new Date().toISOString().slice(0, 10);
 
 // The JSON is ordered by version, so the first open milestone is the next one.

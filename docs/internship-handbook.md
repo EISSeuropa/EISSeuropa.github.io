@@ -33,9 +33,10 @@ it. That is the whole of the expectation.
    is what most of the work here touches. Ten minutes clicking through
    it will make the task list mean something.
 5. **Bookmark the apps dashboard.** [internal.eiss-europa.com](https://internal.eiss-europa.com)
-   lists the apps EISS uses, such as Indico, Drive and Meet. Choose the
-   role that describes you to narrow the list. Each app asks for its own
-   sign-in.
+   lists the apps EISS uses, such as Indico, Drive and Meet. Choose
+   "Staff or intern" to narrow the list. If you are an intern with an EISS
+   account, the Task tracker there holds your tasks. Each app asks for
+   its own sign-in.
 
 ## Claiming a task
 

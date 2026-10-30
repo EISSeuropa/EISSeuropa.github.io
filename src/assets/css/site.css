@@ -785,8 +785,8 @@ h4 { font-size: var(--fs-lg); }
 .apps-segments {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  --cols: 4;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  --cols: 5;
   --rows: 1;
   --x: 0;
   --y: 0;
@@ -808,8 +808,9 @@ h4 { font-size: var(--fs-lg); }
   transition: transform var(--motion-base) var(--ease-out);
 }
 .apps-segments:has([value="staff"]:checked) { --x: 1; }
-.apps-segments:has([value="board"]:checked) { --x: 2; }
-.apps-segments:has([value="volunteer"]:checked) { --x: 3; }
+.apps-segments:has([value="management"]:checked) { --x: 2; }
+.apps-segments:has([value="board"]:checked) { --x: 3; }
+.apps-segments:has([value="volunteer"]:checked) { --x: 4; }
 .apps-role {
   position: relative;
   display: flex;
@@ -921,6 +922,7 @@ h4 { font-size: var(--fs-lg); }
 .apps-admin .apps-heading { margin-bottom: var(--space-5); }
 
 .apps-page:has(.apps-role [value="staff"]:checked) [data-roles]:not([data-roles~="staff"]),
+.apps-page:has(.apps-role [value="management"]:checked) [data-roles]:not([data-roles~="management"]),
 .apps-page:has(.apps-role [value="board"]:checked) [data-roles]:not([data-roles~="board"]),
 .apps-page:has(.apps-role [value="volunteer"]:checked) [data-roles]:not([data-roles~="volunteer"]) {
   display: none;
@@ -994,10 +996,11 @@ h4 { font-size: var(--fs-lg); }
   .apps-segments {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     --cols: 2;
-    --rows: 2;
+    --rows: 3;
   }
-  .apps-segments:has([value="board"]:checked) { --x: 0; --y: 1; }
-  .apps-segments:has([value="volunteer"]:checked) { --x: 1; --y: 1; }
+  .apps-segments:has([value="management"]:checked) { --x: 0; --y: 1; }
+  .apps-segments:has([value="board"]:checked) { --x: 1; --y: 1; }
+  .apps-segments:has([value="volunteer"]:checked) { --x: 0; --y: 2; }
   .apps-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
   .apps-tile { min-height: 8.5rem; padding: var(--space-4); }
   .apps-go { display: none; }
