@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>EISS: Website Documentation Pack v1.0.1</title>
+<title>EISS: Website Documentation Pack v1.0.2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -475,7 +475,7 @@ pre code{background:transparent;color:inherit;padding:0;font-size:inherit}
     <div class="cover-meta">
       <div class="item">
         <div class="label">Pack version &amp; date</div>
-        <div class="value">v1.0.1 · October 2026</div>
+        <div class="value">v1.0.2 · October 2026</div>
       </div>
       <div class="item">
         <div class="label">Website version</div>
@@ -938,7 +938,7 @@ python3 scripts/check-i18n-drift.py --mark-fresh src/initiative.njk de</code></p
   <table>
     <thead><tr><th>Asset</th><th>What it controls</th><th>Where access lives</th></tr></thead>
     <tbody>
-      <tr><td><strong>GitHub organisation and repository</strong> (<code>EISSeuropa/EISSeuropa.github.io</code>)</td><td>Source, build, every workflow, the issue backlog</td><td>Organisation owners. Keep at least two, so it can never be orphaned.</td></tr>
+      <tr><td><strong>GitHub account and repository</strong> (<code>EISSeuropa/EISSeuropa.github.io</code>)</td><td>Source, build, every workflow, the issue backlog</td><td>The <code>EISSeuropa</code> user account login. Keep a sealed copy with a second board member, so it can never be orphaned.</td></tr>
       <tr><td><strong>Domain</strong> <code>eiss-europa.com</code></td><td>The public address and its DNS records</td><td>The registrar account, in the maintainer's password manager. <strong>The most important transfer in a handover.</strong></td></tr>
       <tr><td><strong>GitHub Pages</strong></td><td>What visitors see, and the TLS certificate</td><td>Tied to the repository. The certificate renews itself.</td></tr>
       <tr><td><strong>Google account</strong></td><td>The board Form, its Sheet and the photo folder</td><td>The maintainer's Google account.</td></tr>
@@ -977,7 +977,7 @@ python3 scripts/check-i18n-drift.py --mark-fresh src/initiative.njk de</code></p
 
   <h2>Handover checklist</h2>
   <ul style="list-style:none">
-    <li>☐ Add the successor as an <strong>owner</strong> of the <code>EISSeuropa</code> GitHub organisation.</li>
+    <li>☐ Pass on the <code>EISSeuropa</code> GitHub login (a user account with no owners to add), including two-factor and recovery codes.</li>
     <li>☐ Transfer the <strong>domain registrar</strong> login.</li>
     <li>☐ Transfer the Google account behind the board Form, the Indico administrator and bot logins, Mailchimp, the social accounts and the contact mailbox.</li>
     <li>☐ Rotate <code>INDICO_API_TOKEN</code>, and replace <code>AUTOPR_TOKEN</code> with a token from an account the successor controls.</li>
@@ -1113,7 +1113,7 @@ flowchart LR
   <p>This changelog tracks the documentation pack, not the website. Website history is in <code>CHANGELOG.md</code> and the GitHub Releases. Pack versions are stamped on the cover and follow Semantic Versioning. The pack is refreshed on minor and major website releases, and patch releases skip it.</p>
 
   <div class="changelog-entries">
-  <h2 class="current">v1.0.1 · October 2026 · Render fixes</h2>
+  <h2 class="current">v1.0.2 · October 2026 · Render fixes</h2>
   <p class="cl-summary">Layout corrections, no change of substance. The diagrams are reshaped so their labels print at 7 pt or larger, up from 5. The contents entries link to their chapters, and the PDF carries a bookmark outline. A grey band that appeared at the foot of the page before some screenshots is gone. The pack is now 28 pages.</p>
 
   <h2>v1.0.0 · October 2026 · First edition</h2>
@@ -1124,7 +1124,7 @@ flowchart LR
 
   <p class="small muted center" style="margin-top:24pt">
     European Initiative for Security Studies · eiss-europa.com<br>
-    Documentation pack v1.0.1 · Compiled October 2026 by Dr Arthur Laudrain, EISS Technology Coordinator.
+    Documentation pack v1.0.2 · Compiled October 2026 by Dr Arthur Laudrain, EISS Technology Coordinator.
   </p>
 </section>
 
