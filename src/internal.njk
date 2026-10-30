@@ -17,7 +17,9 @@ eleventyExcludeFromCollections: true
 
   Reads: site.staffLinks (entries with `roles`), labels t.staffMenu.<key>.
   The role filter is CSS `:has()` on data-roles, so it works without JS.
-  The script only remembers the choice. A shortcut list, not access control.
+  A shortcut list, not access control. Everything works without JS: the script
+  only adds the greeting, clock, live day count, app count, remembered role,
+  card spotlight and the hero constellation.
   #admin: an unlisted view (site.adminLinks) shown by CSS `:target`. Hidden
   from view, not secret: the links are in the source of this public page.
 
@@ -28,64 +30,201 @@ eleventyExcludeFromCollections: true
 {%- set t = i18n[lang or "en"] -%}
 
 <div class="apps-page">
-  <header class="page-header">
-    <div class="container">
-      <h1>{{ t.staffMenu.heading }}</h1>
-      <p class="page-lead">Shortcuts to the apps EISS uses. Each one asks you to sign in, with your eiss-europa.com account for the Google apps.</p>
+  <header class="apps-hero" data-apps-hero>
+    <canvas class="apps-hero-canvas" aria-hidden="true"></canvas>
+    <div class="container apps-hero-inner">
+      <div class="apps-hero-logo">{% inlineSvg "assets/images/brand/eiss-10-lockup.svg" %}</div>
+      <h1 class="apps-hero-title">{{ t.staffMenu.heading }}</h1>
+      <p class="apps-hero-clock" data-apps-clock hidden></p>
+      <p class="apps-hero-lead">Shortcuts to the apps EISS uses. Each one asks you to sign in, with your eiss-europa.com account for the Google apps.</p>
     </div>
   </header>
 
-  <section class="section">
-    <div class="container">
-      <div class="apps-admin" id="admin">
-        <h2>Admin</h2>
-        <ul class="apps-grid" role="list">
-          {% for app in site.adminLinks %}
-            <li>
-              <a class="apps-tile" href="{{ app.href }}">
-                <span class="apps-icon">{{ icon(app.icon) }}</span>
-                <span class="apps-label">{{ app.label }}</span>
-              </a>
-            </li>
-          {% endfor %}
-        </ul>
+  <div class="container">
+    <dl class="apps-stats">
+      {% if facts.conferences.next %}
+        <div class="apps-stat">
+          <dt>days until ESSC {{ facts.conferences.next.startDate | truncate(4, true, "") }}, {{ facts.conferences.next.city }}</dt>
+          <dd data-apps-countdown="{{ facts.conferences.next.startDate }}" data-apps-count>{{ facts.conferences.next.startDate | daysUntil }}</dd>
+        </div>
+      {% endif %}
+      <div class="apps-stat"><dt>conferences held</dt><dd data-apps-count>{{ facts.conferences.held }}</dd></div>
+      <div class="apps-stat"><dt>host countries</dt><dd data-apps-count>{{ facts.conferences.countries }}</dd></div>
+      <div class="apps-stat"><dt>Anthology papers</dt><dd data-apps-count>{{ facts.anthology.papers }}</dd></div>
+    </dl>
+
+    <div class="apps-admin" id="admin">
+      <h2 class="apps-heading">Admin</h2>
+      <ul class="apps-grid" role="list">
+        {% for app in site.adminLinks %}
+          <li class="apps-card-wrap" style="--n: {{ loop.index0 }}">
+            <a class="apps-tile" href="{{ app.href }}">
+              <span class="apps-icon">{{ icon(app.icon) }}</span>
+              <span class="apps-label">{{ app.label }}</span>
+              <span class="apps-go">{{ icon("arrow-right") }}</span>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <section class="apps-panel" aria-labelledby="apps-heading">
+      <div class="apps-panel-head">
+        <div>
+          <h2 class="apps-heading" id="apps-heading">Your apps</h2>
+          <p class="apps-count" data-apps-total role="status" hidden></p>
+        </div>
+        <fieldset class="apps-roles">
+          <legend>Which describes you?</legend>
+          <div class="apps-segments">
+            <label class="apps-role" for="apps-role-all"><input type="radio" id="apps-role-all" name="apps-role" value="all" checked> Show all</label>
+            <label class="apps-role" for="apps-role-staff"><input type="radio" id="apps-role-staff" name="apps-role" value="staff"> Staff</label>
+            <label class="apps-role" for="apps-role-board"><input type="radio" id="apps-role-board" name="apps-role" value="board"> Board member</label>
+            <label class="apps-role" for="apps-role-volunteer"><input type="radio" id="apps-role-volunteer" name="apps-role" value="volunteer"> Volunteer</label>
+          </div>
+        </fieldset>
       </div>
 
-      <fieldset class="apps-roles">
-        <legend>Which describes you?</legend>
-        <label class="apps-role" for="apps-role-all"><input type="radio" id="apps-role-all" name="apps-role" value="all" checked> Show all</label>
-        <label class="apps-role" for="apps-role-staff"><input type="radio" id="apps-role-staff" name="apps-role" value="staff"> Staff</label>
-        <label class="apps-role" for="apps-role-board"><input type="radio" id="apps-role-board" name="apps-role" value="board"> Board member</label>
-        <label class="apps-role" for="apps-role-volunteer"><input type="radio" id="apps-role-volunteer" name="apps-role" value="volunteer"> Volunteer</label>
-      </fieldset>
-
       <ul class="apps-grid" role="list">
+        {% set n = 0 %}
         {% for app in site.staffLinks %}{% if app.roles %}
-          <li class="apps-item" data-roles="{{ app.roles | join(' ') }}">
+          <li class="apps-item apps-card-wrap" data-roles="{{ app.roles | join(' ') }}" style="--n: {{ n }}">
             <a class="apps-tile" href="{{ app.href }}">
               <span class="apps-icon">{{ icon(app.icon) }}</span>
               <span class="apps-label">{{ t.staffMenu[app.key] }}</span>
               {% if t.staffMenu[app.key + "Note"] %}<span class="apps-note">{{ t.staffMenu[app.key + "Note"] }}</span>{% endif %}
+              <span class="apps-go">{{ icon("arrow-right") }}</span>
             </a>
           </li>
+          {% set n = n + 1 %}
         {% endif %}{% endfor %}
       </ul>
-    </div>
-  </section>
+    </section>
+  </div>
 </div>
 
 <script>
-  // Remember the role choice. The filtering itself is CSS.
   (function () {
+    var calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Remember the role choice and report how many apps it leaves. The
+    // filtering itself is CSS.
     var KEY = "eiss-apps-role";
     var radios = document.querySelectorAll('input[name="apps-role"]');
+    var total = document.querySelector("[data-apps-total]");
     var saved = null;
     try { saved = localStorage.getItem(KEY); } catch (e) {}
+    function tally() {
+      var shown = [].filter.call(document.querySelectorAll(".apps-item"), function (el) {
+        return getComputedStyle(el).display !== "none";
+      }).length;
+      total.textContent = shown + (shown === 1 ? " app" : " apps");
+      total.hidden = false;
+    }
     radios.forEach(function (r) {
       if (r.value === saved) r.checked = true;
       r.addEventListener("change", function () {
         try { localStorage.setItem(KEY, r.value); } catch (e) {}
+        tally();
       });
     });
+    tally();
+
+    // Greeting and clock, in the reader's own time zone.
+    var clock = document.querySelector("[data-apps-clock]");
+    function tick() {
+      var d = new Date(), h = d.getHours();
+      var hello = h < 5 ? "Good evening" : h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
+      clock.textContent = hello + ". " +
+        d.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" }) + ", " +
+        d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+      clock.hidden = false;
+      setTimeout(tick, 60000 - d.getSeconds() * 1000);
+    }
+    tick();
+
+    // The day count stays right between daily rebuilds. Figures count up once.
+    var cd = document.querySelector("[data-apps-countdown]");
+    if (cd) {
+      var p = cd.getAttribute("data-apps-countdown").split("-"), now = new Date();
+      var days = Math.round((Date.UTC(p[0], p[1] - 1, p[2]) - Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())) / 864e5);
+      if (days < 0) cd.parentNode.hidden = true; else cd.textContent = days;
+    }
+    if (!calm) document.querySelectorAll("[data-apps-count]").forEach(function (el) {
+      var end = +el.textContent, start = performance.now();
+      (function step(t) {
+        var k = Math.min((t - start) / 900, 1);
+        el.textContent = Math.round(end * (1 - Math.pow(1 - k, 3)));
+        if (k < 1) requestAnimationFrame(step);
+      })(start);
+    });
+
+    // A soft light follows the pointer across the cards.
+    document.querySelectorAll(".apps-tile").forEach(function (a) {
+      a.addEventListener("pointermove", function (e) {
+        var r = a.getBoundingClientRect();
+        a.style.setProperty("--mx", e.clientX - r.left + "px");
+        a.style.setProperty("--my", e.clientY - r.top + "px");
+      });
+    });
+
+    // The constellation behind the logo. It drifts for four seconds and comes
+    // to rest (RGAA 13.8: motion past five seconds needs a pause control), and
+    // moves again only under the reader's pointer.
+    var hero = document.querySelector("[data-apps-hero]");
+    var c = hero.querySelector("canvas"), ctx = c.getContext("2d");
+    var nodes = [], ptr = null, until = 0, running = false, W, H, dpr;
+    function size() {
+      dpr = Math.min(devicePixelRatio || 1, 2);
+      W = hero.clientWidth; H = hero.clientHeight;
+      c.width = W * dpr; c.height = H * dpr;
+      var want = Math.min(70, Math.round(W * H / 14000));
+      while (nodes.length < want) nodes.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35 });
+      nodes.length = want;
+    }
+    function draw(step) {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+      var pts = ptr ? nodes.concat(ptr) : nodes;
+      pts.forEach(function (a, i) {
+        if (a !== ptr) {
+          a.x = (a.x + a.vx * step + W) % W;
+          a.y = (a.y + a.vy * step + H) % H;
+        }
+        for (var j = i + 1; j < pts.length; j++) {
+          var b = pts[j], d = Math.hypot(a.x - b.x, a.y - b.y);
+          if (d < 130) {
+            ctx.strokeStyle = "rgba(115, 202, 255, " + (0.32 * (1 - d / 130)) + ")";
+            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+          }
+        }
+        ctx.fillStyle = "rgba(115, 202, 255, 0.7)";
+        ctx.beginPath(); ctx.arc(a.x, a.y, 1.6, 0, 7); ctx.fill();
+      });
+    }
+    function run() {
+      if (running) return;
+      running = true;
+      (function frame() {
+        var left = until - performance.now();
+        if (left <= 0) { running = false; return; }
+        draw(Math.min(left / 800, 1));
+        requestAnimationFrame(frame);
+      })();
+    }
+    size();
+    draw(0);
+    new ResizeObserver(function () { size(); draw(0); }).observe(hero);
+    if (!calm) {
+      until = performance.now() + 4000;
+      run();
+      hero.addEventListener("pointermove", function (e) {
+        var r = hero.getBoundingClientRect();
+        ptr = { x: e.clientX - r.left, y: e.clientY - r.top };
+        until = performance.now() + 900;
+        run();
+      });
+      hero.addEventListener("pointerleave", function () { ptr = null; until = performance.now() + 400; run(); });
+    }
   })();
 </script>

@@ -672,78 +672,281 @@ h4 { font-size: var(--fs-lg); }
 }
 
 /* ---------- internal apps dashboard (/internal.html) ---------- */
-/* Round icon tiles after Google Workspace's "Your apps" page, in EISS
-   tokens. The role radios filter with :has(), no JS needed. */
-.apps-roles {
+/* A fixed navy hero carrying the 10-year logo, a stats strip that overlaps it,
+   then app cards. The role filter and #admin are CSS only (:has, :target). */
+.apps-hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(var(--space-7), 6vw, var(--space-9)) calc(clamp(var(--space-7), 6vw, var(--space-9)) + var(--space-7));
+  color: hsl(0 0% 100%);
+  text-align: center;
+  background:
+    radial-gradient(900px circle at 50% -10%, hsl(203 100% 36% / 0.55), transparent 65%),
+    radial-gradient(700px circle at 95% 110%, hsl(203 100% 66% / 0.16), transparent 60%),
+    hsl(222 47% 11%);
+}
+.apps-hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.apps-hero-inner { position: relative; }
+.apps-hero-logo {
+  width: min(100%, 46rem);
+  margin-inline: auto;
+  color: hsl(0 0% 100%);
+  filter: drop-shadow(0 6px 28px hsl(203 100% 60% / 0.35));
+  animation: apps-rise 800ms var(--ease-out) both;
+}
+.apps-hero-logo svg { display: block; width: 100%; height: auto; }
+.apps-hero-title {
+  margin: var(--space-6) 0 var(--space-2);
+  color: inherit;
+  font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  animation: apps-rise 800ms var(--ease-out) 120ms both;
+}
+.apps-hero-clock {
+  margin: 0 0 var(--space-2);
+  color: var(--brand-network);
+  font-variant-numeric: tabular-nums;
+  animation: apps-rise 800ms var(--ease-out) 200ms both;
+}
+.apps-hero-lead {
+  max-width: 38rem;
+  margin: 0 auto;
+  color: hsl(210 30% 86%);
+  animation: apps-rise 800ms var(--ease-out) 280ms both;
+}
+
+.apps-stats {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  margin: calc(-1 * var(--space-7)) 0 var(--space-7);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-elev);
+  box-shadow: var(--shadow-3);
+  animation: apps-rise 800ms var(--ease-out) 360ms both;
+}
+.apps-stat {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-5);
+  border-inline-start: 1px solid var(--border);
+}
+.apps-stat:first-child { border-inline-start: 0; }
+.apps-stat dt { color: var(--text-muted); font-size: 0.875rem; line-height: 1.35; }
+.apps-stat dd {
+  margin: 0;
+  color: var(--accent);
+  font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.apps-panel { padding-bottom: var(--space-8); }
+.apps-panel-head {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
-  margin: 0 0 var(--space-6);
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+.apps-heading { margin: 0; font-size: clamp(1.375rem, 1.2rem + 0.6vw, 1.75rem); }
+.apps-count {
+  margin: var(--space-1) 0 0;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.apps-roles {
+  min-width: 0;
+  margin: 0;
   padding: 0;
   border: 0;
 }
 .apps-roles legend {
   margin-bottom: var(--space-2);
+  padding: 0;
+  color: var(--text-muted);
+  font-size: 0.875rem;
   font-weight: 600;
 }
-.apps-role {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: 44px;
-  padding: var(--space-2) var(--space-4);
+/* A segmented control whose highlight slides to the checked radio. --x and --y
+   count the highlight's own width and height. */
+.apps-segments {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  --cols: 4;
+  --rows: 1;
+  --x: 0;
+  --y: 0;
+  padding: var(--space-1);
   border: 1px solid var(--border-strong);
-  border-radius: var(--radius-full);
-  background: var(--surface-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elev);
+}
+.apps-segments::before {
+  content: "";
+  position: absolute;
+  inset-block-start: var(--space-1);
+  inset-inline-start: var(--space-1);
+  width: calc((100% - 2 * var(--space-1)) / var(--cols));
+  height: calc((100% - 2 * var(--space-1)) / var(--rows));
+  border-radius: var(--radius-xs);
+  background: var(--accent);
+  transform: translate(calc(var(--x) * 100%), calc(var(--y) * 100%));
+  transition: transform var(--motion-base) var(--ease-out);
+}
+.apps-segments:has([value="staff"]:checked) { --x: 1; }
+.apps-segments:has([value="board"]:checked) { --x: 2; }
+.apps-segments:has([value="volunteer"]:checked) { --x: 3; }
+.apps-role {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--space-1) var(--space-4);
+  border-radius: var(--radius-xs);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: color var(--motion-base) var(--ease-out);
+}
+.apps-role:has(:checked) { color: var(--accent-text); }
+.apps-role:has(:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.apps-role input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
   cursor: pointer;
 }
-.apps-role:has(:checked) {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-}
-.apps-role input { accent-color: var(--accent); margin: 0; }
 
 .apps-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
   gap: var(--space-4);
   margin: 0;
   padding: 0;
   list-style: none;
 }
+/* An item coming back from display: none replays this, so a role change
+   animates with no script. */
+.apps-card-wrap { animation: apps-rise 500ms var(--ease-out) calc(var(--n) * 45ms) both; }
 .apps-tile {
+  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-4) var(--space-2);
+  height: 100%;
+  min-height: 9.5rem;
+  overflow: hidden;
+  padding: var(--space-5);
+  border: 1px solid var(--border);
   border-radius: var(--radius-md);
+  background: var(--bg-elev);
+  box-shadow: var(--shadow-1);
   color: var(--text);
-  text-align: center;
   text-decoration: none;
+  transition: transform var(--motion-base) var(--ease-out),
+              box-shadow var(--motion-base) var(--ease-out),
+              border-color var(--motion-base) var(--ease-out);
 }
-.apps-tile:hover { background: var(--accent-soft); }
+.apps-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), var(--accent-soft), transparent 70%);
+  opacity: 0;
+  transition: opacity var(--motion-base) var(--ease-out);
+  pointer-events: none;
+}
+.apps-tile:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-3);
+  color: var(--text);
+}
+.apps-tile:hover::before { opacity: 1; }
 .apps-icon {
+  position: relative;
   display: grid;
   place-items: center;
-  width: 4rem;
-  height: 4rem;
+  width: 3.25rem;
+  height: 3.25rem;
+  margin-bottom: var(--space-4);
   border-radius: var(--radius-full);
   background: var(--accent);
   color: var(--accent-text);
-  font-size: 1.75rem;
-  box-shadow: 0 0 0 4px var(--brand-network);
+  font-size: 1.5rem;
+  box-shadow: 0 0 0 4px var(--accent-soft);
+  transition: transform var(--motion-base) var(--ease-out);
 }
-.apps-label { font-weight: 500; line-height: 1.3; }
-.apps-note { margin-top: calc(-1 * var(--space-2)); color: var(--text-muted); font-size: 0.8125rem; line-height: 1.3; }
+.apps-tile:hover .apps-icon { transform: scale(1.08); }
+.apps-label { position: relative; font-weight: 600; line-height: 1.3; }
+.apps-note {
+  position: relative;
+  margin-top: var(--space-1);
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+.apps-go {
+  position: absolute;
+  inset-block-start: var(--space-5);
+  inset-inline-end: var(--space-5);
+  color: var(--accent);
+  font-size: 1.25rem;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity var(--motion-base) var(--ease-out),
+              transform var(--motion-base) var(--ease-out);
+}
+.apps-tile:hover .apps-go,
+.apps-tile:focus-visible .apps-go { opacity: 1; transform: none; }
 
-.apps-admin { display: none; margin-bottom: var(--space-6); }
+.apps-admin { display: none; margin-bottom: var(--space-7); }
 .apps-admin:target { display: block; }
+.apps-admin .apps-heading { margin-bottom: var(--space-5); }
 
 .apps-page:has(.apps-role [value="staff"]:checked) .apps-item:not([data-roles~="staff"]),
 .apps-page:has(.apps-role [value="board"]:checked) .apps-item:not([data-roles~="board"]),
 .apps-page:has(.apps-role [value="volunteer"]:checked) .apps-item:not([data-roles~="volunteer"]) {
   display: none;
+}
+
+@keyframes apps-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 640px) {
+  .apps-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .apps-stat { padding: var(--space-4); }
+  .apps-stat:nth-child(odd) { border-inline-start: 0; }
+  .apps-stat:nth-child(n + 3) { border-block-start: 1px solid var(--border); }
+  .apps-roles { width: 100%; }
+  .apps-segments {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    --cols: 2;
+    --rows: 2;
+  }
+  .apps-segments:has([value="board"]:checked) { --x: 0; --y: 1; }
+  .apps-segments:has([value="volunteer"]:checked) { --x: 1; --y: 1; }
+  .apps-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+  .apps-tile { min-height: 8.5rem; padding: var(--space-4); }
+  .apps-go { display: none; }
 }
 
 /* ---------- What's New banner ---------- */
