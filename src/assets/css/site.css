@@ -920,10 +920,64 @@ h4 { font-size: var(--fs-lg); }
 .apps-admin:target { display: block; }
 .apps-admin .apps-heading { margin-bottom: var(--space-5); }
 
-.apps-page:has(.apps-role [value="staff"]:checked) .apps-item:not([data-roles~="staff"]),
-.apps-page:has(.apps-role [value="board"]:checked) .apps-item:not([data-roles~="board"]),
-.apps-page:has(.apps-role [value="volunteer"]:checked) .apps-item:not([data-roles~="volunteer"]) {
+.apps-page:has(.apps-role [value="staff"]:checked) [data-roles]:not([data-roles~="staff"]),
+.apps-page:has(.apps-role [value="board"]:checked) [data-roles]:not([data-roles~="board"]),
+.apps-page:has(.apps-role [value="volunteer"]:checked) [data-roles]:not([data-roles~="volunteer"]) {
   display: none;
+}
+
+.apps-tile-soon {
+  border-style: dashed;
+  background: transparent;
+  box-shadow: none;
+}
+.apps-tile-soon:hover {
+  transform: none;
+  border-color: var(--border);
+  box-shadow: none;
+}
+.apps-tile-soon:hover .apps-icon { transform: none; }
+.apps-tile-short { min-height: 0; }
+.apps-section-heading { margin-bottom: var(--space-5); }
+.apps-status {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--space-4);
+}
+.apps-status-card {
+  padding: var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-elev);
+  box-shadow: var(--shadow-1);
+}
+.apps-status-title { margin: 0 0 var(--space-3); font-size: 1rem; font-weight: 600; }
+.apps-release { margin: 0 0 var(--space-3); }
+.apps-release a { text-decoration: underline; }
+.apps-progress {
+  display: block;
+  width: 100%;
+  height: 0.5rem;
+  accent-color: var(--accent);
+}
+.apps-counts,
+.apps-dates {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.apps-counts a { display: inline-block; padding-block: var(--space-1); }
+.apps-counts strong {
+  color: var(--accent);
+  font-size: 1.25rem;
+  font-variant-numeric: tabular-nums;
+}
+.apps-dates time {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
 }
 
 @keyframes apps-rise {

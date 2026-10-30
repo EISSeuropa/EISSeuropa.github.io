@@ -387,6 +387,9 @@ the rendered style guide cannot disagree.
   role filter is CSS `:has()` and the `#admin` view is CSS `:target`, so
   both work without JavaScript. The script only adds the greeting, clock,
   live figures, remembered role, card spotlight and hero constellation.
+  An entry with no `href` renders as a dashed "coming soon" tile, left
+  out of the app count. Any `[data-roles]` element on the page follows
+  the role filter, so the status cards and guides use it too.
   See `admin-guide.md` for the address and how to change the apps.
 - **`icons.njk`** — inline-SVG Lucide icon set via the `icon()` macro.
 

@@ -114,6 +114,15 @@ successor inherits through the handover in section 4.
   labels under `staffMenu` in `src/_data/i18n.js` for all three
   languages. `roles` sets which roles see a tile on the dashboard, and
   `menu: true` adds the link to the padlock menu.
+- **Where things stand.** The next release and the open issue, PR and
+  `help wanted` counts come from `src/data/roadmap-progress.json`, which
+  the daily *Refresh roadmap surfaces* workflow rewrites. Key dates are
+  the next conference, the release due dates and anything in `keyDates`
+  in `src/_data/site.js`. `src/_data/dashboard.js` assembles all of it.
+- **Guides and the task tracker.** Guides are `guideLinks` in
+  `src/_data/site.js`. The *Task tracker* tile is a placeholder until the
+  Sheet exists: give its `staffLinks` entry an `href` and remove `note`.
+  The Sheet holds private work, since this page and the repo are public.
 - **The admin view.** `/internal.html#admin` adds the `adminLinks` from
   the same file. It is unlisted, not secret: those links are in the page
   source. Neither view is access control. Each app's own sign-in protects

@@ -15,7 +15,8 @@ eleventyExcludeFromCollections: true
   redirects here from a separate one-file repo (GitHub Pages serves one
   custom domain per repo).
 
-  Reads: site.staffLinks (entries with `roles`), labels t.staffMenu.<key>.
+  Reads: site.staffLinks (entries with `roles`), labels t.staffMenu.<key> or
+  the entry's own `label`, site.guideLinks and dashboard (release, counts, dates).
   The role filter is CSS `:has()` on data-roles, so it works without JS.
   A shortcut list, not access control. Everything works without JS: the script
   only adds the greeting, clock, live day count, app count, remembered role,
@@ -88,16 +89,74 @@ eleventyExcludeFromCollections: true
       <ul class="apps-grid" role="list">
         {% set n = 0 %}
         {% for app in site.staffLinks %}{% if app.roles %}
-          <li class="apps-item apps-card-wrap" data-roles="{{ app.roles | join(' ') }}" style="--n: {{ n }}">
-            <a class="apps-tile" href="{{ app.href }}">
-              <span class="apps-icon">{{ icon(app.icon) }}</span>
-              <span class="apps-label">{{ t.staffMenu[app.key] }}</span>
-              {% if t.staffMenu[app.key + "Note"] %}<span class="apps-note">{{ t.staffMenu[app.key + "Note"] }}</span>{% endif %}
-              <span class="apps-go">{{ icon("arrow-right") }}</span>
-            </a>
+          {% set note = app.note or t.staffMenu[app.key + "Note"] %}
+          <li class="apps-card-wrap"{% if app.href %} data-apps-app{% endif %} data-roles="{{ app.roles | join(' ') }}" style="--n: {{ n }}">
+            {% if app.href %}
+              <a class="apps-tile" href="{{ app.href }}">
+                <span class="apps-icon">{{ icon(app.icon) }}</span>
+                <span class="apps-label">{{ app.label or t.staffMenu[app.key] }}</span>
+                {% if note %}<span class="apps-note">{{ note }}</span>{% endif %}
+                <span class="apps-go">{{ icon("arrow-right") }}</span>
+              </a>
+            {% else %}
+              <div class="apps-tile apps-tile-soon">
+                <span class="apps-icon">{{ icon(app.icon) }}</span>
+                <span class="apps-label">{{ app.label }}</span>
+                {% if note %}<span class="apps-note">{{ note }}</span>{% endif %}
+              </div>
+            {% endif %}
           </li>
           {% set n = n + 1 %}
         {% endif %}{% endfor %}
+      </ul>
+    </section>
+
+    <section class="apps-panel" aria-labelledby="apps-status-heading">
+      <h2 class="apps-heading apps-section-heading" id="apps-status-heading">Where things stand</h2>
+      <div class="apps-status">
+        {% if dashboard.release %}
+          <div class="apps-status-card" data-roles="staff">
+            <h3 class="apps-status-title">Next release</h3>
+            <p class="apps-release"><a href="{{ dashboard.release.url }}">{{ dashboard.release.title }}</a>{% if dashboard.release.due %}, due {{ dashboard.release.due | newsDate("en") }}{% endif %}</p>
+            <progress class="apps-progress" value="{{ dashboard.release.closed }}" max="{{ dashboard.release.total }}" aria-label="{{ dashboard.release.title }} progress">{{ dashboard.release.percent }}%</progress>
+            <p class="apps-note">{{ dashboard.release.closed }} of {{ dashboard.release.total }} issues closed</p>
+          </div>
+        {% endif %}
+        {% if dashboard.counts %}
+          <div class="apps-status-card" data-roles="staff volunteer">
+            <h3 class="apps-status-title">On GitHub</h3>
+            <ul class="apps-counts" role="list">
+              {% for c in dashboard.counts %}
+                <li data-roles="{{ c.roles | join(' ') }}"><a href="{{ c.url }}"><strong>{{ c.value }}</strong> {{ c.label }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+        {% if dashboard.dates.length %}
+          <div class="apps-status-card">
+            <h3 class="apps-status-title">Key dates</h3>
+            <ul class="apps-dates" role="list">
+              {% for d in dashboard.dates %}
+                <li data-roles="{{ d.roles | join(' ') }}"><time datetime="{{ d.date }}">{{ d.date | newsDate("en") }}</time> <span>{{ d.label }}</span></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+    </section>
+
+    <section class="apps-panel" aria-labelledby="apps-guides-heading">
+      <h2 class="apps-heading apps-section-heading" id="apps-guides-heading">Guides</h2>
+      <ul class="apps-grid" role="list">
+        {% for guide in site.guideLinks %}
+          <li class="apps-card-wrap" data-roles="{{ guide.roles | join(' ') }}" style="--n: {{ loop.index0 }}">
+            <a class="apps-tile apps-tile-short" href="{{ guide.href }}">
+              <span class="apps-icon">{{ icon(guide.icon) }}</span>
+              <span class="apps-label">{{ guide.label }}</span>
+              <span class="apps-go">{{ icon("arrow-right") }}</span>
+            </a>
+          </li>
+        {% endfor %}
       </ul>
     </section>
   </div>
@@ -115,7 +174,7 @@ eleventyExcludeFromCollections: true
     var saved = null;
     try { saved = localStorage.getItem(KEY); } catch (e) {}
     function tally() {
-      var shown = [].filter.call(document.querySelectorAll(".apps-item"), function (el) {
+      var shown = [].filter.call(document.querySelectorAll("[data-apps-app]"), function (el) {
         return getComputedStyle(el).display !== "none";
       }).length;
       total.textContent = shown + (shown === 1 ? " app" : " apps");

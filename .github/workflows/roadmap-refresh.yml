@@ -111,7 +111,8 @@ jobs:
             echo '```'
             echo ""
             echo "**\`src/data/roadmap-progress.json\`**: per-milestone closed/total/percent,"
-            echo "read by the progress bars on \`/roadmap.html\` (+ FR + DE). Committed rather"
+            echo "read by the progress bars on \`/roadmap.html\` (+ FR + DE), and the open"
+            echo "counts on \`/internal.html\`. Committed rather"
             echo "than fetched live, so the page stays static and survives an API outage."
             echo ""
             echo '```'
