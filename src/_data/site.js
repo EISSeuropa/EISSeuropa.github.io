@@ -222,9 +222,9 @@ module.exports = {
       sep: true,
     },
     { href: "https://workspace.google.com/dashboard", key: "googleApps", icon: "layout-grid", roles: ["staff"] },
-    // Placeholder: set `href` to the Sheet's address to activate the tile, and
-    // drop `note`. The Sheet stays private, only the link goes here.
-    { href: null, label: "Task tracker", note: "Coming soon", icon: "file-text", roles: ["staff", "board"] },
+    // An Apps Script app open to the EISS domain only, for interns, staff and
+    // management. Its own People list decides who gets in.
+    { href: "https://script.google.com/a/macros/eiss-europa.com/s/AKfycbzlceXEY4CHShuTGgy9etowrkmnpv7R0u6XmF1-NgT7-ivepTibfllkyVR9tI9wcRI/exec", label: "Task tracker", icon: "file-text", roles: ["staff", "board"] },
   ],
 
   // The guides on /internal.html. Roles work as in staffLinks.
