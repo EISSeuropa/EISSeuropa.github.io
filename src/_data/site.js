@@ -202,20 +202,16 @@ module.exports = {
   // dashboard's role filter (a convenience, not access control: every app
   // asks for sign-in), and an entry without `roles` is menu-only. The
   // `/a/eiss-europa.com` form steers sign-in to the EISS account (Meet 404s
-  // and Chat drops it, so those two go bare). The
+  // on it, so it goes bare). The
   // mail./groups. custom domains are http only, so they are not linked.
   staffLinks: [
     { href: "https://indico.eiss-europa.com", key: "indico", icon: "ticket", roles: ["staff", "board", "volunteer"] },
     { href: "https://mail.google.com/a/eiss-europa.com", key: "mail", icon: "mail", roles: ["staff", "board"], menu: true },
+    // contact@ and internship@ are collaborative inboxes, worked in Groups.
+    { href: "https://groups.google.com/a/eiss-europa.com", key: "groups", icon: "inbox", roles: ["staff"], menu: true },
     { href: "https://calendar.google.com/a/eiss-europa.com", key: "calendar", icon: "calendar", roles: ["staff", "board"], menu: true },
     { href: "https://drive.google.com/a/eiss-europa.com", key: "drive", icon: "folder", roles: ["staff", "board", "volunteer"], menu: true },
     { href: "https://meet.google.com/", key: "meet", icon: "video", roles: ["staff", "board", "volunteer"] },
-    { href: "https://chat.google.com/", key: "chat", icon: "message-circle", roles: ["staff"] },
-    { href: "https://groups.google.com/a/eiss-europa.com", key: "groups", icon: "users", roles: ["staff", "board"], menu: true },
-    { href: "https://docs.google.com/a/eiss-europa.com/document/", key: "docs", icon: "file-text", roles: ["staff", "board"] },
-    { href: "https://docs.google.com/a/eiss-europa.com/spreadsheets/", key: "sheets", icon: "table", roles: ["staff", "board"] },
-    { href: "https://docs.google.com/a/eiss-europa.com/presentation/", key: "slides", icon: "presentation", roles: ["staff", "board"] },
-    { href: "https://docs.google.com/a/eiss-europa.com/forms/", key: "forms", icon: "list-checks", roles: ["staff", "board"] },
     { href: "/internal.html", key: "allApps", icon: "layout-grid", menu: true },
     {
       href: "https://docs.google.com/forms/d/e/1FAIpQLSevC0tbQwCA4ZNfdk_pCY5xUvmFjuQbIIpddDXLF5TdSoKfcw/viewform",
@@ -225,6 +221,6 @@ module.exports = {
       menu: true,
       sep: true,
     },
-    { href: "https://workspace.google.com/dashboard", key: "googleApps", icon: "layout-grid", roles: ["staff", "board"] },
+    { href: "https://workspace.google.com/dashboard", key: "googleApps", icon: "layout-grid", roles: ["staff"] },
   ],
 };

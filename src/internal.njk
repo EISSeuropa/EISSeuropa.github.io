@@ -49,6 +49,7 @@ eleventyExcludeFromCollections: true
             <a class="apps-tile" href="{{ app.href }}">
               <span class="apps-icon">{{ icon(app.icon) }}</span>
               <span class="apps-label">{{ t.staffMenu[app.key] }}</span>
+              {% if t.staffMenu[app.key + "Note"] %}<span class="apps-note">{{ t.staffMenu[app.key + "Note"] }}</span>{% endif %}
             </a>
           </li>
         {% endif %}{% endfor %}

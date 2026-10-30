@@ -735,6 +735,7 @@ h4 { font-size: var(--fs-lg); }
   box-shadow: 0 0 0 4px var(--brand-network);
 }
 .apps-label { font-weight: 500; line-height: 1.3; }
+.apps-note { margin-top: calc(-1 * var(--space-2)); color: var(--text-muted); font-size: 0.8125rem; line-height: 1.3; }
 
 .apps-page:has(.apps-role [value="staff"]:checked) .apps-item:not([data-roles~="staff"]),
 .apps-page:has(.apps-role [value="board"]:checked) .apps-item:not([data-roles~="board"]),
