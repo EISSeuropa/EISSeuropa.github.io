@@ -119,10 +119,19 @@ successor inherits through the handover in section 4.
   the daily *Refresh roadmap surfaces* workflow rewrites. Key dates are
   the next conference, the release due dates and anything in `keyDates`
   in `src/_data/site.js`. `src/_data/dashboard.js` assembles all of it.
-- **Guides and the task tracker.** Guides are `guideLinks` in
-  `src/_data/site.js`. The *Task tracker* tile is a placeholder until the
-  Sheet exists: give its `staffLinks` entry an `href` and remove `note`.
-  The Sheet holds private work, since this page and the repo are public.
+- **Guides.** Guides are `guideLinks` in `src/_data/site.js`.
+- **The task tracker.** The *Task tracker* tile opens an Apps Script web
+  app for staff, management and volunteers, owned by `admin@`, with the
+  private Sheet "EISS task tracker" behind it. It is open to the EISS
+  domain only, and the Sheet's *People* tab decides who gets in. The
+  "EISS intern lifecycle" script adds each volunteer on approval and removes them
+  at offboarding, handing their open tasks to the Technology Coordinator.
+  Add everyone else by hand. The tile shows for the *Staff*, *Management*
+  and *Volunteer* roles, and the Sheet itself, linked from `#admin`, stays
+  restricted, since edit access could change who gets in. The code is
+  outside this repo, with its own README, in the maintainer's EISS folder
+  under `task-tracker/`. Tasks stay out of this repo and this page, since
+  both are public.
 - **The admin view.** `/internal.html#admin` adds the `adminLinks` from
   the same file. It is unlisted, not secret: those links are in the page
   source. Neither view is access control. Each app's own sign-in protects

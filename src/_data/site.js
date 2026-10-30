@@ -205,13 +205,13 @@ module.exports = {
   // on it, so it goes bare). The
   // mail./groups. custom domains are http only, so they are not linked.
   staffLinks: [
-    { href: "https://indico.eiss-europa.com", key: "indico", icon: "ticket", roles: ["staff", "board", "volunteer"] },
-    { href: "https://mail.google.com/a/eiss-europa.com", key: "mail", icon: "mail", roles: ["staff", "board"], menu: true },
+    { href: "https://indico.eiss-europa.com", key: "indico", icon: "ticket", roles: ["staff", "management", "board", "volunteer"] },
+    { href: "https://mail.google.com/a/eiss-europa.com", key: "mail", icon: "mail", roles: ["staff", "management", "board", "volunteer"], menu: true },
     // contact@ and internship@ are collaborative inboxes, worked in Groups.
-    { href: "https://groups.google.com/a/eiss-europa.com", key: "groups", icon: "inbox", roles: ["staff"], menu: true },
-    { href: "https://calendar.google.com/a/eiss-europa.com", key: "calendar", icon: "calendar", roles: ["staff", "board"], menu: true },
-    { href: "https://drive.google.com/a/eiss-europa.com", key: "drive", icon: "folder", roles: ["staff", "board", "volunteer"], menu: true },
-    { href: "https://meet.google.com/", key: "meet", icon: "video", roles: ["staff", "board", "volunteer"] },
+    { href: "https://groups.google.com/a/eiss-europa.com", key: "groups", icon: "inbox", roles: ["staff", "management", "volunteer"], menu: true },
+    { href: "https://calendar.google.com/a/eiss-europa.com", key: "calendar", icon: "calendar", roles: ["staff", "management", "board", "volunteer"], menu: true },
+    { href: "https://drive.google.com/a/eiss-europa.com", key: "drive", icon: "folder", roles: ["staff", "management", "board", "volunteer"], menu: true },
+    { href: "https://meet.google.com/", key: "meet", icon: "video", roles: ["staff", "management", "board", "volunteer"] },
     { href: "/internal.html", key: "allApps", icon: "layout-grid", menu: true },
     {
       href: "https://docs.google.com/forms/d/e/1FAIpQLSevC0tbQwCA4ZNfdk_pCY5xUvmFjuQbIIpddDXLF5TdSoKfcw/viewform",
@@ -222,16 +222,16 @@ module.exports = {
       sep: true,
     },
     { href: "https://workspace.google.com/dashboard", key: "googleApps", icon: "layout-grid", roles: ["staff"] },
-    // Placeholder: set `href` to the Sheet's address to activate the tile, and
-    // drop `note`. The Sheet stays private, only the link goes here.
-    { href: null, label: "Task tracker", note: "Coming soon", icon: "file-text", roles: ["staff", "board"] },
+    // An Apps Script app open to the EISS domain only, for staff, management and
+    // volunteers. Its own People list decides who gets in.
+    { href: "https://script.google.com/a/macros/eiss-europa.com/s/AKfycbzlceXEY4CHShuTGgy9etowrkmnpv7R0u6XmF1-NgT7-ivepTibfllkyVR9tI9wcRI/exec", label: "Task tracker", icon: "file-text", roles: ["staff", "management", "volunteer"] },
   ],
 
   // The guides on /internal.html. Roles work as in staffLinks.
   guideLinks: [
     { href: "https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/internship-handbook.md", label: "Internship handbook", icon: "graduation-cap", roles: ["staff", "volunteer"] },
     { href: "https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/news-publishing.md", label: "Publishing news", icon: "rss", roles: ["staff"] },
-    { href: "https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/admin-guide.md", label: "Operator and handover guide", icon: "book-open", roles: ["staff", "board"] },
+    { href: "https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/admin-guide.md", label: "Operator and handover guide", icon: "book-open", roles: ["staff", "management", "board"] },
   ],
 
   // Hand-kept dates for the /internal.html list, added to the conference and
@@ -246,6 +246,7 @@ module.exports = {
   adminLinks: [
     { href: "https://admin.google.com/", label: "Admin console", icon: "shield" },
     { href: "https://indico.eiss-europa.com/admin/", label: "Indico administration", icon: "settings" },
+    { href: "https://docs.google.com/spreadsheets/d/1upTZe9BrEj_pVAXDCGBHFLHhXwzvSK5nHrz_nuXT4-Y/edit", label: "Task tracker Sheet", icon: "file-text" },
     { href: "https://script.google.com/home", label: "Apps Script", icon: "code" },
     { href: "https://ap.www.namecheap.com/", label: "Namecheap", icon: "globe" },
     { href: "https://github.com/EISSeuropa", label: "GitHub", icon: "git-branch" },
