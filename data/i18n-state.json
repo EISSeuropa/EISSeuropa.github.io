@@ -158,14 +158,14 @@
     "src/policy.njk": {
       "fr": {
         "file": "src/policy.fr.njk",
-        "source_sha1": "e20965126f5071c2ad58c9f52e2dd985b94d4007",
-        "translated_on": "2026-06-09",
+        "source_sha1": "5dadcc439b67c87c044aa56f65492a9fa009c870",
+        "translated_on": "2026-10-30",
         "status": "beta"
       },
       "de": {
         "file": "src/policy.de.njk",
-        "source_sha1": "e20965126f5071c2ad58c9f52e2dd985b94d4007",
-        "translated_on": "2026-06-09",
+        "source_sha1": "5dadcc439b67c87c044aa56f65492a9fa009c870",
+        "translated_on": "2026-10-30",
         "status": "beta"
       }
     },
