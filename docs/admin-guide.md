@@ -93,6 +93,32 @@ successor inherits through the handover in section 4.
   DNS resolves to Pages and *Enforce HTTPS* is ticked in repo
   *Settings → Pages*. No certificate to renew by hand.
 
+### Internal dashboard: internal.eiss-europa.com
+
+- **What it is.** An apps dashboard for staff, board members and
+  volunteers at `/internal.html` (`src/internal.njk`), in English only
+  and kept out of search engines, the sitemap and site search. The
+  padlock menu in the header offers a shorter list of the same links.
+- **The address.** `https://internal.eiss-europa.com` is a separate
+  public repository, [`EISSeuropa/internal`](https://github.com/EISSeuropa/internal),
+  because GitHub Pages serves one custom domain per repository. It holds
+  two files on `main`: `CNAME` and an `index.html` whose meta refresh
+  leads to `https://eiss-europa.com/internal.html`. Moving the dashboard
+  means editing that `index.html`. *Enforce HTTPS* is on in that
+  repository's *Settings → Pages*.
+- **DNS.** A CNAME record at Namecheap, host `internal`, value
+  `eisseuropa.github.io.`. The subdomain can be claimed by anyone with a
+  Pages site until the domain is verified under the account's
+  *Settings → Pages → Verified domains*.
+- **Changing the apps.** Edit `staffLinks` in `src/_data/site.js`, with
+  labels under `staffMenu` in `src/_data/i18n.js` for all three
+  languages. `roles` sets which roles see a tile on the dashboard, and
+  `menu: true` adds the link to the padlock menu.
+- **The admin view.** `/internal.html#admin` adds the `adminLinks` from
+  the same file. It is unlisted, not secret: those links are in the page
+  source. Neither view is access control. Each app's own sign-in protects
+  it, so no credential belongs on the page.
+
 ### Board bios: Google Form and Sheet pipeline
 
 - **What it is.** A Google Form feeds a linked Google Sheet, published
@@ -292,6 +318,7 @@ here.
 |---|---|
 | **Build red on a PR or on master.** | Open the failed run under *Actions → Build and deploy site*. The failing step is almost always `npm run build`. Reproduce locally: `npm install --no-audit --no-fund` then `npm run build`. Read the Eleventy / Nunjucks error, which names the offending template and line. A common cause is a leaf template using `t.*` without `{%- set t = i18n[lang or "en"] -%}` at the top of its body (CLAUDE.md note). Fix on a branch, open a PR, confirm the build goes green. |
 | **A sync PR is failing or empty.** | *Board sync:* an empty run is normal when no submitter changed anything. A failing run usually means the published CSV URL in `scripts/board-source.json` went stale or the Drive photo folder lost its *Anyone with the link* sharing. Re-check both per [`board-bios-setup.md`](board-bios-setup.md). *Indico sync:* check the run log's first line for the mode banner. A genuinely empty no-op is fine. A failure points at the token or the Indico endpoint, see the Indico token row below. *An unexpectedly empty bios PR* is a regression, not noise: open an issue and investigate (CLAUDE.md §8). |
+| **`internal.eiss-europa.com` fails but the main site works.** | Check the `EISSeuropa/internal` repository: its *Settings → Pages* should show the custom domain and a passing DNS check, and the Namecheap CNAME for `internal` should still point at `eisseuropa.github.io.`. |
 | **DNS or Pages down (site unreachable or serving the wrong content).** | First isolate the layer. Is `master` healthy and is the latest deploy green under *Actions*? If the deploy is stale, force one: `gh workflow run deploy.yml --ref master` (the cascade gotcha in section 1). If deploys are green but the domain does not resolve, the problem is DNS or the registrar: confirm `src/CNAME` still reads `eiss-europa.com`, confirm the registrar's apex records still point at GitHub Pages, and confirm *Settings → Pages* shows the custom domain verified with *Enforce HTTPS* on. A recently lapsed or transferred domain is the worst case, handled by the registrar login in the handover. |
 | **Indico token expired or revoked.** | The site keeps working: the sync falls back to anonymous mode and public programme data still flows, so this is degraded, not down. The tell is the run log reading `anonymous mode` when you expect `authenticated`, or auth-gated fields going blank. Issue a fresh read-only token under the bot account, update the `INDICO_API_TOKEN` repo secret, delete the old token in Indico, then re-run the sync to confirm the `authenticated mode` banner. Full steps in [`indico-api-token.md`](indico-api-token.md). |
 | **i18n drift check failing.** | The drift checker found an English source whose recorded SHA no longer matches, so a translation is stale or missing. Run `python3 scripts/check-i18n-drift.py` locally to see which page and language. Either hand-translate the FR / DE sibling to match the English change and re-stamp, or, for a trivial edit, re-stamp to silence CI as a deliberate maintainer override: `python3 scripts/check-i18n-drift.py --mark-fresh src/<page>.njk fr` (and `de`). The final state must be *All translations match*. See [`i18n.md`](i18n.md). |
