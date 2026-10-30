@@ -163,10 +163,10 @@
         <summary class="icon-btn staff-menu-summary" aria-label="{{ t.staffMenu.label }}" title="{{ t.staffMenu.label }}">{{ icon("lock") }}</summary>
         <div class="staff-menu-panel" role="group" aria-label="{{ t.staffMenu.label }}">
           <span class="staff-menu-heading">{{ t.staffMenu.heading }}</span>
-          {% for link in site.staffLinks %}
+          {% for link in site.staffLinks %}{% if link.menu %}
             {% if link.sep %}<hr class="staff-menu-sep">{% endif %}
-            <a class="staff-menu-link" href="{{ link.href }}" target="_blank" rel="noopener">{{ icon(link.icon) }}{{ t.staffMenu[link.key] }}</a>
-          {% endfor %}
+            <a class="staff-menu-link" href="{{ link.href }}"{% if link.href[0] != "/" %} target="_blank" rel="noopener"{% endif %}>{{ icon(link.icon) }}{{ t.staffMenu[link.key] }}</a>
+          {% endif %}{% endfor %}
         </div>
       </details>
       <button class="icon-btn nav-menu-toggle"

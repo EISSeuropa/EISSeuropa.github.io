@@ -197,21 +197,40 @@ module.exports = {
     },
   ]),
 
-  // The padlock menu in the header bar: Google Workspace for eiss-europa.com
-  // plus the intern onboarding form. Labels are `t.staffMenu.<key>`. The
-  // `/a/eiss-europa.com` form steers sign-in to the EISS account. The
+  // The apps on /internal.html and, where `menu` is set, in the header
+  // padlock menu. Labels are `t.staffMenu.<key>`. `roles` drives the
+  // dashboard's role filter (a convenience, not access control: every app
+  // asks for sign-in), and an entry without `roles` is menu-only. The
+  // `/a/eiss-europa.com` form steers sign-in to the EISS account (Meet 404s
+  // on it, so it goes bare). The
   // mail./groups. custom domains are http only, so they are not linked.
   staffLinks: [
-    { href: "https://mail.google.com/a/eiss-europa.com", key: "mail", icon: "mail" },
-    { href: "https://calendar.google.com/a/eiss-europa.com", key: "calendar", icon: "calendar" },
-    { href: "https://drive.google.com/a/eiss-europa.com", key: "drive", icon: "folder" },
-    { href: "https://groups.google.com/a/eiss-europa.com", key: "groups", icon: "users" },
-    { href: "https://workspace.google.com/dashboard", key: "allApps", icon: "layout-grid" },
+    { href: "https://indico.eiss-europa.com", key: "indico", icon: "ticket", roles: ["staff", "board", "volunteer"] },
+    { href: "https://mail.google.com/a/eiss-europa.com", key: "mail", icon: "mail", roles: ["staff", "board"], menu: true },
+    // contact@ and internship@ are collaborative inboxes, worked in Groups.
+    { href: "https://groups.google.com/a/eiss-europa.com", key: "groups", icon: "inbox", roles: ["staff"], menu: true },
+    { href: "https://calendar.google.com/a/eiss-europa.com", key: "calendar", icon: "calendar", roles: ["staff", "board"], menu: true },
+    { href: "https://drive.google.com/a/eiss-europa.com", key: "drive", icon: "folder", roles: ["staff", "board", "volunteer"], menu: true },
+    { href: "https://meet.google.com/", key: "meet", icon: "video", roles: ["staff", "board", "volunteer"] },
+    { href: "/internal.html", key: "allApps", icon: "layout-grid", menu: true },
     {
       href: "https://docs.google.com/forms/d/e/1FAIpQLSevC0tbQwCA4ZNfdk_pCY5xUvmFjuQbIIpddDXLF5TdSoKfcw/viewform",
       key: "internForm",
-      icon: "file-text",
+      icon: "graduation-cap",
+      roles: ["staff"],
+      menu: true,
       sep: true,
     },
+    { href: "https://workspace.google.com/dashboard", key: "googleApps", icon: "layout-grid", roles: ["staff"] },
+  ],
+
+  // The unlisted /internal.html#admin view. Hidden from view, not secret: the
+  // links are in the page source and each app's own sign-in protects it.
+  adminLinks: [
+    { href: "https://admin.google.com/", label: "Admin console", icon: "shield" },
+    { href: "https://indico.eiss-europa.com/admin/", label: "Indico administration", icon: "settings" },
+    { href: "https://script.google.com/home", label: "Apps Script", icon: "code" },
+    { href: "https://ap.www.namecheap.com/", label: "Namecheap", icon: "globe" },
+    { href: "https://github.com/EISSeuropa", label: "GitHub", icon: "git-branch" },
   ],
 };

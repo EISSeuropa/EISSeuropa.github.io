@@ -105,12 +105,17 @@ const locales = {
     staffMenu: {
       label: "Staff sign-in",
       heading: "Internal Dashboard",
-      mail: "Email",
+      mail: "My email",
+      mailNote: "Your nominative address",
       calendar: "Calendar",
       drive: "Drive",
-      groups: "Groups",
+      groups: "Shared inboxes",
+      groupsNote: "contact@ and internship@",
       allApps: "All apps",
       internForm: "Intern onboarding form",
+      indico: "Indico",
+      meet: "Meet",
+      googleApps: "All Google apps",
     },
 
     search: {
@@ -1008,12 +1013,17 @@ const locales = {
     staffMenu: {
       label: "Connexion de l'équipe",
       heading: "Tableau de bord interne",
-      mail: "Courriel",
+      mail: "Mon courriel",
+      mailNote: "Votre adresse nominative",
       calendar: "Agenda",
       drive: "Drive",
-      groups: "Groupes",
+      groups: "Boîtes partagées",
+      groupsNote: "contact@ et internship@",
       allApps: "Toutes les applications",
       internForm: "Formulaire d'arrivée des stagiaires",
+      indico: "Indico",
+      meet: "Meet",
+      googleApps: "Toutes les applications Google",
     },
 
     search: {
@@ -1788,12 +1798,17 @@ const locales = {
     staffMenu: {
       label: "Anmeldung für das Team",
       heading: "Internes Dashboard",
-      mail: "E-Mail",
+      mail: "Meine E-Mail",
+      mailNote: "Ihre namentliche Adresse",
       calendar: "Kalender",
       drive: "Drive",
-      groups: "Groups",
+      groups: "Geteilte Postfächer",
+      groupsNote: "contact@ und internship@",
       allApps: "Alle Apps",
       internForm: "Onboarding-Formular für Praktika",
+      indico: "Indico",
+      meet: "Meet",
+      googleApps: "Alle Google-Apps",
     },
 
     search: {

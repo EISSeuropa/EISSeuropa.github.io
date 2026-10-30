@@ -288,8 +288,9 @@
      stubs (search-bios.njk) carry data-pagefind-body, and Pagefind's rule
      is that once *any* page has it, pages *without* it are dropped from
      the index — so every real page must declare it here too, or only the
-     stubs get indexed. See docs/search.md. #}
-  <main id="main" role="main" data-pagefind-body>
+     stubs get indexed. See docs/search.md. `searchExclude: true` in
+     front-matter leaves it off, which drops that page from the index. #}
+  <main id="main" role="main"{% if not searchExclude %} data-pagefind-body{% endif %}>
     {{ content | safe }}
   </main>
 
