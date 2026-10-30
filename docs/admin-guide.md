@@ -35,14 +35,16 @@ successor inherits through the handover in section 4.
 
 - **What it is.** `github.com/EISSeuropa/EISSeuropa.github.io`, an
   Eleventy 3 + Nunjucks static site under the `EISSeuropa` GitHub
-  organisation. `master` is the single long-lived branch. Every change
+  account, which is a user account and not an organisation. `master` is the single long-lived branch. Every change
   lands as one squashed commit.
 - **What it controls.** Source, build, the automated sync workflows,
   the release tooling, and the issue and milestone backlog. This is the
   authoritative source for the whole site.
-- **Access.** The maintainer owns the org and the repo. The board
-  should hold at least one further org **Owner** so the repo cannot be
-  orphaned (see section 4). The automated PRs are assigned to the
+- **Access.** The maintainer holds the `EISSeuropa` login, which owns
+  this repo, `EISSeuropa/internal` and the NetSec site's repo. A user
+  account has no Owners to add, so the login itself is what passes on.
+  The board should know where a sealed copy of it is kept, so the repos
+  cannot be orphaned (see section 4). The automated PRs are assigned to the
   maintainer's GitHub handle so the assignee notification reaches them.
 - **Secrets.** Repository secrets live under *Settings → Secrets and
   variables → Actions*. `INDICO_API_TOKEN` (see below) is the Indico
@@ -354,16 +356,20 @@ survives.
 ## 4. Bus-factor handover checklist
 
 What a successor needs to take over the site cleanly. Work top to
-bottom. The domain and the org ownership are the two that, if missed,
+bottom. The domain and the GitHub login are the two that, if missed,
 make recovery genuinely hard.
 
 **Accounts and credentials to transfer** (from the maintainer's
 password manager):
 
-- [ ] **GitHub org ownership.** Add the successor as an **Owner** of
-      the `EISSeuropa` organisation, not just a repo collaborator. The
-      board should always keep at least two Owners so the org can never
-      be orphaned.
+- [ ] **GitHub login.** Pass on the `EISSeuropa` account itself, since
+      it is a user account with no Owners to add: password, two-factor
+      device or passkey, and recovery codes. The successor then replaces
+      all of these and generates new recovery codes. Repo collaborator
+      access is not enough, because settings, secrets and Pages stay with
+      the account. Outside a handover, keep a sealed copy of the login
+      and recovery codes with a second board member so the account can
+      never be orphaned.
 - [ ] **Domain registrar login.** The account holding `eiss-europa.com`
       and its DNS records. This is the single most critical transfer. A
       lapsed domain takes the site down.
