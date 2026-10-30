@@ -1,5 +1,5 @@
 /**
- * Volunteers and interns credited on /internship.html (+ FR + DE).
+ * Volunteers credited on /internship.html (+ FR + DE).
  *
  * Two of the four volunteer tracks produce no byline: corpus and abstract
  * indexing, and the database work. This is where those people are named,

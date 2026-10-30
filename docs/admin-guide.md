@@ -247,11 +247,11 @@ A board member submitted or updated their bio. To publish it:
 
 How a member leaves depends on which kind they are.
 
-- **An intern, time-based.** The Form's *Internship end date* field
+- **A volunteer, time-based.** The Form's *Internship end date* field
   writes `roleEndDate` into `board.json`.
   [`src/_data/boardSorted.js`](../src/_data/boardSorted.js) applies a
   7-day grace at build time, then moves the entry into the folded
-  *Past board members and interns* footer automatically. No operator
+  *EISS community* section automatically. No operator
   action. The daily rebuild advances the cut-off.
 - **A board member or leadership departure, by hand.** Their terms are
   open-ended, so expiry is a deliberate edit. Open

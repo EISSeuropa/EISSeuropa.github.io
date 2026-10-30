@@ -11,7 +11,7 @@
  *               every subscriber.
  *   author      the byline, as the person writes their own name
  *   authorNote  one line of affiliation or standing, e.g. "EISS volunteer,
- *               2027". Deliberately not a profile: volunteers and interns
+ *               2027". Deliberately not a profile: volunteers
  *               have no board.json entry and do not need a page.
  *   summary     one or two sentences, shown on /blog.html and in the feed
  *
