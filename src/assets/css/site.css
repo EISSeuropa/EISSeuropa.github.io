@@ -671,6 +671,77 @@ h4 { font-size: var(--fs-lg); }
   border-block-start: 1px solid var(--border);
 }
 
+/* ---------- internal apps dashboard (/internal.html) ---------- */
+/* Round icon tiles after Google Workspace's "Your apps" page, in EISS
+   tokens. The role radios filter with :has(), no JS needed. */
+.apps-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-6);
+  padding: 0;
+  border: 0;
+}
+.apps-roles legend {
+  margin-bottom: var(--space-2);
+  font-weight: 600;
+}
+.apps-role {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-full);
+  background: var(--surface-strong);
+  cursor: pointer;
+}
+.apps-role:has(:checked) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.apps-role input { accent-color: var(--accent); margin: 0; }
+
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.apps-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-2);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  text-align: center;
+  text-decoration: none;
+}
+.apps-tile:hover { background: var(--accent-soft); }
+.apps-icon {
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+  color: var(--accent-text);
+  font-size: 1.75rem;
+  box-shadow: 0 0 0 4px var(--brand-network);
+}
+.apps-label { font-weight: 500; line-height: 1.3; }
+
+.apps-page:has(.apps-role [value="staff"]:checked) .apps-item:not([data-roles~="staff"]),
+.apps-page:has(.apps-role [value="board"]:checked) .apps-item:not([data-roles~="board"]),
+.apps-page:has(.apps-role [value="volunteer"]:checked) .apps-item:not([data-roles~="volunteer"]) {
+  display: none;
+}
+
 /* ---------- What's New banner ---------- */
 /* Sparingly-used site-wide announcement, driven by
    src/_data/whats-new.json (CLAUDE.md §12). Rendered by JS into

@@ -111,6 +111,14 @@ const locales = {
       groups: "Groups",
       allApps: "All apps",
       internForm: "Intern onboarding form",
+      indico: "Indico",
+      meet: "Meet",
+      chat: "Chat",
+      docs: "Docs",
+      sheets: "Sheets",
+      slides: "Slides",
+      forms: "Forms",
+      googleApps: "All Google apps",
     },
 
     search: {
@@ -1014,6 +1022,14 @@ const locales = {
       groups: "Groupes",
       allApps: "Toutes les applications",
       internForm: "Formulaire d'arrivée des stagiaires",
+      indico: "Indico",
+      meet: "Meet",
+      chat: "Chat",
+      docs: "Docs",
+      sheets: "Sheets",
+      slides: "Slides",
+      forms: "Forms",
+      googleApps: "Toutes les applications Google",
     },
 
     search: {
@@ -1794,6 +1810,14 @@ const locales = {
       groups: "Groups",
       allApps: "Alle Apps",
       internForm: "Onboarding-Formular für Praktika",
+      indico: "Indico",
+      meet: "Meet",
+      chat: "Chat",
+      docs: "Docs",
+      sheets: "Sheets",
+      slides: "Slides",
+      forms: "Forms",
+      googleApps: "Alle Google-Apps",
     },
 
     search: {

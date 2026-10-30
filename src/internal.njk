@@ -1,0 +1,74 @@
+---
+layout: base.njk
+permalink: /internal.html
+title: Internal Dashboard
+description: Shortcuts to the apps EISS staff, board members and volunteers use. Every app asks for sign-in.
+navKey: ""
+lang: en
+noindex: true
+searchExclude: true
+eleventyExcludeFromCollections: true
+---
+{#
+  internal.njk: the apps dashboard for staff, board members and volunteers,
+  after Google Workspace's "Your apps" page. internal.eiss-europa.com
+  redirects here from a separate one-file repo (GitHub Pages serves one
+  custom domain per repo).
+
+  Reads: site.staffLinks (entries with `roles`), labels t.staffMenu.<key>.
+  The role filter is CSS `:has()` on data-roles, so it works without JS.
+  The script only remembers the choice. A shortcut list, not access control.
+
+  ponytail: EN only. Its readers work in English. Add .fr/.de siblings when
+  someone asks for them, hand-translated (CLAUDE.md §1).
+#}
+{% from "icons.njk" import icon %}
+{%- set t = i18n[lang or "en"] -%}
+
+<div class="apps-page">
+  <header class="page-header">
+    <div class="container">
+      <h1>{{ t.staffMenu.heading }}</h1>
+      <p class="page-lead">Shortcuts to the apps EISS uses. Each one asks you to sign in, with your eiss-europa.com account for the Google apps.</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <fieldset class="apps-roles">
+        <legend>Which describes you?</legend>
+        <label class="apps-role"><input type="radio" name="apps-role" value="all" checked> Show all</label>
+        <label class="apps-role"><input type="radio" name="apps-role" value="staff"> Staff</label>
+        <label class="apps-role"><input type="radio" name="apps-role" value="board"> Board member</label>
+        <label class="apps-role"><input type="radio" name="apps-role" value="volunteer"> Volunteer</label>
+      </fieldset>
+
+      <ul class="apps-grid" role="list">
+        {% for app in site.staffLinks %}{% if app.roles %}
+          <li class="apps-item" data-roles="{{ app.roles | join(' ') }}">
+            <a class="apps-tile" href="{{ app.href }}">
+              <span class="apps-icon">{{ icon(app.icon) }}</span>
+              <span class="apps-label">{{ t.staffMenu[app.key] }}</span>
+            </a>
+          </li>
+        {% endif %}{% endfor %}
+      </ul>
+    </div>
+  </section>
+</div>
+
+<script>
+  // Remember the role choice. The filtering itself is CSS.
+  (function () {
+    var KEY = "eiss-apps-role";
+    var radios = document.querySelectorAll('input[name="apps-role"]');
+    var saved = null;
+    try { saved = localStorage.getItem(KEY); } catch (e) {}
+    radios.forEach(function (r) {
+      if (r.value === saved) r.checked = true;
+      r.addEventListener("change", function () {
+        try { localStorage.setItem(KEY, r.value); } catch (e) {}
+      });
+    });
+  })();
+</script>
