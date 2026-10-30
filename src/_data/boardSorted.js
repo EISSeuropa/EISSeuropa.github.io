@@ -114,7 +114,7 @@ function slugify(s) {
 
 const BIO_LONG_THRESHOLD = 180;
 
-// Time-bound roles (interns, visiting fellows, fixed-term contracts)
+// Time-bound roles (volunteers, visiting fellows, fixed-term contracts)
 // carry a `roleEndDate` (ISO `YYYY-MM-DD`). We hide a person from the
 // active sections one week after that date — the grace period keeps
 // the card visible for ~7 days past departure so anyone bookmarking
@@ -122,7 +122,7 @@ const BIO_LONG_THRESHOLD = 180;
 // `roleEndDate` are permanent and never filtered.
 //
 // Past entries move to `pastMembers` so the template can render them
-// as a folded "Past board members and interns" footer — they remain
+// as a folded "EISS community" footer — they remain
 // part of the broader European security studies family, just not the
 // active team.
 const GRACE_PERIOD_DAYS = 7;
@@ -212,7 +212,7 @@ module.exports = function () {
   // Past members: union of expired entries from both sources, sorted
   // by surname for the community section. Tier is preserved so the
   // template can show their last role. `activeYear` is the year of
-  // the entry's roleEndDate — per spec, when an internship spans
+  // the entry's roleEndDate — per spec, when a placement spans
   // two calendar years, this picks the most recent one. Only set
   // on past members (the field is template-conditional, so active
   // entries don't get a misleading "until YYYY" badge).
@@ -223,7 +223,7 @@ module.exports = function () {
       activeYear: m.roleEndDate ? m.roleEndDate.slice(0, 4) : null,
     }))
     // Sort most-recent-end-date first, then by surname within a tie.
-    // The community section reads better when 2026's interns appear
+    // The community section reads better when 2026's volunteers appear
     // above 2023's — newcomers see "who left recently" first.
     // ISO YYYY-MM-DD strings sort lexicographically = chronologically,
     // so localeCompare(b, a) gives descending date order.

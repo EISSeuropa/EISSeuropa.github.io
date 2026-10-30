@@ -181,6 +181,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- Public pages say "volunteers" throughout, in all three languages, and the navigation reads "Volunteering" ("Bénévolat", "Ehrenamt"). `/internship.html` keeps its address, its "Volunteering and internships" title and the convention de stage details for readers seeking a formal placement.
 - The Guides section of `/internal.html` links "Start here", the volunteer handbook and the "Guides and procedures" folder in Drive, in place of the handbook on GitHub.
 - The privacy policy now covers volunteers (the onboarding Form, their EISS account, the task tracker) and People page profiles, names Google Workspace as a processor, and states the legal basis, retention and transfers for them, in all three languages.
 - **The homepage join panel is one accent band.** The membership tiers, the latest members' event, the join and manage buttons and the newsletter now sit together on a single blue band, the tiers as pills. In English its heading reads "See you in Belgrade." while ESSC 2027 is next, and it falls back to "Join us today" when no conference is. The French and German pages keep their existing heading until the new one is translated by hand (#1847).

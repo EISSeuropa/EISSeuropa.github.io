@@ -191,7 +191,7 @@ module.exports = {
       key: "getInvolved",
       children: [
         { href: "/membership.html", text: "Membership", key: "membership" },
-        { href: "/internship.html", text: "Volunteering and internships", key: "internship" },
+        { href: "/internship.html", text: "Volunteering", key: "internship" },
         { href: newsletterUrl, text: "Newsletter", key: "newsletter", external: true },
       ],
     },

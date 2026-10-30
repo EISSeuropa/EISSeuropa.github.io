@@ -88,7 +88,7 @@ than a hard constraint:
 - Secretary-General
 - Treasurer
 - Board Member
-- Support Staff (incl. intern)
+- Support Staff (incl. volunteers)
 
 **Q4 options**, which must match values in `scripts/board-source.json` →
 `functional_responsibilities` list. A member can hold a Functional
@@ -143,9 +143,9 @@ And on the **Headshot photo (optional)** question, set its
 > Submit a fresh response. The file-upload field is locked by
 > Google Forms after the first submission.
 
-### End-date question — interns
+### End-date question — volunteers
 
-Q18 (**Internship end date (optional)**, Date) is scoped to interns,
+Q18 (**Internship end date (optional)**, Date) is scoped to volunteers,
 the only category of EISS contributor where automatic time-based
 expiry on `/board` makes sense. Board Members and Leadership have
 elected terms of ~3 years, but they typically re-up and shouldn't

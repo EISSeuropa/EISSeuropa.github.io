@@ -538,10 +538,10 @@ try {
       url: p.url,
       photo: p.photo || null,
       initials: p.initials || "",
-      // Affiliation category for the by-person pill: "Support Staff" (interns
+      // Affiliation category for the by-person pill: "Support Staff" (volunteers
       // + the comms/admin assistants, current or past) reads as "staff", every
       // other role (Co-Director, Treasurer, Board Member, …) as "board". Driven
-      // off the role string so a departed intern and a departed board member
+      // off the role string so a departed volunteer and a departed board member
       // sort correctly without depending on which boardSorted section they sit in.
       category: /support staff/i.test(p.role || "") ? "staff" : "board",
     };
