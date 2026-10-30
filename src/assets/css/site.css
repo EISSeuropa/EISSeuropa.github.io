@@ -737,6 +737,9 @@ h4 { font-size: var(--fs-lg); }
 .apps-label { font-weight: 500; line-height: 1.3; }
 .apps-note { margin-top: calc(-1 * var(--space-2)); color: var(--text-muted); font-size: 0.8125rem; line-height: 1.3; }
 
+.apps-admin { display: none; margin-bottom: var(--space-6); }
+.apps-admin:target { display: block; }
+
 .apps-page:has(.apps-role [value="staff"]:checked) .apps-item:not([data-roles~="staff"]),
 .apps-page:has(.apps-role [value="board"]:checked) .apps-item:not([data-roles~="board"]),
 .apps-page:has(.apps-role [value="volunteer"]:checked) .apps-item:not([data-roles~="volunteer"]) {

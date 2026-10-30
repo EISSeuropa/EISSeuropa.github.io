@@ -18,6 +18,8 @@ eleventyExcludeFromCollections: true
   Reads: site.staffLinks (entries with `roles`), labels t.staffMenu.<key>.
   The role filter is CSS `:has()` on data-roles, so it works without JS.
   The script only remembers the choice. A shortcut list, not access control.
+  #admin: an unlisted view (site.adminLinks) shown by CSS `:target`. Hidden
+  from view, not secret: the links are in the source of this public page.
 
   ponytail: EN only. Its readers work in English. Add .fr/.de siblings when
   someone asks for them, hand-translated (CLAUDE.md §1).
@@ -35,6 +37,20 @@ eleventyExcludeFromCollections: true
 
   <section class="section">
     <div class="container">
+      <div class="apps-admin" id="admin">
+        <h2>Admin</h2>
+        <ul class="apps-grid" role="list">
+          {% for app in site.adminLinks %}
+            <li>
+              <a class="apps-tile" href="{{ app.href }}">
+                <span class="apps-icon">{{ icon(app.icon) }}</span>
+                <span class="apps-label">{{ app.label }}</span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
       <fieldset class="apps-roles">
         <legend>Which describes you?</legend>
         <label class="apps-role" for="apps-role-all"><input type="radio" id="apps-role-all" name="apps-role" value="all" checked> Show all</label>

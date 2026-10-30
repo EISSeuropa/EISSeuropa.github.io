@@ -223,4 +223,14 @@ module.exports = {
     },
     { href: "https://workspace.google.com/dashboard", key: "googleApps", icon: "layout-grid", roles: ["staff"] },
   ],
+
+  // The unlisted /internal.html#admin view. Hidden from view, not secret: the
+  // links are in the page source and each app's own sign-in protects it.
+  adminLinks: [
+    { href: "https://admin.google.com/", label: "Admin console", icon: "shield" },
+    { href: "https://indico.eiss-europa.com/admin/", label: "Indico administration", icon: "settings" },
+    { href: "https://script.google.com/home", label: "Apps Script", icon: "code" },
+    { href: "https://ap.www.namecheap.com/", label: "Namecheap", icon: "globe" },
+    { href: "https://github.com/EISSeuropa", label: "GitHub", icon: "git-branch" },
+  ],
 };
