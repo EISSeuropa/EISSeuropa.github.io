@@ -124,8 +124,11 @@ successor inherits through the handover in section 4.
 - **Guides.** Guides are `guideLinks` in `src/_data/site.js`.
 - **IT System Monitoring.** A staff section that lists the latest run of
   each automation in both site repos, read when the site builds by
-  `src/_data/systemHealth.js`, with links to the Workspace consoles. It
-  hides itself if a build cannot reach GitHub.
+  `src/_data/systemHealth.js`. Its Workspace card reads Google's public
+  status feed and the "EISS status" Apps Script web app, whose source is
+  in the private `workspace-ops` repo. A script run that crashes or stops
+  shows as a stale check. The section hides itself if a build cannot
+  reach GitHub.
 - **The Project Manager.** The *Project Manager* tile (formerly the task
   tracker) opens an Apps Script web app for staff, management and volunteers, owned by `admin@`, with the
   private Sheet "EISS task tracker" behind it. It is open to the EISS
