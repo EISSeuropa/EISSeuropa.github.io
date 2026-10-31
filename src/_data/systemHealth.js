@@ -4,8 +4,8 @@
 // the section and still succeeds. The repos are public, so nothing here is private.
 
 const REPOS = [
-  { label: "EISS website", slug: "EISSeuropa/EISSeuropa.github.io", branch: "master" },
-  { label: "NetSec website", slug: "EISSeuropa/netsec.github.io", branch: "main" },
+  { label: "EISS website", site: "https://eiss-europa.com/", slug: "EISSeuropa/EISSeuropa.github.io", branch: "master" },
+  { label: "NetSec website", site: "https://netsec-cost.eu/", slug: "EISSeuropa/netsec.github.io", branch: "main" },
 ];
 
 async function api(path) {
@@ -43,7 +43,7 @@ function worst(levels) {
 // three or more failures at once. Any other failure is an issue.
 const CRITICAL_AT = 3;
 
-async function repoHealth({ label, slug, branch }) {
+async function repoHealth({ label, site, slug, branch }) {
   const { workflows } = await api(`${slug}/actions/workflows?per_page=100`);
   const active = workflows.filter((w) => w.state === "active" && w.path.startsWith(".github/workflows/"));
   const latest = await Promise.all(active.map(async (w) => {
@@ -68,7 +68,7 @@ async function repoHealth({ label, slug, branch }) {
     .sort((a, b) => b.failed - a.failed || a.name.localeCompare(b.name));
   const failedCount = items.filter((i) => i.failed).length;
   const level = failedCount >= CRITICAL_AT || items.some((i) => i.level === "critical") ? "critical" : failedCount ? "issue" : "nominal";
-  return { label, url: `https://github.com/${slug}/actions`, items, failedCount, level, levelLabel: LABELS[level] };
+  return { label, site, url: `https://github.com/${slug}/actions`, items, failedCount, level, levelLabel: LABELS[level] };
 }
 
 // Google's public status feed, which needs no sign-in. Only the services EISS uses count.

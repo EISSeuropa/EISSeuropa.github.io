@@ -152,7 +152,11 @@ eleventyExcludeFromCollections: true
         <div class="apps-status">
           {% for repo in systemHealth.repos %}
             <div class="apps-status-card">
-              <h3 class="apps-status-title"><a href="{{ repo.url }}">{{ repo.label }}</a></h3>
+              <h3 class="apps-status-title apps-health-brand">
+                <a href="{{ repo.site }}" aria-label="{{ repo.label }}">
+                  {% if loop.first %}<span aria-hidden="true">{% inlineSvg "assets/images/brand/logo-lockup.svg" %}</span>{% else %}<img src="/assets/images/partners/netsec.svg#svgView(viewBox(360,780,2800,930))" alt="" width="120" height="40">{% endif %}
+                </a>
+              </h3>
               <p class="apps-health-level"><span class="apps-dot apps-dot-{{ repo.level }}" aria-hidden="true"></span>{{ repo.levelLabel }}</p>
               <p class="apps-health-summary">{% if repo.failedCount %}{{ repo.failedCount }} of {{ repo.items.length }} automations failing{% else %}{{ repo.items.length }} automations, none failing{% endif %}</p>
               <details class="apps-health-details"{% if repo.failedCount %} open{% endif %}>
