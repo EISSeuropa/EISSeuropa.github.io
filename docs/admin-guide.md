@@ -116,7 +116,8 @@ successor inherits through the handover in section 4.
   labels under `staffMenu` in `src/_data/i18n.js` for all three
   languages. `roles` sets which roles see a tile on the dashboard, and
   `menu: true` adds the link to the padlock menu.
-- **Where things stand.** The next release and the open issue, PR and
+- **Tabs.** Apps, Project status, Guides and IT monitoring, linkable as `#apps`, `#status`, `#guides` and `#it`. Without JavaScript all four stack. The IT monitoring tab follows the staff role.
+- **Project status.** The next release and the open issue, PR and
   `help wanted` counts come from `src/data/roadmap-progress.json`, which
   the daily *Refresh roadmap surfaces* workflow rewrites. Key dates are
   the next conference, the release due dates and anything in `keyDates`

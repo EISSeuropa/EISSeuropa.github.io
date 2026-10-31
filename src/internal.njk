@@ -18,7 +18,8 @@ eleventyExcludeFromCollections: true
   Reads: site.staffLinks (entries with `roles`), labels t.staffMenu.<key> or
   the entry's own `label`, site.guideLinks, systemHealth and dashboard (release,
   counts, dates, deadlines, phase).
-  The role filter is CSS `:has()` on data-roles, so it works without JS.
+  The role filter is CSS `:has()` on data-roles, so it works without JS. So does
+  the page, with every tab's section stacked.
   A shortcut list, not access control. Everything works without JS: the script
   only adds the first-visit prompt, greeting, clock, live day counts, app count,
   remembered role, Today line, live GitHub figures, card spotlight and the hero
@@ -63,7 +64,7 @@ eleventyExcludeFromCollections: true
       {% if deadline %}
         <div class="apps-stat" data-apps-deadline>
           <dt data-apps-deadline-label>{{ deadline.label }}</dt>
-          <dd><a href="#apps-status-heading" data-apps-deadline-days>{{ deadline.date | daysUntil }} days</a></dd>
+          <dd><a href="#status" data-apps-deadline-days>{{ deadline.date | daysUntil }} days</a></dd>
         </div>
       {% endif %}
       {% if facts.conferences.next %}
@@ -123,22 +124,31 @@ eleventyExcludeFromCollections: true
       </ul>
     </div>
 
-    <section class="apps-panel" aria-labelledby="apps-heading">
+    <div class="apps-tabbar">
+      <div class="apps-tabs" role="tablist" aria-label="Dashboard sections" data-apps-tabs hidden>
+        <button type="button" role="tab" id="apps-tab-apps" aria-controls="apps" data-apps-tab="apps">Apps</button>
+        <button type="button" role="tab" id="apps-tab-status" aria-controls="status" data-apps-tab="status">Project status</button>
+        <button type="button" role="tab" id="apps-tab-guides" aria-controls="guides" data-apps-tab="guides">Guides</button>
+        {% if systemHealth %}<button type="button" role="tab" id="apps-tab-it" aria-controls="it" data-apps-tab="it" data-roles="staff">IT monitoring <span class="apps-dot apps-dot-{{ systemHealth.summary.level }}" data-apps-it-dot aria-hidden="true"{% if not systemHealth.summary.url %} hidden{% endif %}></span><span class="sr-only" data-apps-it-note{% if not systemHealth.summary.url %} hidden{% endif %}>, needs attention</span></button>{% endif %}
+      </div>
+      <div class="apps-viewing">
+        <label for="apps-role">Viewing as</label>
+        <select class="apps-role" id="apps-role">
+          <option value="all" selected>Show all</option>
+          <option value="staff">Staff</option>
+          <option value="management">Management</option>
+          <option value="board">Board member</option>
+          <option value="volunteer">Volunteer</option>
+        </select>
+      </div>
+    </div>
+
+    <section class="apps-panel" id="apps" data-apps-panel aria-labelledby="apps-heading">
       <div class="apps-panel-head">
         <div>
           <h2 class="apps-heading" id="apps-heading">Your apps</h2>
           <p class="apps-count" data-apps-total role="status" hidden></p>
         </div>
-        <fieldset class="apps-roles">
-          <legend>Which describes you?</legend>
-          <div class="apps-segments">
-            <label class="apps-role" for="apps-role-all"><input type="radio" id="apps-role-all" name="apps-role" value="all" checked> Show all</label>
-            <label class="apps-role" for="apps-role-staff"><input type="radio" id="apps-role-staff" name="apps-role" value="staff"> Staff</label>
-            <label class="apps-role" for="apps-role-management"><input type="radio" id="apps-role-management" name="apps-role" value="management"> Management</label>
-            <label class="apps-role" for="apps-role-board"><input type="radio" id="apps-role-board" name="apps-role" value="board"> Board member</label>
-            <label class="apps-role" for="apps-role-volunteer"><input type="radio" id="apps-role-volunteer" name="apps-role" value="volunteer"> Volunteer</label>
-          </div>
-        </fieldset>
       </div>
 
       <ul class="apps-grid" role="list">
@@ -166,8 +176,8 @@ eleventyExcludeFromCollections: true
       </ul>
     </section>
 
-    <section class="apps-panel" aria-labelledby="apps-status-heading">
-      <h2 class="apps-heading apps-section-heading" id="apps-status-heading">Where things stand</h2>
+    <section class="apps-panel" id="status" data-apps-panel aria-labelledby="apps-status-heading">
+      <h2 class="apps-heading apps-section-heading" id="apps-status-heading">Project status</h2>
       <div class="apps-status">
         {% if dashboard.release %}
           <div class="apps-status-card" data-roles="staff">
@@ -201,9 +211,8 @@ eleventyExcludeFromCollections: true
     </section>
 
     {% if systemHealth %}
-      <section class="apps-panel apps-health" aria-labelledby="apps-health-heading" data-roles="staff">
-        <details class="apps-health-wrap" data-apps-health{% if systemHealth.summary.url %} open{% endif %}>
-        <summary><h2 class="apps-heading apps-section-heading" id="apps-health-heading">IT System Monitoring</h2></summary>
+      <section class="apps-panel apps-health" id="it" data-apps-panel aria-labelledby="apps-health-heading" data-roles="staff">
+        <h2 class="apps-heading apps-section-heading" id="apps-health-heading">IT System Monitoring</h2>
         <div class="apps-status">
           {% for repo in systemHealth.repos %}
             <div class="apps-status-card">
@@ -245,11 +254,10 @@ eleventyExcludeFromCollections: true
           </div>
         </div>
         <p class="apps-note" data-apps-asof>Figures as of {{ systemHealth.checked | newsDate("en") }}.</p>
-        </details>
       </section>
     {% endif %}
 
-    <section class="apps-panel" aria-labelledby="apps-guides-heading">
+    <section class="apps-panel" id="guides" data-apps-panel aria-labelledby="apps-guides-heading">
       <h2 class="apps-heading apps-section-heading" id="apps-guides-heading">Guides</h2>
       <ul class="apps-grid" role="list">
         {% for guide in site.guideLinks %}
@@ -274,7 +282,7 @@ eleventyExcludeFromCollections: true
     // Remember the role choice and report how many apps it leaves. The
     // filtering itself is CSS.
     var KEY = "eiss-apps-role";
-    var radios = document.querySelectorAll('input[name="apps-role"]');
+    var roleSelect = document.getElementById("apps-role");
     var total = document.querySelector("[data-apps-total]");
     var saved = null;
     try { saved = localStorage.getItem(KEY); } catch (e) {}
@@ -285,13 +293,12 @@ eleventyExcludeFromCollections: true
       total.textContent = shown + (shown === 1 ? " app" : " apps");
       total.hidden = false;
     }
-    radios.forEach(function (r) {
-      if (r.value === saved) r.checked = true;
-      r.addEventListener("change", function () {
-        try { localStorage.setItem(KEY, r.value); } catch (e) {}
-        tally();
-        renderToday();
-      });
+    if (saved && roleSelect.querySelector('[value="' + CSS.escape(saved) + '"]')) roleSelect.value = saved;
+    roleSelect.addEventListener("change", function () {
+      try { localStorage.setItem(KEY, roleSelect.value); } catch (e) {}
+      tally();
+      renderToday();
+      keepTabVisible();
     });
     tally();
 
@@ -302,11 +309,61 @@ eleventyExcludeFromCollections: true
     first.addEventListener("click", function (e) {
       var value = e.target.getAttribute && e.target.getAttribute("data-apps-choose");
       if (!value) return;
-      var radio = document.querySelector('input[name="apps-role"][value="' + value + '"]');
-      radio.checked = true;
-      radio.dispatchEvent(new Event("change"));
+      roleSelect.value = value;
+      roleSelect.dispatchEvent(new Event("change"));
       first.hidden = true;
-      radio.focus();
+      roleSelect.focus();
+    });
+
+    // Tabs. Without this script they stay hidden and every section stacks.
+    // Each has its own link, and the page always opens on Apps otherwise.
+    var tablist = document.querySelector("[data-apps-tabs]");
+    var tabs = [].slice.call(tablist.querySelectorAll("[role=tab]"));
+    var panels = [].slice.call(document.querySelectorAll("[data-apps-panel]"));
+    function isTab(name) { return tabs.some(function (t) { return t.getAttribute("data-apps-tab") === name; }); }
+    function selectTab(name) {
+      tabs.forEach(function (t) {
+        var on = t.getAttribute("data-apps-tab") === name;
+        t.setAttribute("aria-selected", on);
+        t.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach(function (panel) { panel.hidden = panel.id !== name; });
+    }
+    function usable() { return tabs.filter(function (t) { return getComputedStyle(t).display !== "none"; }); }
+    function keepTabVisible() {
+      if (usable().indexOf(tablist.querySelector('[aria-selected="true"]')) < 0) {
+        selectTab("apps");
+        history.replaceState(null, "", location.pathname);
+      }
+    }
+    panels.forEach(function (panel) {
+      panel.setAttribute("role", "tabpanel");
+      panel.setAttribute("aria-labelledby", "apps-tab-" + panel.id);
+    });
+    tablist.hidden = false;
+    selectTab(isTab(location.hash.slice(1)) ? location.hash.slice(1) : "apps");
+    keepTabVisible();
+    tablist.addEventListener("click", function (e) {
+      var tab = e.target.closest("[role=tab]");
+      if (!tab) return;
+      var name = tab.getAttribute("data-apps-tab");
+      selectTab(name);
+      history.replaceState(null, "", "#" + name);
+    });
+    tablist.addEventListener("keydown", function (e) {
+      var list = usable(), i = list.indexOf(document.activeElement);
+      var to = e.key === "ArrowRight" ? (i + 1) % list.length : e.key === "ArrowLeft" ? (i - 1 + list.length) % list.length : e.key === "Home" ? 0 : e.key === "End" ? list.length - 1 : -1;
+      if (to < 0) return;
+      e.preventDefault();
+      list[to].focus();
+      list[to].click();
+    });
+    addEventListener("hashchange", function () {
+      var name = location.hash.slice(1);
+      if (!isTab(name)) return;
+      selectTab(name);
+      keepTabVisible();
+      tablist.scrollIntoView({ block: "nearest" });
     });
 
     // Greeting and clock, in the reader's own time zone.
@@ -354,7 +411,7 @@ eleventyExcludeFromCollections: true
     var since = { tasks: 0, closed: 0 };
     var today = document.querySelector("[data-apps-today]");
     function renderToday() {
-      var role = (document.querySelector('input[name="apps-role"]:checked') || {}).value || "all";
+      var role = roleSelect.value;
       var parts = [];
       if (failed.length && (role === "all" || role === "staff")) {
         parts.push(failed.length + (failed.length === 1 ? " automation failing: " : " automations failing: ") + failed.join(", ") + ".");
@@ -464,7 +521,11 @@ eleventyExcludeFromCollections: true
         if (overall === "issue" || overall === "critical") label.href = bad.length && isRun(bad[0].url) ? bad[0].url : "https://script.google.com/home/executions";
         else label.removeAttribute("href");
       }
-      if (overall === "issue" || overall === "critical") document.querySelector("[data-apps-health]").open = true;
+      var alarm = overall === "issue" || overall === "critical";
+      var dot = document.querySelector("[data-apps-it-dot]");
+      setDot(dot, overall);
+      dot.hidden = !alarm;
+      document.querySelector("[data-apps-it-note]").hidden = !alarm;
     }
     function applyLive(live, at) {
       ["issues", "prs", "tasks"].forEach(function (k) {
