@@ -146,6 +146,37 @@ eleventyExcludeFromCollections: true
       </div>
     </section>
 
+    {% if systemHealth %}
+      <section class="apps-panel apps-health" aria-labelledby="apps-health-heading" data-roles="staff">
+        <h2 class="apps-heading apps-section-heading" id="apps-health-heading">IT System Monitoring</h2>
+        <div class="apps-status">
+          {% for repo in systemHealth.repos %}
+            <div class="apps-status-card">
+              <h3 class="apps-status-title"><a href="{{ repo.url }}">{{ repo.label }}</a></h3>
+              <p class="apps-health-summary">{% if repo.failedCount %}<strong>{{ repo.failedCount }} failing</strong> of {{ repo.items.length }} automations{% else %}All {{ repo.items.length }} automations without a failure{% endif %}</p>
+              <details class="apps-health-details"{% if repo.failedCount %} open{% endif %}>
+                <summary>Every automation</summary>
+                <ul class="apps-health-list" role="list">
+                  {% for item in repo.items %}
+                    <li{% if item.failed %} class="apps-health-failed"{% endif %}><a href="{{ item.url }}">{{ item.name }}</a> <span>{{ item.status }}{% if item.date %}, {{ item.date | newsDate("en") }}{% endif %}</span></li>
+                  {% endfor %}
+                </ul>
+              </details>
+            </div>
+          {% endfor %}
+          <div class="apps-status-card">
+            <h3 class="apps-status-title">Google Workspace</h3>
+            <ul class="apps-health-list" role="list">
+              <li><a href="https://script.google.com/home/executions">Apps Script runs</a> <span>Needs sign-in</span></li>
+              <li><a href="https://admin.google.com/ac/ac">Security alerts</a> <span>Needs admin sign-in</span></li>
+              <li><a href="https://www.google.com/appsstatus/dashboard/">Google's service status</a></li>
+            </ul>
+          </div>
+        </div>
+        <p class="apps-note">GitHub figures as of {{ systemHealth.checked | newsDate("en") }}.</p>
+      </section>
+    {% endif %}
+
     <section class="apps-panel" aria-labelledby="apps-guides-heading">
       <h2 class="apps-heading apps-section-heading" id="apps-guides-heading">Guides</h2>
       <ul class="apps-grid" role="list">

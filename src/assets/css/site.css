@@ -959,6 +959,11 @@ h4 { font-size: var(--fs-lg); }
   grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
   gap: var(--space-4);
 }
+.apps-health-summary { margin: 0 0 var(--space-2); }
+.apps-health-details summary { cursor: pointer; min-height: 24px; }
+.apps-health-list { display: grid; gap: var(--space-2); margin: var(--space-2) 0 0; padding: 0; list-style: none; font-size: 0.875rem; }
+.apps-health-list span { display: block; color: var(--text-muted); }
+.apps-health-failed a { font-weight: 600; }
 .apps-status-card {
   padding: var(--space-5);
   border: 1px solid var(--border);

@@ -122,8 +122,12 @@ successor inherits through the handover in section 4.
   the next conference, the release due dates and anything in `keyDates`
   in `src/_data/site.js`. `src/_data/dashboard.js` assembles all of it.
 - **Guides.** Guides are `guideLinks` in `src/_data/site.js`.
-- **The task tracker.** The *Task tracker* tile opens an Apps Script web
-  app for staff, management and volunteers, owned by `admin@`, with the
+- **IT System Monitoring.** A staff section that lists the latest run of
+  each automation in both site repos, read when the site builds by
+  `src/_data/systemHealth.js`, with links to the Workspace consoles. It
+  hides itself if a build cannot reach GitHub.
+- **The Project Manager.** The *Project Manager* tile (formerly the task
+  tracker) opens an Apps Script web app for staff, management and volunteers, owned by `admin@`, with the
   private Sheet "EISS task tracker" behind it. It is open to the EISS
   domain only, and the Sheet's *People* tab decides who gets in. The
   "EISS intern lifecycle" script adds each volunteer on approval and removes them
