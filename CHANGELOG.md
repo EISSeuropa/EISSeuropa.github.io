@@ -182,6 +182,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- The staff task tracker becomes the Project Manager, with project and group filters, task links, a conference runbook, a view of open website tasks and a Monday digest of overdue and upcoming tasks. Its notification emails are now personal letters.
 - `indico.eiss-europa.com` loads faster on a first visit. The server now compresses its scripts and styles and tells browsers to keep its versioned files, which cuts the 23 main files from 8.06 MB to 2.31 MB. With an empty cache the page appeared in about 1.2 s across four timed loads, against about 5.8 s in one earlier load measured in a different browser set-up.
 - Apps on `/internal.html` show a spinning ring, the word "Opening…" and a moving bar once clicked, until the app's page opens, and the connection to Indico opens ahead of the click.
 - The Workspace card in IT System Monitoring shows a status for the weekly task digest, volunteer accounts, nightly backups and the restore test.

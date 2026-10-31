@@ -141,9 +141,12 @@ successor inherits through the handover in section 4.
   own, without handing them to someone else. The tile shows for the *Staff*, *Management*
   and *Volunteer* roles and carries a *Beta* bubble (`badge` in
   `staffLinks`), and the Sheet itself, linked from `#admin`, stays
-  restricted, since edit access could change who gets in. The code is
-  outside this repo, with its own README, in the maintainer's EISS folder
-  under `task-tracker/`. Tasks stay out of this repo and this page, since
+  restricted, since edit access could change who gets in. Tasks can be filtered by project and by group, carry a link, and can be
+  added in bulk from the Sheet's *Runbook* tab. Its *Website tasks* view
+  reads open `help wanted` issues live from GitHub, storing nothing.
+  Staff and volunteers get a Monday email listing overdue and upcoming
+  tasks. The code is in the private `EISSeuropa/workspace-ops` repo,
+  deployed with `clasp`. Tasks stay out of this repo and this page, since
   both are public.
 - **The admin view.** `/internal.html#admin` adds the `adminLinks` from
   the same file. It is unlisted, not secret: those links are in the page
@@ -169,6 +172,13 @@ successor inherits through the handover in section 4.
   link → Viewer* so the sync can download headshots without auth.
 
 ### Indico instance and INDICO_API_TOKEN
+
+- **Server settings.** The nginx configuration is not in this repo. Since
+  31 October 2026, `/etc/nginx/conf.d/indico-compression.conf` compresses
+  scripts and styles, and a `location ^~ /dist/` block in
+  `/etc/nginx/conf.d/indico.conf` lets browsers keep hashed files for a
+  year (#1947). An Indico upgrade should rename those files, so check the
+  site after each upgrade. A reinstall needs both settings again.
 
 - **What it is.** `indico.eiss-europa.com`, the conference-management
   instance. The *Sync events from Indico* workflow
@@ -366,6 +376,11 @@ What a successor needs to take over the site cleanly. Work top to
 bottom. The domain and the GitHub login are the two that, if missed,
 make recovery genuinely hard.
 
+**Read first:** the "EISS DevOps handbook" in EISS Restricted > DevOps,
+which holds the access map, recovery steps and scheduled agents. The
+Apps Scripts are in the private `EISSeuropa/workspace-ops` repo, which
+comes with the GitHub login.
+
 **Accounts and credentials to transfer** (from the maintainer's
 password manager):
 
@@ -383,7 +398,10 @@ password manager):
 - [ ] **Google account** behind the board-bios Form, the linked Sheet,
       and the Drive photo folder.
 - [ ] **Indico admin** for `indico.eiss-europa.com`, plus the *EISS
-      Website Sync Bot* service-account login.
+      Website Sync Bot* service-account login and the server's SSH access.
+- [ ] **Workspace super-admin** (`admin@`) and the sealed emergency
+      account, the `clasp` sign-in, and the Claude account that runs the
+      scheduled agents.
 - [ ] **Mailchimp account** for the newsletter.
 - [ ] **Social logins:** YouTube, X / Twitter, LinkedIn.
 - [ ] **The `contact@eiss-europa.com` mailbox** and wherever its
