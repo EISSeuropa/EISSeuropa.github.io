@@ -30,7 +30,10 @@ eleventyExcludeFromCollections: true
 {% from "icons.njk" import icon %}
 {%- set t = i18n[lang or "en"] -%}
 
+{# Opens the connection to Indico ahead of the click. #}
+<link rel="preconnect" href="https://indico.eiss-europa.com">
 <div class="apps-page">
+  <p class="sr-only" role="status" data-apps-status></p>
   <header class="apps-hero" data-apps-hero>
     <canvas class="apps-hero-canvas" aria-hidden="true"></canvas>
     <div class="container apps-hero-inner">
@@ -333,5 +336,25 @@ eleventyExcludeFromCollections: true
       });
       hero.addEventListener("pointerleave", function () { ptr = null; until = performance.now() + 400; run(); });
     }
+
+    // A click on an app shows that it is opening, since some take seconds to answer.
+    // A new-tab click leaves this page in place, so it gets no animation.
+    var launched = null, timer;
+    function stopLaunch() {
+      clearTimeout(timer);
+      if (launched) launched.classList.remove("is-launching");
+      launched = null;
+    }
+    document.addEventListener("click", function (e) {
+      var tile = e.target.closest && e.target.closest("a.apps-tile");
+      if (!tile || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      stopLaunch();
+      launched = tile;
+      tile.classList.add("is-launching");
+      document.querySelector("[data-apps-status]").textContent = "Opening " + tile.querySelector(".apps-label").textContent;
+      timer = setTimeout(stopLaunch, 15000);
+    });
+    // Coming back with the browser's Back button restores the page as it was left.
+    addEventListener("pageshow", stopLaunch);
   })();
 </script>

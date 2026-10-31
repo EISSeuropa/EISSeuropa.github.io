@@ -941,6 +941,44 @@ h4 { font-size: var(--fs-lg); }
   display: none;
 }
 
+/* Shown from the click until the app's page takes over. */
+.apps-tile.is-launching { border-color: var(--accent); }
+.apps-tile.is-launching .apps-go { display: none; }
+.apps-tile.is-launching .apps-icon { position: relative; }
+.apps-tile.is-launching .apps-icon::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border: 3px solid var(--accent);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+}
+.apps-tile.is-launching .apps-label::after {
+  content: "Opening…";
+  display: block;
+  margin-top: var(--space-1);
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+.apps-tile.is-launching::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  background: var(--accent);
+  transform-origin: left;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .apps-tile.is-launching .apps-icon::after { animation: apps-launch-spin 0.8s linear infinite; }
+  .apps-tile.is-launching::after { animation: apps-launch-sweep 1.4s ease-in-out infinite; }
+}
+@keyframes apps-launch-spin { to { transform: rotate(360deg); } }
+@keyframes apps-launch-sweep {
+  0% { transform: translateX(-100%) scaleX(0.4); }
+  100% { transform: translateX(100%) scaleX(0.4); }
+}
 .apps-tile-soon {
   border-style: dashed;
   background: transparent;

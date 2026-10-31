@@ -182,6 +182,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- Apps on `/internal.html` show a spinning ring, the word "Opening…" and a moving bar once clicked, until the app's page opens, and the connection to Indico opens ahead of the click.
 - The Workspace card in IT System Monitoring shows a status for the weekly task digest, volunteer accounts, nightly backups and the restore test.
 - IT System Monitoring on `/internal.html` shows the EISS and NetSec logos, each linking to its website.
 - IT System Monitoring on `/internal.html` shows a coloured dot and a status of Nominal, Issue or Critical for each area, and now reads Google's public status feed for the Workspace services EISS uses.
