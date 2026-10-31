@@ -959,6 +959,13 @@ h4 { font-size: var(--fs-lg); }
   grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
   gap: var(--space-4);
 }
+.apps-health-brand a { display: inline-block; }
+.apps-health-brand svg, .apps-health-brand img { display: block; width: auto; height: 2.5rem; }
+/* NetSec's grey wordmark is hard to read on the dark card. */
+[data-theme="dark"] .apps-health-brand img { filter: brightness(1.7); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .apps-health-brand img { filter: brightness(1.7); }
+}
 .apps-health-level { display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-1); font-size: 1.125rem; font-weight: 600; }
 .apps-health-summary { margin: 0 0 var(--space-2); }
 .apps-health-item { display: flex; align-items: baseline; gap: var(--space-2); }
