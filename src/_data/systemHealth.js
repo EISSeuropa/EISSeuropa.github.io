@@ -68,7 +68,7 @@ async function repoHealth({ label, site, slug, branch }) {
     .sort((a, b) => b.failed - a.failed || a.name.localeCompare(b.name));
   const failedCount = items.filter((i) => i.failed).length;
   const level = failedCount >= CRITICAL_AT || items.some((i) => i.level === "critical") ? "critical" : failedCount ? "issue" : "nominal";
-  return { label, site, url: `https://github.com/${slug}/actions`, items, failedCount, level, levelLabel: LABELS[level] };
+  return { label, site, slug, branch, url: `https://github.com/${slug}/actions`, items, failedCount, level, levelLabel: LABELS[level] };
 }
 
 // Google's public status feed, which needs no sign-in. Only the services EISS uses count.
@@ -92,7 +92,11 @@ module.exports = async function () {
     const [repos, google, checks] = await Promise.all([Promise.all(REPOS.map(repoHealth)), googleHealth(), workspaceChecks()]);
     const level = worst([...(google ? [google.level] : []), ...(checks || []).map((c) => c.level)]);
     const workspace = { level, levelLabel: LABELS[level], checks };
-    return { repos, google, workspace, checked: new Date().toISOString().slice(0, 10) };
+    const failed = repos.flatMap((r) => r.items.filter((i) => i.failed));
+    const overall = worst([...repos.map((r) => r.level), level]);
+    const link = failed.length ? failed[0].url : "https://script.google.com/home/executions";
+    const summary = { level: overall, label: LABELS[overall], failed: failed.map((i) => i.name), url: ["issue", "critical"].includes(overall) ? link : null };
+    return { repos, google, workspace, summary, checked: new Date().toISOString().slice(0, 10) };
   } catch (e) {
     console.warn(`[systemHealth] section hidden: ${e.message}`);
     return null;

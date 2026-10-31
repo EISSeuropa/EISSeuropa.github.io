@@ -16,11 +16,14 @@ eleventyExcludeFromCollections: true
   custom domain per repo).
 
   Reads: site.staffLinks (entries with `roles`), labels t.staffMenu.<key> or
-  the entry's own `label`, site.guideLinks and dashboard (release, counts, dates).
-  The role filter is CSS `:has()` on data-roles, so it works without JS.
+  the entry's own `label`, site.guideLinks, systemHealth and dashboard (release,
+  counts, dates, deadlines, phase).
+  The role filter is CSS `:has()` on data-roles, so it works without JS. So does
+  the page, with every tab's section stacked.
   A shortcut list, not access control. Everything works without JS: the script
-  only adds the greeting, clock, live day count, app count, remembered role,
-  card spotlight and the hero constellation.
+  only adds the first-visit prompt, greeting, clock, live day counts, app count,
+  remembered role, Today line, live GitHub figures, card spotlight and the hero
+  constellation. Without it the strip shows the figures of the last build.
   #admin: an unlisted view (site.adminLinks) shown by CSS `:target`. Hidden
   from view, not secret: the links are in the source of this public page.
 
@@ -45,17 +48,66 @@ eleventyExcludeFromCollections: true
   </header>
 
   <div class="container">
+    <div class="apps-first" data-apps-first hidden>
+      <p class="apps-first-title" id="apps-first-title">Which describes you?</p>
+      <div class="apps-first-choices" role="group" aria-labelledby="apps-first-title">
+        <button type="button" class="btn btn-secondary btn-sm" data-apps-choose="staff">Staff</button>
+        <button type="button" class="btn btn-secondary btn-sm" data-apps-choose="management">Management</button>
+        <button type="button" class="btn btn-secondary btn-sm" data-apps-choose="board">Board member</button>
+        <button type="button" class="btn btn-secondary btn-sm" data-apps-choose="volunteer">Volunteer</button>
+        <button type="button" class="btn btn-secondary btn-sm" data-apps-choose="all">Show all</button>
+      </div>
+    </div>
+
     <dl class="apps-stats">
+      {% set deadline = dashboard.deadlines[0] %}
+      {% if deadline %}
+        <div class="apps-stat" data-apps-deadline>
+          <dt data-apps-deadline-label>{{ deadline.label }}</dt>
+          <dd><a href="#status" data-apps-deadline-days>{{ deadline.date | daysUntil }} days</a></dd>
+        </div>
+      {% endif %}
       {% if facts.conferences.next %}
         <div class="apps-stat">
           <dt>days until ESSC {{ facts.conferences.next.startDate | truncate(4, true, "") }}, {{ facts.conferences.next.city }}</dt>
-          <dd data-apps-countdown="{{ facts.conferences.next.startDate }}" data-apps-count>{{ facts.conferences.next.startDate | daysUntil }}</dd>
+          <dd><a href="/{{ facts.conferences.next.startDate | truncate(4, true, "") }}.html" data-apps-countdown="{{ facts.conferences.next.startDate }}" data-apps-count>{{ facts.conferences.next.startDate | daysUntil }}</a></dd>
         </div>
       {% endif %}
-      <div class="apps-stat"><dt>conferences held</dt><dd data-apps-count>{{ facts.conferences.held }}</dd></div>
-      <div class="apps-stat"><dt>host countries</dt><dd data-apps-count>{{ facts.conferences.countries }}</dd></div>
-      <div class="apps-stat"><dt>Anthology papers</dt><dd data-apps-count>{{ facts.anthology.papers }}</dd></div>
+      {% if systemHealth %}
+        <div class="apps-stat{% if systemHealth.summary.url %} apps-stat-{{ systemHealth.summary.level }}{% endif %}" data-apps-systems>
+          <dt>Systems</dt>
+          <dd class="apps-stat-level"><span class="apps-dot apps-dot-{{ systemHealth.summary.level }}" data-apps-systems-dot aria-hidden="true"></span>{% if systemHealth.summary.url %}<a href="{{ systemHealth.summary.url }}" data-apps-systems-label>{{ systemHealth.summary.label }}</a>{% else %}<a data-apps-systems-label>{{ systemHealth.summary.label }}</a>{% endif %}</dd>
+        </div>
+      {% endif %}
+      {% if dashboard.release %}
+        <div class="apps-stat">
+          <dt>{{ dashboard.release.title }}{% if dashboard.release.due %}, due {{ dashboard.release.due | newsDate("en") }}{% endif %}</dt>
+          <dd><a href="{{ dashboard.release.url }}" data-apps-release-percent>{{ dashboard.release.percent }}%</a></dd>
+        </div>
+      {% endif %}
+      {% if dashboard.counts %}
+        <div class="apps-stat">
+          <dt>tasks to pick up</dt>
+          <dd><a href="{{ dashboard.counts[2].url }}" data-apps-live="tasks">{{ dashboard.counts[2].value }}</a></dd>
+        </div>
+      {% endif %}
     </dl>
+    <p class="apps-live" data-apps-asof>{% if systemHealth %}Figures as of {{ systemHealth.checked | newsDate("en") }}{% endif %}</p>
+    <p class="apps-today" data-apps-today hidden></p>
+
+    {% if dashboard.phase %}
+      <section class="apps-phase" aria-labelledby="apps-phase-title">
+        <div>
+          <h2 class="apps-phase-title" id="apps-phase-title">Now: {{ dashboard.phase.label }}</h2>
+          <p class="apps-note">{{ dashboard.phase.note }}</p>
+        </div>
+        <ul class="apps-phase-links" role="list">
+          {% for l in dashboard.phase.links %}
+            <li data-roles="{{ l.roles | join(' ') }}"><a class="btn btn-secondary btn-sm" href="{{ l.href }}">{{ icon(l.icon) }} {{ l.label or t.staffMenu[l.key] }}</a></li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
 
     <div class="apps-admin" id="admin">
       <h2 class="apps-heading">Admin</h2>
@@ -72,22 +124,31 @@ eleventyExcludeFromCollections: true
       </ul>
     </div>
 
-    <section class="apps-panel" aria-labelledby="apps-heading">
+    <div class="apps-tabbar">
+      <div class="apps-tabs" role="tablist" aria-label="Dashboard sections" data-apps-tabs hidden>
+        <button type="button" role="tab" id="apps-tab-apps" aria-controls="apps" data-apps-tab="apps">Apps</button>
+        <button type="button" role="tab" id="apps-tab-status" aria-controls="status" data-apps-tab="status">Project status</button>
+        <button type="button" role="tab" id="apps-tab-guides" aria-controls="guides" data-apps-tab="guides">Guides</button>
+        {% if systemHealth %}<button type="button" role="tab" id="apps-tab-it" aria-controls="it" data-apps-tab="it" data-roles="staff">IT monitoring <span class="apps-dot apps-dot-{{ systemHealth.summary.level }}" data-apps-it-dot aria-hidden="true"{% if not systemHealth.summary.url %} hidden{% endif %}></span><span class="sr-only" data-apps-it-note{% if not systemHealth.summary.url %} hidden{% endif %}>, needs attention</span></button>{% endif %}
+      </div>
+      <div class="apps-viewing">
+        <label for="apps-role">Viewing as</label>
+        <select class="apps-role" id="apps-role">
+          <option value="all" selected>Show all</option>
+          <option value="staff">Staff</option>
+          <option value="management">Management</option>
+          <option value="board">Board member</option>
+          <option value="volunteer">Volunteer</option>
+        </select>
+      </div>
+    </div>
+
+    <section class="apps-panel" id="apps" data-apps-panel aria-labelledby="apps-heading">
       <div class="apps-panel-head">
         <div>
           <h2 class="apps-heading" id="apps-heading">Your apps</h2>
           <p class="apps-count" data-apps-total role="status" hidden></p>
         </div>
-        <fieldset class="apps-roles">
-          <legend>Which describes you?</legend>
-          <div class="apps-segments">
-            <label class="apps-role" for="apps-role-all"><input type="radio" id="apps-role-all" name="apps-role" value="all" checked> Show all</label>
-            <label class="apps-role" for="apps-role-staff"><input type="radio" id="apps-role-staff" name="apps-role" value="staff"> Staff</label>
-            <label class="apps-role" for="apps-role-management"><input type="radio" id="apps-role-management" name="apps-role" value="management"> Management</label>
-            <label class="apps-role" for="apps-role-board"><input type="radio" id="apps-role-board" name="apps-role" value="board"> Board member</label>
-            <label class="apps-role" for="apps-role-volunteer"><input type="radio" id="apps-role-volunteer" name="apps-role" value="volunteer"> Volunteer</label>
-          </div>
-        </fieldset>
       </div>
 
       <ul class="apps-grid" role="list">
@@ -115,15 +176,15 @@ eleventyExcludeFromCollections: true
       </ul>
     </section>
 
-    <section class="apps-panel" aria-labelledby="apps-status-heading">
-      <h2 class="apps-heading apps-section-heading" id="apps-status-heading">Where things stand</h2>
+    <section class="apps-panel" id="status" data-apps-panel aria-labelledby="apps-status-heading">
+      <h2 class="apps-heading apps-section-heading" id="apps-status-heading">Project status</h2>
       <div class="apps-status">
         {% if dashboard.release %}
           <div class="apps-status-card" data-roles="staff">
             <h3 class="apps-status-title">Next release</h3>
             <p class="apps-release"><a href="{{ dashboard.release.url }}">{{ dashboard.release.title }}</a>{% if dashboard.release.due %}, due {{ dashboard.release.due | newsDate("en") }}{% endif %}</p>
-            <progress class="apps-progress" value="{{ dashboard.release.closed }}" max="{{ dashboard.release.total }}" aria-label="{{ dashboard.release.title }} progress">{{ dashboard.release.percent }}%</progress>
-            <p class="apps-note">{{ dashboard.release.closed }} of {{ dashboard.release.total }} issues closed</p>
+            <progress class="apps-progress" data-apps-release-bar value="{{ dashboard.release.closed }}" max="{{ dashboard.release.total }}" aria-label="{{ dashboard.release.title }} progress">{{ dashboard.release.percent }}%</progress>
+            <p class="apps-note" data-apps-release-note>{{ dashboard.release.closed }} of {{ dashboard.release.total }} issues closed</p>
           </div>
         {% endif %}
         {% if dashboard.counts %}
@@ -131,7 +192,7 @@ eleventyExcludeFromCollections: true
             <h3 class="apps-status-title">On GitHub</h3>
             <ul class="apps-counts" role="list">
               {% for c in dashboard.counts %}
-                <li data-roles="{{ c.roles | join(' ') }}"><a href="{{ c.url }}"><strong>{{ c.value }}</strong> {{ c.label }}</a></li>
+                <li data-roles="{{ c.roles | join(' ') }}"><a href="{{ c.url }}"><strong data-apps-live="{{ ['issues', 'prs', 'tasks'][loop.index0] }}">{{ c.value }}</strong> {{ c.label }}</a></li>
               {% endfor %}
             </ul>
           </div>
@@ -150,7 +211,7 @@ eleventyExcludeFromCollections: true
     </section>
 
     {% if systemHealth %}
-      <section class="apps-panel apps-health" aria-labelledby="apps-health-heading" data-roles="staff">
+      <section class="apps-panel apps-health" id="it" data-apps-panel aria-labelledby="apps-health-heading" data-roles="staff">
         <h2 class="apps-heading apps-section-heading" id="apps-health-heading">IT System Monitoring</h2>
         <div class="apps-status">
           {% for repo in systemHealth.repos %}
@@ -160,13 +221,13 @@ eleventyExcludeFromCollections: true
                   {% if loop.first %}<span aria-hidden="true">{% inlineSvg "assets/images/brand/logo-lockup.svg" %}</span>{% else %}<img src="/assets/images/partners/netsec.svg#svgView(viewBox(360,780,2800,930))" alt="" width="120" height="40">{% endif %}
                 </a>
               </h3>
-              <p class="apps-health-level"><span class="apps-dot apps-dot-{{ repo.level }}" aria-hidden="true"></span>{{ repo.levelLabel }}</p>
-              <p class="apps-health-summary">{% if repo.failedCount %}{{ repo.failedCount }} of {{ repo.items.length }} automations failing{% else %}{{ repo.items.length }} automations, none failing{% endif %}</p>
-              <details class="apps-health-details"{% if repo.failedCount %} open{% endif %}>
+              <p class="apps-health-level" data-apps-repo-level="{{ repo.slug }}"><span class="apps-dot apps-dot-{{ repo.level }}" aria-hidden="true"></span><span>{{ repo.levelLabel }}</span></p>
+              <p class="apps-health-summary" data-apps-repo-summary="{{ repo.slug }}">{% if repo.failedCount %}{{ repo.failedCount }} of {{ repo.items.length }} automations failing{% else %}{{ repo.items.length }} automations, none failing{% endif %}</p>
+              <details class="apps-health-details" data-apps-repo-details="{{ repo.slug }}"{% if repo.failedCount %} open{% endif %}>
                 <summary>Every automation</summary>
                 <ul class="apps-health-list" role="list">
                   {% for item in repo.items %}
-                    <li class="apps-health-item{% if item.failed %} apps-health-failed{% endif %}"><span class="apps-dot apps-dot-{{ item.level }}" aria-hidden="true"></span><div><a href="{{ item.url }}">{{ item.name }}</a> <span>{{ item.label }}{% if item.date %}, {{ item.date | newsDate("en") }}{% endif %}</span></div></li>
+                    <li class="apps-health-item{% if item.failed %} apps-health-failed{% endif %}" data-apps-run="{{ repo.slug }}|{{ item.name }}"><span class="apps-dot apps-dot-{{ item.level }}" aria-hidden="true"></span><div><a href="{{ item.url }}">{{ item.name }}</a> <span>{{ item.label }}{% if item.date %}, {{ item.date | newsDate("en") }}{% endif %}</span></div></li>
                   {% endfor %}
                 </ul>
               </details>
@@ -192,11 +253,11 @@ eleventyExcludeFromCollections: true
             </ul>
           </div>
         </div>
-        <p class="apps-note">Figures as of {{ systemHealth.checked | newsDate("en") }}.</p>
+        <p class="apps-note" data-apps-asof>Figures as of {{ systemHealth.checked | newsDate("en") }}.</p>
       </section>
     {% endif %}
 
-    <section class="apps-panel" aria-labelledby="apps-guides-heading">
+    <section class="apps-panel" id="guides" data-apps-panel aria-labelledby="apps-guides-heading">
       <h2 class="apps-heading apps-section-heading" id="apps-guides-heading">Guides</h2>
       <ul class="apps-grid" role="list">
         {% for guide in site.guideLinks %}
@@ -213,6 +274,7 @@ eleventyExcludeFromCollections: true
   </div>
 </div>
 
+<script type="application/json" id="apps-data">{{ { deadlines: dashboard.deadlines, release: dashboard.release, counts: dashboard.counts, repo: dashboard.repo, health: systemHealth } | dump | safe }}</script>
 <script>
   (function () {
     var calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -220,7 +282,7 @@ eleventyExcludeFromCollections: true
     // Remember the role choice and report how many apps it leaves. The
     // filtering itself is CSS.
     var KEY = "eiss-apps-role";
-    var radios = document.querySelectorAll('input[name="apps-role"]');
+    var roleSelect = document.getElementById("apps-role");
     var total = document.querySelector("[data-apps-total]");
     var saved = null;
     try { saved = localStorage.getItem(KEY); } catch (e) {}
@@ -231,14 +293,78 @@ eleventyExcludeFromCollections: true
       total.textContent = shown + (shown === 1 ? " app" : " apps");
       total.hidden = false;
     }
-    radios.forEach(function (r) {
-      if (r.value === saved) r.checked = true;
-      r.addEventListener("change", function () {
-        try { localStorage.setItem(KEY, r.value); } catch (e) {}
-        tally();
-      });
+    if (saved && roleSelect.querySelector('[value="' + CSS.escape(saved) + '"]')) roleSelect.value = saved;
+    roleSelect.addEventListener("change", function () {
+      try { localStorage.setItem(KEY, roleSelect.value); } catch (e) {}
+      tally();
+      renderToday();
+      keepTabVisible();
     });
     tally();
+
+    // The first visit asks for a role under the header. The answer sets the
+    // same radio as the filter, which stays available to change it later.
+    var first = document.querySelector("[data-apps-first]");
+    if (saved === null) first.hidden = false;
+    first.addEventListener("click", function (e) {
+      var value = e.target.getAttribute && e.target.getAttribute("data-apps-choose");
+      if (!value) return;
+      roleSelect.value = value;
+      roleSelect.dispatchEvent(new Event("change"));
+      first.hidden = true;
+      roleSelect.focus();
+    });
+
+    // Tabs. Without this script they stay hidden and every section stacks.
+    // Each has its own link, and the page always opens on Apps otherwise.
+    var tablist = document.querySelector("[data-apps-tabs]");
+    var tabs = [].slice.call(tablist.querySelectorAll("[role=tab]"));
+    var panels = [].slice.call(document.querySelectorAll("[data-apps-panel]"));
+    function isTab(name) { return tabs.some(function (t) { return t.getAttribute("data-apps-tab") === name; }); }
+    function selectTab(name) {
+      tabs.forEach(function (t) {
+        var on = t.getAttribute("data-apps-tab") === name;
+        t.setAttribute("aria-selected", on);
+        t.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach(function (panel) { panel.hidden = panel.id !== name; });
+    }
+    function usable() { return tabs.filter(function (t) { return getComputedStyle(t).display !== "none"; }); }
+    function keepTabVisible() {
+      if (usable().indexOf(tablist.querySelector('[aria-selected="true"]')) < 0) {
+        selectTab("apps");
+        history.replaceState(null, "", location.pathname);
+      }
+    }
+    panels.forEach(function (panel) {
+      panel.setAttribute("role", "tabpanel");
+      panel.setAttribute("aria-labelledby", "apps-tab-" + panel.id);
+    });
+    tablist.hidden = false;
+    selectTab(isTab(location.hash.slice(1)) ? location.hash.slice(1) : "apps");
+    keepTabVisible();
+    tablist.addEventListener("click", function (e) {
+      var tab = e.target.closest("[role=tab]");
+      if (!tab) return;
+      var name = tab.getAttribute("data-apps-tab");
+      selectTab(name);
+      history.replaceState(null, "", "#" + name);
+    });
+    tablist.addEventListener("keydown", function (e) {
+      var list = usable(), i = list.indexOf(document.activeElement);
+      var to = e.key === "ArrowRight" ? (i + 1) % list.length : e.key === "ArrowLeft" ? (i - 1 + list.length) % list.length : e.key === "Home" ? 0 : e.key === "End" ? list.length - 1 : -1;
+      if (to < 0) return;
+      e.preventDefault();
+      list[to].focus();
+      list[to].click();
+    });
+    addEventListener("hashchange", function () {
+      var name = location.hash.slice(1);
+      if (!isTab(name)) return;
+      selectTab(name);
+      keepTabVisible();
+      tablist.scrollIntoView({ block: "nearest" });
+    });
 
     // Greeting and clock, in the reader's own time zone.
     var clock = document.querySelector("[data-apps-clock]");
@@ -253,13 +379,183 @@ eleventyExcludeFromCollections: true
     }
     tick();
 
-    // The day count stays right between daily rebuilds. Figures count up once.
+    // Day counts stay right between daily rebuilds. Figures count up once.
+    function daysTo(iso) {
+      var p = iso.split("-"), now = new Date();
+      return Math.round((Date.UTC(p[0], p[1] - 1, p[2]) - Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())) / 864e5);
+    }
+    function inDays(n) { return n === 0 ? "Today" : n === 1 ? "1 day" : n + " days"; }
     var cd = document.querySelector("[data-apps-countdown]");
     if (cd) {
-      var p = cd.getAttribute("data-apps-countdown").split("-"), now = new Date();
-      var days = Math.round((Date.UTC(p[0], p[1] - 1, p[2]) - Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())) / 864e5);
-      if (days < 0) cd.parentNode.hidden = true; else cd.textContent = days;
+      var days = daysTo(cd.getAttribute("data-apps-countdown"));
+      if (days < 0) cd.closest(".apps-stat").hidden = true; else cd.textContent = days;
     }
+
+    var data = JSON.parse(document.getElementById("apps-data").textContent);
+    var next = (data.deadlines || []).filter(function (d) { return daysTo(d.date) >= 0; })[0];
+    var tile = document.querySelector("[data-apps-deadline]");
+    if (tile) {
+      if (next) {
+        var left = daysTo(next.date);
+        tile.querySelector("[data-apps-deadline-label]").textContent = next.label;
+        tile.querySelector("[data-apps-deadline-days]").textContent = inDays(left);
+        tile.classList.toggle("apps-stat-critical", left <= 3);
+        tile.classList.toggle("apps-stat-issue", left > 3 && left <= 14);
+      } else tile.hidden = true;
+    }
+
+    // The Today line: failures first for those who see IT monitoring, then a
+    // deadline inside 30 days, then what changed since the last visit. It stays
+    // away when there is nothing to say.
+    var failed = data.health ? data.health.summary.failed : [];
+    var since = { tasks: 0, closed: 0 };
+    var today = document.querySelector("[data-apps-today]");
+    function renderToday() {
+      var role = roleSelect.value;
+      var parts = [];
+      if (failed.length && (role === "all" || role === "staff")) {
+        parts.push(failed.length + (failed.length === 1 ? " automation failing: " : " automations failing: ") + failed.join(", ") + ".");
+      }
+      if (next && daysTo(next.date) <= 30) {
+        var when = new Date(next.date + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "long" });
+        parts.push(next.label + ": " + when + ".");
+      }
+      var news = [];
+      if (since.tasks > 0 && role !== "management" && role !== "board") news.push(since.tasks + (since.tasks === 1 ? " new task" : " new tasks"));
+      if (since.closed > 0 && (role === "all" || role === "staff")) news.push(since.closed + " more release " + (since.closed === 1 ? "issue" : "issues") + " closed");
+      if (news.length) parts.push("Since your last visit: " + news.join(", ") + ".");
+      today.textContent = parts.join(" ");
+      today.hidden = !parts.length;
+    }
+
+    // Since your last visit, per browser. Reloads within the hour count as the
+    // same visit, so the note survives them. First visits have nothing to compare.
+    function compare(tasks, closed) {
+      var SEEN = "eiss-apps-seen", seen = null, t = Date.now();
+      try { seen = JSON.parse(localStorage.getItem(SEEN)); } catch (e) {}
+      var now = { tasks: tasks, closed: closed };
+      if (!seen) seen = { at: t, prev: null, cur: now };
+      else if (t - seen.at > 36e5) seen = { at: t, prev: seen.cur, cur: now };
+      else seen.cur = now;
+      try { localStorage.setItem(SEEN, JSON.stringify(seen)); } catch (e) {}
+      since = seen.prev ? { tasks: tasks - seen.prev.tasks, closed: closed - seen.prev.closed } : { tasks: 0, closed: 0 };
+      renderToday();
+    }
+    var built = { tasks: data.counts ? data.counts[2].value : 0, closed: data.release ? data.release.closed : 0 };
+    renderToday();
+
+    // Live figures from GitHub's public API, which allows 60 requests an hour
+    // per address, hence the 10-minute cache. On any failure the build's stay.
+    // ponytail: Workspace and Google stay on the daily build, no browser route is tested.
+    var API = "https://api.github.com/";
+    function get(path) {
+      return fetch(API + path, { headers: { Accept: "application/vnd.github+json" } }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        return r.json();
+      });
+    }
+    function count(q) {
+      return get("search/issues?per_page=1&q=" + encodeURIComponent("repo:" + data.repo + " " + q)).then(function (r) { return r.total_count; });
+    }
+    function loadLive() {
+      var repos = data.health ? data.health.repos : [];
+      return Promise.all([
+        count("is:issue is:open"),
+        count("is:pr is:open"),
+        count('is:issue is:open label:"help wanted"'),
+        get("repos/" + data.repo + "/milestones?state=open&per_page=100"),
+        Promise.all(repos.map(function (r) {
+          return get("repos/" + r.slug + "/actions/runs?status=completed&per_page=100&branch=" + r.branch);
+        })),
+      ]).then(function (a) {
+        var m = data.release && a[3].filter(function (x) { return x.title === data.release.title; })[0];
+        return { issues: a[0], prs: a[1], tasks: a[2], closed: m ? m.closed_issues : null, total: m ? m.closed_issues + m.open_issues : null,
+          runs: a[4].map(function (r) { return r.workflow_runs.map(function (w) { return { name: w.name, conclusion: w.conclusion, url: w.html_url }; }); }) };
+      });
+    }
+    var LEVELS = { nominal: "Nominal", issue: "Issue", critical: "Critical" };
+    // Run links arrive from the API or the browser's cache, so only GitHub's are followed.
+    function isRun(url) { return /^https:\/\/github\.com\//.test(url); }
+    function setDot(el, level) { el.className = "apps-dot apps-dot-" + level; }
+    function applyHealth(live) {
+      var all = [];
+      data.health.repos.forEach(function (repo, i) {
+        var bad = repo.items.filter(function (item) {
+          // Runs are newest first, and a quiet weekly job may not be in the page: it keeps its build state.
+          var run = live.runs[i].filter(function (w) { return w.name === item.name; })[0];
+          if (run) {
+            item.failed = ["failure", "timed_out", "startup_failure"].indexOf(run.conclusion) > -1;
+            item.level = !item.failed ? "nominal" : /deploy/i.test(item.name) ? "critical" : "issue";
+            item.url = run.url;
+          }
+          var li = [].filter.call(document.querySelectorAll("[data-apps-run]"), function (el) {
+            return el.getAttribute("data-apps-run") === repo.slug + "|" + item.name;
+          })[0];
+          if (li) {
+            li.classList.toggle("apps-health-failed", item.failed);
+            setDot(li.querySelector(".apps-dot"), item.level);
+            if (isRun(item.url)) li.querySelector("a").href = item.url;
+            li.querySelector("span:not(.apps-dot)").textContent = LEVELS[item.level] + (run ? ", latest run" : "");
+          }
+          return item.failed;
+        });
+        var level = bad.length >= 3 || bad.some(function (b) { return b.level === "critical"; }) ? "critical" : bad.length ? "issue" : "nominal";
+        all.push({ level: level, bad: bad });
+        var line = document.querySelector('[data-apps-repo-level="' + repo.slug + '"]');
+        if (line) { setDot(line.querySelector(".apps-dot"), level); line.lastElementChild.textContent = LEVELS[level]; }
+        var sum = document.querySelector('[data-apps-repo-summary="' + repo.slug + '"]');
+        if (sum) sum.textContent = bad.length ? bad.length + " of " + repo.items.length + " automations failing" : repo.items.length + " automations, none failing";
+        var det = document.querySelector('[data-apps-repo-details="' + repo.slug + '"]');
+        if (det && bad.length) det.open = true;
+      });
+      var ws = data.health.workspace.level;
+      var levels = all.map(function (x) { return x.level; }).concat(ws);
+      var overall = levels.indexOf("critical") > -1 ? "critical" : levels.indexOf("issue") > -1 ? "issue" : levels.indexOf("nominal") > -1 ? "nominal" : "unknown";
+      var bad = all.reduce(function (acc, x) { return acc.concat(x.bad); }, []);
+      failed = bad.map(function (b) { return b.name; });
+      var box = document.querySelector("[data-apps-systems]");
+      if (box) {
+        box.className = overall === "issue" || overall === "critical" ? "apps-stat apps-stat-" + overall : "apps-stat";
+        setDot(box.querySelector("[data-apps-systems-dot]"), overall);
+        var label = box.querySelector("[data-apps-systems-label]");
+        label.textContent = LEVELS[overall] || data.health.summary.label;
+        if (overall === "issue" || overall === "critical") label.href = bad.length && isRun(bad[0].url) ? bad[0].url : "https://script.google.com/home/executions";
+        else label.removeAttribute("href");
+      }
+      var alarm = overall === "issue" || overall === "critical";
+      var dot = document.querySelector("[data-apps-it-dot]");
+      setDot(dot, overall);
+      dot.hidden = !alarm;
+      document.querySelector("[data-apps-it-note]").hidden = !alarm;
+    }
+    function applyLive(live, at) {
+      ["issues", "prs", "tasks"].forEach(function (k) {
+        document.querySelectorAll('[data-apps-live="' + k + '"]').forEach(function (el) { el.textContent = live[k]; });
+      });
+      if (live.total) {
+        var pct = Math.round(live.closed / live.total * 100);
+        var el = document.querySelector("[data-apps-release-percent]");
+        if (el) el.textContent = pct + "%";
+        var bar = document.querySelector("[data-apps-release-bar]");
+        if (bar) { bar.max = live.total; bar.value = live.closed; bar.textContent = pct + "%"; }
+        var note = document.querySelector("[data-apps-release-note]");
+        if (note) note.textContent = live.closed + " of " + live.total + " issues closed";
+      }
+      if (data.health) applyHealth(live);
+      var mins = Math.round((Date.now() - at) / 6e4);
+      var line = document.querySelector(".apps-live");
+      line.classList.add("is-live");
+      line.textContent = "Live from GitHub, checked " + (mins < 1 ? "just now" : mins + (mins === 1 ? " minute ago" : " minutes ago"));
+      compare(live.tasks, live.closed === null ? built.closed : live.closed);
+    }
+    var LIVE = "eiss-apps-live", cached = null;
+    try { cached = JSON.parse(localStorage.getItem(LIVE)); } catch (e) {}
+    if (cached && Date.now() - cached.at < 6e5) applyLive(cached.live, cached.at);
+    else loadLive().then(function (live) {
+      var at = Date.now();
+      try { localStorage.setItem(LIVE, JSON.stringify({ at: at, live: live })); } catch (e) {}
+      applyLive(live, at);
+    }).catch(function () { compare(built.tasks, built.closed); });
     if (!calm) document.querySelectorAll("[data-apps-count]").forEach(function (el) {
       var end = +el.textContent, start = performance.now();
       (function step(t) {
