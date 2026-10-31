@@ -384,6 +384,18 @@ that track the roadmap and when to create a new milestone are in the
 The site has two classes of documentation, each with a different
 cadence for staying current.
 
+### What goes where
+
+GitHub records how the system works and why it changed. Drive (EISS
+Restricted > DevOps) records how EISS operates it. Both site repos are
+public, so nothing private goes in them, including people's private
+details and the access map. Secrets go only in the password manager.
+Link rather than copy. Staff guides live in EISS Team > Guides and
+procedures. After a change, ask: did it change how something works (repo
+doc, same PR), how someone operates it (DevOps handbook or staff guide),
+or who holds access (handbook's access map, same day)? Routine reports go
+to issue #1939, in public-safe wording.
+
 ### Repo `.md` docs
 
 1. **Inline at PR time.** If a PR changes something a doc describes
