@@ -153,12 +153,13 @@ eleventyExcludeFromCollections: true
           {% for repo in systemHealth.repos %}
             <div class="apps-status-card">
               <h3 class="apps-status-title"><a href="{{ repo.url }}">{{ repo.label }}</a></h3>
-              <p class="apps-health-summary">{% if repo.failedCount %}<strong>{{ repo.failedCount }} failing</strong> of {{ repo.items.length }} automations{% else %}All {{ repo.items.length }} automations without a failure{% endif %}</p>
+              <p class="apps-health-level"><span class="apps-dot apps-dot-{{ repo.level }}" aria-hidden="true"></span>{{ repo.levelLabel }}</p>
+              <p class="apps-health-summary">{% if repo.failedCount %}{{ repo.failedCount }} of {{ repo.items.length }} automations failing{% else %}{{ repo.items.length }} automations, none failing{% endif %}</p>
               <details class="apps-health-details"{% if repo.failedCount %} open{% endif %}>
                 <summary>Every automation</summary>
                 <ul class="apps-health-list" role="list">
                   {% for item in repo.items %}
-                    <li{% if item.failed %} class="apps-health-failed"{% endif %}><a href="{{ item.url }}">{{ item.name }}</a> <span>{{ item.status }}{% if item.date %}, {{ item.date | newsDate("en") }}{% endif %}</span></li>
+                    <li class="apps-health-item{% if item.failed %} apps-health-failed{% endif %}"><span class="apps-dot apps-dot-{{ item.level }}" aria-hidden="true"></span><div><a href="{{ item.url }}">{{ item.name }}</a> <span>{{ item.label }}{% if item.date %}, {{ item.date | newsDate("en") }}{% endif %}</span></div></li>
                   {% endfor %}
                 </ul>
               </details>
@@ -166,10 +167,16 @@ eleventyExcludeFromCollections: true
           {% endfor %}
           <div class="apps-status-card">
             <h3 class="apps-status-title">Google Workspace</h3>
+            {% if systemHealth.google %}
+              <p class="apps-health-level"><span class="apps-dot apps-dot-{{ systemHealth.google.level }}" aria-hidden="true"></span>{{ systemHealth.google.levelLabel }}</p>
+              <p class="apps-health-summary">{% if systemHealth.google.services.length %}Affected: {{ systemHealth.google.services | join(", ") }}{% else %}Google reports no incident on the services EISS uses{% endif %}</p>
+            {% else %}
+              <p class="apps-health-summary">Google's status could not be read at the last build.</p>
+            {% endif %}
             <ul class="apps-health-list" role="list">
-              <li><a href="https://script.google.com/home/executions">Apps Script runs</a> <span>Needs sign-in</span></li>
-              <li><a href="https://admin.google.com/ac/ac">Security alerts</a> <span>Needs admin sign-in</span></li>
               <li><a href="https://www.google.com/appsstatus/dashboard/">Google's service status</a></li>
+              <li><a href="https://script.google.com/home/executions">Apps Script runs</a> <span>Not monitored here yet</span></li>
+              <li><a href="https://admin.google.com/ac/ac">Security alerts</a> <span>Not monitored here yet</span></li>
             </ul>
           </div>
         </div>

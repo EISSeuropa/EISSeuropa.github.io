@@ -16,7 +16,11 @@ async function api(path) {
   return res.json();
 }
 
-const STATUS = { success: "Passed", skipped: "Skipped", cancelled: "Cancelled" };
+const LABELS = { nominal: "Nominal", issue: "Issue", critical: "Critical" };
+
+// A failing site deploy is critical, since the live site stops updating. So are
+// three or more failures at once. Any other failure is an issue.
+const CRITICAL_AT = 3;
 
 async function repoHealth({ label, slug, branch }) {
   const { workflows } = await api(`${slug}/actions/workflows?per_page=100`);
@@ -30,26 +34,42 @@ async function repoHealth({ label, slug, branch }) {
     .filter(({ run }) => run)
     .map(({ w, run }) => {
       const failed = ["failure", "timed_out", "startup_failure"].includes(run.conclusion);
+      const level = !failed ? "nominal" : /deploy/i.test(w.name) ? "critical" : "issue";
       return {
         name: w.name,
         failed,
-        status: failed ? "Failed" : STATUS[run.conclusion] || run.conclusion,
+        level,
+        label: LABELS[level],
         date: run.created_at.slice(0, 10),
         url: run.html_url,
       };
     })
     .sort((a, b) => b.failed - a.failed || a.name.localeCompare(b.name));
-  return {
-    label,
-    url: `https://github.com/${slug}/actions`,
-    items,
-    failedCount: items.filter((i) => i.failed).length,
-  };
+  const failedCount = items.filter((i) => i.failed).length;
+  const level = failedCount >= CRITICAL_AT || items.some((i) => i.level === "critical") ? "critical" : failedCount ? "issue" : "nominal";
+  return { label, url: `https://github.com/${slug}/actions`, items, failedCount, level, levelLabel: LABELS[level] };
+}
+
+// Google's public status feed, which needs no sign-in. Only the services EISS uses count.
+const GOOGLE_SERVICES = /gmail|drive|docs|sheets|calendar|meet|groups|forms|apps script|admin console/i;
+
+async function googleHealth() {
+  try {
+    const res = await fetch("https://www.google.com/appsstatus/dashboard/incidents.json", { signal: AbortSignal.timeout(15000) });
+    if (!res.ok) throw new Error(String(res.status));
+    const open = (await res.json()).filter((i) => !i.end && i.status_impact !== "SERVICE_INFORMATION" && GOOGLE_SERVICES.test(i.service_name));
+    const level = open.some((i) => i.status_impact === "SERVICE_OUTAGE") ? "critical" : open.length ? "issue" : "nominal";
+    return { level, levelLabel: LABELS[level], services: [...new Set(open.map((i) => i.service_name))] };
+  } catch (e) {
+    console.warn(`[systemHealth] Google status unavailable: ${e.message}`);
+    return null;
+  }
 }
 
 module.exports = async function () {
   try {
-    return { repos: await Promise.all(REPOS.map(repoHealth)), checked: new Date().toISOString().slice(0, 10) };
+    const [repos, google] = await Promise.all([Promise.all(REPOS.map(repoHealth)), googleHealth()]);
+    return { repos, google, checked: new Date().toISOString().slice(0, 10) };
   } catch (e) {
     console.warn(`[systemHealth] section hidden: ${e.message}`);
     return null;
