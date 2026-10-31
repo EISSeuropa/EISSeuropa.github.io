@@ -167,20 +167,25 @@ eleventyExcludeFromCollections: true
           {% endfor %}
           <div class="apps-status-card">
             <h3 class="apps-status-title">Google Workspace</h3>
-            {% if systemHealth.google %}
-              <p class="apps-health-level"><span class="apps-dot apps-dot-{{ systemHealth.google.level }}" aria-hidden="true"></span>{{ systemHealth.google.levelLabel }}</p>
-              <p class="apps-health-summary">{% if systemHealth.google.services.length %}Affected: {{ systemHealth.google.services | join(", ") }}{% else %}Google reports no incident on the services EISS uses{% endif %}</p>
-            {% else %}
-              <p class="apps-health-summary">Google's status could not be read at the last build.</p>
-            {% endif %}
+            <p class="apps-health-level"><span class="apps-dot apps-dot-{{ systemHealth.workspace.level }}" aria-hidden="true"></span>{{ systemHealth.workspace.levelLabel }}</p>
             <ul class="apps-health-list" role="list">
-              <li><a href="https://www.google.com/appsstatus/dashboard/">Google's service status</a></li>
-              <li><a href="https://script.google.com/home/executions">Apps Script runs</a> <span>Not monitored here yet</span></li>
-              <li><a href="https://admin.google.com/ac/ac">Security alerts</a> <span>Not monitored here yet</span></li>
+              {% if systemHealth.google %}
+                <li class="apps-health-item"><span class="apps-dot apps-dot-{{ systemHealth.google.level }}" aria-hidden="true"></span><div><a href="https://www.google.com/appsstatus/dashboard/">Google's services</a> <span>{{ systemHealth.google.levelLabel }}{% if systemHealth.google.services.length %}: {{ systemHealth.google.services | join(", ") }}{% endif %}</span></div></li>
+              {% else %}
+                <li><a href="https://www.google.com/appsstatus/dashboard/">Google's services</a> <span>Could not be read at the last build</span></li>
+              {% endif %}
+              {% if systemHealth.workspace.checks %}
+                {% for check in systemHealth.workspace.checks %}
+                  <li class="apps-health-item"><span class="apps-dot apps-dot-{{ check.level }}" aria-hidden="true"></span><div><a href="https://script.google.com/home/executions">{{ check.name }}</a> <span>{{ check.label }}{% if check.date %}, last good run {{ check.date | newsDate("en") }}{% endif %}</span></div></li>
+                {% endfor %}
+              {% else %}
+                <li><a href="https://script.google.com/home/executions">Apps Script runs</a> <span>Could not be read at the last build</span></li>
+              {% endif %}
+              <li><a href="https://admin.google.com/ac/ac">Security alerts</a> <span>Not monitored here</span></li>
             </ul>
           </div>
         </div>
-        <p class="apps-note">GitHub figures as of {{ systemHealth.checked | newsDate("en") }}.</p>
+        <p class="apps-note">Figures as of {{ systemHealth.checked | newsDate("en") }}.</p>
       </section>
     {% endif %}
 

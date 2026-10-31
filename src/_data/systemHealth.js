@@ -16,7 +16,28 @@ async function api(path) {
   return res.json();
 }
 
-const LABELS = { nominal: "Nominal", issue: "Issue", critical: "Critical" };
+const LABELS = { nominal: "Nominal", issue: "Issue", critical: "Critical", unknown: "No report yet" };
+
+// The "EISS status" Apps Script web app (workspace-ops/status), which is public
+// and returns only each check's level and last good date.
+const WORKSPACE_STATUS = "https://script.google.com/macros/s/AKfycbyUPZHKz0SQ0eNN6jfvy7TWvS_LtVFMnir2Q4D-QJEjjJXoGS7VbK63m7MIhUFBp4QN/exec";
+
+async function workspaceChecks() {
+  try {
+    const res = await fetch(WORKSPACE_STATUS, { signal: AbortSignal.timeout(30000) });
+    if (!res.ok) throw new Error(String(res.status));
+    const { checks } = await res.json();
+    return checks.map((c) => ({ name: c.name, level: c.level, label: LABELS[c.level] || c.level, date: c.lastOk }));
+  } catch (e) {
+    console.warn(`[systemHealth] Workspace status unavailable: ${e.message}`);
+    return null;
+  }
+}
+
+// The worst of the levels given. No report yet counts for nothing.
+function worst(levels) {
+  return ["critical", "issue", "nominal"].find((l) => levels.includes(l)) || "unknown";
+}
 
 // A failing site deploy is critical, since the live site stops updating. So are
 // three or more failures at once. Any other failure is an issue.
@@ -68,8 +89,10 @@ async function googleHealth() {
 
 module.exports = async function () {
   try {
-    const [repos, google] = await Promise.all([Promise.all(REPOS.map(repoHealth)), googleHealth()]);
-    return { repos, google, checked: new Date().toISOString().slice(0, 10) };
+    const [repos, google, checks] = await Promise.all([Promise.all(REPOS.map(repoHealth)), googleHealth(), workspaceChecks()]);
+    const level = worst([...(google ? [google.level] : []), ...(checks || []).map((c) => c.level)]);
+    const workspace = { level, levelLabel: LABELS[level], checks };
+    return { repos, google, workspace, checked: new Date().toISOString().slice(0, 10) };
   } catch (e) {
     console.warn(`[systemHealth] section hidden: ${e.message}`);
     return null;
