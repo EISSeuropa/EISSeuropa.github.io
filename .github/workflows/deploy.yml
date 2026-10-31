@@ -90,6 +90,9 @@ jobs:
       - run: npm install --no-audit --no-fund
 
       - run: npm run build
+        env:
+          # src/_data/systemHealth.js reads workflow runs from the GitHub API.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Build the static search index. Pagefind crawls the rendered
       # _site/ HTML and writes wasm + index shards to _site/pagefind/,

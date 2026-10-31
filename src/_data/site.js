@@ -224,7 +224,7 @@ module.exports = {
     { href: "https://workspace.google.com/dashboard", key: "googleApps", icon: "layout-grid", roles: ["staff"] },
     // An Apps Script app open to the EISS domain only, for staff, management and
     // volunteers. Its own People list decides who gets in.
-    { href: "https://script.google.com/a/macros/eiss-europa.com/s/AKfycbzlceXEY4CHShuTGgy9etowrkmnpv7R0u6XmF1-NgT7-ivepTibfllkyVR9tI9wcRI/exec", label: "Task tracker", icon: "file-text", badge: "Beta", roles: ["staff", "management", "volunteer"] },
+    { href: "https://script.google.com/a/macros/eiss-europa.com/s/AKfycbzlceXEY4CHShuTGgy9etowrkmnpv7R0u6XmF1-NgT7-ivepTibfllkyVR9tI9wcRI/exec", label: "Project Manager", icon: "file-text", badge: "Beta", roles: ["staff", "management", "volunteer"] },
   ],
 
   // The guides on /internal.html. Roles work as in staffLinks.
@@ -248,7 +248,7 @@ module.exports = {
   adminLinks: [
     { href: "https://admin.google.com/", label: "Admin console", icon: "shield" },
     { href: "https://indico.eiss-europa.com/admin/", label: "Indico administration", icon: "settings" },
-    { href: "https://docs.google.com/spreadsheets/d/1upTZe9BrEj_pVAXDCGBHFLHhXwzvSK5nHrz_nuXT4-Y/edit", label: "Task tracker Sheet", icon: "file-text" },
+    { href: "https://docs.google.com/spreadsheets/d/1upTZe9BrEj_pVAXDCGBHFLHhXwzvSK5nHrz_nuXT4-Y/edit", label: "Project Manager Sheet", icon: "file-text" },
     { href: "https://script.google.com/home", label: "Apps Script", icon: "code" },
     { href: "https://ap.www.namecheap.com/", label: "Namecheap", icon: "globe" },
     { href: "https://github.com/EISSeuropa", label: "GitHub", icon: "git-branch" },
