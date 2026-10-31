@@ -73,7 +73,7 @@ eleventyExcludeFromCollections: true
         </div>
       {% endif %}
       {% if systemHealth %}
-        <div class="apps-stat apps-stat-{{ systemHealth.summary.level }}" data-apps-systems>
+        <div class="apps-stat{% if systemHealth.summary.url %} apps-stat-{{ systemHealth.summary.level }}{% endif %}" data-apps-systems>
           <dt>Systems</dt>
           <dd>{% if systemHealth.summary.url %}<a href="{{ systemHealth.summary.url }}" data-apps-systems-label>{{ systemHealth.summary.label }}</a>{% else %}<a data-apps-systems-label>{{ systemHealth.summary.label }}</a>{% endif %}</dd>
         </div>
@@ -417,6 +417,8 @@ eleventyExcludeFromCollections: true
       });
     }
     var LEVELS = { nominal: "Nominal", issue: "Issue", critical: "Critical" };
+    // Run links arrive from the API or the browser's cache, so only GitHub's are followed.
+    function isRun(url) { return /^https:\/\/github\.com\//.test(url); }
     function setDot(el, level) { el.className = "apps-dot apps-dot-" + level; }
     function applyHealth(live) {
       var all = [];
@@ -429,11 +431,13 @@ eleventyExcludeFromCollections: true
             item.level = !item.failed ? "nominal" : /deploy/i.test(item.name) ? "critical" : "issue";
             item.url = run.url;
           }
-          var li = document.querySelector('[data-apps-run="' + repo.slug + "|" + item.name.replace(/"/g, '\\"') + '"]');
+          var li = [].filter.call(document.querySelectorAll("[data-apps-run]"), function (el) {
+            return el.getAttribute("data-apps-run") === repo.slug + "|" + item.name;
+          })[0];
           if (li) {
             li.classList.toggle("apps-health-failed", item.failed);
             setDot(li.querySelector(".apps-dot"), item.level);
-            li.querySelector("a").href = item.url;
+            if (isRun(item.url)) li.querySelector("a").href = item.url;
             li.querySelector("span:not(.apps-dot)").textContent = LEVELS[item.level] + (run ? ", latest run" : "");
           }
           return item.failed;
@@ -454,10 +458,10 @@ eleventyExcludeFromCollections: true
       failed = bad.map(function (b) { return b.name; });
       var box = document.querySelector("[data-apps-systems]");
       if (box) {
-        box.className = "apps-stat apps-stat-" + overall;
+        box.className = overall === "issue" || overall === "critical" ? "apps-stat apps-stat-" + overall : "apps-stat";
         var label = box.querySelector("[data-apps-systems-label]");
         label.textContent = LEVELS[overall] || data.health.summary.label;
-        if (overall === "issue" || overall === "critical") label.href = bad.length ? bad[0].url : "https://script.google.com/home/executions";
+        if (overall === "issue" || overall === "critical") label.href = bad.length && isRun(bad[0].url) ? bad[0].url : "https://script.google.com/home/executions";
         else label.removeAttribute("href");
       }
       if (overall === "issue" || overall === "critical") document.querySelector("[data-apps-health]").open = true;
