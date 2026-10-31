@@ -396,6 +396,16 @@ doc, same PR), how someone operates it (DevOps handbook or staff guide),
 or who holds access (handbook's access map, same day)? Routine reports go
 to issue #1939, in public-safe wording.
 
+### GitHub issue or Project Manager task
+
+A piece of work lives in one place. Change to a website, its code or an
+automation: GitHub issue (rule §3 still applies). Team work with an owner
+and a date, or a manual step in an app: Project Manager task, even when it
+concerns IT. Never copy one into the other. A task that depends on an issue
+carries its link in the Link field. To offer website work to volunteers,
+label the issue `help wanted`, and it appears under "Website tasks" there,
+read live and never stored.
+
 ### Repo `.md` docs
 
 1. **Inline at PR time.** If a PR changes something a doc describes
