@@ -752,6 +752,9 @@ h4 { font-size: var(--fs-lg); }
 .apps-stat.apps-stat-critical { background: hsl(0 72% 42%); }
 .apps-stat.apps-stat-issue dt, .apps-stat.apps-stat-issue dd { color: hsl(222 40% 10%); }
 .apps-stat.apps-stat-critical dt, .apps-stat.apps-stat-critical dd { color: hsl(0 0% 100%); }
+.apps-stat-level { display: flex; align-items: center; gap: var(--space-2); }
+/* The status colours would vanish on the tile's own fill. */
+.apps-stat.apps-stat-issue .apps-dot, .apps-stat.apps-stat-critical .apps-dot { background: currentColor; box-shadow: none; animation: none; }
 .apps-first { margin: var(--space-6) 0 var(--space-5); }
 .apps-first:not([hidden]) + .apps-stats { margin-top: 0; }
 .apps-first-title { margin: 0 0 var(--space-3); font-size: 1.125rem; font-weight: 600; }

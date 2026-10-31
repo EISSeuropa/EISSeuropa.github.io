@@ -76,7 +76,7 @@ eleventyExcludeFromCollections: true
       {% if systemHealth %}
         <div class="apps-stat{% if systemHealth.summary.url %} apps-stat-{{ systemHealth.summary.level }}{% endif %}" data-apps-systems>
           <dt>Systems</dt>
-          <dd>{% if systemHealth.summary.url %}<a href="{{ systemHealth.summary.url }}" data-apps-systems-label>{{ systemHealth.summary.label }}</a>{% else %}<a data-apps-systems-label>{{ systemHealth.summary.label }}</a>{% endif %}</dd>
+          <dd class="apps-stat-level"><span class="apps-dot apps-dot-{{ systemHealth.summary.level }}" data-apps-systems-dot aria-hidden="true"></span>{% if systemHealth.summary.url %}<a href="{{ systemHealth.summary.url }}" data-apps-systems-label>{{ systemHealth.summary.label }}</a>{% else %}<a data-apps-systems-label>{{ systemHealth.summary.label }}</a>{% endif %}</dd>
         </div>
       {% endif %}
       {% if dashboard.release %}
@@ -516,6 +516,7 @@ eleventyExcludeFromCollections: true
       var box = document.querySelector("[data-apps-systems]");
       if (box) {
         box.className = overall === "issue" || overall === "critical" ? "apps-stat apps-stat-" + overall : "apps-stat";
+        setDot(box.querySelector("[data-apps-systems-dot]"), overall);
         var label = box.querySelector("[data-apps-systems-label]");
         label.textContent = LEVELS[overall] || data.health.summary.label;
         if (overall === "issue" || overall === "critical") label.href = bad.length && isRun(bad[0].url) ? bad[0].url : "https://script.google.com/home/executions";
