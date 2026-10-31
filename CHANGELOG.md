@@ -127,6 +127,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- `/internal.html` shows the real numbers of open issues and tasks to pick up. The daily refresh had been recording far too few of them.
 - An internal planning issue for the 2027 throwback series was published as a news item and in the feed by mistake, because it carried the `news` label. It is withdrawn, and the label is off the issue.
 - Below 1120px the homepage host-city timeline is one vertical rail, a city and its years per line, instead of a two-column grid that repeated the rail on every row.
 - In-page links no longer land under the menu bar while the What's New banner is showing. The scroll offset counted the menu bar's height but not the banner above it, so headings reached by an anchor sat about 45px under the bar on every page.
