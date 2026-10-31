@@ -60,6 +60,8 @@ on:
 
 permissions:
   contents: write
+  # Without it the search API undercounts: 3 open issues instead of 96 when tested.
+  issues: read
   pull-requests: write
 
 concurrency:
