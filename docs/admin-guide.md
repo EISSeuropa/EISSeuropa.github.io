@@ -121,6 +121,16 @@ successor inherits through the handover in section 4.
   the daily *Refresh roadmap surfaces* workflow rewrites. Key dates are
   the next conference, the release due dates and anything in `keyDates`
   in `src/_data/site.js`. `src/_data/dashboard.js` assembles all of it.
+- **Status strip and Today line.** The strip shows the next `keyDates`
+  entry, the conference, systems, the next release and tasks to pick up.
+  The deadline tile turns amber within 14 days and red within 3. In the
+  browser, GitHub figures refresh from the public API, cached for 10
+  minutes, and the last build's figures stay if that fails. Workspace and
+  Google status update only at build. "Since your last visit" compares
+  against figures saved in that browser.
+- **Conference phase.** `conferencePhases` in `src/_data/site.js` holds one
+  edition's stages, and needs replacing for each new edition along with
+  `keyDates`.
 - **Guides.** Guides are `guideLinks` in `src/_data/site.js`.
 - **IT System Monitoring.** A staff section that lists the latest run of
   each automation in both site repos, read when the site builds by

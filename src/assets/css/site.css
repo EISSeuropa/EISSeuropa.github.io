@@ -724,8 +724,10 @@ h4 { font-size: var(--fs-lg); }
 .apps-stats {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-  margin: calc(-1 * var(--space-7)) 0 var(--space-7);
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  margin: calc(-1 * var(--space-7)) 0 var(--space-2);
+  overflow: hidden;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   background: var(--bg-elev);
@@ -741,11 +743,41 @@ h4 { font-size: var(--fs-lg); }
   border-inline-start: 1px solid var(--border);
 }
 .apps-stat:first-child { border-inline-start: 0; }
+.apps-stat[hidden] { display: none; }
+.apps-stat a:not([href]) { color: inherit; }
+.apps-stat a[href] { color: inherit; text-decoration: none; }
+.apps-stat a[href]:hover { text-decoration: underline; }
+.apps-stat-issue { background: color-mix(in srgb, hsl(28 95% 52%) 18%, transparent); }
+.apps-stat-critical { background: color-mix(in srgb, hsl(0 80% 50%) 18%, transparent); }
+.apps-stat.apps-stat-issue dd, .apps-stat.apps-stat-critical dd { color: var(--text); }
+.apps-stat.apps-stat-issue dt, .apps-stat.apps-stat-critical dt { color: var(--text); }
+.apps-first { margin: var(--space-6) 0 var(--space-5); }
+.apps-first:not([hidden]) + .apps-stats { margin-top: 0; }
+.apps-first-title { margin: 0 0 var(--space-3); font-size: 1.125rem; font-weight: 600; }
+.apps-first-choices { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.apps-live { display: flex; align-items: center; justify-content: flex-end; gap: var(--space-2); min-height: 1.25rem; margin: 0 0 var(--space-3); color: var(--text-muted); font-size: 0.8125rem; }
+.apps-live.is-live::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--accent); }
+@media (prefers-reduced-motion: no-preference) {
+  /* Three pulses and it rests (RGAA 13.8: motion past five seconds needs a pause control). */
+  .apps-live.is-live::before { animation: apps-live-ring 1.4s ease-out 3; }
+}
+@keyframes apps-live-ring {
+  from { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 70%, transparent); }
+  to { box-shadow: 0 0 0 0.5rem transparent; }
+}
+.apps-today { margin: 0 0 var(--space-4); padding: var(--space-3) var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elev); }
+.apps-phase { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); margin: 0 0 var(--space-7); padding: var(--space-4) var(--space-5); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elev); }
+.apps-phase-title { margin: 0 0 var(--space-1); font-size: 1.125rem; }
+.apps-phase .apps-note { margin: 0; }
+.apps-phase-links { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.apps-health-wrap > summary { cursor: pointer; }
+.apps-health-wrap > summary h2 { display: inline; }
+.apps-health-wrap[open] > summary { margin-bottom: var(--space-5); }
 .apps-stat dt { color: var(--text-muted); font-size: 0.875rem; line-height: 1.35; }
 .apps-stat dd {
   margin: 0;
   color: var(--accent);
-  font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem);
+  font-size: clamp(1.25rem, 1rem + 1vw, 2rem);
   font-weight: 700;
   line-height: 1.1;
   font-variant-numeric: tabular-nums;
@@ -1070,10 +1102,11 @@ h4 { font-size: var(--fs-lg); }
 }
 
 @media (max-width: 640px) {
-  .apps-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .apps-stats { grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .apps-stat { padding: var(--space-4); }
-  .apps-stat:nth-child(odd) { border-inline-start: 0; }
-  .apps-stat:nth-child(n + 3) { border-block-start: 1px solid var(--border); }
+  .apps-stat:first-child { grid-column: 1 / -1; }
+  .apps-stat:nth-child(even) { border-inline-start: 0; }
+  .apps-stat:nth-child(n + 2) { border-block-start: 1px solid var(--border); }
   .apps-roles { width: 100%; }
   .apps-segments {
     grid-template-columns: repeat(2, minmax(0, 1fr));

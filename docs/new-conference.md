@@ -159,7 +159,11 @@ error until you add the entry — open `data/i18n-state.json` and add:
 
 Then run `--mark-fresh` for each language to fill in the SHA.
 
-## 5. Verify and ship
+## 5. Update the internal dashboard dates
+
+In `src/_data/site.js`, replace `keyDates` and `conferencePhases` with the new edition's dates and stages. `/internal.html` reads both.
+
+## 6. Verify and ship
 
 ```bash
 npx @11ty/eleventy

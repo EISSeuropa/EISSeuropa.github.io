@@ -240,7 +240,25 @@ module.exports = {
   // the releases: { date: "2027-01-31", label: "...", roles: ["staff"] }. This
   // page is public, so nothing confidential. Past dates drop off at build.
   keyDates: [
-    { date: "2026-11-10", label: "ESSC 2027 call for papers deadline" },
+    { date: "2026-11-10", label: "Issue the ESSC 2027 call for papers" },
+    { date: "2027-01-26", label: "Panel, poster and paper proposals due on Indico" },
+    { date: "2027-02-20", label: "Decisions on open panels (organising committee) and on papers for closed panels (chairs)" },
+    { date: "2027-02-27", label: "Final programme sent to participants" },
+    { date: "2027-05-27", label: "Papers due to panel chairs for the Best Paper Prize" },
+    { date: "2027-06-03", label: "Papers due to panel chairs" },
+  ],
+
+  // The stage of the conference year shown on /internal.html, one edition at a
+  // time. Each runs from its `from` date to the next one's, and the last stops
+  // at `until`. `links` name staffLinks by key or label.
+  conferencePhases: [
+    { from: "2026-06-13", label: "Preparing the call for papers", note: "The call is issued by 10 November.", links: ["drive", "Project Manager"] },
+    { from: "2026-11-10", label: "Call for papers open", note: "Proposals are due on Indico by 26 January.", links: ["indico", "groups"] },
+    { from: "2027-01-26", label: "Reviewing proposals", note: "Decisions on panels and papers are due by 20 February.", links: ["indico", "drive"] },
+    { from: "2027-02-20", label: "Finalising the programme", note: "The final programme goes to participants on 27 February.", links: ["indico", "groups"] },
+    { from: "2027-02-27", label: "Programme out, papers next", note: "Papers reach panel chairs by 27 May for the Best Paper Prize, and by 3 June otherwise.", links: ["indico", "groups"] },
+    { from: "2027-06-03", label: "Final preparations", note: "ESSC 2027 opens in Belgrade on 10 June.", links: ["drive", "calendar"] },
+    { from: "2027-06-10", until: "2027-06-11", label: "ESSC 2027 is on", note: "In Belgrade until 11 June.", links: ["indico", "groups"] },
   ],
 
   // The unlisted /internal.html#admin view. Hidden from view, not secret: the
