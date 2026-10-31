@@ -747,10 +747,11 @@ h4 { font-size: var(--fs-lg); }
 .apps-stat a:not([href]) { color: inherit; }
 .apps-stat a[href] { color: inherit; text-decoration: none; }
 .apps-stat a[href]:hover { text-decoration: underline; }
-.apps-stat-issue { background: color-mix(in srgb, hsl(28 95% 52%) 18%, transparent); }
-.apps-stat-critical { background: color-mix(in srgb, hsl(0 80% 50%) 18%, transparent); }
-.apps-stat.apps-stat-issue dd, .apps-stat.apps-stat-critical dd { color: var(--text); }
-.apps-stat.apps-stat-issue dt, .apps-stat.apps-stat-critical dt { color: var(--text); }
+/* Solid fills with fixed text, the same in both themes. */
+.apps-stat.apps-stat-issue { background: hsl(38 95% 55%); }
+.apps-stat.apps-stat-critical { background: hsl(0 72% 42%); }
+.apps-stat.apps-stat-issue dt, .apps-stat.apps-stat-issue dd { color: hsl(222 40% 10%); }
+.apps-stat.apps-stat-critical dt, .apps-stat.apps-stat-critical dd { color: hsl(0 0% 100%); }
 .apps-first { margin: var(--space-6) 0 var(--space-5); }
 .apps-first:not([hidden]) + .apps-stats { margin-top: 0; }
 .apps-first-title { margin: 0 0 var(--space-3); font-size: 1.125rem; font-weight: 600; }
