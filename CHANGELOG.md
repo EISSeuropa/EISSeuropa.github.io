@@ -182,6 +182,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- IT System Monitoring on `/internal.html` shows a coloured dot and a status of Nominal, Issue or Critical for each area, and now reads Google's public status feed for the Workspace services EISS uses.
 - Public pages say "volunteers" throughout, in all three languages, and the navigation reads "Volunteering" ("Bénévolat", "Ehrenamt"). `/internship.html` keeps its address, its "Volunteering and internships" title and the convention de stage details for readers seeking a formal placement.
 - The Guides section of `/internal.html` links "Start here", the volunteer handbook and the "Guides and procedures" folder in Drive, in place of the handbook on GitHub.
 - The privacy policy now covers volunteers (the onboarding Form, their EISS account, the task tracker) and People page profiles, names Google Workspace as a processor, and states the legal basis, retention and transfers for them, in all three languages.
