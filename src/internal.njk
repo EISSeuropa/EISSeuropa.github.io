@@ -404,9 +404,8 @@ eleventyExcludeFromCollections: true
       } else tile.hidden = true;
     }
 
-    // The Today line: failures first for those who see IT monitoring, then a
-    // deadline inside 30 days, then what changed since the last visit. It stays
-    // away when there is nothing to say.
+    // The Today line: failures for those who see IT monitoring, then what changed
+    // since the last visit. It stays away when there is nothing to say.
     var failed = data.health ? data.health.summary.failed : [];
     var since = { tasks: 0, closed: 0 };
     var today = document.querySelector("[data-apps-today]");
@@ -415,10 +414,6 @@ eleventyExcludeFromCollections: true
       var parts = [];
       if (failed.length && (role === "all" || role === "staff")) {
         parts.push(failed.length + (failed.length === 1 ? " automation failing: " : " automations failing: ") + failed.join(", ") + ".");
-      }
-      if (next && daysTo(next.date) <= 30) {
-        var when = new Date(next.date + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "long" });
-        parts.push(next.label + ": " + when + ".");
       }
       var news = [];
       if (since.tasks > 0 && role !== "management" && role !== "board") news.push(since.tasks + (since.tasks === 1 ? " new task" : " new tasks"));
