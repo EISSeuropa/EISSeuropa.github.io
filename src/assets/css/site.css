@@ -9106,7 +9106,7 @@ a.profile-pub-title:hover { text-decoration: underline; }
   outline-offset: -3px;
 }
 .atlas-card { position: absolute; pointer-events: none; max-width: 290px; padding: 12px 15px; border-radius: var(--radius-md); background: var(--surface-strong); border: 1px solid var(--border); box-shadow: var(--shadow-3); -webkit-backdrop-filter: blur(var(--blur-card)); backdrop-filter: blur(var(--blur-card)); opacity: 0; transform: translateY(4px); transition: opacity .12s, transform .12s; z-index: 2; }
-.atlas-card.apps-done-on { opacity: 1; transform: none; }
+.atlas-card.is-on { opacity: 1; transform: none; }
 /* A card pinned by a tap has to be tappable, unlike the hover card, which
    must never eat the pointer it is following (#1431). */
 .atlas-card.is-pinned { pointer-events: auto; }
