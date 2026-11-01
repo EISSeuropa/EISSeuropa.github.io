@@ -78,9 +78,9 @@ issues, and they are the organising group's, not ours.
 
 | Release | Due | Conference work in it |
 | --- | --- | --- |
-| v2.29.0 | 8 Dec 2026 | *Save the date*, due 30 September: the edition settled and entered in `conferences.js` (#1522, done) · *Call for papers*, due 6 November: the parked 2027 page activated (#1524, live, issue still open), the edition share cards generated (#1525), the call published and announced (#1526) · *Selection and notifications*, due 31 December: the prize jury confirmed and the terms published (#1527) |
-| v2.30.0 | 30 Apr 2027 | *Programme and logistics*: programme content once the accepted papers are known (#1528) |
-| v2.31.0 | 25 Jun 2027 | *The conference itself*: the archive rollover and the abstract pull afterwards (#1529), cut two weeks after the conference so the pull has the final Indico data |
+| v2.29.0 | 8 Dec 2026 | *Save the date*, due 30 September: the edition settled and entered in `conferences.js` (#1522, done) · *Call for papers*, due 6 November: the parked 2027 page activated (#1524, live, issue still open), the edition share cards generated (#1525), the call published and announced (#1526), with the prize jury confirmed and the terms published before it goes out (#1527) |
+| v2.30.0 | 30 Apr 2027 | *Selection and notifications*: proposals due on Indico on 26 January 2027, decisions on open panels and on papers for closed panels on 20 February · *Programme and logistics*: the final programme to participants on 27 February, and the programme page once the accepted papers are known (#1528) |
+| v2.31.0 | 25 Jun 2027 | *The conference itself*: papers to panel chairs by 27 May for the Best Paper Prize and by 3 June otherwise, then the archive rollover and the abstract pull afterwards (#1529), cut two weeks after the conference so the pull has the final Indico data |
 
 The phase names are the joint group's vocabulary and the NetSec
 roadmap uses the same five, so a deadline can be named across the two
@@ -390,9 +390,10 @@ release rather than to this document.
   and an entry for the corpus dataset in Recherche Data Gouv, the French
   national research-data platform
   ([#1251](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1251), M).
-- **ESSC 2027, the first three phases** — *save the date*, *call for
-  papers* and *selection and notifications*, five issues with deadlines
-  between 30 September and 31 December. *Save the date* is done (#1522)
+- **ESSC 2027, the first two phases** — *save the date* and *call for
+  papers*, five issues with deadlines between 30 September and early
+  November. *Selection and notifications* moved to v2.30.0, with
+  decisions due on 20 February 2027. *Save the date* is done (#1522)
   and the page is live, which leaves the share cards (#1525), the call
   itself (#1526) and the prize jury (#1527). These are set out in the *ESSC
   2027 preparation* table above rather than repeated here, because the

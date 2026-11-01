@@ -195,6 +195,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- The two team guides on the Guides tab of `/internal.html` are renamed for what they do: Getting started becomes Joining EISS, the set-up guide read once, and Start here becomes How the team works, the page for who owns what and the house rules. Both names had meant "begin here".
 - Daily tasks move from the Project Manager to the Tasks tabs of EISS Google Chat spaces. `/internal.html` swaps the Project Manager tile for a Chat tile, and the privacy notice says where a volunteer's name and tasks now appear, in all three languages.
 - The staff task tracker becomes the Project Manager, with project and group filters, task links, a conference runbook, a view of open website tasks and a Monday digest of overdue and upcoming tasks. Its notification emails are now personal letters.
 - `indico.eiss-europa.com` loads faster on a first visit. The server now compresses its scripts and styles and tells browsers to keep its versioned files, which cuts the 23 main files from 8.06 MB to 2.31 MB. With an empty cache the page appeared in about 1.2 s across four timed loads, against about 5.8 s in one earlier load measured in a different browser set-up.
