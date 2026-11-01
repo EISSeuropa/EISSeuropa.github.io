@@ -2,7 +2,7 @@
 layout: base.njk
 permalink: /internship.fr.html
 title: Bénévolat et stages
-description: Contribuez à l'EISS à distance, environ un jour par semaine au sein de l'une des trois promotions de huit semaines de l'année, et repartez avec une publication qui porte votre nom. Ouvert aux étudiants comme aux jeunes diplômés. Une convention de stage est possible si votre formation l'exige.
+description: Contribuez à l'EISS à distance, environ un jour par semaine pendant huit semaines, et repartez avec une publication qui porte votre nom. Trois promotions par an, ouvertes aux étudiants et aux jeunes diplômés.
 navKey: internship
 lang: fr
 status: beta
@@ -12,112 +12,83 @@ alternates:
   de: /internship.de.html
 ---
 {% from "icons.njk" import icon %}
+{% set open = false %}{% for c in cohorts %}{% if not open and (c.callOpens | daysUntil) <= 0 and (c.applyBy | daysUntil) >= 0 %}{% set open = c %}{% endif %}{% endfor %}
 
 <header class="page-header">
   <div class="container">
     <span class="eyebrow">Nous rejoindre</span>
     <h1>Bénévolat et stages</h1>
     <p class="page-lead">
-      L'EISS fonctionne entièrement grâce à des bénévoles. Contribuez à distance, à raison d'environ
-      un jour par semaine sur huit semaines, et repartez avec un travail qui porte votre nom : un
-      billet sous votre signature, ou une contribution créditée à l'Anthologie. Ouvert aussi bien aux
-      étudiants qu'aux jeunes diplômés.
+      L'EISS fonctionne entièrement grâce à des bénévoles. Rejoignez une promotion, travaillez à
+      distance environ un jour par semaine pendant huit semaines, et repartez avec un travail qui porte
+      votre nom.
     </p>
-    {% for c in cohorts %}{% if (c.callOpens | daysUntil) <= 0 and (c.applyBy | daysUntil) >= 0 %}
-    <p class="page-lead">
-      <strong>Les candidatures pour {{ c.phrase.fr }} sont ouvertes jusqu'au
-      {{ c.applyBy | newsDate("fr") }}.</strong> <a href="#intakes">Voir les dates</a>.
+    {% if open %}
+    <p style="margin-top: var(--space-5);">
+      <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}?subject=Promotion%20{{ open.name.fr }}">
+        {{ icon("mail") }} Candidatez pour {{ open.phrase.fr }} jusqu'au {{ open.applyBy | newsDate("fr") }}
+      </a>
     </p>
-    {% endif %}{% endfor %}
+    {% endif %}
   </div>
 </header>
 
 <section class="section">
   <div class="container">
-    <h2>Ce que vous y gagnez</h2>
+    <h2 id="intakes">Quand commencer</h2>
     <p style="max-width: 44rem;">
-      Ces quatre points sont convenus dès le départ et inscrits dans vos objectifs.
+      Trois promotions par an, de quatre personnes au plus. Aucune mission ne commence entre mai et
+      la conférence annuelle de juin.
     </p>
 
     <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-block: var(--space-6);">
+      {% for c in cohorts %}{% if (c.end | daysUntil) >= 0 %}
       <article class="tile">
-        <div class="tile-icon" aria-hidden="true">{{ icon("file-text") }}</div>
-        <h3>Une publication qui porte votre nom</h3>
-        <p>
-          Si votre axe donne lieu à un billet, il paraît sous votre propre signature, comme
-          composante définie de votre mission.
-        </p>
+        <h3>{{ c.name.fr }}</h3>
+        <p><strong>{{ c.start | dateRange(c.end, "fr") }}</strong></p>
+        <p>{{ c.focus.fr }}</p>
+        {% if (c.callOpens | daysUntil) > 0 %}
+        <p class="muted">Candidatures : {{ c.callOpens | dateRange(c.applyBy, "fr") }}.</p>
+        {% elif (c.applyBy | daysUntil) >= 0 %}
+        <p><strong>Candidatures ouvertes jusqu'au {{ c.applyBy | newsDate("fr") }}.</strong></p>
+        {% else %}
+        <p class="muted">Candidatures closes.</p>
+        {% endif %}
       </article>
-      <article class="tile">
-        <div class="tile-icon" aria-hidden="true">{{ icon("book-open") }}</div>
-        <h3>Crédité nominativement dans tous les cas</h3>
-        <p>
-          L'indexation et le travail sur les données ne donnent lieu à aucune signature. Ils sont
-          crédités nominativement sur cette page et dans le journal des modifications du projet,
-          avec un lien vers ce que vous avez fait.
-        </p>
-      </article>
-      <article class="tile">
-        <div class="tile-icon" aria-hidden="true">{{ icon("users") }}</div>
-        <h3>Un échange avec le bureau</h3>
-        <p>
-          Une demi-heure avec un membre du bureau, consacrée à vos propres intérêts de recherche,
-          programmée dans vos premières semaines.
-        </p>
-      </article>
-      <article class="tile">
-        <div class="tile-icon" aria-hidden="true">{{ icon("calendar") }}</div>
-        <h3>Trois rendez-vous sur les huit semaines</h3>
-        <p>
-          Un accueil la première semaine, un point la quatrième, et un entretien de fin de mission
-          la huitième, accompagné d'un court questionnaire de retour.
-        </p>
-      </article>
+      {% endif %}{% endfor %}
     </div>
+  </div>
+</section>
 
+<section class="section">
+  <div class="container">
     <h2>Sur quoi vous travailleriez</h2>
     <p style="max-width: 44rem;">
-      Nous adaptons cela à ce qui vous intéresse. La plupart des bénévoles choisissent l'un de ces
-      axes, et beaucoup passent de l'un à l'autre. Tout ce qui est ouvert figure sur la
+      Un axe chacun, choisi selon vos centres d'intérêt. Les tâches ouvertes sont sur la
       <a href="{{ site.helpWantedUrl }}">liste « help wanted »</a>.
     </p>
 
     <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-block: var(--space-6);">
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("search") }}</div>
-        <h3>Indexation du corpus et des résumés</h3>
-        <p>
-          Retrouver les résumés des communications présentées lors des éditions antérieures, les
-          vérifier au regard du programme et les intégrer à l'Anthologie pour compléter le relevé.
-        </p>
-        <p class="muted"><strong>Vous produisez :</strong> un lot de résumés retrouvés, crédité à votre nom.</p>
+        <h3>Retrouver des résumés</h3>
+        <p>Rechercher les communications des conférences passées et les ajouter à l'Anthologie.</p>
       </article>
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("file-text") }}</div>
-        <h3>Rédaction d'un billet pour Belvédère</h3>
-        <p>
-          Un texte court et signé sur une question de sécurité européenne, sur un sujet de votre
-          choix. Il est relu avant sa parution.
-        </p>
-        <p class="muted"><strong>Vous produisez :</strong> un billet sur <a href="/blog.fr.html">Belvédère – le blog de l'EISS</a>, sous votre propre signature.</p>
+        <h3>Écrire pour Belvédère</h3>
+        <p>Un court billet signé sur le blog de l'EISS, sur une question de sécurité européenne de votre choix.</p>
+        <p class="muted"><a href="/blog.fr.html">Lire Belvédère</a></p>
       </article>
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("settings") }}</div>
-        <h3>Amélioration de la base de données</h3>
-        <p>
-          Consolider les données de l'Anthologie : noms et affiliations des auteurs, liens vers les
-          versions publiées, et les liens que l'Atlas trace entre communications et personnes.
-        </p>
-        <p class="muted"><strong>Vous produisez :</strong> un jeu de données vérifié dont le site se sert, crédité à votre nom.</p>
+        <h3>Améliorer les données</h3>
+        <p>Noms d'auteurs, affiliations et liens vers les versions publiées, derrière l'Anthologie et l'Atlas.</p>
       </article>
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("users") }}</div>
-        <h3>Préparation de la Conférence annuelle</h3>
-        <p>
-          Aider l'équipe à préparer notre événement phare, de l'appel à communications jusqu'au
-          programme. Tout le monde ici en prend sa part.
-        </p>
-        <p class="muted"><strong>Vous produisez :</strong> votre part de la conférence, créditée à votre nom. Saisonnier, et plus intense au printemps.</p>
+        <h3>La conférence annuelle</h3>
+        <p>Programme et organisation, de l'appel à communications jusqu'à l'événement. La période la plus chargée est le printemps.</p>
       </article>
     </div>
   </div>
@@ -125,87 +96,33 @@ alternates:
 
 <section class="section">
   <div class="container">
-    <h2>Comment la mission se déroule</h2>
-    <p style="max-width: 44rem;">
-      Les conditions, annoncées à l'avance.
-    </p>
+    <h2>Les conditions</h2>
 
     <dl class="definition-list">
       <div>
-        <dt>Environ un jour par semaine, sur huit semaines</dt>
+        <dt>Votre nom sur votre travail</dt>
         <dd>
-          Nous convenons du rythme au départ, et vous pouvez le modifier selon vos cours ou votre
-          emploi. Vous ne nous devez aucun minimum et vous êtes libre d'arrêter plus tôt.
+          Un billet paraît sous votre signature. Le travail d'indexation et sur les données est crédité nominativement sur cette page et dans le journal des modifications. Une seule production publiable par personne, relue avant parution. Nous pouvons refuser un texte, sans conséquence sur le crédit du reste de votre travail.
         </dd>
       </div>
       <div>
-        <dt>Non rémunéré</dt>
+        <dt>Quelqu'un à qui s'adresser</dt>
         <dd>
-          L'EISS n'a aucun personnel salarié. Tout le monde ici est bénévole, le bureau compris. Les
-          frais convenus avec nous au préalable sont remboursés sur justificatifs, et rien d'autre
-          n'est versé.
+          Un interlocuteur désigné dès le premier jour, des rendez-vous la première, la quatrième et la huitième semaine, et une demi-heure avec un membre du bureau sur vos propres recherches. Personne ne contrôle vos heures.
         </dd>
       </div>
       <div>
-        <dt>Le bénévolat par défaut</dt>
+        <dt>Non rémunéré, et libre d'arrêter</dt>
         <dd>
-          La plupart des personnes nous rejoignent comme bénévoles. Il n'y a pas de contrat, vous
-          choisissez votre axe, vous fixez votre propre rythme, et vous pouvez arrêter à tout moment
-          sans avoir à vous en expliquer.
+          Personne n'est rémunéré à l'EISS, bureau compris. Les frais convenus à l'avance sont remboursés sur justificatifs. Il n'y a pas de contrat et vous pouvez arrêter à tout moment.
         </dd>
       </div>
       <div>
-        <dt>Une convention de stage si votre formation l'exige</dt>
+        <dt>Une <em>convention de stage</em> si besoin</dt>
         <dd>
-          Le droit français ne qualifie de stage qu'une période intégrée à un cursus comportant au
-          moins 200 heures d'enseignement par an. Si c'est le cas du vôtre, nous signons la
-          convention tripartite avec vous et votre établissement, et nous désignons un tuteur de
-          stage. Dites-le-nous tôt : les démarches passent par votre université.
+          Nous en signons une lorsque votre formation comporte au moins 200 heures d'enseignement par an, et désignons un <em>tuteur de stage</em>. Prévenez-nous tôt : la procédure passe par votre université.
         </dd>
       </div>
-      <div>
-        <dt>Quelqu'un à qui demander</dt>
-        <dd>
-          Vous disposez d'un interlocuteur désigné dès le premier jour, ainsi que de trois
-          rendez-vous programmés. Entre eux, personne ici ne comptabilise vos heures ni ne réclame
-          de compte rendu.
-        </dd>
-      </div>
-      <div>
-        <dt>Une publication</dt>
-        <dd>
-          Une production publiable par personne. Elle est relue avant parution, et nous pouvons
-          décider de ne pas la publier. Cela ne retire rien au crédit de vos autres travaux.
-        </dd>
-      </div>
-    </dl>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <h2 id="intakes">Quand commencer</h2>
-    <p style="max-width: 44rem;">
-      Les bénévoles commencent ensemble, au sein de l'une des trois promotions de l'année, de quatre
-      personnes au plus. Aucune mission ne commence entre mai et la conférence annuelle de juin.
-    </p>
-
-    <dl class="definition-list">
-      {% for c in cohorts %}{% if (c.end | daysUntil) >= 0 %}
-      <div>
-        <dt>{{ c.name.fr }} · du {{ c.start | newsDate("fr") }} au {{ c.end | newsDate("fr") }}</dt>
-        <dd>
-          {{ c.focus.fr }}
-          {% if (c.callOpens | daysUntil) > 0 %}
-          Candidatures du {{ c.callOpens | newsDate("fr") }} au {{ c.applyBy | newsDate("fr") }}.
-          {% elif (c.applyBy | daysUntil) >= 0 %}
-          <strong>Candidatures ouvertes jusqu'au {{ c.applyBy | newsDate("fr") }}.</strong>
-          {% else %}
-          Les candidatures pour cette promotion sont closes.
-          {% endif %}
-        </dd>
-      </div>
-      {% endif %}{% endfor %}
     </dl>
   </div>
 </section>
@@ -236,68 +153,18 @@ alternates:
 
 <section class="section-tight">
   <div class="container">
-    <article class="card" style="display: grid; gap: var(--space-5); grid-template-columns: 1fr; padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <div>
-        <div class="featured-eyebrow">Nous contacter</div>
-        <h2 style="margin-bottom: var(--space-3);">Écrivez-nous</h2>
-        <p class="muted">
-          Envoyez un court message et un CV à
-          <a href="mailto:{{ site.contactEmail }}?subject=B%C3%A9n%C3%A9volat">{{ site.contactEmail }}</a>,
-          en nous indiquant quelle promotion et lequel des quatre axes ci-dessus vous attirent, et de
-          combien de temps vous disposez. Nous répondons à chacun dans la semaine qui suit la clôture. Signalez-nous si vous avez besoin d'une <em>convention de stage</em>.
-        </p>
-        <p style="margin-top: var(--space-4);">
-          <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}?subject=B%C3%A9n%C3%A9volat">
-            {{ icon("mail") }} Écrivez-nous
-          </a>
-        </p>
-      </div>
-    </article>
-  </div>
-</section>
-
-<section class="section-tight">
-  <div class="container">
     <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <div class="prose" style="margin-inline: 0;">
-        <div class="featured-eyebrow">Vous avez déjà commencé ?</div>
-        <h2>Commencez ici</h2>
-        <p>
-          Six points pour votre première semaine. Si une étape ne
-          fonctionne pas, dites-le-nous et nous la réglerons.
-        </p>
-        <ol>
-          <li>
-            <strong>Vous avez un interlocuteur désigné.</strong> Il vous a écrit à votre arrivée.
-            Posez-lui toutes vos questions, y compris celle de savoir si une tâche vaut la peine
-            d'être faite.
-          </li>
-          <li>
-            <strong>Envoyez-nous votre identifiant GitHub</strong>, pour que nous vous ajoutions au
-            dépôt. Vous n'avez jamais utilisé GitHub ? Dites-le. Nous le mettons en place avec
-            vous, et ce n'est un prérequis pour rien.
-          </li>
-          <li>
-            <strong>Inscrivez les trois rendez-vous à votre agenda.</strong> L'accueil la première
-            semaine, le point la quatrième et l'entretien de fin de mission la huitième. Nous envoyons les invitations.
-          </li>
-          <li>
-            <strong>Choisissez une tâche sur la
-            <a href="{{ site.helpWantedUrl }}">liste « help wanted »</a>.</strong> Signalez en
-            commentaire que vous la prenez. La rendre plus tard ne pose aucun problème et ne compte
-            contre rien.
-          </li>
-          <li>
-            <strong>Lisez <a href="{{ site.handbookUrl }}">le guide</a> avant votre première
-            tâche.</strong> Il précise ce que chaque travail demande réellement, et où se situent
-            les jugements à porter. Il n'existe qu'en anglais.
-          </li>
-          <li>
-            <strong>Lisez le style de la maison avant d'écrire.</strong> Un anglais britannique, et
-            la concision plutôt que l'ornement.
-          </li>
-        </ol>
-      </div>
+      <h2 style="margin-bottom: var(--space-3);">Écrivez-nous</h2>
+      <p class="muted">
+        Envoyez un court message et un CV à
+        <a href="mailto:{{ site.contactEmail }}?subject=B%C3%A9n%C3%A9volat">{{ site.contactEmail }}</a>,
+        en indiquant la promotion et l'axe qui vous intéressent. Nous répondons à chacun dans la
+        semaine qui suit la clôture.
+      </p>
+      <p class="muted" style="margin-top: var(--space-4);">
+        Déjà bénévole ? Votre première semaine est décrite dans <a href="{{ site.handbookUrl }}">le guide</a>
+        (en anglais).
+      </p>
     </article>
   </div>
 </section>

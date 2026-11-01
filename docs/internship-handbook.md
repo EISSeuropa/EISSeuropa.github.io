@@ -3,8 +3,7 @@
 For people who have joined the EISS as a volunteer or on a
 *convention de stage*, and want to know how the work is actually done.
 [/internship.html](https://eiss-europa.com/internship.html) covers the
-terms of the placement, what you get out of it, and the shape of the
-year. This file covers everything operational, and it is the one to
+cohort dates, the tracks and the terms of the placement. This file covers everything operational, and it is the one to
 come back to once the induction call is over.
 
 English only. Rule §1 of `CLAUDE.md` forbids machine translation, and
