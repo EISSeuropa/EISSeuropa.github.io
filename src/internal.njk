@@ -97,7 +97,10 @@ eleventyExcludeFromCollections: true
       <div class="apps-today-clip">
         <div class="apps-today-box">
           <p class="apps-today-text" data-apps-today-text></p>
-          <ul class="apps-done" data-apps-done role="list"></ul>
+          <div class="apps-done-stage" data-apps-done-stage hidden>
+            <ul class="apps-done" data-apps-done role="list" aria-label="Release issues closed since your last visit"></ul>
+            <button type="button" class="apps-done-pause" data-apps-done-pause aria-pressed="false" aria-label="Pause the closed issues" hidden><span class="apps-done-hold">{{ icon("pause") }}</span><span class="apps-done-play">{{ icon("play") }}</span></button>
+          </div>
         </div>
       </div>
     </div>
@@ -419,51 +422,88 @@ eleventyExcludeFromCollections: true
     var todayText = document.querySelector("[data-apps-today-text]");
     var doneList = document.querySelector("[data-apps-done]");
 
-    // Lines fold open and shut on a grid row (CSS), so their neighbours glide
-    // rather than jump. Without motion they simply show and hide.
-    function reveal(el, show, delay) {
+    // The box folds open and shut on a grid row (CSS), so what sits below it
+    // glides rather than jumps. Without motion it simply shows and hides.
+    function reveal(el, show) {
       if (show) {
         if (!el.hidden && !el.classList.contains("is-out")) return;
-        el.style.transitionDelay = (delay || 0) + "ms";
-        el.style.setProperty("--apps-delay", (delay || 0) + "ms");
         if (el.hidden) { el.classList.add("is-out"); el.hidden = false; void el.offsetWidth; }
         el.classList.remove("is-out");
       } else {
         if (el.hidden || el.classList.contains("is-out")) return;
-        el.style.transitionDelay = "0ms";
-        el.style.setProperty("--apps-delay", "0ms");
-        if (calm) { el.hidden = true; if (el.parentNode === doneList) el.remove(); return; }
+        if (calm) { el.hidden = true; return; }
         el.classList.add("is-out");
         el.addEventListener("transitionend", function end(e) {
           if (e.target !== el || e.propertyName !== "opacity") return;
           el.removeEventListener("transitionend", end);
-          if (!el.classList.contains("is-out")) return;
-          el.hidden = true;
-          if (el.parentNode === doneList) el.remove();
+          if (el.classList.contains("is-out")) el.hidden = true;
         });
       }
     }
+
+    // Closed issues roll through one at a time, like end credits, and loop.
+    // Hovering, focusing a link or the pause button holds the roll (RGAA 13.8:
+    // motion past five seconds needs a pause control). Tabbing to a link brings
+    // its line up. Without motion every line stays in view.
+    var stage = document.querySelector("[data-apps-done-stage]");
+    var pauseBtn = document.querySelector("[data-apps-done-pause]");
+    var roll = { key: null, i: 0, hover: false, focus: false, held: false };
     var CHECK = '<span class="apps-done-box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>';
+    function lines() { return [].slice.call(doneList.children); }
+    function go(k) {
+      var ls = lines(), cur = ls[roll.i], next = ls[k];
+      roll.i = k;
+      if (cur && cur !== next) { cur.classList.remove("apps-done-on"); cur.classList.add("apps-done-past"); }
+      if (next) { next.classList.remove("apps-done-past", "apps-done-reset"); next.classList.add("apps-done-on"); }
+    }
+    // A line that has drifted out goes back below, unseen, for its next turn.
+    doneList.addEventListener("transitionend", function (e) {
+      var li = e.target;
+      if (li.parentNode !== doneList || e.propertyName !== "opacity" || !li.classList.contains("apps-done-past")) return;
+      li.classList.add("apps-done-reset");
+      li.classList.remove("apps-done-past");
+      void li.offsetWidth;
+      li.classList.remove("apps-done-reset");
+    });
+    setInterval(function () {
+      var n = lines().length;
+      if (calm || n < 2 || roll.hover || roll.focus || roll.held || document.hidden) return;
+      go((roll.i + 1) % n);
+    }, 3200);
+    stage.addEventListener("pointerenter", function () { roll.hover = true; });
+    stage.addEventListener("pointerleave", function () { roll.hover = false; });
+    doneList.addEventListener("focusin", function (e) {
+      roll.focus = true;
+      var k = lines().indexOf(e.target.closest("li"));
+      if (k > -1 && k !== roll.i) go(k);
+    });
+    doneList.addEventListener("focusout", function (e) { roll.focus = doneList.contains(e.relatedTarget); });
+    pauseBtn.addEventListener("click", function () {
+      roll.held = !roll.held;
+      pauseBtn.setAttribute("aria-pressed", String(roll.held));
+    });
     function renderDone(items) {
-      var want = items.map(function (x) { return String(x.n); });
-      [].slice.call(doneList.children).forEach(function (li) {
-        if (want.indexOf(li.getAttribute("data-n")) < 0) reveal(li, false);
+      var key = items.map(function (x) { return x.n; }).join();
+      if (key === roll.key) return;
+      roll.key = key;
+      roll.i = 0;
+      doneList.textContent = "";
+      items.forEach(function (x) {
+        var li = document.createElement("li");
+        li.className = "apps-done-item";
+        li.innerHTML = CHECK + '<a><span class="sr-only">Closed: </span><span class="apps-done-num"></span> <span class="apps-done-title"></span></a>';
+        var a = li.querySelector("a");
+        a.href = x.url;
+        a.title = x.title;
+        li.querySelector(".apps-done-num").textContent = "#" + x.n;
+        li.querySelector(".apps-done-title").textContent = x.title;
+        doneList.appendChild(li);
       });
-      items.forEach(function (x, i) {
-        var li = doneList.querySelector('[data-n="' + x.n + '"]');
-        if (!li) {
-          li = document.createElement("li");
-          li.className = "apps-done-item";
-          li.setAttribute("data-n", x.n);
-          li.hidden = true;
-          li.innerHTML = '<div class="apps-done-clip"><div class="apps-done-row">' + CHECK + '<a><span class="sr-only">Closed: </span><span class="apps-done-num"></span> <span class="apps-done-title"></span></a></div></div>';
-          li.querySelector("a").href = x.url;
-          li.querySelector(".apps-done-num").textContent = "#" + x.n;
-          li.querySelector(".apps-done-title").textContent = x.title;
-          doneList.appendChild(li);
-        }
-        reveal(li, true, calm ? 0 : 120 + i * 90);
-      });
+      stage.hidden = !items.length;
+      doneList.classList.toggle("apps-done-static", calm);
+      pauseBtn.hidden = calm || items.length < 2;
+      // The first line rises in once the box has opened.
+      if (items.length && !calm) setTimeout(function () { if (roll.key === key) go(0); }, 250);
     }
     function renderToday() {
       var role = roleSelect.value;
@@ -477,7 +517,7 @@ eleventyExcludeFromCollections: true
       if (since.closed > 0 && staff) news.push(since.closed + " more release " + (since.closed === 1 ? "issue" : "issues") + " closed");
       if (news.length) parts.push("Since your last visit: " + news.join(", ") + ".");
       if (parts.length) todayText.textContent = parts.join(" ");
-      // The box opens first, so the lines inside it are laid out and can fade in.
+      // The box opens first, so the first line can rise into it.
       reveal(today, parts.length > 0);
       renderDone(staff ? since.done : []);
     }

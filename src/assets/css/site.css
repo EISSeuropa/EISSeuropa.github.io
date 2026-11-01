@@ -769,31 +769,42 @@ h4 { font-size: var(--fs-lg); }
   from { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 70%, transparent); }
   to { box-shadow: 0 0 0 0.5rem transparent; }
 }
-/* The Today box and its closed-issue lines fold on a grid row: 1fr open, 0fr shut (.is-out). */
-.apps-today, .apps-done-item { display: grid; grid-template-rows: 1fr; }
-.apps-today { margin: 0 0 var(--space-4); }
-.apps-today[hidden], .apps-done-item[hidden] { display: none; }
-.apps-today-clip, .apps-done-clip { min-height: 0; overflow: hidden; }
+/* The Today box folds on a grid row: 1fr open, 0fr shut (.is-out). */
+.apps-today { display: grid; grid-template-rows: 1fr; margin: 0 0 var(--space-4); }
+.apps-today[hidden] { display: none; }
+.apps-today-clip { min-height: 0; overflow: hidden; }
 .apps-today-box { padding: var(--space-3) var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elev); }
 .apps-today-text { margin: 0; }
-.apps-done { margin: 0; padding: 0; list-style: none; }
-.apps-done-row { display: flex; align-items: flex-start; gap: var(--space-3); padding-top: var(--space-2); }
-.apps-done-item:first-child .apps-done-row { padding-top: var(--space-3); }
-.apps-done-row a { color: var(--text); text-decoration: none; }
-.apps-done-row a:hover { text-decoration: underline; }
+/* Closed issues roll through one at a time, like end credits: each rises in,
+   holds, then drifts up and fades as the next arrives (.apps-done-on, then .apps-done-past). */
+.apps-done-stage { display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-3); }
+.apps-done-stage[hidden] { display: none; }
+.apps-done { position: relative; flex: 1; min-width: 0; height: 1.75rem; margin: 0; padding: 0; list-style: none; overflow: hidden; }
+.apps-done-item { position: absolute; inset: 0; display: flex; align-items: center; gap: var(--space-3); opacity: 0; transform: translateY(100%); pointer-events: none; }
+.apps-done-item.apps-done-on { opacity: 1; transform: none; pointer-events: auto; }
+.apps-done-item.apps-done-past { opacity: 0; transform: translateY(-100%); }
+.apps-done-item.apps-done-reset { transition: none !important; }
+.apps-done-item a { flex: 1; min-width: 0; overflow: hidden; color: var(--text); text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
+.apps-done-item a:hover { text-decoration: underline; }
 .apps-done-num { color: var(--text-muted); font-variant-numeric: tabular-nums; }
 .apps-done-title { overflow-wrap: anywhere; }
-.apps-done-box { flex: none; display: grid; place-items: center; width: 1.125rem; height: 1.125rem; margin-top: 0.2em; border-radius: var(--radius-xs); background: var(--accent); }
+.apps-done-box { flex: none; display: grid; place-items: center; width: 1.125rem; height: 1.125rem; border-radius: var(--radius-xs); background: var(--accent); }
 .apps-done-box svg { width: 0.875rem; height: 0.875rem; fill: none; stroke: var(--bg); stroke-width: 2.25; stroke-linecap: round; stroke-linejoin: round; }
+.apps-done-pause { flex: none; display: grid; place-items: center; width: 2rem; height: 2rem; padding: 0; border: 1px solid var(--border); border-radius: var(--radius-full); background: none; color: var(--text-muted); cursor: pointer; }
+.apps-done-pause:hover { color: var(--text); border-color: var(--border-strong); }
+.apps-done-pause svg { width: 0.875rem; height: 0.875rem; fill: currentColor; }
+.apps-done-pause .apps-done-play, .apps-done-pause[aria-pressed="true"] .apps-done-hold { display: none; }
+.apps-done-pause[aria-pressed="true"] .apps-done-play { display: inline; }
+/* Without motion: a plain list, every line in view. */
+.apps-done.apps-done-static { height: auto; overflow: visible; }
+.apps-done.apps-done-static .apps-done-item { position: static; padding-top: var(--space-1); opacity: 1; transform: none; pointer-events: auto; }
 @media (prefers-reduced-motion: no-preference) {
-  .apps-today, .apps-done-item { transition: grid-template-rows var(--motion-slow) var(--ease-out), opacity var(--motion-slow) var(--ease-out), margin var(--motion-slow) var(--ease-out); }
-  .apps-done-item .apps-done-row { transition: transform var(--motion-slow) var(--ease-out) var(--apps-delay, 0ms); }
-  .apps-done-item.is-out .apps-done-row { transform: translateY(-0.375rem); }
-  /* The tick draws itself once the line is in. */
-  .apps-done-item:not(.is-out) .apps-done-box path { stroke-dasharray: 16; stroke-dashoffset: 16; animation: apps-done-tick var(--motion-slow) var(--ease-out) forwards; animation-delay: calc(var(--apps-delay, 0ms) + var(--motion-base)); }
+  .apps-today { transition: grid-template-rows var(--motion-slow) var(--ease-out), opacity var(--motion-slow) var(--ease-out), margin var(--motion-slow) var(--ease-out); }
+  .apps-done-item { transition: opacity 700ms var(--ease-in-out), transform 700ms var(--ease-in-out); }
+  /* The tick draws itself each time its line comes up. */
+  .apps-done-item.apps-done-on .apps-done-box path { stroke-dasharray: 16; stroke-dashoffset: 16; animation: apps-done-tick var(--motion-slow) var(--ease-out) 450ms forwards; }
 }
-.apps-today.is-out, .apps-done-item.is-out { grid-template-rows: 0fr; opacity: 0; }
-.apps-today.is-out { margin-bottom: 0; }
+.apps-today.is-out { grid-template-rows: 0fr; opacity: 0; margin-bottom: 0; }
 @keyframes apps-done-tick { to { stroke-dashoffset: 0; } }
 .apps-phase { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); margin: 0 0 var(--space-7); padding: var(--space-4) var(--space-5); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elev); }
 .apps-phase-title { margin: 0 0 var(--space-1); font-size: 1.125rem; }
@@ -9095,7 +9106,7 @@ a.profile-pub-title:hover { text-decoration: underline; }
   outline-offset: -3px;
 }
 .atlas-card { position: absolute; pointer-events: none; max-width: 290px; padding: 12px 15px; border-radius: var(--radius-md); background: var(--surface-strong); border: 1px solid var(--border); box-shadow: var(--shadow-3); -webkit-backdrop-filter: blur(var(--blur-card)); backdrop-filter: blur(var(--blur-card)); opacity: 0; transform: translateY(4px); transition: opacity .12s, transform .12s; z-index: 2; }
-.atlas-card.is-on { opacity: 1; transform: none; }
+.atlas-card.apps-done-on { opacity: 1; transform: none; }
 /* A card pinned by a tap has to be tappable, unlike the hover card, which
    must never eat the pointer it is following (#1431). */
 .atlas-card.is-pinned { pointer-events: auto; }
