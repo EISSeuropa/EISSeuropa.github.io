@@ -755,6 +755,11 @@ h4 { font-size: var(--fs-lg); }
 .apps-stat-level { display: flex; align-items: center; gap: var(--space-2); }
 /* The status colours would vanish on the tile's own fill. */
 .apps-stat.apps-stat-issue .apps-dot, .apps-stat.apps-stat-critical .apps-dot { background: currentColor; box-shadow: none; animation: none; }
+/* What moved since the last visit, beside a strip figure. */
+.apps-delta { display: inline-block; margin-inline-start: var(--space-2); padding: 0.125rem 0.5rem; border-radius: var(--radius-full); background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); font-size: 0.8125rem; font-weight: 600; line-height: 1.4; vertical-align: 0.3em; white-space: nowrap; }
+@media (prefers-reduced-motion: no-preference) {
+  .apps-delta { animation: apps-rise 500ms var(--ease-out) 1s both; }
+}
 .apps-first { margin: var(--space-6) 0 var(--space-5); }
 .apps-first:not([hidden]) + .apps-stats { margin-top: 0; }
 .apps-first-title { margin: 0 0 var(--space-3); font-size: 1.125rem; font-weight: 600; }
@@ -1087,6 +1092,14 @@ h4 { font-size: var(--fs-lg); }
   height: 0.5rem;
   accent-color: var(--accent);
 }
+/* The stretch closed since the last visit, in a lighter shade over the bar. */
+.apps-progress-wrap { position: relative; }
+.apps-progress-new { position: absolute; top: 0; bottom: 0; border-radius: var(--radius-full); background: color-mix(in srgb, var(--accent) 45%, white); transform-origin: left; }
+.apps-progress-new[hidden] { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .apps-progress-new { animation: apps-progress-grow 900ms var(--ease-out) 300ms both; }
+}
+@keyframes apps-progress-grow { from { transform: scaleX(0); } }
 .apps-counts,
 .apps-dates {
   display: grid;
