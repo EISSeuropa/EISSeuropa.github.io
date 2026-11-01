@@ -227,8 +227,8 @@ module.exports = {
 
   // The guides on /internal.html. Roles work as in staffLinks.
   guideLinks: [
-    { href: "https://docs.google.com/document/d/1nnUBgds6CUM5fLHmhDwB1osklx-99lXzKv2OhPF0SXo/edit", label: "Getting started", icon: "book-open", roles: ["staff", "management", "board", "volunteer"] },
-    { href: "https://docs.google.com/document/d/1ETe9RCqFLRExvyRCouYKHyIl0xEZNXJ-aUIMZNpwue4/edit", label: "Start here", icon: "file-text", roles: ["staff", "management", "volunteer"] },
+    { href: "https://docs.google.com/document/d/1nnUBgds6CUM5fLHmhDwB1osklx-99lXzKv2OhPF0SXo/edit", label: "Joining EISS", icon: "book-open", roles: ["staff", "management", "board", "volunteer"] },
+    { href: "https://docs.google.com/document/d/1ETe9RCqFLRExvyRCouYKHyIl0xEZNXJ-aUIMZNpwue4/edit", label: "How the team works", icon: "file-text", roles: ["staff", "management", "volunteer"] },
     { href: "https://docs.google.com/document/d/1c3_KX7Hm-57OQZh3soo-JCQ_HaaEekqwlhXMW0C42Xs/edit", label: "Volunteer handbook", icon: "graduation-cap", roles: ["staff", "volunteer"] },
     { href: "https://docs.google.com/document/d/1v1XXmCYhJoFn8gJopP0vIXKc6m37ecjSDXM2F11ykNk/edit", label: "Staff handbook", icon: "file-text", roles: ["staff", "management"] },
     { href: "https://github.com/EISSeuropa/EISSeuropa.github.io/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22", label: "Website tasks", icon: "git-branch", roles: ["staff", "volunteer"] },

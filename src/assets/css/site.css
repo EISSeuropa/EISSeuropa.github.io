@@ -1162,6 +1162,34 @@ h4 { font-size: var(--fs-lg); }
 .apps-progress-wrap { position: relative; }
 .apps-progress-new { position: absolute; top: 0; bottom: 0; border-radius: var(--radius-full); background: color-mix(in srgb, var(--accent) 45%, white); transform-origin: left; }
 .apps-progress-new[hidden] { display: none; }
+/* The release's pace: closures per day over 30 days, under the progress bar.
+   Bars: <= 24px, 4px rounded tops, square at the baseline, 2px gaps. */
+.apps-pace { --apps-pace-bar: var(--accent); margin-top: var(--space-4); }
+[data-theme="dark"] .apps-pace { --apps-pace-bar: hsl(203 100% 46%); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .apps-pace { --apps-pace-bar: hsl(203 100% 46%); }
+}
+.apps-pace[hidden] { display: none; }
+.apps-pace-summary { margin: 0 0 var(--space-3); font-size: 0.875rem; }
+.apps-pace-plot { position: relative; }
+.apps-pace-bars { display: flex; align-items: flex-end; gap: 2px; height: 3rem; padding-top: 1rem; border-bottom: 1px solid var(--border); }
+.apps-pace-bar { position: relative; flex: 1; max-width: 24px; height: calc(var(--h) * 100%); min-height: 0; border-radius: 4px 4px 0 0; background: var(--apps-pace-bar); }
+.apps-pace-bar:hover { opacity: 0.75; }
+.apps-pace-zero { height: 100%; background: none; }
+.apps-pace-peak { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); padding-bottom: 2px; color: var(--text-muted); font-size: 0.6875rem; font-variant-numeric: tabular-nums; line-height: 1; }
+.apps-pace-tip { position: absolute; bottom: calc(100% + var(--space-1)); z-index: 2; margin: 0; padding: var(--space-1) var(--space-2); border: 1px solid var(--border); border-radius: var(--radius-xs); background: var(--bg-elev); box-shadow: var(--shadow-2); color: var(--text-muted); font-size: 0.75rem; white-space: nowrap; transform: translateX(-50%); pointer-events: none; }
+.apps-pace-tip strong { color: var(--text); }
+.apps-pace-tip[hidden] { display: none; }
+.apps-pace-axis { display: flex; justify-content: space-between; margin: var(--space-1) 0 0; color: var(--text-muted); font-size: 0.6875rem; }
+.apps-pace-table { margin-top: var(--space-2); font-size: 0.8125rem; }
+.apps-pace-table summary { color: var(--text-muted); cursor: pointer; }
+.apps-pace-table table { margin-top: var(--space-2); border-collapse: collapse; }
+.apps-pace-table th, .apps-pace-table td { padding: 2px var(--space-3) 2px 0; text-align: left; font-variant-numeric: tabular-nums; }
+.apps-pace-table th { color: var(--text-muted); font-weight: 600; }
+@media (prefers-reduced-motion: no-preference) {
+  .apps-pace-bar:not(.apps-pace-zero) { transform-origin: bottom; animation: apps-pace-grow 600ms var(--ease-out) calc(300ms + var(--i) * 18ms) both; }
+}
+@keyframes apps-pace-grow { from { transform: scaleY(0); } }
 @media (prefers-reduced-motion: no-preference) {
   .apps-progress-new { animation: apps-progress-grow 900ms var(--ease-out) 300ms both; }
 }
