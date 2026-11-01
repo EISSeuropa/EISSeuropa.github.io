@@ -744,6 +744,21 @@ h4 { font-size: var(--fs-lg); }
 }
 .apps-stat:first-child { border-inline-start: 0; }
 .apps-stat[hidden] { display: none; }
+/* The deadline tile's foot: time left since the previous deadline. */
+.apps-stat-drain { position: relative; }
+.apps-stat-drain::before, .apps-stat-drain::after { content: ""; position: absolute; inset: auto 0 0; height: 4px; background: var(--accent); }
+.apps-stat-drain::before { opacity: 0.15; }
+.apps-stat-drain::after { transform: scaleX(var(--apps-left)); transform-origin: left; }
+.apps-stat-issue.apps-stat-drain::before, .apps-stat-issue.apps-stat-drain::after { background: hsl(222 40% 10%); }
+.apps-stat-issue.apps-stat-drain::after { opacity: 0.55; }
+.apps-stat-critical.apps-stat-drain::before, .apps-stat-critical.apps-stat-drain::after { background: hsl(0 0% 100%); }
+@media (prefers-reduced-motion: no-preference) {
+  .apps-stat-drain::after { animation: apps-drain 1.4s var(--ease-out) 900ms both; }
+  /* Inside three days it pulses three times, then rests. */
+  .apps-stat-critical.apps-stat-drain::after { animation: apps-drain 1.4s var(--ease-out) 900ms both, apps-drain-pulse 1s ease-in-out 2.3s 3; }
+}
+@keyframes apps-drain { from { transform: scaleX(1); } }
+@keyframes apps-drain-pulse { 50% { opacity: 0.25; } }
 .apps-stat a:not([href]) { color: inherit; }
 .apps-stat a[href] { color: inherit; text-decoration: none; }
 .apps-stat a[href]:hover { text-decoration: underline; }
