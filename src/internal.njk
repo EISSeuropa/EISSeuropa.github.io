@@ -539,6 +539,10 @@ eleventyExcludeFromCollections: true
       if (prev && prev.at && done) {
         since.done = done.filter(function (x) { return Date.parse(x.at) > prev.at && isRun(x.url); });
         since.closed = since.done.length;
+      } else if (prev && done && since.closed > 0) {
+        // A visit stored before visits kept their time: name the latest closures, as many as the count.
+        since.done = done.filter(function (x) { return isRun(x.url); }).slice(0, since.closed);
+        since.closed = since.done.length;
       }
       renderToday();
     }
