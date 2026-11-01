@@ -590,6 +590,36 @@ eleventyExcludeFromCollections: true
     // Run links arrive from the API or the browser's cache, so only GitHub's are followed.
     function isRun(url) { return /^https:\/\/github\.com\//.test(url); }
     function setDot(el, level) { el.className = "apps-dot apps-dot-" + level; }
+    // The last ten runs of an automation as a row of squares, oldest first, so
+    // a one-off failure reads differently from a streak.
+    var FAILED = ["failure", "timed_out", "startup_failure"];
+    function history(li, runs) {
+      if (!runs.length) return;
+      var row = li.querySelector("[data-apps-history]");
+      if (!row) {
+        row = document.createElement("span");
+        row.className = "apps-history";
+        row.setAttribute("data-apps-history", "");
+        row.setAttribute("role", "img");
+        li.querySelector("div").appendChild(row);
+      }
+      var last = runs.slice(0, 10).reverse();
+      var bad = 0, ok = 0;
+      row.textContent = "";
+      last.forEach(function (w, i) {
+        var kind = w.conclusion === "success" ? "ok" : FAILED.indexOf(w.conclusion) > -1 ? "bad" : "other";
+        if (kind === "ok") ok++;
+        if (kind === "bad") bad++;
+        var cell = document.createElement("span");
+        cell.className = "apps-run apps-run-" + kind;
+        cell.style.setProperty("--i", i);
+        cell.title = w.conclusion.replace(/_/g, " ");
+        row.appendChild(cell);
+      });
+      var other = last.length - ok - bad;
+      row.setAttribute("aria-label", last.length === 1 ? "Last run: " + row.firstChild.title :
+        "Last " + last.length + " runs: " + ok + " passed, " + bad + " failed" + (other ? ", " + other + " cancelled or skipped" : ""));
+    }
     function applyHealth(live) {
       var all = [];
       data.health.repos.forEach(function (repo, i) {
@@ -609,6 +639,7 @@ eleventyExcludeFromCollections: true
             setDot(li.querySelector(".apps-dot"), item.level);
             if (isRun(item.url)) li.querySelector("a").href = item.url;
             li.querySelector("span:not(.apps-dot)").textContent = LEVELS[item.level] + (run ? ", latest run" : "");
+            history(li, live.runs[i].filter(function (w) { return w.name === item.name; }));
           }
           return item.failed;
         });
