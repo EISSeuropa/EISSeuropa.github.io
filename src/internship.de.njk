@@ -2,7 +2,7 @@
 layout: base.njk
 permalink: /internship.de.html
 title: Ehrenamt und Praktika
-description: Wirken Sie remote an der EISS mit, etwa einen Tag pro Woche über zwei Monate, und gehen Sie mit einer Veröffentlichung unter Ihrem eigenen Namen. Offen für Studierende und frisch Graduierte. Eine convention de stage ist möglich, wenn Ihr Studiengang sie verlangt.
+description: Wirken Sie remote an der EISS mit, etwa einen Tag pro Woche in einem der drei achtwöchigen Durchgänge im Jahr, und gehen Sie mit einer Veröffentlichung unter Ihrem eigenen Namen. Offen für Studierende und frisch Graduierte. Eine convention de stage ist möglich, wenn Ihr Studiengang sie verlangt.
 navKey: internship
 lang: de
 status: beta
@@ -19,10 +19,16 @@ alternates:
     <h1>Ehrenamt und Praktika</h1>
     <p class="page-lead">
       Die EISS wird ausschließlich von Ehrenamtlichen getragen. Wirken Sie remote mit, etwa einen
-      Tag pro Woche über zwei Monate, und gehen Sie mit einer Arbeit, die Ihren Namen trägt: einem
+      Tag pro Woche über acht Wochen, und gehen Sie mit einer Arbeit, die Ihren Namen trägt: einem
       Blogbeitrag unter Ihrem eigenen Namen oder einem namentlich ausgewiesenen Beitrag zur
       Anthologie. Offen für Studierende ebenso wie für frisch Graduierte.
     </p>
+    {% for c in cohorts %}{% if (c.callOpens | daysUntil) <= 0 and (c.applyBy | daysUntil) >= 0 %}
+    <p class="page-lead">
+      <strong>Bewerbungen für {{ c.phrase.de }} sind bis zum {{ c.applyBy | newsDate("de") }}
+      möglich.</strong> <a href="#intakes">Zu den Terminen</a>.
+    </p>
+    {% endif %}{% endfor %}
   </div>
 </header>
 
@@ -61,10 +67,10 @@ alternates:
       </article>
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("calendar") }}</div>
-        <h3>Drei Termine über die zwei Monate</h3>
+        <h3>Drei Termine über die acht Wochen</h3>
         <p>
-          Ein Einführungsgespräch in der ersten Woche, ein Zwischengespräch zur Halbzeit und ein
-          Abschlussgespräch am Ende mit einer kurzen Rückmeldeumfrage.
+          Ein Einführungsgespräch in der ersten Woche, ein Zwischengespräch in der vierten und ein
+          Abschlussgespräch in der achten Woche mit einer kurzen Rückmeldeumfrage.
         </p>
       </article>
     </div>
@@ -127,7 +133,7 @@ alternates:
 
     <dl class="definition-list">
       <div>
-        <dt>Etwa ein Tag pro Woche, über zwei Monate</dt>
+        <dt>Etwa ein Tag pro Woche, über acht Wochen</dt>
         <dd>
           Den Rhythmus vereinbaren wir zu Beginn, und Sie können ihn je nach Semester oder Beruf
           ändern. Sie schulden uns kein Minimum und dürfen jederzeit früher aufhören.
@@ -180,42 +186,28 @@ alternates:
 
 <section class="section">
   <div class="container">
-    <h2>Das Jahr im Überblick</h2>
+    <h2 id="intakes">Wann Sie beginnen können</h2>
     <p style="max-width: 44rem;">
-      Einsätze mit Beginn im Januar passen am besten in den Zyklus. Die Konferenz fällt in den
-      Juni.
+      Ehrenamtliche beginnen gemeinsam, in einem von drei Durchgängen im Jahr mit höchstens vier
+      Personen. Zwischen Mai und der Jahreskonferenz im Juni beginnen keine neuen Einsätze.
     </p>
 
     <dl class="definition-list">
+      {% for c in cohorts %}{% if (c.end | daysUntil) >= 0 %}
       <div>
-        <dt>Januar · Einführung</dt>
+        <dt>{{ c.name.de }} · {{ c.start | newsDate("de") }} bis {{ c.end | newsDate("de") }}</dt>
         <dd>
-          Ein kurzer gemeinsamer Einstieg in das Korpus, den Hausstil und den Maßstab, nach dem wir
-          veröffentlichen. Sie wählen Ihren Arbeitsbereich und wir vereinbaren Ihr einzelnes
-          Ergebnis.
+          {{ c.focus.de }}
+          {% if (c.callOpens | daysUntil) > 0 %}
+          Bewerbungen vom {{ c.callOpens | newsDate("de") }} bis zum {{ c.applyBy | newsDate("de") }}.
+          {% elif (c.applyBy | daysUntil) >= 0 %}
+          <strong>Bewerbungen sind bis zum {{ c.applyBy | newsDate("de") }} möglich.</strong>
+          {% else %}
+          Die Bewerbungsfrist für diesen Durchgang ist abgelaufen.
+          {% endif %}
         </dd>
       </div>
-      <div>
-        <dt>Februar bis April · Die inhaltliche Phase</dt>
-        <dd>
-          Arbeit am eigenen Bereich, Ihr Zwischengespräch und eine erste
-          Fassung vor April.
-        </dd>
-      </div>
-      <div>
-        <dt>April bis Juni · Die Jahreskonferenz</dt>
-        <dd>
-          Die Organisation wiegt hier am schwersten, und alle übernehmen einen Teil davon, wir
-          eingeschlossen. Rechnen Sie damit, dass das Schreiben langsamer wird.
-        </dd>
-      </div>
-      <div>
-        <dt>Juli · Veröffentlichung und Anerkennung</dt>
-        <dd>
-          Die Blogbeiträge erscheinen, die Mitwirkenden kommen auf diese Seite, und wir fragen die
-          Gruppe, was sich gelohnt hat und was Füllarbeit war.
-        </dd>
-      </div>
+      {% endif %}{% endfor %}
     </dl>
   </div>
 </section>
@@ -254,8 +246,8 @@ alternates:
         <p class="muted">
           Senden Sie eine kurze Nachricht und einen Lebenslauf an
           <a href="mailto:{{ site.contactEmail }}?subject=Ehrenamt">{{ site.contactEmail }}</a> und
-          sagen Sie uns, welcher der vier Bereiche oben Sie reizt und wie viel Zeit Sie ungefähr
-          haben. Erwähnen Sie eine <em lang="fr">convention de stage</em>, falls Sie eine brauchen.
+          sagen Sie uns, welcher Durchgang und welcher der vier Bereiche oben Sie reizen und wie viel
+          Zeit Sie ungefähr haben. Wir antworten allen innerhalb einer Woche nach Fristende. Erwähnen Sie eine <em lang="fr">convention de stage</em>, falls Sie eine brauchen.
         </p>
         <p style="margin-top: var(--space-4);">
           <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}?subject=Ehrenamt">
@@ -288,8 +280,8 @@ alternates:
             gemeinsam mit Ihnen ein, und es ist für nichts Voraussetzung.
           </li>
           <li>
-            <strong>Tragen Sie die drei Termine in Ihren Kalender ein.</strong> Einführung,
-            Zwischengespräch und Abschlussgespräch. Die Einladungen verschicken wir.
+            <strong>Tragen Sie die drei Termine in Ihren Kalender ein.</strong> Einführung in der
+            ersten Woche, Zwischengespräch in der vierten und Abschlussgespräch in der achten. Die Einladungen verschicken wir.
           </li>
           <li>
             <strong>Wählen Sie etwas aus der

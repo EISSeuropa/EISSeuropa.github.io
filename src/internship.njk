@@ -2,7 +2,7 @@
 layout: base.njk
 permalink: /internship.html
 title: Volunteering and internships
-description: Volunteer with the EISS remotely, at about a day a week over two months, and leave with something published under your own name. Open to students and to recent graduates. A convention de stage is available if your programme requires one.
+description: Volunteer with the EISS remotely, at about a day a week in one of three eight-week cohorts a year, and leave with something published under your own name. Open to students and to recent graduates. A convention de stage is available if your programme requires one.
 navKey: internship
 lang: en
 alternates:
@@ -17,10 +17,16 @@ alternates:
     <span class="eyebrow">Join us</span>
     <h1>Volunteering and internships</h1>
     <p class="page-lead">
-      The EISS is run entirely by volunteers. Contribute remotely, at about a day a week over two
-      months, and leave with something that carries your name: a blog post under your own byline, or a
+      The EISS is run entirely by volunteers. Contribute remotely, at about a day a week over eight
+      weeks, and leave with something that carries your name: a blog post under your own byline, or a
       credited contribution to the Anthology. Open to students and to recent graduates alike.
     </p>
+    {% for c in cohorts %}{% if (c.callOpens | daysUntil) <= 0 and (c.applyBy | daysUntil) >= 0 %}
+    <p class="page-lead">
+      <strong>Applications for {{ c.phrase.en }} are open until
+      {{ c.applyBy | newsDate("en") }}.</strong> <a href="#intakes">See the dates</a>.
+    </p>
+    {% endif %}{% endfor %}
   </div>
 </header>
 
@@ -58,10 +64,10 @@ alternates:
       </article>
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("calendar") }}</div>
-        <h3>Three meetings across the two months</h3>
+        <h3>Three meetings across the eight weeks</h3>
         <p>
-          Onboarding in your first week, a review at the halfway point, and an exit review at
-          the end with a short feedback survey.
+          Onboarding in week one, a review in week four, and an exit review in week eight with a
+          short feedback survey.
         </p>
       </article>
     </div>
@@ -123,7 +129,7 @@ alternates:
 
     <dl class="definition-list">
       <div>
-        <dt>About a day a week, over two months</dt>
+        <dt>About a day a week, over eight weeks</dt>
         <dd>
           We agree the rhythm at the start, and you can change it as your term or your job demands.
           There is no minimum you owe us and you are free to stop earlier.
@@ -174,40 +180,28 @@ alternates:
 
 <section class="section">
   <div class="container">
-    <h2>The year at a glance</h2>
+    <h2 id="intakes">When you can start</h2>
     <p style="max-width: 44rem;">
-      Placements starting in January suit the cycle best. The conference falls in June.
+      Volunteers start together, in one of three cohorts a year of up to four people each. No new
+      placements start between May and the Annual Conference in June.
     </p>
 
     <dl class="definition-list">
+      {% for c in cohorts %}{% if (c.end | daysUntil) >= 0 %}
       <div>
-        <dt>January · Induction</dt>
+        <dt>{{ c.name.en }} · {{ c.start | newsDate("en") }} to {{ c.end | newsDate("en") }}</dt>
         <dd>
-          A short shared start on the corpus, the house style and the standard we publish to. You
-          pick your track and we agree your single output.
+          {{ c.focus.en }}
+          {% if (c.callOpens | daysUntil) > 0 %}
+          Applications open on {{ c.callOpens | newsDate("en") }} and close on {{ c.applyBy | newsDate("en") }}.
+          {% elif (c.applyBy | daysUntil) >= 0 %}
+          <strong>Applications are open until {{ c.applyBy | newsDate("en") }}.</strong>
+          {% else %}
+          Applications for this cohort have closed.
+          {% endif %}
         </dd>
       </div>
-      <div>
-        <dt>February to April · The substantive window</dt>
-        <dd>
-          Track work, your mid-term review, and a first draft due before
-          April.
-        </dd>
-      </div>
-      <div>
-        <dt>April to June · The annual conference</dt>
-        <dd>
-          Logistics is heaviest here and everyone takes some of it, ourselves included. Expect the
-          writing to slow down.
-        </dd>
-      </div>
-      <div>
-        <dt>July · Publication and credit</dt>
-        <dd>
-          Posts go up, contributors are added to this page, and we ask the group what was worth
-          doing and what was filler.
-        </dd>
-      </div>
+      {% endif %}{% endfor %}
     </dl>
   </div>
 </section>
@@ -247,8 +241,8 @@ alternates:
         <p class="muted">
           Send a short note and a CV to
           <a href="mailto:{{ site.contactEmail }}?subject=Volunteering">{{ site.contactEmail }}</a>,
-          telling us which of the four areas above appeals to you and roughly how much time you
-          have. Mention a <em lang="fr">convention de stage</em> if you need one.
+          telling us which cohort and which of the four areas above appeal to you, and roughly how
+          much time you have. We reply to everyone within a week of the closing date. Mention a <em lang="fr">convention de stage</em> if you need one.
         </p>
         <p style="margin-top: var(--space-4);">
           <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}?subject=Volunteering">
@@ -280,8 +274,8 @@ alternates:
             Never used GitHub? Say so. We set it up with you, and it is not a prerequisite.
           </li>
           <li>
-            <strong>Put the three meetings in your calendar.</strong> Onboarding, the mid-term
-            review, and the exit review at the end. We send the invitations.
+            <strong>Put the three meetings in your calendar.</strong> Onboarding in week one,
+            the review in week four and the exit review in week eight. We send the invitations.
           </li>
           <li>
             <strong>Pick something from the

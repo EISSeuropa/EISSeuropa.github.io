@@ -14,6 +14,37 @@ is translated. This is not.
 
 ---
 
+## Cohorts
+
+Volunteers join in one of three fixed cohorts a year, eight weeks each,
+with at most four people per cohort. The dates and application windows
+are in [`src/_data/cohorts.json`](../src/_data/cohorts.json), which the
+internship page reads in all three languages. Add next year's cohorts
+there, and a cohort drops off the page once its end date passes.
+
+| Cohort | Dates | Call out by | Applications close |
+|---|---|---|---|
+| Winter 2027 | 4 January to 26 February | 13 November 2026 | 4 December 2026 |
+| Spring 2027 | 1 March to 30 April | 29 January | 19 February |
+| Autumn 2027 | 27 September to 26 November | 30 July | 20 August |
+
+No new placement starts between 1 May and the Annual Conference
+(Belgrade, 10 and 11 June 2027).
+
+Every cohort has the same three checkpoints, set as Google Chat tasks
+on day one:
+
+- **Week 1, onboarding.** Track and one output agreed, roster row
+  complete, first real task assigned.
+- **Week 4, review.** Includes the question "What slowed you down in
+  your first week?"
+- **Week 8, exit review.** Volunteer handbook role section updated,
+  roster handover columns set to Yes, alumni invite sent.
+
+A returning volunteer acts as cohort lead for each intake. The
+operational detail (the roster, the handbook role sections, the first-day
+steps) lives in the Drive, not here.
+
 ## Your first week
 
 **Nothing here is a test.** If a step does not work, say so and we fix
@@ -26,17 +57,16 @@ it. That is the whole of the expectation.
 2. **Send us your GitHub account name.** We add you to the repository
    with it. If you have never used GitHub, say so. We set it up with
    you on a call, and it is not a prerequisite for anything.
-3. **Put the three meetings in your calendar.** Onboarding in your
-   first week, a review at the halfway point, and an exit review at the
-   end with a short feedback survey. We send the invitations.
+3. **Put the three meetings in your calendar.** Onboarding in week
+   one, a review in week four, and an exit review in week eight with a
+   short feedback survey. We send the invitations.
 4. **Have a look around the corpus.** [The Anthology](https://eiss-europa.com/anthology.html)
    is what most of the work here touches. Ten minutes clicking through
    it will make the task list mean something.
 5. **Bookmark the apps dashboard.** [internal.eiss-europa.com](https://internal.eiss-europa.com)
    lists the apps EISS uses, such as Indico, Drive and Meet. Choose
-   "Volunteer" to narrow the list. If you have an EISS account, the Project
-   Manager there holds your tasks. Each app asks for
-   its own sign-in.
+   "Volunteer" to narrow the list. Your tasks are in your project room
+   in Google Chat. Each app asks for its own sign-in.
 
 ## Claiming a task
 
@@ -196,9 +226,9 @@ If your track produces a brief, this is the path it takes.
 1. **You agree the piece at induction.** One output per person. The cap
    is real, and it exists because our reviewing capacity is the binding
    constraint rather than your willingness.
-2. **First draft before April.** Not after. Conference logistics
-   absorbs the spring, and a draft that arrives in May does not get the
-   attention it deserves.
+2. **First draft by week six.** That leaves two weeks for an edit
+   before your exit review, and a draft that arrives in the last days
+   does not get the attention it deserves.
 3. **We read it and come back to you.** Expect substantive comments
    rather than a yes or no, and expect at least one round.
 4. **We may decide not to publish a piece.** This is stated in advance

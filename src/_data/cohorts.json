@@ -1,0 +1,68 @@
+[
+  {
+    "key": "winter-2027",
+    "start": "2027-01-04",
+    "end": "2027-02-26",
+    "callOpens": "2026-11-01",
+    "applyBy": "2026-12-04",
+    "name": {
+      "en": "Winter",
+      "fr": "Hiver",
+      "de": "Winter"
+    },
+    "phrase": {
+      "en": "the winter cohort",
+      "fr": "la promotion d'hiver",
+      "de": "den Winterdurchgang"
+    },
+    "focus": {
+      "en": "The launch of the tenth-anniversary campaign, Belvedere, the follow-up to the conference selection, and the participant record for past editions.",
+      "fr": "Le lancement de la campagne des dix ans, Belvedere, le suivi de la sélection pour la conférence, et le recensement des participants aux éditions passées.",
+      "de": "Der Start der Kampagne zum zehnjährigen Bestehen, Belvedere, die Nacharbeit zur Konferenzauswahl und die Teilnehmerzahlen früherer Ausgaben."
+    }
+  },
+  {
+    "key": "spring-2027",
+    "start": "2027-03-01",
+    "end": "2027-04-30",
+    "callOpens": "2027-01-29",
+    "applyBy": "2027-02-19",
+    "name": {
+      "en": "Spring",
+      "fr": "Printemps",
+      "de": "Frühjahr"
+    },
+    "phrase": {
+      "en": "the spring cohort",
+      "fr": "la promotion de printemps",
+      "de": "den Frühjahrsdurchgang"
+    },
+    "focus": {
+      "en": "The programme and logistics of the 2027 Annual Conference in Belgrade.",
+      "fr": "Le programme et l'organisation de la conférence annuelle 2027 à Belgrade.",
+      "de": "Programm und Organisation der Jahreskonferenz 2027 in Belgrad."
+    }
+  },
+  {
+    "key": "autumn-2027",
+    "start": "2027-09-27",
+    "end": "2027-11-26",
+    "callOpens": "2027-07-30",
+    "applyBy": "2027-08-20",
+    "name": {
+      "en": "Autumn",
+      "fr": "Automne",
+      "de": "Herbst"
+    },
+    "phrase": {
+      "en": "the autumn cohort",
+      "fr": "la promotion d'automne",
+      "de": "den Herbstdurchgang"
+    },
+    "focus": {
+      "en": "Adding the 2027 conference abstracts to the Anthology, and Belvedere.",
+      "fr": "L'ajout des résumés de la conférence 2027 à l'Anthologie, et Belvedere.",
+      "de": "Die Aufnahme der Abstracts der Konferenz 2027 in die Anthologie sowie Belvedere."
+    }
+  }
+]
