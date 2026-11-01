@@ -766,7 +766,50 @@ function checkCorpusCitationMeta() {
   }
 }
 
+// ---------------------------------------------------------------------------
+// npm overrides that upstream has made redundant (#1976).
+//
+// package.json pins minimatch under @11ty/recursive-copy to clear
+// GHSA-g3hv-75wg-m249, which the copier's own ^3.1.5 range could not reach.
+// An override outliving its reason holds back whatever upstream picks next,
+// so this fails once the parent's declared range already starts at the
+// patched floor, or once the parent is no longer installed. node_modules
+// keeps the parent's original package.json, so its declared range is
+// readable even while the override is active.
+const OVERRIDE_FLOORS = {
+  "@11ty/recursive-copy": { minimatch: "11.0.1" },
+};
+const verTuple = (v) => (v.match(/\d+(?:\.\d+){0,2}/)?.[0] ?? "0").split(".").map(Number);
+const verGte = (a, b) => {
+  const [x, y] = [verTuple(a), verTuple(b)];
+  for (let i = 0; i < 3; i++) if ((x[i] ?? 0) !== (y[i] ?? 0)) return (x[i] ?? 0) > (y[i] ?? 0);
+  return true;
+};
+function checkRedundantOverrides() {
+  const pkg = JSON.parse(readFileSync("package.json", "utf8"));
+  const overrides = pkg.overrides ?? {};
+  for (const [parent, children] of Object.entries(OVERRIDE_FLOORS)) {
+    if (!overrides[parent]) continue;
+    const parentPkg = join("node_modules", parent, "package.json");
+    if (!existsSync(parentPkg)) {
+      problems.push(`npm override for ${parent} is redundant: ${parent} is no longer installed. Remove it from package.json "overrides" and OVERRIDE_FLOORS (#1976).`);
+      continue;
+    }
+    const deps = JSON.parse(readFileSync(parentPkg, "utf8")).dependencies ?? {};
+    for (const [child, floor] of Object.entries(children)) {
+      const range = deps[child];
+      if (!range || verGte(range, floor)) {
+        problems.push(
+          `npm override ${parent} > ${child} is redundant: ${parent} now declares ${child}@${range ?? "(none)"}, at or above the patched ${floor}. ` +
+            `Remove it from package.json "overrides" and OVERRIDE_FLOORS, then npm install (#1976).`
+        );
+      }
+    }
+  }
+}
+
 checkDataKeys();
+checkRedundantOverrides();
 checkBoardLinks();
 checkBuiltHtml();
 checkUndefinedClasses();
@@ -785,4 +828,4 @@ if (problems.length) {
   console.error("");
   process.exit(1);
 }
-console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, no cross-block CSS class collisions, people hovercard index resolvable, theme spread within bounds, theme patterns identical across their two copies, every paper page in the sitemap, no duplicate build inputs, no orphaned or missing share cards, Anthology corpus citation metadata intact).");
+console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, no cross-block CSS class collisions, people hovercard index resolvable, theme spread within bounds, theme patterns identical across their two copies, every paper page in the sitemap, no duplicate build inputs, no orphaned or missing share cards, Anthology corpus citation metadata intact, no redundant npm overrides).");
