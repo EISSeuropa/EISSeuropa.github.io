@@ -284,8 +284,8 @@ the rendered style guide cannot disagree.
   (`[data-search-trigger]`).
 - **Staff menu** (`.staff-menu`, in `nav.njk`) — the padlock button
   beside the theme toggle. A native `<details>` like the nav groups,
-  built from the `site.staffLinks` entries with `menu: true`, labels from
-  `t.staffMenu`. Hidden below 360 px.
+  built from the `site.staffLinks` entries with a `menu` number, in that
+  order, labels from `t.staffMenu`. No heading: the padlock names it. Hidden below 360 px.
 - **`footer.njk`** — co-branding, funding-style credit, legal-links row
   (terms / privacy / accessibility / sitemap / licensing / roadmap /
   press kit), socials. `data-pagefind-ignore`.

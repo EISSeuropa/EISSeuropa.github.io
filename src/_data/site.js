@@ -198,7 +198,7 @@ module.exports = {
   ]),
 
   // The apps on /internal.html and, where `menu` is set, in the header
-  // padlock menu. Labels are `t.staffMenu.<key>`. `roles` drives the
+  // padlock menu, ordered by that number. Labels are `t.staffMenu.<key>`. `roles` drives the
   // dashboard's role filter (a convenience, not access control: every app
   // asks for sign-in), and an entry without `roles` is menu-only. The
   // `/a/eiss-europa.com` form steers sign-in to the EISS account (Meet 404s
@@ -206,23 +206,21 @@ module.exports = {
   // mail./groups. custom domains are http only, so they are not linked.
   staffLinks: [
     { href: "https://indico.eiss-europa.com", key: "indico", icon: "ticket", roles: ["staff", "management", "board", "volunteer"] },
-    { href: "https://mail.google.com/a/eiss-europa.com", key: "mail", icon: "mail", roles: ["staff", "management", "board", "volunteer"], menu: true },
+    { href: "https://mail.google.com/a/eiss-europa.com", key: "mail", icon: "mail", roles: ["staff", "management", "board", "volunteer"], menu: 2 },
     // contact@ and internship@ are collaborative inboxes, worked in Groups.
-    { href: "https://groups.google.com/a/eiss-europa.com", key: "groups", icon: "inbox", roles: ["staff", "management", "volunteer"], menu: true },
-    { href: "https://calendar.google.com/a/eiss-europa.com", key: "calendar", icon: "calendar", roles: ["staff", "management", "board", "volunteer"], menu: true },
-    { href: "https://drive.google.com/a/eiss-europa.com", key: "drive", icon: "folder", roles: ["staff", "management", "board", "volunteer"], menu: true },
+    { href: "https://groups.google.com/a/eiss-europa.com", key: "groups", icon: "inbox", roles: ["staff", "management", "volunteer"], menu: 3 },
+    { href: "https://calendar.google.com/a/eiss-europa.com", key: "calendar", icon: "calendar", roles: ["staff", "management", "board", "volunteer"], menu: 5 },
+    { href: "https://drive.google.com/a/eiss-europa.com", key: "drive", icon: "folder", roles: ["staff", "management", "board", "volunteer"], menu: 4 },
     { href: "https://meet.google.com/", key: "meet", icon: "video", roles: ["staff", "management", "board", "volunteer"] },
-    { href: "/internal.html", key: "allApps", icon: "layout-grid", menu: true },
+    { href: "/internal.html", key: "allApps", icon: "layout-grid", menu: 6, sep: true },
     {
       href: "https://docs.google.com/forms/d/e/1FAIpQLSevC0tbQwCA4ZNfdk_pCY5xUvmFjuQbIIpddDXLF5TdSoKfcw/viewform",
       key: "internForm",
       icon: "graduation-cap",
       roles: ["staff"],
-      menu: true,
-      sep: true,
     },
     // Daily tasks live in Chat spaces.
-    { href: "https://chat.google.com/", key: "chat", icon: "users", roles: ["staff", "management", "volunteer"] },
+    { href: "https://chat.google.com/", key: "chat", icon: "users", roles: ["staff", "management", "volunteer"], menu: 1 },
   ],
 
   // The guides on /internal.html. Roles work as in staffLinks.

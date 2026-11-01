@@ -640,12 +640,6 @@ h4 { font-size: var(--fs-lg); }
   z-index: 61;
 }
 
-.staff-menu-heading {
-  padding: var(--space-2) var(--space-3);
-  color: var(--text-subtle);
-  font-size: var(--fs-xs);
-}
-
 .staff-menu-link {
   display: flex;
   align-items: center;
