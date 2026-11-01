@@ -593,7 +593,7 @@ eleventyExcludeFromCollections: true
     // The last ten runs of an automation as a row of squares, oldest first, so
     // a one-off failure reads differently from a streak.
     var FAILED = ["failure", "timed_out", "startup_failure"];
-    function history(li, runs) {
+    function runHistory(li, runs) {
       if (!runs.length) return;
       var row = li.querySelector("[data-apps-history]");
       if (!row) {
@@ -639,7 +639,7 @@ eleventyExcludeFromCollections: true
             setDot(li.querySelector(".apps-dot"), item.level);
             if (isRun(item.url)) li.querySelector("a").href = item.url;
             li.querySelector("span:not(.apps-dot)").textContent = LEVELS[item.level] + (run ? ", latest run" : "");
-            history(li, live.runs[i].filter(function (w) { return w.name === item.name; }));
+            runHistory(li, live.runs[i].filter(function (w) { return w.name === item.name; }));
           }
           return item.failed;
         });
