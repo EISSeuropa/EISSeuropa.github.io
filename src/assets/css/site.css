@@ -1075,6 +1075,16 @@ h4 { font-size: var(--fs-lg); }
 .apps-health-details summary { cursor: pointer; min-height: 24px; }
 .apps-health-list { display: grid; gap: var(--space-2); margin: var(--space-2) 0 0; padding: 0; list-style: none; font-size: 0.875rem; }
 .apps-health-list span { display: block; color: var(--text-muted); }
+/* The last ten runs of an automation, oldest first. */
+.apps-health-list .apps-history { display: flex; gap: 3px; margin-top: var(--space-1); }
+.apps-health-list .apps-run { display: block; width: 0.625rem; height: 0.625rem; border-radius: 2px; }
+.apps-run-ok { background: hsl(142 65% 38%); }
+.apps-run-bad { background: hsl(0 80% 50%); }
+.apps-run-other { background: var(--border-strong); }
+@media (prefers-reduced-motion: no-preference) {
+  .apps-health-list .apps-run { animation: apps-run-in 300ms var(--ease-out) calc(var(--i) * 40ms) both; }
+}
+@keyframes apps-run-in { from { opacity: 0; transform: scale(0.4); } }
 .apps-health-failed a { font-weight: 600; }
 .apps-status-card {
   padding: var(--space-5);
