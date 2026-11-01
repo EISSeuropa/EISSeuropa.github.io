@@ -140,25 +140,13 @@ successor inherits through the handover in section 4.
   in the private `workspace-ops` repo. A script run that crashes or stops
   shows as a stale check. The section hides itself if a build cannot
   reach GitHub.
-- **The Project Manager.** The *Project Manager* tile (formerly the task
-  tracker) opens an Apps Script web app for staff, management and volunteers, owned by `admin@`, with the
-  private Sheet "EISS task tracker" behind it. It is open to the EISS
-  domain only, and the Sheet's *People* tab decides who gets in. The
-  "EISS intern lifecycle" script adds each volunteer on approval and removes them
-  at offboarding, handing their open tasks to the Technology Coordinator.
-  Add everyone else by hand. The *Role* column sets the
-  rules, enforced by the app: *Staff* and *Management* can create, assign
-  and edit anyone's tasks, and a *Volunteer* or a blank role only their
-  own, without handing them to someone else. The tile shows for the *Staff*, *Management*
-  and *Volunteer* roles and carries a *Beta* bubble (`badge` in
-  `staffLinks`), and the Sheet itself, linked from `#admin`, stays
-  restricted, since edit access could change who gets in. Tasks can be filtered by project and by group, carry a link, and can be
-  added in bulk from the Sheet's *Runbook* tab. Its *Website tasks* view
-  reads open `help wanted` issues live from GitHub, storing nothing.
-  Staff and volunteers get a Monday email listing overdue and upcoming
-  tasks. The code is in the private `EISSeuropa/workspace-ops` repo,
-  deployed with `clasp`. Tasks stay out of this repo and this page, since
-  both are public.
+- **Tasks in Google Chat.** Daily tasks live in the Tasks tab of each
+  project's Chat space, and the *Chat* tile opens Chat for staff, management
+  and volunteers. A task has one assignee, who must be a member of the
+  space. The Project Manager app is retired from daily use: its tile is
+  gone, its weekly digest is off and its Sheet is kept as an archive, linked
+  from `#admin`. Tasks stay out of this repo and this page, since both are
+  public.
 - **The admin view.** `/internal.html#admin` adds the `adminLinks` from
   the same file. It is unlisted, not secret: those links are in the page
   source. Neither view is access control. Each app's own sign-in protects
