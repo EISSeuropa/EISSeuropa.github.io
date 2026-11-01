@@ -222,9 +222,8 @@ module.exports = {
       sep: true,
     },
     { href: "https://workspace.google.com/dashboard", key: "googleApps", icon: "layout-grid", roles: ["staff"] },
-    // An Apps Script app open to the EISS domain only, for staff, management and
-    // volunteers. Its own People list decides who gets in.
-    { href: "https://script.google.com/a/macros/eiss-europa.com/s/AKfycbzlceXEY4CHShuTGgy9etowrkmnpv7R0u6XmF1-NgT7-ivepTibfllkyVR9tI9wcRI/exec", label: "Project Manager", icon: "file-text", badge: "Beta", roles: ["staff", "management", "volunteer"] },
+    // Daily tasks live in Chat spaces.
+    { href: "https://chat.google.com/", label: "Chat", icon: "users", roles: ["staff", "management", "volunteer"] },
   ],
 
   // The guides on /internal.html. Roles work as in staffLinks.
@@ -252,7 +251,7 @@ module.exports = {
   // time. Each runs from its `from` date to the next one's, and the last stops
   // at `until`. `links` name staffLinks by key or label.
   conferencePhases: [
-    { from: "2026-06-13", label: "Preparing the call for papers", note: "The call is issued by 10 November.", links: ["drive", "Project Manager"] },
+    { from: "2026-06-13", label: "Preparing the call for papers", note: "The call is issued by 10 November.", links: ["drive", "Chat"] },
     { from: "2026-11-10", label: "Call for papers open", note: "Proposals are due on Indico by 26 January.", links: ["indico", "groups"] },
     { from: "2027-01-26", label: "Reviewing proposals", note: "Decisions on panels and papers are due by 20 February.", links: ["indico", "drive"] },
     { from: "2027-02-20", label: "Finalising the programme", note: "The final programme goes to participants on 27 February.", links: ["indico", "groups"] },
@@ -266,7 +265,7 @@ module.exports = {
   adminLinks: [
     { href: "https://admin.google.com/", label: "Admin console", icon: "shield" },
     { href: "https://indico.eiss-europa.com/admin/", label: "Indico administration", icon: "settings" },
-    { href: "https://docs.google.com/spreadsheets/d/1upTZe9BrEj_pVAXDCGBHFLHhXwzvSK5nHrz_nuXT4-Y/edit", label: "Project Manager Sheet", icon: "file-text" },
+    { href: "https://docs.google.com/spreadsheets/d/1upTZe9BrEj_pVAXDCGBHFLHhXwzvSK5nHrz_nuXT4-Y/edit", label: "Project Manager Sheet (archive)", icon: "file-text" },
     { href: "https://script.google.com/home", label: "Apps Script", icon: "code" },
     { href: "https://ap.www.namecheap.com/", label: "Namecheap", icon: "globe" },
     { href: "https://github.com/EISSeuropa", label: "GitHub", icon: "git-branch" },
