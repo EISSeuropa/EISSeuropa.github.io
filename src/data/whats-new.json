@@ -1,10 +1,10 @@
 {
   "_documentation": "What's New banner — sparingly-used site-wide announcement, used per CLAUDE.md §12. When `active: true`, every page renders a small dismissible banner fixed at the top of the viewport. Visitors who dismiss it don't see it again until `version` changes. High bar for activation: a new section visitors would find without reading the CHANGELOG, a major feature visible above the fold, or a milestone (live conference programme, brand launch). NOT used for quality patches, structural refactors, infra, or copy edits. Flip active true → false manually after 4–6 weeks, or sooner once the announcement is no longer fresh.",
-  "active": true,
+  "active": false,
   "version": "v2.29.0-belvedere",
   "_active_since": "2026-09-29",
-  "_active_until": "2026-11-10",
-  "_active_reason": "Launch of Belvedere – the EISS Blog, a new section visitors would not otherwise find. Turn off by 10 November 2026, six weeks on.",
+  "_active_until": "2026-11-01",
+  "_active_reason": "Launch of Belvedere – the EISS Blog, a new section visitors would not otherwise find. Turned off on 1 November 2026, closing #1739.",
   "headline": {
     "en": "Belvedere – the EISS Blog is open.",
     "fr": "Belvédère – le blog de l'EISS est ouvert.",

@@ -1,12 +1,12 @@
 ---
 name: whats-new-banner
-description: "Discipline for the site-wide \"What's New\" announcement banner driven by src/_data/whats-new.json: when activating it is justified, when it is not, the 3-4 per year cadence, and how to update the file. Use when asked to activate, update, or retire the banner."
+description: "Discipline for the site-wide \"What's New\" announcement banner driven by src/data/whats-new.json: when activating it is justified, when it is not, the 3-4 per year cadence, and how to update the file. Use when asked to activate, update, or retire the banner."
 ---
 
 # 12. "What's New" banner discipline
 
 The site carries a sparingly-used site-wide announcement banner driven
-by `src/_data/whats-new.json`. When `active: true`, every page shows a
+by `src/data/whats-new.json`. When `active: true`, every page shows a
 small dismissible bar above the sticky-chrome. Each visitor sees a given
 banner at most once (dismissed state lives in `localStorage` keyed by
 `version`). The JS render lives at the bottom of `src/assets/js/theme.js`.
@@ -36,7 +36,7 @@ trains visitors to ignore it.
 
 ### How to update
 
-1. Edit `src/_data/whats-new.json` — set `active`, `version`, `headline`
+1. Edit `src/data/whats-new.json` — set `active`, `version`, `headline`
    (EN/FR/DE), and `cta`.
 2. The `version` string is the dismissal key. Bump it for each new
    activation so returning visitors see the new banner even if they
