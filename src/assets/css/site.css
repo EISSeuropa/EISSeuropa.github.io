@@ -1106,6 +1106,13 @@ h4 { font-size: var(--fs-lg); }
   color: var(--text-muted);
   font-size: 0.8125rem;
 }
+/* A tab change crossfades the panels, the new one rising slightly (see switchTab). */
+.apps-panel:not([hidden]) { view-transition-name: apps-panel; }
+::view-transition-group(apps-panel) { animation-duration: 320ms; animation-timing-function: var(--ease-out); }
+::view-transition-old(apps-panel) { animation: 160ms var(--ease-out) both apps-panel-out; }
+::view-transition-new(apps-panel) { animation: 320ms var(--ease-out) 60ms both apps-panel-in; }
+@keyframes apps-panel-out { to { opacity: 0; } }
+@keyframes apps-panel-in { from { opacity: 0; transform: translateY(0.5rem); } }
 
 @keyframes apps-rise {
   from { opacity: 0; transform: translateY(12px); }

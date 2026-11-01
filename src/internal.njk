@@ -339,6 +339,12 @@ eleventyExcludeFromCollections: true
       });
       panels.forEach(function (panel) { panel.hidden = panel.id !== name; });
     }
+    // Switching tabs crossfades the panels where the browser has View
+    // Transitions. Elsewhere, and under reduced motion, they swap at once.
+    function switchTab(name) {
+      if (calm || !document.startViewTransition) selectTab(name);
+      else document.startViewTransition(function () { selectTab(name); });
+    }
     function usable() { return tabs.filter(function (t) { return getComputedStyle(t).display !== "none"; }); }
     function keepTabVisible() {
       if (usable().indexOf(tablist.querySelector('[aria-selected="true"]')) < 0) {
@@ -357,7 +363,7 @@ eleventyExcludeFromCollections: true
       var tab = e.target.closest("[role=tab]");
       if (!tab) return;
       var name = tab.getAttribute("data-apps-tab");
-      selectTab(name);
+      switchTab(name);
       history.replaceState(null, "", "#" + name);
     });
     tablist.addEventListener("keydown", function (e) {
@@ -371,7 +377,7 @@ eleventyExcludeFromCollections: true
     addEventListener("hashchange", function () {
       var name = location.hash.slice(1);
       if (!isTab(name)) return;
-      selectTab(name);
+      switchTab(name);
       keepTabVisible();
       tablist.scrollIntoView({ block: "nearest" });
     });
