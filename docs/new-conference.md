@@ -161,7 +161,7 @@ Then run `--mark-fresh` for each language to fill in the SHA.
 
 ## 5. Update the internal dashboard dates
 
-In `src/_data/site.js`, replace `keyDates` and `conferencePhases` with the new edition's dates and stages. `/internal.html` reads both.
+In `src/_data/site.js`, replace `keyDates` and `conferencePhases` with the new edition's dates and stages. Give each stage a `step`, the short name the dashboard's stepper shows ("Call open", "Review"). `/internal.html` reads both.
 
 ## 6. Verify and ship
 

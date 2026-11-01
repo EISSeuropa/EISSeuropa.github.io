@@ -116,6 +116,11 @@ eleventyExcludeFromCollections: true
             <li data-roles="{{ l.roles | join(' ') }}"><a class="btn btn-secondary btn-sm" href="{{ l.href }}">{{ icon(l.icon) }} {{ l.label or t.staffMenu[l.key] }}</a></li>
           {% endfor %}
         </ul>
+        <ol class="apps-steps" aria-label="Stages of the conference year" style="--apps-steps-n: {{ dashboard.phase.steps.length }}; --apps-steps-fill: {{ dashboard.phase.fill }}">
+          {% for s in dashboard.phase.steps %}
+            <li class="apps-step apps-step-{{ s.state }}"{% if s.state == "now" %} aria-current="step"{% endif %}><span class="apps-step-dot" aria-hidden="true"></span><span class="apps-step-label">{{ s.step }}{% if s.state == "done" %}<span class="sr-only">, done</span>{% endif %}</span></li>
+          {% endfor %}
+        </ol>
       </section>
     {% endif %}
 
