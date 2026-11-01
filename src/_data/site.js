@@ -221,15 +221,17 @@ module.exports = {
       menu: true,
       sep: true,
     },
-    { href: "https://workspace.google.com/dashboard", key: "googleApps", icon: "layout-grid", roles: ["staff"] },
     // Daily tasks live in Chat spaces.
-    { href: "https://chat.google.com/", label: "Chat", icon: "users", roles: ["staff", "management", "volunteer"] },
+    { href: "https://chat.google.com/", key: "chat", icon: "users", roles: ["staff", "management", "volunteer"] },
   ],
 
   // The guides on /internal.html. Roles work as in staffLinks.
   guideLinks: [
+    { href: "https://docs.google.com/document/d/1nnUBgds6CUM5fLHmhDwB1osklx-99lXzKv2OhPF0SXo/edit", label: "Getting started", icon: "book-open", roles: ["staff", "management", "board", "volunteer"] },
     { href: "https://docs.google.com/document/d/1ETe9RCqFLRExvyRCouYKHyIl0xEZNXJ-aUIMZNpwue4/edit", label: "Start here", icon: "file-text", roles: ["staff", "management", "volunteer"] },
     { href: "https://docs.google.com/document/d/1c3_KX7Hm-57OQZh3soo-JCQ_HaaEekqwlhXMW0C42Xs/edit", label: "Volunteer handbook", icon: "graduation-cap", roles: ["staff", "volunteer"] },
+    { href: "https://docs.google.com/document/d/1v1XXmCYhJoFn8gJopP0vIXKc6m37ecjSDXM2F11ykNk/edit", label: "Staff handbook", icon: "file-text", roles: ["staff", "management"] },
+    { href: "https://github.com/EISSeuropa/EISSeuropa.github.io/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22", label: "Website tasks", icon: "git-branch", roles: ["staff", "volunteer"] },
     { href: "https://drive.google.com/drive/folders/1J2MqJ_1cwHgL9V2wNpPlU4sCT5SWwrcd", label: "Guides and procedures", icon: "folder", roles: ["staff", "management", "volunteer"] },
     { href: "https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/news-publishing.md", label: "Publishing news", icon: "rss", roles: ["staff"] },
     { href: "https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/admin-guide.md", label: "Operator and handover guide", icon: "book-open", roles: ["staff", "management", "board"] },
@@ -251,7 +253,7 @@ module.exports = {
   // time. Each runs from its `from` date to the next one's, and the last stops
   // at `until`. `links` name staffLinks by key or label.
   conferencePhases: [
-    { from: "2026-06-13", label: "Preparing the call for papers", note: "The call is issued by 10 November.", links: ["drive", "Chat"] },
+    { from: "2026-06-13", label: "Preparing the call for papers", note: "The call is issued by 10 November.", links: ["drive", "chat"] },
     { from: "2026-11-10", label: "Call for papers open", note: "Proposals are due on Indico by 26 January.", links: ["indico", "groups"] },
     { from: "2027-01-26", label: "Reviewing proposals", note: "Decisions on panels and papers are due by 20 February.", links: ["indico", "drive"] },
     { from: "2027-02-20", label: "Finalising the programme", note: "The final programme goes to participants on 27 February.", links: ["indico", "groups"] },
