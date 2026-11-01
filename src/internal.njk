@@ -206,6 +206,21 @@ eleventyExcludeFromCollections: true
             <div class="apps-progress-wrap">
               <progress class="apps-progress" data-apps-release-bar value="{{ dashboard.release.closed }}" max="{{ dashboard.release.total }}" aria-label="{{ dashboard.release.title }} progress">{{ dashboard.release.percent }}%</progress><span class="apps-progress-new" data-apps-release-new hidden></span></div>
             <p class="apps-note" data-apps-release-note>{{ dashboard.release.closed }} of {{ dashboard.release.total }} issues closed</p>
+            <div class="apps-pace" data-apps-pace hidden>
+              <p class="apps-pace-summary" data-apps-pace-summary></p>
+              <div class="apps-pace-plot">
+                <div class="apps-pace-bars" data-apps-pace-bars aria-hidden="true"></div>
+                <p class="apps-pace-tip" data-apps-pace-tip hidden></p>
+              </div>
+              <p class="apps-pace-axis" aria-hidden="true"><span>30 days ago</span><span>Today</span></p>
+              <details class="apps-pace-table">
+                <summary>Days with closures</summary>
+                <table>
+                  <thead><tr><th scope="col">Day</th><th scope="col">Issues closed</th></tr></thead>
+                  <tbody data-apps-pace-rows></tbody>
+                </table>
+              </details>
+            </div>
           </div>
         {% endif %}
         {% if dashboard.counts %}
@@ -644,7 +659,7 @@ eleventyExcludeFromCollections: true
           runs: a[4].map(function (r) { return r.workflow_runs.map(function (w) { return { name: w.name, conclusion: w.conclusion, url: w.html_url }; }); }) };
         if (!m) return live;
         // The release's latest closed issues, for the Today line. A failure here only loses the list.
-        return get("repos/" + data.repo + "/issues?milestone=" + m.number + "&state=closed&sort=updated&direction=desc&per_page=50").then(function (list) {
+        return get("repos/" + data.repo + "/issues?milestone=" + m.number + "&state=closed&sort=updated&direction=desc&per_page=100").then(function (list) {
           live.done = list.filter(function (x) { return !x.pull_request && x.closed_at; })
             .map(function (x) { return { n: x.number, title: x.title, url: x.html_url, at: x.closed_at }; })
             .sort(function (x, y) { return Date.parse(y.at) - Date.parse(x.at); });
@@ -758,7 +773,85 @@ eleventyExcludeFromCollections: true
       line.classList.add("is-live");
       line.textContent = "Live from GitHub, checked " + (mins < 1 ? "just now" : mins + (mins === 1 ? " minute ago" : " minutes ago"));
       compare(live.tasks, live.closed === null ? built.closed : live.closed, at, live.done);
+      if (live.done) renderPace(live.done);
     }
+    // The release's pace: issues closed per day over the last 30 days, from the
+    // closed-issue list the live load already fetches. Oldest day on the left.
+    var DAYS = 30;
+    function dayStart(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime(); }
+    function renderPace(done) {
+      var box = document.querySelector("[data-apps-pace]");
+      if (!box) return;
+      var today = dayStart(new Date()), counts = [];
+      for (var i = 0; i < DAYS; i++) counts.push(0);
+      done.forEach(function (x) {
+        var ago = Math.round((today - dayStart(new Date(x.at))) / 864e5);
+        if (ago >= 0 && ago < DAYS) counts[DAYS - 1 - ago]++;
+      });
+      var total = counts.reduce(function (a, b) { return a + b; }, 0);
+      var week = counts.slice(-7).reduce(function (a, b) { return a + b; }, 0);
+      var top = Math.max.apply(null, counts), scale = Math.max(top, 3);
+      function dayLabel(i) {
+        return new Date(today - (DAYS - 1 - i) * 864e5).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
+      }
+      document.querySelector("[data-apps-pace-summary]").textContent = total
+        ? total + (total === 1 ? " issue" : " issues") + " closed in the last 30 days, " + week + " of them this week."
+        : "No issues closed in the last 30 days.";
+      var bars = document.querySelector("[data-apps-pace-bars]");
+      var rows = document.querySelector("[data-apps-pace-rows]");
+      bars.textContent = "";
+      rows.textContent = "";
+      var peakShown = false;
+      counts.forEach(function (n, i) {
+        var bar = document.createElement("span");
+        bar.className = "apps-pace-bar" + (n ? "" : " apps-pace-zero");
+        bar.style.setProperty("--h", n / scale);
+        bar.style.setProperty("--i", i);
+        bar.setAttribute("data-n", n);
+        bar.setAttribute("data-day", dayLabel(i));
+        // The busiest day carries its figure, once.
+        if (n && n === top && !peakShown) {
+          peakShown = true;
+          var v = document.createElement("span");
+          v.className = "apps-pace-peak";
+          v.textContent = n;
+          bar.appendChild(v);
+        }
+        bars.appendChild(bar);
+        if (n) {
+          var tr = document.createElement("tr"), td1 = document.createElement("td"), td2 = document.createElement("td");
+          td1.textContent = dayLabel(i);
+          td2.textContent = n;
+          tr.appendChild(td1);
+          tr.appendChild(td2);
+          rows.insertBefore(tr, rows.firstChild);
+        }
+      });
+      box.querySelector(".apps-pace-table").hidden = !total;
+      box.hidden = false;
+    }
+    // One tooltip for every bar: the count leads, the day follows.
+    (function () {
+      var plot = document.querySelector(".apps-pace-plot");
+      if (!plot) return;
+      var tip = plot.querySelector("[data-apps-pace-tip]");
+      plot.addEventListener("pointermove", function (e) {
+        var bar = e.target.closest(".apps-pace-bar");
+        if (!bar) { tip.hidden = true; return; }
+        var n = +bar.getAttribute("data-n");
+        tip.textContent = "";
+        var strong = document.createElement("strong");
+        strong.textContent = n + " closed";
+        tip.appendChild(strong);
+        tip.appendChild(document.createTextNode(" " + bar.getAttribute("data-day")));
+        tip.hidden = false;
+        var p = plot.getBoundingClientRect(), b = bar.getBoundingClientRect();
+        var x = b.left + b.width / 2 - p.left, half = tip.offsetWidth / 2;
+        tip.style.left = Math.min(Math.max(x, half), p.width - half) + "px";
+      });
+      plot.addEventListener("pointerleave", function () { tip.hidden = true; });
+    })();
+
     var LIVE = "eiss-apps-live", cached = null;
     try { cached = JSON.parse(localStorage.getItem(LIVE)); } catch (e) {}
     if (cached && Date.now() - cached.at < 6e5) applyLive(cached.live, cached.at);

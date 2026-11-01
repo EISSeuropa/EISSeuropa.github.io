@@ -123,6 +123,9 @@ successor inherits through the handover in section 4.
   the daily *Refresh roadmap surfaces* workflow rewrites. Key dates are
   the next conference, the release due dates and anything in `keyDates`
   in `src/_data/site.js`. `src/_data/dashboard.js` assembles all of it.
+  Under the release bar, a chart counts the release's issues closed per day
+  over the last 30 days, in the browser from the same live GitHub call as the
+  "since your last visit" list. It stays hidden when that call fails.
 - **Status strip and Today line.** The strip shows the next `keyDates`
   entry, the conference, systems, the next release and tasks to pick up.
   The deadline tile turns amber within 14 days and red within 3. In the
