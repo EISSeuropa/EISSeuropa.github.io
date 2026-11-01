@@ -411,6 +411,12 @@ eleventyExcludeFromCollections: true
         tile.querySelector("[data-apps-deadline-days]").textContent = inDays(left);
         tile.classList.toggle("apps-stat-critical", left <= 3);
         tile.classList.toggle("apps-stat-issue", left > 3 && left <= 14);
+        // A bar along the tile's foot drains from the previous deadline to this one.
+        var span = next.start ? daysTo(next.date) - daysTo(next.start) : 0;
+        if (span > 0) {
+          tile.style.setProperty("--apps-left", Math.min(left / span, 1).toFixed(3));
+          tile.classList.add("apps-stat-drain");
+        }
       } else tile.hidden = true;
     }
 

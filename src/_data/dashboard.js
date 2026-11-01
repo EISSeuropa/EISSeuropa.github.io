@@ -35,7 +35,13 @@ const dates = [
   .sort((a, b) => a.date.localeCompare(b.date));
 
 // The deadline tile leaves out the conference and the releases, which have tiles of their own.
-const deadlines = site.keyDates.filter((d) => d.date >= today).sort((a, b) => a.date.localeCompare(b.date));
+// Each carries the date it counts from, the deadline before it (the year's
+// first stage for the first), so the tile can show how much time is left.
+const keyDates = [...site.keyDates].sort((a, b) => a.date.localeCompare(b.date));
+const firstStage = (site.conferencePhases[0] || {}).from;
+const deadlines = keyDates
+  .map((d, i) => ({ ...d, start: i ? keyDates[i - 1].date : firstStage }))
+  .filter((d) => d.date >= today);
 
 const phases = site.conferencePhases;
 const current = phases.filter((p) => p.from <= today).pop();
