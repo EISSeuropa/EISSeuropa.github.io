@@ -93,7 +93,14 @@ eleventyExcludeFromCollections: true
       {% endif %}
     </dl>
     <p class="apps-live" data-apps-asof>{% if systemHealth %}Figures as of {{ systemHealth.checked | newsDate("en") }}{% endif %}</p>
-    <p class="apps-today" data-apps-today hidden></p>
+    <div class="apps-today" data-apps-today hidden>
+      <div class="apps-today-clip">
+        <div class="apps-today-box">
+          <p class="apps-today-text" data-apps-today-text></p>
+          <ul class="apps-done" data-apps-done role="list"></ul>
+        </div>
+      </div>
+    </div>
 
     {% if dashboard.phase %}
       <section class="apps-phase" aria-labelledby="apps-phase-title">
@@ -407,8 +414,57 @@ eleventyExcludeFromCollections: true
     // The Today line: failures for those who see IT monitoring, then what changed
     // since the last visit. It stays away when there is nothing to say.
     var failed = data.health ? data.health.summary.failed : [];
-    var since = { tasks: 0, closed: 0 };
+    var since = { tasks: 0, closed: 0, done: [] };
     var today = document.querySelector("[data-apps-today]");
+    var todayText = document.querySelector("[data-apps-today-text]");
+    var doneList = document.querySelector("[data-apps-done]");
+
+    // Lines fold open and shut on a grid row (CSS), so their neighbours glide
+    // rather than jump. Without motion they simply show and hide.
+    function reveal(el, show, delay) {
+      if (show) {
+        if (!el.hidden && !el.classList.contains("is-out")) return;
+        el.style.transitionDelay = (delay || 0) + "ms";
+        el.style.setProperty("--apps-delay", (delay || 0) + "ms");
+        if (el.hidden) { el.classList.add("is-out"); el.hidden = false; void el.offsetWidth; }
+        el.classList.remove("is-out");
+      } else {
+        if (el.hidden || el.classList.contains("is-out")) return;
+        el.style.transitionDelay = "0ms";
+        el.style.setProperty("--apps-delay", "0ms");
+        if (calm) { el.hidden = true; if (el.parentNode === doneList) el.remove(); return; }
+        el.classList.add("is-out");
+        el.addEventListener("transitionend", function end(e) {
+          if (e.target !== el || e.propertyName !== "opacity") return;
+          el.removeEventListener("transitionend", end);
+          if (!el.classList.contains("is-out")) return;
+          el.hidden = true;
+          if (el.parentNode === doneList) el.remove();
+        });
+      }
+    }
+    var CHECK = '<span class="apps-done-box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>';
+    function renderDone(items) {
+      var want = items.map(function (x) { return String(x.n); });
+      [].slice.call(doneList.children).forEach(function (li) {
+        if (want.indexOf(li.getAttribute("data-n")) < 0) reveal(li, false);
+      });
+      items.forEach(function (x, i) {
+        var li = doneList.querySelector('[data-n="' + x.n + '"]');
+        if (!li) {
+          li = document.createElement("li");
+          li.className = "apps-done-item";
+          li.setAttribute("data-n", x.n);
+          li.hidden = true;
+          li.innerHTML = '<div class="apps-done-clip"><div class="apps-done-row">' + CHECK + '<a><span class="sr-only">Closed: </span><span class="apps-done-num"></span> <span class="apps-done-title"></span></a></div></div>';
+          li.querySelector("a").href = x.url;
+          li.querySelector(".apps-done-num").textContent = "#" + x.n;
+          li.querySelector(".apps-done-title").textContent = x.title;
+          doneList.appendChild(li);
+        }
+        reveal(li, true, calm ? 0 : 120 + i * 90);
+      });
+    }
     function renderToday() {
       var role = roleSelect.value;
       var parts = [];
@@ -416,24 +472,34 @@ eleventyExcludeFromCollections: true
         parts.push(failed.length + (failed.length === 1 ? " automation failing: " : " automations failing: ") + failed.join(", ") + ".");
       }
       var news = [];
+      var staff = role === "all" || role === "staff";
       if (since.tasks > 0 && role !== "management" && role !== "board") news.push(since.tasks + (since.tasks === 1 ? " new task" : " new tasks"));
-      if (since.closed > 0 && (role === "all" || role === "staff")) news.push(since.closed + " more release " + (since.closed === 1 ? "issue" : "issues") + " closed");
+      if (since.closed > 0 && staff) news.push(since.closed + " more release " + (since.closed === 1 ? "issue" : "issues") + " closed");
       if (news.length) parts.push("Since your last visit: " + news.join(", ") + ".");
-      today.textContent = parts.join(" ");
-      today.hidden = !parts.length;
+      if (parts.length) todayText.textContent = parts.join(" ");
+      // The box opens first, so the lines inside it are laid out and can fade in.
+      reveal(today, parts.length > 0);
+      renderDone(staff ? since.done : []);
     }
 
     // Since your last visit, per browser. Reloads within the hour count as the
     // same visit, so the note survives them. First visits have nothing to compare.
-    function compare(tasks, closed) {
+    // With the live list, the release issues closed after the last check are
+    // named one by one, and their number is the count.
+    function compare(tasks, closed, at, done) {
       var SEEN = "eiss-apps-seen", seen = null, t = Date.now();
       try { seen = JSON.parse(localStorage.getItem(SEEN)); } catch (e) {}
-      var now = { tasks: tasks, closed: closed };
+      var now = { tasks: tasks, closed: closed, at: at || null };
       if (!seen) seen = { at: t, prev: null, cur: now };
       else if (t - seen.at > 36e5) seen = { at: t, prev: seen.cur, cur: now };
       else seen.cur = now;
       try { localStorage.setItem(SEEN, JSON.stringify(seen)); } catch (e) {}
-      since = seen.prev ? { tasks: tasks - seen.prev.tasks, closed: closed - seen.prev.closed } : { tasks: 0, closed: 0 };
+      var prev = seen.prev;
+      since = prev ? { tasks: tasks - prev.tasks, closed: closed - prev.closed, done: [] } : { tasks: 0, closed: 0, done: [] };
+      if (prev && prev.at && done) {
+        since.done = done.filter(function (x) { return Date.parse(x.at) > prev.at && isRun(x.url); });
+        since.closed = since.done.length;
+      }
       renderToday();
     }
     var built = { tasks: data.counts ? data.counts[2].value : 0, closed: data.release ? data.release.closed : 0 };
@@ -464,8 +530,16 @@ eleventyExcludeFromCollections: true
         })),
       ]).then(function (a) {
         var m = data.release && a[3].filter(function (x) { return x.title === data.release.title; })[0];
-        return { issues: a[0], prs: a[1], tasks: a[2], closed: m ? m.closed_issues : null, total: m ? m.closed_issues + m.open_issues : null,
+        var live = { issues: a[0], prs: a[1], tasks: a[2], closed: m ? m.closed_issues : null, total: m ? m.closed_issues + m.open_issues : null,
           runs: a[4].map(function (r) { return r.workflow_runs.map(function (w) { return { name: w.name, conclusion: w.conclusion, url: w.html_url }; }); }) };
+        if (!m) return live;
+        // The release's latest closed issues, for the Today line. A failure here only loses the list.
+        return get("repos/" + data.repo + "/issues?milestone=" + m.number + "&state=closed&sort=updated&direction=desc&per_page=50").then(function (list) {
+          live.done = list.filter(function (x) { return !x.pull_request && x.closed_at; })
+            .map(function (x) { return { n: x.number, title: x.title, url: x.html_url, at: x.closed_at }; })
+            .sort(function (x, y) { return Date.parse(y.at) - Date.parse(x.at); });
+          return live;
+        }, function () { return live; });
       });
     }
     var LEVELS = { nominal: "Nominal", issue: "Issue", critical: "Critical" };
@@ -541,7 +615,7 @@ eleventyExcludeFromCollections: true
       var line = document.querySelector(".apps-live");
       line.classList.add("is-live");
       line.textContent = "Live from GitHub, checked " + (mins < 1 ? "just now" : mins + (mins === 1 ? " minute ago" : " minutes ago"));
-      compare(live.tasks, live.closed === null ? built.closed : live.closed);
+      compare(live.tasks, live.closed === null ? built.closed : live.closed, at, live.done);
     }
     var LIVE = "eiss-apps-live", cached = null;
     try { cached = JSON.parse(localStorage.getItem(LIVE)); } catch (e) {}
