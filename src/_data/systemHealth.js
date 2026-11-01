@@ -102,3 +102,6 @@ module.exports = async function () {
     return null;
   }
 };
+
+// The dashboard reads the same web app for the year's dates (?view=dates).
+module.exports.WORKSPACE_STATUS = WORKSPACE_STATUS;

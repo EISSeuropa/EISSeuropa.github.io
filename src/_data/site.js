@@ -238,8 +238,10 @@ module.exports = {
   ],
 
   // The year's dates for /internal.html, one edition at a time, added there to
-  // the conference and the release due dates. This page is public, so nothing
-  // confidential: { date: "2027-01-31", label: "...", roles: ["staff"] }.
+  // the conference and the release due dates. The "EISS dates" calendar takes
+  // over once it has events (see docs/admin-guide.md), and this list is then
+  // only the fallback. This page is public, so nothing confidential:
+  // { date: "2027-01-31", label: "...", roles: ["staff"] }.
   // A date that opens a stage of the conference year also carries `stage` (its
   // name on the "Now" card), `step` (its short name on the stepper) and
   // `links` (staffLinks by key or label). A stage runs until the next date
@@ -255,6 +257,9 @@ module.exports = {
     { date: "2027-06-03", label: "Papers due to panel chairs", stage: "Final preparations", step: "Final prep", links: ["drive", "calendar"] },
   ],
   conferenceStage: { step: "Conference", links: ["indico", "groups"] },
+  // The "EISS internal deadlines" calendar, linked under Key dates once it
+  // exists. The dates above are only the public ones.
+  deadlinesCalendar: "",
 
   // The unlisted /internal.html#admin view. Hidden from view, not secret: the
   // links are in the page source and each app's own sign-in protects it.

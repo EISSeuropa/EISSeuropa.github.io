@@ -133,8 +133,16 @@ successor inherits through the handover in section 4.
   minutes, and the last build's figures stay if that fails. Workspace and
   Google status update only at build. "Since your last visit" compares
   against figures saved in that browser.
-- **Dates and conference phase.** `keyDates` in `src/_data/site.js` is the
-  one list of an edition's dates, and needs replacing for each new edition.
+- **Dates and conference phase.** The "EISS dates" Google Calendar holds an
+  edition's public dates. The build reads it through the EISS status web
+  app's `?view=dates` (source in the private `workspace-ops` repo, which
+  documents the event format), and falls back to `keyDates` in
+  `src/_data/site.js` when the calendar gives nothing or cannot be reached.
+  Mistakes in the calendar only warn in the build log, while mistakes in
+  `keyDates` stop the build. Internal deadlines go in the "EISS internal
+  deadlines" calendar, which the site never reads. `deadlinesCalendar` in
+  `site.js` links it under Key dates. Either source is the one list of an
+  edition's dates, and needs replacing for each new edition.
   A date that opens a stage of the year also carries `stage` (its name on the
   "Now" card), `step` (its short name on the stepper) and `links`. The stage
   runs until the next date that opens one, and the conference stage comes
