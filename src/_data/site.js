@@ -251,15 +251,16 @@ module.exports = {
 
   // The stage of the conference year shown on /internal.html, one edition at a
   // time. Each runs from its `from` date to the next one's, and the last stops
-  // at `until`. `links` name staffLinks by key or label.
+  // at `until`. `links` name staffLinks by key or label. `step` is the short
+  // name on the dashboard's stepper.
   conferencePhases: [
-    { from: "2026-06-13", label: "Preparing the call for papers", note: "The call is issued by 10 November.", links: ["drive", "chat"] },
-    { from: "2026-11-10", label: "Call for papers open", note: "Proposals are due on Indico by 26 January.", links: ["indico", "groups"] },
-    { from: "2027-01-26", label: "Reviewing proposals", note: "Decisions on panels and papers are due by 20 February.", links: ["indico", "drive"] },
-    { from: "2027-02-20", label: "Finalising the programme", note: "The final programme goes to participants on 27 February.", links: ["indico", "groups"] },
-    { from: "2027-02-27", label: "Programme out, papers next", note: "Papers reach panel chairs by 27 May for the Best Paper Prize, and by 3 June otherwise.", links: ["indico", "groups"] },
-    { from: "2027-06-03", label: "Final preparations", note: "ESSC 2027 opens in Belgrade on 10 June.", links: ["drive", "calendar"] },
-    { from: "2027-06-10", until: "2027-06-11", label: "ESSC 2027 is on", note: "In Belgrade until 11 June.", links: ["indico", "groups"] },
+    { from: "2026-06-13", step: "Prepare call", label: "Preparing the call for papers", note: "The call is issued by 10 November.", links: ["drive", "chat"] },
+    { from: "2026-11-10", step: "Call open", label: "Call for papers open", note: "Proposals are due on Indico by 26 January.", links: ["indico", "groups"] },
+    { from: "2027-01-26", step: "Review", label: "Reviewing proposals", note: "Decisions on panels and papers are due by 20 February.", links: ["indico", "drive"] },
+    { from: "2027-02-20", step: "Programme", label: "Finalising the programme", note: "The final programme goes to participants on 27 February.", links: ["indico", "groups"] },
+    { from: "2027-02-27", step: "Papers", label: "Programme out, papers next", note: "Papers reach panel chairs by 27 May for the Best Paper Prize, and by 3 June otherwise.", links: ["indico", "groups"] },
+    { from: "2027-06-03", step: "Final prep", label: "Final preparations", note: "ESSC 2027 opens in Belgrade on 10 June.", links: ["drive", "calendar"] },
+    { from: "2027-06-10", until: "2027-06-11", step: "Conference", label: "ESSC 2027 is on", note: "In Belgrade until 11 June.", links: ["indico", "groups"] },
   ],
 
   // The unlisted /internal.html#admin view. Hidden from view, not secret: the

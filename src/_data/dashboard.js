@@ -39,8 +39,17 @@ const deadlines = site.keyDates.filter((d) => d.date >= today).sort((a, b) => a.
 
 const phases = site.conferencePhases;
 const current = phases.filter((p) => p.from <= today).pop();
+// The stepper under the current stage: each stage done, now or next, and how
+// far along the line today sits (0 at the first stage, 1 at the last).
+const at = phases.indexOf(current);
+const days = (d) => Date.parse(d) / 864e5;
+const end = phases[at + 1] ? phases[at + 1].from : current && current.until;
+const within = current && end ? Math.min(Math.max((days(today) - days(current.from)) / (days(end) - days(current.from)), 0), 1) : 0;
+const steps = phases.map((p, i) => ({ step: p.step, state: i < at ? "done" : i === at ? "now" : "next" }));
+const fill = phases.length > 1 ? Math.min((at + within) / (phases.length - 1), 1).toFixed(3) : 0;
+
 const phase = current && (!current.until || today <= current.until)
-  ? { ...current, links: current.links.map((l) => site.staffLinks.find((a) => a.key === l || a.label === l)) }
+  ? { ...current, links: current.links.map((l) => site.staffLinks.find((a) => a.key === l || a.label === l)), steps, fill }
   : null;
 
 module.exports = { release, counts, dates, deadlines, phase, repo: "EISSeuropa/EISSeuropa.github.io" };

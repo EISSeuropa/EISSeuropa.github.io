@@ -131,7 +131,8 @@ successor inherits through the handover in section 4.
   against figures saved in that browser.
 - **Conference phase.** `conferencePhases` in `src/_data/site.js` holds one
   edition's stages, and needs replacing for each new edition along with
-  `keyDates`.
+  `keyDates`. Each stage's `step` is its short name on the stepper under the
+  "Now" card, which fills to today's place in the year at each build.
 - **Guides.** Guides are `guideLinks` in `src/_data/site.js`.
 - **IT System Monitoring.** A staff section that lists the latest run of
   each automation in both site repos, read when the site builds by
