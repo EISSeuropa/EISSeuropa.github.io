@@ -2,7 +2,7 @@
 layout: base.njk
 permalink: /internship.fr.html
 title: Bénévolat et stages
-description: Contribuez à l'EISS à distance, environ un jour par semaine sur deux mois, et repartez avec une publication qui porte votre nom. Ouvert aux étudiants comme aux jeunes diplômés. Une convention de stage est possible si votre formation l'exige.
+description: Contribuez à l'EISS à distance, environ un jour par semaine au sein de l'une des trois promotions de huit semaines de l'année, et repartez avec une publication qui porte votre nom. Ouvert aux étudiants comme aux jeunes diplômés. Une convention de stage est possible si votre formation l'exige.
 navKey: internship
 lang: fr
 status: beta
@@ -19,10 +19,16 @@ alternates:
     <h1>Bénévolat et stages</h1>
     <p class="page-lead">
       L'EISS fonctionne entièrement grâce à des bénévoles. Contribuez à distance, à raison d'environ
-      un jour par semaine sur deux mois, et repartez avec un travail qui porte votre nom : un billet
-      sous votre signature, ou une contribution créditée à l'Anthologie. Ouvert aussi bien aux
+      un jour par semaine sur huit semaines, et repartez avec un travail qui porte votre nom : un
+      billet sous votre signature, ou une contribution créditée à l'Anthologie. Ouvert aussi bien aux
       étudiants qu'aux jeunes diplômés.
     </p>
+    {% for c in cohorts %}{% if (c.callOpens | daysUntil) <= 0 and (c.applyBy | daysUntil) >= 0 %}
+    <p class="page-lead">
+      <strong>Les candidatures pour {{ c.phrase.fr }} sont ouvertes jusqu'au
+      {{ c.applyBy | newsDate("fr") }}.</strong> <a href="#intakes">Voir les dates</a>.
+    </p>
+    {% endif %}{% endfor %}
   </div>
 </header>
 
@@ -61,10 +67,10 @@ alternates:
       </article>
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("calendar") }}</div>
-        <h3>Trois rendez-vous sur les deux mois</h3>
+        <h3>Trois rendez-vous sur les huit semaines</h3>
         <p>
-          Un accueil la première semaine, un point à mi-parcours, et un entretien de fin de mission
-          accompagné d'un court questionnaire de retour.
+          Un accueil la première semaine, un point la quatrième, et un entretien de fin de mission
+          la huitième, accompagné d'un court questionnaire de retour.
         </p>
       </article>
     </div>
@@ -126,7 +132,7 @@ alternates:
 
     <dl class="definition-list">
       <div>
-        <dt>Environ un jour par semaine, sur deux mois</dt>
+        <dt>Environ un jour par semaine, sur huit semaines</dt>
         <dd>
           Nous convenons du rythme au départ, et vous pouvez le modifier selon vos cours ou votre
           emploi. Vous ne nous devez aucun minimum et vous êtes libre d'arrêter plus tôt.
@@ -178,40 +184,28 @@ alternates:
 
 <section class="section">
   <div class="container">
-    <h2>L'année en bref</h2>
+    <h2 id="intakes">Quand commencer</h2>
     <p style="max-width: 44rem;">
-      Les missions débutant en janvier s'accordent le mieux au cycle. La conférence a lieu en juin.
+      Les bénévoles commencent ensemble, au sein de l'une des trois promotions de l'année, de quatre
+      personnes au plus. Aucune mission ne commence entre mai et la conférence annuelle de juin.
     </p>
 
     <dl class="definition-list">
+      {% for c in cohorts %}{% if (c.end | daysUntil) >= 0 %}
       <div>
-        <dt>Janvier · Accueil</dt>
+        <dt>{{ c.name.fr }} · du {{ c.start | newsDate("fr") }} au {{ c.end | newsDate("fr") }}</dt>
         <dd>
-          Une prise en main commune et brève du corpus, du style de la maison et du niveau auquel
-          nous publions. Vous choisissez votre axe et nous convenons de votre production unique.
+          {{ c.focus.fr }}
+          {% if (c.callOpens | daysUntil) > 0 %}
+          Candidatures du {{ c.callOpens | newsDate("fr") }} au {{ c.applyBy | newsDate("fr") }}.
+          {% elif (c.applyBy | daysUntil) >= 0 %}
+          <strong>Candidatures ouvertes jusqu'au {{ c.applyBy | newsDate("fr") }}.</strong>
+          {% else %}
+          Les candidatures pour cette promotion sont closes.
+          {% endif %}
         </dd>
       </div>
-      <div>
-        <dt>De février à avril · La période de fond</dt>
-        <dd>
-          Travail sur l'axe, votre point à mi-parcours, et un premier jet
-          attendu avant avril.
-        </dd>
-      </div>
-      <div>
-        <dt>D'avril à juin · La conférence annuelle</dt>
-        <dd>
-          L'organisation pèse le plus lourd à ce moment-là et chacun en prend sa part, nous y
-          compris. Attendez-vous à ce que la rédaction ralentisse.
-        </dd>
-      </div>
-      <div>
-        <dt>Juillet · Publication et crédit</dt>
-        <dd>
-          Les billets paraissent, les contributeurs sont ajoutés à cette page, et nous demandons au
-          groupe ce qui valait la peine et ce qui n'était que du remplissage.
-        </dd>
-      </div>
+      {% endif %}{% endfor %}
     </dl>
   </div>
 </section>
@@ -249,8 +243,8 @@ alternates:
         <p class="muted">
           Envoyez un court message et un CV à
           <a href="mailto:{{ site.contactEmail }}?subject=B%C3%A9n%C3%A9volat">{{ site.contactEmail }}</a>,
-          en nous indiquant lequel des quatre axes ci-dessus vous attire et de combien de temps vous
-          disposez. Signalez-nous si vous avez besoin d'une <em>convention de stage</em>.
+          en nous indiquant quelle promotion et lequel des quatre axes ci-dessus vous attirent, et de
+          combien de temps vous disposez. Nous répondons à chacun dans la semaine qui suit la clôture. Signalez-nous si vous avez besoin d'une <em>convention de stage</em>.
         </p>
         <p style="margin-top: var(--space-4);">
           <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}?subject=B%C3%A9n%C3%A9volat">
@@ -284,8 +278,8 @@ alternates:
             vous, et ce n'est un prérequis pour rien.
           </li>
           <li>
-            <strong>Inscrivez les trois rendez-vous à votre agenda.</strong> L'accueil, le point
-            à mi-parcours et l'entretien de fin de mission. Nous envoyons les invitations.
+            <strong>Inscrivez les trois rendez-vous à votre agenda.</strong> L'accueil la première
+            semaine, le point la quatrième et l'entretien de fin de mission la huitième. Nous envoyons les invitations.
           </li>
           <li>
             <strong>Choisissez une tâche sur la

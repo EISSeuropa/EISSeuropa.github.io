@@ -86,9 +86,11 @@ module.exports = function (eleventyConfig) {
     const d = new Date(String(iso).slice(0, 10) + "T00:00:00Z");
     if (isNaN(d.getTime())) return iso;
     const loc = { en: "en-GB", fr: "fr-FR", de: "de-DE" }[lang || "en"] || "en-GB";
-    return new Intl.DateTimeFormat(loc, {
+    const out = new Intl.DateTimeFormat(loc, {
       day: "numeric", month: "long", year: "numeric", timeZone: "UTC",
     }).format(d);
+    // French writes the first of the month as an ordinal: "1er mars".
+    return loc === "fr-FR" ? out.replace(/^1 /, "1er ") : out;
   });
 
   // Blog posts in one language (#1740). A post without `lang` is English.
