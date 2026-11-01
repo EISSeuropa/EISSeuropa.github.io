@@ -221,11 +221,12 @@ eleventyExcludeFromCollections: true
         {% if dashboard.dates.length %}
           <div class="apps-status-card">
             <h3 class="apps-status-title">Key dates</h3>
-            <ul class="apps-dates" role="list">
+            <ol class="apps-timeline" data-apps-timeline>
               {% for d in dashboard.dates %}
-                <li data-roles="{{ d.roles | join(' ') }}"><time datetime="{{ d.date }}">{{ d.date | newsDate("en") }}</time> <span>{{ d.label }}</span></li>
+                {% if d.state == "next" %}<li class="apps-timeline-today" data-apps-timeline-today aria-hidden="true"><span>Today</span></li>{% endif %}
+                <li class="apps-timeline-item apps-timeline-{{ d.state }}" data-roles="{{ d.roles | join(' ') }}" data-date="{{ d.date }}"><span class="apps-timeline-dot" aria-hidden="true"></span><time datetime="{{ d.date }}">{{ d.date | newsDate("en") }}</time> <span class="apps-timeline-label">{{ d.label }}</span><span class="apps-timeline-when" data-apps-timeline-when>{% if d.state == "past" %}<span class="sr-only">, done</span>{% endif %}</span></li>
               {% endfor %}
-            </ul>
+            </ol>
           </div>
         {% endif %}
       </div>
@@ -319,6 +320,7 @@ eleventyExcludeFromCollections: true
       try { localStorage.setItem(KEY, roleSelect.value); } catch (e) {}
       tally();
       renderToday();
+      renderTimeline(false);
       keepTabVisible();
     });
     tally();
@@ -419,6 +421,44 @@ eleventyExcludeFromCollections: true
     }
 
     var data = JSON.parse(document.getElementById("apps-data").textContent);
+
+    // The Key dates timeline, kept right between daily builds: dates over 30
+    // days old leave, the rest are ticked off as they pass, and the first one
+    // ahead for the role in view gets the countdown and the "Today" marker,
+    // which slides into place once on load.
+    var timeline = document.querySelector("[data-apps-timeline]");
+    var todayMark = document.querySelector("[data-apps-timeline-today]");
+    function renderTimeline(first) {
+      if (!timeline) return;
+      var role = roleSelect.value, next = null;
+      if (!todayMark) {
+        todayMark = document.createElement("li");
+        todayMark.className = "apps-timeline-today";
+        todayMark.setAttribute("aria-hidden", "true");
+        todayMark.innerHTML = "<span>Today</span>";
+      }
+      [].forEach.call(timeline.querySelectorAll(".apps-timeline-item"), function (li) {
+        var n = daysTo(li.getAttribute("data-date"));
+        var mine = role === "all" || (" " + li.getAttribute("data-roles") + " ").indexOf(" " + role + " ") > -1;
+        li.hidden = n < -30;
+        var state = n < 0 ? "past" : !next && mine ? "next" : "later";
+        if (state === "next") next = li;
+        li.className = "apps-timeline-item apps-timeline-" + state;
+        var when = li.querySelector("[data-apps-timeline-when]");
+        when.textContent = state === "next" ? (n === 0 ? "Today" : "in " + inDays(n)) : "";
+        if (state === "past") {
+          var done = document.createElement("span");
+          done.className = "sr-only";
+          done.textContent = ", done";
+          when.appendChild(done);
+        }
+      });
+      if (next) timeline.insertBefore(todayMark, next); else timeline.appendChild(todayMark);
+      if (first && !calm && todayMark.offsetTop > 0) {
+        todayMark.animate([{ transform: "translateY(" + -todayMark.offsetTop + "px)", opacity: 0 }, { transform: "none", opacity: 1 }],
+          { duration: 900, delay: 300, easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "backwards" });
+      }
+    }
     var next = (data.deadlines || []).filter(function (d) { return daysTo(d.date) >= 0; })[0];
     var tile = document.querySelector("[data-apps-deadline]");
     if (tile) {
@@ -435,6 +475,17 @@ eleventyExcludeFromCollections: true
           tile.classList.add("apps-stat-drain");
         }
       } else tile.hidden = true;
+    }
+
+    renderTimeline(false);
+    // The marker slides in when the timeline is first in view (its tab may be closed).
+    if (timeline && "IntersectionObserver" in window) {
+      var seenOnce = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        seenOnce.disconnect();
+        renderTimeline(true);
+      });
+      seenOnce.observe(timeline);
     }
 
     // The Today line: failures for those who see IT monitoring, then what changed

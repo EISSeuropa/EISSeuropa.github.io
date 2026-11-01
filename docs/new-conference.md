@@ -161,7 +161,7 @@ Then run `--mark-fresh` for each language to fill in the SHA.
 
 ## 5. Update the internal dashboard dates
 
-In `src/_data/site.js`, replace `keyDates` and `conferencePhases` with the new edition's dates and stages. Give each stage a `step`, the short name the dashboard's stepper shows ("Call open", "Review"). `/internal.html` reads both.
+In `src/_data/site.js`, replace `keyDates` with the new edition's dates. Give each date that opens a stage of the year a `stage`, a `step` (the short name the dashboard's stepper shows, "Call open", "Review") and `links`. The conference stage comes from the edition in `conferences.js`. `/internal.html` reads this one list for the deadline tile, the stepper and the Key dates timeline, and the build stops on a stage with no `step` or a date listed twice.
 
 ## 6. Verify and ship
 

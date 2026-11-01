@@ -1166,8 +1166,7 @@ h4 { font-size: var(--fs-lg); }
   .apps-progress-new { animation: apps-progress-grow 900ms var(--ease-out) 300ms both; }
 }
 @keyframes apps-progress-grow { from { transform: scaleX(0); } }
-.apps-counts,
-.apps-dates {
+.apps-counts {
   display: grid;
   gap: var(--space-2);
   margin: 0;
@@ -1180,11 +1179,27 @@ h4 { font-size: var(--fs-lg); }
   font-size: 1.25rem;
   font-variant-numeric: tabular-nums;
 }
-.apps-dates time {
-  display: block;
-  color: var(--text-muted);
-  font-size: 0.8125rem;
-}
+/* Key dates as a timeline: a rail of dots, the last 30 days ticked and dimmed,
+   the next date with its countdown, and a "Today" marker before it. */
+.apps-timeline { position: relative; margin: 0; padding: 0; list-style: none; }
+.apps-timeline::before { content: ""; position: absolute; top: 0.5rem; bottom: 0.5rem; left: 0.3125rem; width: 2px; border-radius: 1px; background: var(--border); }
+.apps-timeline-item { position: relative; display: grid; grid-template-columns: auto 1fr; column-gap: var(--space-3); padding: 0 0 var(--space-3) calc(0.75rem + var(--space-3)); }
+.apps-timeline-item[hidden] { display: none; }
+.apps-timeline-item time { display: block; color: var(--text-muted); font-size: 0.8125rem; grid-column: 1 / -1; }
+.apps-timeline-label { grid-column: 1 / -1; }
+.apps-timeline-dot { position: absolute; top: 0.25rem; left: 0; width: 0.75rem; height: 0.75rem; border: 2px solid var(--border-strong); border-radius: 50%; background: var(--bg-elev); }
+.apps-timeline-past { opacity: 0.6; }
+.apps-timeline-past .apps-timeline-dot { border-color: var(--accent); background: var(--accent); }
+.apps-timeline-past .apps-timeline-dot::after { content: ""; position: absolute; left: 0.125rem; top: 0.0625rem; width: 0.25rem; height: 0.375rem; border: solid var(--bg-elev); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.apps-timeline-past .apps-timeline-label { text-decoration: line-through; text-decoration-color: var(--text-muted); }
+.apps-timeline-next .apps-timeline-dot { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent); }
+.apps-timeline-next .apps-timeline-label { font-weight: 600; }
+.apps-timeline-later .apps-timeline-dot { border-color: var(--border-strong); }
+.apps-timeline-when { grid-column: 1 / -1; color: var(--accent); font-size: 0.8125rem; font-weight: 600; }
+.apps-timeline-when:empty { display: none; }
+.apps-timeline-today { position: relative; display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-3); color: var(--accent); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.apps-timeline-today::before { content: ""; width: 0.75rem; height: 2px; border-radius: 1px; background: var(--accent); }
+.apps-timeline-today::after { content: ""; flex: 1; height: 1px; background: color-mix(in srgb, var(--accent) 40%, transparent); }
 /* A tab change crossfades the panels, the new one rising slightly (see switchTab). */
 .apps-panel:not([hidden]) { view-transition-name: apps-panel; }
 ::view-transition-group(apps-panel) { animation-duration: 320ms; animation-timing-function: var(--ease-out); }

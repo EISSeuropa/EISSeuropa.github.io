@@ -237,31 +237,24 @@ module.exports = {
     { href: "https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/admin-guide.md", label: "Operator and handover guide", icon: "book-open", roles: ["staff", "management", "board"] },
   ],
 
-  // Hand-kept dates for the /internal.html list, added to the conference and
-  // the releases: { date: "2027-01-31", label: "...", roles: ["staff"] }. This
-  // page is public, so nothing confidential. Past dates drop off at build.
+  // The year's dates for /internal.html, one edition at a time, added there to
+  // the conference and the release due dates. This page is public, so nothing
+  // confidential: { date: "2027-01-31", label: "...", roles: ["staff"] }.
+  // A date that opens a stage of the conference year also carries `stage` (its
+  // name on the "Now" card), `step` (its short name on the stepper) and
+  // `links` (staffLinks by key or label). A stage runs until the next date
+  // that opens one. The last stage, the conference itself, comes from
+  // conferences.js with `conferenceStage` below.
   keyDates: [
-    { date: "2026-11-10", label: "Issue the ESSC 2027 call for papers" },
-    { date: "2027-01-26", label: "Panel, poster and paper proposals due on Indico" },
-    { date: "2027-02-20", label: "Decisions on open panels (organising committee) and on papers for closed panels (chairs)" },
-    { date: "2027-02-27", label: "Final programme sent to participants" },
+    { date: "2026-06-13", label: "Preparations for ESSC 2027 begin", stage: "Preparing the call for papers", step: "Prepare call", links: ["drive", "chat"] },
+    { date: "2026-11-10", label: "Issue the ESSC 2027 call for papers", stage: "Call for papers open", step: "Call open", links: ["indico", "groups"] },
+    { date: "2027-01-26", label: "Panel, poster and paper proposals due on Indico", stage: "Reviewing proposals", step: "Review", links: ["indico", "drive"] },
+    { date: "2027-02-20", label: "Decisions on open panels (organising committee) and on papers for closed panels (chairs)", stage: "Finalising the programme", step: "Programme", links: ["indico", "groups"] },
+    { date: "2027-02-27", label: "Final programme sent to participants", stage: "Programme out, papers next", step: "Papers", links: ["indico", "groups"] },
     { date: "2027-05-27", label: "Papers due to panel chairs for the Best Paper Prize" },
-    { date: "2027-06-03", label: "Papers due to panel chairs" },
+    { date: "2027-06-03", label: "Papers due to panel chairs", stage: "Final preparations", step: "Final prep", links: ["drive", "calendar"] },
   ],
-
-  // The stage of the conference year shown on /internal.html, one edition at a
-  // time. Each runs from its `from` date to the next one's, and the last stops
-  // at `until`. `links` name staffLinks by key or label. `step` is the short
-  // name on the dashboard's stepper.
-  conferencePhases: [
-    { from: "2026-06-13", step: "Prepare call", label: "Preparing the call for papers", note: "The call is issued by 10 November.", links: ["drive", "chat"] },
-    { from: "2026-11-10", step: "Call open", label: "Call for papers open", note: "Proposals are due on Indico by 26 January.", links: ["indico", "groups"] },
-    { from: "2027-01-26", step: "Review", label: "Reviewing proposals", note: "Decisions on panels and papers are due by 20 February.", links: ["indico", "drive"] },
-    { from: "2027-02-20", step: "Programme", label: "Finalising the programme", note: "The final programme goes to participants on 27 February.", links: ["indico", "groups"] },
-    { from: "2027-02-27", step: "Papers", label: "Programme out, papers next", note: "Papers reach panel chairs by 27 May for the Best Paper Prize, and by 3 June otherwise.", links: ["indico", "groups"] },
-    { from: "2027-06-03", step: "Final prep", label: "Final preparations", note: "ESSC 2027 opens in Belgrade on 10 June.", links: ["drive", "calendar"] },
-    { from: "2027-06-10", until: "2027-06-11", step: "Conference", label: "ESSC 2027 is on", note: "In Belgrade until 11 June.", links: ["indico", "groups"] },
-  ],
+  conferenceStage: { step: "Conference", links: ["indico", "groups"] },
 
   // The unlisted /internal.html#admin view. Hidden from view, not secret: the
   // links are in the page source and each app's own sign-in protects it.
