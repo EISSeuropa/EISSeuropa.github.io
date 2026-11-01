@@ -133,10 +133,16 @@ successor inherits through the handover in section 4.
   minutes, and the last build's figures stay if that fails. Workspace and
   Google status update only at build. "Since your last visit" compares
   against figures saved in that browser.
-- **Conference phase.** `conferencePhases` in `src/_data/site.js` holds one
-  edition's stages, and needs replacing for each new edition along with
-  `keyDates`. Each stage's `step` is its short name on the stepper under the
-  "Now" card, which fills to today's place in the year at each build.
+- **Dates and conference phase.** `keyDates` in `src/_data/site.js` is the
+  one list of an edition's dates, and needs replacing for each new edition.
+  A date that opens a stage of the year also carries `stage` (its name on the
+  "Now" card), `step` (its short name on the stepper) and `links`. The stage
+  runs until the next date that opens one, and the conference stage comes
+  from `conferences.js` with `conferenceStage`. The "Now" card's note names
+  the next date, so no date is typed twice. The build stops on a stage with
+  no `step` or on a date listed twice. Key dates show as a timeline: the last
+  30 days ticked off, the next date with its countdown and a "Today" marker,
+  kept right in the browser between builds.
 - **Guides.** Guides are `guideLinks` in `src/_data/site.js`.
 - **IT System Monitoring.** A staff section that lists the latest run of
   each automation in both site repos, read when the site builds by
