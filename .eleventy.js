@@ -93,6 +93,16 @@ module.exports = function (eleventyConfig) {
     return loc === "fr-FR" ? out.replace(/^1 /, "1er ") : out;
   });
 
+  // Two ISO dates as one localised range: "4 January – 26 February 2027" /
+  // "4 janvier – 26 février 2027" / "4. Januar – 26. Februar 2027".
+  eleventyConfig.addFilter("dateRange", (start, end, lang) => {
+    const loc = { en: "en-GB", fr: "fr-FR", de: "de-DE" }[lang || "en"] || "en-GB";
+    const out = new Intl.DateTimeFormat(loc, {
+      day: "numeric", month: "long", year: "numeric", timeZone: "UTC",
+    }).formatRange(new Date(start + "T00:00:00Z"), new Date(end + "T00:00:00Z"));
+    return loc === "fr-FR" ? out.replace(/(^|– )1 /g, "$11er ") : out;
+  });
+
   // Blog posts in one language (#1740). A post without `lang` is English.
   eleventyConfig.addFilter("byLang", (items, lang) =>
     (items || []).filter((i) => (i.data.lang || "en") === lang));

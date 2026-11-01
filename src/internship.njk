@@ -2,7 +2,7 @@
 layout: base.njk
 permalink: /internship.html
 title: Volunteering and internships
-description: Volunteer with the EISS remotely, at about a day a week in one of three eight-week cohorts a year, and leave with something published under your own name. Open to students and to recent graduates. A convention de stage is available if your programme requires one.
+description: Volunteer with the EISS remotely, about a day a week for eight weeks, and leave with something published under your own name. Three cohorts a year, open to students and recent graduates.
 navKey: internship
 lang: en
 alternates:
@@ -11,110 +11,81 @@ alternates:
   de: /internship.de.html
 ---
 {% from "icons.njk" import icon %}
+{% set open = false %}{% for c in cohorts %}{% if not open and (c.callOpens | daysUntil) <= 0 and (c.applyBy | daysUntil) >= 0 %}{% set open = c %}{% endif %}{% endfor %}
 
 <header class="page-header">
   <div class="container">
     <span class="eyebrow">Join us</span>
     <h1>Volunteering and internships</h1>
     <p class="page-lead">
-      The EISS is run entirely by volunteers. Contribute remotely, at about a day a week over eight
-      weeks, and leave with something that carries your name: a blog post under your own byline, or a
-      credited contribution to the Anthology. Open to students and to recent graduates alike.
+      The EISS is run entirely by volunteers. Join a cohort, work remotely about a day a week for
+      eight weeks, and leave with something that carries your name.
     </p>
-    {% for c in cohorts %}{% if (c.callOpens | daysUntil) <= 0 and (c.applyBy | daysUntil) >= 0 %}
-    <p class="page-lead">
-      <strong>Applications for {{ c.phrase.en }} are open until
-      {{ c.applyBy | newsDate("en") }}.</strong> <a href="#intakes">See the dates</a>.
+    {% if open %}
+    <p style="margin-top: var(--space-5);">
+      <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}?subject={{ open.name.en }}%20cohort">
+        {{ icon("mail") }} Apply for {{ open.phrase.en }} by {{ open.applyBy | newsDate("en") }}
+      </a>
     </p>
-    {% endif %}{% endfor %}
+    {% endif %}
   </div>
 </header>
 
 <section class="section">
   <div class="container">
-    <h2>What you get out of it</h2>
+    <h2 id="intakes">When you can start</h2>
     <p style="max-width: 44rem;">
-      All four are agreed at the start and written into your objectives.
+      Three cohorts a year, of up to four people each. Nothing new starts between May and the
+      Annual Conference in June.
     </p>
 
     <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-block: var(--space-6);">
+      {% for c in cohorts %}{% if (c.end | daysUntil) >= 0 %}
       <article class="tile">
-        <div class="tile-icon" aria-hidden="true">{{ icon("file-text") }}</div>
-        <h3>Something published under your name</h3>
-        <p>
-          If your track produces a blog post, it goes out under your own byline, as a defined part of
-          the placement.
-        </p>
+        <h3>{{ c.name.en }}</h3>
+        <p><strong>{{ c.start | dateRange(c.end, "en") }}</strong></p>
+        <p>{{ c.focus.en }}</p>
+        {% if (c.callOpens | daysUntil) > 0 %}
+        <p class="muted">Applications {{ c.callOpens | dateRange(c.applyBy, "en") }}.</p>
+        {% elif (c.applyBy | daysUntil) >= 0 %}
+        <p><strong>Applications open until {{ c.applyBy | newsDate("en") }}.</strong></p>
+        {% else %}
+        <p class="muted">Applications closed.</p>
+        {% endif %}
       </article>
-      <article class="tile">
-        <div class="tile-icon" aria-hidden="true">{{ icon("book-open") }}</div>
-        <h3>Credited by name either way</h3>
-        <p>
-          Indexing and data work produce no byline. They are credited by name on this page and in
-          the project's changelog, with a link to what you did.
-        </p>
-      </article>
-      <article class="tile">
-        <div class="tile-icon" aria-hidden="true">{{ icon("users") }}</div>
-        <h3>A conversation with the board</h3>
-        <p>
-          Half an hour with a board member about your own research interests, scheduled in your
-          first weeks.
-        </p>
-      </article>
-      <article class="tile">
-        <div class="tile-icon" aria-hidden="true">{{ icon("calendar") }}</div>
-        <h3>Three meetings across the eight weeks</h3>
-        <p>
-          Onboarding in week one, a review in week four, and an exit review in week eight with a
-          short feedback survey.
-        </p>
-      </article>
+      {% endif %}{% endfor %}
     </div>
+  </div>
+</section>
 
+<section class="section">
+  <div class="container">
     <h2>What you would work on</h2>
     <p style="max-width: 44rem;">
-      We match this to what interests you. Most volunteers take on one of these, and many move
-      between them. Everything currently open is on the
+      One track each, matched to what interests you. Open tasks are on the
       <a href="{{ site.helpWantedUrl }}">“help wanted” list</a>.
     </p>
 
     <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-block: var(--space-6);">
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("search") }}</div>
-        <h3>Corpus and abstract indexing</h3>
-        <p>
-          Tracking down the abstracts of papers given at earlier conferences, checking them against
-          the programme, and adding them to the Anthology so the record is complete.
-        </p>
-        <p class="muted"><strong>You produce:</strong> a batch of recovered abstracts, credited to you by name.</p>
+        <h3>Recovering abstracts</h3>
+        <p>Tracking down papers from earlier conferences and adding them to the Anthology.</p>
       </article>
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("file-text") }}</div>
-        <h3>Writing a post for Belvedere</h3>
-        <p>
-          A short, signed piece on a question in European security, on a topic you choose. It is
-          edited before it appears.
-        </p>
-        <p class="muted"><strong>You produce:</strong> a post on <a href="/blog.html">Belvedere – the EISS Blog</a>, under your own byline.</p>
+        <h3>Writing for Belvedere</h3>
+        <p>A short, signed post on <a href="/blog.html">the EISS blog</a>, on a question in European security that you choose.</p>
       </article>
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("settings") }}</div>
-        <h3>Improving the database</h3>
-        <p>
-          Strengthening the data behind the Anthology: author names and affiliations, links to
-          published versions, and the connections the Atlas draws between papers and people.
-        </p>
-        <p class="muted"><strong>You produce:</strong> a reviewed dataset the site draws on, credited to you by name.</p>
+        <h3>Improving the data</h3>
+        <p>Author names, affiliations and links to published versions, behind the Anthology and the Atlas.</p>
       </article>
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("users") }}</div>
-        <h3>Annual Conference preparation</h3>
-        <p>
-          Helping the team get our flagship event ready, from the call for papers through to the
-          programme. Everyone here takes some of this.
-        </p>
-        <p class="muted"><strong>You produce:</strong> your share of the conference, credited by name. Seasonal, and heaviest in spring.</p>
+        <h3>The Annual Conference</h3>
+        <p>Programme and logistics, from the call for papers to the event. Busiest in spring.</p>
       </article>
     </div>
   </div>
@@ -122,86 +93,39 @@ alternates:
 
 <section class="section">
   <div class="container">
-    <h2>How the placement works</h2>
-    <p style="max-width: 44rem;">
-      The terms, stated in advance.
-    </p>
+    <h2>The terms</h2>
 
     <dl class="definition-list">
       <div>
-        <dt>About a day a week, over eight weeks</dt>
+        <dt>Your name on your work</dt>
         <dd>
-          We agree the rhythm at the start, and you can change it as your term or your job demands.
-          There is no minimum you owe us and you are free to stop earlier.
-        </dd>
-      </div>
-      <div>
-        <dt>Unpaid</dt>
-        <dd>
-          The EISS has no salaried staff. Everyone here is a volunteer, the board included. Expenses
-          agreed with us beforehand are reimbursed against receipts, and nothing else is paid.
-        </dd>
-      </div>
-      <div>
-        <dt>Volunteering by default</dt>
-        <dd>
-          Most people join us as <em lang="fr">bénévoles</em>. There is no contract, you choose which
-          track you take, you set your own pace, and you can stop at any point without giving a
-          reason.
-        </dd>
-      </div>
-      <div>
-        <dt>A <em lang="fr">convention de stage</em> where your programme needs one</dt>
-        <dd>
-          French law treats a placement as a <em lang="fr">stage</em> only where it sits inside a
-          course carrying at least 200 hours of teaching a year. If yours does, we sign the
-          tripartite convention with you and your institution and name a
-          <em lang="fr">tuteur de stage</em>. Tell us early: the paperwork goes through your
-          university.
+          A post goes out under your byline. Indexing and data work are credited by name on this
+          page and in the changelog. One publishable output each, edited before it appears. We may
+          decline a piece, and that does not affect the credit for the rest of your work.
         </dd>
       </div>
       <div>
         <dt>Someone to ask</dt>
         <dd>
-          You get a named point of contact from your first day, and three scheduled meetings.
-          Between those, nobody here monitors your hours or asks for a status report.
+          A named contact from day one, meetings in weeks one, four and eight, and half an hour
+          with a board member about your own research. Nobody monitors your hours.
         </dd>
       </div>
       <div>
-        <dt>One published output</dt>
+        <dt>Unpaid, and free to stop</dt>
         <dd>
-          One publishable output per person. It is edited before publication, and we may decline
-          one. A declined piece does not affect the credit for the rest of your work.
+          Nobody at the EISS is paid, the board included. Expenses agreed beforehand are reimbursed
+          against receipts. There is no contract and you can stop at any point.
         </dd>
       </div>
-    </dl>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <h2 id="intakes">When you can start</h2>
-    <p style="max-width: 44rem;">
-      Volunteers start together, in one of three cohorts a year of up to four people each. No new
-      placements start between May and the Annual Conference in June.
-    </p>
-
-    <dl class="definition-list">
-      {% for c in cohorts %}{% if (c.end | daysUntil) >= 0 %}
       <div>
-        <dt>{{ c.name.en }} · {{ c.start | newsDate("en") }} to {{ c.end | newsDate("en") }}</dt>
+        <dt>A <em lang="fr">convention de stage</em> if you need one</dt>
         <dd>
-          {{ c.focus.en }}
-          {% if (c.callOpens | daysUntil) > 0 %}
-          Applications open on {{ c.callOpens | newsDate("en") }} and close on {{ c.applyBy | newsDate("en") }}.
-          {% elif (c.applyBy | daysUntil) >= 0 %}
-          <strong>Applications are open until {{ c.applyBy | newsDate("en") }}.</strong>
-          {% else %}
-          Applications for this cohort have closed.
-          {% endif %}
+          We sign one where your course carries at least 200 hours of teaching a year, and name a
+          <em lang="fr">tuteur de stage</em>. Tell us early: the paperwork goes through your
+          university.
         </dd>
       </div>
-      {% endif %}{% endfor %}
     </dl>
   </div>
 </section>
@@ -234,65 +158,17 @@ alternates:
 
 <section class="section-tight">
   <div class="container">
-    <article class="card" style="display: grid; gap: var(--space-5); grid-template-columns: 1fr; padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <div>
-        <div class="featured-eyebrow">Get in touch</div>
-        <h2 style="margin-bottom: var(--space-3);">Write to us</h2>
-        <p class="muted">
-          Send a short note and a CV to
-          <a href="mailto:{{ site.contactEmail }}?subject=Volunteering">{{ site.contactEmail }}</a>,
-          telling us which cohort and which of the four areas above appeal to you, and roughly how
-          much time you have. We reply to everyone within a week of the closing date. Mention a <em lang="fr">convention de stage</em> if you need one.
-        </p>
-        <p style="margin-top: var(--space-4);">
-          <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}?subject=Volunteering">
-            {{ icon("mail") }} Write to us
-          </a>
-        </p>
-      </div>
-    </article>
-  </div>
-</section>
-
-<section class="section-tight">
-  <div class="container">
     <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <div class="prose" style="margin-inline: 0;">
-        <div class="featured-eyebrow">Already started?</div>
-        <h2>Start here</h2>
-        <p>
-          Six things for your first week. If a step does not work, tell
-          us and we will sort it out.
-        </p>
-        <ol>
-          <li>
-            <strong>You have a point of contact.</strong> They wrote to you when you joined. Ask
-            them anything, including whether something is worth doing at all.
-          </li>
-          <li>
-            <strong>Send us your GitHub account name</strong>, so we can add you to the repository.
-            Never used GitHub? Say so. We set it up with you, and it is not a prerequisite.
-          </li>
-          <li>
-            <strong>Put the three meetings in your calendar.</strong> Onboarding in week one,
-            the review in week four and the exit review in week eight. We send the invitations.
-          </li>
-          <li>
-            <strong>Pick something from the
-            <a href="{{ site.helpWantedUrl }}">“help wanted” list</a>.</strong> Comment to say you
-            are taking it. Handing it back later is fine and counts against nothing.
-          </li>
-          <li>
-            <strong>Read <a href="{{ site.handbookUrl }}">the handbook</a> before your first
-            task.</strong> It covers what each job actually asks of you, and where the judgement
-            calls are.
-          </li>
-          <li>
-            <strong>Read the house style before you write.</strong> British English, and short beats
-            elaborate.
-          </li>
-        </ol>
-      </div>
+      <h2 style="margin-bottom: var(--space-3);">Write to us</h2>
+      <p class="muted">
+        Send a short note and a CV to
+        <a href="mailto:{{ site.contactEmail }}?subject=Volunteering">{{ site.contactEmail }}</a>,
+        saying which cohort and which track interest you. We reply to everyone within a week of the
+        closing date.
+      </p>
+      <p class="muted" style="margin-top: var(--space-4);">
+        Already a volunteer? Your first week is in <a href="{{ site.handbookUrl }}">the handbook</a>.
+      </p>
     </article>
   </div>
 </section>

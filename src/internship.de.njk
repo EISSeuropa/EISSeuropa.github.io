@@ -2,7 +2,7 @@
 layout: base.njk
 permalink: /internship.de.html
 title: Ehrenamt und Praktika
-description: Wirken Sie remote an der EISS mit, etwa einen Tag pro Woche in einem der drei achtwöchigen Durchgänge im Jahr, und gehen Sie mit einer Veröffentlichung unter Ihrem eigenen Namen. Offen für Studierende und frisch Graduierte. Eine convention de stage ist möglich, wenn Ihr Studiengang sie verlangt.
+description: Wirken Sie remote an der EISS mit, etwa einen Tag pro Woche über acht Wochen, und gehen Sie mit einer Veröffentlichung unter Ihrem eigenen Namen. Drei Durchgänge im Jahr, offen für Studierende und frisch Graduierte.
 navKey: internship
 lang: de
 status: beta
@@ -12,113 +12,82 @@ alternates:
   de: /internship.de.html
 ---
 {% from "icons.njk" import icon %}
+{% set open = false %}{% for c in cohorts %}{% if not open and (c.callOpens | daysUntil) <= 0 and (c.applyBy | daysUntil) >= 0 %}{% set open = c %}{% endif %}{% endfor %}
 
 <header class="page-header">
   <div class="container">
     <span class="eyebrow">Mitmachen</span>
     <h1>Ehrenamt und Praktika</h1>
     <p class="page-lead">
-      Die EISS wird ausschließlich von Ehrenamtlichen getragen. Wirken Sie remote mit, etwa einen
-      Tag pro Woche über acht Wochen, und gehen Sie mit einer Arbeit, die Ihren Namen trägt: einem
-      Blogbeitrag unter Ihrem eigenen Namen oder einem namentlich ausgewiesenen Beitrag zur
-      Anthologie. Offen für Studierende ebenso wie für frisch Graduierte.
+      Die EISS wird ausschließlich von Ehrenamtlichen getragen. Schließen Sie sich einem Durchgang
+      an, arbeiten Sie acht Wochen lang etwa einen Tag pro Woche remote mit, und gehen Sie mit einer
+      Arbeit, die Ihren Namen trägt.
     </p>
-    {% for c in cohorts %}{% if (c.callOpens | daysUntil) <= 0 and (c.applyBy | daysUntil) >= 0 %}
-    <p class="page-lead">
-      <strong>Bewerbungen für {{ c.phrase.de }} sind bis zum {{ c.applyBy | newsDate("de") }}
-      möglich.</strong> <a href="#intakes">Zu den Terminen</a>.
+    {% if open %}
+    <p style="margin-top: var(--space-5);">
+      <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}?subject=Durchgang%20{{ open.name.de }}">
+        {{ icon("mail") }} Bis zum {{ open.applyBy | newsDate("de") }} für {{ open.phrase.de }} bewerben
+      </a>
     </p>
-    {% endif %}{% endfor %}
+    {% endif %}
   </div>
 </header>
 
 <section class="section">
   <div class="container">
-    <h2>Was Sie davon haben</h2>
+    <h2 id="intakes">Wann Sie beginnen können</h2>
     <p style="max-width: 44rem;">
-      Alle vier werden zu Beginn vereinbart und in Ihren Zielen festgehalten.
+      Drei Durchgänge im Jahr mit höchstens vier Personen. Zwischen Mai und der Jahreskonferenz im
+      Juni beginnen keine neuen Einsätze.
     </p>
 
     <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-block: var(--space-6);">
+      {% for c in cohorts %}{% if (c.end | daysUntil) >= 0 %}
       <article class="tile">
-        <div class="tile-icon" aria-hidden="true">{{ icon("file-text") }}</div>
-        <h3>Eine Veröffentlichung unter Ihrem Namen</h3>
-        <p>
-          Führt Ihr Arbeitsbereich zu einem Blogbeitrag, erscheint er unter Ihrem eigenen Namen, als
-          fest vereinbarter Bestandteil des Einsatzes.
-        </p>
+        <h3>{{ c.name.de }}</h3>
+        <p><strong>{{ c.start | dateRange(c.end, "de") }}</strong></p>
+        <p>{{ c.focus.de }}</p>
+        {% if (c.callOpens | daysUntil) > 0 %}
+        <p class="muted">Bewerbungszeitraum: {{ c.callOpens | dateRange(c.applyBy, "de") }}.</p>
+        {% elif (c.applyBy | daysUntil) >= 0 %}
+        <p><strong>Bewerbungen bis zum {{ c.applyBy | newsDate("de") }} möglich.</strong></p>
+        {% else %}
+        <p class="muted">Die Bewerbungsfrist ist abgelaufen.</p>
+        {% endif %}
       </article>
-      <article class="tile">
-        <div class="tile-icon" aria-hidden="true">{{ icon("book-open") }}</div>
-        <h3>Namentlich ausgewiesen, in jedem Fall</h3>
-        <p>
-          Erschließung und Datenarbeit führen zu keinem eigenen Beitrag. Sie werden auf dieser Seite
-          und im Änderungsprotokoll des Projekts namentlich ausgewiesen, mit einem Link auf das, was
-          Sie getan haben.
-        </p>
-      </article>
-      <article class="tile">
-        <div class="tile-icon" aria-hidden="true">{{ icon("users") }}</div>
-        <h3>Ein Gespräch mit dem Vorstand</h3>
-        <p>
-          Eine halbe Stunde mit einem Vorstandsmitglied über Ihre eigenen Forschungsinteressen,
-          angesetzt in Ihren ersten Wochen.
-        </p>
-      </article>
-      <article class="tile">
-        <div class="tile-icon" aria-hidden="true">{{ icon("calendar") }}</div>
-        <h3>Drei Termine über die acht Wochen</h3>
-        <p>
-          Ein Einführungsgespräch in der ersten Woche, ein Zwischengespräch in der vierten und ein
-          Abschlussgespräch in der achten Woche mit einer kurzen Rückmeldeumfrage.
-        </p>
-      </article>
+      {% endif %}{% endfor %}
     </div>
+  </div>
+</section>
 
+<section class="section">
+  <div class="container">
     <h2>Woran Sie arbeiten würden</h2>
     <p style="max-width: 44rem;">
-      Wir richten das an Ihren Interessen aus. Die meisten Ehrenamtlichen übernehmen einen dieser
-      Bereiche, und viele wechseln zwischen ihnen. Alles derzeit Offene steht auf der
+      Ein Bereich pro Person, passend zu Ihren Interessen. Offene Aufgaben stehen auf der
       <a href="{{ site.helpWantedUrl }}">Liste „help wanted“</a>.
     </p>
 
     <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-block: var(--space-6);">
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("search") }}</div>
-        <h3>Erschließung von Korpus und Abstracts</h3>
-        <p>
-          Die Abstracts der Beiträge früherer Konferenzen aufspüren, sie am Programm prüfen und in
-          die Anthologie einpflegen, damit der Bestand vollständig wird.
-        </p>
-        <p class="muted"><strong>Ihr Ergebnis:</strong> ein Satz wiedergewonnener Abstracts, namentlich Ihnen zugeschrieben.</p>
+        <h3>Abstracts wiederfinden</h3>
+        <p>Beiträge früherer Konferenzen aufspüren und in die Anthologie aufnehmen.</p>
       </article>
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("file-text") }}</div>
-        <h3>Einen Beitrag für Belvedere schreiben</h3>
-        <p>
-          Ein kurzer, namentlich gezeichneter Text zu einer Frage der europäischen Sicherheit, zu
-          einem Thema Ihrer Wahl. Er wird vor der Veröffentlichung redigiert.
-        </p>
-        <p class="muted"><strong>Ihr Ergebnis:</strong> ein Beitrag in <a href="/blog.de.html">Belvedere – dem EISS-Blog</a>, unter Ihrem eigenen Namen.</p>
+        <h3>Schreiben für Belvedere</h3>
+        <p>Ein kurzer, namentlich gezeichneter Beitrag im <a href="/blog.de.html">EISS-Blog</a> zu einer Frage der europäischen Sicherheit, die Sie selbst wählen.</p>
       </article>
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("settings") }}</div>
-        <h3>Verbesserung der Datenbank</h3>
-        <p>
-          Die Daten hinter der Anthologie festigen: Namen und Affiliationen der Autoren, Links auf
-          die veröffentlichten Fassungen und die Verbindungen, die der Atlas zwischen Beiträgen und
-          Personen zieht.
-        </p>
-        <p class="muted"><strong>Ihr Ergebnis:</strong> ein geprüfter Datenbestand, auf den die Website zugreift, namentlich Ihnen zugeschrieben.</p>
+        <h3>Die Daten verbessern</h3>
+        <p>Autorennamen, Affiliationen und Links zu veröffentlichten Fassungen, auf denen die Anthologie und der Atlas aufbauen.</p>
       </article>
       <article class="tile">
         <div class="tile-icon" aria-hidden="true">{{ icon("users") }}</div>
-        <h3>Vorbereitung der Jahreskonferenz</h3>
-        <p>
-          Dem Team helfen, unsere wichtigste Veranstaltung vorzubereiten, vom Call for Papers bis
-          zum Programm. Alle hier übernehmen einen Teil davon.
-        </p>
-        <p class="muted"><strong>Ihr Ergebnis:</strong> Ihr Anteil an der Konferenz, namentlich genannt. Saisonal, am dichtesten im Frühjahr.</p>
+        <h3>Die Jahreskonferenz</h3>
+        <p>Programm und Organisation, vom Call for Papers bis zur Veranstaltung. Am meisten zu tun ist im Frühjahr.</p>
       </article>
     </div>
   </div>
@@ -126,88 +95,33 @@ alternates:
 
 <section class="section">
   <div class="container">
-    <h2>Wie der Einsatz abläuft</h2>
-    <p style="max-width: 44rem;">
-      Die Bedingungen, vorab benannt.
-    </p>
+    <h2>Die Bedingungen</h2>
 
     <dl class="definition-list">
       <div>
-        <dt>Etwa ein Tag pro Woche, über acht Wochen</dt>
+        <dt>Ihr Name auf Ihrer Arbeit</dt>
         <dd>
-          Den Rhythmus vereinbaren wir zu Beginn, und Sie können ihn je nach Semester oder Beruf
-          ändern. Sie schulden uns kein Minimum und dürfen jederzeit früher aufhören.
+          Ein Blogbeitrag erscheint unter Ihrem Namen. Indexierungs- und Datenarbeit wird auf dieser Seite und im Änderungsprotokoll namentlich ausgewiesen. Ein veröffentlichbares Ergebnis pro Person, vor dem Erscheinen redigiert. Wir können einen Text ablehnen, ohne dass dies die Anerkennung für Ihre übrige Arbeit berührt.
         </dd>
       </div>
       <div>
-        <dt>Unbezahlt</dt>
+        <dt>Eine Ansprechperson</dt>
         <dd>
-          Die EISS hat keine angestellten Mitarbeitenden. Alle hier arbeiten ehrenamtlich, der
-          Vorstand eingeschlossen. Vorab mit uns abgestimmte Auslagen erstatten wir gegen Belege,
-          darüber hinaus wird nichts gezahlt.
+          Eine feste Ansprechperson ab dem ersten Tag, Gespräche in der ersten, vierten und achten Woche und eine halbe Stunde mit einem Vorstandsmitglied über Ihre eigene Forschung. Niemand kontrolliert Ihre Stunden.
         </dd>
       </div>
       <div>
-        <dt>Ehrenamt als Regelfall</dt>
+        <dt>Unbezahlt und ohne Bindung</dt>
         <dd>
-          Die meisten kommen als Ehrenamtliche zu uns. Es gibt keinen Vertrag, Sie wählen Ihren
-          Arbeitsbereich, Sie bestimmen Ihr Tempo, und Sie können jederzeit ohne Begründung
-          aufhören.
+          Bei der EISS wird niemand bezahlt, auch der Vorstand nicht. Vorab vereinbarte Auslagen werden gegen Beleg erstattet. Es gibt keinen Vertrag, und Sie können jederzeit aufhören.
         </dd>
       </div>
       <div>
-        <dt>Eine <em lang="fr">convention de stage</em>, wenn Ihr Studiengang sie verlangt</dt>
+        <dt>Eine <em lang="fr">convention de stage</em>, falls nötig</dt>
         <dd>
-          Das französische Recht wertet einen Einsatz nur dann als <em lang="fr">stage</em>, wenn er
-          in einen Studiengang mit mindestens 200 Lehrstunden pro Jahr eingebettet ist. Trifft das
-          auf Ihren zu, schließen wir die dreiseitige Vereinbarung mit Ihnen und Ihrer Hochschule
-          und benennen einen <em lang="fr">tuteur de stage</em>. Sagen Sie uns früh Bescheid: die
-          Formalitäten laufen über Ihre Universität.
+          Wir schließen eine ab, wenn Ihr Studiengang mindestens 200 Stunden Lehre im Jahr umfasst, und benennen einen <em lang="fr">tuteur de stage</em>. Sagen Sie es uns früh: Die Formalitäten laufen über Ihre Hochschule.
         </dd>
       </div>
-      <div>
-        <dt>Jemand zum Fragen</dt>
-        <dd>
-          Vom ersten Tag an haben Sie eine feste Ansprechperson, dazu drei vereinbarte Termine.
-          Dazwischen zählt hier niemand Ihre Stunden und verlangt niemand einen Statusbericht.
-        </dd>
-      </div>
-      <div>
-        <dt>Eine Veröffentlichung</dt>
-        <dd>
-          Ein veröffentlichungsfähiges Ergebnis pro Person. Es wird vor der Veröffentlichung
-          redaktionell durchgesehen, und wir können entscheiden, es nicht zu veröffentlichen. Die
-          Anerkennung Ihrer übrigen Arbeit bleibt davon unberührt.
-        </dd>
-      </div>
-    </dl>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <h2 id="intakes">Wann Sie beginnen können</h2>
-    <p style="max-width: 44rem;">
-      Ehrenamtliche beginnen gemeinsam, in einem von drei Durchgängen im Jahr mit höchstens vier
-      Personen. Zwischen Mai und der Jahreskonferenz im Juni beginnen keine neuen Einsätze.
-    </p>
-
-    <dl class="definition-list">
-      {% for c in cohorts %}{% if (c.end | daysUntil) >= 0 %}
-      <div>
-        <dt>{{ c.name.de }} · {{ c.start | newsDate("de") }} bis {{ c.end | newsDate("de") }}</dt>
-        <dd>
-          {{ c.focus.de }}
-          {% if (c.callOpens | daysUntil) > 0 %}
-          Bewerbungen vom {{ c.callOpens | newsDate("de") }} bis zum {{ c.applyBy | newsDate("de") }}.
-          {% elif (c.applyBy | daysUntil) >= 0 %}
-          <strong>Bewerbungen sind bis zum {{ c.applyBy | newsDate("de") }} möglich.</strong>
-          {% else %}
-          Die Bewerbungsfrist für diesen Durchgang ist abgelaufen.
-          {% endif %}
-        </dd>
-      </div>
-      {% endif %}{% endfor %}
     </dl>
   </div>
 </section>
@@ -239,67 +153,18 @@ alternates:
 
 <section class="section-tight">
   <div class="container">
-    <article class="card" style="display: grid; gap: var(--space-5); grid-template-columns: 1fr; padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <div>
-        <div class="featured-eyebrow">Kontakt</div>
-        <h2 style="margin-bottom: var(--space-3);">Schreiben Sie uns</h2>
-        <p class="muted">
-          Senden Sie eine kurze Nachricht und einen Lebenslauf an
-          <a href="mailto:{{ site.contactEmail }}?subject=Ehrenamt">{{ site.contactEmail }}</a> und
-          sagen Sie uns, welcher Durchgang und welcher der vier Bereiche oben Sie reizen und wie viel
-          Zeit Sie ungefähr haben. Wir antworten allen innerhalb einer Woche nach Fristende. Erwähnen Sie eine <em lang="fr">convention de stage</em>, falls Sie eine brauchen.
-        </p>
-        <p style="margin-top: var(--space-4);">
-          <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}?subject=Ehrenamt">
-            {{ icon("mail") }} Schreiben Sie uns
-          </a>
-        </p>
-      </div>
-    </article>
-  </div>
-</section>
-
-<section class="section-tight">
-  <div class="container">
     <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <div class="prose" style="margin-inline: 0;">
-        <div class="featured-eyebrow">Schon angefangen?</div>
-        <h2>Hier beginnen</h2>
-        <p>
-          Sechs Punkte für Ihre erste Woche. Funktioniert ein
-          Schritt nicht, sagen Sie es uns und wir bringen es in Ordnung.
-        </p>
-        <ol>
-          <li>
-            <strong>Sie haben eine feste Ansprechperson.</strong> Sie hat Ihnen zum Start
-            geschrieben. Fragen Sie sie alles, auch ob eine Aufgabe überhaupt lohnt.
-          </li>
-          <li>
-            <strong>Schicken Sie uns Ihren GitHub-Namen</strong>, damit wir Sie zum Repository
-            hinzufügen können. Noch nie mit GitHub gearbeitet? Sagen Sie es. Wir richten es
-            gemeinsam mit Ihnen ein, und es ist für nichts Voraussetzung.
-          </li>
-          <li>
-            <strong>Tragen Sie die drei Termine in Ihren Kalender ein.</strong> Einführung in der
-            ersten Woche, Zwischengespräch in der vierten und Abschlussgespräch in der achten. Die Einladungen verschicken wir.
-          </li>
-          <li>
-            <strong>Wählen Sie etwas aus der
-            <a href="{{ site.helpWantedUrl }}">Liste „help wanted“</a>.</strong> Schreiben Sie einen
-            Kommentar, dass Sie es übernehmen. Es später zurückzugeben ist in Ordnung und wird
-            Ihnen nicht angelastet.
-          </li>
-          <li>
-            <strong>Lesen Sie <a href="{{ site.handbookUrl }}">den Leitfaden</a> vor Ihrer ersten
-            Aufgabe.</strong> Er erklärt, was jede Aufgabe tatsächlich verlangt und wo die
-            Ermessensfragen liegen. Er liegt nur auf Englisch vor.
-          </li>
-          <li>
-            <strong>Lesen Sie den Hausstil, bevor Sie schreiben.</strong> Britisches Englisch, und
-            knapp schlägt ausgeschmückt.
-          </li>
-        </ol>
-      </div>
+      <h2 style="margin-bottom: var(--space-3);">Schreiben Sie uns</h2>
+      <p class="muted">
+        Senden Sie eine kurze Nachricht und einen Lebenslauf an
+        <a href="mailto:{{ site.contactEmail }}?subject=Ehrenamt">{{ site.contactEmail }}</a> und
+        nennen Sie den Durchgang und den Bereich, die Sie interessieren. Wir antworten allen innerhalb
+        einer Woche nach Fristende.
+      </p>
+      <p class="muted" style="margin-top: var(--space-4);">
+        Schon dabei? Ihre erste Woche ist im <a href="{{ site.handbookUrl }}">Leitfaden</a> beschrieben
+        (auf Englisch).
+      </p>
     </article>
   </div>
 </section>
