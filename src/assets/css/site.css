@@ -1222,6 +1222,7 @@ h4 { font-size: var(--fs-lg); }
 .apps-timeline-today { position: relative; display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-3); color: var(--accent); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 .apps-timeline-today::before { content: ""; width: 0.75rem; height: 2px; border-radius: 1px; background: var(--accent); }
 .apps-timeline-today::after { content: ""; flex: 1; height: 1px; background: color-mix(in srgb, var(--accent) 40%, transparent); }
+.apps-timeline-more { margin: var(--space-2) 0 0; }
 /* A tab change crossfades the panels, the new one rising slightly (see switchTab). */
 .apps-panel:not([hidden]) { view-transition-name: apps-panel; }
 ::view-transition-group(apps-panel) { animation-duration: 320ms; animation-timing-function: var(--ease-out); }

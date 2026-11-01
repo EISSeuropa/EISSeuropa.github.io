@@ -242,6 +242,7 @@ eleventyExcludeFromCollections: true
                 <li class="apps-timeline-item apps-timeline-{{ d.state }}" data-roles="{{ d.roles | join(' ') }}" data-date="{{ d.date }}"><span class="apps-timeline-dot" aria-hidden="true"></span><time datetime="{{ d.date }}">{{ d.date | newsDate("en") }}</time> <span class="apps-timeline-label">{{ d.label }}</span><span class="apps-timeline-when" data-apps-timeline-when>{% if d.state == "past" %}<span class="sr-only">, done</span>{% endif %}</span></li>
               {% endfor %}
             </ol>
+            {% if dashboard.calendar %}<p class="apps-note apps-timeline-more"><a href="{{ dashboard.calendar }}">All deadlines, internal ones included</a></p>{% endif %}
           </div>
         {% endif %}
       </div>
