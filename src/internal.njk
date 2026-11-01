@@ -159,6 +159,10 @@ eleventyExcludeFromCollections: true
           <h2 class="apps-heading" id="apps-heading">Your apps</h2>
           <p class="apps-count" data-apps-total role="status" hidden></p>
         </div>
+        <div class="apps-filter" data-apps-filter-box hidden>
+          <label class="sr-only" for="apps-filter">Filter apps</label>
+          <input class="apps-filter-input" id="apps-filter" type="search" placeholder="Filter apps" autocomplete="off" spellcheck="false" data-apps-filter>
+        </div>
       </div>
 
       <ul class="apps-grid" role="list">
@@ -184,6 +188,7 @@ eleventyExcludeFromCollections: true
           {% set n = n + 1 %}
         {% endif %}{% endfor %}
       </ul>
+      <p class="apps-note apps-filter-empty" data-apps-filter-empty hidden></p>
     </section>
 
     <section class="apps-panel" id="status" data-apps-panel aria-labelledby="apps-status-heading">
@@ -747,6 +752,55 @@ eleventyExcludeFromCollections: true
     }
 
     // A click on an app shows that it is opening, since some take seconds to answer.
+    // The apps grid. The three apps opened most often on this device (three
+    // times or more) come first, and the field above filters the tiles, the
+    // rest closing up around the matches. Counts stay in this browser.
+    var grid = document.querySelector("#apps .apps-grid");
+    var USED = "eiss-apps-used", used = {};
+    try { used = JSON.parse(localStorage.getItem(USED)) || {}; } catch (e) {}
+    function hrefOf(li) { var a = li.querySelector("a.apps-tile"); return a ? a.getAttribute("href") : null; }
+    function uses(li) { return used[hrefOf(li)] || 0; }
+    [].slice.call(grid.children).filter(function (li) { return uses(li) >= 3; })
+      .sort(function (a, b) { return uses(b) - uses(a); }).slice(0, 3).reverse()
+      .forEach(function (li) { grid.insertBefore(li, grid.firstChild); });
+    [].forEach.call(grid.children, function (li, i) { li.style.setProperty("--n", i); });
+    grid.addEventListener("click", function (e) {
+      var li = e.target.closest("li"), key = li && hrefOf(li);
+      if (!key) return;
+      used[key] = (used[key] || 0) + 1;
+      try { localStorage.setItem(USED, JSON.stringify(used)); } catch (err) {}
+    });
+
+    var filterBox = document.querySelector("[data-apps-filter-box]");
+    var filter = document.querySelector("[data-apps-filter]");
+    var empty = document.querySelector("[data-apps-filter-empty]");
+    function shown() { return [].filter.call(grid.children, function (li) { return li.offsetParent !== null; }); }
+    function applyFilter() {
+      var q = filter.value.trim().toLowerCase();
+      var before = new Map();
+      shown().forEach(function (li) { before.set(li, li.getBoundingClientRect()); });
+      [].forEach.call(grid.children, function (li) {
+        li.classList.toggle("apps-filtered-out", !!q && li.textContent.toLowerCase().indexOf(q) < 0);
+      });
+      var now = shown();
+      // The tiles that stay glide from where they were to where they land.
+      if (!calm) now.forEach(function (li) {
+        var was = before.get(li);
+        if (!was) return;
+        var to = li.getBoundingClientRect(), dx = was.left - to.left, dy = was.top - to.top;
+        if (dx || dy) li.animate([{ transform: "translate(" + dx + "px, " + dy + "px)" }, { transform: "none" }], { duration: 320, easing: "cubic-bezier(0.22, 1, 0.36, 1)" });
+      });
+      empty.hidden = !q || now.length > 0;
+      empty.textContent = "No app matches “" + filter.value.trim() + "”.";
+      document.querySelector("[data-apps-status]").textContent = q ? now.length + (now.length === 1 ? " app matches" : " apps match") : "";
+    }
+    filter.addEventListener("input", applyFilter);
+    filter.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && filter.value) { e.preventDefault(); filter.value = ""; applyFilter(); }
+    });
+    roleSelect.addEventListener("change", function () { if (filter.value) applyFilter(); });
+    filterBox.hidden = false;
+
     // A new-tab click leaves this page in place, so it gets no animation.
     var launched = null, timer;
     function stopLaunch() {

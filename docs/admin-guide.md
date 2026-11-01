@@ -117,6 +117,7 @@ successor inherits through the handover in section 4.
   languages. `roles` sets which roles see a tile on the dashboard, and
   `menu: true` adds the link to the padlock menu.
 - **Tabs.** Apps, Project status, Guides and IT monitoring, linkable as `#apps`, `#status`, `#guides` and `#it`. Without JavaScript all four stack. The IT monitoring tab follows the staff role.
+- **Apps grid.** A "Filter apps" field narrows the tiles by name and note, and Escape clears it. The three apps opened most often in a browser (three times or more) move to the front there. The counts sit in that browser's storage under `eiss-apps-used` and go nowhere else.
 - **Project status.** The next release and the open issue, PR and
   `help wanted` counts come from `src/data/roadmap-progress.json`, which
   the daily *Refresh roadmap surfaces* workflow rewrites. Key dates are
