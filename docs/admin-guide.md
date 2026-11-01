@@ -115,7 +115,9 @@ successor inherits through the handover in section 4.
 - **Changing the apps.** Edit `staffLinks` in `src/_data/site.js`, with
   labels under `staffMenu` in `src/_data/i18n.js` for all three
   languages. `roles` sets which roles see a tile on the dashboard, and
-  `menu: true` adds the link to the padlock menu.
+  a `menu` number adds the link to the padlock menu, which lists them in
+  that order. Team chat comes first, and the last entry opens this
+  dashboard.
 - **Tabs.** Apps, Project status, Guides and IT monitoring, linkable as `#apps`, `#status`, `#guides` and `#it`. Without JavaScript all four stack. The IT monitoring tab follows the staff role.
 - **Apps grid.** A "Filter apps" field narrows the tiles by name and note, and Escape clears it. The three apps opened most often in a browser (three times or more) move to the front there. The counts sit in that browser's storage under `eiss-apps-used` and go nowhere else.
 - **Project status.** The next release and the open issue, PR and
