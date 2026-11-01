@@ -17,5 +17,10 @@
     "@11ty/eleventy": "^3.1.7",
     "acorn": "^8.19.0",
     "axe-core": "^4.14.0"
+  },
+  "overrides": {
+    "@11ty/recursive-copy": {
+      "minimatch": "^11.0.3"
+    }
   }
 }
