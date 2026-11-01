@@ -769,7 +769,43 @@ h4 { font-size: var(--fs-lg); }
   from { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 70%, transparent); }
   to { box-shadow: 0 0 0 0.5rem transparent; }
 }
-.apps-today { margin: 0 0 var(--space-4); padding: var(--space-3) var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elev); }
+/* The Today box folds on a grid row: 1fr open, 0fr shut (.is-out). */
+.apps-today { display: grid; grid-template-rows: 1fr; margin: 0 0 var(--space-4); }
+.apps-today[hidden] { display: none; }
+.apps-today-clip { min-height: 0; overflow: hidden; }
+.apps-today-box { padding: var(--space-3) var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elev); }
+.apps-today-text { margin: 0; }
+/* Closed issues roll through one at a time, like end credits: each rises in,
+   holds, then drifts up and fades as the next arrives (.apps-done-on, then .apps-done-past). */
+.apps-done-stage { display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-3); }
+.apps-done-stage[hidden] { display: none; }
+.apps-done { position: relative; flex: 1; min-width: 0; height: 1.75rem; margin: 0; padding: 0; list-style: none; overflow: hidden; }
+.apps-done-item { position: absolute; inset: 0; display: flex; align-items: center; gap: var(--space-3); opacity: 0; transform: translateY(100%); pointer-events: none; }
+.apps-done-item.apps-done-on { opacity: 1; transform: none; pointer-events: auto; }
+.apps-done-item.apps-done-past { opacity: 0; transform: translateY(-100%); }
+.apps-done-item.apps-done-reset { transition: none !important; }
+.apps-done-item a { flex: 1; min-width: 0; overflow: hidden; color: var(--text); text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
+.apps-done-item a:hover { text-decoration: underline; }
+.apps-done-num { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.apps-done-title { overflow-wrap: anywhere; }
+.apps-done-box { flex: none; display: grid; place-items: center; width: 1.125rem; height: 1.125rem; border-radius: var(--radius-xs); background: var(--accent); }
+.apps-done-box svg { width: 0.875rem; height: 0.875rem; fill: none; stroke: var(--bg); stroke-width: 2.25; stroke-linecap: round; stroke-linejoin: round; }
+.apps-done-pause { flex: none; display: grid; place-items: center; width: 2rem; height: 2rem; padding: 0; border: 1px solid var(--border); border-radius: var(--radius-full); background: none; color: var(--text-muted); cursor: pointer; }
+.apps-done-pause:hover { color: var(--text); border-color: var(--border-strong); }
+.apps-done-pause svg { width: 0.875rem; height: 0.875rem; fill: currentColor; }
+.apps-done-pause .apps-done-play, .apps-done-pause[aria-pressed="true"] .apps-done-hold { display: none; }
+.apps-done-pause[aria-pressed="true"] .apps-done-play { display: inline; }
+/* Without motion: a plain list, every line in view. */
+.apps-done.apps-done-static { height: auto; overflow: visible; }
+.apps-done.apps-done-static .apps-done-item { position: static; padding-top: var(--space-1); opacity: 1; transform: none; pointer-events: auto; }
+@media (prefers-reduced-motion: no-preference) {
+  .apps-today { transition: grid-template-rows var(--motion-slow) var(--ease-out), opacity var(--motion-slow) var(--ease-out), margin var(--motion-slow) var(--ease-out); }
+  .apps-done-item { transition: opacity 700ms var(--ease-in-out), transform 700ms var(--ease-in-out); }
+  /* The tick draws itself each time its line comes up. */
+  .apps-done-item.apps-done-on .apps-done-box path { stroke-dasharray: 16; stroke-dashoffset: 16; animation: apps-done-tick var(--motion-slow) var(--ease-out) 450ms forwards; }
+}
+.apps-today.is-out { grid-template-rows: 0fr; opacity: 0; margin-bottom: 0; }
+@keyframes apps-done-tick { to { stroke-dashoffset: 0; } }
 .apps-phase { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); margin: 0 0 var(--space-7); padding: var(--space-4) var(--space-5); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elev); }
 .apps-phase-title { margin: 0 0 var(--space-1); font-size: 1.125rem; }
 .apps-phase .apps-note { margin: 0; }

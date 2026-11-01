@@ -93,7 +93,17 @@ eleventyExcludeFromCollections: true
       {% endif %}
     </dl>
     <p class="apps-live" data-apps-asof>{% if systemHealth %}Figures as of {{ systemHealth.checked | newsDate("en") }}{% endif %}</p>
-    <p class="apps-today" data-apps-today hidden></p>
+    <div class="apps-today" data-apps-today hidden>
+      <div class="apps-today-clip">
+        <div class="apps-today-box">
+          <p class="apps-today-text" data-apps-today-text></p>
+          <div class="apps-done-stage" data-apps-done-stage hidden>
+            <ul class="apps-done" data-apps-done role="list" aria-label="Release issues closed since your last visit"></ul>
+            <button type="button" class="apps-done-pause" data-apps-done-pause aria-pressed="false" aria-label="Pause the closed issues" hidden><span class="apps-done-hold">{{ icon("pause") }}</span><span class="apps-done-play">{{ icon("play") }}</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     {% if dashboard.phase %}
       <section class="apps-phase" aria-labelledby="apps-phase-title">
@@ -407,8 +417,94 @@ eleventyExcludeFromCollections: true
     // The Today line: failures for those who see IT monitoring, then what changed
     // since the last visit. It stays away when there is nothing to say.
     var failed = data.health ? data.health.summary.failed : [];
-    var since = { tasks: 0, closed: 0 };
+    var since = { tasks: 0, closed: 0, done: [] };
     var today = document.querySelector("[data-apps-today]");
+    var todayText = document.querySelector("[data-apps-today-text]");
+    var doneList = document.querySelector("[data-apps-done]");
+
+    // The box folds open and shut on a grid row (CSS), so what sits below it
+    // glides rather than jumps. Without motion it simply shows and hides.
+    function reveal(el, show) {
+      if (show) {
+        if (!el.hidden && !el.classList.contains("is-out")) return;
+        if (el.hidden) { el.classList.add("is-out"); el.hidden = false; void el.offsetWidth; }
+        el.classList.remove("is-out");
+      } else {
+        if (el.hidden || el.classList.contains("is-out")) return;
+        if (calm) { el.hidden = true; return; }
+        el.classList.add("is-out");
+        el.addEventListener("transitionend", function end(e) {
+          if (e.target !== el || e.propertyName !== "opacity") return;
+          el.removeEventListener("transitionend", end);
+          if (el.classList.contains("is-out")) el.hidden = true;
+        });
+      }
+    }
+
+    // Closed issues roll through one at a time, like end credits, and loop.
+    // Hovering, focusing a link or the pause button holds the roll (RGAA 13.8:
+    // motion past five seconds needs a pause control). Tabbing to a link brings
+    // its line up. Without motion every line stays in view.
+    var stage = document.querySelector("[data-apps-done-stage]");
+    var pauseBtn = document.querySelector("[data-apps-done-pause]");
+    var roll = { key: null, i: 0, hover: false, focus: false, held: false };
+    var CHECK = '<span class="apps-done-box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>';
+    function lines() { return [].slice.call(doneList.children); }
+    function go(k) {
+      var ls = lines(), cur = ls[roll.i], next = ls[k];
+      roll.i = k;
+      if (cur && cur !== next) { cur.classList.remove("apps-done-on"); cur.classList.add("apps-done-past"); }
+      if (next) { next.classList.remove("apps-done-past", "apps-done-reset"); next.classList.add("apps-done-on"); }
+    }
+    // A line that has drifted out goes back below, unseen, for its next turn.
+    doneList.addEventListener("transitionend", function (e) {
+      var li = e.target;
+      if (li.parentNode !== doneList || e.propertyName !== "opacity" || !li.classList.contains("apps-done-past")) return;
+      li.classList.add("apps-done-reset");
+      li.classList.remove("apps-done-past");
+      void li.offsetWidth;
+      li.classList.remove("apps-done-reset");
+    });
+    setInterval(function () {
+      var n = lines().length;
+      if (calm || n < 2 || roll.hover || roll.focus || roll.held || document.hidden) return;
+      go((roll.i + 1) % n);
+    }, 3200);
+    stage.addEventListener("pointerenter", function () { roll.hover = true; });
+    stage.addEventListener("pointerleave", function () { roll.hover = false; });
+    doneList.addEventListener("focusin", function (e) {
+      roll.focus = true;
+      var k = lines().indexOf(e.target.closest("li"));
+      if (k > -1 && k !== roll.i) go(k);
+    });
+    doneList.addEventListener("focusout", function (e) { roll.focus = doneList.contains(e.relatedTarget); });
+    pauseBtn.addEventListener("click", function () {
+      roll.held = !roll.held;
+      pauseBtn.setAttribute("aria-pressed", String(roll.held));
+    });
+    function renderDone(items) {
+      var key = items.map(function (x) { return x.n; }).join();
+      if (key === roll.key) return;
+      roll.key = key;
+      roll.i = 0;
+      doneList.textContent = "";
+      items.forEach(function (x) {
+        var li = document.createElement("li");
+        li.className = "apps-done-item";
+        li.innerHTML = CHECK + '<a><span class="sr-only">Closed: </span><span class="apps-done-num"></span> <span class="apps-done-title"></span></a>';
+        var a = li.querySelector("a");
+        a.href = x.url;
+        a.title = x.title;
+        li.querySelector(".apps-done-num").textContent = "#" + x.n;
+        li.querySelector(".apps-done-title").textContent = x.title;
+        doneList.appendChild(li);
+      });
+      stage.hidden = !items.length;
+      doneList.classList.toggle("apps-done-static", calm);
+      pauseBtn.hidden = calm || items.length < 2;
+      // The first line rises in once the box has opened.
+      if (items.length && !calm) setTimeout(function () { if (roll.key === key) go(0); }, 250);
+    }
     function renderToday() {
       var role = roleSelect.value;
       var parts = [];
@@ -416,24 +512,34 @@ eleventyExcludeFromCollections: true
         parts.push(failed.length + (failed.length === 1 ? " automation failing: " : " automations failing: ") + failed.join(", ") + ".");
       }
       var news = [];
+      var staff = role === "all" || role === "staff";
       if (since.tasks > 0 && role !== "management" && role !== "board") news.push(since.tasks + (since.tasks === 1 ? " new task" : " new tasks"));
-      if (since.closed > 0 && (role === "all" || role === "staff")) news.push(since.closed + " more release " + (since.closed === 1 ? "issue" : "issues") + " closed");
+      if (since.closed > 0 && staff) news.push(since.closed + " more release " + (since.closed === 1 ? "issue" : "issues") + " closed");
       if (news.length) parts.push("Since your last visit: " + news.join(", ") + ".");
-      today.textContent = parts.join(" ");
-      today.hidden = !parts.length;
+      if (parts.length) todayText.textContent = parts.join(" ");
+      // The box opens first, so the first line can rise into it.
+      reveal(today, parts.length > 0);
+      renderDone(staff ? since.done : []);
     }
 
     // Since your last visit, per browser. Reloads within the hour count as the
     // same visit, so the note survives them. First visits have nothing to compare.
-    function compare(tasks, closed) {
+    // With the live list, the release issues closed after the last check are
+    // named one by one, and their number is the count.
+    function compare(tasks, closed, at, done) {
       var SEEN = "eiss-apps-seen", seen = null, t = Date.now();
       try { seen = JSON.parse(localStorage.getItem(SEEN)); } catch (e) {}
-      var now = { tasks: tasks, closed: closed };
+      var now = { tasks: tasks, closed: closed, at: at || null };
       if (!seen) seen = { at: t, prev: null, cur: now };
       else if (t - seen.at > 36e5) seen = { at: t, prev: seen.cur, cur: now };
       else seen.cur = now;
       try { localStorage.setItem(SEEN, JSON.stringify(seen)); } catch (e) {}
-      since = seen.prev ? { tasks: tasks - seen.prev.tasks, closed: closed - seen.prev.closed } : { tasks: 0, closed: 0 };
+      var prev = seen.prev;
+      since = prev ? { tasks: tasks - prev.tasks, closed: closed - prev.closed, done: [] } : { tasks: 0, closed: 0, done: [] };
+      if (prev && prev.at && done) {
+        since.done = done.filter(function (x) { return Date.parse(x.at) > prev.at && isRun(x.url); });
+        since.closed = since.done.length;
+      }
       renderToday();
     }
     var built = { tasks: data.counts ? data.counts[2].value : 0, closed: data.release ? data.release.closed : 0 };
@@ -464,8 +570,16 @@ eleventyExcludeFromCollections: true
         })),
       ]).then(function (a) {
         var m = data.release && a[3].filter(function (x) { return x.title === data.release.title; })[0];
-        return { issues: a[0], prs: a[1], tasks: a[2], closed: m ? m.closed_issues : null, total: m ? m.closed_issues + m.open_issues : null,
+        var live = { issues: a[0], prs: a[1], tasks: a[2], closed: m ? m.closed_issues : null, total: m ? m.closed_issues + m.open_issues : null,
           runs: a[4].map(function (r) { return r.workflow_runs.map(function (w) { return { name: w.name, conclusion: w.conclusion, url: w.html_url }; }); }) };
+        if (!m) return live;
+        // The release's latest closed issues, for the Today line. A failure here only loses the list.
+        return get("repos/" + data.repo + "/issues?milestone=" + m.number + "&state=closed&sort=updated&direction=desc&per_page=50").then(function (list) {
+          live.done = list.filter(function (x) { return !x.pull_request && x.closed_at; })
+            .map(function (x) { return { n: x.number, title: x.title, url: x.html_url, at: x.closed_at }; })
+            .sort(function (x, y) { return Date.parse(y.at) - Date.parse(x.at); });
+          return live;
+        }, function () { return live; });
       });
     }
     var LEVELS = { nominal: "Nominal", issue: "Issue", critical: "Critical" };
@@ -541,7 +655,7 @@ eleventyExcludeFromCollections: true
       var line = document.querySelector(".apps-live");
       line.classList.add("is-live");
       line.textContent = "Live from GitHub, checked " + (mins < 1 ? "just now" : mins + (mins === 1 ? " minute ago" : " minutes ago"));
-      compare(live.tasks, live.closed === null ? built.closed : live.closed);
+      compare(live.tasks, live.closed === null ? built.closed : live.closed, at, live.done);
     }
     var LIVE = "eiss-apps-live", cached = null;
     try { cached = JSON.parse(localStorage.getItem(LIVE)); } catch (e) {}
