@@ -193,7 +193,8 @@ eleventyExcludeFromCollections: true
           <div class="apps-status-card" data-roles="staff">
             <h3 class="apps-status-title">Next release</h3>
             <p class="apps-release"><a href="{{ dashboard.release.url }}">{{ dashboard.release.title }}</a>{% if dashboard.release.due %}, due {{ dashboard.release.due | newsDate("en") }}{% endif %}</p>
-            <progress class="apps-progress" data-apps-release-bar value="{{ dashboard.release.closed }}" max="{{ dashboard.release.total }}" aria-label="{{ dashboard.release.title }} progress">{{ dashboard.release.percent }}%</progress>
+            <div class="apps-progress-wrap">
+              <progress class="apps-progress" data-apps-release-bar value="{{ dashboard.release.closed }}" max="{{ dashboard.release.total }}" aria-label="{{ dashboard.release.title }} progress">{{ dashboard.release.percent }}%</progress><span class="apps-progress-new" data-apps-release-new hidden></span></div>
             <p class="apps-note" data-apps-release-note>{{ dashboard.release.closed }} of {{ dashboard.release.total }} issues closed</p>
           </div>
         {% endif %}
@@ -505,6 +506,22 @@ eleventyExcludeFromCollections: true
       // The first line rises in once the box has opened.
       if (items.length && !calm) setTimeout(function () { if (roll.key === key) go(0); }, 250);
     }
+    // A small badge beside a strip figure for what moved since the last visit.
+    function delta(anchor, text, said) {
+      if (!anchor) return;
+      var tag = anchor.nextElementSibling;
+      if (!tag || !tag.hasAttribute("data-apps-delta")) {
+        if (!text) return;
+        tag = document.createElement("span");
+        tag.className = "apps-delta";
+        tag.setAttribute("data-apps-delta", "");
+        tag.innerHTML = '<span aria-hidden="true"></span><span class="sr-only"></span>';
+        anchor.after(tag);
+      }
+      if (!text) { tag.remove(); return; }
+      tag.firstChild.textContent = text;
+      tag.lastChild.textContent = ", " + said;
+    }
     function renderToday() {
       var role = roleSelect.value;
       var parts = [];
@@ -520,6 +537,8 @@ eleventyExcludeFromCollections: true
       // The box opens first, so the first line can rise into it.
       reveal(today, parts.length > 0);
       renderDone(staff ? since.done : []);
+      delta(document.querySelector("[data-apps-release-percent]"), staff && since.closed > 0 ? "+" + since.closed : "", since.closed + " closed since your last visit");
+      delta(document.querySelector('.apps-stats [data-apps-live="tasks"]'), since.tasks > 0 && role !== "management" && role !== "board" ? "+" + since.tasks + " new" : "", since.tasks + " new since your last visit");
     }
 
     // Since your last visit, per browser. Reloads within the hour count as the
@@ -545,8 +564,33 @@ eleventyExcludeFromCollections: true
         since.closed = since.done.length;
       }
       renderToday();
+      showGain(closed);
     }
     var built = { tasks: data.counts ? data.counts[2].value : 0, closed: data.release ? data.release.closed : 0 };
+
+    // The release figure counts up from where it stood at the last visit, and
+    // the progress bar marks the newly closed stretch. Once per page load.
+    var releaseTotal = data.release ? data.release.total : 0, gained = false;
+    function pctOf(n) { return Math.round(n / releaseTotal * 100); }
+    function showGain(closed) {
+      if (gained || !releaseTotal || since.closed <= 0) return;
+      gained = true;
+      var from = Math.max(closed - since.closed, 0);
+      var seg = document.querySelector("[data-apps-release-new]");
+      if (seg) {
+        seg.style.left = (from / releaseTotal * 100) + "%";
+        seg.style.width = (Math.min(since.closed, closed) / releaseTotal * 100) + "%";
+        seg.hidden = false;
+      }
+      var el = document.querySelector("[data-apps-release-percent]");
+      if (!el || calm) return;
+      var a = pctOf(from), b = pctOf(closed), start = performance.now();
+      (function step(t) {
+        var k = Math.min((t - start) / 1200, 1);
+        el.textContent = Math.round(a + (b - a) * (1 - Math.pow(1 - k, 3))) + "%";
+        if (k < 1) requestAnimationFrame(step);
+      })(start);
+    }
     renderToday();
 
     // Live figures from GitHub's public API, which allows 60 requests an hour
@@ -646,6 +690,7 @@ eleventyExcludeFromCollections: true
         document.querySelectorAll('[data-apps-live="' + k + '"]').forEach(function (el) { el.textContent = live[k]; });
       });
       if (live.total) {
+        releaseTotal = live.total;
         var pct = Math.round(live.closed / live.total * 100);
         var el = document.querySelector("[data-apps-release-percent]");
         if (el) el.textContent = pct + "%";
