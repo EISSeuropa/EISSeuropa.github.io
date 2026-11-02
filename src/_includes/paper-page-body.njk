@@ -1,6 +1,20 @@
-{# Visible body of a per-paper landing page (#794). `paper` is the pagination
-   alias from paper.njk. Reuses existing page-header / prose / btn classes, so
-   no new CSS. Authors that are EISS members link to their profile. #}
+{# English-only per-paper landing page body.
+   Reads: paper, paperIndex, site.
+   Requires: paper (paperPages pagination entry from paper.njk, including
+             slug, title, year, conferenceLabel, conferenceUrl, authorNames,
+             bibtex and ris), site.url, site.contactEmail, paperIndex.themeDot.
+             bibtex and ris are read by the included paper-cite-block.njk.
+   Optional: paper's prize, authorsLinked, affiliations, themes, publishedUrl,
+             abstract, panel, abstractUrl, related, editionPrev and editionNext
+             (absent/empty: their blocks or links are omitted).
+             Publication details: publishedAuthors defaults to [] in paperPages.js.
+             publishedTitle, publishedYear, publishedType, publishedJournal,
+             publishedPublisher, publishedVolume, publishedIssue, publishedPages
+             and doi default to null there, omitting the relevant detail.
+             Outlet falls back from publishedJournal to publishedPublisher. Without
+             publishedUrl, citation controls describe the presentation.
+   No locale parameter. Optional paper fields and their data defaults are
+   defined in src/_data/paperPages.js. #}
 {% from "icons.njk" import icon %}
 
 {# Mobile-only sticky Back (#889, item 4). Keeps an entry-aware exit in reach

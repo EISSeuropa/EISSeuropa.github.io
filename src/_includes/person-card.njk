@@ -1,25 +1,18 @@
-{# Shared card mark-up for /board (Leadership / Board Members /
-   Support Staff). Variables in scope:
-     - person   — entry from boardSorted.leadership / .boardMembers /
-                  .support. Carries the raw board.json fields plus
-                  the computed `isEsscActive` boolean.
-
-   Optional fields on `person`:
-     - functionalResponsibility — secondary role labels, comma-separated,
-       each rendered as a quiet pill next to the primary role (e.g. for
-       Arthur: "BOARD MEMBER" + a "Technology Coordinator" pill).
-     - bio — narrative paragraph, rendered as a teaser with a
-       Read-more <details> expander when longer than ~200 chars.
-     - affiliation — single line above the bio.
-     - themes — comma-separated phrases, rendered under a thin
-       divider. Empty / missing → row skipped.
-     - country — small line under the affiliation when present.
-     - links{} — optional object with publicEmail / website / orcid /
-       linkedin / twitter / bluesky / mastodon URLs. Renders as an
-       icon row at the bottom of the card when at least one is set.
-     - isEsscActive — when true, a mic icon appears next to the role
-       indicating the person is chairing, discussing, or speaking at
-       the live ESSC edition. #}
+{# Shared People card for a boardSorted entry, including past members.
+   Reads: person, lang, i18n, countryFlags.
+   Requires: person (name, role), i18n, countryFlags.byName.
+   Optional: lang (default "en"). person fields:
+     photoOverride falls back to photo, then an initials placeholder.
+     alt falls back to name. initials defaults to "?".
+     slug (absent: no card id or profile link),
+     activeYear (absent: no year suffix),
+     functionalResponsibility (default "", comma-separated labels),
+     isEsscActive (absent/false: no mic), themes (absent: no themes row).
+     position and institution take precedence over legacy affiliation.
+     country defaults to "", with text if no flag matches. Missing
+     affiliation fields omit their lines.
+     links defaults to {}. publicEmail, website, orcid, linkedin, twitter,
+     bluesky and mastodon each omit their link when absent. #}
 {% from "icons.njk" import icon %}
 {%- set lang = lang or "en" -%}
 {%- set t = i18n[lang] -%}

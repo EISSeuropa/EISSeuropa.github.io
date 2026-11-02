@@ -263,6 +263,24 @@ the rendered style guide cannot disagree.
 
 <!-- TOKENS:END -->
 
+## Partial input headers
+
+Partials with caller-supplied parameters declare their interface in one opening Nunjucks comment (`{# … #}`). Start with a short purpose, then `Reads:` for context variables, `Requires:` for inputs the caller must supply (including Eleventy global data), and `Optional:` for each optional input's existing default or behaviour when absent. Describe the useful data shape or point to its producer. Include dependencies read by nested includes, identifying them as such. Locally assigned variables and imported macros are not caller inputs.
+
+```njk
+{# conference-media.njk: archive session recordings.
+   Reads: mediaYear, conferences.
+   Requires: mediaYear (year key), conferences.byYear.
+             An edition with a playlist needs city for the embed title.
+   Optional: the edition's youtubePlaylist (absent: no output). #}
+```
+
+Keep an existing opening comment and update it instead of adding a second header. Leave chrome with no meaningful caller parameters alone. The initial set is `archive-page`, `conference-media`, `person-card`, `programme-grid`, `paper-page-body` and `atlas-signpost` (#1273). These headers describe current behaviour. They do not add validation or change defaults.
+
+Preserve whitespace outside the comment, including any whitespace-control markers. Compare clean builds of the baseline and changed tree byte for byte. A comment does not render, but a newline added after it can.
+
+**Linting decision (#1273):** no header lint is being added. The six headers are checked against their callers and data producers in review. Requiring a header on every partial would add noise to chrome, and inferring required variables statically would need to account for Nunjucks scopes and nested includes. Reconsider automation only if maintaining the headers exposes a concrete gap.
+
 ## Chrome (every page, via `base.njk`)
 
 - **`nav.njk`** — primary nav. Items come from `site.js` `nav[]`, labels

@@ -1,18 +1,13 @@
-{# Conference Navigator — the unified archive over the ESSC corpus (#756).
-   One surface, two lenses: a by-person view (speakers-index.njk) and a
-   by-paper view (papers-page.njk), both rendering from corpus.js /
-   paperIndex.js. The wrapper page sets `archiveDefaultView` ("people" or
-   "papers"); /speakers.html and /papers.html are redirects into this page
-   with the matching view forced. archive.js toggles the panels and mirrors
-   the choice in ?view=.
-
-   Only the default view is server-rendered (#1641). The other panel is a
-   placeholder that archive.js fills from anthology-fragment.njk on first
-   activation. It used to ship in full behind `hidden`, which put both lists
-   in one 1,530,626-byte document; the page is 891,549 bytes now. Either way
-   only the default view reaches site search, since the panel that is not
-   rendered cannot be indexed and the placeholder carries
-   data-pagefind-ignore. #}
+{# Unified Anthology archive, with people and papers views.
+   Reads: archiveDefaultView, lang, corpus, paperIndex, i18n, site,
+          releaseScope, atlasThemePages.
+   Requires: corpus, paperIndex, i18n, site (corpus deposit links and
+             contactEmail), releaseScope, atlasThemePages. These global data
+             objects also supply the included people and papers panels.
+   Optional: archiveDefaultView ("people" | "papers", default "people"),
+             lang (default "en").
+   Only the default view is server-rendered. archive.js loads the other
+   panel from anthology-fragment.njk on first activation (#1641). #}
 {% from "icons.njk" import icon %}
 {%- set t = i18n[lang or "en"] -%}
 {%- set n18n = t.navigator -%}
