@@ -216,8 +216,8 @@ module.exports = {
     {
       href: "https://docs.google.com/forms/d/e/1FAIpQLSevC0tbQwCA4ZNfdk_pCY5xUvmFjuQbIIpddDXLF5TdSoKfcw/viewform",
       key: "internForm",
-      icon: "graduation-cap",
-      roles: ["staff"],
+      icon: "user-plus",
+      roles: ["staff", "management"],
     },
     // Daily tasks live in Chat spaces.
     { href: "https://chat.google.com/", key: "chat", icon: "users", roles: ["staff", "management", "volunteer"], menu: 1 },
@@ -225,7 +225,7 @@ module.exports = {
 
   // The guides on /internal.html. Roles work as in staffLinks.
   guideLinks: [
-    { href: "https://docs.google.com/document/d/1nnUBgds6CUM5fLHmhDwB1osklx-99lXzKv2OhPF0SXo/edit", label: "Joining EISS", icon: "book-open", roles: ["staff", "management", "board", "volunteer"] },
+    { href: "https://docs.google.com/document/d/1nnUBgds6CUM5fLHmhDwB1osklx-99lXzKv2OhPF0SXo/edit", label: "Joining Guide", icon: "book-open", roles: ["staff", "management", "board", "volunteer"] },
     { href: "https://docs.google.com/document/d/1ETe9RCqFLRExvyRCouYKHyIl0xEZNXJ-aUIMZNpwue4/edit", label: "How the team works", icon: "file-text", roles: ["staff", "management", "volunteer"] },
     { href: "https://docs.google.com/document/d/1c3_KX7Hm-57OQZh3soo-JCQ_HaaEekqwlhXMW0C42Xs/edit", label: "Volunteer handbook", icon: "graduation-cap", roles: ["staff", "volunteer"] },
     { href: "https://docs.google.com/document/d/1v1XXmCYhJoFn8gJopP0vIXKc6m37ecjSDXM2F11ykNk/edit", label: "Staff handbook", icon: "file-text", roles: ["staff", "management"] },

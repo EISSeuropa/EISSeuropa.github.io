@@ -30,6 +30,7 @@
     "mastodon": "Mastodon URL (optional)",
     "photo": "Headshot photo (optional)",
     "roleEndDate": "Internship end date (optional)",
+    "cohort": "Volunteer cohort (optional)",
     "consent": "I consent to publication of my bio on eiss-europa.com"
   },
 
