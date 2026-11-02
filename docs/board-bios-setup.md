@@ -32,6 +32,25 @@ members directly), and every workflow run produces a PR that you
 review before it lands. If something unexpected comes through, you
 just don't merge.
 
+## Where the Form lives
+
+The live Form ("EISS Profile Workflow"), its response Sheet and the
+folder of uploaded headshots belong to the legacy Google account
+**eissnetwork@gmail.com**, not to the EISS Workspace. They stay there
+on purpose: the sync reads the Sheet's published CSV, and moving or
+copying the Form would change that URL and the photo folder. The
+account's French locale is why `scripts/board-source.json` maps the
+timestamp and email columns to *Horodateur* and *Adresse e-mail*.
+
+Whoever holds that account can edit the Form and see every response,
+including unpublished ones. The account is listed in the DevOps
+handbook (EISS Restricted) with its holder and recovery route. The
+question of moving it into the Workspace is #1988.
+
+The Form is separate from the *Joining EISS* form that creates EISS
+accounts (#1986). One publishes a profile and is resubmitted whenever
+a bio changes. The other grants access and is filled in once.
+
 ## Step 1 · Create the Form
 
 1. Go to <https://forms.google.com> and create a new blank form.
