@@ -2,15 +2,15 @@
   "_documentation": "Configuration for scripts/sync-board.py. See docs/board-bios-setup.md for the step-by-step on creating the Google Form, linking it to a Sheet, and filling in the URLs below. While `csv_url` is empty, the workflow runs but no-ops cleanly — so the workflow stays green while the Form is still being set up.",
 
   "sheet": {
-    "csv_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSM-A0lurXgcXcQV2PX3vgDVNGJbqW7SnDSM_LcCxbZ9UnlfoTdG1Mp2kp2wrLKbbE_HG3ljsrojZ0x/pub?gid=1270406305&single=true&output=csv"
+    "csv_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQbgVAv_jfL0XN0Xe4opwnjyIvd-tpVz052oMfetOaAhwPcP3Eis7wUeVZQkDZjpGpJhMDxcF3HZbXU/pub?gid=1463572126&single=true&output=csv"
   },
-  "form_url": "https://docs.google.com/forms/d/e/1FAIpQLSeVVwOHOwukLF9bzryNj1WeApuXOjxM-sOGbK_O908OLaPyGg/viewform",
+  "form_url": "https://docs.google.com/forms/d/e/1FAIpQLSdL-DGd5SV7awb56Wh8G71w5oCpXWwlvJKYKyEr0r3oZExKvg/viewform",
 
-  "_columns_doc": "Header names exactly as Google Sheets writes them for this form. Timestamp + email columns are localised to the form owner's account language (this form is owned by an FR-locale account, so the timestamp column is 'Horodateur' and email is 'Adresse e-mail'). If you ever rename a question in the form, mirror the change here so the sync script keeps matching. `title` is a separate dropdown question (Prof. / Dr / M / Mr / Mx / None); the sync prepends the chosen title to the full name so the card still renders 'Prof. Jane Doe' (a 'None'/blank title prepends nothing). Slug + identity keys strip honorifics, so splitting the title out of the name field does not move a person's anchor.",
+  "_columns_doc": "Header names exactly as Google Sheets writes them for this form. Timestamp + email columns are localised to the form owner's account language (this form is owned by admin@eiss-europa.com, an English-locale account, so they are 'Timestamp' and 'Email address'. They were 'Horodateur' and 'Adresse e-mail' while the form lived on eissnetwork@gmail.com, until #1988). If you ever rename a question in the form, mirror the change here so the sync script keeps matching. `title` is a separate dropdown question (Prof. / Dr / M / Mr / Mx / None); the sync prepends the chosen title to the full name so the card still renders 'Prof. Jane Doe' (a 'None'/blank title prepends nothing). Slug + identity keys strip honorifics, so splitting the title out of the name field does not move a person's anchor.",
 
   "columns": {
-    "timestamp": "Horodateur",
-    "email": "Adresse e-mail",
+    "timestamp": "Timestamp",
+    "email": "Email address",
     "title": "Title",
     "name": "Full name",
     "role": "What is your role at EISS?",
