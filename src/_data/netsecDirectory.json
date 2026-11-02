@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-26T11:03:35+00:00",
-  "count": 110,
+  "generated_at": "2026-11-02T13:29:13+00:00",
+  "count": 125,
   "source": "https://netsec-cost.eu/directory-index.json",
   "members": [
     {
@@ -103,6 +103,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/andriy-tyushka.jpg"
     },
     {
+      "name": "Prof. Anna Danielsson",
+      "name_key": "anna danielsson",
+      "aliases": [],
+      "slug": "anna-danielsson",
+      "url": "https://netsec-cost.eu/people/anna-danielsson.html",
+      "orcid": null,
+      "role": "Management Committee · Sweden",
+      "affiliation": "Swedish Defence University",
+      "photo": null
+    },
+    {
       "name": "Anna Pagnacco",
       "name_key": "anna pagnacco",
       "aliases": [],
@@ -154,7 +165,7 @@
       "url": "https://netsec-cost.eu/people/arthur-laudrain.html",
       "orcid": "0000-0002-8642-2671",
       "role": "Management Committee · Switzerland · Science Communication Coordinator Co-Leader",
-      "affiliation": "ETH Zürich, Center for Security Studies",
+      "affiliation": "ETH Zurich, Center for Security Studies",
       "photo": "https://netsec-cost.eu/assets/images/people/arthur-laudrain.jpg"
     },
     {
@@ -255,6 +266,17 @@
       "role": null,
       "affiliation": "King's College London",
       "photo": "https://netsec-cost.eu/assets/images/people/clara-jammot.jpg"
+    },
+    {
+      "name": "Dr Constantinos Adamides",
+      "name_key": "constantinos adamides",
+      "aliases": [],
+      "slug": "constantinos-adamides",
+      "url": "https://netsec-cost.eu/people/constantinos-adamides.html",
+      "orcid": "0000-0001-5823-0552",
+      "role": "Management Committee · Cyprus",
+      "affiliation": "University of Nicosia",
+      "photo": "https://netsec-cost.eu/assets/images/people/constantinos-adamides.jpg"
     },
     {
       "name": "Dr Daniela Mechkaroska",
@@ -372,9 +394,9 @@
       "aliases": [],
       "slug": "filip-ejdus",
       "url": "https://netsec-cost.eu/people/filip-ejdus.html",
-      "orcid": null,
+      "orcid": "0000-0001-7443-1661",
       "role": "Management Committee · Serbia · WG1 Leader",
-      "affiliation": "University of Belgrade",
+      "affiliation": "Faculty of Political Science, University of Belgrade",
       "photo": "https://netsec-cost.eu/assets/images/people/filip-ejdus.jpg"
     },
     {
@@ -455,6 +477,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/giulia-biselli.jpg"
     },
     {
+      "name": "Dr Gürkan Gür",
+      "name_key": "gurkan gur",
+      "aliases": [],
+      "slug": "gurkan-gur",
+      "url": "https://netsec-cost.eu/people/gurkan-gur.html",
+      "orcid": null,
+      "role": "Management Committee · Switzerland",
+      "affiliation": "Zurich University of Applied Sciences (ZHAW)",
+      "photo": "https://netsec-cost.eu/assets/images/people/gurkan-gur.jpg"
+    },
+    {
       "name": "Dr Henrique Garbino",
       "name_key": "henrique garbino",
       "aliases": [],
@@ -464,6 +497,28 @@
       "role": "Management Committee · Sweden",
       "affiliation": "Swedish Defence University",
       "photo": "https://netsec-cost.eu/assets/images/people/henrique-garbino.jpg"
+    },
+    {
+      "name": "Dr Hugo Meijer",
+      "name_key": "hugo meijer",
+      "aliases": [],
+      "slug": "hugo-meijer",
+      "url": "https://netsec-cost.eu/people/hugo-meijer.html",
+      "orcid": "0000-0001-6745-9914",
+      "role": "Management Committee · France",
+      "affiliation": "Sciences Po, Paris",
+      "photo": "https://netsec-cost.eu/assets/images/people/hugo-meijer.jpg"
+    },
+    {
+      "name": "Mr Hussein Fawaz",
+      "name_key": "hussein fawaz",
+      "aliases": [],
+      "slug": "hussein-fawaz",
+      "url": "https://netsec-cost.eu/people/hussein-fawaz.html",
+      "orcid": "0009-0003-9366-0904",
+      "role": null,
+      "affiliation": "University of Applied Sciences and Arts of Southern Switzerland (SUPSI)",
+      "photo": "https://netsec-cost.eu/assets/images/people/hussein-fawaz.jpg"
     },
     {
       "name": "Prof. Huw Bennett",
@@ -609,6 +664,28 @@
       "photo": "https://netsec-cost.eu/assets/images/people/ken-mcdonagh.jpg"
     },
     {
+      "name": "Mr Khalil Talhaoui",
+      "name_key": "khalil talhaoui",
+      "aliases": [],
+      "slug": "khalil-talhaoui",
+      "url": "https://netsec-cost.eu/people/khalil-talhaoui.html",
+      "orcid": null,
+      "role": null,
+      "affiliation": "University of Exeter",
+      "photo": null
+    },
+    {
+      "name": "Dr Khaoula Boukir",
+      "name_key": "khaoula boukir",
+      "aliases": [],
+      "slug": "khaoula-boukir",
+      "url": "https://netsec-cost.eu/people/khaoula-boukir.html",
+      "orcid": "0000-0003-1845-6308",
+      "role": null,
+      "affiliation": "Ibn Tofail University",
+      "photo": null
+    },
+    {
       "name": "Dr Kire Babanoski",
       "name_key": "kire babanoski",
       "aliases": [],
@@ -662,6 +739,17 @@
       "role": null,
       "affiliation": "Horizon Europe ReConnect China Project",
       "photo": "https://netsec-cost.eu/assets/images/people/li-yang.jpg"
+    },
+    {
+      "name": "Dr Liliana Pasquale",
+      "name_key": "liliana pasquale",
+      "aliases": [],
+      "slug": "liliana-pasquale",
+      "url": "https://netsec-cost.eu/people/liliana-pasquale.html",
+      "orcid": "0000-0001-9673-3054",
+      "role": "Management Committee · Ireland",
+      "affiliation": "University College Dublin",
+      "photo": "https://netsec-cost.eu/assets/images/people/liliana-pasquale.jpg"
     },
     {
       "name": "Dr Linde Desmaele",
@@ -752,6 +840,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/marie-robin.png"
     },
     {
+      "name": "Prof. Marina Henke",
+      "name_key": "marina henke",
+      "aliases": [],
+      "slug": "marina-henke",
+      "url": "https://netsec-cost.eu/people/marina-henke.html",
+      "orcid": null,
+      "role": "Management Committee · Germany",
+      "affiliation": "Hertie School",
+      "photo": "https://netsec-cost.eu/assets/images/people/marina-henke.jpg"
+    },
+    {
       "name": "Dr Marius Ghincea",
       "name_key": "marius ghincea",
       "aliases": [],
@@ -805,6 +904,17 @@
       "role": null,
       "affiliation": "University of Genoa",
       "photo": "https://netsec-cost.eu/assets/images/people/mattia-sguazzini.jpg"
+    },
+    {
+      "name": "Dr Megghi Pengili",
+      "name_key": "megghi pengili",
+      "aliases": [],
+      "slug": "megghi-pengili",
+      "url": "https://netsec-cost.eu/people/megghi-pengili.html",
+      "orcid": "0000-0002-7218-799X",
+      "role": null,
+      "affiliation": "CeFLI-Rome / University of Leeds",
+      "photo": null
     },
     {
       "name": "Dr Mehmet Babacan",
@@ -862,6 +972,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/mykhailo-mosora.jpg"
     },
     {
+      "name": "Ms Nadine Klopf",
+      "name_key": "nadine klopf",
+      "aliases": [],
+      "slug": "nadine-klopf",
+      "url": "https://netsec-cost.eu/people/nadine-klopf.html",
+      "orcid": "0000-0001-7642-4369",
+      "role": null,
+      "affiliation": "Kiel University",
+      "photo": "https://netsec-cost.eu/assets/images/people/nadine-klopf.jpg"
+    },
+    {
       "name": "Dr Niklas Karlén",
       "name_key": "niklas karlen",
       "aliases": [],
@@ -895,6 +1016,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/noela-mahmutaj.jpg"
     },
     {
+      "name": "Prof. Olivier Schmitt",
+      "name_key": "olivier schmitt",
+      "aliases": [],
+      "slug": "olivier-schmitt",
+      "url": "https://netsec-cost.eu/people/olivier-schmitt.html",
+      "orcid": "0000-0003-1366-6621",
+      "role": "Management Committee · Denmark",
+      "affiliation": "Institute for Military Operations, Royal Danish Defence College",
+      "photo": "https://netsec-cost.eu/assets/images/people/olivier-schmitt.jpg"
+    },
+    {
       "name": "Dr Pınar Akgül",
       "name_key": "p akgul",
       "aliases": [],
@@ -904,6 +1036,17 @@
       "role": null,
       "affiliation": "Giresun University",
       "photo": "https://netsec-cost.eu/assets/images/people/p-nar-akgul.jpg"
+    },
+    {
+      "name": "Prof. Pınar Bilgin",
+      "name_key": "p bilgin",
+      "aliases": [],
+      "slug": "p-nar-bilgin",
+      "url": "https://netsec-cost.eu/people/p-nar-bilgin.html",
+      "orcid": null,
+      "role": null,
+      "affiliation": "Bilkent University",
+      "photo": null
     },
     {
       "name": "Mr Pablo Arriazu",
@@ -1027,6 +1170,17 @@
       "photo": "https://netsec-cost.eu/assets/images/people/sandra-cvikic.jpg"
     },
     {
+      "name": "Prof. Sanne Cornelia J. Verschuren",
+      "name_key": "sanne verschuren",
+      "aliases": [],
+      "slug": "sanne-cornelia-j-verschuren",
+      "url": "https://netsec-cost.eu/people/sanne-cornelia-j-verschuren.html",
+      "orcid": "0000-0001-7977-361X",
+      "role": null,
+      "affiliation": "Boston University",
+      "photo": "https://netsec-cost.eu/assets/images/people/sanne-cornelia-j-verschuren.jpg"
+    },
+    {
       "name": "Ms Sara Russo",
       "name_key": "sara russo",
       "aliases": [],
@@ -1124,6 +1278,17 @@
       "role": "Management Committee · Slovenia",
       "affiliation": "Jozef Stefan Institute",
       "photo": "https://netsec-cost.eu/assets/images/people/tanja-pavleska.jpg"
+    },
+    {
+      "name": "Mr Tawhidur Rahman",
+      "name_key": "tawhidur rahman",
+      "aliases": [],
+      "slug": "tawhidur-rahman",
+      "url": "https://netsec-cost.eu/people/tawhidur-rahman.html",
+      "orcid": "0000-0002-0985-6417",
+      "role": null,
+      "affiliation": "Bangladesh",
+      "photo": "https://netsec-cost.eu/assets/images/people/tawhidur-rahman.jpg"
     },
     {
       "name": "Ms Teodora Stoicescu",
