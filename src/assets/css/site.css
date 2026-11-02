@@ -793,6 +793,9 @@ h4 { font-size: var(--fs-lg); }
    holds, then drifts up and fades as the next arrives (.apps-done-on, then .apps-done-past). */
 .apps-done-stage { display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-3); }
 .apps-done-stage[hidden] { display: none; }
+.apps-done-heading { margin: var(--space-3) 0 0; color: var(--text-muted); font-size: 0.8125rem; font-weight: 600; }
+.apps-today-text[hidden] + .apps-done-heading { margin-top: 0; }
+.apps-done-heading + .apps-done-stage { margin-top: var(--space-1); }
 .apps-done { position: relative; flex: 1; min-width: 0; height: 1.75rem; margin: 0; padding: 0; list-style: none; overflow: hidden; }
 .apps-done-item { position: absolute; inset: 0; display: flex; align-items: center; gap: var(--space-3); opacity: 0; transform: translateY(100%); pointer-events: none; }
 .apps-done-item.apps-done-on { opacity: 1; transform: none; pointer-events: auto; }

@@ -126,15 +126,17 @@ successor inherits through the handover in section 4.
   the next conference, the release due dates and anything in `keyDates`
   in `src/_data/site.js`. `src/_data/dashboard.js` assembles all of it.
   Under the release bar, a chart counts the release's issues closed per day
-  over the last 30 days, in the browser from the same live GitHub call as the
-  "since your last visit" list. It stays hidden when that call fails.
+  over the last 30 days, in the browser from the live GitHub call that lists
+  the release's closed issues. It stays hidden when that call fails.
 - **Status strip and Today line.** The strip shows the next `keyDates`
   entry, the conference, systems, the next release and tasks to pick up.
   The deadline tile turns amber within 14 days and red within 3. In the
   browser, GitHub figures refresh from the public API, cached for 10
   minutes, and the last build's figures stay if that fails. Workspace and
   Google status update only at build. "Since your last visit" compares
-  against figures saved in that browser.
+  against figures saved in that browser. Under it, the last five issues
+  closed as done (any milestone, "not planned" closures left out) roll
+  through one at a time, for staff and "Show all".
 - **Dates and conference phase.** The "EISS dates" Google Calendar holds an
   edition's public dates. The build reads it through the EISS status web
   app's `?view=dates` (source in the private `workspace-ops` repo, which
