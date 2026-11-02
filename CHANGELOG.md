@@ -197,6 +197,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- Irina Sofronie and Giovanni Guerra now finish their autumn placements on 1 December 2026, like Astha Dhal, so their cards on `/board` move to EISS community with hers.
 - The staff entry for onboarding is now the Joining Form, for everyone who joins EISS whatever their role, and management sees it too. Its label and note change in all three languages, translated by hand, and the Joining EISS guide on `/internal.html` is now the Joining Guide. Volunteers give their cohort on the bios form instead of an end date, and the board sync takes the end date from `src/_data/cohorts.json`. The offboarding issue keeps the website side of a departure and points to the leaver checklist for the rest. Part of [#1986](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1986).
 - The internal dashboard reads its dates from the "EISS dates" Google Calendar once that calendar has events, so adding a date no longer needs a change to the website. The dates in the website repo stay as the fallback. Internal deadlines live in a separate calendar that the site never reads.
 - The padlock menu in the site header opens on Team chat, where the rooms and tasks now live, then My email, Shared inboxes, Drive and Calendar. Its last entry is named Internal dashboard, the name the dashboard has everywhere else, instead of All apps under a heading that was not a link. The volunteer onboarding form leaves the menu and stays on the dashboard for staff.
