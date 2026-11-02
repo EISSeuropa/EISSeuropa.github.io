@@ -51,6 +51,23 @@ The Form is separate from the *Joining Form* that creates EISS
 accounts (#1986). One publishes a profile and is resubmitted whenever
 a bio changes. The other grants access and is filled in once.
 
+### Rows from the Joining Form
+
+New people also reach `/board` through the Joining Form, which ends
+with an optional profile made of this Form's own questions (all but
+the name, role, cohort and headshot). When Arthur approves a newcomer
+who ticked the consent box, the "EISS intern lifecycle" Apps Script
+(`workspace-ops`) appends a row to this Form's response Sheet: a
+timestamp, their new EISS address, the full name, the role label
+(Support Staff, Board Member, or the leadership title management
+picks), the cohort and the profile answers. Personal email and dates
+stay in the private lifecycle sheet.
+
+The sync treats that row like any other response. The person adds
+their headshot later by submitting this Form, signed in with their
+EISS account. Dedup by email keeps the newer row, and any answer left
+blank keeps the value already in `board.json`.
+
 ## Step 1 · Create the Form
 
 1. Go to <https://forms.google.com> and create a new blank form.
