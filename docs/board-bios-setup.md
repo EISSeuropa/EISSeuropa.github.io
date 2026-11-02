@@ -47,7 +47,7 @@ including unpublished ones. The account is listed in the DevOps
 handbook (EISS Restricted) with its holder and recovery route. The
 question of moving it into the Workspace is #1988.
 
-The Form is separate from the *Joining EISS* form that creates EISS
+The Form is separate from the *Joining Form* that creates EISS
 accounts (#1986). One publishes a profile and is resubmitted whenever
 a bio changes. The other grants access and is filled in once.
 
@@ -83,7 +83,7 @@ a bio changes. The other grants access and is filled in once.
 | 16 | **Bluesky URL (optional)** | Short answer | ⬜ |
 | 17 | **Mastodon URL (optional)** | Short answer | ⬜ |
 | 18 | **Headshot photo (optional)** | File upload — image only — max 5 MB | ⬜ |
-| 19 | **Internship end date (optional)** | Date | ⬜ |
+| 19 | **Volunteer cohort (optional)** | Multiple choice | ⬜ |
 | 20 | **I consent to publication of my bio on eiss-europa.com** | Checkboxes — single option | ✅ |
 
 **Q1 options** (the honorific title). The sync prepends the chosen title to
@@ -162,29 +162,30 @@ And on the **Headshot photo (optional)** question, set its
 > Submit a fresh response. The file-upload field is locked by
 > Google Forms after the first submission.
 
-### End-date question — volunteers
+### Cohort question: volunteers
 
-Q18 (**Internship end date (optional)**, Date) is scoped to volunteers,
-the only category of EISS contributor where automatic time-based
-expiry on `/board` makes sense. Board Members and Leadership have
-elected terms of ~3 years, but they typically re-up and shouldn't
-vanish into the past-members footer during a re-election gap. Their
-ins and outs are tracked through election minutes by hand-editing
-`board.json` directly. Permanent Support Staff (e.g. the
-Communications Coordinator) likewise leave this field blank.
+Q19 (**Volunteer cohort (optional)**, Multiple choice) is for
+volunteers, the only contributors whose card leaves `/board` on a
+date known in advance. Everyone else leaves it blank, and their
+departure is a hand edit of `board.json`.
 
-Set the question **Description** to:
+The choices are the cohorts in `src/_data/cohorts.json` that have not
+ended, such as "Winter 2027 (4 January to 26 February 2027)". Nobody
+edits them by hand: the "EISS intern lifecycle" Apps Script
+(`workspace-ops`) resets them every morning, and its one-off
+`upgradeForm` puts the question in place of the old *Internship end
+date* (#1986). Its description reads:
 
-> For interns only. Leave blank if your EISS role is open-ended
-> (Board Member, Leadership, permanent Support Staff). If you're an
-> intern, fill in the date your internship ends. Your card will
-> stay on the board for ~1 week after this date, then move to a
-> folded *"Past board members and interns"* footer. You remain part
-> of the broader European security studies family.
+> Volunteers only. Your card moves to EISS community on /board a
+> week after your cohort ends.
 
-The sync writes whatever the respondent picks straight through to
-`board.json` as `roleEndDate` (ISO `YYYY-MM-DD`). The internal field
-key stays generic so we can also hand-set it on a former Board
+The sync looks the answer up in `cohorts.json` and writes the
+cohort's `end` to `board.json` as `roleEndDate` (ISO `YYYY-MM-DD`).
+The label is built the same way on both sides, so a cohort renamed in
+`cohorts.json` only matches once the script has refreshed the choices.
+Responses from before the change keep their *Internship end date*
+column, which the sync still reads when the cohort is blank. The
+field key stays generic so it can also be hand-set on a former Board
 Member's entry when election minutes record a departure.
 `src/_data/boardSorted.js` applies a 7-day grace at build time and
 moves expired entries into `pastMembers` for the folded footer on

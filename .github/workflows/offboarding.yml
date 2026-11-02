@@ -56,9 +56,7 @@ jobs:
           - [ ] Thank them, and ask whether they are happy to stay listed under *EISS community* on /board
           - [ ] Invite them to the EISS Alumni LinkedIn group (#1861)
           - [ ] Optional: a short thank-you post, if they agree
-          - [ ] Check their EISS working files are in the **EISS Team** shared drive, not in their My Drive (a shared drive owns its files, so they stay when the account is deleted)
-          - [ ] Interns and volunteers only (board members skip this): update their role's section of the **Volunteer handbook** (EISS Team > Interns)
-          - [ ] Remove them from the EISS Proton Pass vaults (Admin, Team, and any items shared with them individually), then rotate every shared password they could see
+          - [ ] Check their End date is in the **EISS people lifecycle** sheet. Accounts, groups and apps outside Google follow from it, through the leaver checklist (#1986)
 
           Close this issue once done. Filed by the Offboarding prompt workflow (#1869).
           BODY

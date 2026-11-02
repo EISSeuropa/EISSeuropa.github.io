@@ -286,8 +286,9 @@ A board member submitted or updated their bio. To publish it:
 
 How a member leaves depends on which kind they are.
 
-- **A volunteer, time-based.** The Form's *Internship end date* field
-  writes `roleEndDate` into `board.json`.
+- **A volunteer, time-based.** The Form's *Volunteer cohort* question
+  writes the cohort's end date from `src/_data/cohorts.json` into
+  `board.json` as `roleEndDate`.
   [`src/_data/boardSorted.js`](../src/_data/boardSorted.js) applies a
   7-day grace at build time, then moves the entry into the folded
   *EISS community* section automatically. No operator
@@ -301,10 +302,14 @@ How a member leaves depends on which kind they are.
   squash-merge.
 - **Offboarding, either kind.** The Monday after a `roleEndDate`
   passes, [`offboarding.yml`](../.github/workflows/offboarding.yml)
-  opens an *Offboarding: name* issue with the checklist: the alumni
-  LinkedIn invitation, the *EISS community* consent, the shared-drive
-  file check, the Volunteer handbook and the Proton Pass removal and
-  password rotation. Dry-run it for any date with
+  opens an *Offboarding: name* issue with the website side of the
+  checklist: the *EISS community* consent, the alumni LinkedIn
+  invitation and an optional thank-you post. Accounts, groups, shared
+  drives and apps outside Google (Proton Pass among them) are the
+  Google side, run from the "EISS people lifecycle" sheet in
+  `workspace-ops`: the issue's last box checks the person's End date
+  is there, which sends the leaver checklist (#1986). Dry-run it for
+  any date with
   `python3 scripts/offboarding-due.py 2026-12-07`.
 - **Full removal.** Two steps, both deliberate. First delete the
   member's row in the Google Sheet, or the next sync re-adds them.

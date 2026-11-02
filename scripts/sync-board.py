@@ -69,6 +69,7 @@ except ImportError:
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG = ROOT / "scripts" / "board-source.json"
 BOARD = ROOT / "src" / "_data" / "board.json"
+COHORTS = ROOT / "src" / "_data" / "cohorts.json"
 PHOTO_DIR = ROOT / "src" / "assets" / "images" / "board"
 
 MAX_PHOTO_WIDTH = 600
@@ -303,6 +304,19 @@ _DATE_PATTERNS = [
 ]
 
 
+def _cohort_end(label: str) -> str:
+    """roleEndDate for the Form's volunteer cohort answer, such as
+    "Winter 2027 (4 January to 26 February 2027)". The choices are written
+    by cohortLabel_ in workspace-ops/intern-lifecycle/Code.gs, so the text
+    is built the same way here."""
+    for c in json.loads(COHORTS.read_text(encoding="utf-8")):
+        s, e = (datetime.strptime(c[k], "%Y-%m-%d") for k in ("start", "end"))
+        if label == f"{c['name']['en']} {e.year} ({s.day} {s:%B} to {e.day} {e:%B %Y})":
+            return c["end"]
+    print(f"  ⚠ unknown cohort {label!r}, keeping the previous end date.")
+    return ""
+
+
 def _normalize_date(raw: str) -> str:
     s = (raw or "").strip()
     if not s:
@@ -523,8 +537,12 @@ def build_from_row(row: dict, cols: dict, role_info: dict, prior: dict | None) -
     # the field is blank or unparseable. boardSorted.js applies a
     # 7-day grace then moves the entry to the folded "Past board
     # members and interns" footer.
+    # Volunteers pick a cohort (#1986). Older responses carry the date itself.
+    cohort = _cell(row, cols, "cohort")
     role_end_raw = _cell(row, cols, "roleEndDate")
-    role_end = _normalize_date(role_end_raw) if role_end_raw else ""
+    role_end = _cohort_end(cohort) if cohort else ""
+    if not role_end and role_end_raw:
+        role_end = _normalize_date(role_end_raw)
     if not role_end:
         role_end = (prior or {}).get("roleEndDate", "")
     if role_end:
