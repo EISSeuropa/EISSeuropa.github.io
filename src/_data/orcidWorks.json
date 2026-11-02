@@ -7,6 +7,18 @@
     "letter": "B",
     "works": [
       {
+        "title": "Security over diplomacy: the rising role of the Ministry of defense in the French Arctic Policy",
+        "year": 2026,
+        "journal": "The Polar Journal",
+        "doi": "https://doi.org/10.1080/2154896x.2025.2603866"
+      },
+      {
+        "title": "Quantifying International Conflicts",
+        "year": 2025,
+        "journal": "Springer Nature Switzerland",
+        "doi": "https://doi.org/10.1007/978-3-031-89331-5"
+      },
+      {
         "title": "Do Humanitarian Workers Really Trust Numbers? An Assessment of the Use of Quantitative Data in the Humanitarian Field",
         "year": 2023,
         "journal": "Journal of humanitarian affairs",
@@ -23,12 +35,6 @@
         "year": 2023,
         "journal": "Global Studies Quarterly",
         "doi": "https://doi.org/10.1093/isagsq/ksad027"
-      },
-      {
-        "title": "Exploring Practices of Conflict Data Production, Analysis, Dissemination, and Practitioner Reception: Methodological Framework and Preliminary Findings",
-        "year": 2021,
-        "journal": null,
-        "doi": null
       }
     ]
   },
