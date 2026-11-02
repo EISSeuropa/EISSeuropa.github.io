@@ -302,8 +302,8 @@ How a member leaves depends on which kind they are.
 - **Offboarding, either kind.** The Monday after a `roleEndDate`
   passes, [`offboarding.yml`](../.github/workflows/offboarding.yml)
   opens an *Offboarding: name* issue with the checklist: the alumni
-  LinkedIn invitation, the *EISS community* consent, the Drive file
-  transfer, the Intern handbook and the Proton Pass removal and
+  LinkedIn invitation, the *EISS community* consent, the shared-drive
+  file check, the Volunteer handbook and the Proton Pass removal and
   password rotation. Dry-run it for any date with
   `python3 scripts/offboarding-due.py 2026-12-07`.
 - **Full removal.** Two steps, both deliberate. First delete the
