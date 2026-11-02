@@ -96,9 +96,10 @@ eleventyExcludeFromCollections: true
     <div class="apps-today" data-apps-today hidden>
       <div class="apps-today-clip">
         <div class="apps-today-box">
-          <p class="apps-today-text" data-apps-today-text></p>
+          <p class="apps-today-text" data-apps-today-text hidden></p>
+          <p class="apps-done-heading" id="apps-done-heading" data-apps-done-heading hidden></p>
           <div class="apps-done-stage" data-apps-done-stage hidden>
-            <ul class="apps-done" data-apps-done role="list" aria-label="Release issues closed since your last visit"></ul>
+            <ul class="apps-done" data-apps-done role="list" aria-labelledby="apps-done-heading"></ul>
             <button type="button" class="apps-done-pause" data-apps-done-pause aria-pressed="false" aria-label="Pause the closed issues" hidden><span class="apps-done-hold">{{ icon("pause") }}</span><span class="apps-done-play">{{ icon("play") }}</span></button>
           </div>
         </div>
@@ -508,6 +509,8 @@ eleventyExcludeFromCollections: true
     // since the last visit. It stays away when there is nothing to say.
     var failed = data.health ? data.health.summary.failed : [];
     var since = { tasks: 0, closed: 0, done: [] };
+    // The last five issues closed as done, whenever they closed: the roll's lines.
+    var recent = [];
     var today = document.querySelector("[data-apps-today]");
     var todayText = document.querySelector("[data-apps-today-text]");
     var doneList = document.querySelector("[data-apps-done]");
@@ -536,6 +539,7 @@ eleventyExcludeFromCollections: true
     // motion past five seconds needs a pause control). Tabbing to a link brings
     // its line up. Without motion every line stays in view.
     var stage = document.querySelector("[data-apps-done-stage]");
+    var doneHeading = document.querySelector("[data-apps-done-heading]");
     var pauseBtn = document.querySelector("[data-apps-done-pause]");
     var roll = { key: null, i: 0, hover: false, focus: false, held: false };
     var CHECK = '<span class="apps-done-box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>';
@@ -584,12 +588,14 @@ eleventyExcludeFromCollections: true
         li.innerHTML = CHECK + '<a><span class="sr-only">Closed: </span><span class="apps-done-num"></span> <span class="apps-done-title"></span></a>';
         var a = li.querySelector("a");
         a.href = x.url;
-        a.title = x.title;
+        a.title = x.title + ", closed " + new Date(x.at).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
         li.querySelector(".apps-done-num").textContent = "#" + x.n;
         li.querySelector(".apps-done-title").textContent = x.title;
         doneList.appendChild(li);
       });
       stage.hidden = !items.length;
+      doneHeading.hidden = !items.length;
+      doneHeading.textContent = items.length === 1 ? "Last issue closed" : "Last " + items.length + " issues closed";
       doneList.classList.toggle("apps-done-static", calm);
       pauseBtn.hidden = calm || items.length < 2;
       // The first line rises in once the box has opened.
@@ -623,9 +629,11 @@ eleventyExcludeFromCollections: true
       if (since.closed > 0 && staff) news.push(since.closed + " more release " + (since.closed === 1 ? "issue" : "issues") + " closed");
       if (news.length) parts.push("Since your last visit: " + news.join(", ") + ".");
       if (parts.length) todayText.textContent = parts.join(" ");
+      todayText.hidden = !parts.length;
+      var rolled = staff ? recent : [];
       // The box opens first, so the first line can rise into it.
-      reveal(today, parts.length > 0);
-      renderDone(staff ? since.done : []);
+      reveal(today, parts.length > 0 || rolled.length > 0);
+      renderDone(rolled);
       delta(document.querySelector("[data-apps-release-percent]"), staff && since.closed > 0 ? "+" + since.closed : "", since.closed + " closed since your last visit");
       delta(document.querySelector('.apps-stats [data-apps-live="tasks"]'), since.tasks > 0 && role !== "management" && role !== "board" ? "+" + since.tasks + " new" : "", since.tasks + " new since your last visit");
     }
@@ -705,10 +713,20 @@ eleventyExcludeFromCollections: true
         Promise.all(repos.map(function (r) {
           return get("repos/" + r.slug + "/actions/runs?status=completed&per_page=100&branch=" + r.branch);
         })),
+        // The last issues closed as done, for the Today box's roll. Search sorts by
+        // update, not closing, so ten come back and the five latest closures stay.
+        // A failure here only loses the roll.
+        get("search/issues?per_page=10&sort=updated&order=desc&q=" + encodeURIComponent("repo:" + data.repo + " is:issue is:closed reason:completed"))
+          .then(function (r) {
+            return r.items.filter(function (x) { return x.closed_at; })
+              .map(function (x) { return { n: x.number, title: x.title, url: x.html_url, at: x.closed_at }; })
+              .sort(function (x, y) { return Date.parse(y.at) - Date.parse(x.at); }).slice(0, 5);
+          }, function () { return null; }),
       ]).then(function (a) {
         var m = data.release && a[3].filter(function (x) { return x.title === data.release.title; })[0];
         var live = { issues: a[0], prs: a[1], tasks: a[2], closed: m ? m.closed_issues : null, total: m ? m.closed_issues + m.open_issues : null,
-          runs: a[4].map(function (r) { return r.workflow_runs.map(function (w) { return { name: w.name, conclusion: w.conclusion, url: w.html_url }; }); }) };
+          runs: a[4].map(function (r) { return r.workflow_runs.map(function (w) { return { name: w.name, conclusion: w.conclusion, url: w.html_url }; }); }),
+          recent: a[5] };
         if (!m) return live;
         // The release's latest closed issues, for the Today line. A failure here only loses the list.
         return get("repos/" + data.repo + "/issues?milestone=" + m.number + "&state=closed&sort=updated&direction=desc&per_page=100").then(function (list) {
@@ -824,6 +842,7 @@ eleventyExcludeFromCollections: true
       var line = document.querySelector(".apps-live");
       line.classList.add("is-live");
       line.textContent = "Live from GitHub, checked " + (mins < 1 ? "just now" : mins + (mins === 1 ? " minute ago" : " minutes ago"));
+      recent = (live.recent || []).filter(function (x) { return isRun(x.url); });
       compare(live.tasks, live.closed === null ? built.closed : live.closed, at, live.done);
       if (live.done) renderPace(live.done);
     }
