@@ -24,6 +24,7 @@ const ALIASES = {
   "the netherlands": "nl",
   "holland": "nl",
   "belgium": "be",
+  "india": "in",
   "italy": "it",
   "spain": "es",
   "austria": "at",
