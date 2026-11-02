@@ -1,12 +1,9 @@
-{# Locale-aware signpost to the Anthology Atlas, as a link-card. Rendered in
-   the Anthology page header (archive-page.njk), under the corpus stats it
-   maps, so it appears on /anthology and its papers view in every locale. Reuses the .speakers-cta link-card
-   pattern (src/_includes/speakers-signpost.njk). The Atlas is published in
-   all three languages since #1495, so the link resolves to the reader's own
-   Atlas and the sub-lines no longer flag it as English.
-   The sub-line used to carry the paper / author / theme counts, which the
-   stats row directly above it already shows. It says what the map is for
-   instead. #}
+{# Locale-aware Anthology Atlas link-card in the archive page header.
+   Reads: lang, i18n.
+   Requires: i18n (atlasSignpost.title and atlasSignpost.sub for the locale).
+   Optional: lang (default "en" for copy). localizedHref(lang) selects the
+             translated Atlas URL when that page exists, otherwise English.
+   Reuses the speakers-cta classes and the Anthology constellation mark. #}
 {% from "icons.njk" import icon %}
 {%- set t = i18n[lang or "en"] -%}
 <a class="speakers-cta" href="{{ '/anthology-atlas.html' | localizedHref(lang) }}">

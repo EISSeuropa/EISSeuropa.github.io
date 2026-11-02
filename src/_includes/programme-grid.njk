@@ -2,11 +2,15 @@
    Renders nothing when the year has no programme data in
    indico.annualConferences[year].programme.days.
 
-   Variables in scope from the page template:
-     - `lang` — front-matter, defaults to "en"
-     - `year` — string, e.g. "2026"
-     - `indico` — src/_data/indico.json (data file)
-     - `conferences` — src/_data/conferences.js
+   Reads: year, indico, conferences, i18n, lang. The included
+          speakers-signpost.njk also reads signpostYear and corpus.
+   Requires: year (year key, e.g. "2026"), indico.annualConferences,
+             conferences.byYear, conferences.today, i18n.
+   Optional: lang (default "en"). Missing/empty programme.days emits nothing.
+             The edition's livestreamUrl defaults to no live link and is
+             ignored once endDate is before conferences.today.
+             signpostYear (absent: generic Anthology link, requiring
+             corpus.stats.speakerCount), otherwise an edition-filtered link.
 
    Data shape produced by scripts/sync-indico.py:extract_programme:
      programme.days[].rows[] = [
