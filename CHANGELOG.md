@@ -197,6 +197,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- The "update your bio" link on `/board` and the weekly bios sync use the bios form's new home on the EISS Workspace, "Create or update my EISS Board entry" on admin@, in place of the copy on the legacy eissnetwork@gmail.com account. Existing cards stay as they are until their owner next submits the form. Part of [#1988](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1988).
 - Irina Sofronie and Giovanni Guerra now finish their autumn placements on 1 December 2026, like Astha Dhal, so their cards on `/board` move to EISS community with hers.
 - The staff entry for onboarding is now the Joining Form, for everyone who joins EISS whatever their role, and management sees it too. Its label and note change in all three languages, translated by hand, and the Joining EISS guide on `/internal.html` is now the Joining Guide. Volunteers give their cohort on the bios form instead of an end date, and the board sync takes the end date from `src/_data/cohorts.json`. The offboarding issue keeps the website side of a departure and points to the leaver checklist for the rest. Part of [#1986](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1986).
 - The internal dashboard reads its dates from the "EISS dates" Google Calendar once that calendar has events, so adding a date no longer needs a change to the website. The dates in the website repo stay as the fallback. Internal deadlines live in a separate calendar that the site never reads.

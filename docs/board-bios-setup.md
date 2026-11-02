@@ -34,18 +34,21 @@ just don't merge.
 
 ## Where the Form lives
 
-The live Form ("EISS Profile Workflow"), its response Sheet and the
-folder of uploaded headshots belong to the legacy Google account
-**eissnetwork@gmail.com**, not to the EISS Workspace. They stay there
-on purpose: the sync reads the Sheet's published CSV, and moving or
-copying the Form would change that URL and the photo folder. The
-account's French locale is why `scripts/board-source.json` maps the
-timestamp and email columns to *Horodateur* and *Adresse e-mail*.
+The live Form, "Create or update my EISS Board entry", its response
+Sheet and the folder of uploaded headshots belong to
+**admin@eiss-europa.com**, in a folder of its My Drive. They are not in
+a shared drive, because Google Forms does not allow file-upload
+questions in a Form stored in one. The account's English locale is why
+`scripts/board-source.json` maps the timestamp and email columns to
+*Timestamp* and *Email address*.
 
-Whoever holds that account can edit the Form and see every response,
-including unpublished ones. The account is listed in the DevOps
-handbook (EISS Restricted) with its holder and recovery route. The
-question of moving it into the Workspace is #1988.
+Until 2 November 2026 the Form lived on the legacy account
+eissnetwork@gmail.com (#1988). Google cannot transfer ownership from a
+personal account, so it was copied and the new copy started with an
+empty Sheet. The sync never removes an entry from `board.json`, so
+every member keeps their card until they next submit the new Form.
+Once it stops accepting responses, the old Form and Sheet stay on
+eissnetwork@gmail.com as a read-only archive.
 
 The Form is separate from the *Joining Form* that creates EISS
 accounts (#1986). One publishes a profile and is resubmitted whenever
