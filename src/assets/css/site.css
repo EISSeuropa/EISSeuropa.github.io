@@ -1138,7 +1138,7 @@ h4 { font-size: var(--fs-lg); }
    tallest one's height and Back and Next stay put from step to step. */
 .apps-welcome-list { display: grid; margin: var(--space-5) 0 0; padding: 0; list-style: none; }
 .apps-welcome-step { grid-area: 1 / 1; visibility: hidden; }
-.apps-welcome-step.is-on { visibility: visible; }
+.apps-welcome-on { visibility: visible; }
 html:has(.apps-welcome[open]) { overflow: hidden; }
 .apps-welcome-step p { margin: 0 0 var(--space-3); line-height: 1.5; }
 .apps-welcome-heading { margin: 0 0 var(--space-3); font-size: 1.25rem; }

@@ -396,7 +396,7 @@ eleventyExcludeFromCollections: true
     }
     function wShow(i) {
       wAt = i;
-      allSteps.forEach(function (li) { li.classList.toggle("is-on", li === wSteps[i]); });
+      allSteps.forEach(function (li) { li.classList.toggle("apps-welcome-on", li === wSteps[i]); });
       wMeta.textContent = wSteps[i].getAttribute("data-stage") + ": step " + (i + 1) + " of " + wSteps.length;
       wBar.max = wSteps.length;
       wBar.value = i + 1;
