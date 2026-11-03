@@ -1094,7 +1094,7 @@ h4 { font-size: var(--fs-lg); }
 .apps-welcome {
   width: min(36rem, calc(100% - 2 * var(--space-4)));
   max-height: calc(100dvh - 2 * var(--space-4));
-  padding: var(--space-6);
+  padding: clamp(var(--space-4), 5vw, var(--space-6));
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   background: var(--bg-elev);
@@ -1120,6 +1120,7 @@ h4 { font-size: var(--fs-lg); }
 .apps-welcome-title { margin: 0 0 var(--space-2); font-size: 1.5rem; }
 .apps-welcome-lead { margin: 0 0 var(--space-5); color: var(--text-muted); }
 .apps-welcome-choices { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-2); }
+.apps-welcome-choices .btn { padding-inline: var(--space-3); white-space: nowrap; }
 .apps-welcome-skip {
   margin-top: var(--space-4);
   min-height: 44px;
@@ -1133,8 +1134,12 @@ h4 { font-size: var(--fs-lg); }
   cursor: pointer;
 }
 .apps-welcome-meta { margin: 0 0 var(--space-2); padding-inline-end: var(--space-6); color: var(--text-muted); font-size: 0.875rem; font-weight: 600; }
-.apps-welcome-list { margin: var(--space-5) 0 0; padding: 0; list-style: none; }
-.apps-welcome-step { min-height: 12rem; }
+/* Every step of the role sits in one grid cell, so the dialog takes the
+   tallest one's height and Back and Next stay put from step to step. */
+.apps-welcome-list { display: grid; margin: var(--space-5) 0 0; padding: 0; list-style: none; }
+.apps-welcome-step { grid-area: 1 / 1; visibility: hidden; }
+.apps-welcome-step.is-on { visibility: visible; }
+html:has(.apps-welcome[open]) { overflow: hidden; }
 .apps-welcome-step p { margin: 0 0 var(--space-3); line-height: 1.5; }
 .apps-welcome-heading { margin: 0 0 var(--space-3); font-size: 1.25rem; }
 .apps-welcome-heading:focus { outline: none; }
@@ -1152,7 +1157,8 @@ h4 { font-size: var(--fs-lg); }
 }
 .apps-welcome-moving { padding-left: var(--space-3); border-left: 3px solid var(--accent); color: var(--text-muted); font-size: 0.9375rem; }
 .apps-welcome-links { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-4) 0 0; padding: 0; list-style: none; }
-.apps-welcome-nav { display: flex; justify-content: space-between; gap: var(--space-3); margin-top: var(--space-6); }
+.apps-welcome-nav { display: flex; justify-content: flex-end; gap: var(--space-3); margin-top: var(--space-6); }
+.apps-welcome-nav [data-apps-welcome-back] { margin-inline-end: auto; }
 .apps-status {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));

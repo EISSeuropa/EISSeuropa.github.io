@@ -59,7 +59,7 @@ eleventyExcludeFromCollections: true
         <h2 class="apps-welcome-title" id="apps-welcome-title">Welcome to EISS</h2>
         <p class="apps-welcome-lead">Which describes you? You get the steps for your role, one at a time.</p>
         <div class="apps-welcome-choices">
-          <button type="button" class="btn btn-secondary" data-apps-choose="staff">Staff</button>
+          <button type="button" class="btn btn-secondary" data-apps-choose="staff" autofocus>Staff</button>
           <button type="button" class="btn btn-secondary" data-apps-choose="management">Management</button>
           <button type="button" class="btn btn-secondary" data-apps-choose="board">Board member</button>
           <button type="button" class="btn btn-secondary" data-apps-choose="volunteer">Volunteer</button>
@@ -67,11 +67,11 @@ eleventyExcludeFromCollections: true
         <button type="button" class="apps-welcome-skip" data-apps-welcome-close>Skip for now</button>
       </div>
       <div data-apps-welcome-steps hidden>
-        <p class="apps-welcome-meta" data-apps-welcome-meta></p>
+        <p class="apps-welcome-meta" data-apps-welcome-meta aria-live="polite"></p>
         <progress class="apps-progress" data-apps-welcome-bar value="0" max="1" aria-hidden="true"></progress>
         <ol class="apps-welcome-list" role="list">
           {% for stage in dashboard.onboarding %}{% for s in stage.steps %}
-            <li class="apps-welcome-step{% if s.key %} apps-welcome-key{% endif %}" data-roles="{{ s.roles | join(' ') }}" data-stage="{{ stage.stage }}" hidden>
+            <li class="apps-welcome-step{% if s.key %} apps-welcome-key{% endif %}" data-roles="{{ s.roles | join(' ') }}" data-stage="{{ stage.stage }}">
               {% if s.key %}<p class="apps-welcome-badge">{{ icon("lightbulb") }} {{ s.key }}</p>{% endif %}
               <h3 class="apps-welcome-heading" tabindex="-1">{{ s.title }}</h3>
               {% if s.text %}<p>{{ s.text }}</p>{% endif %}
@@ -396,11 +396,11 @@ eleventyExcludeFromCollections: true
     }
     function wShow(i) {
       wAt = i;
-      wSteps.forEach(function (li, j) { li.hidden = j !== i; });
+      allSteps.forEach(function (li) { li.classList.toggle("is-on", li === wSteps[i]); });
       wMeta.textContent = wSteps[i].getAttribute("data-stage") + ": step " + (i + 1) + " of " + wSteps.length;
       wBar.max = wSteps.length;
       wBar.value = i + 1;
-      wBack.disabled = i === 0;
+      wBack.hidden = i === 0;
       wNext.textContent = i === wSteps.length - 1 ? "Finish" : "Next";
       wSteps[i].querySelector(".apps-welcome-heading").focus();
     }
@@ -421,6 +421,9 @@ eleventyExcludeFromCollections: true
     });
     dlg.addEventListener("close", function () {
       try { localStorage.setItem(WELCOMED, "1"); } catch (e) {}
+      // Opened on load, the dialog has no earlier focus to return to.
+      var f = document.activeElement;
+      if (f === document.body || dlg.contains(f)) tablist.querySelector('[aria-selected="true"]').focus();
     });
     document.addEventListener("click", function (e) {
       var a = e.target.closest && e.target.closest('a[href="#welcome"]');
