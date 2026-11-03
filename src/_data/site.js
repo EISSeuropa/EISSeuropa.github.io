@@ -235,6 +235,43 @@ module.exports = {
     { href: "https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/admin-guide.md", label: "Operator and handover guide", icon: "book-open", roles: ["staff", "management", "board"] },
   ],
 
+  // The "Get started" tab on /internal.html: what someone joining (or moving
+  // over from the old set-up) does, in order. `links` name staffLinks by key
+  // or guideLinks by label, or are { href, label, icon }. `moving` is shown
+  // to people already with EISS. Roles work as in staffLinks, and a stage
+  // takes the roles of its steps. Public page, so nothing confidential.
+  onboarding: [
+    {
+      stage: "Day one",
+      steps: [
+        { id: "account", title: "Sign in to your EISS account", roles: ["staff", "management", "board", "volunteer"], text: "Open Gmail and sign in with your eiss-europa.com address and the temporary password you were sent. Google then asks you to choose your own.", links: ["mail"], moving: "Your old address stays in the EISS groups for now, so group mail can reach both. Staff remove it once your EISS address works." },
+        { id: "security", title: "Turn on 2-Step Verification", roles: ["staff", "management", "board", "volunteer"], text: "Add a second sign-in step, such as a prompt on your phone.", links: [{ href: "https://myaccount.google.com/signinoptions/two-step-verification", label: "2-Step Verification", icon: "shield" }] },
+        { id: "form", title: "Fill in the Joining Form", roles: ["staff", "management", "board", "volunteer"], text: "It gives us your details for the team pages and your access. Skip this if you have sent it already.", links: ["internForm"] },
+        { id: "guide", title: "Read the guides for your role", roles: ["staff", "management", "board", "volunteer"], text: "Start with the Joining Guide. The others go deeper.", links: ["Joining Guide", "How the team works", "Volunteer handbook", "Staff handbook"] },
+        { id: "bookmark", title: "Bookmark this dashboard", roles: ["staff", "management", "board", "volunteer"], text: "internal.eiss-europa.com brings you back here, to every app and guide." },
+      ],
+    },
+    {
+      stage: "First week",
+      steps: [
+        { id: "chat", title: "Join your rooms in Team chat", roles: ["staff", "management", "volunteer"], text: "Accept the invitations to your rooms. Each room's Tasks tab holds its daily work: assign, comment and tick off tasks there.", links: ["chat"], moving: "The Project Manager is now an archive. Add any open task to the Tasks tab of the room it belongs to." },
+        { id: "inbox", title: "Answer the shared inboxes", roles: ["staff", "management", "volunteer"], text: "contact@ and internship@ are shared inboxes in Groups. Take a conversation so others see it is yours, reply, then mark it complete. On internship@, reply from your own address.", links: ["groups"] },
+        { id: "management", title: "Send as management@", roles: ["management"], text: "Co-Directors and the treasurer can send as management@. Choose it in the From line in Gmail.", links: ["mail"] },
+        { id: "board", title: "Write to the board", roles: ["board"], text: "board@ reaches every board member. Nobody sends as board@: reply from your own address.", links: ["mail"] },
+        { id: "drive", title: "Keep EISS files in the shared drive", roles: ["staff", "management", "board", "volunteer"], text: "Save EISS work in the EISS Team shared drive, not in My Drive.", links: ["drive"], moving: "Move EISS files from a personal account into the shared drive." },
+        { id: "calendar", title: "Meet in Calendar and Meet", roles: ["staff", "management", "board", "volunteer"], text: "Invitations arrive at your EISS address. Join calls with that account.", links: ["calendar", "meet"] },
+        { id: "indico", title: "Find the conference in Indico", roles: ["staff", "management", "board", "volunteer"], text: "Submissions, reviews and the programme of each ESSC live in Indico. Use your EISS address there.", links: ["indico"] },
+        { id: "github", title: "Pick up a website task", roles: ["staff", "volunteer"], text: "Changes to the website are GitHub issues, and those marked help wanted are open to volunteers. Team work with an owner and a date goes in Chat instead.", links: ["Website tasks"] },
+      ],
+    },
+    {
+      stage: "When you leave",
+      steps: [
+        { id: "leave", title: "Hand over your files", roles: ["volunteer"], text: "Your account is suspended after your end date. Move anything EISS needs into the shared drive before then.", links: ["drive"] },
+      ],
+    },
+  ],
+
   // The year's dates for /internal.html, one edition at a time, added there to
   // the conference and the release due dates. The "EISS dates" calendar takes
   // over once it has events (see docs/admin-guide.md), and this list is then

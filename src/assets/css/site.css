@@ -1093,6 +1093,34 @@ h4 { font-size: var(--fs-lg); }
 .apps-tile-soon:hover .apps-icon { transform: none; }
 .apps-tile-short { min-height: 0; }
 .apps-section-heading { margin-bottom: var(--space-5); }
+
+/* Get started: numbered steps with a tick each. A ticked step fades back. */
+.apps-start-tally { margin: 0; color: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; }
+.apps-start-tally[hidden] { display: none; }
+.apps-start-stage { margin-bottom: var(--space-6); }
+.apps-start-list { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+.apps-start-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-3);
+  max-width: 48rem;
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-elev);
+  box-shadow: var(--shadow-1);
+  transition: opacity var(--motion-base) var(--ease-out);
+}
+.apps-start-step:has(.apps-start-check:checked) { opacity: 0.6; box-shadow: none; }
+.apps-start-step:has(.apps-start-check:checked) .apps-start-title { text-decoration: line-through; }
+.apps-start-check { width: 1.375rem; height: 1.375rem; margin: 0.1rem 0 0; accent-color: var(--accent); cursor: pointer; }
+.apps-start-title { font-weight: 600; cursor: pointer; }
+/* The counter skips steps the role menu hides, so the numbers stay unbroken. */
+#start { counter-reset: apps-start; }
+.apps-start-step { counter-increment: apps-start; }
+.apps-start-title::before { content: counter(apps-start) ". "; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.apps-start-moving { padding-left: var(--space-3); border-left: 3px solid var(--accent); }
+.apps-start-links { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-3) 0 0; padding: 0; list-style: none; }
 .apps-status {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
