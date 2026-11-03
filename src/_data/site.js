@@ -268,13 +268,13 @@ module.exports = {
           "How the team works",
         ] },
         { id: "profile", title: "Check your card on the People page", roles: ["staff", "management", "board", "volunteer"], text: "If you gave a profile on the Joining Form, your card is made from it. To add a photo or change your details, use the bios form, signed in with your EISS account.", links: [{ href: "https://docs.google.com/forms/d/e/1FAIpQLSdL-DGd5SV7awb56Wh8G71w5oCpXWwlvJKYKyEr0r3oZExKvg/viewform", label: "Bios form", icon: "user" }, { href: "/board.html", label: "The People", icon: "users" }] },
-        { id: "bookmark", title: "Bookmark this dashboard", roles: ["staff", "management", "board", "volunteer"], text: "internal.eiss-europa.com brings you back here, to every app and guide." },
+        { id: "chat", title: "Join your rooms in Team chat", roles: ["staff", "management", "volunteer"], text: "Accept the invitations to your rooms. Each room's Tasks tab holds its daily work: assign, comment and tick off tasks there.", links: ["chat"], moving: "The Project Manager is now an archive. Add any open task to the Tasks tab of the room it belongs to." },
       ],
     },
     {
       stage: "First week",
       steps: [
-        { id: "chat", title: "Join your rooms in Team chat", roles: ["staff", "management", "volunteer"], text: "Accept the invitations to your rooms. Each room's Tasks tab holds its daily work: assign, comment and tick off tasks there.", links: ["chat"], moving: "The Project Manager is now an archive. Add any open task to the Tasks tab of the room it belongs to." },
+        { id: "bookmark", title: "Bookmark this dashboard", roles: ["staff", "management", "board", "volunteer"], text: "internal.eiss-europa.com brings you back here, to every app and guide." },
         { id: "inbox", title: "Answer the shared inboxes", roles: ["staff", "management", "volunteer"], text: "internship@ is the volunteers' shared inbox in Groups, and contact@ is answered by the staff members added to it. In either, take a conversation so others see it is yours, reply, then mark it complete. On internship@, reply from your own address.", links: ["groups"] },
         { id: "management", title: "Send as management@", roles: ["management"], text: "Co-Directors and the treasurer can send as management@. Choose it in the From line in Gmail.", links: ["mail"] },
         { id: "board", title: "Write to the board", roles: ["board"], text: "board@ reaches every board member. Nobody sends as board@: reply from your own address.", links: ["mail"], moving: "For a week after your EISS address joins board@, its messages reach your usual address too. After that, only the new one. To keep reading them in your usual inbox, set up forwarding in your EISS Gmail." },
