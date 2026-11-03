@@ -140,12 +140,14 @@ function assemble(keyDates, source) {
     : null;
 
   // Onboarding links by staffLinks key or guideLinks label, as for stages.
+  // A staffLinks entry's roles say who sees the app, not who needs the step,
+  // so they are dropped. A guide keeps its roles: the role guides rely on them.
+  const app = (l) => { const a = site.staffLinks.find((x) => x.key === l); return a && { ...a, roles: undefined }; };
   const link = (l) => typeof l === "object" ? l
-    : site.staffLinks.find((a) => a.key === l) || site.guideLinks.find((g) => g.label === l)
+    : app(l) || site.guideLinks.find((g) => g.label === l)
       || console.warn(`[dashboard] onboarding link "${l}" is not in staffLinks or guideLinks, left out`);
   const onboarding = site.onboarding.map((s) => ({
     ...s,
-    roles: [...new Set(s.steps.flatMap((st) => st.roles))],
     steps: s.steps.map((st) => ({ ...st, links: (st.links || []).map(link).filter(Boolean) })),
   }));
 

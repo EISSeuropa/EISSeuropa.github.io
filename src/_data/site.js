@@ -225,6 +225,7 @@ module.exports = {
 
   // The guides on /internal.html. Roles work as in staffLinks.
   guideLinks: [
+    { href: "#welcome", label: "Joining steps", icon: "user-plus", roles: ["staff", "management", "board", "volunteer"] },
     { href: "https://docs.google.com/document/d/1nnUBgds6CUM5fLHmhDwB1osklx-99lXzKv2OhPF0SXo/edit", label: "Joining Guide", icon: "book-open", roles: ["staff", "management", "board", "volunteer"] },
     { href: "https://docs.google.com/document/d/1ETe9RCqFLRExvyRCouYKHyIl0xEZNXJ-aUIMZNpwue4/edit", label: "How the team works", icon: "file-text", roles: ["staff", "management", "volunteer"] },
     { href: "https://docs.google.com/document/d/1c3_KX7Hm-57OQZh3soo-JCQ_HaaEekqwlhXMW0C42Xs/edit", label: "Volunteer handbook", icon: "graduation-cap", roles: ["staff", "volunteer"] },
@@ -235,11 +236,13 @@ module.exports = {
     { href: "https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/admin-guide.md", label: "Operator and handover guide", icon: "book-open", roles: ["staff", "management", "board"] },
   ],
 
-  // The "Get started" tab on /internal.html: what someone joining (or moving
+  // The welcome dialog on /internal.html: what someone joining (or moving
   // over from the old set-up) does, in order. `links` name staffLinks by key
   // or guideLinks by label, or are { href, label, icon, roles }. `moving` is
-  // shown to people already with EISS. Roles work as in staffLinks, and a
-  // stage takes the roles of its steps. Public page, so nothing confidential.
+  // shown to people already with EISS, and `key` badges the step that
+  // matters most. A step's roles pick who is shown it. A link's roles apply
+  // only when written here or carried by a guide. Public page, so nothing
+  // confidential.
   // The order follows the people lifecycle script in EISSeuropa/workspace-ops
   // (intern-lifecycle/Code.gs): the Joining Form, an approval, the account
   // within the hour, then the welcome email. Change both together.
@@ -254,8 +257,9 @@ module.exports = {
     {
       stage: "Day one",
       steps: [
-        { id: "account", title: "Sign in and choose your password", roles: ["staff", "management", "board", "volunteer"], text: "Sign in to Gmail with your EISS address and the temporary password. Google then asks you to choose your own.", links: ["mail"] },
-        { id: "guide", title: "Follow the Joining Guide", roles: ["staff", "management", "board", "volunteer"], text: "It opens once you are signed in, and takes you through 2-Step Verification and a separate Chrome profile for EISS.", links: ["Joining Guide"] },
+        { id: "chrome", key: "Do this first", title: "Make a Chrome profile for EISS", roles: ["staff", "management", "board", "volunteer"], text: "In Chrome, add a new profile and sign in to your EISS account there, never in the window you use for your personal Google account. Open EISS apps, Drive links and this dashboard only from that profile. Mixed accounts are the cause of most \"no access\" errors.", links: [{ href: "https://support.google.com/chrome/answer/2364824", label: "Add a Chrome profile", icon: "user-plus" }] },
+        { id: "account", title: "Sign in and choose your password", roles: ["staff", "management", "board", "volunteer"], text: "In your EISS profile, sign in to Gmail with your EISS address and the temporary password. Google then asks you to choose your own.", links: ["mail"] },
+        { id: "guide", title: "Follow the Joining Guide", roles: ["staff", "management", "board", "volunteer"], text: "It opens once you are signed in, and takes you through 2-Step Verification.", links: ["Joining Guide"] },
         { id: "role", title: "Read the guide for your role", roles: ["staff", "management", "board", "volunteer"], links: [
           "Volunteer handbook",
           "Staff handbook",
