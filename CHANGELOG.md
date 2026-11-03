@@ -141,6 +141,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- Two joining steps on the internal dashboard now match how the accounts work. The shared inboxes step no longer tells every staff and management member that they answer contact@ and internship@, since only volunteers are on internship@ and contact@ is given by hand. The Indico step explains that Indico has its own account, made with the EISS address or added to an existing one.
 - **French dates on the first of the month read "1er".** The `newsDate` filter printed "1 mars", and now prints "1er mars" as French writes it, on every French page that shows a date.
 - `/internal.html` shows the real numbers of open issues and tasks to pick up. The daily refresh had been recording far too few of them.
 - An internal planning issue for the 2027 throwback series was published as a news item and in the feed by mistake, because it carried the `news` label. It is withdrawn, and the label is off the issue.
