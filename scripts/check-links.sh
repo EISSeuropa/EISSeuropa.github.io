@@ -87,9 +87,10 @@ quiet = sys.argv[3] == "1"
 HREF_RE = re.compile(r'<a\s+[^>]*?\bhref\s*=\s*["\']([^"\']+)["\']', re.IGNORECASE)
 
 # Hosts that refuse HEAD and need GET instead. Add to this list when
-# we see a 405 or 403 from a known-good URL.
+# we see a 405 or 403 from a known-good URL. support.google.com answers
+# HEAD with a 404 for live help pages, which the 403/405 fallback misses.
 GET_HOSTS = {
-    "docs.google.com", "forms.google.com",
+    "docs.google.com", "forms.google.com", "support.google.com",
 }
 
 # Hosts we deliberately skip. Three categories collapse here. (a)

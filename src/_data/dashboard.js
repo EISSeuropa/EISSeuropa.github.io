@@ -139,7 +139,19 @@ function assemble(keyDates, source) {
     ? { ...current, note, links: current.links.map((l) => site.staffLinks.find((a) => a.key === l || a.label === l) || console.warn(`[dashboard] stage link "${l}" is not in staffLinks, left out`)).filter(Boolean), steps, fill }
     : null;
 
-  return { release, counts, dates, deadlines, phase, datesSource: source, calendar: site.deadlinesCalendar || null, repo: "EISSeuropa/EISSeuropa.github.io" };
+  // Onboarding links by staffLinks key or guideLinks label, as for stages.
+  // A staffLinks entry's roles say who sees the app, not who needs the step,
+  // so they are dropped. A guide keeps its roles: the role guides rely on them.
+  const app = (l) => { const a = site.staffLinks.find((x) => x.key === l); return a && { ...a, roles: undefined }; };
+  const link = (l) => typeof l === "object" ? l
+    : app(l) || site.guideLinks.find((g) => g.label === l)
+      || console.warn(`[dashboard] onboarding link "${l}" is not in staffLinks or guideLinks, left out`);
+  const onboarding = site.onboarding.map((s) => ({
+    ...s,
+    steps: s.steps.map((st) => ({ ...st, links: (st.links || []).map(link).filter(Boolean) })),
+  }));
+
+  return { release, counts, dates, deadlines, phase, onboarding, datesSource: source, calendar: site.deadlinesCalendar || null, repo: "EISSeuropa/EISSeuropa.github.io" };
 }
 
 module.exports = async function () {

@@ -225,6 +225,7 @@ module.exports = {
 
   // The guides on /internal.html. Roles work as in staffLinks.
   guideLinks: [
+    { href: "#welcome", label: "Joining steps", icon: "user-plus", roles: ["staff", "management", "board", "volunteer"] },
     { href: "https://docs.google.com/document/d/1nnUBgds6CUM5fLHmhDwB1osklx-99lXzKv2OhPF0SXo/edit", label: "Joining Guide", icon: "book-open", roles: ["staff", "management", "board", "volunteer"] },
     { href: "https://docs.google.com/document/d/1ETe9RCqFLRExvyRCouYKHyIl0xEZNXJ-aUIMZNpwue4/edit", label: "How the team works", icon: "file-text", roles: ["staff", "management", "volunteer"] },
     { href: "https://docs.google.com/document/d/1c3_KX7Hm-57OQZh3soo-JCQ_HaaEekqwlhXMW0C42Xs/edit", label: "Volunteer handbook", icon: "graduation-cap", roles: ["staff", "volunteer"] },
@@ -233,6 +234,63 @@ module.exports = {
     { href: "https://drive.google.com/drive/folders/1J2MqJ_1cwHgL9V2wNpPlU4sCT5SWwrcd", label: "Guides and procedures", icon: "folder", roles: ["staff", "management", "volunteer"] },
     { href: "https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/news-publishing.md", label: "Publishing news", icon: "rss", roles: ["staff"] },
     { href: "https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/admin-guide.md", label: "Operator and handover guide", icon: "book-open", roles: ["staff", "management", "board"] },
+  ],
+
+  // The welcome dialog on /internal.html: what someone joining (or moving
+  // over from the old set-up) does, in order. `links` name staffLinks by key
+  // or guideLinks by label, or are { href, label, icon, roles }. `moving` is
+  // shown to people already with EISS, and `key` badges the step that
+  // matters most. A step's roles pick who is shown it. A link's roles apply
+  // only when written here or carried by a guide. Public page, so nothing
+  // confidential.
+  // The order follows the people lifecycle script in EISSeuropa/workspace-ops
+  // (intern-lifecycle/Code.gs): the Joining Form, an approval, the account
+  // within the hour, then the welcome email. Change both together.
+  onboarding: [
+    {
+      stage: "Before your account",
+      steps: [
+        { id: "form", title: "Fill in the Joining Form", roles: ["staff", "management", "board", "volunteer"], text: "Give your role, your personal email and your dates. Once your entry is approved, your EISS account is created within the hour.", links: ["internForm"], moving: "Fill it in too if you do not have an eiss-europa.com account yet." },
+        { id: "welcome", title: "Look out for the welcome email", roles: ["staff", "management", "board", "volunteer"], text: "It arrives at your personal address, with your new EISS address and a temporary password." },
+      ],
+    },
+    {
+      stage: "Day one",
+      steps: [
+        { id: "chrome", key: "Do this first", title: "Make a Chrome profile for EISS", roles: ["staff", "management", "board", "volunteer"], text: "In Chrome, add a new profile and sign in to your EISS account there, never in the window you use for your personal Google account. Open EISS apps, Drive links and this dashboard only from that profile. Mixed accounts are the cause of most \"no access\" errors.", links: [{ href: "https://support.google.com/chrome/answer/2364824", label: "Add a Chrome profile", icon: "user-plus" }] },
+        { id: "account", title: "Sign in and choose your password", roles: ["staff", "management", "board", "volunteer"], text: "In your EISS profile, sign in to Gmail with your EISS address and the temporary password. Google then asks you to choose your own.", links: ["mail"] },
+        { id: "guide", title: "Follow the Joining Guide", roles: ["staff", "management", "board", "volunteer"], text: "It opens once you are signed in, and takes you through 2-Step Verification.", links: ["Joining Guide"] },
+        { id: "role", title: "Read the guide for your role", roles: ["staff", "management", "board", "volunteer"], links: [
+          "Volunteer handbook",
+          "Staff handbook",
+          { href: "https://drive.google.com/file/d/1J1Z-oDGrO7EqYyIw0I_dql8U65lzFMoM/view", label: "Writing as management@", icon: "file-text", roles: ["management"] },
+          { href: "https://drive.google.com/file/d/1blou9JjBbdzbuCxOHkxPbg9oDO3Ii-Xt/view", label: "Writing to board@", icon: "file-text", roles: ["board"] },
+          "How the team works",
+        ] },
+        { id: "profile", title: "Check your card on the People page", roles: ["staff", "management", "board", "volunteer"], text: "If you gave a profile on the Joining Form, your card is made from it. To add a photo or change your details, use the bios form, signed in with your EISS account.", links: [{ href: "https://docs.google.com/forms/d/e/1FAIpQLSdL-DGd5SV7awb56Wh8G71w5oCpXWwlvJKYKyEr0r3oZExKvg/viewform", label: "Bios form", icon: "user" }, { href: "/board.html", label: "The People", icon: "users" }] },
+        { id: "bookmark", title: "Bookmark this dashboard", roles: ["staff", "management", "board", "volunteer"], text: "internal.eiss-europa.com brings you back here, to every app and guide." },
+      ],
+    },
+    {
+      stage: "First week",
+      steps: [
+        { id: "chat", title: "Join your rooms in Team chat", roles: ["staff", "management", "volunteer"], text: "Accept the invitations to your rooms. Each room's Tasks tab holds its daily work: assign, comment and tick off tasks there.", links: ["chat"], moving: "The Project Manager is now an archive. Add any open task to the Tasks tab of the room it belongs to." },
+        { id: "inbox", title: "Answer the shared inboxes", roles: ["staff", "management", "volunteer"], text: "contact@ and internship@ are shared inboxes in Groups. Take a conversation so others see it is yours, reply, then mark it complete. On internship@, reply from your own address.", links: ["groups"] },
+        { id: "management", title: "Send as management@", roles: ["management"], text: "Co-Directors and the treasurer can send as management@. Choose it in the From line in Gmail.", links: ["mail"] },
+        { id: "board", title: "Write to the board", roles: ["board"], text: "board@ reaches every board member. Nobody sends as board@: reply from your own address.", links: ["mail"], moving: "For a week after your EISS address joins board@, its messages reach your usual address too. After that, only the new one. To keep reading them in your usual inbox, set up forwarding in your EISS Gmail." },
+        { id: "drive", title: "Keep EISS files in a shared drive", roles: ["staff", "management", "board", "volunteer"], text: "Your role's group opens its shared drive: EISS Team, or EISS Board for board members. Save EISS work there, not in My Drive.", links: ["drive"], moving: "Move EISS files from a personal account into the shared drive." },
+        { id: "calendar", title: "Meet in Calendar and Meet", roles: ["staff", "management", "board", "volunteer"], text: "Invitations arrive at your EISS address. Join calls with that account.", links: ["calendar", "meet"] },
+        { id: "indico", title: "Find the conference in Indico", roles: ["staff", "management", "board", "volunteer"], text: "Submissions, reviews and the programme of each ESSC live in Indico. Use your EISS address there.", links: ["indico"] },
+        { id: "github", title: "Pick up a website task", roles: ["staff", "volunteer"], text: "Changes to the website are GitHub issues, and those marked help wanted are open to volunteers. Team work with an owner and a date goes in Chat instead.", links: ["Website tasks"] },
+      ],
+    },
+    {
+      stage: "When you leave",
+      steps: [
+        { id: "leave", title: "Hand over before your end date", roles: ["volunteer"], text: "A reminder arrives a week before. Move EISS files from My Drive into the EISS Team shared drive, update your role section in the Volunteer handbook, reassign your open tasks in Chat and hand over every internship@ message you took. Your account is suspended the day after your end date.", links: ["Volunteer handbook"] },
+        { id: "leave-other", title: "Move your files before you go", roles: ["staff", "management", "board"], text: "Move any EISS files still in My Drive into a shared drive. Arthur then closes your access.", links: ["drive"] },
+      ],
+    },
   ],
 
   // The year's dates for /internal.html, one edition at a time, added there to

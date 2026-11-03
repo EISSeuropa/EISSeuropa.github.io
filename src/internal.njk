@@ -48,16 +48,50 @@ eleventyExcludeFromCollections: true
   </header>
 
   <div class="container">
-    <div class="apps-first" data-apps-first hidden>
-      <p class="apps-first-title" id="apps-first-title">Which describes you?</p>
-      <div class="apps-first-choices" role="group" aria-labelledby="apps-first-title">
-        <button type="button" class="btn btn-secondary btn-sm" data-apps-choose="staff">Staff</button>
-        <button type="button" class="btn btn-secondary btn-sm" data-apps-choose="management">Management</button>
-        <button type="button" class="btn btn-secondary btn-sm" data-apps-choose="board">Board member</button>
-        <button type="button" class="btn btn-secondary btn-sm" data-apps-choose="volunteer">Volunteer</button>
-        <button type="button" class="btn btn-secondary btn-sm" data-apps-choose="all">Show all</button>
+    {# The welcome: on a first visit, asks the role, then walks through that
+       role's joining steps one at a time. Reopened from Guides. Without JS
+       it never opens and the Joining Guide covers the same ground.
+       ponytail: steps, not a saved checklist. Add per-step ticks if
+       people ask to resume where they stopped. #}
+    <dialog class="apps-welcome" data-apps-welcome aria-labelledby="apps-welcome-title">
+      <button type="button" class="apps-welcome-close" data-apps-welcome-close aria-label="Close the welcome">&times;</button>
+      <div data-apps-welcome-role>
+        <h2 class="apps-welcome-title" id="apps-welcome-title">Welcome to EISS</h2>
+        <p class="apps-welcome-lead">Which describes you? You get the steps for your role, one at a time.</p>
+        <div class="apps-welcome-choices">
+          <button type="button" class="btn btn-secondary" data-apps-choose="staff">Staff</button>
+          <button type="button" class="btn btn-secondary" data-apps-choose="management">Management</button>
+          <button type="button" class="btn btn-secondary" data-apps-choose="board">Board member</button>
+          <button type="button" class="btn btn-secondary" data-apps-choose="volunteer">Volunteer</button>
+        </div>
+        <button type="button" class="apps-welcome-skip" data-apps-welcome-close>Skip for now</button>
       </div>
-    </div>
+      <div data-apps-welcome-steps hidden>
+        <p class="apps-welcome-meta" data-apps-welcome-meta></p>
+        <progress class="apps-progress" data-apps-welcome-bar value="0" max="1" aria-hidden="true"></progress>
+        <ol class="apps-welcome-list" role="list">
+          {% for stage in dashboard.onboarding %}{% for s in stage.steps %}
+            <li class="apps-welcome-step{% if s.key %} apps-welcome-key{% endif %}" data-roles="{{ s.roles | join(' ') }}" data-stage="{{ stage.stage }}" hidden>
+              {% if s.key %}<p class="apps-welcome-badge">{{ icon("lightbulb") }} {{ s.key }}</p>{% endif %}
+              <h3 class="apps-welcome-heading" tabindex="-1">{{ s.title }}</h3>
+              {% if s.text %}<p>{{ s.text }}</p>{% endif %}
+              {% if s.moving %}<p class="apps-welcome-moving"><strong>Already with EISS?</strong> {{ s.moving }}</p>{% endif %}
+              {% if s.links.length %}
+                <ul class="apps-welcome-links" role="list">
+                  {% for l in s.links %}
+                    <li{% if l.roles %} data-roles="{{ l.roles | join(' ') }}"{% endif %}><a class="btn btn-secondary btn-sm" href="{{ l.href }}" target="_blank" rel="noopener">{{ icon(l.icon) }} {{ l.label or t.staffMenu[l.key] }}</a></li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+          {% endfor %}{% endfor %}
+        </ol>
+        <div class="apps-welcome-nav">
+          <button type="button" class="btn btn-secondary" data-apps-welcome-back>Back</button>
+          <button type="button" class="btn btn-primary" data-apps-welcome-next>Next</button>
+        </div>
+      </div>
+    </dialog>
 
     <dl class="apps-stats">
       {% set deadline = dashboard.deadlines[0] %}
@@ -342,18 +376,61 @@ eleventyExcludeFromCollections: true
     });
     tally();
 
-    // The first visit asks for a role under the header. The answer sets the
-    // same radio as the filter, which stays available to change it later.
-    var first = document.querySelector("[data-apps-first]");
-    if (saved === null) first.hidden = false;
-    first.addEventListener("click", function (e) {
-      var value = e.target.getAttribute && e.target.getAttribute("data-apps-choose");
-      if (!value) return;
-      roleSelect.value = value;
-      roleSelect.dispatchEvent(new Event("change"));
-      first.hidden = true;
-      roleSelect.focus();
+    // The welcome dialog. It opens once per device, on a first visit with no
+    // role saved, and from any link to #welcome. Choosing a role sets the
+    // role menu, which also filters the steps' links.
+    var WELCOMED = "eiss-apps-welcomed";
+    var dlg = document.querySelector("[data-apps-welcome]");
+    var roleBox = dlg.querySelector("[data-apps-welcome-role]");
+    var stepBox = dlg.querySelector("[data-apps-welcome-steps]");
+    var allSteps = [].slice.call(dlg.querySelectorAll(".apps-welcome-step"));
+    var wMeta = dlg.querySelector("[data-apps-welcome-meta]");
+    var wBar = dlg.querySelector("[data-apps-welcome-bar]");
+    var wBack = dlg.querySelector("[data-apps-welcome-back]");
+    var wNext = dlg.querySelector("[data-apps-welcome-next]");
+    var wSteps = [], wAt = 0;
+    function openWelcome() {
+      roleBox.hidden = false;
+      stepBox.hidden = true;
+      if (!dlg.open) dlg.showModal();
+    }
+    function wShow(i) {
+      wAt = i;
+      wSteps.forEach(function (li, j) { li.hidden = j !== i; });
+      wMeta.textContent = wSteps[i].getAttribute("data-stage") + ": step " + (i + 1) + " of " + wSteps.length;
+      wBar.max = wSteps.length;
+      wBar.value = i + 1;
+      wBack.disabled = i === 0;
+      wNext.textContent = i === wSteps.length - 1 ? "Finish" : "Next";
+      wSteps[i].querySelector(".apps-welcome-heading").focus();
+    }
+    dlg.addEventListener("click", function (e) {
+      var t = e.target.closest("button");
+      if (!t) return;
+      var role = t.getAttribute("data-apps-choose");
+      if (role) {
+        roleSelect.value = role;
+        roleSelect.dispatchEvent(new Event("change"));
+        wSteps = allSteps.filter(function (li) { return li.getAttribute("data-roles").split(" ").indexOf(role) >= 0; });
+        roleBox.hidden = true;
+        stepBox.hidden = false;
+        wShow(0);
+      } else if (t.hasAttribute("data-apps-welcome-close")) dlg.close();
+      else if (t === wBack) wShow(wAt - 1);
+      else if (t === wNext) { if (wAt < wSteps.length - 1) wShow(wAt + 1); else dlg.close(); }
     });
+    dlg.addEventListener("close", function () {
+      try { localStorage.setItem(WELCOMED, "1"); } catch (e) {}
+    });
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest('a[href="#welcome"]');
+      if (!a) return;
+      e.preventDefault();
+      openWelcome();
+    });
+    var welcomed = null;
+    try { welcomed = localStorage.getItem(WELCOMED); } catch (e) {}
+    if (saved === null && !welcomed && dlg.showModal) openWelcome();
 
     // Tabs. Without this script they stay hidden and every section stacks.
     // Each has its own link, and the page always opens on Apps otherwise.
