@@ -143,6 +143,7 @@ eleventyExcludeFromCollections: true
     <div class="apps-tabbar">
       <div class="apps-tabs" role="tablist" aria-label="Dashboard sections" data-apps-tabs hidden>
         <button type="button" role="tab" id="apps-tab-apps" aria-controls="apps" data-apps-tab="apps">Apps</button>
+        <button type="button" role="tab" id="apps-tab-start" aria-controls="start" data-apps-tab="start">Get started</button>
         <button type="button" role="tab" id="apps-tab-status" aria-controls="status" data-apps-tab="status">Project status</button>
         <button type="button" role="tab" id="apps-tab-guides" aria-controls="guides" data-apps-tab="guides">Guides</button>
         {% if systemHealth %}<button type="button" role="tab" id="apps-tab-it" aria-controls="it" data-apps-tab="it" data-roles="staff">IT monitoring <span class="apps-dot apps-dot-{{ systemHealth.summary.level }}" data-apps-it-dot aria-hidden="true"{% if not systemHealth.summary.url %} hidden{% endif %}></span><span class="sr-only" data-apps-it-note{% if not systemHealth.summary.url %} hidden{% endif %}>, needs attention</span></button>{% endif %}
@@ -195,6 +196,40 @@ eleventyExcludeFromCollections: true
         {% endif %}{% endfor %}
       </ul>
       <p class="apps-note apps-filter-empty" data-apps-filter-empty hidden></p>
+    </section>
+
+    <section class="apps-panel" id="start" data-apps-panel aria-labelledby="apps-start-heading">
+      <div class="apps-panel-head">
+        <div>
+          <h2 class="apps-heading" id="apps-start-heading">Get started</h2>
+          <p class="apps-count">New to EISS, or moving over from the old set-up? Work down the list. Ticks stay on this device.</p>
+        </div>
+        <p class="apps-start-tally" data-apps-start-tally role="status" hidden></p>
+      </div>
+      {% for stage in dashboard.onboarding %}
+        <div class="apps-start-stage" data-roles="{{ stage.roles | join(' ') }}">
+          <h3 class="apps-status-title">{{ stage.stage }}</h3>
+          <ol class="apps-start-list" role="list">
+            {% for s in stage.steps %}
+              <li class="apps-start-step" data-roles="{{ s.roles | join(' ') }}">
+                <input class="apps-start-check" type="checkbox" id="apps-start-{{ s.id }}" data-apps-start="{{ s.id }}">
+                <div>
+                  <label class="apps-start-title" for="apps-start-{{ s.id }}">{{ s.title }}</label>
+                  <p class="apps-note">{{ s.text }}</p>
+                  {% if s.moving %}<p class="apps-note apps-start-moving"><strong>Already with EISS?</strong> {{ s.moving }}</p>{% endif %}
+                  {% if s.links.length %}
+                    <ul class="apps-start-links" role="list">
+                      {% for l in s.links %}
+                        <li{% if l.roles %} data-roles="{{ l.roles | join(' ') }}"{% endif %}><a class="btn btn-secondary btn-sm" href="{{ l.href }}">{{ icon(l.icon) }} {{ l.label or t.staffMenu[l.key] }}</a></li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                </div>
+              </li>
+            {% endfor %}
+          </ol>
+        </div>
+      {% endfor %}
     </section>
 
     <section class="apps-panel" id="status" data-apps-panel aria-labelledby="apps-status-heading">
@@ -336,11 +371,35 @@ eleventyExcludeFromCollections: true
     roleSelect.addEventListener("change", function () {
       try { localStorage.setItem(KEY, roleSelect.value); } catch (e) {}
       tally();
+      startTally();
       renderToday();
       renderTimeline(false);
       keepTabVisible();
     });
     tally();
+
+    // Get started: ticks are kept on this device, and the tally counts the
+    // steps the role menu leaves. The dimming of a ticked step is CSS.
+    var START = "eiss-apps-start";
+    var checks = [].slice.call(document.querySelectorAll("[data-apps-start]"));
+    var startOut = document.querySelector("[data-apps-start-tally]");
+    var ticked = [];
+    try { ticked = JSON.parse(localStorage.getItem(START)) || []; } catch (e) {}
+    checks.forEach(function (c) { c.checked = ticked.indexOf(c.getAttribute("data-apps-start")) >= 0; });
+    function startTally() {
+      var shown = checks.filter(function (c) { return getComputedStyle(c.closest("li")).display !== "none"; });
+      var done = shown.filter(function (c) { return c.checked; }).length;
+      startOut.textContent = done === shown.length ? "All " + done + " steps done" : done + " of " + shown.length + " steps done";
+      startOut.hidden = false;
+    }
+    document.getElementById("start").addEventListener("change", function (e) {
+      if (!e.target.hasAttribute("data-apps-start")) return;
+      try {
+        localStorage.setItem(START, JSON.stringify(checks.filter(function (c) { return c.checked; }).map(function (c) { return c.getAttribute("data-apps-start"); })));
+      } catch (err) {}
+      startTally();
+    });
+    startTally();
 
     // The first visit asks for a role under the header. The answer sets the
     // same radio as the filter, which stays available to change it later.
@@ -387,7 +446,7 @@ eleventyExcludeFromCollections: true
       panel.setAttribute("aria-labelledby", "apps-tab-" + panel.id);
     });
     tablist.hidden = false;
-    selectTab(isTab(location.hash.slice(1)) ? location.hash.slice(1) : "apps");
+    selectTab(isTab(location.hash.slice(1)) ? location.hash.slice(1) : saved === null ? "start" : "apps");
     keepTabVisible();
     tablist.addEventListener("click", function (e) {
       var tab = e.target.closest("[role=tab]");
