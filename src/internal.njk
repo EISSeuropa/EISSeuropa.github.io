@@ -215,7 +215,7 @@ eleventyExcludeFromCollections: true
                 <input class="apps-start-check" type="checkbox" id="apps-start-{{ s.id }}" data-apps-start="{{ s.id }}">
                 <div>
                   <label class="apps-start-title" for="apps-start-{{ s.id }}">{{ s.title }}</label>
-                  <p class="apps-note">{{ s.text }}</p>
+                  {% if s.text %}<p class="apps-note">{{ s.text }}</p>{% endif %}
                   {% if s.moving %}<p class="apps-note apps-start-moving"><strong>Already with EISS?</strong> {{ s.moving }}</p>{% endif %}
                   {% if s.links.length %}
                     <ul class="apps-start-links" role="list">
