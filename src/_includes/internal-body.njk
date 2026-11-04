@@ -342,7 +342,7 @@
 
 <script type="application/json" id="apps-i18n">{{ d.js | dump | safe }}</script>
 <script type="application/json" id="apps-dash">{{ { next: d.next, finish: d.finish, today: d.today, done: d.done, levels: d.levels, automationsFailing: d.automationsFailing, automationsOk: d.automationsOk, issuesClosed: d.issuesClosed } | dump | safe }}</script>
-<script type="application/json" id="apps-data">{{ { deadlines: dashboard.deadlines, release: dashboard.release, counts: dashboard.counts, repo: dashboard.repo, health: systemHealth } | dump | safe }}</script>
+<script type="application/json" id="apps-data">{{ { deadlines: dashboard.deadlines, release: dashboard.release, counts: dashboard.counts, repo: dashboard.repo, recent: dashboard.recent, health: systemHealth } | dump | safe }}</script>
 <script>
   (function () {
     var calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -592,7 +592,7 @@
     var failed = data.health ? data.health.summary.failed : [];
     var since = { tasks: 0, closed: 0, done: [] };
     // The last five issues closed as done, whenever they closed: the roll's lines.
-    var recent = [];
+    var recent = data.recent || [];
     var today = document.querySelector("[data-apps-today]");
     var todayText = document.querySelector("[data-apps-today-text]");
     var doneList = document.querySelector("[data-apps-done]");
@@ -925,7 +925,7 @@
       var line = document.querySelector(".apps-live");
       line.classList.add("is-live");
       line.textContent = f(I.liveChecked, { when: mins < 1 ? I.justNow : pl(I.minAgo, mins) });
-      recent = (live.recent || []).filter(function (x) { return isRun(x.url); });
+      recent = (live.recent || data.recent || []).filter(function (x) { return isRun(x.url); });
       compare(live.tasks, live.closed === null ? built.closed : live.closed, at, live.done);
       if (live.done) renderPace(live.done);
     }
