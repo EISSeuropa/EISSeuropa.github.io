@@ -347,7 +347,7 @@ eleventyExcludeFromCollections: true
   </div>
 </div>
 
-<script type="application/json" id="apps-data">{{ { deadlines: dashboard.deadlines, release: dashboard.release, counts: dashboard.counts, repo: dashboard.repo, health: systemHealth } | dump | safe }}</script>
+<script type="application/json" id="apps-data">{{ { deadlines: dashboard.deadlines, release: dashboard.release, counts: dashboard.counts, repo: dashboard.repo, recent: dashboard.recent, health: systemHealth } | dump | safe }}</script>
 <script>
   (function () {
     var calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -590,7 +590,7 @@ eleventyExcludeFromCollections: true
     var failed = data.health ? data.health.summary.failed : [];
     var since = { tasks: 0, closed: 0, done: [] };
     // The last five issues closed as done, whenever they closed: the roll's lines.
-    var recent = [];
+    var recent = data.recent || [];
     var today = document.querySelector("[data-apps-today]");
     var todayText = document.querySelector("[data-apps-today-text]");
     var doneList = document.querySelector("[data-apps-done]");
@@ -922,7 +922,7 @@ eleventyExcludeFromCollections: true
       var line = document.querySelector(".apps-live");
       line.classList.add("is-live");
       line.textContent = "Live from GitHub, checked " + (mins < 1 ? "just now" : mins + (mins === 1 ? " minute ago" : " minutes ago"));
-      recent = (live.recent || []).filter(function (x) { return isRun(x.url); });
+      recent = (live.recent || data.recent || []).filter(function (x) { return isRun(x.url); });
       compare(live.tasks, live.closed === null ? built.closed : live.closed, at, live.done);
       if (live.done) renderPace(live.done);
     }

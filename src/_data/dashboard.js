@@ -154,7 +154,27 @@ function assemble(keyDates, source) {
   return { release, counts, dates, deadlines, phase, onboarding, datesSource: source, calendar: site.deadlinesCalendar || null, repo: "EISSeuropa/EISSeuropa.github.io" };
 }
 
+// The last five issues closed as done, for the Today box when the browser's
+// own GitHub calls are refused (the unauthenticated limit is 60 an hour per
+// address). Same query as the page's live load.
+async function fetchRecent() {
+  const headers = { Accept: "application/vnd.github+json" };
+  if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+  const q = encodeURIComponent("repo:EISSeuropa/EISSeuropa.github.io is:issue is:closed reason:completed");
+  try {
+    const res = await fetch(`https://api.github.com/search/issues?per_page=10&sort=updated&order=desc&q=${q}`, { headers, signal: AbortSignal.timeout(15000) });
+    if (!res.ok) throw new Error(String(res.status));
+    const { items } = await res.json();
+    return items.filter((x) => x.closed_at)
+      .map((x) => ({ n: x.number, title: x.title, url: x.html_url, at: x.closed_at }))
+      .sort((x, y) => Date.parse(y.at) - Date.parse(x.at)).slice(0, 5);
+  } catch (e) {
+    console.warn(`[dashboard] closed issues unavailable (${e.message}), the Today roll waits for the live load`);
+    return [];
+  }
+}
+
 module.exports = async function () {
-  const { keyDates, source } = await fetchDates();
-  return assemble(keyDates, source);
+  const [{ keyDates, source }, recent] = await Promise.all([fetchDates(), fetchRecent()]);
+  return { ...assemble(keyDates, source), recent };
 };
