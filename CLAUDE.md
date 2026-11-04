@@ -22,10 +22,12 @@ authoritative for EISS.
   bodies, PR descriptions that an external reader might see). Internal
   commit messages and code comments can be more relaxed but should not
   flip mid-document.
-- **No machine translation, ever.** FR and DE variants are translated
-  by hand. The `status: beta` ribbon on `*.fr.njk` / `*.de.njk` carries
-  the manual-translation framing. If you find any user-facing copy that
-  implies machine translation, fix it.
+- **FR and DE: Claude may draft, a person reviews.** Claude can write
+  the FR and DE copy. A person who reads the language reviews it, and the
+  page keeps `status: beta` (the ribbon) until a native speaker signs
+  off. The PR body says which strings are Claude drafts. Never paste
+  unreviewed output from a translation tool (DeepL, Google Translate),
+  and never ship FR/DE copy nobody has been asked to review.
 
 ## 2. Pull-request workflow
 
@@ -583,9 +585,9 @@ Eleventy sites it reads:
 
 Repo-specific "when NOT to be lazy": a green `npx @11ty/eleventy` is not
 "it works" (§14). The ponytail "one runnable check" here is a render plus a
-computed-style read at desktop and phone width, not a screenshot. And no
-machine translation as a shortcut (§1): FR/DE are hand-translated or they
-do not ship. Mark deliberate simplifications with a `ponytail:` comment
+computed-style read at desktop and phone width, not a screenshot. And FR/DE
+drafts are not a shortcut past review (§1): they ship as beta and a reader
+of the language checks them. Mark deliberate simplifications with a `ponytail:` comment
 (fits the existing one-line `# label` comment style).
 
 ### Delegate reads, keep the decisions

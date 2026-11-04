@@ -98,8 +98,13 @@ successor inherits through the handover in section 4.
 ### Internal dashboard: internal.eiss-europa.com
 
 - **What it is.** An apps dashboard for staff, board members and
-  volunteers at `/internal.html` (`src/internal.njk`), in English only
-  and kept out of search engines, the sitemap and site search. The
+  volunteers at `/internal.html`, with French and German versions at
+  `/internal.fr.html` and `/internal.de.html`. The three pages share
+  `src/_includes/internal-body.njk`. Page strings are `dash` in
+  `src/_data/i18n.js`, and entries in `site.js` (apps, guides, joining
+  steps, key dates) carry their own `fr` / `de` overrides. Dates added
+  through the "EISS dates" calendar show as typed. It is kept out of
+  search engines, the sitemap and site search. The
   padlock menu in the header offers a shorter list of the same links.
 - **The address.** `https://internal.eiss-europa.com` is a separate
   public repository, [`EISSeuropa/internal`](https://github.com/EISSeuropa/internal),
@@ -324,8 +329,8 @@ and DE siblings.
 
 1. Edit the English source, e.g. `src/initiative.njk`.
 2. Decide whether the change is substantive. If the same wording exists
-   in the FR / DE siblings, hand-translate it there too (no machine
-   translation, per CLAUDE.md §1). For a trivial edit you may let the
+   in the FR / DE siblings, translate it there too (a Claude draft
+   is fine, reviewed by a reader of the language, per CLAUDE.md §1). For a trivial edit you may let the
    translation lag and just re-stamp.
 3. Re-stamp the drift state so CI passes:
 

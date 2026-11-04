@@ -20,9 +20,9 @@ const release = next && next.total
 
 const c = progress.counts;
 const counts = c && [
-  { value: c.openIssues, label: "open issues", url: `${REPO}/issues`, roles: ["staff"] },
-  { value: c.openPRs, label: "open pull requests", url: `${REPO}/pulls`, roles: ["staff"] },
-  { value: c.helpWanted, label: "tasks to pick up", url: `${REPO}/labels/help%20wanted`, roles: ["staff", "volunteer"] },
+  { key: "issues", value: c.openIssues, label: "open issues", url: `${REPO}/issues`, roles: ["staff"] },
+  { key: "prs", value: c.openPRs, label: "open pull requests", url: `${REPO}/pulls`, roles: ["staff"] },
+  { key: "tasks", value: c.helpWanted, label: "tasks to pick up", url: `${REPO}/labels/help%20wanted`, roles: ["staff", "volunteer"] },
 ];
 
 const edition = conferences.next;
@@ -92,13 +92,16 @@ async function fetchDates() {
   return { keyDates: siteDates(), source: "site" };
 }
 
+// A date's fr/de overrides, renamed for a stage: its stage is the label.
+const stageLangs = (d) => Object.fromEntries(["fr", "de"].filter((l) => d[l]).map((l) => [l, { label: d[l].stage, step: d[l].step }]));
+
 function assemble(keyDates, source) {
   // The Key dates timeline keeps the last 30 days, which the page ticks off.
   const PAST_DAYS = 30;
   const dates = [
-    ...(edition ? [{ date: edition.startDate, label: `ESSC ${edition.year}, ${edition.city}`, roles: everyone }] : []),
-    ...open.filter((m) => m.due).map((m) => ({ date: m.due, label: `Release ${m.title} due`, roles: ["staff"] })),
-    ...keyDates.map(({ date, label, roles }) => ({ date, label, roles: roles || everyone })),
+    ...(edition ? [{ date: edition.startDate, label: `ESSC ${edition.year}, ${edition.city}`, kind: "essc", year: edition.year, city: edition.city, roles: everyone }] : []),
+    ...open.filter((m) => m.due).map((m) => ({ date: m.due, label: `Release ${m.title} due`, kind: "release", title: m.title, roles: ["staff"] })),
+    ...keyDates.map(({ date, label, roles, fr, de }) => ({ date, label, roles: roles || everyone, fr, de })),
   ]
     .filter((d) => d.date >= isoDaysAgo(PAST_DAYS))
     .sort(byDate);
@@ -109,14 +112,14 @@ function assemble(keyDates, source) {
   // Each carries the date it counts from, the deadline before it, so the tile
   // can show how much time is left.
   const deadlines = keyDates
-    .map((d, i) => ({ date: d.date, label: d.label, start: i ? keyDates[i - 1].date : null }))
+    .map((d, i) => ({ date: d.date, label: d.label, fr: d.fr, de: d.de, start: i ? keyDates[i - 1].date : null }))
     .filter((d) => d.date >= today);
 
   // The stages of the conference year: each date that opens one, then the
   // conference itself.
   const phases = [
-    ...keyDates.filter((d) => d.stage).map((d) => ({ from: d.date, label: d.stage, step: d.step, links: d.links || [] })),
-    ...(edition ? [{ from: edition.startDate, until: edition.endDate, label: `ESSC ${edition.year} is on`, step: site.conferenceStage.step, links: site.conferenceStage.links, conference: true }] : []),
+    ...keyDates.filter((d) => d.stage).map((d) => ({ from: d.date, label: d.stage, step: d.step, links: d.links || [], ...stageLangs(d) })),
+    ...(edition ? [{ from: edition.startDate, until: edition.endDate, label: `ESSC ${edition.year} is on`, year: edition.year, step: site.conferenceStage.step, links: site.conferenceStage.links, conference: true, ...stageLangs(site.conferenceStage) }] : []),
   ];
   const current = phases.filter((p) => p.from <= today).pop();
   // The stepper under the current stage: each stage done, now or next, and how
@@ -124,19 +127,23 @@ function assemble(keyDates, source) {
   const at = phases.indexOf(current);
   const end = phases[at + 1] ? phases[at + 1].from : current && current.until;
   const within = current && end ? Math.min(Math.max((days(today) - days(current.from)) / (days(end) - days(current.from)), 0), 1) : 0;
-  const steps = phases.map((p, i) => ({ step: p.step, state: i < at ? "done" : i === at ? "now" : "next" }));
+  const steps = phases.map((p, i) => ({ step: p.step, fr: p.fr, de: p.de, state: i < at ? "done" : i === at ? "now" : "next" }));
   const fill = phases.length > 1 ? Math.min((at + within) / (phases.length - 1), 1).toFixed(3) : 0;
 
   // The "Now" card names what comes next rather than restating a date by hand.
-  const upcoming = [...keyDates, ...(edition ? [{ date: edition.startDate, label: `ESSC ${edition.year} opens in ${edition.city}` }] : [])]
+  const upcoming = [...keyDates, ...(edition ? [{ date: edition.startDate, label: `ESSC ${edition.year} opens in ${edition.city}`, kind: "essc", year: edition.year, city: edition.city }] : [])]
     .filter((d) => d.date >= today)
     .sort(byDate)[0];
   const note = current && current.conference
     ? `In ${edition.city} until ${longDate(edition.endDate)}.`
     : upcoming ? `Next: ${upcoming.label}, ${longDate(upcoming.date)}.` : "";
+  // The same note in parts, for the FR and DE pages to word it themselves.
+  const noteParts = current && current.conference
+    ? { kind: "until", city: edition.city, date: edition.endDate }
+    : upcoming ? { kind: "next", ...upcoming } : null;
 
   const phase = current && (!current.until || today <= current.until)
-    ? { ...current, note, links: current.links.map((l) => site.staffLinks.find((a) => a.key === l || a.label === l) || console.warn(`[dashboard] stage link "${l}" is not in staffLinks, left out`)).filter(Boolean), steps, fill }
+    ? { ...current, note, noteParts, links: current.links.map((l) => site.staffLinks.find((a) => a.key === l || a.label === l) || console.warn(`[dashboard] stage link "${l}" is not in staffLinks, left out`)).filter(Boolean), steps, fill }
     : null;
 
   // Onboarding links by staffLinks key or guideLinks label, as for stages.

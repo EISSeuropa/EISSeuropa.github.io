@@ -17,9 +17,8 @@ Workflow when a translation drifts
 ----------------------------------
   1. Open the English source (e.g. src/policy.njk) and the translated
      sibling (e.g. src/policy.fr.njk) side by side.
-  2. Port the changes across by hand. Translations are written by
-     someone who reads the language, never by a machine-translation
-     tool (CLAUDE.md §1).
+  2. Port the changes across. Claude may draft them, and someone who
+     reads the language reviews the draft (CLAUDE.md §1).
   3. When done, refresh the `source_sha1` and `translated_on` fields
      in data/i18n-state.json by running:
         python3 scripts/check-i18n-drift.py --mark-fresh src/policy.njk fr
