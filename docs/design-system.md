@@ -409,7 +409,7 @@ Preserve whitespace outside the comment, including any whitespace-control marker
   out of the app count (none at present). Any `[data-roles]` element on the page follows
   the role filter, so the status cards and guides use it too.
   See `admin-guide.md` for the address and how to change the apps.
-- **`icons.njk`** — inline-SVG Lucide icon set via the `icon()` macro.
+- **`icons.njk`** — inline-SVG Lucide icon set via the `icon()` macro (ISC, licence text in `src/assets/licences/lucide-ISC.txt`).
 
 ## Interaction inventory (theme.js)
 
