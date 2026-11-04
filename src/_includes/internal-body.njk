@@ -897,6 +897,11 @@
     }
     // The Systems tile and the IT tab's dot: the worst of the repos, Workspace and GitHub.
     var repoLive = null;
+    // A failed run's link, rebuilt on a fixed GitHub prefix so data from the page never sets a scheme.
+    function runPath(item) {
+      var m = item && /^https:\/\/github\.com\/([\w.-]+\/[\w.-]+\/actions\/runs\/\d+)/.exec(item.url);
+      return m && m[1];
+    }
     function rollup() {
       var all = repoLive || data.health.repos.map(function (r) { return { level: r.level, bad: r.items.filter(function (i) { return i.failed; }) }; });
       var gh = data.health.github;
@@ -911,7 +916,7 @@
         setDot(box.querySelector("[data-apps-systems-dot]"), overall);
         var label = box.querySelector("[data-apps-systems-label]");
         label.textContent = LEVELS[overall] || LEVELS[data.health.summary.level];
-        if (overall === "issue" || overall === "critical") label.href = bad.length && isRun(bad[0].url) ? bad[0].url : ghBad ? "https://www.githubstatus.com/" : "https://script.google.com/home/executions";
+        if (overall === "issue" || overall === "critical") label.href = runPath(bad[0]) ? "https://github.com/" + runPath(bad[0]) : ghBad ? "https://www.githubstatus.com/" : "https://script.google.com/home/executions";
         else label.removeAttribute("href");
       }
       var alarm = overall === "issue" || overall === "critical";
