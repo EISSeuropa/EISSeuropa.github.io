@@ -221,6 +221,7 @@ module.exports = {
     },
     // Daily tasks live in Chat spaces.
     { href: "https://chat.google.com/", key: "chat", icon: "users", roles: ["staff", "management", "volunteer"], menu: 1 },
+    { href: "https://www.linkedin.com/groups/42830462/", key: "alumni", label: "Alumni community", note: "Current and former EISS team on LinkedIn", icon: "linkedin", roles: ["staff", "management", "board", "volunteer"] },
   ],
 
   // The guides on /internal.html. Roles work as in staffLinks.
