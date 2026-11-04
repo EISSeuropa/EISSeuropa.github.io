@@ -145,8 +145,10 @@ Two licences, split by what the file is:
 - **Code**: the Eleventy templates, configuration, build scripts, and stylesheets are under the [MIT licence](LICENSE).
 - **Content**: the site's text, page layout, and original imagery are under [Creative Commons Attribution 4.0 International](LICENSE-CONTENT) (CC BY 4.0). Attribution: *European Initiative for Security Studies, eiss-europa.com*.
 
-**Carve-out: member photos and biographies.** The CC BY licence does **not** cover the photographs and biographies of board, community, and contributing members (sourced from `board.json`). Those remain the rights of the individuals and may not be reused without their consent.
+**Carve-out: member photos and biographies.** The CC BY licence does **not** cover the photographs and biographies of board, community, and contributing members (sourced from `board.json`). Copyright in a photograph stays with whoever supplied it or with the photographer, and none may be reused without the person's consent.
 
-**Bundled third-party assets** keep their own licences: Lucide icons under ISC, the Inter typeface under OFL. Conference and programme photographs credited in the footer remain the property of their owners.
+**Bundled third-party assets** keep their own licences: Lucide icons under ISC, the Inter typeface under OFL 1.1 and the circle-flags country flags under MIT. Their licence texts ship in `src/assets/licences/` and `/licensing.html` links each one. Conference and programme photographs remain the property of their owners, and partner, funder and platform logos and the EU emblem are trademarks of their owners. A third-party photograph is credited in a caption under the photo itself (the Prague photo on `/2024` is the example), not in the footer.
+
+**Adding a third-party asset** takes, in the same PR, its licence text in `src/assets/licences/` and an entry in the third-party list of `src/licensing.njk` (+ FR + DE). `addPassthroughCopy("src/assets")` publishes every file under `src/assets/`, so an image no page uses is still public: delete it rather than leave it.
 
 The `LICENSE` and `LICENSE-CONTENT` files are the verbatim licence texts, so GitHub detects them as MIT and CC BY 4.0. The plain-language version for visitors is on the site at [/licensing](https://eiss-europa.com/licensing.html).
