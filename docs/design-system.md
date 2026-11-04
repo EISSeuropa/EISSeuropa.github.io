@@ -401,7 +401,7 @@ Preserve whitespace outside the comment, including any whitespace-control marker
 - **`announcement-card.njk`**, **`indico-events-list.njk`**,
   **`notfound-illustration.njk`** (the 404 broken-stars SVG),
   **`europe-outline.njk`**, **`redirect-body.njk`**.
-- **`internal.njk`** + `.apps-*` — the `/internal.html` dashboard. The
+- **`internal-body.njk`** + `.apps-*` — the `/internal.html` dashboard and its FR and DE versions. The
   role filter is CSS `:has()` and the `#admin` view is CSS `:target`, so
   both work without JavaScript. The script only adds the greeting, clock,
   live figures, remembered role, card spotlight and hero constellation.

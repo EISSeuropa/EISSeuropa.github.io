@@ -61,10 +61,10 @@ same release. If yes but too big to fit, open a tracking issue
 - Run `python3 scripts/check-i18n-drift.py` locally. CI catches drift
   on HTML-touching PRs, but a release moment is the right place to
   confirm zero drift before stamping a version.
-- Did any EN copy change in this release? FR / DE need manual updates
-  (no machine translation per rule §1).
-- The `status: beta` ribbon on `*.fr.njk` / `*.de.njk` carries the
-  manual-translation framing; if a translation has been re-verified
+- Did any EN copy change in this release? FR / DE need updating
+  (Claude drafts, a reader of the language reviews, per rule §1).
+- The `status: beta` ribbon on `*.fr.njk` / `*.de.njk` marks copy not
+  yet signed off by a native speaker; if a translation has been re-verified
   against current EN, consider whether the *beta* marker still applies.
 
 ### 4. Repo docs
