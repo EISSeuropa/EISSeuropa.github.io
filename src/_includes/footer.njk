@@ -76,12 +76,7 @@
       <p>
         <span class="footer-credit">{{ t.footer.copyright | replace("{{year}}", "" | year) }}</span>
       </p>
-      {# Light trim: image credits + legal status used to be two separate
-         paragraphs. Merged into one fine-print line so the footer doesn't
-         feel bottom-heavy. #}
       <p>
-        <span class="footer-credit">{{ t.footer.imageCredits }}</span>
-        <span aria-hidden="true">&nbsp;·&nbsp;</span>
         {%- set legal = t.footer.legalStatus.split(" | ") %}
         <span lang="en">{{ legal[0] }}</span>
         <span aria-hidden="true">|</span>
