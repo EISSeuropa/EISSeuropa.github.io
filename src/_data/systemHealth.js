@@ -87,16 +87,39 @@ async function googleHealth() {
   }
 }
 
+// GitHub's public status page, which needs no sign-in. Only the components EISS
+// uses count. Actions runs every sync and Pages serves the deploy, so a major
+// outage there is critical. The dashboard's script repeats this in the browser.
+const GITHUB_COMPONENTS = ["Actions", "Pages", "Git Operations", "API Requests", "Pull Requests", "Webhooks"];
+
+function githubLevel(components) {
+  const hit = components.filter((c) => GITHUB_COMPONENTS.includes(c.name) && c.status !== "operational");
+  const major = hit.filter((c) => c.status === "major_outage");
+  const level = major.some((c) => c.name === "Actions" || c.name === "Pages") ? "critical" : hit.length ? "issue" : "nominal";
+  return { level, components: hit.map((c) => c.name) };
+}
+
+async function githubHealth() {
+  try {
+    const res = await fetch("https://www.githubstatus.com/api/v2/summary.json", { signal: AbortSignal.timeout(15000) });
+    if (!res.ok) throw new Error(String(res.status));
+    return githubLevel((await res.json()).components);
+  } catch (e) {
+    console.warn(`[systemHealth] GitHub status unavailable: ${e.message}`);
+    return null;
+  }
+}
+
 module.exports = async function () {
   try {
-    const [repos, google, checks] = await Promise.all([Promise.all(REPOS.map(repoHealth)), googleHealth(), workspaceChecks()]);
+    const [repos, google, checks, github] = await Promise.all([Promise.all(REPOS.map(repoHealth)), googleHealth(), workspaceChecks(), githubHealth()]);
     const level = worst([...(google ? [google.level] : []), ...(checks || []).map((c) => c.level)]);
     const workspace = { level, levelLabel: LABELS[level], checks };
     const failed = repos.flatMap((r) => r.items.filter((i) => i.failed));
-    const overall = worst([...repos.map((r) => r.level), level]);
-    const link = failed.length ? failed[0].url : "https://script.google.com/home/executions";
+    const overall = worst([...repos.map((r) => r.level), level, ...(github ? [github.level] : [])]);
+    const link = failed.length ? failed[0].url : ["issue", "critical"].includes(github?.level) ? "https://www.githubstatus.com/" : "https://script.google.com/home/executions";
     const summary = { level: overall, label: LABELS[overall], failed: failed.map((i) => i.name), url: ["issue", "critical"].includes(overall) ? link : null };
-    return { repos, google, workspace, summary, checked: new Date().toISOString().slice(0, 10) };
+    return { repos, google, github, workspace, summary, checked: new Date().toISOString().slice(0, 10) };
   } catch (e) {
     console.warn(`[systemHealth] section hidden: ${e.message}`);
     return null;
@@ -105,3 +128,4 @@ module.exports = async function () {
 
 // The dashboard reads the same web app for the year's dates (?view=dates).
 module.exports.WORKSPACE_STATUS = WORKSPACE_STATUS;
+module.exports.githubLevel = githubLevel;

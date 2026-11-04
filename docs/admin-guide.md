@@ -166,8 +166,14 @@ successor inherits through the handover in section 4.
   `src/_data/systemHealth.js`. Its Workspace card reads Google's public
   status feed and the "EISS status" Apps Script web app, whose source is
   in the private `workspace-ops` repo. A script run that crashes or stops
-  shows as a stale check. The section hides itself if a build cannot
-  reach GitHub.
+  shows as a stale check. Its GitHub card reads GitHub's public status
+  page (`githubstatus.com/api/v2/summary.json`) for the components EISS
+  uses: Actions, Pages, Git Operations, API Requests, Pull Requests and
+  Webhooks. Any trouble there is an issue, and a major outage of Actions
+  or Pages is critical. The page's script reads the same status live in
+  the browser, since the build runs on GitHub Actions and seldom runs
+  during a GitHub outage, and the Systems tile follows it. The section
+  hides itself if a build cannot reach GitHub.
 - **Tasks in Google Chat.** Daily tasks live in the Tasks tab of each
   project's Chat space, and the *Chat* tile opens Chat for staff, management
   and volunteers. A task has one assignee, who must be a member of the

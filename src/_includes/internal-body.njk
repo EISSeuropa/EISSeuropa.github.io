@@ -299,6 +299,12 @@
               </details>
             </div>
           {% endfor %}
+          {% set gh = systemHealth.github %}
+          <div class="apps-status-card">
+            <h3 class="apps-status-title">GitHub</h3>
+            <p class="apps-health-level" data-apps-github-level><span class="apps-dot apps-dot-{{ gh.level if gh else 'unknown' }}" aria-hidden="true"></span><span>{{ d.levels[gh.level if gh else 'unknown'] }}</span></p>
+            <p class="apps-health-summary"><a href="https://www.githubstatus.com/">{{ d.githubServices }}</a> <span data-apps-github-text>{% if gh %}{{ d.levels[gh.level] }}{% if gh.components.length %}: {{ gh.components | join(", ") }}{% endif %}{% else %}{{ d.unreadable }}{% endif %}</span></p>
+          </div>
           <div class="apps-status-card">
             <h3 class="apps-status-title">Google Workspace</h3>
             <p class="apps-health-level"><span class="apps-dot apps-dot-{{ systemHealth.workspace.level }}" aria-hidden="true"></span>{{ d.levels[systemHealth.workspace.level] }}</p>
@@ -886,19 +892,28 @@
         var det = document.querySelector('[data-apps-repo-details="' + repo.slug + '"]');
         if (det && bad.length) det.open = true;
       });
-      var ws = data.health.workspace.level;
-      var levels = all.map(function (x) { return x.level; }).concat(ws);
+      repoLive = all;
+      rollup();
+    }
+    // The Systems tile and the IT tab's dot: the worst of the repos, Workspace and GitHub.
+    var repoLive = null;
+    function rollup() {
+      // Before the live runs arrive, the build's repo levels count and the build's link stays.
+      var all = repoLive || data.health.repos.map(function (r) { return { level: r.level, bad: [] }; });
+      var gh = data.health.github;
+      var levels = all.map(function (x) { return x.level; }).concat(data.health.workspace.level, gh ? gh.level : []);
       var overall = levels.indexOf("critical") > -1 ? "critical" : levels.indexOf("issue") > -1 ? "issue" : levels.indexOf("nominal") > -1 ? "nominal" : "unknown";
       var bad = all.reduce(function (acc, x) { return acc.concat(x.bad); }, []);
-      failed = bad.map(function (b) { return b.name; });
+      var ghBad = gh && (gh.level === "issue" || gh.level === "critical");
+      if (repoLive) failed = bad.map(function (b) { return b.name; });
       var box = document.querySelector("[data-apps-systems]");
       if (box) {
         box.className = overall === "issue" || overall === "critical" ? "apps-stat apps-stat-" + overall : "apps-stat";
         setDot(box.querySelector("[data-apps-systems-dot]"), overall);
         var label = box.querySelector("[data-apps-systems-label]");
         label.textContent = LEVELS[overall] || LEVELS[data.health.summary.level];
-        if (overall === "issue" || overall === "critical") label.href = bad.length && isRun(bad[0].url) ? bad[0].url : "https://script.google.com/home/executions";
-        else label.removeAttribute("href");
+        if ((overall === "issue" || overall === "critical") && (repoLive || !label.hasAttribute("href"))) label.href = bad.length && isRun(bad[0].url) ? bad[0].url : ghBad ? "https://www.githubstatus.com/" : "https://script.google.com/home/executions";
+        else if (overall !== "issue" && overall !== "critical") label.removeAttribute("href");
       }
       var alarm = overall === "issue" || overall === "critical";
       var dot = document.querySelector("[data-apps-it-dot]");
@@ -906,6 +921,28 @@
       dot.hidden = !alarm;
       document.querySelector("[data-apps-it-note]").hidden = !alarm;
     }
+    // GitHub's own status page, live, since the build runs on GitHub Actions and
+    // seldom runs during a GitHub outage. Same rule as githubLevel() in
+    // systemHealth.js. On failure the build's value stays.
+    var GH_PARTS = ["Actions", "Pages", "Git Operations", "API Requests", "Pull Requests", "Webhooks"];
+    function loadGithubStatus() {
+      if (!data.health) return;
+      fetch("https://www.githubstatus.com/api/v2/summary.json").then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        return r.json();
+      }).then(function (sum) {
+        var hit = sum.components.filter(function (c) { return GH_PARTS.indexOf(c.name) > -1 && c.status !== "operational"; });
+        var level = hit.some(function (c) { return c.status === "major_outage" && (c.name === "Actions" || c.name === "Pages"); }) ? "critical" : hit.length ? "issue" : "nominal";
+        var names = hit.map(function (c) { return c.name; });
+        data.health.github = { level: level, components: names };
+        var line = document.querySelector("[data-apps-github-level]");
+        if (line) { setDot(line.querySelector(".apps-dot"), level); line.lastElementChild.textContent = LEVELS[level]; }
+        var text = document.querySelector("[data-apps-github-text]");
+        if (text) text.textContent = LEVELS[level] + (names.length ? ": " + names.join(", ") : "");
+        rollup();
+      }).catch(function () {});
+    }
+    loadGithubStatus();
     function applyLive(live, at) {
       ["issues", "prs", "tasks"].forEach(function (k) {
         document.querySelectorAll('[data-apps-live="' + k + '"]').forEach(function (el) { el.textContent = live[k]; });
