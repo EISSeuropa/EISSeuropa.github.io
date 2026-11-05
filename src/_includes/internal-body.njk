@@ -664,6 +664,13 @@
       roll.held = !roll.held;
       pauseBtn.setAttribute("aria-pressed", String(roll.held));
     });
+    function safeHref(raw) {
+      try {
+        var u = new URL(String(raw || ""), window.location.href);
+        if (u.protocol === "http:" || u.protocol === "https:") return u.href;
+      } catch (e) {}
+      return "#";
+    }
     function renderDone(items) {
       var key = items.map(function (x) { return x.n; }).join();
       if (key === roll.key) return;
@@ -675,7 +682,7 @@
         li.className = "apps-done-item";
         li.innerHTML = CHECK + '<a><span class="sr-only"></span><span class="apps-done-num"></span> <span class="apps-done-title"></span></a>';
         var a = li.querySelector("a");
-        a.href = x.url;
+        a.href = safeHref(x.url);
         a.firstChild.textContent = I.closedSr;
         a.title = f(I.closedOn, { title: x.title, date: new Date(x.at).toLocaleDateString(LOC, { day: "numeric", month: "short" }) });
         li.querySelector(".apps-done-num").textContent = "#" + x.n;
