@@ -2150,7 +2150,8 @@ html:has(.apps-welcome[open]) { overflow: hidden; }
 
 /* ---------- home-map ----------
    Homepage host-city timeline (home-map.njk): a ruled row of cities with a
-   dot on the rule for each, the next host in the accent. Wraps into rows on
+   dot on the rule for each, all in the accent, the next host larger and
+   pulsing. Wraps into rows on
    narrow screens. */
 .home-map__head {
   display: flex;
@@ -2178,7 +2179,7 @@ html:has(.apps-welcome[open]) { overflow: hidden; }
 .home-map__stop {
   position: relative;
   padding: var(--space-5) var(--space-3) 0 0;
-  border-top: 2px solid var(--border-strong);
+  border-top: 2px solid var(--accent);
 }
 .home-map__stop::before {
   content: "";
@@ -2188,7 +2189,7 @@ html:has(.apps-welcome[open]) { overflow: hidden; }
   width: 0.875rem;
   height: 0.875rem;
   border-radius: 50%;
-  background: var(--text-subtle);
+  background: var(--accent);
 }
 .home-map__stop a {
   display: block;
@@ -2203,7 +2204,6 @@ html:has(.apps-welcome[open]) { overflow: hidden; }
   font-size: var(--fs-sm);
   color: var(--text-muted);
 }
-.home-map__stop--next { border-top-color: var(--accent); }
 .home-map__stop--next::before {
   top: -0.625rem;
   left: -0.125rem;
@@ -2213,6 +2213,16 @@ html:has(.apps-welcome[open]) { overflow: hidden; }
   box-shadow: 0 0 0 6px var(--accent-soft);
 }
 .home-map__stop--next a { color: var(--accent); }
+/* The next host pulses three times and rests (RGAA 13.8: motion past five
+   seconds needs a pause control). Reduced-motion visitors see the still ring. */
+@media (prefers-reduced-motion: no-preference) {
+  .home-map__stop--next::before { animation: home-map-pulse 1.6s ease-out 3; }
+}
+@keyframes home-map-pulse {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 70%, transparent); }
+  70%  { box-shadow: 0 0 0 12px transparent; }
+  100% { box-shadow: 0 0 0 6px var(--accent-soft); }
+}
 /* Below 70rem the eight stops no longer fit one row, and a wrapped row of
    rails reads as a table. So the list becomes one vertical rail down the
    left, a city and its years per line. The dot centres on the 2px rail
@@ -2232,7 +2242,7 @@ html:has(.apps-welcome[open]) { overflow: hidden; }
     min-height: 2.75rem;
     padding: var(--space-2) 0 var(--space-2) var(--space-5);
     border-top: 0;
-    border-left: 2px solid var(--border-strong);
+    border-left: 2px solid var(--accent);
   }
   .home-map__stop::before {
     top: 50%;
@@ -2240,7 +2250,6 @@ html:has(.apps-welcome[open]) { overflow: hidden; }
     transform: translateY(-50%);
   }
   .home-map__stop a { font-size: var(--fs-md); }
-  .home-map__stop--next { border-left-color: var(--accent); }
   .home-map__stop--next::before {
     top: 50%;
     left: calc(-1px - 0.5625rem);

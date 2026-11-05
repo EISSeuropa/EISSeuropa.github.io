@@ -207,6 +207,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- The host-city timeline on the home page draws the past editions in the accent blue, rail and dots, and the dot for the next host, Belgrade 2027, pulses three times on load before it rests. With reduced motion it stays still.
 - `/licensing.html` credits the circle-flags country flags (MIT), links the full licence text of each bundled asset (Lucide, Inter, circle-flags, now served from `/assets/licences/`), and states that partner, funder and platform logos and the EU emblem are trademarks outside CC BY 4.0. The member-photo carve-out now says copyright stays with whoever supplied the photo or with the photographer. The French and German wording is drafted by Claude and the page keeps its beta ribbon until a native speaker reviews it.
 - The "update your bio" link on `/board` and the weekly bios sync use the bios form's new home on the EISS Workspace, "Create or update my EISS Board entry" on admin@, in place of the copy on the legacy eissnetwork@gmail.com account. Existing cards stay as they are until their owner next submits the form. Part of [#1988](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1988).
 - Irina Sofronie and Giovanni Guerra now finish their autumn placements on 1 December 2026, like Astha Dhal, so their cards on `/board` move to EISS community with hers.
