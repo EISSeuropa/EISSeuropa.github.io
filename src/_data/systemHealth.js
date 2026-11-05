@@ -11,7 +11,9 @@ const REPOS = [
 async function api(path) {
   const headers = { Accept: "application/vnd.github+json" };
   if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
-  const res = await fetch(`https://api.github.com/repos/${path}`, { headers, signal: AbortSignal.timeout(15000) });
+  const get = () => fetch(`https://api.github.com/repos/${path}`, { headers, signal: AbortSignal.timeout(15000) });
+  // ponytail: one retry, since a single network blip among ~30 calls hid the whole section (4 Nov 2026).
+  const res = await get().catch(get);
   if (!res.ok) throw new Error(`${path}: ${res.status}`);
   return res.json();
 }
