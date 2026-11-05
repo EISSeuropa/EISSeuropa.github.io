@@ -719,7 +719,7 @@
       if (news.length) parts.push(f(I.sinceVisit, { list: news.join(", ") }));
       if (parts.length) todayText.textContent = parts.join(" ");
       todayText.hidden = !parts.length;
-      var rolled = staff ? recent : [];
+      var rolled = recent;
       // The box opens first, so the first line can rise into it.
       reveal(today, parts.length > 0 || rolled.length > 0);
       renderDone(rolled);

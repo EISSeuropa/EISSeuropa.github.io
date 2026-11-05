@@ -141,7 +141,7 @@ successor inherits through the handover in section 4.
   Google status update only at build. "Since your last visit" compares
   against figures saved in that browser. Under it, the last five issues
   closed as done (any milestone, "not planned" closures left out) roll
-  through one at a time, for staff and "Show all".
+  through one at a time, for every role.
 - **Dates and conference phase.** The "EISS dates" Google Calendar holds an
   edition's public dates. The build reads it through the EISS status web
   app's `?view=dates` (source in the private `workspace-ops` repo, which
