@@ -144,6 +144,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- The IT tab and the Systems tile on the internal dashboard no longer vanish when a single call to GitHub fails during a build. The build retries the call once before hiding the section.
 - The "Last issues closed" roll on the internal dashboard shows again when the browser's own GitHub calls are refused. Unsigned visitors share GitHub's limit of 60 calls an hour per address, and one refused call emptied the roll. The build now carries the last five closed issues, and the page falls back to them.
 - Two joining steps on the internal dashboard now match how the accounts work. The shared inboxes step no longer tells every staff and management member that they answer contact@ and internship@, since only volunteers are on internship@ and contact@ is given by hand. The Indico step explains that Indico has its own account, made with the EISS address or added to an existing one.
 - **French dates on the first of the month read "1er".** The `newsDate` filter printed "1 mars", and now prints "1er mars" as French writes it, on every French page that shows a date.
