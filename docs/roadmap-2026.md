@@ -9,7 +9,7 @@ against v2.29.0 since the v2.28.0 cut, and v2.31.0 moved to two weeks
 after the conference).**
 
 <!-- AUTOSTAMP:BEGIN -->
-> _Auto-tracked: **125 entries** in [`[Unreleased]`](../CHANGELOG.md#unreleased) since **v2.28.0** (39 Added, 34 Changed, 1 Removed, 51 Fixed). Last refresh by `scripts/sync-roadmap.py`: 4 Nov 2026. Prose in the timeline below may lag; the maintainer resynthesises on release-time §5 sweep._
+> _Auto-tracked: **134 entries** in [`[Unreleased]`](../CHANGELOG.md#unreleased) since **v2.28.0** (41 Added, 36 Changed, 3 Removed, 54 Fixed). Last refresh by `scripts/sync-roadmap.py`: 5 Nov 2026. Prose in the timeline below may lag; the maintainer resynthesises on release-time §5 sweep._
 <!-- AUTOSTAMP:END -->
 
 > **Sync convention.** This file is the authoritative planning source.
