@@ -917,6 +917,17 @@ h4 { font-size: var(--fs-lg); }
 .apps-tabs [role="tab"]:hover { color: var(--text); }
 .apps-tabs [role="tab"][aria-selected="true"] { border-bottom-color: var(--accent); color: var(--text); }
 .apps-tabs .apps-dot[hidden] { display: none; }
+/* The NetSec report tab carries NetSec's COST blue and gold. */
+.apps-tabs .apps-tab-netsec::before { content: ""; display: inline-block; width: 0.625rem; height: 0.625rem; margin-inline-end: var(--space-2); border-radius: 2px; background: #ffcc00; box-shadow: inset 0 0 0 2px #003399; vertical-align: -0.05em; }
+.apps-tabs .apps-tab-netsec[aria-selected="true"] { border-bottom-color: #ffcc00; }
+/* The NetSec monthly report panel. */
+.apps-netsec-figure { margin: 0 0 var(--space-1); font-size: 1.25rem; font-weight: 600; }
+.apps-netsec-sub { margin: var(--space-4) 0 var(--space-1); font-size: 0.9375rem; font-weight: 600; }
+.apps-netsec-muted { color: var(--text-muted); font-size: 0.875rem; }
+.apps-netsec-list { display: grid; gap: var(--space-2); margin: var(--space-2) 0 0; padding: 0; list-style: none; font-size: 0.9375rem; }
+.apps-netsec-list span { display: block; color: var(--text-muted); font-size: 0.8125rem; }
+.apps-netsec-more { margin-top: var(--space-3); }
+.apps-netsec-more summary { cursor: pointer; min-height: 24px; font-weight: 600; }
 .apps-panel[hidden] { display: none; }
 .apps-viewing { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); color: var(--text-muted); font-size: 0.875rem; font-weight: 600; }
 .apps-role {

@@ -93,6 +93,11 @@ module.exports = function (eleventyConfig) {
     return loc === "fr-FR" ? out.replace(/^1 /, "1er ") : out;
   });
 
+  // "October 2026" / "octobre 2026" / "Oktober 2026", for the NetSec report's month.
+  eleventyConfig.addFilter("monthYear", (iso, lang) => new Intl.DateTimeFormat({ en: "en-GB", fr: "fr-FR", de: "de-DE" }[lang || "en"] || "en-GB", { month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(String(iso).slice(0, 10) + "T00:00:00Z")));
+  // 12178 as "12,178" / "12 178" / "12.178".
+  eleventyConfig.addFilter("thousands", (n, lang) => Number(n).toLocaleString({ en: "en-GB", fr: "fr-FR", de: "de-DE" }[lang || "en"] || "en-GB"));
+
   // Two ISO dates as one localised range: "4 January – 26 February 2027" /
   // "4 janvier – 26 février 2027" / "4. Januar – 26. Februar 2027".
   eleventyConfig.addFilter("dateRange", (start, end, lang) => {

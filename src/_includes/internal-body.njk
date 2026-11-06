@@ -6,7 +6,7 @@
 
   Reads: site.staffLinks (entries with `roles`), labels t.staffMenu.<key> or
   the entry's own `label`, site.guideLinks, systemHealth and dashboard (release,
-  counts, dates, deadlines, phase, recent, board).
+  counts, dates, deadlines, phase, recent, board) and netsecReport.
   The role filter is CSS `:has()` on data-roles, so it works without JS. So does
   the page, with every tab's section stacked.
   A shortcut list, not access control. Everything works without JS: the script
@@ -191,6 +191,7 @@
       <div class="apps-tabs" role="tablist" aria-label="{{ d.sections }}" data-apps-tabs hidden>
         <button type="button" role="tab" id="apps-tab-apps" aria-controls="apps" data-apps-tab="apps">{{ d.tabApps }}</button>
         <button type="button" role="tab" id="apps-tab-status" aria-controls="status" data-apps-tab="status">{{ d.tabStatus }}</button>
+        {% if netsecReport %}<button type="button" role="tab" id="apps-tab-netsec" aria-controls="netsec" data-apps-tab="netsec" class="apps-tab-netsec">{{ d.netsec.tab }}</button>{% endif %}
         <button type="button" role="tab" id="apps-tab-guides" aria-controls="guides" data-apps-tab="guides">{{ d.tabGuides }}</button>
         {% if systemHealth %}<button type="button" role="tab" id="apps-tab-it" aria-controls="it" data-apps-tab="it" data-roles="staff">{{ d.tabIt }} <span class="apps-dot apps-dot-{{ systemHealth.summary.level }}" data-apps-it-dot aria-hidden="true"{% if not systemHealth.summary.url %} hidden{% endif %}></span><span class="sr-only" data-apps-it-note{% if not systemHealth.summary.url %} hidden{% endif %}>{{ d.needsAttention }}</span></button>{% endif %}
       </div>
@@ -295,6 +296,80 @@
         {% endif %}
       </div>
     </section>
+
+    {# The NetSec monthly report for the last complete month, recomputed at
+       build by src/_data/netsecReport.js. Names and titles stay as the NetSec
+       data and the commits give them. #}
+    {% set R = netsecReport %}
+    {% if R %}
+      {% set N = d.netsec %}
+      {% set W = R.website %}
+      <section class="apps-panel apps-netsec" id="netsec" data-apps-panel aria-labelledby="apps-netsec-heading">
+        <h2 class="apps-heading apps-section-heading" id="apps-netsec-heading">{{ N.heading | replace("{month}", R.start | monthYear(lang)) }}</h2>
+        <p class="apps-note">{{ N.lead }}</p>
+        <div class="apps-status">
+          <div class="apps-status-card">
+            <h3 class="apps-status-title">{{ N.directory }}</h3>
+            <p class="apps-netsec-figure">{{ N.profiles | replace("{from}", R.directory.from) | replace("{to}", R.directory.to) }}</p>
+            <p>{{ N.joinedLeft | replace("{joined}", R.directory.joined.length) | replace("{left}", R.directory.left.length) }}</p>
+            {% for key in ["joined", "left"] %}{% if R.directory[key].length %}
+              <details class="apps-netsec-more"{% if key == "joined" %} open{% endif %}>
+                <summary>{{ N.profileLists[key] }} ({{ R.directory[key].length }})</summary>
+                <ul class="apps-netsec-list" role="list">
+                  {% for m in R.directory[key] %}<li><a href="{{ m.url }}">{{ m.name }}</a><span>{{ m.affiliation }} ({{ m.country }})</span></li>{% endfor %}
+                </ul>
+              </details>
+            {% endif %}{% endfor %}
+          </div>
+
+          <div class="apps-status-card">
+            <h3 class="apps-status-title">{{ N.leadership }}</h3>
+            <h4 class="apps-netsec-sub">{{ N.coreGroup }}</h4>
+            <ul class="apps-netsec-list" role="list">
+              {% for c in R.coreGroup %}
+                <li>{% if c.kind == "appointed" %}{{ N.appointed | replace("{name}", c.name) | replace("{role}", c.role) }}{% elif c.kind == "left" %}{{ N.noLonger | replace("{name}", c.name) | replace("{role}", c.role) }}{% else %}{{ N.post | replace("{role}", c.role) | replace("{was}", c.was or N.vacant) | replace("{now}", c.now or N.vacant) }}{% endif %}</li>
+              {% else %}
+                <li>{{ N.noChange }}</li>
+              {% endfor %}
+            </ul>
+            <h4 class="apps-netsec-sub">{{ N.mc }}</h4>
+            <p>{{ N.representatives | replace("{from}", R.committee.from) | replace("{to}", R.committee.to) }}</p>
+            {% for key in ["joined", "left"] %}{% if R.committee[key].length %}
+              <p><strong>{{ N[key] }}:</strong> {% for m in R.committee[key] %}{{ m.name }} ({{ m.country }}){% if not loop.last %}, {% endif %}{% endfor %}</p>
+            {% endif %}{% endfor %}
+          </div>
+
+          <div class="apps-status-card">
+            <h3 class="apps-status-title">{{ N.groups }}</h3>
+            {% for g in R.groups %}
+              <h4 class="apps-netsec-sub">WG{{ g.number }} {{ g.name }}</h4>
+              <p>{% if g.from == g.to %}{{ N.unchanged | replace("{n}", g.to) }}{% else %}{{ N.changed | replace("{from}", g.from) | replace("{to}", g.to) | replace("{delta}", ("+" if g.to > g.from else "") + (g.to - g.from)) }}{% endif %}<br>
+              <span class="apps-netsec-muted">{% if g.lead %}{{ N.leader | replace("{name}", g.lead) }}{% endif %}{% if g.lead and g.coLead %}, {% endif %}{% if g.coLead %}{{ N.coLeader | replace("{name}", g.coLead) }}{% endif %}</span></p>
+              {% for key in ["joined", "left"] %}{% if g[key].length %}
+                <p class="apps-netsec-muted"><strong>{{ N[key] }}:</strong> {% for m in g[key] %}{{ m.name }} ({{ m.country }}){% if not loop.last %}, {% endif %}{% endfor %}</p>
+              {% endif %}{% endfor %}
+            {% endfor %}
+          </div>
+
+          <div class="apps-status-card">
+            <h3 class="apps-status-title">{{ N.website }}</h3>
+            <p class="apps-netsec-figure">{{ N.prs | replace("{n}", W.merged) }}</p>
+            <p>{{ N.tally | replace("{features}", W.features) | replace("{fixes}", W.fixes) | replace("{data}", W.data) | replace("{add}", W.add | thousands(lang)) | replace("{del}", W.del | thousands(lang)) }}</p>
+            {% for key in ["majorFeatures", "notableFixes"] %}{% if W[key].length %}
+              <h4 class="apps-netsec-sub">{{ N[key] }}</h4>
+              <ul class="apps-netsec-list" role="list">
+                {% for x in W[key] %}<li>{% if x.url %}<a href="{{ x.url }}">{{ x.title }}</a>{% else %}{{ x.title }}{% endif %}<span>{% if x.pr %}#{{ x.pr }}, {% endif %}+{{ x.add | thousands(lang) }}/−{{ x.del | thousands(lang) }}</span></li>{% endfor %}
+              </ul>
+            {% endif %}{% endfor %}
+            <h4 class="apps-netsec-sub">{{ N.contributors }}</h4>
+            <ul class="apps-netsec-list" role="list">
+              {% for c in W.contributors %}<li>{{ c.who }}<span>{{ N.commits[0 if c.commits == 1 else 1] | replace("{n}", c.commits) }}</span></li>{% endfor %}
+            </ul>
+          </div>
+        </div>
+        <p class="apps-note">{{ N.period | replace("{start}", R.start | newsDate(lang)) | replace("{end}", R.end | newsDate(lang)) | replace("{a}", R.commits[0]) | replace("{b}", R.commits[1]) }}</p>
+      </section>
+    {% endif %}
 
     {% if systemHealth %}
       <section class="apps-panel apps-health" id="it" data-apps-panel aria-labelledby="apps-health-heading" data-roles="staff">

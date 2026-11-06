@@ -154,6 +154,20 @@ successor inherits through the handover in section 4.
   leaves those two cards out. Latest audits is the five newest entries of
   `src/_data/audits.json`, kept by hand: add a line when an audit lands.
   The private `workspace-ops` repo stays out, since the page is public.
+- **NetSec report.** A tab with the NetSec monthly report for the last
+  complete month, as the email gives it: Directory joins and leaves, Core
+  Group, Management Committee and working-group changes, and the website
+  repository's merged PRs, main features and fixes, lines and contributors.
+  `src/_data/netsecReport.js` recomputes it at build from public NetSec
+  data: `data/bios.json`, `data/wg.json` and `data/mc-members.json` at the
+  last commit before each end of the month, and the month's commits on
+  `main` (one call per commit for its line count, about 140). A past month
+  never changes, so the build publishes the result at
+  `/internal/netsec-report.json` and reuses the live copy until the month
+  turns. Bump `VERSION` in the file when the report's logic changes, or the
+  old copy stays. Without the live copy and a `GITHUB_TOKEN`, or on any
+  failure, the tab is left out. October 2026 was checked against the email
+  figure for figure.
 - **Dates and conference phase.** The "EISS dates" Google Calendar holds an
   edition's public dates. The build reads it through the EISS status web
   app's `?view=dates` (source in the private `workspace-ops` repo, which
