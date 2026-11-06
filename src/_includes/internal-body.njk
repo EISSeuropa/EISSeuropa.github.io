@@ -170,8 +170,8 @@
     </section>
     {% endif %}
 
-    {# The rolling modules: the issues for every role but the board, then the
-       board's features, audits and fixes. Each row is one roll. #}
+    {# The rolling modules, for every role: the issues, then the features,
+       audits and fixes. Each row is one roll. #}
     <section class="apps-rolls" aria-labelledby="apps-rolls-heading">
     <h2 class="apps-heading" id="apps-rolls-heading">{{ d.rolls.heading }}</h2>
     <div class="apps-today" data-apps-today hidden>
@@ -192,16 +192,16 @@
       </div>
     </div>
 
-    {# The board's view: the month's main features and fixes in both site repos,
-       and the latest formal audits, each rolling like the issues above. Board
-       only, and in the "Everyone" view. Without JS (or motion) the lines stack. #}
+    {# The month's main features and fixes in both site repos, and the latest
+       formal audits, each rolling like the issues above. Every role sees them.
+       Without JS (or motion) the lines stack. #}
     {% set B = dashboard.board %}
     {% set MARK = {
       features: '<path d="M8 4v8M4 8h8"/>',
       audits: '<path d="M7 4a3 3 0 1 0 0 6a3 3 0 1 0 0-6M9.2 9.2l3 3"/>',
       fixes: '<path d="M3.5 8.5l3 3 6-7"/>'
     } %}
-    <div class="apps-board" data-roles="board">
+    <div class="apps-board">
       <div class="apps-today-box">
         {% for key in ["features", "audits", "fixes"] %}{% if B[key] and B[key].length %}
           <div class="apps-roll-row">
@@ -241,8 +241,8 @@
         <button type="button" role="tab" id="apps-tab-apps" aria-controls="apps" data-apps-tab="apps">{{ d.tabApps }}</button>
         <button type="button" role="tab" id="apps-tab-guides" aria-controls="guides" data-apps-tab="guides">{{ d.tabGuides }}</button>
         <button type="button" role="tab" id="apps-tab-status" aria-controls="status" data-apps-tab="status">{{ d.tabStatus }}</button>
-        {% if netsecReport %}<button type="button" role="tab" id="apps-tab-netsec" aria-controls="netsec" data-apps-tab="netsec" class="apps-tab-netsec">{{ d.netsec.tab }}</button>{% endif %}
         {% if systemHealth %}<button type="button" role="tab" id="apps-tab-it" aria-controls="it" data-apps-tab="it" data-roles="staff">{{ d.tabIt }} <span class="apps-dot apps-dot-{{ systemHealth.summary.level }}" data-apps-it-dot aria-hidden="true"{% if not systemHealth.summary.url %} hidden{% endif %}></span><span class="sr-only" data-apps-it-note{% if not systemHealth.summary.url %} hidden{% endif %}>{{ d.needsAttention }}</span></button>{% endif %}
+        {% if netsecReport %}<button type="button" role="tab" id="apps-tab-netsec" aria-controls="netsec" data-apps-tab="netsec" class="apps-tab-netsec">{{ d.netsec.tab }}</button>{% endif %}
       </div>
       <div class="apps-viewing">
         <label for="apps-role">{{ d.viewingAs }}</label>
@@ -369,10 +369,66 @@
       </div>
     </section>
 
-    {# The NetSec monthly report for the last complete month, recomputed at
-       build by src/_data/netsecReport.js. Names and titles stay as the NetSec
-       data and the commits give them. #}
-    {% set R = netsecReport %}
+    {% if systemHealth %}
+      <section class="apps-panel apps-health" id="it" data-apps-panel aria-labelledby="apps-health-heading" data-roles="staff">
+        <h2 class="apps-heading apps-section-heading" id="apps-health-heading">{{ d.itHeading }}</h2>
+        <div class="apps-status">
+          {% for repo in systemHealth.repos %}
+            <div class="apps-status-card">
+              {{ SRC | replace("@", "runs") | safe }}
+              <h3 class="apps-status-title apps-health-brand">
+                <a href="{{ repo.site }}" aria-label="{{ repo.label }}">
+                  {% if loop.first %}<span aria-hidden="true">{% inlineSvg "assets/images/brand/logo-lockup.svg" %}</span>{% else %}<img src="/assets/images/partners/netsec.svg#svgView(viewBox(360,780,2800,930))" alt="" width="120" height="40">{% endif %}
+                </a>
+              </h3>
+              <p class="apps-health-level" data-apps-repo-level="{{ repo.slug }}"><span class="apps-dot apps-dot-{{ repo.level }}" aria-hidden="true"></span><span>{{ d.levels[repo.level] }}</span></p>
+              <p class="apps-health-summary" data-apps-repo-summary="{{ repo.slug }}">{% if repo.failedCount %}{{ d.automationsFailing | replace("{bad}", repo.failedCount) | replace("{n}", repo.items.length) }}{% else %}{{ d.automationsOk | replace("{n}", repo.items.length) }}{% endif %}</p>
+              <details class="apps-health-details" data-apps-repo-details="{{ repo.slug }}"{% if repo.failedCount %} open{% endif %}>
+                <summary>{{ d.everyAutomation }}</summary>
+                <ul class="apps-health-list" role="list">
+                  {% for item in repo.items %}
+                    <li class="apps-health-item{% if item.failed %} apps-health-failed{% endif %}" data-apps-run="{{ repo.slug }}|{{ item.name }}"><span class="apps-dot apps-dot-{{ item.level }}" aria-hidden="true"></span><div><a href="{{ item.url }}">{{ item.name }}</a> <span>{{ d.levels[item.level] }}{% if item.date %}, {{ item.date | newsDate(lang) }}{% endif %}</span></div></li>
+                  {% endfor %}
+                </ul>
+              </details>
+            </div>
+          {% endfor %}
+          {% set gh = systemHealth.github %}
+          <div class="apps-status-card">
+            {{ SRC | replace("@", "ghstatus") | safe }}
+            <h3 class="apps-status-title">GitHub</h3>
+            <p class="apps-health-level" data-apps-github-level><span class="apps-dot apps-dot-{{ gh.level if gh else 'unknown' }}" aria-hidden="true"></span><span>{{ d.levels[gh.level if gh else 'unknown'] }}</span></p>
+            <p class="apps-health-summary"><a href="https://www.githubstatus.com/">{{ d.githubServices }}</a> <span data-apps-github-text>{% if gh %}{{ d.levels[gh.level] }}{% if gh.components.length %}: {{ gh.components | join(", ") }}{% endif %}{% else %}{{ d.unreadable }}{% endif %}</span></p>
+          </div>
+          <div class="apps-status-card">
+            {{ SRC | replace("@", "") | safe }}
+            <h3 class="apps-status-title">Google Workspace</h3>
+            <p class="apps-health-level"><span class="apps-dot apps-dot-{{ systemHealth.workspace.level }}" aria-hidden="true"></span>{{ d.levels[systemHealth.workspace.level] }}</p>
+            <ul class="apps-health-list" role="list">
+              {% if systemHealth.google %}
+                <li class="apps-health-item"><span class="apps-dot apps-dot-{{ systemHealth.google.level }}" aria-hidden="true"></span><div><a href="https://www.google.com/appsstatus/dashboard/">{{ d.googleServices }}</a> <span>{{ d.levels[systemHealth.google.level] }}{% if systemHealth.google.services.length %}: {{ systemHealth.google.services | join(", ") }}{% endif %}</span></div></li>
+              {% else %}
+                <li><a href="https://www.google.com/appsstatus/dashboard/">{{ d.googleServices }}</a> <span>{{ d.unreadable }}</span></li>
+              {% endif %}
+              {% if systemHealth.workspace.checks %}
+                {% for check in systemHealth.workspace.checks %}
+                  <li class="apps-health-item"><span class="apps-dot apps-dot-{{ check.level }}" aria-hidden="true"></span><div><a href="https://script.google.com/home/executions">{{ check.name }}</a> <span>{{ d.levels[check.level] or check.label }}{% if check.date %}{{ d.lastGoodRun | replace("{date}", check.date | newsDate(lang)) }}{% endif %}</span></div></li>
+                {% endfor %}
+              {% else %}
+                <li><a href="https://script.google.com/home/executions">{{ d.appsScriptRuns }}</a> <span>{{ d.unreadable }}</span></li>
+              {% endif %}
+              <li><a href="https://admin.google.com/ac/ac">{{ d.securityAlerts }}</a> <span>{{ d.notMonitored }}</span></li>
+            </ul>
+          </div>
+        </div>
+        <p class="apps-note" data-apps-asof>{{ d.asOf | replace("{date}", systemHealth.checked | newsDate(lang)) }}.</p>
+      </section>
+    {% endif %}
+
+    {# The NetSec monthly report, newest month first, recomputed at build by
+       src/_data/netsecReport.js. This shows the newest. Names and titles stay
+       as the NetSec data and the commits give them. #}
+    {% set R = netsecReport[0] if netsecReport %}
     {% if R %}
       {% set N = d.netsec %}
       {% set W = R.website %}
@@ -444,62 +500,6 @@
           </div>
         </div>
         <p class="apps-note">{{ N.period | replace("{start}", R.start | newsDate(lang)) | replace("{end}", R.end | newsDate(lang)) | replace("{a}", R.commits[0]) | replace("{b}", R.commits[1]) }}</p>
-      </section>
-    {% endif %}
-
-    {% if systemHealth %}
-      <section class="apps-panel apps-health" id="it" data-apps-panel aria-labelledby="apps-health-heading" data-roles="staff">
-        <h2 class="apps-heading apps-section-heading" id="apps-health-heading">{{ d.itHeading }}</h2>
-        <div class="apps-status">
-          {% for repo in systemHealth.repos %}
-            <div class="apps-status-card">
-              {{ SRC | replace("@", "runs") | safe }}
-              <h3 class="apps-status-title apps-health-brand">
-                <a href="{{ repo.site }}" aria-label="{{ repo.label }}">
-                  {% if loop.first %}<span aria-hidden="true">{% inlineSvg "assets/images/brand/logo-lockup.svg" %}</span>{% else %}<img src="/assets/images/partners/netsec.svg#svgView(viewBox(360,780,2800,930))" alt="" width="120" height="40">{% endif %}
-                </a>
-              </h3>
-              <p class="apps-health-level" data-apps-repo-level="{{ repo.slug }}"><span class="apps-dot apps-dot-{{ repo.level }}" aria-hidden="true"></span><span>{{ d.levels[repo.level] }}</span></p>
-              <p class="apps-health-summary" data-apps-repo-summary="{{ repo.slug }}">{% if repo.failedCount %}{{ d.automationsFailing | replace("{bad}", repo.failedCount) | replace("{n}", repo.items.length) }}{% else %}{{ d.automationsOk | replace("{n}", repo.items.length) }}{% endif %}</p>
-              <details class="apps-health-details" data-apps-repo-details="{{ repo.slug }}"{% if repo.failedCount %} open{% endif %}>
-                <summary>{{ d.everyAutomation }}</summary>
-                <ul class="apps-health-list" role="list">
-                  {% for item in repo.items %}
-                    <li class="apps-health-item{% if item.failed %} apps-health-failed{% endif %}" data-apps-run="{{ repo.slug }}|{{ item.name }}"><span class="apps-dot apps-dot-{{ item.level }}" aria-hidden="true"></span><div><a href="{{ item.url }}">{{ item.name }}</a> <span>{{ d.levels[item.level] }}{% if item.date %}, {{ item.date | newsDate(lang) }}{% endif %}</span></div></li>
-                  {% endfor %}
-                </ul>
-              </details>
-            </div>
-          {% endfor %}
-          {% set gh = systemHealth.github %}
-          <div class="apps-status-card">
-            {{ SRC | replace("@", "ghstatus") | safe }}
-            <h3 class="apps-status-title">GitHub</h3>
-            <p class="apps-health-level" data-apps-github-level><span class="apps-dot apps-dot-{{ gh.level if gh else 'unknown' }}" aria-hidden="true"></span><span>{{ d.levels[gh.level if gh else 'unknown'] }}</span></p>
-            <p class="apps-health-summary"><a href="https://www.githubstatus.com/">{{ d.githubServices }}</a> <span data-apps-github-text>{% if gh %}{{ d.levels[gh.level] }}{% if gh.components.length %}: {{ gh.components | join(", ") }}{% endif %}{% else %}{{ d.unreadable }}{% endif %}</span></p>
-          </div>
-          <div class="apps-status-card">
-            {{ SRC | replace("@", "") | safe }}
-            <h3 class="apps-status-title">Google Workspace</h3>
-            <p class="apps-health-level"><span class="apps-dot apps-dot-{{ systemHealth.workspace.level }}" aria-hidden="true"></span>{{ d.levels[systemHealth.workspace.level] }}</p>
-            <ul class="apps-health-list" role="list">
-              {% if systemHealth.google %}
-                <li class="apps-health-item"><span class="apps-dot apps-dot-{{ systemHealth.google.level }}" aria-hidden="true"></span><div><a href="https://www.google.com/appsstatus/dashboard/">{{ d.googleServices }}</a> <span>{{ d.levels[systemHealth.google.level] }}{% if systemHealth.google.services.length %}: {{ systemHealth.google.services | join(", ") }}{% endif %}</span></div></li>
-              {% else %}
-                <li><a href="https://www.google.com/appsstatus/dashboard/">{{ d.googleServices }}</a> <span>{{ d.unreadable }}</span></li>
-              {% endif %}
-              {% if systemHealth.workspace.checks %}
-                {% for check in systemHealth.workspace.checks %}
-                  <li class="apps-health-item"><span class="apps-dot apps-dot-{{ check.level }}" aria-hidden="true"></span><div><a href="https://script.google.com/home/executions">{{ check.name }}</a> <span>{{ d.levels[check.level] or check.label }}{% if check.date %}{{ d.lastGoodRun | replace("{date}", check.date | newsDate(lang)) }}{% endif %}</span></div></li>
-                {% endfor %}
-              {% else %}
-                <li><a href="https://script.google.com/home/executions">{{ d.appsScriptRuns }}</a> <span>{{ d.unreadable }}</span></li>
-              {% endif %}
-              <li><a href="https://admin.google.com/ac/ac">{{ d.securityAlerts }}</a> <span>{{ d.notMonitored }}</span></li>
-            </ul>
-          </div>
-        </div>
-        <p class="apps-note" data-apps-asof>{{ d.asOf | replace("{date}", systemHealth.checked | newsDate(lang)) }}.</p>
       </section>
     {% endif %}
 
@@ -935,11 +935,9 @@
       if (news.length) parts.push(f(I.sinceVisit, { list: news.join(", ") }));
       if (parts.length) todayText.textContent = parts.join(" ");
       todayText.hidden = !parts.length;
-      // Board members get their own view below, so the roll is not theirs.
-      var rolled = role === "board" ? [] : recent;
       // The box opens first, so the first line can rise into it.
-      reveal(today, parts.length > 0 || rolled.length > 0);
-      renderDone(rolled);
+      reveal(today, parts.length > 0 || recent.length > 0);
+      renderDone(recent);
       delta(document.querySelector("[data-apps-release-percent]"), staff && since.closed > 0 ? "+" + since.closed : "", f(I.closedSince, { n: since.closed }));
       delta(document.querySelector('.apps-stats [data-apps-live="tasks"]'), since.tasks > 0 && role !== "management" && role !== "board" ? f(I.newBadge, { n: since.tasks }) : "", f(I.newSince, { n: since.tasks }));
     }
