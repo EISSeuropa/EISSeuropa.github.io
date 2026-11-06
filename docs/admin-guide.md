@@ -123,9 +123,9 @@ successor inherits through the handover in section 4.
   a `menu` number adds the link to the padlock menu, which lists them in
   that order. Team chat comes first, and the last entry opens this
   dashboard.
-- **Tabs.** Apps, Project status, Guides and IT monitoring, linkable as `#apps`, `#status`, `#guides` and `#it`. Without JavaScript all four stack. The IT monitoring tab follows the staff role.
+- **Tabs.** Apps, Guides, Platform development status, NetSec report and Platform status, linkable as `#apps`, `#guides`, `#status`, `#netsec` and `#it` (the hashes kept their old names, so existing links still work). Without JavaScript all of them stack. The Platform status tab follows the staff role.
 - **Apps grid.** A "Filter apps" field narrows the tiles by name and note, and Escape clears it. The three apps opened most often in a browser (three times or more) move to the front there. The counts sit in that browser's storage under `eiss-apps-used` and go nowhere else.
-- **Project status.** The next release and the open issue, PR and
+- **Platform development status** (`#status`). The next release and the open issue, PR and
   `help wanted` counts come from `src/data/roadmap-progress.json`, which
   the daily *Refresh roadmap surfaces* workflow rewrites. Key dates are
   the next conference, the release due dates and anything in `keyDates`
@@ -160,13 +160,17 @@ successor inherits through the handover in section 4.
   `src/_data/audits.json`, kept by hand: add a line when an audit lands.
   The private `workspace-ops` repo stays out, since the page is public.
 - **Version.** The foot of the page reads "Internal dashboard v2.21.0", from `VERSION` in `src/_data/dashboard.js`. The rules for bumping it and the history are in [internal-dashboard.md](internal-dashboard.md).
-- **Conference timeline.** The first section under the strip. It holds the
-  "Now" card with its stepper (below), then up to 20 calendar tiles for the
+- **Timeline.** The first section under the strip. It holds the
+  "Conference timeline" card with its stepper (below; its note opens with
+  "Now:" and the current stage), then up to 20 calendar tiles for the
   coming dates, built by `agenda()` in `src/_data/dashboard.js` from the Key
   dates list, the cohorts in `src/_data/cohorts.json` (call opens,
   applications close, start) and NetSec's `data/events.json`, read from the
   NetSec repo at build. NetSec's ESSC entry is left out, since EISS shows
   it. A tile keeps its date's roles, so release due dates are for staff.
+  Each tile has a kind, set in `agenda()`, shown as the colour of its month
+  band and a tag: conference (blue), internship (teal), release (purple)
+  and NetSec event (COST blue).
   Moving the tiles to Google Calendar is
   [#2028](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2028).
 - **NetSec report.** A tab with the NetSec monthly report for the last
@@ -202,7 +206,7 @@ successor inherits through the handover in section 4.
   30 days ticked off, the next date with its countdown and a "Today" marker,
   kept right in the browser between builds.
 - **Guides.** Guides are `guideLinks` in `src/_data/site.js`.
-- **IT System Monitoring.** A staff section that lists the latest run of
+- **Platform status** (`#it`, formerly IT System Monitoring). A staff section that lists the latest run of
   each automation in both site repos, read when the site builds by
   `src/_data/systemHealth.js`. Its Workspace card reads Google's public
   status feed and the "EISS status" Apps Script web app, whose source is

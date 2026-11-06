@@ -100,6 +100,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 ### Added
 
 - The internal dashboard shows its own version number at the foot of the page ("Internal dashboard v2.21.0"), with semantic versioning and a history back to 1.0.0 in `docs/internal-dashboard.md`.
+- The internal dashboard's tiles under "Timeline" carry a kind as well as EISS or NetSec: conference (blue), internship (teal), release (purple) or NetSec event (COST blue), shown as the colour of the month band and a tag.
 - The internal dashboard opens with a "Conference timeline" section: the "Now" card with the stepper of the conference year, then calendar tiles for the coming dates, soonest first. The tiles cover the ESSC 2027 deadlines, the conference itself, release due dates for staff, internship cohort calls, deadlines and start dates, and NetSec's events, each tagged EISS or NetSec, in one row that scrolls sideways. The section sits above "Recent activity".
 - The internal dashboard has a "NetSec report" tab, marked in NetSec's blue and gold, with the NetSec monthly report for the last complete month: Directory profiles joined and left, Core Group, Management Committee and working-group changes, and the website repository's merged pull requests, main features, notable fixes and contributors. It is rebuilt from the NetSec website's public data and git history, and moves to the next month on the first build after the month ends.
 - The internal dashboard has a "For the board" box with three rolls built like the issue roll: the five main new features and the five main bug fixes merged across the EISS and NetSec websites in the last 30 days, and the five latest formal audits (licensing, accessibility, quality). Each line carries an EISS or NetSec tag and a marker for its kind, and the box takes three lines, so the apps stay in view. Board members see it in place of the issue roll.
@@ -149,6 +150,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- Opening a roll on the internal dashboard's "Recent activity" kept its chevron in reach. A long title such as #1988 had stretched the opened list past the edge of its box, which hid the chevron that folds it back. Long titles now wrap onto a second line in an opened list, and the lines appear at once rather than mid-animation.
 - The "Last issues closed" roll on the internal dashboard shows for every role, not only staff and "Show all".
 - The IT tab and the Systems tile on the internal dashboard no longer vanish when a single call to GitHub fails during a build. The build retries the call once before hiding the section.
 - The "Last issues closed" roll on the internal dashboard shows again when the browser's own GitHub calls are refused. Unsigned visitors share GitHub's limit of 60 calls an hour per address, and one refused call emptied the roll. The build now carries the last five closed issues, and the page falls back to them.
@@ -212,6 +214,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- The internal dashboard's sections are renamed and reordered. The top section is "Timeline", and its stage card is "Conference timeline", with the current stage in its note ("Now: Preparing the call for papers."). The tabs read Apps, Guides, Platform development status (formerly Project status), NetSec report and Platform status (formerly IT monitoring), with Guides moved next to Apps.
 - The host-city timeline on the home page draws the past editions in the accent blue, rail and dots, keeps the rail after the next host grey, and the dot for the next host, Belgrade 2027, pulses three times on load before it rests. With reduced motion it stays still.
 - `/licensing.html` credits the circle-flags country flags (MIT), links the full licence text of each bundled asset (Lucide, Inter, circle-flags, now served from `/assets/licences/`), and states that partner, funder and platform logos and the EU emblem are trademarks outside CC BY 4.0. The member-photo carve-out now says copyright stays with whoever supplied the photo or with the photographer. The French and German wording is drafted by Claude and the page keeps its beta ribbon until a native speaker reviews it.
 - The "update your bio" link on `/board` and the weekly bios sync use the bios form's new home on the EISS Workspace, "Create or update my EISS Board entry" on admin@, in place of the copy on the legacy eissnetwork@gmail.com account. Existing cards stay as they are until their owner next submits the form. Part of [#1988](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1988).

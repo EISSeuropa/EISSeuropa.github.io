@@ -246,16 +246,16 @@ const cohorts = require("./cohorts.json");
 let netsecEvents = [];
 function agenda(dates) {
   const eiss = dates.filter((d) => d.date >= today)
-    .map((d) => ({ ...d, site: "EISS", end: d.kind === "essc" && edition ? edition.endDate : undefined, state: undefined }));
+    .map((d) => ({ ...d, site: "EISS", cat: d.kind === "release" ? "release" : "conference", end: d.kind === "essc" && edition ? edition.endDate : undefined, state: undefined }));
   const intern = cohorts.flatMap((c) => [
     { date: c.callOpens, kind: "cohortCall", cohort: c.name },
     { date: c.applyBy, kind: "cohortApply", cohort: c.name },
     { date: c.start, kind: "cohortStart", cohort: c.name },
-  ]).filter((d) => d.date >= today).map((d) => ({ ...d, site: "EISS", roles: everyone, url: "/internship.html" }));
+  ]).filter((d) => d.date >= today).map((d) => ({ ...d, site: "EISS", cat: "internship", roles: everyone, url: "/internship.html" }));
   // NetSec lists ESSC too, which EISS already shows.
   const netsec = netsecEvents.filter((e) => e.start.slice(0, 10) >= today && !/European Security Studies Conference/.test(e.summary))
     .map((e) => ({ date: e.start.slice(0, 10), end: e.end && e.end.slice(0, 10) > e.start.slice(0, 10) ? e.end.slice(0, 10) : undefined,
-      label: e.summary, url: e.url, site: "NetSec", roles: everyone, tentative: e.status === "TENTATIVE" }));
+      label: e.summary, url: e.url, site: "NetSec", cat: "event", roles: everyone, tentative: e.status === "TENTATIVE" }));
   return [...eiss, ...intern, ...netsec].sort(byDate).slice(0, 20);
 }
 async function fetchNetsecEvents() {
