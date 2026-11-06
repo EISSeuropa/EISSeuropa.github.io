@@ -24,6 +24,11 @@
 {% from "icons.njk" import icon %}
 {%- set t = i18n[lang or "en"] -%}
 {%- set d = t.dash -%}
+{#- A data block's light: dark green while it shows the build's figures, light
+    green and glowing once the live load replaces them (data-apps-src names the
+    load). The legend sits at the foot of the page. -#}
+{%- set STORED = d.stored | replace("{date}", dashboard.built | newsDate(lang)) -%}
+{%- set SRC = '<span class="apps-src" data-apps-src="@" role="img" aria-label="' + STORED + '" title="' + STORED + '"></span>' -%}
 
 {# Opens the connection to Indico ahead of the click. #}
 <link rel="preconnect" href="https://indico.eiss-europa.com">
@@ -175,7 +180,7 @@
           <p class="apps-today-text" data-apps-today-text hidden></p>
           {% for key in ["closed", "opened"] %}
             <div class="apps-roll-row" data-apps-issue-row="{{ key }}" hidden>
-              <p class="apps-roll-label" id="apps-roll-{{ key }}">{{ d.rolls[key] }}</p>
+              <p class="apps-roll-label" id="apps-roll-{{ key }}">{{ d.rolls[key] }} {{ SRC | replace("@", "rolls") | safe }}</p>
               <div class="apps-done-stage" data-apps-issue-roll="{{ key }}">
                 <ul class="apps-done" data-apps-done role="list" aria-labelledby="apps-roll-{{ key }}"></ul>
                 <button type="button" class="apps-done-pause apps-done-more" data-apps-done-more aria-expanded="false" aria-label="{{ d.rolls.showAll | replace("{label}", d.rolls[key]) }}" title="{{ d.rolls.showAll | replace("{label}", d.rolls[key]) }}" hidden>{{ icon("chevron-down") }}</button>
@@ -200,7 +205,7 @@
       <div class="apps-today-box">
         {% for key in ["features", "audits", "fixes"] %}{% if B[key] and B[key].length %}
           <div class="apps-roll-row">
-            <p class="apps-roll-label" id="apps-board-{{ key }}">{{ d.board[key] }}</p>
+            <p class="apps-roll-label" id="apps-board-{{ key }}">{{ d.board[key] }} {{ SRC | replace("@", "") | safe }}</p>
             <div class="apps-done-stage" data-apps-roll>
               <ul class="apps-done apps-done-static" data-apps-done role="list" aria-labelledby="apps-board-{{ key }}">
                 {% for x in B[key] %}
@@ -309,6 +314,7 @@
       <div class="apps-status">
         {% if dashboard.release %}
           <div class="apps-status-card" data-roles="staff">
+            {{ SRC | replace("@", "release") | safe }}
             <h3 class="apps-status-title">{{ d.nextRelease }}</h3>
             <p class="apps-release"><a href="{{ dashboard.release.url }}">{{ dashboard.release.title }}</a>{% if dashboard.release.due %}{{ d.dueOn | replace("{date}", dashboard.release.due | newsDate(lang)) }}{% endif %}</p>
             <div class="apps-progress-wrap">
@@ -333,11 +339,15 @@
         {% endif %}
         {% if dashboard.counts %}
           <div class="apps-status-card" data-roles="staff volunteer">
+            {{ SRC | replace("@", "counts") | safe }}
             <h3 class="apps-status-title">{{ d.onGithub }}</h3>
             <ul class="apps-counts" role="list">
               {% for c in dashboard.counts %}
                 <li data-roles="{{ c.roles | join(' ') }}"><a href="{{ c.url }}"><strong data-apps-live="{{ ['issues', 'prs', 'tasks'][loop.index0] }}">{{ c.value }}</strong> {{ d.counts[c.key] }}</a></li>
               {% endfor %}
+            </ul>
+            <ul class="apps-help" data-apps-help role="list" aria-label="{{ d.newestTasks }}"{% if not dashboard.help.length %} hidden{% endif %}>
+              {% for x in dashboard.help %}<li><a href="{{ x.url }}"><span class="apps-help-num">#{{ x.n }}</span> {{ x.title }}</a></li>{% endfor %}
             </ul>
           </div>
         {% endif %}
@@ -345,6 +355,7 @@
            conference and internship dates are under Timeline. #}
         {% if dashboard.milestones.length %}
           <div class="apps-status-card">
+            {{ SRC | replace("@", "") | safe }}
             <h3 class="apps-status-title">{{ d.nextMilestones }}</h3>
             <ol class="apps-timeline" data-apps-timeline>
               {% for m in dashboard.milestones %}
@@ -370,6 +381,7 @@
         <p class="apps-note">{{ N.lead }}</p>
         <div class="apps-status">
           <div class="apps-status-card">
+            {{ SRC | replace("@", "") | safe }}
             <h3 class="apps-status-title">{{ N.directory }}</h3>
             <p class="apps-netsec-figure">{{ N.profiles | replace("{from}", R.directory.from) | replace("{to}", R.directory.to) }}</p>
             <p>{{ N.joinedLeft | replace("{joined}", R.directory.joined.length) | replace("{left}", R.directory.left.length) }}</p>
@@ -384,6 +396,7 @@
           </div>
 
           <div class="apps-status-card">
+            {{ SRC | replace("@", "") | safe }}
             <h3 class="apps-status-title">{{ N.leadership }}</h3>
             <h4 class="apps-netsec-sub">{{ N.coreGroup }}</h4>
             <ul class="apps-netsec-list" role="list">
@@ -401,6 +414,7 @@
           </div>
 
           <div class="apps-status-card">
+            {{ SRC | replace("@", "") | safe }}
             <h3 class="apps-status-title">{{ N.groups }}</h3>
             {% for g in R.groups %}
               <h4 class="apps-netsec-sub">WG{{ g.number }} {{ g.name }}</h4>
@@ -413,6 +427,7 @@
           </div>
 
           <div class="apps-status-card">
+            {{ SRC | replace("@", "") | safe }}
             <h3 class="apps-status-title">{{ N.website }}</h3>
             <p class="apps-netsec-figure">{{ N.prs | replace("{n}", W.merged) }}</p>
             <p>{{ N.tally | replace("{features}", W.features) | replace("{fixes}", W.fixes) | replace("{data}", W.data) | replace("{add}", W.add | thousands(lang)) | replace("{del}", W.del | thousands(lang)) }}</p>
@@ -438,6 +453,7 @@
         <div class="apps-status">
           {% for repo in systemHealth.repos %}
             <div class="apps-status-card">
+              {{ SRC | replace("@", "runs") | safe }}
               <h3 class="apps-status-title apps-health-brand">
                 <a href="{{ repo.site }}" aria-label="{{ repo.label }}">
                   {% if loop.first %}<span aria-hidden="true">{% inlineSvg "assets/images/brand/logo-lockup.svg" %}</span>{% else %}<img src="/assets/images/partners/netsec.svg#svgView(viewBox(360,780,2800,930))" alt="" width="120" height="40">{% endif %}
@@ -457,11 +473,13 @@
           {% endfor %}
           {% set gh = systemHealth.github %}
           <div class="apps-status-card">
+            {{ SRC | replace("@", "ghstatus") | safe }}
             <h3 class="apps-status-title">GitHub</h3>
             <p class="apps-health-level" data-apps-github-level><span class="apps-dot apps-dot-{{ gh.level if gh else 'unknown' }}" aria-hidden="true"></span><span>{{ d.levels[gh.level if gh else 'unknown'] }}</span></p>
             <p class="apps-health-summary"><a href="https://www.githubstatus.com/">{{ d.githubServices }}</a> <span data-apps-github-text>{% if gh %}{{ d.levels[gh.level] }}{% if gh.components.length %}: {{ gh.components | join(", ") }}{% endif %}{% else %}{{ d.unreadable }}{% endif %}</span></p>
           </div>
           <div class="apps-status-card">
+            {{ SRC | replace("@", "") | safe }}
             <h3 class="apps-status-title">Google Workspace</h3>
             <p class="apps-health-level"><span class="apps-dot apps-dot-{{ systemHealth.workspace.level }}" aria-hidden="true"></span>{{ d.levels[systemHealth.workspace.level] }}</p>
             <ul class="apps-health-list" role="list">
@@ -486,6 +504,7 @@
     {% endif %}
 
     {# The dashboard's own version. Rules and history: docs/internal-dashboard.md. #}
+    <p class="apps-legend" aria-hidden="true"><span><span class="apps-src is-live"></span> {{ d.live }}</span> <span><span class="apps-src"></span> {{ STORED }}</span></p>
     <p class="apps-version">{{ d.version | replace("{v}", dashboard.version) }}</p>
   </div>
 </div>
@@ -517,9 +536,23 @@
       total.textContent = pl(I.app, shown);
       total.hidden = false;
     }
-    if (saved && roleSelect.querySelector('[value="' + CSS.escape(saved) + '"]')) roleSelect.value = saved;
+    // A link can carry the role (?role=board) to open someone on their view. It
+    // applies to that visit only: the saved role and the first-visit welcome
+    // still follow localStorage. The address bar shows the role on view, so it
+    // can be copied and sent.
+    function isRole(r) { return r && roleSelect.querySelector('[value="' + CSS.escape(r) + '"]'); }
+    function roleToUrl() {
+      var u = new URL(location.href);
+      if (roleSelect.value === "all") u.searchParams.delete("role"); else u.searchParams.set("role", roleSelect.value);
+      history.replaceState(null, "", u);
+    }
+    var linked = new URLSearchParams(location.search).get("role");
+    if (isRole(linked)) roleSelect.value = linked;
+    else if (isRole(saved)) roleSelect.value = saved;
+    roleToUrl();
     roleSelect.addEventListener("change", function () {
       try { localStorage.setItem(KEY, roleSelect.value); } catch (e) {}
+      roleToUrl();
       tally();
       renderToday();
       renderTimeline(false);
@@ -610,7 +643,7 @@
     function keepTabVisible() {
       if (usable().indexOf(tablist.querySelector('[aria-selected="true"]')) < 0) {
         selectTab("apps");
-        history.replaceState(null, "", location.pathname);
+        history.replaceState(null, "", location.pathname + location.search);
       }
     }
     panels.forEach(function (panel) {
@@ -981,7 +1014,7 @@
       return Promise.all([
         count("is:issue is:open"),
         count("is:pr is:open"),
-        count('is:issue is:open label:"help wanted"'),
+        get("search/issues?per_page=3&sort=created&order=desc&q=" + encodeURIComponent("repo:" + data.repo + ' is:issue is:open label:"help wanted"')),
         get("repos/" + data.repo + "/milestones?state=open&per_page=100"),
         Promise.all(repos.map(function (r) {
           return get("repos/" + r.slug + "/actions/runs?status=completed&per_page=100&branch=" + r.branch);
@@ -1003,7 +1036,7 @@
         }, function () { return null; }),
       ]).then(function (a) {
         var m = data.release && a[3].filter(function (x) { return x.title === data.release.title; })[0];
-        var live = { issues: a[0], prs: a[1], tasks: a[2], closed: m ? m.closed_issues : null, total: m ? m.closed_issues + m.open_issues : null,
+        var live = { issues: a[0], prs: a[1], tasks: a[2].total_count, help: a[2].items.map(function (x) { return { n: x.number, title: x.title }; }), closed: m ? m.closed_issues : null, total: m ? m.closed_issues + m.open_issues : null,
           runs: a[4].map(function (r) { return r.workflow_runs.map(function (w) { return { name: w.name, conclusion: w.conclusion, url: w.html_url }; }); }),
           recent: a[5] };
         if (!m) return live;
@@ -1129,15 +1162,44 @@
         if (line) { setDot(line.querySelector(".apps-dot"), level); line.lastElementChild.textContent = LEVELS[level]; }
         var text = document.querySelector("[data-apps-github-text]");
         if (text) text.textContent = LEVELS[level] + (names.length ? ": " + names.join(", ") : "");
+        markLive("ghstatus");
         rollup();
       }).catch(function () {});
     }
     loadGithubStatus();
+    // A block's light turns live once its figures come from the live load.
+    function markLive(key) {
+      document.querySelectorAll('[data-apps-src="' + key + '"]').forEach(function (el) {
+        el.classList.add("is-live");
+        el.setAttribute("aria-label", I.srcLive);
+        el.title = I.srcLive;
+      });
+    }
+    function renderHelp(items) {
+      var ul = document.querySelector("[data-apps-help]");
+      if (!ul) return;
+      ul.textContent = "";
+      items.forEach(function (x) {
+        var li = document.createElement("li");
+        li.innerHTML = '<a><span class="apps-help-num"></span> <span></span></a>';
+        // Built from the issue number, so only this repo's issues are linked.
+        li.firstChild.href = "https://github.com/EISSeuropa/EISSeuropa.github.io/issues/" + Number(x.n);
+        li.querySelector(".apps-help-num").textContent = "#" + x.n;
+        li.firstChild.lastChild.textContent = x.title;
+        ul.appendChild(li);
+      });
+      ul.hidden = !items.length;
+    }
     function applyLive(live, at) {
       ["issues", "prs", "tasks"].forEach(function (k) {
         document.querySelectorAll('[data-apps-live="' + k + '"]').forEach(function (el) { el.textContent = live[k]; });
       });
+      if (live.help) renderHelp(live.help);
+      markLive("counts");
+      if (live.recent) markLive("rolls");
+      if (live.runs && live.runs.length) markLive("runs");
       if (live.total) {
+        markLive("release");
         releaseTotal = live.total;
         var pct = Math.round(live.closed / live.total * 100);
         var el = document.querySelector("[data-apps-release-percent]");

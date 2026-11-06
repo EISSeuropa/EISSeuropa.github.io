@@ -99,6 +99,9 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
+- Each block of figures on the internal dashboard has a small light: dark green while it shows the figures stored at the last daily update, light green with a glow once the live figures from GitHub replace them. A legend at the foot of the page explains the two.
+- The "On GitHub" card on the internal dashboard lists the three newest tasks to pick up under their count, for staff and volunteers.
+- A link to the internal dashboard can carry a role, as in `/internal.html?role=board`, to open it on that role's view. The address bar shows the current role, so it can be copied and sent. The link does not change the role the visitor has saved.
 - The internal dashboard shows its own version number at the foot of the page ("Internal dashboard v2.21.0"), with semantic versioning and a history back to 1.0.0 in `docs/internal-dashboard.md`.
 - The internal dashboard's tiles under "Timeline" carry a kind as well as EISS or NetSec: conference (blue), internship (teal), release (purple) or NetSec event (COST blue), shown as the colour of the month band and a tag.
 - The internal dashboard opens with a "Conference timeline" section: the "Now" card with the stepper of the conference year, then calendar tiles for the coming dates, soonest first. The tiles cover the ESSC 2027 deadlines, the conference itself, release due dates for staff, internship cohort calls, deadlines and start dates, and NetSec's events, each tagged EISS or NetSec, in one row that scrolls sideways. The section sits above "Recent activity".
