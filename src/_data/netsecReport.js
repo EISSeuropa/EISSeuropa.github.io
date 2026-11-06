@@ -6,8 +6,12 @@
 // website section comes from the month's commits on main (one per squashed PR).
 // A past month never changes, so the build first reuses the months the live
 // site published (/internal/netsec-reports.json) and recomputes only those it
-// lacks or holds at an older VERSION. A month that fails is left out. With no
-// month at all the tab is hidden, never the build.
+// lacks or holds at an older VERSION. Pull-request builds never recompute: they
+// share the Actions token's hourly API allowance with the deploys, and about
+// 140 calls a month used it up on 6 November 2026 (#2047). A month that cannot
+// be recomputed keeps its live copy, even at an older VERSION, so a build never
+// publishes fewer months than it read. A month with neither is left out. With
+// no month at all the tab is hidden, never the build.
 
 const REPO = "EISSeuropa/netsec.github.io";
 const LIVE = "https://eiss-europa.com/internal/netsec-reports.json";
@@ -158,22 +162,25 @@ async function live(url) {
 }
 
 module.exports = async function () {
-  const stored = ((await live(LIVE)) || []).filter((r) => r && r.version === VERSION);
+  const published = ((await live(LIVE)) || []).filter((r) => r && r.start);
+  const recompute = Boolean(process.env.GITHUB_TOKEN) && process.env.GITHUB_EVENT_NAME !== "pull_request";
   const out = [];
   let warned = false;
   // ponytail: one month at a time keeps a backfill under the API's burst limit.
   for (const month of months()) {
-    const kept = stored.find((r) => r.start === month.start);
-    if (kept) { out.push(kept); continue; }
-    if (!process.env.GITHUB_TOKEN) {
-      if (!warned) console.warn("[netsecReport] no GITHUB_TOKEN, months without a live copy are left out");
+    const kept = published.find((r) => r.start === month.start);
+    if (kept && kept.version === VERSION) { out.push(kept); continue; }
+    if (!recompute) {
+      if (!warned) console.warn(`[netsecReport] ${process.env.GITHUB_TOKEN ? "pull-request build" : "no GITHUB_TOKEN"}, months are not recomputed`);
       warned = true;
+      if (kept) out.push(kept);
       continue;
     }
     try {
       out.push(await compute(month));
     } catch (e) {
-      console.warn(`[netsecReport] ${month.start} unavailable (${e.message}), left out`);
+      console.warn(`[netsecReport] ${month.start} unavailable (${e.message}), ${kept ? "the live copy is kept" : "left out"}`);
+      if (kept) out.push(kept);
     }
   }
   return out.length ? out : null;

@@ -1,6 +1,6 @@
 # Internal dashboard: versions
 
-`/internal.html` (with `/internal.fr.html` and `/internal.de.html`) carries its own version number, shown at the foot of the page as "Internal dashboard v2.26.0". It is separate from the site's release numbers in `CHANGELOG.md`, so a reader can tell which build of the dashboard they are looking at.
+`/internal.html` (with `/internal.fr.html` and `/internal.de.html`) carries its own version number, shown at the foot of the page as "Internal dashboard v2.27.1". It is separate from the site's release numbers in `CHANGELOG.md`, so a reader can tell which build of the dashboard they are looking at.
 
 The number lives once, as `VERSION` in `src/_data/dashboard.js`.
 
@@ -30,6 +30,7 @@ Newest first. Rows for 2.20.0 and later were added as each PR was opened.
 
 | Version | Date | PR | Change |
 |---|---|---|---|
+| 2.27.1 | 2026-11-06 | (this PR) | The NetSec months survive a rate-limited build: pull-request builds no longer recompute them, and a month that cannot be recomputed keeps its live copy (#2047) |
 | 2.27.0 | 2026-11-06 | [#2045](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2045) | A Month menu on the NetSec report tab for past months (`?month=2026-09`), the Recent activity lights to the left of each roll's label, the Platform status lights merged into the level dots, and the "Live from GitHub, checked" line under the header removed |
 | 2.26.0 | 2026-11-06 | [#2046](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2046) | A link to the annual report draft at the foot of the page (staff, management, board) |
 | 2.25.0 | 2026-11-06 | [#2043](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2043) | A "Conference pace" card in the conference timeline (staff and management): abstracts and registrations against the previous edition at the same distance from the conference (#2039) |
