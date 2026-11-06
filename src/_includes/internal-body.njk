@@ -133,20 +133,28 @@
     </div>
 
     {# The board's view: the month's main features and fixes in both site repos,
-       and the latest formal audits. Board only, and in the "Everyone" view. #}
+       and the latest formal audits, each rolling like the issues above. Board
+       only, and in the "Everyone" view. Without JS (or motion) the lines stack. #}
     {% set B = dashboard.board %}
+    {% set MARK = {
+      features: '<path d="M8 4v8M4 8h8"/>',
+      audits: '<path d="M7 4a3 3 0 1 0 0 6a3 3 0 1 0 0-6M9.2 9.2l3 3"/>',
+      fixes: '<path d="M3.5 8.5l3 3 6-7"/>'
+    } %}
     <section class="apps-board" data-roles="board" aria-labelledby="apps-board-heading">
-      <h2 class="apps-heading" id="apps-board-heading">{{ d.board.heading }}</h2>
-      <div class="apps-board-grid">
+      <div class="apps-today-box">
+        <h2 class="apps-done-heading" id="apps-board-heading">{{ d.board.heading }}{% if B.since %}<span class="apps-board-since">, {{ d.board.since | replace("{date}", B.since | newsDate(lang)) }}</span>{% endif %}</h2>
         {% for key in ["features", "audits", "fixes"] %}{% if B[key] and B[key].length %}
-          <div class="apps-status-card">
-            <h3 class="apps-status-title">{{ d.board[key] }}</h3>
-            {% if key != "audits" %}<p class="apps-note">{{ d.board.since | replace("{date}", B.since | newsDate(lang)) }}</p>{% endif %}
-            <ol class="apps-board-list" role="list">
-              {% for x in B[key] %}
-                <li><span class="apps-board-site apps-board-site-{{ x.site | lower }}">{{ x.site }}</span> <a href="{{ x.url }}">{{ x.title }}</a> <time datetime="{{ x.at or x.date }}">{{ (x.at or x.date) | newsDate(lang) }}</time></li>
-              {% endfor %}
-            </ol>
+          <div class="apps-board-row">
+            <p class="apps-board-label" id="apps-board-{{ key }}">{{ d.board[key] }}</p>
+            <div class="apps-done-stage" data-apps-roll>
+              <ul class="apps-done apps-done-static" data-apps-done role="list" aria-labelledby="apps-board-{{ key }}">
+                {% for x in B[key] %}
+                  <li class="apps-done-item"><span class="apps-done-box apps-done-box-{{ key }}" aria-hidden="true"><svg viewBox="0 0 16 16">{{ MARK[key] | safe }}</svg></span><a href="{{ x.url }}" title="{{ x.title }}, {{ (x.at or x.date) | newsDate(lang) }}"><span class="apps-board-site apps-board-site-{{ x.site | lower }}">{{ x.site }}</span> <span class="apps-done-title">{{ x.title }}</span></a></li>
+                {% endfor %}
+              </ul>
+              <button type="button" class="apps-done-pause" data-apps-done-pause aria-pressed="false" aria-label="{{ d.board.pause | replace("{label}", d.board[key]) }}" hidden><span class="apps-done-hold">{{ icon("pause") }}</span><span class="apps-done-play">{{ icon("play") }}</span></button>
+            </div>
           </div>
         {% endif %}{% endfor %}
       </div>
@@ -696,7 +704,7 @@
     var recent = data.recent || [];
     var today = document.querySelector("[data-apps-today]");
     var todayText = document.querySelector("[data-apps-today-text]");
-    var doneList = document.querySelector("[data-apps-done]");
+    var doneList = document.querySelector("[data-apps-today] [data-apps-done]");
 
     // The box folds open and shut on a grid row (CSS), so what sits below it
     // glides rather than jumps. Without motion it simply shows and hides.
@@ -721,53 +729,65 @@
     // Hovering, focusing a link or the pause button holds the roll (RGAA 13.8:
     // motion past five seconds needs a pause control). Tabbing to a link brings
     // its line up. Without motion every line stays in view.
-    var stage = document.querySelector("[data-apps-done-stage]");
+    // One roll per stage: the issues in the Today box, and the board's three.
+    function makeRoll(stage) {
+      var list = stage.querySelector("[data-apps-done]"), btn = stage.querySelector("[data-apps-done-pause]");
+      var roll = { key: null, i: 0, hover: false, focus: false, held: false, list: list };
+      function lines() { return [].slice.call(list.children); }
+      function go(k) {
+        var ls = lines(), cur = ls[roll.i], next = ls[k];
+        roll.i = k;
+        if (cur && cur !== next) { cur.classList.remove("apps-done-on"); cur.classList.add("apps-done-past"); }
+        if (next) { next.classList.remove("apps-done-past", "apps-done-reset"); next.classList.add("apps-done-on"); }
+      }
+      // A line that has drifted out goes back below, unseen, for its next turn.
+      list.addEventListener("transitionend", function (e) {
+        var li = e.target;
+        if (li.parentNode !== list || e.propertyName !== "opacity" || !li.classList.contains("apps-done-past")) return;
+        li.classList.add("apps-done-reset");
+        li.classList.remove("apps-done-past");
+        void li.offsetWidth;
+        li.classList.remove("apps-done-reset");
+      });
+      setInterval(function () {
+        var n = lines().length;
+        if (calm || n < 2 || roll.hover || roll.focus || roll.held || document.hidden || !list.offsetParent) return;
+        go((roll.i + 1) % n);
+      }, 3200);
+      stage.addEventListener("pointerenter", function () { roll.hover = true; });
+      stage.addEventListener("pointerleave", function () { roll.hover = false; });
+      list.addEventListener("focusin", function (e) {
+        roll.focus = true;
+        var k = lines().indexOf(e.target.closest("li"));
+        if (k > -1 && k !== roll.i) go(k);
+      });
+      list.addEventListener("focusout", function (e) { roll.focus = list.contains(e.relatedTarget); });
+      btn.addEventListener("click", function () {
+        roll.held = !roll.held;
+        btn.setAttribute("aria-pressed", String(roll.held));
+      });
+      // Called once the lines are in place. The first rises in after a beat.
+      roll.start = function (key) {
+        roll.key = key;
+        roll.i = 0;
+        list.classList.toggle("apps-done-static", calm);
+        btn.hidden = calm || lines().length < 2;
+        if (lines().length && !calm) setTimeout(function () { if (roll.key === key) go(0); }, 250);
+      };
+      return roll;
+    }
+    var stage = document.querySelector("[data-apps-today] [data-apps-done-stage]");
     var doneHeading = document.querySelector("[data-apps-done-heading]");
-    var pauseBtn = document.querySelector("[data-apps-done-pause]");
-    var roll = { key: null, i: 0, hover: false, focus: false, held: false };
+    var roll = makeRoll(stage);
+    [].forEach.call(document.querySelectorAll("[data-apps-roll]"), function (s) { makeRoll(s).start("board"); });
     // A closed issue gets a green tick, an opened one an amber "i".
     var MARK = {
       closed: '<span class="apps-done-box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>',
       opened: '<span class="apps-done-box apps-done-box-opened" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 7.5v4M8 4.5v0.01"/></svg></span>',
     };
-    function lines() { return [].slice.call(doneList.children); }
-    function go(k) {
-      var ls = lines(), cur = ls[roll.i], next = ls[k];
-      roll.i = k;
-      if (cur && cur !== next) { cur.classList.remove("apps-done-on"); cur.classList.add("apps-done-past"); }
-      if (next) { next.classList.remove("apps-done-past", "apps-done-reset"); next.classList.add("apps-done-on"); }
-    }
-    // A line that has drifted out goes back below, unseen, for its next turn.
-    doneList.addEventListener("transitionend", function (e) {
-      var li = e.target;
-      if (li.parentNode !== doneList || e.propertyName !== "opacity" || !li.classList.contains("apps-done-past")) return;
-      li.classList.add("apps-done-reset");
-      li.classList.remove("apps-done-past");
-      void li.offsetWidth;
-      li.classList.remove("apps-done-reset");
-    });
-    setInterval(function () {
-      var n = lines().length;
-      if (calm || n < 2 || roll.hover || roll.focus || roll.held || document.hidden) return;
-      go((roll.i + 1) % n);
-    }, 3200);
-    stage.addEventListener("pointerenter", function () { roll.hover = true; });
-    stage.addEventListener("pointerleave", function () { roll.hover = false; });
-    doneList.addEventListener("focusin", function (e) {
-      roll.focus = true;
-      var k = lines().indexOf(e.target.closest("li"));
-      if (k > -1 && k !== roll.i) go(k);
-    });
-    doneList.addEventListener("focusout", function (e) { roll.focus = doneList.contains(e.relatedTarget); });
-    pauseBtn.addEventListener("click", function () {
-      roll.held = !roll.held;
-      pauseBtn.setAttribute("aria-pressed", String(roll.held));
-    });
     function renderDone(items) {
       var key = items.map(function (x) { return x.kind + x.n; }).join();
       if (key === roll.key) return;
-      roll.key = key;
-      roll.i = 0;
       doneList.textContent = "";
       items.forEach(function (x) {
         var li = document.createElement("li");
@@ -785,10 +805,7 @@
       stage.hidden = !items.length;
       doneHeading.hidden = !items.length;
       doneHeading.textContent = I.recentIssues;
-      doneList.classList.toggle("apps-done-static", calm);
-      pauseBtn.hidden = calm || items.length < 2;
-      // The first line rises in once the box has opened.
-      if (items.length && !calm) setTimeout(function () { if (roll.key === key) go(0); }, 250);
+      roll.start(key);
     }
     // A small badge beside a strip figure for what moved since the last visit.
     function delta(anchor, text, said) {

@@ -144,8 +144,10 @@ successor inherits through the handover in section 4.
   newest first, closed ones with a green tick and opened ones with an
   amber "i". Issues labelled `automated` and "not planned" closures are
   left out. The roll shows for every role except board members.
-- **For the board.** Board members (and the Everyone view) get three cards
-  under the Today box. Main new features and Main bug fixes are the five
+- **For the board.** Board members (and the Everyone view) get a box under
+  the Today box with three rolls built like the issue roll, one line each,
+  with a pause button per roll (the lines stack with reduced motion or
+  without JavaScript). Main new features and Main bug fixes are the five
   largest `feat` and `fix` pull requests merged in the last 30 days across
   the EISS and NetSec site repos, ranked by lines changed as in the NetSec
   monthly report, with the conventional-commit prefix dropped from the

@@ -240,7 +240,8 @@ const locales = {
         features: "Main new features",
         fixes: "Main bug fixes",
         audits: "Latest audits",
-        since: "Merged since {date}, largest first",
+        since: "features and fixes merged since {date}, largest first",
+        pause: "Pause {label}",
       },
       js: {
         locale: "en-GB",
@@ -1310,7 +1311,8 @@ const locales = {
         features: "Principales nouveautés",
         fixes: "Principales corrections",
         audits: "Derniers audits",
-        since: "Fusionnées depuis le {date}, les plus importantes d'abord",
+        since: "nouveautés et corrections fusionnées depuis le {date}, les plus importantes d'abord",
+        pause: "Mettre en pause : {label}",
       },
       js: {
         locale: "fr-FR",
@@ -2257,7 +2259,8 @@ const locales = {
         features: "Wichtigste neue Funktionen",
         fixes: "Wichtigste Fehlerbehebungen",
         audits: "Letzte Audits",
-        since: "Zusammengeführt seit {date}, die umfangreichsten zuerst",
+        since: "Funktionen und Fehlerbehebungen seit {date}, die umfangreichsten zuerst",
+        pause: "{label} anhalten",
       },
       js: {
         locale: "de-DE",
