@@ -127,9 +127,12 @@ successor inherits through the handover in section 4.
 - **Apps grid.** A "Filter apps" field narrows the tiles by name and note, and Escape clears it. The three apps opened most often in a browser (three times or more) move to the front there. The counts sit in that browser's storage under `eiss-apps-used` and go nowhere else.
 - **Platform development status** (`#status`). The next release and the open issue, PR and
   `help wanted` counts come from `src/data/roadmap-progress.json`, which
-  the daily *Refresh roadmap surfaces* workflow rewrites. Key dates are
-  the next conference, the release due dates and anything in `keyDates`
-  in `src/_data/site.js`. `src/_data/dashboard.js` assembles all of it.
+  the daily *Refresh roadmap surfaces* workflow rewrites. The "Next
+  milestones" card lists the open release milestones with a due date,
+  soonest first, each with its progress bar and "X of Y issues closed",
+  linked to its issues. It keeps the timeline's countdown and "Today"
+  marker. Conference and internship dates sit under Timeline, not here.
+  `src/_data/dashboard.js` assembles all of it.
   Under the release bar, a chart counts the release's issues closed per day
   over the last 30 days, in the browser from the live GitHub call that lists
   the release's closed issues. It stays hidden when that call fails.
@@ -159,7 +162,7 @@ successor inherits through the handover in section 4.
   leaves those two cards out. Latest audits is the five newest entries of
   `src/_data/audits.json`, kept by hand: add a line when an audit lands.
   The private `workspace-ops` repo stays out, since the page is public.
-- **Version.** The foot of the page reads "Internal dashboard v2.21.0", from `VERSION` in `src/_data/dashboard.js`. The rules for bumping it and the history are in [internal-dashboard.md](internal-dashboard.md).
+- **Version.** The foot of the page reads "Internal dashboard v2.22.0", from `VERSION` in `src/_data/dashboard.js`. The rules for bumping it and the history are in [internal-dashboard.md](internal-dashboard.md).
 - **Timeline.** The first section under the strip. It holds the
   "Conference timeline" card with its stepper (below; its note opens with
   "Now:" and the current stage), then up to 20 calendar tiles for the
@@ -195,16 +198,15 @@ successor inherits through the handover in section 4.
   Mistakes in the calendar only warn in the build log, while mistakes in
   `keyDates` stop the build. Internal deadlines go in the "EISS internal
   deadlines" calendar, which the site never reads. `deadlinesCalendar` in
-  `site.js` links it under Key dates. Either source is the one list of an
+  `site.js` links it under the Timeline tiles. Either source is the one list of an
   edition's dates, and needs replacing for each new edition.
   A date that opens a stage of the year also carries `stage` (its name on the
   "Now" card), `step` (its short name on the stepper) and `links`. The stage
   runs until the next date that opens one, and the conference stage comes
   from `conferences.js` with `conferenceStage`. The "Now" card's note names
   the next date, so no date is typed twice. The build stops on a stage with
-  no `step` or on a date listed twice. Key dates show as a timeline: the last
-  30 days ticked off, the next date with its countdown and a "Today" marker,
-  kept right in the browser between builds.
+  no `step` or on a date listed twice. These dates feed the stepper, the
+  deadline tile and the Timeline tiles.
 - **Guides.** Guides are `guideLinks` in `src/_data/site.js`.
 - **Platform status** (`#it`, formerly IT System Monitoring). A staff section that lists the latest run of
   each automation in both site repos, read when the site builds by

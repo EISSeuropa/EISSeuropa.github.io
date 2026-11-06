@@ -160,6 +160,7 @@
           </li>
         {% endfor %}
       </ul>
+      {% if dashboard.calendar %}<p class="apps-note"><a href="{{ dashboard.calendar }}">{{ d.allDeadlines }}</a></p>{% endif %}
     {% endif %}
     </section>
     {% endif %}
@@ -340,16 +341,18 @@
             </ul>
           </div>
         {% endif %}
-        {% if dashboard.dates.length %}
+        {# The coming release milestones, from the GitHub milestones. The
+           conference and internship dates are under Timeline. #}
+        {% if dashboard.milestones.length %}
           <div class="apps-status-card">
-            <h3 class="apps-status-title">{{ d.keyDates }}</h3>
+            <h3 class="apps-status-title">{{ d.nextMilestones }}</h3>
             <ol class="apps-timeline" data-apps-timeline>
-              {% for kd in dashboard.dates %}
-                {% if kd.state == "next" %}<li class="apps-timeline-today" data-apps-timeline-today aria-hidden="true"><span>{{ d.today }}</span></li>{% endif %}
-                <li class="apps-timeline-item apps-timeline-{{ kd.state }}" data-roles="{{ kd.roles | join(' ') }}" data-date="{{ kd.date }}"><span class="apps-timeline-dot" aria-hidden="true"></span><time datetime="{{ kd.date }}">{{ kd.date | newsDate(lang) }}</time> <span class="apps-timeline-label">{% if kd.kind == "essc" %}{{ d.esscDate | replace("{year}", kd.year) | replace("{city}", kd.city) }}{% elif kd.kind == "release" %}{{ d.releaseDue | replace("{title}", kd.title) }}{% else %}{{ (kd[lang] and kd[lang].label) or kd.label }}{% endif %}</span><span class="apps-timeline-when" data-apps-timeline-when>{% if kd.state == "past" %}<span class="sr-only">{{ d.done }}</span>{% endif %}</span></li>
+              {% for m in dashboard.milestones %}
+                {% if m.state == "next" %}<li class="apps-timeline-today" data-apps-timeline-today aria-hidden="true"><span>{{ d.today }}</span></li>{% endif %}
+                <li class="apps-timeline-item apps-timeline-{{ m.state }}" data-roles="staff management board volunteer" data-date="{{ m.date }}"><span class="apps-timeline-dot" aria-hidden="true"></span><time datetime="{{ m.date }}">{{ m.date | newsDate(lang) }}</time> <span class="apps-timeline-label"><a href="{{ m.url }}">{{ d.releaseDue | replace("{title}", m.title) }}</a></span><span class="apps-timeline-when" data-apps-timeline-when></span>
+                  <span class="apps-timeline-detail"><progress class="apps-progress" value="{{ m.closed }}" max="{{ m.total }}" aria-label="{{ d.progress | replace("{title}", m.title) }}">{{ m.percent }}%</progress>{{ d.issuesClosed | replace("{closed}", m.closed) | replace("{total}", m.total) }} ({{ m.percent }}%)</span></li>
               {% endfor %}
             </ol>
-            {% if dashboard.calendar %}<p class="apps-note apps-timeline-more"><a href="{{ dashboard.calendar }}">{{ d.allDeadlines }}</a></p>{% endif %}
           </div>
         {% endif %}
       </div>

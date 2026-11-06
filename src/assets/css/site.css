@@ -1356,6 +1356,8 @@ html:has(.apps-welcome[open]) { overflow: hidden; }
 .apps-timeline-item[hidden] { display: none; }
 .apps-timeline-item time { display: block; color: var(--text-muted); font-size: 0.8125rem; grid-column: 1 / -1; }
 .apps-timeline-label { grid-column: 1 / -1; }
+/* A milestone's progress under its label, in Next milestones. */
+.apps-timeline-detail { grid-column: 1 / -1; display: grid; gap: var(--space-1); margin-top: var(--space-1); color: var(--text-muted); font-size: 0.8125rem; }
 .apps-timeline-dot { position: absolute; top: 0.25rem; left: 0; width: 0.75rem; height: 0.75rem; border: 2px solid var(--border-strong); border-radius: 50%; background: var(--bg-elev); }
 .apps-timeline-past { opacity: 0.6; }
 .apps-timeline-past .apps-timeline-dot { border-color: var(--accent); background: var(--accent); }
