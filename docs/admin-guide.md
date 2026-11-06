@@ -161,7 +161,7 @@ successor inherits through the handover in section 4.
   leaves those two cards out. Latest audits is the five newest entries of
   `src/_data/audits.json`, kept by hand: add a line when an audit lands.
   The private `workspace-ops` repo stays out, since the page is public.
-- **Version.** The foot of the page reads "Internal dashboard v2.24.0", from `VERSION` in `src/_data/dashboard.js`. The rules for bumping it and the history are in [internal-dashboard.md](internal-dashboard.md).
+- **Version.** The foot of the page reads "Internal dashboard v2.25.0", from `VERSION` in `src/_data/dashboard.js`. The rules for bumping it and the history are in [internal-dashboard.md](internal-dashboard.md).
 - **Timeline.** The first section under the strip. It holds the
   "Conference timeline" card with its stepper (below; its note opens with
   "Now:" and the current stage), then up to 20 calendar tiles for the
@@ -187,8 +187,8 @@ successor inherits through the handover in section 4.
   `data/wg.json` at both ends), newest first, and publishes the list at
   `/internal/netsec-reports.json`. A past month never changes, so the next
   build reuses the live months and computes only the one that has just
-  ended. The tab shows the newest month. The list is there for a month
-  dropdown. Bump `VERSION` in the file when the report's logic changes,
+  ended. The tab opens on the newest month, and a Month menu shows any
+  other (`?month=2026-09` links to one). Bump `VERSION` in the file when the report's logic changes,
   and every month is recomputed. A month without a live copy and a
   `GITHUB_TOKEN`, or one that fails, is left out, and with no month the
   tab is left out. October 2026 was checked against the email

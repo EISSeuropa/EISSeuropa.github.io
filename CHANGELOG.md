@@ -99,6 +99,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
+- The NetSec report tab on the internal dashboard has a Month menu that shows any complete month since June 2026, newest first. `?month=2026-09` links to one month.
 - Each block of figures on the internal dashboard has a small light: dark green while it shows the figures stored at the last daily update, light green with a glow once the live figures from GitHub replace them. A legend at the foot of the page explains the two.
 - The "On GitHub" card on the internal dashboard lists the three newest tasks to pick up under their count, for staff and volunteers.
 - A link to the internal dashboard can carry a role, as in `/internal.html?role=board`, to open it on that role's view. The address bar shows the current role, so it can be copied and sent. The link does not change the role the visitor has saved.
@@ -217,6 +218,8 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- The stored/live lights in the internal dashboard's Recent activity sit to the left of each roll's label, in one column. In Platform status the light is the level dot beside "Nominal", in place of a second dot in the card's corner.
+- The "Live from GitHub, checked X minutes ago" line under the internal dashboard's header is gone. The lights beside each block show the same.
 - Both "Recent activity" boxes on the internal dashboard, the issue rolls and the rolls of main features, audits and fixes, show for every role. Board members no longer lose the issue rolls, and the other roles see the features, audits and fixes.
 - The internal dashboard's "Platform development status" tab is "Platform development", and the NetSec report tab moves to the end of the row, after Platform status.
 - A roll on the internal dashboard's "Recent activity" now glides open when its chevron is pressed, and the lines that join fade in one after another. It glides shut on a second press. With reduced motion the list opens at once, as before.
