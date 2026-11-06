@@ -139,13 +139,16 @@ successor inherits through the handover in section 4.
   browser, GitHub figures refresh from the public API, cached for 10
   minutes, and the last build's figures stay if that fails. Workspace and
   Google status update only at build. "Since your last visit" compares
-  against figures saved in that browser. Under it, the last five issues
-  opened and the last five closed as done roll through one at a time,
-  newest first, closed ones with a green tick and opened ones with an
-  amber "i". Issues labelled `automated` and "not planned" closures are
-  left out. The roll shows for every role except board members.
-- **For the board.** Board members (and the Everyone view) get three cards
-  under the Today box. Main new features and Main bug fixes are the five
+  against figures saved in that browser. Under it, two rolls show one line
+  at a time: the last five issues closed as done (green tick) and the five
+  newest issues still open (amber "i"). Issues labelled `automated` and
+  "not planned" closures are left out. The rolls show for every role except
+  board members. They and the board's rolls sit under one "Recent activity"
+  heading.
+- **For the board.** Board members (and the Everyone view) get a box under
+  the Today box with three rolls built like the issue roll, one line each,
+  with a pause button per roll (the lines stack with reduced motion or
+  without JavaScript). Main new features and Main bug fixes are the five
   largest `feat` and `fix` pull requests merged in the last 30 days across
   the EISS and NetSec site repos, ranked by lines changed as in the NetSec
   monthly report, with the conventional-commit prefix dropped from the

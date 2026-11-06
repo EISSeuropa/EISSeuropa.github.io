@@ -823,10 +823,21 @@ h4 { font-size: var(--fs-lg); }
 .apps-today.is-out { grid-template-rows: 0fr; opacity: 0; margin-bottom: 0; }
 @keyframes apps-done-tick { to { stroke-dashoffset: 0; } }
 /* The board's view: features, audits and fixes, each tagged EISS or NetSec. */
-.apps-board { margin: 0 0 var(--space-6); }
-.apps-board-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: var(--space-4); }
-.apps-board-list { display: grid; gap: var(--space-3); margin: var(--space-3) 0 0; padding: 0; list-style: none; }
-.apps-board-list time { display: block; color: var(--text-muted); font-size: 0.8125rem; }
+/* The rolling modules: one section, each row a label and a one-line roll. */
+.apps-rolls { margin: 0 0 var(--space-4); }
+.apps-rolls > .apps-heading { margin-bottom: var(--space-3); }
+.apps-board { margin: 0 0 var(--space-4); }
+.apps-roll-row { display: grid; grid-template-columns: 11rem 1fr; align-items: center; gap: var(--space-3); margin-top: var(--space-2); }
+.apps-roll-row:first-child, .apps-today-text[hidden] + .apps-roll-row { margin-top: 0; }
+.apps-roll-row[hidden] { display: none; }
+.apps-roll-row .apps-done-stage { margin-top: 0; }
+.apps-roll-label { margin: 0; color: var(--text-muted); font-size: 0.8125rem; font-weight: 600; }
+.apps-done-box-features { background: var(--accent); }
+.apps-done-box-audits { background: hsl(268 45% 48%); }
+.apps-done-box-fixes { background: hsl(142 65% 32%); }
+@media (max-width: 40rem) {
+  .apps-roll-row { grid-template-columns: 1fr; gap: var(--space-1); }
+}
 .apps-board-site { display: inline-block; margin-inline-end: var(--space-1); padding: 0 0.4rem; border-radius: var(--radius-xs); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.02em; vertical-align: 0.1em; }
 .apps-board-site-eiss { background: var(--accent); color: var(--accent-text); }
 /* NetSec in the COST/EU blue and gold, apart from EISS's own blue. */
