@@ -123,9 +123,9 @@ successor inherits through the handover in section 4.
   a `menu` number adds the link to the padlock menu, which lists them in
   that order. Team chat comes first, and the last entry opens this
   dashboard.
-- **Tabs.** Apps, Guides, Platform development status, NetSec report and Platform status, linkable as `#apps`, `#guides`, `#status`, `#netsec` and `#it` (the hashes kept their old names, so existing links still work). Without JavaScript all of them stack. The Platform status tab follows the staff role.
+- **Tabs.** Apps, Guides, Platform development, Platform status and NetSec report, linkable as `#apps`, `#guides`, `#status`, `#it` and `#netsec` (the hashes kept their old names, so existing links still work). Without JavaScript all of them stack. The Platform status tab follows the staff role.
 - **Apps grid.** A "Filter apps" field narrows the tiles by name and note, and Escape clears it. The three apps opened most often in a browser (three times or more) move to the front there. The counts sit in that browser's storage under `eiss-apps-used` and go nowhere else.
-- **Platform development status** (`#status`). The next release and the open issue, PR and
+- **Platform development** (`#status`). The next release and the open issue, PR and
   `help wanted` counts come from `src/data/roadmap-progress.json`, which
   the daily *Refresh roadmap surfaces* workflow rewrites. The "Next
   milestones" card lists the open release milestones with a due date,
@@ -145,12 +145,11 @@ successor inherits through the handover in section 4.
   against figures saved in that browser. Under it, two rolls show one line
   at a time: the last five issues closed as done (green tick) and the five
   newest issues still open (amber "i"). Issues labelled `automated` and
-  "not planned" closures are left out. The rolls show for every role except
-  board members. They and the board's rolls sit under one "Recent activity"
-  heading. Every roll moves on every 6.2 s (`setInterval` in `makeRoll`),
+  "not planned" closures are left out. The rolls show for every role. They
+  and the board's rolls sit under one "Recent activity" heading. Every roll moves on every 6.2 s (`setInterval` in `makeRoll`),
   and its chevron button unfolds the whole list and stops that roll until
   folded again.
-- **For the board.** Board members (and the Everyone view) get a box under
+- **For the board.** Every role gets a box under
   the Today box with three rolls built like the issue roll, one line each,
   with a pause button per roll (the lines stack with reduced motion or
   without JavaScript). Main new features and Main bug fixes are the five
@@ -162,7 +161,7 @@ successor inherits through the handover in section 4.
   leaves those two cards out. Latest audits is the five newest entries of
   `src/_data/audits.json`, kept by hand: add a line when an audit lands.
   The private `workspace-ops` repo stays out, since the page is public.
-- **Version.** The foot of the page reads "Internal dashboard v2.22.0", from `VERSION` in `src/_data/dashboard.js`. The rules for bumping it and the history are in [internal-dashboard.md](internal-dashboard.md).
+- **Version.** The foot of the page reads "Internal dashboard v2.24.0", from `VERSION` in `src/_data/dashboard.js`. The rules for bumping it and the history are in [internal-dashboard.md](internal-dashboard.md).
 - **Timeline.** The first section under the strip. It holds the
   "Conference timeline" card with its stepper (below; its note opens with
   "Now:" and the current stage), then up to 20 calendar tiles for the
@@ -183,12 +182,16 @@ successor inherits through the handover in section 4.
   `src/_data/netsecReport.js` recomputes it at build from public NetSec
   data: `data/bios.json`, `data/wg.json` and `data/mc-members.json` at the
   last commit before each end of the month, and the month's commits on
-  `main` (one call per commit for its line count, about 140). A past month
-  never changes, so the build publishes the result at
-  `/internal/netsec-report.json` and reuses the live copy until the month
-  turns. Bump `VERSION` in the file when the report's logic changes, or the
-  old copy stays. Without the live copy and a `GITHUB_TOKEN`, or on any
-  failure, the tab is left out. October 2026 was checked against the email
+  `main` (one call per commit for its line count, about 140). The build
+  keeps every complete month from June 2026 (`FIRST`, the first month with
+  `data/wg.json` at both ends), newest first, and publishes the list at
+  `/internal/netsec-reports.json`. A past month never changes, so the next
+  build reuses the live months and computes only the one that has just
+  ended. The tab shows the newest month. The list is there for a month
+  dropdown. Bump `VERSION` in the file when the report's logic changes,
+  and every month is recomputed. A month without a live copy and a
+  `GITHUB_TOKEN`, or one that fails, is left out, and with no month the
+  tab is left out. October 2026 was checked against the email
   figure for figure.
 - **Dates and conference phase.** The "EISS dates" Google Calendar holds an
   edition's public dates. The build reads it through the EISS status web
