@@ -1,6 +1,6 @@
 # Internal dashboard: versions
 
-`/internal.html` (with `/internal.fr.html` and `/internal.de.html`) carries its own version number, shown at the foot of the page as "Internal dashboard v2.21.0". It is separate from the site's release numbers in `CHANGELOG.md`, so a reader can tell which build of the dashboard they are looking at.
+`/internal.html` (with `/internal.fr.html` and `/internal.de.html`) carries its own version number, shown at the foot of the page as "Internal dashboard v2.22.0". It is separate from the site's release numbers in `CHANGELOG.md`, so a reader can tell which build of the dashboard they are looking at.
 
 The number lives once, as `VERSION` in `src/_data/dashboard.js`.
 
@@ -30,6 +30,7 @@ Newest first. Rows for 2.20.0 and later were added as each PR was opened.
 
 | Version | Date | PR | Change |
 |---|---|---|---|
+| 2.22.0 | 2026-11-06 | [#2037](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2037) | "Key dates" in Platform development status becomes "Next milestones": the release milestones only, each with its progress |
 | 2.21.0 | 2026-11-06 | [#2033](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2033) | A version number on the dashboard, and this history |
 | 2.20.1 | 2026-11-06 | [#2032](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2032) | An opened roll keeps its chevron in its box, and long titles wrap |
 | 2.20.0 | 2026-11-06 | [#2031](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2031) | One "Timeline" section with a "Conference timeline" card, tiles marked by kind (conference, internship, release, NetSec event), and the tabs renamed and reordered (Apps, Guides, Platform development status, NetSec report, Platform status) |

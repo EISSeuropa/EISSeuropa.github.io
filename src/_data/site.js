@@ -314,7 +314,7 @@ module.exports = {
     { date: "2027-06-03", label: "Papers due to panel chairs", fr: { label: "Date limite d'envoi des communications aux présidences de panel", stage: "Derniers préparatifs", step: "Préparatifs" }, de: { label: "Frist für Papers an die Panel-Vorsitzenden", stage: "Letzte Vorbereitungen", step: "Vorbereitung" }, stage: "Final preparations", step: "Final prep", links: ["drive", "calendar"] },
   ],
   conferenceStage: { step: "Conference", fr: { step: "Conférence" }, de: { step: "Konferenz" }, links: ["indico", "groups"] },
-  // The "EISS internal deadlines" calendar, linked under Key dates once it
+  // The "EISS internal deadlines" calendar, linked under the Timeline tiles once it
   // exists. The dates above are only the public ones.
   deadlinesCalendar: "",
 
