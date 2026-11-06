@@ -1,0 +1,7 @@
+---
+permalink: /internal/board-highlights.json
+eleventyExcludeFromCollections: true
+---
+{#- The board's features and fixes, published so the next build can keep them
+    when it cannot recompute them (src/_data/dashboard.js, #2047). -#}
+{{ { features: dashboard.board.features or [], fixes: dashboard.board.fixes or [], since: dashboard.board.since } | dump | safe }}

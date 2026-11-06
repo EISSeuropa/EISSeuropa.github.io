@@ -8,7 +8,7 @@ const site = require("./site.js");
 const REPO = "https://github.com/EISSeuropa/EISSeuropa.github.io";
 // The dashboard's own version, shown at the foot of the page. Semantic
 // versioning, rules and history in docs/internal-dashboard.md.
-const VERSION = "2.27.1";
+const VERSION = "2.27.2";
 const everyone = ["staff", "management", "board", "volunteer"];
 const today = new Date().toISOString().slice(0, 10);
 
@@ -260,12 +260,23 @@ async function api(url) {
   return res.json();
 }
 
+// The highlights the live site published (/internal/board-highlights.json),
+// kept when they cannot be recomputed. The same rule as netsecReport.js (#2047).
+const LIVE_HIGHLIGHTS = "https://eiss-europa.com/internal/board-highlights.json";
+async function liveHighlights() {
+  try {
+    const r = await fetch(LIVE_HIGHLIGHTS, { signal: AbortSignal.timeout(10000) });
+    const j = r.ok ? await r.json() : null;
+    return j && Array.isArray(j.features) && Array.isArray(j.fixes) ? j : null;
+  } catch (e) { return null; } // first build with the file, or offline
+}
 async function fetchHighlights() {
-  // ponytail: one call per candidate PR for its line count, about 80 a month,
-  // so a build without a token (60 calls an hour) leaves the highlights out.
-  if (!process.env.GITHUB_TOKEN) {
-    console.warn("[dashboard] no GITHUB_TOKEN, the board highlights are left out");
-    return null;
+  // ponytail: one call per candidate PR for its line count, about 80 a month.
+  // Pull-request builds share the deploys' hourly API allowance, so they reuse
+  // the published highlights, as does a build without a token or one whose calls fail.
+  if (!process.env.GITHUB_TOKEN || process.env.GITHUB_EVENT_NAME === "pull_request") {
+    console.warn(`[dashboard] ${process.env.GITHUB_TOKEN ? "pull-request build" : "no GITHUB_TOKEN"}, the board highlights are the published ones`);
+    return liveHighlights();
   }
   const since = isoDaysAgo(30);
   try {
@@ -281,8 +292,9 @@ async function fetchHighlights() {
     const top = (kind) => found.flat().filter((p) => p.kind === kind).sort((a, b) => b.lines - a.lines).slice(0, 5);
     return { features: top("feature"), fixes: top("fix"), since };
   } catch (e) {
-    console.warn(`[dashboard] board highlights unavailable (${e.message}), left out`);
-    return null;
+    const kept = await liveHighlights();
+    console.warn(`[dashboard] board highlights unavailable (${e.message}), ${kept ? "the published ones are kept" : "left out"}`);
+    return kept;
   }
 }
 

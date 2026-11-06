@@ -156,12 +156,15 @@ successor inherits through the handover in section 4.
   largest `feat` and `fix` pull requests merged in the last 30 days across
   the EISS and NetSec site repos, ranked by lines changed as in the NetSec
   monthly report, with the conventional-commit prefix dropped from the
-  title. `src/_data/dashboard.js` reads them at build and needs
-  `GITHUB_TOKEN` (one call per candidate PR), so a local build without it
-  leaves those two cards out. Latest audits is the five newest entries of
+  title. `src/_data/dashboard.js` reads them at build with `GITHUB_TOKEN`
+  (one call per candidate PR, about 80) and publishes them at
+  `/internal/board-highlights.json`. A build that cannot recompute them (a
+  pull-request build, no token, or failed calls) keeps the published ones
+  (#2047), so the two rolls survive a rate-limited deploy.
+  `node scripts/test-board-highlights.js` checks this with `fetch` stubbed. Latest audits is the five newest entries of
   `src/_data/audits.json`, kept by hand: add a line when an audit lands.
   The private `workspace-ops` repo stays out, since the page is public.
-- **Version.** The foot of the page reads "Internal dashboard v2.27.0", from `VERSION` in `src/_data/dashboard.js`. The rules for bumping it and the history are in [internal-dashboard.md](internal-dashboard.md).
+- **Version.** The foot of the page reads "Internal dashboard v2.27.2", from `VERSION` in `src/_data/dashboard.js`. The rules for bumping it and the history are in [internal-dashboard.md](internal-dashboard.md).
 - **Timeline.** The first section under the strip. It holds the
   "Conference timeline" card with its stepper (below; its note opens with
   "Now:" and the current stage), then up to 20 calendar tiles for the

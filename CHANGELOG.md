@@ -156,6 +156,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- The internal dashboard's "Main new features" and "Main bug fixes" rolls no longer disappear after a rate-limited build. They cost about 80 GitHub API calls a build, pull-request builds included, and a build whose calls failed left them out. They are now published at `/internal/board-highlights.json`, and pull-request builds and failed builds keep the published ones (#2047).
 - The NetSec tab on the internal dashboard, and the NetSec section of the annual report, no longer disappear after a busy hour of merges. Each build recomputed every NetSec month at about 140 GitHub API calls a month, pull-request builds included, and on 6 November 2026 that used up the Actions token's hourly allowance: one deploy failed, and the next published no months. Pull-request builds now reuse the published months, and a month that cannot be recomputed keeps its published copy (#2047).
 - Opening a roll on the internal dashboard's "Recent activity" kept its chevron in reach. A long title such as #1988 had stretched the opened list past the edge of its box, which hid the chevron that folds it back. Long titles now wrap onto a second line in an opened list, and the lines appear at once rather than mid-animation.
 - The "Last issues closed" roll on the internal dashboard shows for every role, not only staff and "Show all".
