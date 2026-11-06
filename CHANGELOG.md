@@ -99,6 +99,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
+- Annual report drafts at `/internal/report-YYYY.html`, one per year from 2025. Each sets the year's figures for the conference, the Anthology, NetSec and the website beside the year before's, with the change, and lists the prizes, feature releases and audits. Staff add the prose in `src/_data/annualReportNotes.json`, and the page prints or saves as PDF. The internal dashboard links the latest draft for staff, management and the board.
 - A "Conference pace" card in the internal dashboard's conference timeline compares the coming ESSC's abstracts and registrations with the previous edition's at the same number of days before the conference, as two bars on one scale. Staff and management see it. The figures come from Indico exports that staff record with `scripts/conference-pace.py`, and until the first is recorded the card says so.
 - Each block of figures on the internal dashboard has a small light: dark green while it shows the figures stored at the last daily update, light green with a glow once the live figures from GitHub replace them. A legend at the foot of the page explains the two.
 - The "On GitHub" card on the internal dashboard lists the three newest tasks to pick up under their count, for staff and volunteers.

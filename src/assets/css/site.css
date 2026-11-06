@@ -10223,3 +10223,31 @@ html.atlas-welcome .atlas-welcome[hidden] { display: flex; }
   color: var(--accent);
   text-decoration: underline;
 }
+
+/* ---------- annual report drafts (/internal/report-YYYY.html) ---------- */
+.report { max-width: 52rem; padding-block: var(--space-7) var(--space-8); }
+.report-header { margin-bottom: var(--space-6); }
+.report-kicker { margin: 0; color: var(--text-muted); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.report-header h1 { margin: var(--space-1) 0 var(--space-2); }
+.report-meta { margin: 0 0 var(--space-3); color: var(--text-muted); }
+.report-tools { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin: 0; font-size: 0.875rem; }
+.report-tools [hidden] { display: none; }
+.report-section { margin-top: var(--space-7); }
+.report-section h2 { margin: 0 0 var(--space-3); padding-bottom: var(--space-2); border-bottom: 1px solid var(--border); }
+.report-section h3 { margin: var(--space-5) 0 var(--space-2); font-size: 1rem; }
+.report-lede { font-weight: 600; }
+.report-todo { padding: var(--space-2) var(--space-3); border: 1px dashed var(--border-strong); border-radius: var(--radius-sm); color: var(--text-muted); font-size: 0.875rem; }
+.report-table { width: 100%; margin: var(--space-4) 0; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.report-table th, .report-table td { padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--border); text-align: right; }
+.report-table th[scope="row"], .report-table thead th:first-child { text-align: left; font-weight: 400; }
+.report-table thead th { color: var(--text-muted); font-size: 0.8125rem; font-weight: 600; }
+.report-table td:last-child { color: var(--text-muted); }
+.report-list { padding-left: var(--space-5); }
+.report-list li + li { margin-top: var(--space-1); }
+.report-source { color: var(--text-muted); font-size: 0.875rem; }
+@media print {
+  .report { max-width: none; padding: 0; }
+  .report-tools, .report-todo { display: none !important; }
+  .report-section { break-inside: avoid-page; }
+  .report-table { break-inside: avoid; }
+}

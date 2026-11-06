@@ -1,0 +1,161 @@
+---
+layout: base.njk
+pagination:
+  data: annualReport.years
+  size: 1
+  alias: r
+permalink: "/internal/report-{{ r.year }}.html"
+eleventyComputed:
+  title: "EISS annual report {{ r.year }} (draft)"
+description: "A draft of the EISS annual report, with each figure beside the year before."
+navKey: ""
+lang: en
+noindex: true
+searchExclude: true
+eleventyExcludeFromCollections: true
+---
+{#
+  The annual report drafts (docs/annual-report.md): each year's figures beside
+  the year before's, from src/_data/annualReport.js, and the prose staff write
+  in src/_data/annualReportNotes.json. English only: the board and COST read
+  it in English. A dash means the source keeps no record for that year.
+#}
+{%- set y = r.year -%}
+{%- set N = annualReportNotes[y] or {} -%}
+{%- macro cell(v) -%}{{ "–" if v == none else v }}{%- endmacro -%}
+{%- macro row(label, a, b) -%}
+  <tr><th scope="row">{{ label }}</th><td>{{ cell(a) }}</td><td>{{ cell(b) }}</td><td>{% if a == none or b == none %}–{% elif a > b %}+{{ a - b }}{% elif a < b %}−{{ b - a }}{% else %}={% endif %}</td></tr>
+{%- endmacro -%}
+{%- macro head(caption) -%}
+  <caption class="sr-only">{{ caption }}</caption>
+  <thead><tr><th scope="col"><span class="sr-only">Measure</span></th><th scope="col">{{ y }}{% if r.toDate %}*{% endif %}</th><th scope="col">{{ y - 1 }}</th><th scope="col">Change</th></tr></thead>
+{%- endmacro -%}
+{%- macro notes(list, label) -%}
+  {% if list and list.length %}{% for p in list %}<p>{{ p }}</p>{% endfor %}{% else %}<p class="report-todo">{{ label }}: to be written in annualReportNotes.json</p>{% endif %}
+{%- endmacro -%}
+
+<div class="container report">
+  <header class="report-header">
+    <p class="report-kicker">European Initiative for Security Studies</p>
+    <h1>Annual report {{ y }}</h1>
+    <p class="report-meta">Draft. {% if r.toDate %}*Year to date, figures as of {{ r.asOf | newsDate("en") }}.{% else %}Figures for 1 January to 31 December {{ y }}.{% endif %} A dash means no record is kept for that year.</p>
+    <p class="report-tools">
+      <button type="button" class="btn btn-secondary btn-sm" data-report-print hidden>Print or save as PDF</button>
+      {% for o in annualReport.years %}{% if o.year != y %}<a href="/internal/report-{{ o.year }}.html">{{ o.year }}</a> {% endif %}{% endfor %}
+      <a href="/internal.html">Dashboard</a>
+    </p>
+  </header>
+
+  <section class="report-section">
+    <h2>Foreword</h2>
+    {{ notes(N.foreword, "Foreword") }}
+  </section>
+
+  {% set c = r.now.conference %}{% set cb = r.before.conference %}
+  <section class="report-section" aria-labelledby="report-conference">
+    <h2 id="report-conference">The conference</h2>
+    {% if c %}
+      <p class="report-lede">The {{ c.nth }} European Security Studies Conference, {{ c.dates }}, {{ c.venue }}, {{ c.city }}, {{ c.country }}.</p>
+      {{ notes(N.conference, "Conference") }}
+      <table class="report-table">
+        {{ head("The conference in figures") }}
+        <tbody>
+          {{ row("Papers presented", c.papers, cb.papers if cb else none) }}
+          {{ row("Sessions", c.sessions, cb.sessions if cb else none) }}
+          {{ row("People on the programme", c.people, cb.people if cb else none) }}
+          {{ row("Affiliations named", c.affiliations, cb.affiliations if cb else none) }}
+        </tbody>
+      </table>
+      {% if c.prizes.length %}
+        <h3>{{ "Prize" if c.prizes.length == 1 else "Prizes" }}</h3>
+        <ul class="report-list">
+          {% for p in c.prizes %}<li><a href="{{ p.url }}">{{ p.title }}</a>, {{ p.authors | join(", ") }} ({{ p.affiliation }}). {{ p.award }}{% if p.partner %}, with the {{ p.partner }}{% endif %}.</li>{% endfor %}
+        </ul>
+      {% endif %}
+    {% else %}
+      <p>No conference was held in {{ y }}.</p>
+    {% endif %}
+  </section>
+
+  {% set a = r.now.anthology %}{% set ab = r.before.anthology %}
+  <section class="report-section" aria-labelledby="report-anthology">
+    <h2 id="report-anthology">The Anthology</h2>
+    {{ notes(N.anthology, "Anthology") }}
+    <table class="report-table">
+      {{ head("The Anthology in figures") }}
+      <tbody>
+        {{ row("Papers added", a.added, ab.added) }}
+        {{ row("Abstracts added", a.abstracts, ab.abstracts) }}
+        {{ row("Papers at the year's end", a.total, ab.total) }}
+      </tbody>
+    </table>
+    <p class="report-source">Archived on Zenodo, <a href="https://doi.org/{{ annualReport.anthologyDoi }}">doi:{{ annualReport.anthologyDoi }}</a>.</p>
+  </section>
+
+  {% set ns = netsecReport | netsecYear(y) %}{% set nb = netsecReport | netsecYear(y - 1) %}
+  <section class="report-section" aria-labelledby="report-netsec">
+    <h2 id="report-netsec">NetSec, COST Action {{ facts.netsec.action }}</h2>
+    {{ notes(N.netsec, "NetSec") }}
+    {% if ns %}
+      <table class="report-table">
+        {{ head("NetSec in figures") }}
+        <tbody>
+          {{ row("Months reported", ns.months, nb.months if nb else none) }}
+          {{ row("Directory members at the end", ns.directory.to, nb.directory.to if nb else none) }}
+          {{ row("Joined the Directory", ns.directory.joined, nb.directory.joined if nb else none) }}
+          {{ row("Left the Directory", ns.directory.left, nb.directory.left if nb else none) }}
+          {{ row("Management Committee members at the end", ns.committee.to, nb.committee.to if nb else none) }}
+          {{ row("Website changes merged", ns.merged, nb.merged if nb else none) }}
+          {{ row("New website features", ns.features, nb.features if nb else none) }}
+          {{ row("Website fixes", ns.fixes, nb.fixes if nb else none) }}
+        </tbody>
+      </table>
+      <p class="report-source">From NetSec's monthly reports, {{ ns.from | newsDate("en") }} to {{ ns.to | newsDate("en") }}.</p>
+    {% else %}
+      <p>No NetSec monthly report covers {{ y }}.</p>
+    {% endif %}
+  </section>
+
+  {% set w = r.now.website %}{% set wb = r.before.website %}
+  <section class="report-section" aria-labelledby="report-website">
+    <h2 id="report-website">The website</h2>
+    {{ notes(N.website, "Website") }}
+    <table class="report-table">
+      {{ head("The website in figures") }}
+      <tbody>
+        {{ row("Releases", w.releases, wb.releases) }}
+        {{ row("Feature releases", w.features.length if w.releases != none else none, wb.features.length if wb.releases != none else none) }}
+        {{ row("Accessibility and quality audits", w.audits, wb.audits) }}
+        {{ row("News posts", w.news, wb.news) }}
+      </tbody>
+    </table>
+    {% if w.features.length %}
+      <h3>Feature releases</h3>
+      <ul class="report-list">
+        {% for f in w.features %}<li><a href="https://github.com/EISSeuropa/EISSeuropa.github.io/releases/tag/v{{ f.version }}">{{ f.version }}</a>, {{ f.date | newsDate("en") }}: {{ f.title }}</li>{% endfor %}
+      </ul>
+    {% endif %}
+    {% if w.auditList.length %}
+      <h3>Audits</h3>
+      <ul class="report-list">
+        {% for x in w.auditList %}<li><a href="{{ x.url }}">{{ x.title }}</a> ({{ x.site }}), {{ x.date | newsDate("en") }}</li>{% endfor %}
+      </ul>
+    {% endif %}
+  </section>
+
+  <section class="report-section" aria-labelledby="report-ahead">
+    <h2 id="report-ahead">Looking ahead</h2>
+    {{ notes(N.ahead, "Looking ahead") }}
+    <ul class="report-list">
+      {% if r.ahead.edition %}<li>The next conference: {{ r.ahead.edition.city }}, {{ r.ahead.edition.country }}, {{ r.ahead.edition.dates }}.</li>{% endif %}
+      {% if r.ahead.cohorts.length %}<li>Internship cohorts in {{ y + 1 }}: {% for c in r.ahead.cohorts %}{{ c.en }}{% if not loop.last %}, {% endif %}{% endfor %}.</li>{% endif %}
+    </ul>
+  </section>
+</div>
+<script>
+  (function () {
+    var b = document.querySelector("[data-report-print]");
+    b.hidden = false;
+    b.addEventListener("click", function () { print(); });
+  })();
+</script>
