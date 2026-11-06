@@ -95,6 +95,13 @@ module.exports = function (eleventyConfig) {
 
   // "October 2026" / "octobre 2026" / "Oktober 2026", for the NetSec report's month.
   eleventyConfig.addFilter("monthYear", (iso, lang) => new Intl.DateTimeFormat({ en: "en-GB", fr: "fr-FR", de: "de-DE" }[lang || "en"] || "en-GB", { month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(String(iso).slice(0, 10) + "T00:00:00Z")));
+  // "Nov", or "Jan 2027" outside the current year, for the calendar tiles.
+  eleventyConfig.addFilter("monthShort", (iso, lang) => {
+    const d = new Date(String(iso).slice(0, 10) + "T00:00:00Z");
+    const loc = { en: "en-GB", fr: "fr-FR", de: "de-DE" }[lang || "en"] || "en-GB";
+    const year = d.getUTCFullYear() !== new Date().getUTCFullYear();
+    return new Intl.DateTimeFormat(loc, { month: "short", year: year ? "numeric" : undefined, timeZone: "UTC" }).format(d);
+  });
   // 12178 as "12,178" / "12 178" / "12.178".
   eleventyConfig.addFilter("thousands", (n, lang) => Number(n).toLocaleString({ en: "en-GB", fr: "fr-FR", de: "de-DE" }[lang || "en"] || "en-GB"));
 

@@ -235,6 +235,14 @@ const locales = {
       inCityUntil: "In {city} until {date}.",
       nextUp: "Next: {label}, {date}.",
       esscOpens: "ESSC {year} opens in {city}",
+      agenda: {
+        heading: "Conference timeline",
+        list: "Coming dates",
+        cohortCall: "{cohort} internship call opens",
+        cohortApply: "{cohort} internship applications close",
+        cohortStart: "{cohort} interns start",
+        tentative: "to be confirmed",
+      },
       rolls: {
         heading: "Recent activity",
         closed: "Recently closed",
@@ -1309,6 +1317,14 @@ const locales = {
       inCityUntil: "À {city} jusqu'au {date}.",
       nextUp: "Ensuite : {label}, {date}.",
       esscOpens: "Ouverture de l'ESSC {year} à {city}",
+      agenda: {
+        heading: "Calendrier de la conférence",
+        list: "Prochaines dates",
+        cohortCall: "Ouverture de l'appel aux stagiaires ({cohort})",
+        cohortApply: "Clôture des candidatures de stage ({cohort})",
+        cohortStart: "Arrivée des stagiaires ({cohort})",
+        tentative: "à confirmer",
+      },
       rolls: {
         heading: "Activité récente",
         closed: "Clos récemment",
@@ -2260,6 +2276,14 @@ const locales = {
       inCityUntil: "In {city} bis zum {date}.",
       nextUp: "Als Nächstes: {label}, {date}.",
       esscOpens: "Die ESSC {year} beginnt in {city}",
+      agenda: {
+        heading: "Konferenzzeitplan",
+        list: "Kommende Termine",
+        cohortCall: "Ausschreibung für Praktika ({cohort}) öffnet",
+        cohortApply: "Bewerbungsschluss für Praktika ({cohort})",
+        cohortStart: "Praktikumsbeginn ({cohort})",
+        tentative: "noch nicht bestätigt",
+      },
       rolls: {
         heading: "Neueste Aktivität",
         closed: "Kürzlich geschlossen",

@@ -856,6 +856,22 @@ h4 { font-size: var(--fs-lg); }
 .apps-phase-title { margin: 0 0 var(--space-1); font-size: 1.125rem; }
 .apps-phase .apps-note { margin: 0; }
 .apps-phase-links { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+/* The conference timeline: the "Now" card, then the coming dates as calendar
+   tiles in one row that scrolls sideways. */
+.apps-conference { margin: 0 0 var(--space-6); }
+.apps-conference > .apps-heading { margin-bottom: var(--space-3); }
+.apps-conference .apps-phase { margin-bottom: var(--space-3); }
+.apps-agenda { display: flex; gap: var(--space-3); margin: 0; padding: 0 0 var(--space-2); list-style: none; overflow-x: auto; scroll-snap-type: x proximity; }
+.apps-agenda-tile { flex: 0 0 9.5rem; scroll-snap-align: start; }
+.apps-agenda-link { display: flex; flex-direction: column; height: 100%; overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elev); color: var(--text); text-decoration: none; box-shadow: var(--shadow-1); }
+a.apps-agenda-link:hover { border-color: var(--border-strong); box-shadow: var(--shadow-2); }
+a.apps-agenda-link:hover .apps-agenda-label { text-decoration: underline; }
+.apps-agenda-month { padding: var(--space-1) var(--space-3); background: var(--accent); color: var(--accent-text); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.apps-agenda-netsec .apps-agenda-month { background: #003399; color: #fff; }
+.apps-agenda-day { padding: var(--space-2) var(--space-3) 0; font-size: 1.75rem; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.apps-agenda-label { flex: 1; padding: var(--space-1) var(--space-3) var(--space-2); font-size: 0.8125rem; line-height: 1.35; }
+.apps-agenda-tbc { color: var(--text-muted); }
+.apps-agenda-link .apps-board-site { align-self: flex-start; margin: 0 var(--space-3) var(--space-3); }
 /* The stages of the conference year, filled up to today. The line runs from
    the first dot's centre to the last's. */
 .apps-steps { position: relative; flex-basis: 100%; display: grid; grid-template-columns: repeat(var(--apps-steps-n), minmax(0, 1fr)); margin: var(--space-2) 0 0; padding: 0; list-style: none; }

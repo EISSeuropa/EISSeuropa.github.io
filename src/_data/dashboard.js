@@ -158,7 +158,7 @@ function assemble(keyDates, source) {
     steps: s.steps.map((st) => ({ ...st, links: (st.links || []).map(link).filter(Boolean) })),
   }));
 
-  return { release, counts, dates, deadlines, phase, onboarding, datesSource: source, calendar: site.deadlinesCalendar || null, repo: "EISSeuropa/EISSeuropa.github.io" };
+  return { release, counts, dates, deadlines, phase, onboarding, agenda: agenda(dates), datesSource: source, calendar: site.deadlinesCalendar || null, repo: "EISSeuropa/EISSeuropa.github.io" };
 }
 
 // The five newest issues still open and the last five closed as done, for the Today
@@ -236,7 +236,36 @@ async function fetchHighlights() {
 
 const audits = [...require("./audits.json")].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 5);
 
+// The calendar tiles under the conference timeline: the coming EISS dates
+// (the Key dates list, internship cohorts) and NetSec's events, soonest first.
+// ponytail: known dates only, for now. #2028 moves them to Google Calendar.
+const cohorts = require("./cohorts.json");
+let netsecEvents = [];
+function agenda(dates) {
+  const eiss = dates.filter((d) => d.date >= today)
+    .map((d) => ({ ...d, site: "EISS", end: d.kind === "essc" && edition ? edition.endDate : undefined, state: undefined }));
+  const intern = cohorts.flatMap((c) => [
+    { date: c.callOpens, kind: "cohortCall", cohort: c.name },
+    { date: c.applyBy, kind: "cohortApply", cohort: c.name },
+    { date: c.start, kind: "cohortStart", cohort: c.name },
+  ]).filter((d) => d.date >= today).map((d) => ({ ...d, site: "EISS", roles: everyone, url: "/internship.html" }));
+  // NetSec lists ESSC too, which EISS already shows.
+  const netsec = netsecEvents.filter((e) => e.start.slice(0, 10) >= today && !/European Security Studies Conference/.test(e.summary))
+    .map((e) => ({ date: e.start.slice(0, 10), end: e.end && e.end.slice(0, 10) > e.start.slice(0, 10) ? e.end.slice(0, 10) : undefined,
+      label: e.summary, url: e.url, site: "NetSec", roles: everyone, tentative: e.status === "TENTATIVE" }));
+  return [...eiss, ...intern, ...netsec].sort(byDate).slice(0, 20);
+}
+async function fetchNetsecEvents() {
+  try {
+    const res = await fetch("https://raw.githubusercontent.com/EISSeuropa/netsec.github.io/main/data/events.json", { signal: AbortSignal.timeout(15000) });
+    if (!res.ok) throw new Error(String(res.status));
+    netsecEvents = (await res.json()).events || [];
+  } catch (e) {
+    console.warn(`[dashboard] NetSec events unavailable (${e.message}), the calendar tiles show EISS dates only`);
+  }
+}
+
 module.exports = async function () {
-  const [{ keyDates, source }, recent, highlights] = await Promise.all([fetchDates(), fetchRecent(), fetchHighlights()]);
+  const [{ keyDates, source }, recent, highlights] = await Promise.all([fetchDates(), fetchRecent(), fetchHighlights(), fetchNetsecEvents()]);
   return { ...assemble(keyDates, source), recent, board: { ...highlights, audits } };
 };
