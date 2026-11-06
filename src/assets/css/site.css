@@ -838,6 +838,8 @@ h4 { font-size: var(--fs-lg); }
 .apps-today.is-out { grid-template-rows: 0fr; opacity: 0; margin-bottom: 0; }
 @keyframes apps-done-tick { to { stroke-dashoffset: 0; } }
 /* The board's view: features, audits and fixes, each tagged EISS or NetSec. */
+/* The dashboard's version, at the foot of the page. */
+.apps-version { margin: var(--space-6) 0 0; color: var(--text-muted); font-size: 0.8125rem; text-align: center; }
 /* The rolling modules: one section, each row a label and a one-line roll. */
 .apps-rolls { margin: 0 0 var(--space-4); }
 .apps-rolls > .apps-heading { margin-bottom: var(--space-3); }

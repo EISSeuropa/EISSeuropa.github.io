@@ -99,6 +99,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
+- The internal dashboard shows its own version number at the foot of the page ("Internal dashboard v2.21.0"), with semantic versioning and a history back to 1.0.0 in `docs/internal-dashboard.md`.
 - The internal dashboard's tiles under "Timeline" carry a kind as well as EISS or NetSec: conference (blue), internship (teal), release (purple) or NetSec event (COST blue), shown as the colour of the month band and a tag.
 - The internal dashboard opens with a "Conference timeline" section: the "Now" card with the stepper of the conference year, then calendar tiles for the coming dates, soonest first. The tiles cover the ESSC 2027 deadlines, the conference itself, release due dates for staff, internship cohort calls, deadlines and start dates, and NetSec's events, each tagged EISS or NetSec, in one row that scrolls sideways. The section sits above "Recent activity".
 - The internal dashboard has a "NetSec report" tab, marked in NetSec's blue and gold, with the NetSec monthly report for the last complete month: Directory profiles joined and left, Core Group, Management Committee and working-group changes, and the website repository's merged pull requests, main features, notable fixes and contributors. It is rebuilt from the NetSec website's public data and git history, and moves to the next month on the first build after the month ends.

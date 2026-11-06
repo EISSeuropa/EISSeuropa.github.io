@@ -482,6 +482,8 @@
       </section>
     {% endif %}
 
+    {# The dashboard's own version. Rules and history: docs/internal-dashboard.md. #}
+    <p class="apps-version">{{ d.version | replace("{v}", dashboard.version) }}</p>
   </div>
 </div>
 
