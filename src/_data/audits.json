@@ -1,0 +1,10 @@
+[
+  { "date": "2026-11-04", "site": "EISS", "title": "Licensing audit: third-party assets credited, unused images removed", "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2014" },
+  { "date": "2026-11-04", "site": "NetSec", "title": "Licensing audit: third-party notices and the scope of CC BY corrected", "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2114" },
+  { "date": "2026-10-09", "site": "EISS", "title": "Accessibility self-audit against RGAA 4.1.2, every non-conformity fixed", "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/1798" },
+  { "date": "2026-09-02", "site": "NetSec", "title": "Accessibility audit: statement v1.5, pa11y flags down from 176 to 21", "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1775" },
+  { "date": "2026-09-02", "site": "EISS", "title": "Accessibility audit, September 2026: statement brought in line", "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/1630" },
+  { "date": "2026-08-18", "site": "EISS", "title": "Accessibility audit, August 2026", "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/1385" },
+  { "date": "2026-06-02", "site": "EISS", "title": "Site-wide quality audit, June 2026", "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/413" },
+  { "date": "2026-06-01", "site": "NetSec", "title": "Site audit, June 2026", "url": "https://github.com/EISSeuropa/netsec.github.io/pull/456" }
+]

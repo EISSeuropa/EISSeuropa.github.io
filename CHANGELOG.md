@@ -99,6 +99,8 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
+- The internal dashboard has a "For the board" view with three cards: the five main new features and the five main bug fixes merged across the EISS and NetSec websites in the last 30 days, and the five latest formal audits (licensing, accessibility, quality). Each entry carries an EISS or NetSec tag. Board members see it in place of the issue roll.
+- The Today box on the internal dashboard rolls the last five issues opened as well as the last five closed. Closed issues carry a green tick and opened ones an amber "i". The roll is hidden from board members.
 - The IT monitoring panel on the internal dashboard shows GitHub's own service status for the parts EISS relies on (Actions, Pages, Git Operations, API Requests, Pull Requests and Webhooks), names any that are degraded and links to githubstatus.com. It feeds the Systems tile, and the page checks it live in the browser, so a GitHub outage like the pull-request one on 4 November 2026 no longer reads as Nominal.
 - The internal dashboard is available in French and German, through the language switch, with the welcome steps, the key dates, the live figures and the IT monitoring panel translated. The French and German text is drafted by Claude and carries the beta ribbon until a native speaker reviews it.
 - The internal dashboard links the EISS Alumni community on LinkedIn, for current and former team members.
