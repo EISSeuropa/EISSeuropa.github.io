@@ -148,6 +148,42 @@
       </div>
     {% endif %}
 
+    {# The conference's pace (#2039): abstracts and registrations for this
+       edition, against the previous edition at the same distance from its
+       conference. Bars share one scale, the previous edition's final total.
+       Figures from scripts/conference-pace.py, procedure in docs/conference-pace.md. #}
+    {% set P = dashboard.pace %}
+    {% if dashboard.phase %}
+      <div class="apps-confpace" data-roles="staff management">
+        {% set PST = d.stored | replace("{date}", (P.recorded if P and P.recorded else dashboard.built) | newsDate(lang)) %}
+        {% if P %}<span class="apps-src" role="img" aria-label="{{ PST }}" title="{{ PST }}"></span>{% endif %}
+        <h3 class="apps-confpace-title">{{ d.confPace.heading }}</h3>
+        {% if P %}
+          {% for key in ["abstracts", "registrations"] %}{% set m = P.measures[key] %}{% if m %}
+            {% set top = m.previous.total if m.previous and m.previous.total > (m.count or 0) else (m.count or 1) %}
+            {% set dp = d.confPace.daysOut %}
+            <div class="apps-confpace-row">
+              <p class="apps-confpace-label">{{ d.confPace[key] }} <span class="apps-confpace-when">{{ (dp[0] if (m.daysOut < 2 if lang == "fr" else m.daysOut == 1) else dp[1]) | replace("{n}", m.daysOut) }}</span></p>
+              <dl class="apps-confpace-bars">
+                <div class="apps-confpace-now">
+                  <dt>{{ m.edition }}</dt>
+                  <dd><span class="apps-confpace-track" aria-hidden="true"><span class="apps-confpace-bar" style="width: {{ ((m.count or 0) / top * 100) | round(1) }}%"></span></span><span class="apps-confpace-num"><strong>{{ m.count if m.recorded else d.confPace.notRecorded }}</strong></span></dd>
+                </div>
+                {% if m.previous %}
+                  <div class="apps-confpace-prev">
+                    <dt>{{ m.previous.edition }}</dt>
+                    <dd><span class="apps-confpace-track" aria-hidden="true"><span class="apps-confpace-bar" style="width: {{ (m.previous.count / top * 100) | round(1) }}%"></span></span><span class="apps-confpace-num"><strong>{{ m.previous.count }}</strong> <span class="apps-confpace-total">{{ d.confPace.ofTotal | replace("{total}", m.previous.total) }}</span></span></dd>
+                  </div>
+                {% endif %}
+              </dl>
+            </div>
+          {% endif %}{% endfor %}
+        {% else %}
+          <p class="apps-note">{{ d.confPace.empty }} <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/conference-pace.md">{{ d.confPace.how }}</a></p>
+        {% endif %}
+      </div>
+    {% endif %}
+
     {# Calendar tiles for the coming EISS and NetSec dates, soonest first, from
        dashboard.agenda. One row that scrolls sideways. #}
     {% if dashboard.agenda.length %}
@@ -506,7 +542,8 @@
 
     {# The dashboard's own version. Rules and history: docs/internal-dashboard.md. #}
     <p class="apps-legend" aria-hidden="true"><span><span class="apps-src is-live"></span> {{ d.live }}</span> <span><span class="apps-src"></span> {{ STORED }}</span></p>
-    <p class="apps-version">{{ d.version | replace("{v}", dashboard.version) }}</p>
+    {# The latest annual report draft (docs/annual-report.md), in English. #}
+    <p class="apps-version">{{ d.version | replace("{v}", dashboard.version) }}{% if annualReport.years.length %}<span data-roles="staff management board"> · <a href="/internal/report-{{ annualReport.years[0].year }}.html" hreflang="en">{{ d.annualReport | replace("{year}", annualReport.years[0].year) }}</a></span>{% endif %}</p>
   </div>
 </div>
 
