@@ -140,8 +140,20 @@ successor inherits through the handover in section 4.
   minutes, and the last build's figures stay if that fails. Workspace and
   Google status update only at build. "Since your last visit" compares
   against figures saved in that browser. Under it, the last five issues
-  closed as done (any milestone, "not planned" closures left out) roll
-  through one at a time, for every role.
+  opened and the last five closed as done roll through one at a time,
+  newest first, closed ones with a green tick and opened ones with an
+  amber "i". Issues labelled `automated` and "not planned" closures are
+  left out. The roll shows for every role except board members.
+- **For the board.** Board members (and the Everyone view) get three cards
+  under the Today box. Main new features and Main bug fixes are the five
+  largest `feat` and `fix` pull requests merged in the last 30 days across
+  the EISS and NetSec site repos, ranked by lines changed as in the NetSec
+  monthly report, with the conventional-commit prefix dropped from the
+  title. `src/_data/dashboard.js` reads them at build and needs
+  `GITHUB_TOKEN` (one call per candidate PR), so a local build without it
+  leaves those two cards out. Latest audits is the five newest entries of
+  `src/_data/audits.json`, kept by hand: add a line when an audit lands.
+  The private `workspace-ops` repo stays out, since the page is public.
 - **Dates and conference phase.** The "EISS dates" Google Calendar holds an
   edition's public dates. The build reads it through the EISS status web
   app's `?view=dates` (source in the private `workspace-ops` repo, which

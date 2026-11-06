@@ -161,27 +161,82 @@ function assemble(keyDates, source) {
   return { release, counts, dates, deadlines, phase, onboarding, datesSource: source, calendar: site.deadlinesCalendar || null, repo: "EISSeuropa/EISSeuropa.github.io" };
 }
 
-// The last five issues closed as done, for the Today box when the browser's
-// own GitHub calls are refused (the unauthenticated limit is 60 an hour per
-// address). Same query as the page's live load.
-async function fetchRecent() {
+// The last five issues opened and the last five closed as done, for the Today
+// box when the browser's own GitHub calls are refused (the unauthenticated
+// limit is 60 an hour per address). Same queries as the page's live load.
+// Automated issues (failure alarms, sync reports) stay out of the opened list.
+const RECENT = [
+  { kind: "opened", q: "is:issue -label:automated", sort: "created", at: "created_at" },
+  { kind: "closed", q: "is:issue is:closed reason:completed", sort: "updated", at: "closed_at" },
+];
+function ghHeaders() {
   const headers = { Accept: "application/vnd.github+json" };
   if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
-  const q = encodeURIComponent("repo:EISSeuropa/EISSeuropa.github.io is:issue is:closed reason:completed");
+  return headers;
+}
+async function fetchRecent() {
   try {
-    const res = await fetch(`https://api.github.com/search/issues?per_page=10&sort=updated&order=desc&q=${q}`, { headers, signal: AbortSignal.timeout(15000) });
-    if (!res.ok) throw new Error(String(res.status));
-    const { items } = await res.json();
-    return items.filter((x) => x.closed_at)
-      .map((x) => ({ n: x.number, title: x.title, url: x.html_url, at: x.closed_at }))
-      .sort((x, y) => Date.parse(y.at) - Date.parse(x.at)).slice(0, 5);
+    const lists = await Promise.all(RECENT.map(async ({ kind, q, sort, at }) => {
+      const query = encodeURIComponent(`repo:EISSeuropa/EISSeuropa.github.io ${q}`);
+      const { items } = await api(`search/issues?per_page=10&sort=${sort}&order=desc&q=${query}`);
+      return items.filter((x) => x[at])
+        .map((x) => ({ n: x.number, title: x.title, url: x.html_url, at: x[at], kind }))
+        .sort((x, y) => Date.parse(y.at) - Date.parse(x.at)).slice(0, 5);
+    }));
+    return lists.flat().sort((x, y) => Date.parse(y.at) - Date.parse(x.at));
   } catch (e) {
-    console.warn(`[dashboard] closed issues unavailable (${e.message}), the Today roll waits for the live load`);
+    console.warn(`[dashboard] recent issues unavailable (${e.message}), the Today roll waits for the live load`);
     return [];
   }
 }
 
+// The board's view: the five largest features and fixes merged in the last
+// 30 days across both site repos, ranked by lines changed as the NetSec monthly
+// report ranks them, and the last five formal audits from audits.json.
+// The private workspace-ops repo stays out: this page is public.
+const SITES = [
+  { slug: "EISSeuropa/EISSeuropa.github.io", site: "EISS" },
+  { slug: "EISSeuropa/netsec.github.io", site: "NetSec" },
+];
+const KINDS = { feature: /^feat\b/i, fix: /^fix\b/i };
+// "feat(home): cut the home page (#12)" reads "Cut the home page".
+const plainTitle = (t) => t.replace(/^\w+(\([^)]*\))?!?:\s*/, "").replace(/\s*\(#\d+\)$/, "").replace(/^./, (c) => c.toUpperCase());
+
+async function api(url) {
+  const res = await fetch(`https://api.github.com/${url}`, { headers: ghHeaders(), signal: AbortSignal.timeout(15000) });
+  if (!res.ok) throw new Error(`${url.split("?")[0]}: ${res.status}`);
+  return res.json();
+}
+
+async function fetchHighlights() {
+  // ponytail: one call per candidate PR for its line count, about 80 a month,
+  // so a build without a token (60 calls an hour) leaves the highlights out.
+  if (!process.env.GITHUB_TOKEN) {
+    console.warn("[dashboard] no GITHUB_TOKEN, the board highlights are left out");
+    return null;
+  }
+  const since = isoDaysAgo(30);
+  try {
+    const found = await Promise.all(SITES.flatMap(({ slug, site }) => Object.entries(KINDS).map(async ([kind, re]) => {
+      const q = encodeURIComponent(`repo:${slug} is:pr is:merged merged:>=${since} ${kind === "feature" ? "feat" : "fix"} in:title`);
+      const { items } = await api(`search/issues?per_page=100&q=${q}`);
+      const prs = items.filter((p) => re.test(p.title) && p.user.type !== "Bot");
+      return Promise.all(prs.map(async (p) => {
+        const { additions, deletions, merged_at } = await api(`repos/${slug}/pulls/${p.number}`);
+        return { kind, site, n: p.number, title: plainTitle(p.title), url: p.html_url, at: merged_at.slice(0, 10), lines: additions + deletions };
+      }));
+    })));
+    const top = (kind) => found.flat().filter((p) => p.kind === kind).sort((a, b) => b.lines - a.lines).slice(0, 5);
+    return { features: top("feature"), fixes: top("fix"), since };
+  } catch (e) {
+    console.warn(`[dashboard] board highlights unavailable (${e.message}), left out`);
+    return null;
+  }
+}
+
+const audits = [...require("./audits.json")].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 5);
+
 module.exports = async function () {
-  const [{ keyDates, source }, recent] = await Promise.all([fetchDates(), fetchRecent()]);
-  return { ...assemble(keyDates, source), recent };
+  const [{ keyDates, source }, recent, highlights] = await Promise.all([fetchDates(), fetchRecent(), fetchHighlights()]);
+  return { ...assemble(keyDates, source), recent, board: { ...highlights, audits } };
 };

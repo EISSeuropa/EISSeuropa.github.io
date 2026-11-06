@@ -801,8 +801,11 @@ h4 { font-size: var(--fs-lg); }
 .apps-done-item a:hover { text-decoration: underline; }
 .apps-done-num { color: var(--text-muted); font-variant-numeric: tabular-nums; }
 .apps-done-title { overflow-wrap: anywhere; }
-.apps-done-box { flex: none; display: grid; place-items: center; width: 1.125rem; height: 1.125rem; border-radius: var(--radius-xs); background: var(--accent); }
-.apps-done-box svg { width: 0.875rem; height: 0.875rem; fill: none; stroke: var(--bg); stroke-width: 2.25; stroke-linecap: round; stroke-linejoin: round; }
+.apps-done-box { flex: none; display: grid; place-items: center; width: 1.125rem; height: 1.125rem; border-radius: var(--radius-xs); background: hsl(142 65% 32%); }
+.apps-done-box svg { width: 0.875rem; height: 0.875rem; fill: none; stroke: #fff; stroke-width: 2.25; stroke-linecap: round; stroke-linejoin: round; }
+/* Closed is the green tick, opened the amber "i". */
+.apps-done-box-opened { background: hsl(38 95% 55%); }
+.apps-done-box-opened svg { stroke: hsl(222 40% 10%); }
 .apps-done-pause { flex: none; display: grid; place-items: center; width: 2rem; height: 2rem; padding: 0; border: 1px solid var(--border); border-radius: var(--radius-full); background: none; color: var(--text-muted); cursor: pointer; }
 .apps-done-pause:hover { color: var(--text); border-color: var(--border-strong); }
 .apps-done-pause svg { width: 0.875rem; height: 0.875rem; fill: currentColor; }
@@ -819,6 +822,15 @@ h4 { font-size: var(--fs-lg); }
 }
 .apps-today.is-out { grid-template-rows: 0fr; opacity: 0; margin-bottom: 0; }
 @keyframes apps-done-tick { to { stroke-dashoffset: 0; } }
+/* The board's view: features, audits and fixes, each tagged EISS or NetSec. */
+.apps-board { margin: 0 0 var(--space-6); }
+.apps-board-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: var(--space-4); }
+.apps-board-list { display: grid; gap: var(--space-3); margin: var(--space-3) 0 0; padding: 0; list-style: none; }
+.apps-board-list time { display: block; color: var(--text-muted); font-size: 0.8125rem; }
+.apps-board-site { display: inline-block; margin-inline-end: var(--space-1); padding: 0 0.4rem; border-radius: var(--radius-xs); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.02em; vertical-align: 0.1em; }
+.apps-board-site-eiss { background: var(--accent); color: var(--accent-text); }
+/* NetSec in the COST/EU blue and gold, apart from EISS's own blue. */
+.apps-board-site-netsec { background: #ffcc00; color: #003399; }
 .apps-phase { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); margin: 0 0 var(--space-7); padding: var(--space-4) var(--space-5); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elev); }
 .apps-phase-title { margin: 0 0 var(--space-1); font-size: 1.125rem; }
 .apps-phase .apps-note { margin: 0; }

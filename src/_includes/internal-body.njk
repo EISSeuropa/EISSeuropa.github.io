@@ -6,7 +6,7 @@
 
   Reads: site.staffLinks (entries with `roles`), labels t.staffMenu.<key> or
   the entry's own `label`, site.guideLinks, systemHealth and dashboard (release,
-  counts, dates, deadlines, phase).
+  counts, dates, deadlines, phase, recent, board).
   The role filter is CSS `:has()` on data-roles, so it works without JS. So does
   the page, with every tab's section stacked.
   A shortcut list, not access control. Everything works without JS: the script
@@ -131,6 +131,26 @@
         </div>
       </div>
     </div>
+
+    {# The board's view: the month's main features and fixes in both site repos,
+       and the latest formal audits. Board only, and in the "Everyone" view. #}
+    {% set B = dashboard.board %}
+    <section class="apps-board" data-roles="board" aria-labelledby="apps-board-heading">
+      <h2 class="apps-heading" id="apps-board-heading">{{ d.board.heading }}</h2>
+      <div class="apps-board-grid">
+        {% for key in ["features", "audits", "fixes"] %}{% if B[key] and B[key].length %}
+          <div class="apps-status-card">
+            <h3 class="apps-status-title">{{ d.board[key] }}</h3>
+            {% if key != "audits" %}<p class="apps-note">{{ d.board.since | replace("{date}", B.since | newsDate(lang)) }}</p>{% endif %}
+            <ol class="apps-board-list" role="list">
+              {% for x in B[key] %}
+                <li><span class="apps-board-site apps-board-site-{{ x.site | lower }}">{{ x.site }}</span> <a href="{{ x.url }}">{{ x.title }}</a> <time datetime="{{ x.at or x.date }}">{{ (x.at or x.date) | newsDate(lang) }}</time></li>
+              {% endfor %}
+            </ol>
+          </div>
+        {% endif %}{% endfor %}
+      </div>
+    </section>
 
     {% if dashboard.phase %}
       <section class="apps-phase" aria-labelledby="apps-phase-title">
@@ -597,7 +617,7 @@
     // since the last visit. It stays away when there is nothing to say.
     var failed = data.health ? data.health.summary.failed : [];
     var since = { tasks: 0, closed: 0, done: [] };
-    // The last five issues closed as done, whenever they closed: the roll's lines.
+    // The last five issues opened and the last five closed as done: the roll's lines.
     var recent = data.recent || [];
     var today = document.querySelector("[data-apps-today]");
     var todayText = document.querySelector("[data-apps-today-text]");
@@ -622,7 +642,7 @@
       }
     }
 
-    // Closed issues roll through one at a time, like end credits, and loop.
+    // Opened and closed issues roll through one at a time, like end credits, and loop.
     // Hovering, focusing a link or the pause button holds the roll (RGAA 13.8:
     // motion past five seconds needs a pause control). Tabbing to a link brings
     // its line up. Without motion every line stays in view.
@@ -630,7 +650,11 @@
     var doneHeading = document.querySelector("[data-apps-done-heading]");
     var pauseBtn = document.querySelector("[data-apps-done-pause]");
     var roll = { key: null, i: 0, hover: false, focus: false, held: false };
-    var CHECK = '<span class="apps-done-box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>';
+    // A closed issue gets a green tick, an opened one an amber "i".
+    var MARK = {
+      closed: '<span class="apps-done-box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>',
+      opened: '<span class="apps-done-box apps-done-box-opened" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 7.5v4M8 4.5v0.01"/></svg></span>',
+    };
     function lines() { return [].slice.call(doneList.children); }
     function go(k) {
       var ls = lines(), cur = ls[roll.i], next = ls[k];
@@ -665,7 +689,7 @@
       pauseBtn.setAttribute("aria-pressed", String(roll.held));
     });
     function renderDone(items) {
-      var key = items.map(function (x) { return x.n; }).join();
+      var key = items.map(function (x) { return x.kind + x.n; }).join();
       if (key === roll.key) return;
       roll.key = key;
       roll.i = 0;
@@ -673,18 +697,19 @@
       items.forEach(function (x) {
         var li = document.createElement("li");
         li.className = "apps-done-item";
-        li.innerHTML = CHECK + '<a><span class="sr-only"></span><span class="apps-done-num"></span> <span class="apps-done-title"></span></a>';
+        var opened = x.kind === "opened";
+        li.innerHTML = MARK[opened ? "opened" : "closed"] + '<a><span class="sr-only"></span><span class="apps-done-num"></span> <span class="apps-done-title"></span></a>';
         var a = li.querySelector("a");
         a.href = x.url;
-        a.firstChild.textContent = I.closedSr;
-        a.title = f(I.closedOn, { title: x.title, date: new Date(x.at).toLocaleDateString(LOC, { day: "numeric", month: "short" }) });
+        a.firstChild.textContent = opened ? I.openedSr : I.closedSr;
+        a.title = f(opened ? I.openedOn : I.closedOn, { title: x.title, date: new Date(x.at).toLocaleDateString(LOC, { day: "numeric", month: "short" }) });
         li.querySelector(".apps-done-num").textContent = "#" + x.n;
         li.querySelector(".apps-done-title").textContent = x.title;
         doneList.appendChild(li);
       });
       stage.hidden = !items.length;
       doneHeading.hidden = !items.length;
-      doneHeading.textContent = pl(I.lastClosed, items.length);
+      doneHeading.textContent = I.recentIssues;
       doneList.classList.toggle("apps-done-static", calm);
       pauseBtn.hidden = calm || items.length < 2;
       // The first line rises in once the box has opened.
@@ -719,7 +744,8 @@
       if (news.length) parts.push(f(I.sinceVisit, { list: news.join(", ") }));
       if (parts.length) todayText.textContent = parts.join(" ");
       todayText.hidden = !parts.length;
-      var rolled = recent;
+      // Board members get their own view below, so the roll is not theirs.
+      var rolled = role === "board" ? [] : recent;
       // The box opens first, so the first line can rise into it.
       reveal(today, parts.length > 0 || rolled.length > 0);
       renderDone(rolled);
@@ -802,15 +828,21 @@
         Promise.all(repos.map(function (r) {
           return get("repos/" + r.slug + "/actions/runs?status=completed&per_page=100&branch=" + r.branch);
         })),
-        // The last issues closed as done, for the Today box's roll. Search sorts by
-        // update, not closing, so ten come back and the five latest closures stay.
-        // A failure here only loses the roll.
-        get("search/issues?per_page=10&sort=updated&order=desc&q=" + encodeURIComponent("repo:" + data.repo + " is:issue is:closed reason:completed"))
-          .then(function (r) {
-            return r.items.filter(function (x) { return x.closed_at; })
-              .map(function (x) { return { n: x.number, title: x.title, url: x.html_url, at: x.closed_at }; })
+        // The last issues opened and closed as done, for the Today box's roll, as
+        // in dashboard.js. Search sorts closed ones by update, not closing, so ten
+        // come back and the five latest closures stay. A failure only loses the roll.
+        Promise.all([
+          ["opened", "is:issue -label:automated", "created", "created_at"],
+          ["closed", "is:issue is:closed reason:completed", "updated", "closed_at"],
+        ].map(function (k) {
+          return get("search/issues?per_page=10&sort=" + k[2] + "&order=desc&q=" + encodeURIComponent("repo:" + data.repo + " " + k[1])).then(function (r) {
+            return r.items.filter(function (x) { return x[k[3]]; })
+              .map(function (x) { return { n: x.number, title: x.title, url: x.html_url, at: x[k[3]], kind: k[0] }; })
               .sort(function (x, y) { return Date.parse(y.at) - Date.parse(x.at); }).slice(0, 5);
-          }, function () { return null; }),
+          });
+        })).then(function (l) {
+          return l[0].concat(l[1]).sort(function (x, y) { return Date.parse(y.at) - Date.parse(x.at); });
+        }, function () { return null; }),
       ]).then(function (a) {
         var m = data.release && a[3].filter(function (x) { return x.title === data.release.title; })[0];
         var live = { issues: a[0], prs: a[1], tasks: a[2], closed: m ? m.closed_issues : null, total: m ? m.closed_issues + m.open_issues : null,
