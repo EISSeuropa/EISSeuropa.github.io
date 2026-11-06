@@ -804,7 +804,8 @@
           var opened = kind === "opened";
           li.innerHTML = MARK[kind] + '<a><span class="sr-only"></span><span class="apps-done-num"></span> <span class="apps-done-title"></span></a>';
           var a = li.querySelector("a");
-          a.href = x.url;
+          // Only GitHub links are followed, as for the automation runs.
+          if (isRun(x.url)) a.href = x.url;
           a.firstChild.textContent = opened ? I.openedSr : I.closedSr;
           a.title = f(opened ? I.openedOn : I.closedOn, { title: x.title, date: new Date(x.at).toLocaleDateString(LOC, { day: "numeric", month: "short" }) });
           li.querySelector(".apps-done-num").textContent = "#" + x.n;
