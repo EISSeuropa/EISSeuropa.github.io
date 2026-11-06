@@ -8,7 +8,7 @@ const site = require("./site.js");
 const REPO = "https://github.com/EISSeuropa/EISSeuropa.github.io";
 // The dashboard's own version, shown at the foot of the page. Semantic
 // versioning, rules and history in docs/internal-dashboard.md.
-const VERSION = "2.23.0";
+const VERSION = "2.24.0";
 const everyone = ["staff", "management", "board", "volunteer"];
 const today = new Date().toISOString().slice(0, 10);
 
@@ -202,28 +202,31 @@ async function fetchRecent() {
 }
 
 // The conference's pace (#2039): for each measure, how many abstracts or
-// registrations this edition had at today's distance from the conference,
-// against the previous recorded edition at the same distance. The figures
-// come from scripts/conference-pace.py. No card shows them yet.
+// registrations this edition had when last recorded, against the previous
+// recorded edition at the same distance from its conference. With nothing
+// recorded for this edition yet, the distance is today's. The figures come
+// from scripts/conference-pace.py and show in the conference timeline.
 function pace() {
   let file;
   try { file = require("../data/conference-pace.json"); } catch { return null; }
   if (!edition) return null;
-  const out = Math.round(days(edition.startDate) - days(today));
-  const at = (list) => list.filter((d) => d >= out).length;
+  const at = (list, out) => list.filter((d) => d >= out).length;
   const result = {};
   for (const [measure, byEdition] of Object.entries(file.measures || {})) {
     const cur = byEdition[edition.year];
     const prevYear = Object.keys(byEdition).filter((y) => y < String(edition.year)).sort().pop();
     const prev = prevYear && byEdition[prevYear];
     if (!cur && !prev) continue;
+    const out = Math.round(days(edition.startDate) - days(cur ? cur.recorded : today));
     result[measure] = {
       edition: edition.year, daysOut: out,
-      count: cur ? at(cur.daysOut) : null, recorded: cur ? cur.recorded : null,
-      previous: prev ? { edition: Number(prevYear), count: at(prev.daysOut), total: prev.daysOut.length } : null,
+      count: cur ? at(cur.daysOut, out) : null, recorded: cur ? cur.recorded : null,
+      previous: prev ? { edition: Number(prevYear), count: at(prev.daysOut, out), total: prev.daysOut.length } : null,
     };
   }
-  return Object.keys(result).length ? result : null;
+  if (!Object.keys(result).length) return null;
+  const recorded = Object.values(result).map((m) => m.recorded).filter(Boolean).sort().pop() || null;
+  return { recorded, measures: result };
 }
 
 // The three newest tasks to pick up, listed under their count for staff and
