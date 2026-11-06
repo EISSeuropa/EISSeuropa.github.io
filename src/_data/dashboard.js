@@ -161,12 +161,12 @@ function assemble(keyDates, source) {
   return { release, counts, dates, deadlines, phase, onboarding, datesSource: source, calendar: site.deadlinesCalendar || null, repo: "EISSeuropa/EISSeuropa.github.io" };
 }
 
-// The last five issues opened and the last five closed as done, for the Today
+// The five newest issues still open and the last five closed as done, for the Today
 // box when the browser's own GitHub calls are refused (the unauthenticated
 // limit is 60 an hour per address). Same queries as the page's live load.
 // Automated issues (failure alarms, sync reports) stay out of the opened list.
 const RECENT = [
-  { kind: "opened", q: "is:issue -label:automated", sort: "created", at: "created_at" },
+  { kind: "opened", q: "is:issue is:open -label:automated", sort: "created", at: "created_at" },
   { kind: "closed", q: "is:issue is:closed reason:completed", sort: "updated", at: "closed_at" },
 ];
 function ghHeaders() {

@@ -119,15 +119,23 @@
       {% endif %}
     </dl>
     <p class="apps-live" data-apps-asof>{% if systemHealth %}{{ d.asOf | replace("{date}", systemHealth.checked | newsDate(lang)) }}{% endif %}</p>
+    {# The rolling modules: the issues for every role but the board, then the
+       board's features, audits and fixes. Each row is one roll. #}
+    <section class="apps-rolls" aria-labelledby="apps-rolls-heading">
+    <h2 class="apps-heading" id="apps-rolls-heading">{{ d.rolls.heading }}</h2>
     <div class="apps-today" data-apps-today hidden>
       <div class="apps-today-clip">
         <div class="apps-today-box">
           <p class="apps-today-text" data-apps-today-text hidden></p>
-          <p class="apps-done-heading" id="apps-done-heading" data-apps-done-heading hidden></p>
-          <div class="apps-done-stage" data-apps-done-stage hidden>
-            <ul class="apps-done" data-apps-done role="list" aria-labelledby="apps-done-heading"></ul>
-            <button type="button" class="apps-done-pause" data-apps-done-pause aria-pressed="false" aria-label="{{ d.pauseClosed }}" hidden><span class="apps-done-hold">{{ icon("pause") }}</span><span class="apps-done-play">{{ icon("play") }}</span></button>
-          </div>
+          {% for key in ["closed", "opened"] %}
+            <div class="apps-roll-row" data-apps-issue-row="{{ key }}" hidden>
+              <p class="apps-roll-label" id="apps-roll-{{ key }}">{{ d.rolls[key] }}</p>
+              <div class="apps-done-stage" data-apps-issue-roll="{{ key }}">
+                <ul class="apps-done" data-apps-done role="list" aria-labelledby="apps-roll-{{ key }}"></ul>
+                <button type="button" class="apps-done-pause" data-apps-done-pause aria-pressed="false" aria-label="{{ d.board.pause | replace("{label}", d.rolls[key]) }}" hidden><span class="apps-done-hold">{{ icon("pause") }}</span><span class="apps-done-play">{{ icon("play") }}</span></button>
+              </div>
+            </div>
+          {% endfor %}
         </div>
       </div>
     </div>
@@ -141,12 +149,11 @@
       audits: '<path d="M7 4a3 3 0 1 0 0 6a3 3 0 1 0 0-6M9.2 9.2l3 3"/>',
       fixes: '<path d="M3.5 8.5l3 3 6-7"/>'
     } %}
-    <section class="apps-board" data-roles="board" aria-labelledby="apps-board-heading">
+    <div class="apps-board" data-roles="board">
       <div class="apps-today-box">
-        <h2 class="apps-done-heading" id="apps-board-heading">{{ d.board.heading }}{% if B.since %}<span class="apps-board-since">, {{ d.board.since | replace("{date}", B.since | newsDate(lang)) }}</span>{% endif %}</h2>
         {% for key in ["features", "audits", "fixes"] %}{% if B[key] and B[key].length %}
-          <div class="apps-board-row">
-            <p class="apps-board-label" id="apps-board-{{ key }}">{{ d.board[key] }}</p>
+          <div class="apps-roll-row">
+            <p class="apps-roll-label" id="apps-board-{{ key }}">{{ d.board[key] }}</p>
             <div class="apps-done-stage" data-apps-roll>
               <ul class="apps-done apps-done-static" data-apps-done role="list" aria-labelledby="apps-board-{{ key }}">
                 {% for x in B[key] %}
@@ -158,6 +165,7 @@
           </div>
         {% endif %}{% endfor %}
       </div>
+    </div>
     </section>
 
     {% if dashboard.phase %}
@@ -700,11 +708,10 @@
     // since the last visit. It stays away when there is nothing to say.
     var failed = data.health ? data.health.summary.failed : [];
     var since = { tasks: 0, closed: 0, done: [] };
-    // The last five issues opened and the last five closed as done: the roll's lines.
+    // The last five issues closed as done and the five newest still open: the rolls' lines.
     var recent = data.recent || [];
     var today = document.querySelector("[data-apps-today]");
     var todayText = document.querySelector("[data-apps-today-text]");
-    var doneList = document.querySelector("[data-apps-today] [data-apps-done]");
 
     // The box folds open and shut on a grid row (CSS), so what sits below it
     // glides rather than jumps. Without motion it simply shows and hides.
@@ -725,7 +732,7 @@
       }
     }
 
-    // Opened and closed issues roll through one at a time, like end credits, and loop.
+    // Each roll shows one line at a time, like end credits, and loops.
     // Hovering, focusing a link or the pause button holds the roll (RGAA 13.8:
     // motion past five seconds needs a pause control). Tabbing to a link brings
     // its line up. Without motion every line stays in view.
@@ -776,9 +783,9 @@
       };
       return roll;
     }
-    var stage = document.querySelector("[data-apps-today] [data-apps-done-stage]");
-    var doneHeading = document.querySelector("[data-apps-done-heading]");
-    var roll = makeRoll(stage);
+    // The issues: closed ones in one roll, those still open in the other.
+    var issueRolls = {};
+    ["closed", "opened"].forEach(function (k) { issueRolls[k] = makeRoll(document.querySelector('[data-apps-issue-roll="' + k + '"]')); });
     [].forEach.call(document.querySelectorAll("[data-apps-roll]"), function (s) { makeRoll(s).start("board"); });
     // A closed issue gets a green tick, an opened one an amber "i".
     var MARK = {
@@ -786,26 +793,27 @@
       opened: '<span class="apps-done-box apps-done-box-opened" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 7.5v4M8 4.5v0.01"/></svg></span>',
     };
     function renderDone(items) {
-      var key = items.map(function (x) { return x.kind + x.n; }).join();
-      if (key === roll.key) return;
-      doneList.textContent = "";
-      items.forEach(function (x) {
-        var li = document.createElement("li");
-        li.className = "apps-done-item";
-        var opened = x.kind === "opened";
-        li.innerHTML = MARK[opened ? "opened" : "closed"] + '<a><span class="sr-only"></span><span class="apps-done-num"></span> <span class="apps-done-title"></span></a>';
-        var a = li.querySelector("a");
-        a.href = x.url;
-        a.firstChild.textContent = opened ? I.openedSr : I.closedSr;
-        a.title = f(opened ? I.openedOn : I.closedOn, { title: x.title, date: new Date(x.at).toLocaleDateString(LOC, { day: "numeric", month: "short" }) });
-        li.querySelector(".apps-done-num").textContent = "#" + x.n;
-        li.querySelector(".apps-done-title").textContent = x.title;
-        doneList.appendChild(li);
+      ["closed", "opened"].forEach(function (kind) {
+        var roll = issueRolls[kind], mine = items.filter(function (x) { return x.kind === kind; });
+        var key = mine.map(function (x) { return x.n; }).join();
+        if (key === roll.key) return;
+        roll.list.textContent = "";
+        mine.forEach(function (x) {
+          var li = document.createElement("li");
+          li.className = "apps-done-item";
+          var opened = kind === "opened";
+          li.innerHTML = MARK[kind] + '<a><span class="sr-only"></span><span class="apps-done-num"></span> <span class="apps-done-title"></span></a>';
+          var a = li.querySelector("a");
+          a.href = x.url;
+          a.firstChild.textContent = opened ? I.openedSr : I.closedSr;
+          a.title = f(opened ? I.openedOn : I.closedOn, { title: x.title, date: new Date(x.at).toLocaleDateString(LOC, { day: "numeric", month: "short" }) });
+          li.querySelector(".apps-done-num").textContent = "#" + x.n;
+          li.querySelector(".apps-done-title").textContent = x.title;
+          roll.list.appendChild(li);
+        });
+        document.querySelector('[data-apps-issue-row="' + kind + '"]').hidden = !mine.length;
+        roll.start(key);
       });
-      stage.hidden = !items.length;
-      doneHeading.hidden = !items.length;
-      doneHeading.textContent = I.recentIssues;
-      roll.start(key);
     }
     // A small badge beside a strip figure for what moved since the last visit.
     function delta(anchor, text, said) {
@@ -920,11 +928,11 @@
         Promise.all(repos.map(function (r) {
           return get("repos/" + r.slug + "/actions/runs?status=completed&per_page=100&branch=" + r.branch);
         })),
-        // The last issues opened and closed as done, for the Today box's roll, as
+        // The last issues closed as done and the newest still open, for the Today box's rolls, as
         // in dashboard.js. Search sorts closed ones by update, not closing, so ten
         // come back and the five latest closures stay. A failure only loses the roll.
         Promise.all([
-          ["opened", "is:issue -label:automated", "created", "created_at"],
+          ["opened", "is:issue is:open -label:automated", "created", "created_at"],
           ["closed", "is:issue is:closed reason:completed", "updated", "closed_at"],
         ].map(function (k) {
           return get("search/issues?per_page=10&sort=" + k[2] + "&order=desc&q=" + encodeURIComponent("repo:" + data.repo + " " + k[1])).then(function (r) {

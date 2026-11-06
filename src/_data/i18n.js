@@ -235,12 +235,15 @@ const locales = {
       inCityUntil: "In {city} until {date}.",
       nextUp: "Next: {label}, {date}.",
       esscOpens: "ESSC {year} opens in {city}",
+      rolls: {
+        heading: "Recent activity",
+        closed: "Recently closed",
+        opened: "Still open",
+      },
       board: {
-        heading: "For the board",
         features: "Main new features",
         fixes: "Main bug fixes",
         audits: "Latest audits",
-        since: "features and fixes merged since {date}, largest first",
         pause: "Pause {label}",
       },
       js: {
@@ -254,7 +257,6 @@ const locales = {
         inDays: ["in {n} day", "in {n} days"],
         closedSr: "Closed: ",
         closedOn: "{title}, closed {date}",
-        recentIssues: "Latest issues opened and closed",
         openedSr: "Opened: ",
         openedOn: "{title}, opened {date}",
         failing: ["{n} automation failing: ", "{n} automations failing: "],
@@ -1306,12 +1308,15 @@ const locales = {
       inCityUntil: "À {city} jusqu'au {date}.",
       nextUp: "Ensuite : {label}, {date}.",
       esscOpens: "Ouverture de l'ESSC {year} à {city}",
+      rolls: {
+        heading: "Activité récente",
+        closed: "Clos récemment",
+        opened: "Encore ouverts",
+      },
       board: {
-        heading: "Pour le bureau",
         features: "Principales nouveautés",
         fixes: "Principales corrections",
         audits: "Derniers audits",
-        since: "nouveautés et corrections fusionnées depuis le {date}, les plus importantes d'abord",
         pause: "Mettre en pause : {label}",
       },
       js: {
@@ -1325,7 +1330,6 @@ const locales = {
         inDays: ["dans {n} jour", "dans {n} jours"],
         closedSr: "Clos : ",
         closedOn: "{title}, clos le {date}",
-        recentIssues: "Derniers tickets ouverts et clos",
         openedSr: "Ouvert : ",
         openedOn: "{title}, ouvert le {date}",
         failing: ["{n} automatisation en échec : ", "{n} automatisations en échec : "],
@@ -2254,12 +2258,15 @@ const locales = {
       inCityUntil: "In {city} bis zum {date}.",
       nextUp: "Als Nächstes: {label}, {date}.",
       esscOpens: "Die ESSC {year} beginnt in {city}",
+      rolls: {
+        heading: "Neueste Aktivität",
+        closed: "Kürzlich geschlossen",
+        opened: "Noch offen",
+      },
       board: {
-        heading: "Für den Vorstand",
         features: "Wichtigste neue Funktionen",
         fixes: "Wichtigste Fehlerbehebungen",
         audits: "Letzte Audits",
-        since: "Funktionen und Fehlerbehebungen seit {date}, die umfangreichsten zuerst",
         pause: "{label} anhalten",
       },
       js: {
@@ -2273,7 +2280,6 @@ const locales = {
         inDays: ["in {n} Tag", "in {n} Tagen"],
         closedSr: "Geschlossen: ",
         closedOn: "{title}, geschlossen am {date}",
-        recentIssues: "Zuletzt eröffnete und geschlossene Issues",
         openedSr: "Eröffnet: ",
         openedOn: "{title}, eröffnet am {date}",
         failing: ["{n} Automatisierung fehlgeschlagen: ", "{n} Automatisierungen fehlgeschlagen: "],
