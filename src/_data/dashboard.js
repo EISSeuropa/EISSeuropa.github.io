@@ -8,7 +8,7 @@ const site = require("./site.js");
 const REPO = "https://github.com/EISSeuropa/EISSeuropa.github.io";
 // The dashboard's own version, shown at the foot of the page. Semantic
 // versioning, rules and history in docs/internal-dashboard.md.
-const VERSION = "2.22.1";
+const VERSION = "2.23.0";
 const everyone = ["staff", "management", "board", "volunteer"];
 const today = new Date().toISOString().slice(0, 10);
 
@@ -201,6 +201,44 @@ async function fetchRecent() {
   }
 }
 
+// The conference's pace (#2039): for each measure, how many abstracts or
+// registrations this edition had at today's distance from the conference,
+// against the previous recorded edition at the same distance. The figures
+// come from scripts/conference-pace.py. No card shows them yet.
+function pace() {
+  let file;
+  try { file = require("../data/conference-pace.json"); } catch { return null; }
+  if (!edition) return null;
+  const out = Math.round(days(edition.startDate) - days(today));
+  const at = (list) => list.filter((d) => d >= out).length;
+  const result = {};
+  for (const [measure, byEdition] of Object.entries(file.measures || {})) {
+    const cur = byEdition[edition.year];
+    const prevYear = Object.keys(byEdition).filter((y) => y < String(edition.year)).sort().pop();
+    const prev = prevYear && byEdition[prevYear];
+    if (!cur && !prev) continue;
+    result[measure] = {
+      edition: edition.year, daysOut: out,
+      count: cur ? at(cur.daysOut) : null, recorded: cur ? cur.recorded : null,
+      previous: prev ? { edition: Number(prevYear), count: at(prev.daysOut), total: prev.daysOut.length } : null,
+    };
+  }
+  return Object.keys(result).length ? result : null;
+}
+
+// The three newest tasks to pick up, listed under their count for staff and
+// volunteers. The live load refreshes them with the same search.
+async function fetchHelp() {
+  try {
+    const query = encodeURIComponent('repo:EISSeuropa/EISSeuropa.github.io is:issue is:open label:"help wanted"');
+    const { items } = await api(`search/issues?per_page=3&sort=created&order=desc&q=${query}`);
+    return items.map((x) => ({ n: x.number, title: x.title, url: x.html_url }));
+  } catch (e) {
+    console.warn(`[dashboard] help-wanted issues unavailable (${e.message}), the list waits for the live load`);
+    return [];
+  }
+}
+
 // The board's view: the five largest features and fixes merged in the last
 // 30 days across both site repos, ranked by lines changed as the NetSec monthly
 // report ranks them, and the last five formal audits from audits.json.
@@ -277,6 +315,6 @@ async function fetchNetsecEvents() {
 }
 
 module.exports = async function () {
-  const [{ keyDates, source }, recent, highlights] = await Promise.all([fetchDates(), fetchRecent(), fetchHighlights(), fetchNetsecEvents()]);
-  return { ...assemble(keyDates, source), recent, board: { ...highlights, audits } };
+  const [{ keyDates, source }, recent, highlights, , help] = await Promise.all([fetchDates(), fetchRecent(), fetchHighlights(), fetchNetsecEvents(), fetchHelp()]);
+  return { ...assemble(keyDates, source), recent, help, built: today, pace: pace(), board: { ...highlights, audits } };
 };

@@ -20,6 +20,7 @@ Maintainer-facing docs for [eiss-europa.com](https://eiss-europa.com)
 | [board-bios-setup.md](board-bios-setup.md) | The Form → `board.json` → board page bios pipeline. |
 | [indico-programme-integration.md](indico-programme-integration.md) | The live ESSC programme grid from the Indico sync. |
 | [indico-api-token.md](indico-api-token.md) | Indico API token setup for the authenticated sync. |
+| [conference-pace.md](conference-pace.md) | Recording the conference's abstracts and registrations from Indico exports, for the dashboard's comparison with the previous edition. |
 | [new-conference.md](new-conference.md) | Per-year-page rollover procedure for a new ESSC. |
 | [news-publishing.md](news-publishing.md) | The News surface: the homepage "Latest" section, the `/news` archive, the Atom feed, and how an item gets added. |
 | [anniversary-2027.md](anniversary-2027.md) | The #EISS10 anniversary automation: the four workflows, the settings to fill in, regenerating the logos and post cards, and what to switch off in January 2028. |

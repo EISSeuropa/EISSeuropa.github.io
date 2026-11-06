@@ -770,14 +770,30 @@ h4 { font-size: var(--fs-lg); }
   .apps-delta { animation: apps-rise 500ms var(--ease-out) 1s both; }
 }
 .apps-live { display: flex; align-items: center; justify-content: flex-end; gap: var(--space-2); min-height: 1.25rem; margin: 0 0 var(--space-3); color: var(--text-muted); font-size: 0.8125rem; }
-.apps-live.is-live::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--accent); }
+/* Where figures come from: a fixed dark green light for the build's stored
+   figures, a light green one with a glow once the live load replaces them. The
+   strip's line wears the same light, and the legend sits at the foot. */
+.apps-src, .apps-live:not(:empty)::before { flex: none; display: inline-block; width: 0.625rem; height: 0.625rem; border-radius: 50%; background: hsl(142 60% 24%); box-shadow: inset 0 0 0 1px hsl(142 45% 40%); vertical-align: 0.05em; }
+.apps-live:not(:empty)::before { content: ""; }
+.apps-src.is-live, .apps-live.is-live::before { background: hsl(142 72% 55%); box-shadow: 0 0 0 2px hsl(142 72% 55% / 0.25), 0 0 8px 2px hsl(142 72% 55% / 0.55); }
+.apps-status-card > .apps-src { position: absolute; top: var(--space-4); right: var(--space-4); }
+.apps-status-card > .apps-src + .apps-status-title { padding-right: var(--space-5); }
+.apps-roll-label .apps-src { margin-left: var(--space-1); }
+.apps-help { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-1); margin: var(--space-2) 0 0; padding: var(--space-2) 0 0; border-top: 1px solid var(--border); list-style: none; font-size: 0.875rem; }
+.apps-help[hidden] { display: none; }
+.apps-help a { display: block; overflow: hidden; padding-block: var(--space-1); color: var(--text); text-overflow: ellipsis; white-space: nowrap; }
+.apps-help-num { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.apps-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2) var(--space-5); margin: var(--space-6) 0 0; color: var(--text-muted); font-size: 0.8125rem; }
+.apps-legend > span { display: inline-flex; align-items: center; gap: var(--space-2); }
+.apps-legend + .apps-version { margin-top: var(--space-2); }
 @media (prefers-reduced-motion: no-preference) {
-  /* Three pulses and it rests (RGAA 13.8: motion past five seconds needs a pause control). */
-  .apps-live.is-live::before { animation: apps-live-ring 1.4s ease-out 3; }
+  /* Three pulses as a light turns live, then it rests (RGAA 13.8: motion past
+     five seconds needs a pause control). The legend's light stays still. */
+  .apps-live.is-live::before, [data-apps-src].is-live { animation: apps-live-ring 1.4s ease-out 3; }
 }
 @keyframes apps-live-ring {
-  from { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 70%, transparent); }
-  to { box-shadow: 0 0 0 0.5rem transparent; }
+  from { box-shadow: 0 0 0 0 hsl(142 72% 55% / 0.7), 0 0 8px 2px hsl(142 72% 55% / 0.55); }
+  to { box-shadow: 0 0 0 0.5rem transparent, 0 0 8px 2px hsl(142 72% 55% / 0.55); }
 }
 /* The Today box folds on a grid row: 1fr open, 0fr shut (.is-out). */
 .apps-today { display: grid; grid-template-rows: 1fr; margin: 0 0 var(--space-4); }
@@ -1284,6 +1300,7 @@ html:has(.apps-welcome[open]) { overflow: hidden; }
 @keyframes apps-run-in { from { opacity: 0; transform: scale(0.4); } }
 .apps-health-failed a { font-weight: 600; }
 .apps-status-card {
+  position: relative;
   padding: var(--space-5);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
