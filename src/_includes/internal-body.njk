@@ -814,7 +814,22 @@
         list.classList.toggle("apps-done-static", open || calm);
         btn.hidden = calm || lines().length < 2;
       }
-      more.addEventListener("click", function () { setOpen(!roll.open); });
+      // On a press, the list glides between one line and all of them, and the
+      // lines that join fade in one after another. Without motion it just flips.
+      var glide = null;
+      more.addEventListener("click", function () {
+        var from = list.getBoundingClientRect().height;
+        setOpen(!roll.open);
+        if (calm || !list.animate) return;
+        var to = list.getBoundingClientRect().height;
+        if (glide) glide.cancel();
+        list.style.overflow = "hidden";
+        glide = list.animate([{ height: from + "px" }, { height: to + "px" }], { duration: 420, easing: "cubic-bezier(0.22, 1, 0.36, 1)" });
+        glide.onfinish = glide.oncancel = function () { list.style.overflow = ""; };
+        if (roll.open) lines().forEach(function (li, k) {
+          if (k !== roll.i) li.animate([{ opacity: 0, transform: "translateY(-0.25rem)" }, { opacity: 1, transform: "none" }], { duration: 320, delay: 60 + 40 * k, easing: "ease-out", fill: "backwards" });
+        });
+      });
       // Called once the lines are in place. The first rises in after a beat.
       roll.start = function (key) {
         roll.key = key;
