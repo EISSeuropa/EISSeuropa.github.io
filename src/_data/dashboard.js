@@ -6,6 +6,9 @@ const conferences = require("./conferences.js");
 const site = require("./site.js");
 
 const REPO = "https://github.com/EISSeuropa/EISSeuropa.github.io";
+// The dashboard's own version, shown at the foot of the page. Semantic
+// versioning, rules and history in docs/internal-dashboard.md.
+const VERSION = "2.21.0";
 const everyone = ["staff", "management", "board", "volunteer"];
 const today = new Date().toISOString().slice(0, 10);
 
@@ -158,7 +161,7 @@ function assemble(keyDates, source) {
     steps: s.steps.map((st) => ({ ...st, links: (st.links || []).map(link).filter(Boolean) })),
   }));
 
-  return { release, counts, dates, deadlines, phase, onboarding, agenda: agenda(dates), datesSource: source, calendar: site.deadlinesCalendar || null, repo: "EISSeuropa/EISSeuropa.github.io" };
+  return { version: VERSION, release, counts, dates, deadlines, phase, onboarding, agenda: agenda(dates), datesSource: source, calendar: site.deadlinesCalendar || null, repo: "EISSeuropa/EISSeuropa.github.io" };
 }
 
 // The five newest issues still open and the last five closed as done, for the Today

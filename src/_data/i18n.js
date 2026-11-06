@@ -243,6 +243,7 @@ const locales = {
         cohortStart: "{cohort} interns start",
         tentative: "to be confirmed",
       },
+      version: "Internal dashboard v{v}",
       rolls: {
         heading: "Recent activity",
         closed: "Recently closed",
@@ -1325,6 +1326,7 @@ const locales = {
         cohortStart: "Arrivée des stagiaires ({cohort})",
         tentative: "à confirmer",
       },
+      version: "Tableau de bord interne v{v}",
       rolls: {
         heading: "Activité récente",
         closed: "Clos récemment",
@@ -2284,6 +2286,7 @@ const locales = {
         cohortStart: "Praktikumsbeginn ({cohort})",
         tentative: "noch nicht bestätigt",
       },
+      version: "Internes Dashboard v{v}",
       rolls: {
         heading: "Neueste Aktivität",
         closed: "Kürzlich geschlossen",

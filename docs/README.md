@@ -7,6 +7,7 @@ Maintainer-facing docs for [eiss-europa.com](https://eiss-europa.com)
 | Doc | What it covers |
 |---|---|
 | [architecture.md](architecture.md) | Build pipeline, data sources, sync jobs, CI gates, deploy — the data-flow map. |
+| [internal-dashboard.md](internal-dashboard.md) | The internal dashboard's own version number: the semantic versioning rules, how to bump it, and its history from 1.0.0. |
 | [admin-guide.md](admin-guide.md) | Operator and handover guide: who holds what access, what runs unattended, and what a successor needs on day one. |
 | [design-system.md](design-system.md) | UI components and interaction patterns (the `.njk` partials + their CSS/JS). |
 | [a11y-audit-2026-08.md](a11y-audit-2026-08.md) | The August 2026 accessibility audit for #1225: method, the five defect classes found, what the tooling could not check, and what declaring conformance would take. |

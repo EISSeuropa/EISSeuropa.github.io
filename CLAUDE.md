@@ -418,6 +418,10 @@ work to volunteers, label the issue `help wanted`.
    changes, `new-conference.md` for the per-year-page rollover
    procedure.
 
+   A PR that changes `/internal.html` also bumps the dashboard's own
+   version (`VERSION` in `src/_data/dashboard.js`) and adds a row to
+   `docs/internal-dashboard.md`, which holds the SemVer rules.
+
 2. **Catch-up sweep at every release** (patch, minor, major). Walk
    the `docs/` index, spot-check each against what shipped, fix
    what's wrong. Lightweight by design: most PRs already updated

@@ -481,7 +481,8 @@
         {% endfor %}
       </ul>
     </section>
-  </div>
+    <p class="apps-version"><a href="https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/internal-dashboard.md">{{ d.version | replace("{v}", dashboard.version) }}</a></p>
+</div>
 </div>
 
 <script type="application/json" id="apps-i18n">{{ d.js | dump | safe }}</script>
