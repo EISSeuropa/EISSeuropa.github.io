@@ -99,6 +99,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
+- The NetSec report tab on the internal dashboard has a Month menu that shows any complete month since June 2026, newest first. `?month=2026-09` links to one month.
 - Annual report drafts at `/internal/report-YYYY.html`, one per year from 2025. Each sets the year's figures for the conference, the Anthology, NetSec and the website beside the year before's, with the change, and lists the prizes, feature releases and audits. Staff add the prose in `src/_data/annualReportNotes.json`, and the page prints or saves as PDF. The internal dashboard links the latest draft for staff, management and the board.
 - A "Conference pace" card in the internal dashboard's conference timeline compares the coming ESSC's abstracts and registrations with the previous edition's at the same number of days before the conference, as two bars on one scale. Staff and management see it. The figures come from Indico exports that staff record with `scripts/conference-pace.py`, and until the first is recorded the card says so.
 - Each block of figures on the internal dashboard has a small light: dark green while it shows the figures stored at the last daily update, light green with a glow once the live figures from GitHub replace them. A legend at the foot of the page explains the two.
@@ -219,6 +220,8 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- The stored/live lights in the internal dashboard's Recent activity sit to the left of each roll's label, in one column. In Platform status the light is the level dot beside "Nominal", in place of a second dot in the card's corner.
+- The "Live from GitHub, checked X minutes ago" line under the internal dashboard's header is gone. The lights beside each block show the same.
 - Both "Recent activity" boxes on the internal dashboard, the issue rolls and the rolls of main features, audits and fixes, show for every role. Board members no longer lose the issue rolls, and the other roles see the features, audits and fixes.
 - The internal dashboard's "Platform development status" tab is "Platform development", and the NetSec report tab moves to the end of the row, after Platform status.
 - A roll on the internal dashboard's "Recent activity" now glides open when its chevron is pressed, and the lines that join fade in one after another. It glides shut on a second press. With reduced motion the list opens at once, as before.

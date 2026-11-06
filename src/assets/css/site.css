@@ -769,16 +769,14 @@ h4 { font-size: var(--fs-lg); }
 @media (prefers-reduced-motion: no-preference) {
   .apps-delta { animation: apps-rise 500ms var(--ease-out) 1s both; }
 }
-.apps-live { display: flex; align-items: center; justify-content: flex-end; gap: var(--space-2); min-height: 1.25rem; margin: 0 0 var(--space-3); color: var(--text-muted); font-size: 0.8125rem; }
 /* Where figures come from: a fixed dark green light for the build's stored
    figures, a light green one with a glow once the live load replaces them. The
    strip's line wears the same light, and the legend sits at the foot. */
-.apps-src, .apps-live:not(:empty)::before { flex: none; display: inline-block; width: 0.625rem; height: 0.625rem; border-radius: 50%; background: hsl(142 60% 24%); box-shadow: inset 0 0 0 1px hsl(142 45% 40%); vertical-align: 0.05em; }
-.apps-live:not(:empty)::before { content: ""; }
-.apps-src.is-live, .apps-live.is-live::before { background: hsl(142 72% 55%); box-shadow: 0 0 0 2px hsl(142 72% 55% / 0.25), 0 0 8px 2px hsl(142 72% 55% / 0.55); }
+.apps-src { flex: none; display: inline-block; width: 0.625rem; height: 0.625rem; border-radius: 50%; background: hsl(142 60% 24%); box-shadow: inset 0 0 0 1px hsl(142 45% 40%); vertical-align: 0.05em; }
+.apps-src.is-live { background: hsl(142 72% 55%); box-shadow: 0 0 0 2px hsl(142 72% 55% / 0.25), 0 0 8px 2px hsl(142 72% 55% / 0.55); }
 .apps-status-card > .apps-src { position: absolute; top: var(--space-4); right: var(--space-4); }
 .apps-status-card > .apps-src + .apps-status-title { padding-right: var(--space-5); }
-.apps-roll-label .apps-src { margin-left: var(--space-1); }
+.apps-roll-label .apps-src { margin-right: var(--space-1); }
 .apps-help { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-1); margin: var(--space-2) 0 0; padding: var(--space-2) 0 0; border-top: 1px solid var(--border); list-style: none; font-size: 0.875rem; }
 .apps-help[hidden] { display: none; }
 .apps-help a { display: block; overflow: hidden; padding-block: var(--space-1); color: var(--text); text-overflow: ellipsis; white-space: nowrap; }
@@ -789,7 +787,7 @@ h4 { font-size: var(--fs-lg); }
 @media (prefers-reduced-motion: no-preference) {
   /* Three pulses as a light turns live, then it rests (RGAA 13.8: motion past
      five seconds needs a pause control). The legend's light stays still. */
-  .apps-live.is-live::before, [data-apps-src].is-live { animation: apps-live-ring 1.4s ease-out 3; }
+  [data-apps-src].is-live { animation: apps-live-ring 1.4s ease-out 3; }
 }
 @keyframes apps-live-ring {
   from { box-shadow: 0 0 0 0 hsl(142 72% 55% / 0.7), 0 0 8px 2px hsl(142 72% 55% / 0.55); }
@@ -1018,6 +1016,8 @@ a.apps-agenda-link:hover .apps-agenda-label { text-decoration: underline; }
 /* The NetSec monthly report panel. */
 .apps-netsec-figure { margin: 0 0 var(--space-1); font-size: 1.25rem; font-weight: 600; }
 .apps-netsec-sub { margin: var(--space-4) 0 var(--space-1); font-size: 0.9375rem; font-weight: 600; }
+.apps-netsec-pick { margin: 0 0 var(--space-3); }
+.apps-netsec-pick label { margin-right: var(--space-2); font-weight: 600; }
 .apps-netsec-muted { color: var(--text-muted); font-size: 0.875rem; }
 .apps-netsec-list { display: grid; gap: var(--space-2); margin: var(--space-2) 0 0; padding: 0; list-style: none; font-size: 0.9375rem; }
 .apps-netsec-list span { display: block; color: var(--text-muted); font-size: 0.8125rem; }
@@ -1294,6 +1294,9 @@ html:has(.apps-welcome[open]) { overflow: hidden; }
 .apps-health-item { display: flex; align-items: baseline; gap: var(--space-2); }
 .apps-dot { display: inline-block; flex: none; width: 0.75rem; height: 0.75rem; border-radius: 50%; }
 .apps-dot-nominal { background: hsl(142 65% 38%); }
+/* A level dot that also carries the stored/live light (Platform status). */
+.apps-dot-nominal[data-apps-src] { background: hsl(142 60% 24%); box-shadow: inset 0 0 0 1px hsl(142 45% 40%); }
+.apps-dot-nominal[data-apps-src].is-live { background: hsl(142 72% 55%); box-shadow: 0 0 0 2px hsl(142 72% 55% / 0.25), 0 0 8px 2px hsl(142 72% 55% / 0.55); }
 .apps-dot-issue { background: hsl(28 95% 52%); box-shadow: 0 0 6px 2px hsl(28 95% 52% / 0.6); }
 .apps-dot-critical { background: hsl(0 80% 50%); }
 .apps-dot-unknown { background: transparent; border: 2px solid var(--text-muted); }

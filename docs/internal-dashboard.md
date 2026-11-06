@@ -30,6 +30,7 @@ Newest first. Rows for 2.20.0 and later were added as each PR was opened.
 
 | Version | Date | PR | Change |
 |---|---|---|---|
+| 2.27.0 | 2026-11-06 | [#2045](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2045) | A Month menu on the NetSec report tab for past months (`?month=2026-09`), the Recent activity lights to the left of each roll's label, the Platform status lights merged into the level dots, and the "Live from GitHub, checked" line under the header removed |
 | 2.26.0 | 2026-11-06 | [#2046](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2046) | A link to the annual report draft at the foot of the page (staff, management, board) |
 | 2.25.0 | 2026-11-06 | [#2043](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2043) | A "Conference pace" card in the conference timeline (staff and management): abstracts and registrations against the previous edition at the same distance from the conference (#2039) |
 | 2.24.0 | 2026-11-06 | [#2041](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2041) | Both "Recent activity" boxes (the issue rolls and the board's rolls) show for every role, "Platform development status" becomes "Platform development", NetSec report moves to the last tab, and `netsecReport` keeps every month since June 2026 for a month dropdown |

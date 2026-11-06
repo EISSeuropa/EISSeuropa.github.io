@@ -123,7 +123,6 @@
         </div>
       {% endif %}
     </dl>
-    <p class="apps-live" data-apps-asof>{% if systemHealth %}{{ d.asOf | replace("{date}", systemHealth.checked | newsDate(lang)) }}{% endif %}</p>
     {# The conference timeline: the stage of the conference year with its
        stepper, then the coming dates as calendar tiles. #}
     {% if dashboard.phase or dashboard.agenda.length %}
@@ -216,7 +215,7 @@
           <p class="apps-today-text" data-apps-today-text hidden></p>
           {% for key in ["closed", "opened"] %}
             <div class="apps-roll-row" data-apps-issue-row="{{ key }}" hidden>
-              <p class="apps-roll-label" id="apps-roll-{{ key }}">{{ d.rolls[key] }} {{ SRC | replace("@", "rolls") | safe }}</p>
+              <p class="apps-roll-label" id="apps-roll-{{ key }}">{{ SRC | replace("@", "rolls") | safe }} {{ d.rolls[key] }}</p>
               <div class="apps-done-stage" data-apps-issue-roll="{{ key }}">
                 <ul class="apps-done" data-apps-done role="list" aria-labelledby="apps-roll-{{ key }}"></ul>
                 <button type="button" class="apps-done-pause apps-done-more" data-apps-done-more aria-expanded="false" aria-label="{{ d.rolls.showAll | replace("{label}", d.rolls[key]) }}" title="{{ d.rolls.showAll | replace("{label}", d.rolls[key]) }}" hidden>{{ icon("chevron-down") }}</button>
@@ -241,7 +240,7 @@
       <div class="apps-today-box">
         {% for key in ["features", "audits", "fixes"] %}{% if B[key] and B[key].length %}
           <div class="apps-roll-row">
-            <p class="apps-roll-label" id="apps-board-{{ key }}">{{ d.board[key] }} {{ SRC | replace("@", "") | safe }}</p>
+            <p class="apps-roll-label" id="apps-board-{{ key }}">{{ SRC | replace("@", "") | safe }} {{ d.board[key] }}</p>
             <div class="apps-done-stage" data-apps-roll>
               <ul class="apps-done apps-done-static" data-apps-done role="list" aria-labelledby="apps-board-{{ key }}">
                 {% for x in B[key] %}
@@ -411,13 +410,12 @@
         <div class="apps-status">
           {% for repo in systemHealth.repos %}
             <div class="apps-status-card">
-              {{ SRC | replace("@", "runs") | safe }}
               <h3 class="apps-status-title apps-health-brand">
                 <a href="{{ repo.site }}" aria-label="{{ repo.label }}">
                   {% if loop.first %}<span aria-hidden="true">{% inlineSvg "assets/images/brand/logo-lockup.svg" %}</span>{% else %}<img src="/assets/images/partners/netsec.svg#svgView(viewBox(360,780,2800,930))" alt="" width="120" height="40">{% endif %}
                 </a>
               </h3>
-              <p class="apps-health-level" data-apps-repo-level="{{ repo.slug }}"><span class="apps-dot apps-dot-{{ repo.level }}" aria-hidden="true"></span><span>{{ d.levels[repo.level] }}</span></p>
+              <p class="apps-health-level" data-apps-repo-level="{{ repo.slug }}"><span class="apps-dot apps-dot-{{ repo.level }}" data-apps-src="runs" title="{{ STORED }}" aria-hidden="true"></span><span>{{ d.levels[repo.level] }}</span></p>
               <p class="apps-health-summary" data-apps-repo-summary="{{ repo.slug }}">{% if repo.failedCount %}{{ d.automationsFailing | replace("{bad}", repo.failedCount) | replace("{n}", repo.items.length) }}{% else %}{{ d.automationsOk | replace("{n}", repo.items.length) }}{% endif %}</p>
               <details class="apps-health-details" data-apps-repo-details="{{ repo.slug }}"{% if repo.failedCount %} open{% endif %}>
                 <summary>{{ d.everyAutomation }}</summary>
@@ -431,15 +429,13 @@
           {% endfor %}
           {% set gh = systemHealth.github %}
           <div class="apps-status-card">
-            {{ SRC | replace("@", "ghstatus") | safe }}
             <h3 class="apps-status-title">GitHub</h3>
-            <p class="apps-health-level" data-apps-github-level><span class="apps-dot apps-dot-{{ gh.level if gh else 'unknown' }}" aria-hidden="true"></span><span>{{ d.levels[gh.level if gh else 'unknown'] }}</span></p>
+            <p class="apps-health-level" data-apps-github-level><span class="apps-dot apps-dot-{{ gh.level if gh else 'unknown' }}" data-apps-src="ghstatus" title="{{ STORED }}" aria-hidden="true"></span><span>{{ d.levels[gh.level if gh else 'unknown'] }}</span></p>
             <p class="apps-health-summary"><a href="https://www.githubstatus.com/">{{ d.githubServices }}</a> <span data-apps-github-text>{% if gh %}{{ d.levels[gh.level] }}{% if gh.components.length %}: {{ gh.components | join(", ") }}{% endif %}{% else %}{{ d.unreadable }}{% endif %}</span></p>
           </div>
           <div class="apps-status-card">
-            {{ SRC | replace("@", "") | safe }}
             <h3 class="apps-status-title">Google Workspace</h3>
-            <p class="apps-health-level"><span class="apps-dot apps-dot-{{ systemHealth.workspace.level }}" aria-hidden="true"></span>{{ d.levels[systemHealth.workspace.level] }}</p>
+            <p class="apps-health-level"><span class="apps-dot apps-dot-{{ systemHealth.workspace.level }}" data-apps-src="" title="{{ STORED }}" aria-hidden="true"></span>{{ d.levels[systemHealth.workspace.level] }}</p>
             <ul class="apps-health-list" role="list">
               {% if systemHealth.google %}
                 <li class="apps-health-item"><span class="apps-dot apps-dot-{{ systemHealth.google.level }}" aria-hidden="true"></span><div><a href="https://www.google.com/appsstatus/dashboard/">{{ d.googleServices }}</a> <span>{{ d.levels[systemHealth.google.level] }}{% if systemHealth.google.services.length %}: {{ systemHealth.google.services | join(", ") }}{% endif %}</span></div></li>
@@ -457,85 +453,90 @@
             </ul>
           </div>
         </div>
-        <p class="apps-note" data-apps-asof>{{ d.asOf | replace("{date}", systemHealth.checked | newsDate(lang)) }}.</p>
+        <p class="apps-note">{{ d.asOf | replace("{date}", systemHealth.checked | newsDate(lang)) }}.</p>
       </section>
     {% endif %}
 
-    {# The NetSec monthly report, newest month first, recomputed at build by
-       src/_data/netsecReport.js. This shows the newest. Names and titles stay
-       as the NetSec data and the commits give them. #}
-    {% set R = netsecReport[0] if netsecReport %}
-    {% if R %}
+    {# The NetSec monthly report, one block per month, newest first, recomputed
+       at build by src/_data/netsecReport.js. The month menu shows one at a
+       time (?month=2026-09 links to one). Without JS the months stack. Names
+       and titles stay as the NetSec data and the commits give them. #}
+    {% if netsecReport %}
       {% set N = d.netsec %}
-      {% set W = R.website %}
       <section class="apps-panel apps-netsec" id="netsec" data-apps-panel aria-labelledby="apps-netsec-heading">
-        <h2 class="apps-heading apps-section-heading" id="apps-netsec-heading">{{ N.heading | replace("{month}", R.start | monthYear(lang)) }}</h2>
+        <p class="apps-netsec-pick" data-apps-netsec-pick hidden><label for="apps-netsec-month">{{ N.month }}</label>
+          <select id="apps-netsec-month">{% for R in netsecReport %}<option value="{{ R.start | truncate(7, true, "") }}">{{ R.start | monthYear(lang) }}</option>{% endfor %}</select></p>
+        {% for R in netsecReport %}{% set W = R.website %}
+        <div data-apps-netsec-month="{{ R.start | truncate(7, true, "") }}">
+        <h2 class="apps-heading apps-section-heading"{% if loop.first %} id="apps-netsec-heading"{% endif %}>{{ N.heading | replace("{month}", R.start | monthYear(lang)) }}</h2>
         <p class="apps-note">{{ N.lead }}</p>
-        <div class="apps-status">
-          <div class="apps-status-card">
-            {{ SRC | replace("@", "") | safe }}
-            <h3 class="apps-status-title">{{ N.directory }}</h3>
-            <p class="apps-netsec-figure">{{ N.profiles | replace("{from}", R.directory.from) | replace("{to}", R.directory.to) }}</p>
-            <p>{{ N.joinedLeft | replace("{joined}", R.directory.joined.length) | replace("{left}", R.directory.left.length) }}</p>
-            {% for key in ["joined", "left"] %}{% if R.directory[key].length %}
-              <details class="apps-netsec-more"{% if key == "joined" %} open{% endif %}>
-                <summary>{{ N.profileLists[key] }} ({{ R.directory[key].length }})</summary>
-                <ul class="apps-netsec-list" role="list">
-                  {% for m in R.directory[key] %}<li><a href="{{ m.url }}">{{ m.name }}</a><span>{{ m.affiliation }} ({{ m.country }})</span></li>{% endfor %}
-                </ul>
-              </details>
-            {% endif %}{% endfor %}
-          </div>
-
-          <div class="apps-status-card">
-            {{ SRC | replace("@", "") | safe }}
-            <h3 class="apps-status-title">{{ N.leadership }}</h3>
-            <h4 class="apps-netsec-sub">{{ N.coreGroup }}</h4>
-            <ul class="apps-netsec-list" role="list">
-              {% for c in R.coreGroup %}
-                <li>{% if c.kind == "appointed" %}{{ N.appointed | replace("{name}", c.name) | replace("{role}", c.role) }}{% elif c.kind == "left" %}{{ N.noLonger | replace("{name}", c.name) | replace("{role}", c.role) }}{% else %}{{ N.post | replace("{role}", c.role) | replace("{was}", c.was or N.vacant) | replace("{now}", c.now or N.vacant) }}{% endif %}</li>
-              {% else %}
-                <li>{{ N.noChange }}</li>
-              {% endfor %}
-            </ul>
-            <h4 class="apps-netsec-sub">{{ N.mc }}</h4>
-            <p>{{ N.representatives | replace("{from}", R.committee.from) | replace("{to}", R.committee.to) }}</p>
-            {% for key in ["joined", "left"] %}{% if R.committee[key].length %}
-              <p><strong>{{ N[key] }}:</strong> {% for m in R.committee[key] %}{{ m.name }} ({{ m.country }}){% if not loop.last %}, {% endif %}{% endfor %}</p>
-            {% endif %}{% endfor %}
-          </div>
-
-          <div class="apps-status-card">
-            {{ SRC | replace("@", "") | safe }}
-            <h3 class="apps-status-title">{{ N.groups }}</h3>
-            {% for g in R.groups %}
-              <h4 class="apps-netsec-sub">WG{{ g.number }} {{ g.name }}</h4>
-              <p>{% if g.from == g.to %}{{ N.unchanged | replace("{n}", g.to) }}{% else %}{{ N.changed | replace("{from}", g.from) | replace("{to}", g.to) | replace("{delta}", ("+" if g.to > g.from else "") + (g.to - g.from)) }}{% endif %}<br>
-              <span class="apps-netsec-muted">{% if g.lead %}{{ N.leader | replace("{name}", g.lead) }}{% endif %}{% if g.lead and g.coLead %}, {% endif %}{% if g.coLead %}{{ N.coLeader | replace("{name}", g.coLead) }}{% endif %}</span></p>
-              {% for key in ["joined", "left"] %}{% if g[key].length %}
-                <p class="apps-netsec-muted"><strong>{{ N[key] }}:</strong> {% for m in g[key] %}{{ m.name }} ({{ m.country }}){% if not loop.last %}, {% endif %}{% endfor %}</p>
+          <div class="apps-status">
+            <div class="apps-status-card">
+              {{ SRC | replace("@", "") | safe }}
+              <h3 class="apps-status-title">{{ N.directory }}</h3>
+              <p class="apps-netsec-figure">{{ N.profiles | replace("{from}", R.directory.from) | replace("{to}", R.directory.to) }}</p>
+              <p>{{ N.joinedLeft | replace("{joined}", R.directory.joined.length) | replace("{left}", R.directory.left.length) }}</p>
+              {% for key in ["joined", "left"] %}{% if R.directory[key].length %}
+                <details class="apps-netsec-more"{% if key == "joined" %} open{% endif %}>
+                  <summary>{{ N.profileLists[key] }} ({{ R.directory[key].length }})</summary>
+                  <ul class="apps-netsec-list" role="list">
+                    {% for m in R.directory[key] %}<li><a href="{{ m.url }}">{{ m.name }}</a><span>{{ m.affiliation }} ({{ m.country }})</span></li>{% endfor %}
+                  </ul>
+                </details>
               {% endif %}{% endfor %}
-            {% endfor %}
-          </div>
+            </div>
 
-          <div class="apps-status-card">
-            {{ SRC | replace("@", "") | safe }}
-            <h3 class="apps-status-title">{{ N.website }}</h3>
-            <p class="apps-netsec-figure">{{ N.prs | replace("{n}", W.merged) }}</p>
-            <p>{{ N.tally | replace("{features}", W.features) | replace("{fixes}", W.fixes) | replace("{data}", W.data) | replace("{add}", W.add | thousands(lang)) | replace("{del}", W.del | thousands(lang)) }}</p>
-            {% for key in ["majorFeatures", "notableFixes"] %}{% if W[key].length %}
-              <h4 class="apps-netsec-sub">{{ N[key] }}</h4>
+            <div class="apps-status-card">
+              {{ SRC | replace("@", "") | safe }}
+              <h3 class="apps-status-title">{{ N.leadership }}</h3>
+              <h4 class="apps-netsec-sub">{{ N.coreGroup }}</h4>
               <ul class="apps-netsec-list" role="list">
-                {% for x in W[key] %}<li>{% if x.url %}<a href="{{ x.url }}">{{ x.title }}</a>{% else %}{{ x.title }}{% endif %}<span>{% if x.pr %}#{{ x.pr }}, {% endif %}+{{ x.add | thousands(lang) }}/−{{ x.del | thousands(lang) }}</span></li>{% endfor %}
+                {% for c in R.coreGroup %}
+                  <li>{% if c.kind == "appointed" %}{{ N.appointed | replace("{name}", c.name) | replace("{role}", c.role) }}{% elif c.kind == "left" %}{{ N.noLonger | replace("{name}", c.name) | replace("{role}", c.role) }}{% else %}{{ N.post | replace("{role}", c.role) | replace("{was}", c.was or N.vacant) | replace("{now}", c.now or N.vacant) }}{% endif %}</li>
+                {% else %}
+                  <li>{{ N.noChange }}</li>
+                {% endfor %}
               </ul>
-            {% endif %}{% endfor %}
-            <h4 class="apps-netsec-sub">{{ N.contributors }}</h4>
-            <ul class="apps-netsec-list" role="list">
-              {% for c in W.contributors %}<li>{{ c.who }}<span>{{ N.commits[0 if c.commits == 1 else 1] | replace("{n}", c.commits) }}</span></li>{% endfor %}
-            </ul>
+              <h4 class="apps-netsec-sub">{{ N.mc }}</h4>
+              <p>{{ N.representatives | replace("{from}", R.committee.from) | replace("{to}", R.committee.to) }}</p>
+              {% for key in ["joined", "left"] %}{% if R.committee[key].length %}
+                <p><strong>{{ N[key] }}:</strong> {% for m in R.committee[key] %}{{ m.name }} ({{ m.country }}){% if not loop.last %}, {% endif %}{% endfor %}</p>
+              {% endif %}{% endfor %}
+            </div>
+
+            <div class="apps-status-card">
+              {{ SRC | replace("@", "") | safe }}
+              <h3 class="apps-status-title">{{ N.groups }}</h3>
+              {% for g in R.groups %}
+                <h4 class="apps-netsec-sub">WG{{ g.number }} {{ g.name }}</h4>
+                <p>{% if g.from == g.to %}{{ N.unchanged | replace("{n}", g.to) }}{% else %}{{ N.changed | replace("{from}", g.from) | replace("{to}", g.to) | replace("{delta}", ("+" if g.to > g.from else "") + (g.to - g.from)) }}{% endif %}<br>
+                <span class="apps-netsec-muted">{% if g.lead %}{{ N.leader | replace("{name}", g.lead) }}{% endif %}{% if g.lead and g.coLead %}, {% endif %}{% if g.coLead %}{{ N.coLeader | replace("{name}", g.coLead) }}{% endif %}</span></p>
+                {% for key in ["joined", "left"] %}{% if g[key].length %}
+                  <p class="apps-netsec-muted"><strong>{{ N[key] }}:</strong> {% for m in g[key] %}{{ m.name }} ({{ m.country }}){% if not loop.last %}, {% endif %}{% endfor %}</p>
+                {% endif %}{% endfor %}
+              {% endfor %}
+            </div>
+
+            <div class="apps-status-card">
+              {{ SRC | replace("@", "") | safe }}
+              <h3 class="apps-status-title">{{ N.website }}</h3>
+              <p class="apps-netsec-figure">{{ N.prs | replace("{n}", W.merged) }}</p>
+              <p>{{ N.tally | replace("{features}", W.features) | replace("{fixes}", W.fixes) | replace("{data}", W.data) | replace("{add}", W.add | thousands(lang)) | replace("{del}", W.del | thousands(lang)) }}</p>
+              {% for key in ["majorFeatures", "notableFixes"] %}{% if W[key].length %}
+                <h4 class="apps-netsec-sub">{{ N[key] }}</h4>
+                <ul class="apps-netsec-list" role="list">
+                  {% for x in W[key] %}<li>{% if x.url %}<a href="{{ x.url }}">{{ x.title }}</a>{% else %}{{ x.title }}{% endif %}<span>{% if x.pr %}#{{ x.pr }}, {% endif %}+{{ x.add | thousands(lang) }}/−{{ x.del | thousands(lang) }}</span></li>{% endfor %}
+                </ul>
+              {% endif %}{% endfor %}
+              <h4 class="apps-netsec-sub">{{ N.contributors }}</h4>
+              <ul class="apps-netsec-list" role="list">
+                {% for c in W.contributors %}<li>{{ c.who }}<span>{{ N.commits[0 if c.commits == 1 else 1] | replace("{n}", c.commits) }}</span></li>{% endfor %}
+              </ul>
+            </div>
           </div>
+          <p class="apps-note">{{ N.period | replace("{start}", R.start | newsDate(lang)) | replace("{end}", R.end | newsDate(lang)) | replace("{a}", R.commits[0]) | replace("{b}", R.commits[1]) }}</p>
         </div>
-        <p class="apps-note">{{ N.period | replace("{start}", R.start | newsDate(lang)) | replace("{end}", R.end | newsDate(lang)) | replace("{a}", R.commits[0]) | replace("{b}", R.commits[1]) }}</p>
+        {% endfor %}
       </section>
     {% endif %}
 
@@ -1087,7 +1088,7 @@
     var LEVELS = DASH.levels;
     // Run links arrive from the API or the browser's cache, so only GitHub's are followed.
     function isRun(url) { return /^https:\/\/github\.com\//.test(url); }
-    function setDot(el, level) { el.className = "apps-dot apps-dot-" + level; }
+    function setDot(el, level) { el.className = "apps-dot apps-dot-" + level + (el.classList.contains("is-live") ? " is-live" : ""); }
     // The last ten runs of an automation as a row of squares, oldest first, so
     // a one-off failure reads differently from a streak.
     var FAILED = ["failure", "timed_out", "startup_failure"];
@@ -1202,6 +1203,26 @@
       }).catch(function () {});
     }
     loadGithubStatus();
+    // The NetSec month menu: one month in view, linkable as ?month=2026-09.
+    (function () {
+      var pick = document.querySelector("[data-apps-netsec-pick]");
+      if (!pick) return;
+      var sel = pick.querySelector("select");
+      var months = [].slice.call(document.querySelectorAll("[data-apps-netsec-month]"));
+      function show() {
+        months.forEach(function (m) { m.hidden = m.getAttribute("data-apps-netsec-month") !== sel.value; });
+      }
+      var linked = new URLSearchParams(location.search).get("month");
+      if (linked && sel.querySelector('[value="' + CSS.escape(linked) + '"]')) sel.value = linked;
+      sel.addEventListener("change", function () {
+        show();
+        var u = new URL(location.href);
+        if (sel.selectedIndex === 0) u.searchParams.delete("month"); else u.searchParams.set("month", sel.value);
+        history.replaceState(null, "", u);
+      });
+      pick.hidden = months.length < 2;
+      show();
+    })();
     // A block's light turns live once its figures come from the live load.
     function markLive(key) {
       document.querySelectorAll('[data-apps-src="' + key + '"]').forEach(function (el) {
@@ -1245,10 +1266,6 @@
         if (note) note.textContent = f(DASH.issuesClosed, { closed: live.closed, total: live.total });
       }
       if (data.health) applyHealth(live);
-      var mins = Math.round((Date.now() - at) / 6e4);
-      var line = document.querySelector(".apps-live");
-      line.classList.add("is-live");
-      line.textContent = f(I.liveChecked, { when: mins < 1 ? I.justNow : pl(I.minAgo, mins) });
       recent = (live.recent || data.recent || []).filter(function (x) { return isRun(x.url); });
       compare(live.tasks, live.closed === null ? built.closed : live.closed, at, live.done);
       if (live.done) renderPace(live.done);
