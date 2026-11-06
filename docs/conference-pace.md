@@ -23,7 +23,9 @@ The script keeps only the dates, as days before the conference's first day (from
 
 ## What reads it
 
-`src/_data/dashboard.js` builds `dashboard.pace` from the file: for each measure, this edition's count at today's distance, the date it was recorded, and the previous edition's count at the same distance with its final total. No card on `/internal.html` shows it yet (#2039, step 2).
+`src/_data/dashboard.js` builds `dashboard.pace` from the file: for each measure, this edition's count when it was last recorded, and the previous edition's count at the same distance from its conference, with its final total. With nothing recorded for this edition yet, the distance is today's.
+
+The "Conference pace" card in the conference timeline on `/internal.html` shows it to staff and management: one bar for each edition, both on the scale of the previous edition's final total. Its light is dark green, with the date of the latest recording in its tooltip. With no file, the card says so and links here.
 
 ## Checks
 
@@ -31,4 +33,4 @@ The script keeps only the dates, as days before the conference's first day (from
 
 ## Later
 
-Step 3 of #2039 replaces the manual export with an authenticated Indico fetch in the daily sync. See [indico-api-token.md](indico-api-token.md).
+Step 3 of #2039, kept for later, replaces the manual export with an authenticated Indico fetch in the daily sync. See [indico-api-token.md](indico-api-token.md).
