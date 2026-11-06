@@ -884,6 +884,30 @@ h4 { font-size: var(--fs-lg); }
 .apps-conference { margin: 0 0 var(--space-6); }
 .apps-conference > .apps-heading { margin-bottom: var(--space-3); }
 .apps-conference .apps-phase { margin-bottom: var(--space-3); }
+/* The conference's pace (#2039): this edition's bar against the previous
+   edition's at the same distance from the conference, on one scale. */
+.apps-confpace { position: relative; margin: 0 0 var(--space-3); padding: var(--space-4) var(--space-5); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elev); }
+.apps-confpace > .apps-src { position: absolute; top: var(--space-4); right: var(--space-4); }
+.apps-confpace-title { margin: 0 0 var(--space-3); padding-right: var(--space-5); font-size: 1.125rem; }
+.apps-confpace .apps-note { margin: 0; }
+.apps-confpace .apps-note a { text-decoration: underline; }
+.apps-confpace-row + .apps-confpace-row { margin-top: var(--space-4); }
+.apps-confpace-label { margin: 0 0 var(--space-2); font-size: 0.875rem; font-weight: 600; }
+.apps-confpace-when { margin-left: var(--space-2); color: var(--text-muted); font-weight: 400; }
+.apps-confpace-bars { display: grid; gap: var(--space-1); max-width: 32rem; margin: 0; }
+.apps-confpace-bars > div { display: grid; grid-template-columns: 3rem minmax(0, 1fr); align-items: center; gap: var(--space-3); }
+.apps-confpace-bars dt { color: var(--text-muted); font-size: 0.8125rem; font-variant-numeric: tabular-nums; }
+.apps-confpace-bars dd { display: flex; align-items: center; gap: var(--space-2); margin: 0; font-size: 0.875rem; }
+.apps-confpace-num { flex: none; width: 7.5rem; }
+.apps-confpace-bars strong { font-variant-numeric: tabular-nums; }
+.apps-confpace-track { flex: 1; height: 0.5rem; overflow: hidden; border-radius: var(--radius-full); background: var(--border); }
+.apps-confpace-bar { display: block; height: 100%; border-radius: inherit; background: var(--accent); }
+.apps-confpace-prev .apps-confpace-bar { background: var(--text-muted); }
+.apps-confpace-total { color: var(--text-muted); font-size: 0.8125rem; white-space: nowrap; }
+@media (prefers-reduced-motion: no-preference) {
+  .apps-confpace-bar { animation: apps-confpace-grow 900ms var(--ease-out) both; }
+}
+@keyframes apps-confpace-grow { from { width: 0; } }
 .apps-agenda { display: flex; gap: var(--space-3); margin: 0; padding: 0 0 var(--space-2); list-style: none; overflow-x: auto; scroll-snap-type: x proximity; }
 .apps-agenda-tile { flex: 0 0 10.5rem; scroll-snap-align: start; }
 .apps-agenda-link { display: flex; flex-direction: column; height: 100%; overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elev); color: var(--text); text-decoration: none; box-shadow: var(--shadow-1); }
