@@ -119,6 +119,51 @@
       {% endif %}
     </dl>
     <p class="apps-live" data-apps-asof>{% if systemHealth %}{{ d.asOf | replace("{date}", systemHealth.checked | newsDate(lang)) }}{% endif %}</p>
+    {# The conference timeline: the stage of the conference year with its
+       stepper, then the coming dates as calendar tiles. #}
+    {% if dashboard.phase or dashboard.agenda.length %}
+    <section class="apps-conference" aria-labelledby="apps-conference-heading">
+    <h2 class="apps-heading" id="apps-conference-heading">{{ d.agenda.heading }}</h2>
+    {% if dashboard.phase %}
+      <div class="apps-phase">
+        <div>
+          <h3 class="apps-phase-title">{{ d.now | replace("{label}", d.esscOn | replace("{year}", dashboard.phase.year) if dashboard.phase.conference else ((dashboard.phase[lang] and dashboard.phase[lang].label) or dashboard.phase.label)) }}</h3>
+          {% set np = dashboard.phase.noteParts %}
+          <p class="apps-note">{% if np.kind == "until" %}{{ d.inCityUntil | replace("{city}", np.city) | replace("{date}", np.date | newsDate(lang)) }}{% elif np %}{{ d.nextUp | replace("{label}", d.esscOpens | replace("{year}", np.year) | replace("{city}", np.city) if np.kind == "essc" else ((np[lang] and np[lang].label) or np.label)) | replace("{date}", np.date | newsDate(lang)) }}{% endif %}</p>
+        </div>
+        <ul class="apps-phase-links" role="list">
+          {% for l in dashboard.phase.links %}
+            <li data-roles="{{ l.roles | join(' ') }}"><a class="btn btn-secondary btn-sm" href="{{ l.href }}">{{ icon(l.icon) }} {{ t.staffMenu[l.key] or l.label }}</a></li>
+          {% endfor %}
+        </ul>
+        <ol class="apps-steps" aria-label="{{ d.stagesLabel }}" style="--apps-steps-n: {{ dashboard.phase.steps.length }}; --apps-steps-fill: {{ dashboard.phase.fill }}">
+          {% for s in dashboard.phase.steps %}
+            <li class="apps-step apps-step-{{ s.state }}"{% if s.state == "now" %} aria-current="step"{% endif %}><span class="apps-step-dot" aria-hidden="true"></span><span class="apps-step-label">{{ (s[lang] and s[lang].step) or s.step }}{% if s.state == "done" %}<span class="sr-only">{{ d.done }}</span>{% endif %}</span></li>
+          {% endfor %}
+        </ol>
+      </div>
+    {% endif %}
+
+    {# Calendar tiles for the coming EISS and NetSec dates, soonest first, from
+       dashboard.agenda. One row that scrolls sideways. #}
+    {% if dashboard.agenda.length %}
+      <ul class="apps-agenda" role="list" aria-label="{{ d.agenda.list }}">
+        {% for x in dashboard.agenda %}
+          {% set label %}{% if x.kind == "essc" %}{{ d.esscDate | replace("{year}", x.year) | replace("{city}", x.city) }}{% elif x.kind == "release" %}{{ d.releaseDue | replace("{title}", x.title) }}{% elif x.cohort %}{{ d.agenda[x.kind] | replace("{cohort}", x.cohort[lang] or x.cohort.en) }}{% else %}{{ (x[lang] and x[lang].label) or x.label }}{% endif %}{% endset %}
+          <li class="apps-agenda-tile{% if x.site == "NetSec" %} apps-agenda-netsec{% endif %}" data-roles="{{ x.roles | join(' ') }}">
+            {% if x.url %}<a class="apps-agenda-link" href="{{ x.url | localizedHref(lang) if x.url.startsWith('/') else x.url }}">{% else %}<div class="apps-agenda-link">{% endif %}
+              <span class="apps-agenda-month">{{ x.date | monthShort(lang) }}</span>
+              <time class="apps-agenda-day" datetime="{{ x.date }}">{{ x.date.slice(8, 10) | int }}{% if x.end and x.end.slice(0, 7) == x.date.slice(0, 7) %}–{{ x.end.slice(8, 10) | int }}{% endif %}</time>
+              <span class="apps-agenda-label">{{ label | trim | safe }}{% if x.tentative %} <span class="apps-agenda-tbc">({{ d.agenda.tentative }})</span>{% endif %}</span>
+              <span class="apps-board-site apps-board-site-{{ x.site | lower }}">{{ x.site }}</span>
+            {% if x.url %}</a>{% else %}</div>{% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    </section>
+    {% endif %}
+
     {# The rolling modules: the issues for every role but the board, then the
        board's features, audits and fixes. Each row is one roll. #}
     <section class="apps-rolls" aria-labelledby="apps-rolls-heading">
@@ -169,26 +214,6 @@
       </div>
     </div>
     </section>
-
-    {% if dashboard.phase %}
-      <section class="apps-phase" aria-labelledby="apps-phase-title">
-        <div>
-          <h2 class="apps-phase-title" id="apps-phase-title">{{ d.now | replace("{label}", d.esscOn | replace("{year}", dashboard.phase.year) if dashboard.phase.conference else ((dashboard.phase[lang] and dashboard.phase[lang].label) or dashboard.phase.label)) }}</h2>
-          {% set np = dashboard.phase.noteParts %}
-          <p class="apps-note">{% if np.kind == "until" %}{{ d.inCityUntil | replace("{city}", np.city) | replace("{date}", np.date | newsDate(lang)) }}{% elif np %}{{ d.nextUp | replace("{label}", d.esscOpens | replace("{year}", np.year) | replace("{city}", np.city) if np.kind == "essc" else ((np[lang] and np[lang].label) or np.label)) | replace("{date}", np.date | newsDate(lang)) }}{% endif %}</p>
-        </div>
-        <ul class="apps-phase-links" role="list">
-          {% for l in dashboard.phase.links %}
-            <li data-roles="{{ l.roles | join(' ') }}"><a class="btn btn-secondary btn-sm" href="{{ l.href }}">{{ icon(l.icon) }} {{ t.staffMenu[l.key] or l.label }}</a></li>
-          {% endfor %}
-        </ul>
-        <ol class="apps-steps" aria-label="{{ d.stagesLabel }}" style="--apps-steps-n: {{ dashboard.phase.steps.length }}; --apps-steps-fill: {{ dashboard.phase.fill }}">
-          {% for s in dashboard.phase.steps %}
-            <li class="apps-step apps-step-{{ s.state }}"{% if s.state == "now" %} aria-current="step"{% endif %}><span class="apps-step-dot" aria-hidden="true"></span><span class="apps-step-label">{{ (s[lang] and s[lang].step) or s.step }}{% if s.state == "done" %}<span class="sr-only">{{ d.done }}</span>{% endif %}</span></li>
-          {% endfor %}
-        </ol>
-      </section>
-    {% endif %}
 
     <div class="apps-admin" id="admin">
       <h2 class="apps-heading">{{ d.admin }}</h2>

@@ -159,6 +159,15 @@ successor inherits through the handover in section 4.
   leaves those two cards out. Latest audits is the five newest entries of
   `src/_data/audits.json`, kept by hand: add a line when an audit lands.
   The private `workspace-ops` repo stays out, since the page is public.
+- **Conference timeline.** The first section under the strip. It holds the
+  "Now" card with its stepper (below), then up to 20 calendar tiles for the
+  coming dates, built by `agenda()` in `src/_data/dashboard.js` from the Key
+  dates list, the cohorts in `src/_data/cohorts.json` (call opens,
+  applications close, start) and NetSec's `data/events.json`, read from the
+  NetSec repo at build. NetSec's ESSC entry is left out, since EISS shows
+  it. A tile keeps its date's roles, so release due dates are for staff.
+  Moving the tiles to Google Calendar is
+  [#2028](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2028).
 - **NetSec report.** A tab with the NetSec monthly report for the last
   complete month, as the email gives it: Directory joins and leaves, Core
   Group, Management Committee and working-group changes, and the website
