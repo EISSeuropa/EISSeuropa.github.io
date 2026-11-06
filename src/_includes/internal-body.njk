@@ -127,9 +127,9 @@
     {% if dashboard.phase %}
       <div class="apps-phase">
         <div>
-          <h3 class="apps-phase-title">{{ d.now | replace("{label}", d.esscOn | replace("{year}", dashboard.phase.year) if dashboard.phase.conference else ((dashboard.phase[lang] and dashboard.phase[lang].label) or dashboard.phase.label)) }}</h3>
+          <h3 class="apps-phase-title">{{ d.agenda.conference }}</h3>
           {% set np = dashboard.phase.noteParts %}
-          <p class="apps-note">{% if np.kind == "until" %}{{ d.inCityUntil | replace("{city}", np.city) | replace("{date}", np.date | newsDate(lang)) }}{% elif np %}{{ d.nextUp | replace("{label}", d.esscOpens | replace("{year}", np.year) | replace("{city}", np.city) if np.kind == "essc" else ((np[lang] and np[lang].label) or np.label)) | replace("{date}", np.date | newsDate(lang)) }}{% endif %}</p>
+          <p class="apps-note">{{ d.now | replace("{label}", d.esscOn | replace("{year}", dashboard.phase.year) if dashboard.phase.conference else ((dashboard.phase[lang] and dashboard.phase[lang].label) or dashboard.phase.label)) }}. {% if np.kind == "until" %}{{ d.inCityUntil | replace("{city}", np.city) | replace("{date}", np.date | newsDate(lang)) }}{% elif np %}{{ d.nextUp | replace("{label}", d.esscOpens | replace("{year}", np.year) | replace("{city}", np.city) if np.kind == "essc" else ((np[lang] and np[lang].label) or np.label)) | replace("{date}", np.date | newsDate(lang)) }}{% endif %}</p>
         </div>
         <ul class="apps-phase-links" role="list">
           {% for l in dashboard.phase.links %}
@@ -150,12 +150,12 @@
       <ul class="apps-agenda" role="list" aria-label="{{ d.agenda.list }}">
         {% for x in dashboard.agenda %}
           {% set label %}{% if x.kind == "essc" %}{{ d.esscDate | replace("{year}", x.year) | replace("{city}", x.city) }}{% elif x.kind == "release" %}{{ d.releaseDue | replace("{title}", x.title) }}{% elif x.cohort %}{{ d.agenda[x.kind] | replace("{cohort}", x.cohort[lang] or x.cohort.en) }}{% else %}{{ (x[lang] and x[lang].label) or x.label }}{% endif %}{% endset %}
-          <li class="apps-agenda-tile{% if x.site == "NetSec" %} apps-agenda-netsec{% endif %}" data-roles="{{ x.roles | join(' ') }}">
+          <li class="apps-agenda-tile apps-agenda-{{ x.cat }}" data-roles="{{ x.roles | join(' ') }}">
             {% if x.url %}<a class="apps-agenda-link" href="{{ x.url | localizedHref(lang) if x.url.startsWith('/') else x.url }}">{% else %}<div class="apps-agenda-link">{% endif %}
               <span class="apps-agenda-month">{{ x.date | monthShort(lang) }}</span>
               <time class="apps-agenda-day" datetime="{{ x.date }}">{{ x.date.slice(8, 10) | int }}{% if x.end and x.end.slice(0, 7) == x.date.slice(0, 7) %}–{{ x.end.slice(8, 10) | int }}{% endif %}</time>
               <span class="apps-agenda-label">{{ label | trim | safe }}{% if x.tentative %} <span class="apps-agenda-tbc">({{ d.agenda.tentative }})</span>{% endif %}</span>
-              <span class="apps-board-site apps-board-site-{{ x.site | lower }}">{{ x.site }}</span>
+              <span class="apps-agenda-tags"><span class="apps-board-site apps-board-site-{{ x.site | lower }}">{{ x.site }}</span> <span class="apps-agenda-cat">{{ d.agenda.cat[x.cat] }}</span></span>
             {% if x.url %}</a>{% else %}</div>{% endif %}
           </li>
         {% endfor %}
@@ -233,9 +233,9 @@
     <div class="apps-tabbar">
       <div class="apps-tabs" role="tablist" aria-label="{{ d.sections }}" data-apps-tabs hidden>
         <button type="button" role="tab" id="apps-tab-apps" aria-controls="apps" data-apps-tab="apps">{{ d.tabApps }}</button>
+        <button type="button" role="tab" id="apps-tab-guides" aria-controls="guides" data-apps-tab="guides">{{ d.tabGuides }}</button>
         <button type="button" role="tab" id="apps-tab-status" aria-controls="status" data-apps-tab="status">{{ d.tabStatus }}</button>
         {% if netsecReport %}<button type="button" role="tab" id="apps-tab-netsec" aria-controls="netsec" data-apps-tab="netsec" class="apps-tab-netsec">{{ d.netsec.tab }}</button>{% endif %}
-        <button type="button" role="tab" id="apps-tab-guides" aria-controls="guides" data-apps-tab="guides">{{ d.tabGuides }}</button>
         {% if systemHealth %}<button type="button" role="tab" id="apps-tab-it" aria-controls="it" data-apps-tab="it" data-roles="staff">{{ d.tabIt }} <span class="apps-dot apps-dot-{{ systemHealth.summary.level }}" data-apps-it-dot aria-hidden="true"{% if not systemHealth.summary.url %} hidden{% endif %}></span><span class="sr-only" data-apps-it-note{% if not systemHealth.summary.url %} hidden{% endif %}>{{ d.needsAttention }}</span></button>{% endif %}
       </div>
       <div class="apps-viewing">
@@ -286,6 +286,21 @@
         {% endif %}{% endfor %}
       </ul>
       <p class="apps-note apps-filter-empty" data-apps-filter-empty hidden></p>
+    </section>
+
+    <section class="apps-panel" id="guides" data-apps-panel aria-labelledby="apps-guides-heading">
+      <h2 class="apps-heading apps-section-heading" id="apps-guides-heading">{{ d.tabGuides }}</h2>
+      <ul class="apps-grid" role="list">
+        {% for guide in site.guideLinks %}
+          <li class="apps-card-wrap" data-roles="{{ guide.roles | join(' ') }}" style="--n: {{ loop.index0 }}">
+            <a class="apps-tile apps-tile-short" href="{{ guide.href | localizedHref(lang) }}">
+              <span class="apps-icon">{{ icon(guide.icon) }}</span>
+              <span class="apps-label">{{ (guide[lang] and guide[lang].label) or guide.label }}</span>
+              <span class="apps-go">{{ icon("arrow-right") }}</span>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
     </section>
 
     <section class="apps-panel" id="status" data-apps-panel aria-labelledby="apps-status-heading">
@@ -467,20 +482,6 @@
       </section>
     {% endif %}
 
-    <section class="apps-panel" id="guides" data-apps-panel aria-labelledby="apps-guides-heading">
-      <h2 class="apps-heading apps-section-heading" id="apps-guides-heading">{{ d.tabGuides }}</h2>
-      <ul class="apps-grid" role="list">
-        {% for guide in site.guideLinks %}
-          <li class="apps-card-wrap" data-roles="{{ guide.roles | join(' ') }}" style="--n: {{ loop.index0 }}">
-            <a class="apps-tile apps-tile-short" href="{{ guide.href | localizedHref(lang) }}">
-              <span class="apps-icon">{{ icon(guide.icon) }}</span>
-              <span class="apps-label">{{ (guide[lang] and guide[lang].label) or guide.label }}</span>
-              <span class="apps-go">{{ icon("arrow-right") }}</span>
-            </a>
-          </li>
-        {% endfor %}
-      </ul>
-    </section>
   </div>
 </div>
 
