@@ -189,9 +189,13 @@ successor inherits through the handover in section 4.
   build reuses the live months and computes only the one that has just
   ended. The tab opens on the newest month, and a Month menu shows any
   other (`?month=2026-09` links to one). Bump `VERSION` in the file when the report's logic changes,
-  and every month is recomputed. A month without a live copy and a
-  `GITHUB_TOKEN`, or one that fails, is left out, and with no month the
-  tab is left out. October 2026 was checked against the email
+  and every month is recomputed. Pull-request builds never recompute: they
+  share the Actions token's hourly API allowance with the deploys (#2047).
+  A month that cannot be recomputed (no `GITHUB_TOKEN`, a pull-request
+  build, or a failed call) keeps its live copy, even at an older `VERSION`,
+  so a build never publishes fewer months than it read. A month with no
+  live copy is then left out, and with no month the tab is left out.
+  `node scripts/test-netsec-report.js` checks this with `fetch` stubbed. October 2026 was checked against the email
   figure for figure.
 - **Dates and conference phase.** The "EISS dates" Google Calendar holds an
   edition's public dates. The build reads it through the EISS status web
