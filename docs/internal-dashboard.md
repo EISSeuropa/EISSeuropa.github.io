@@ -30,7 +30,7 @@ Newest first. Rows for 2.20.0 and later were added as each PR was opened.
 
 | Version | Date | PR | Change |
 |---|---|---|---|
-| 2.24.0 | 2026-11-06 | [#2041](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2041) | A "Conference pace" card in the conference timeline (staff and management): abstracts and registrations against the previous edition at the same distance from the conference (#2039) |
+| 2.24.0 | 2026-11-06 | [#2043](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2043) | A "Conference pace" card in the conference timeline (staff and management): abstracts and registrations against the previous edition at the same distance from the conference (#2039) |
 | 2.23.0 | 2026-11-06 | [#2040](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2040) | A light on each data block (dark green stored, light green live) with a legend at the foot, the three newest tasks to pick up under their count, the role in the address (`?role=board`), and `dashboard.pace` for #2039 |
 | 2.22.1 | 2026-11-06 | [#2038](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2038) | A roll's full list glides open and shut, and its extra lines fade in |
 | 2.22.0 | 2026-11-06 | [#2037](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2037) | "Key dates" in Platform development status becomes "Next milestones": the release milestones only, each with its progress |
