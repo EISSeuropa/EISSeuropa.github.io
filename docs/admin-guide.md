@@ -144,7 +144,9 @@ successor inherits through the handover in section 4.
   newest issues still open (amber "i"). Issues labelled `automated` and
   "not planned" closures are left out. The rolls show for every role except
   board members. They and the board's rolls sit under one "Recent activity"
-  heading.
+  heading. Every roll moves on every 6.2 s (`setInterval` in `makeRoll`),
+  and its chevron button unfolds the whole list and stops that roll until
+  folded again.
 - **For the board.** Board members (and the Everyone view) get a box under
   the Today box with three rolls built like the issue roll, one line each,
   with a pause button per roll (the lines stack with reduced motion or
