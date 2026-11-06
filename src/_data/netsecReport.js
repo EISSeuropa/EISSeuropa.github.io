@@ -1,14 +1,18 @@
-// The NetSec tab of /internal.html: the last complete month of the NetSec
-// monthly report, recomputed at build from public data in the NetSec repo.
+// The NetSec tab of /internal.html: the NetSec monthly report for every
+// complete month since FIRST, newest first, recomputed at build from public
+// data in the NetSec repo.
 // The Directory, Core Group and MC come from data/bios.json, data/wg.json and
 // data/mc-members.json at the last commit before each end of the month. The
 // website section comes from the month's commits on main (one per squashed PR).
-// A past month never changes, so the build first reuses the copy the live site
-// published (/internal/netsec-report.json) and recomputes only when it is for
-// another month or an older VERSION. Any failure hides the tab, never the build.
+// A past month never changes, so the build first reuses the months the live
+// site published (/internal/netsec-reports.json) and recomputes only those it
+// lacks or holds at an older VERSION. A month that fails is left out. With no
+// month at all the tab is hidden, never the build.
 
 const REPO = "EISSeuropa/netsec.github.io";
-const LIVE = "https://eiss-europa.com/internal/netsec-report.json";
+const LIVE = "https://eiss-europa.com/internal/netsec-reports.json";
+// The first month with data/wg.json at both ends (it was added on 30 May 2026).
+const FIRST = "2026-06-01";
 // Bump when the report's logic changes, so the live copy is not reused.
 const VERSION = 1;
 
@@ -138,22 +142,42 @@ async function compute({ start, end }) {
   };
 }
 
+// Every complete month from FIRST to the one before the build, newest first.
+function months(now = new Date()) {
+  const out = [];
+  for (let m = lastMonth(now); m.start >= FIRST; m = lastMonth(new Date(Date.parse(m.start)))) out.push(m);
+  return out;
+}
+
+async function live(url) {
+  try {
+    const r = await fetch(url, { signal: AbortSignal.timeout(10000) });
+    const j = r.ok ? await r.json() : null;
+    return Array.isArray(j) ? j : null;
+  } catch (e) { return null; } // first build with the archive, or offline
+}
+
 module.exports = async function () {
-  const month = lastMonth();
-  try {
-    const live = await fetch(LIVE, { signal: AbortSignal.timeout(10000) }).then((r) => (r.ok ? r.json() : null));
-    if (live && live.version === VERSION && live.start === month.start) return live;
-  } catch (e) { /* first build of the month, or offline: recompute */ }
-  if (!process.env.GITHUB_TOKEN) {
-    console.warn("[netsecReport] no GITHUB_TOKEN and no live copy for this month, the NetSec tab is left out");
-    return null;
+  const stored = ((await live(LIVE)) || []).filter((r) => r && r.version === VERSION);
+  const out = [];
+  let warned = false;
+  // ponytail: one month at a time keeps a backfill under the API's burst limit.
+  for (const month of months()) {
+    const kept = stored.find((r) => r.start === month.start);
+    if (kept) { out.push(kept); continue; }
+    if (!process.env.GITHUB_TOKEN) {
+      if (!warned) console.warn("[netsecReport] no GITHUB_TOKEN, months without a live copy are left out");
+      warned = true;
+      continue;
+    }
+    try {
+      out.push(await compute(month));
+    } catch (e) {
+      console.warn(`[netsecReport] ${month.start} unavailable (${e.message}), left out`);
+    }
   }
-  try {
-    return await compute(month);
-  } catch (e) {
-    console.warn(`[netsecReport] report unavailable (${e.message}), the NetSec tab is left out`);
-    return null;
-  }
+  return out.length ? out : null;
 };
 module.exports.compute = compute;
 module.exports.lastMonth = lastMonth;
+module.exports.months = months;

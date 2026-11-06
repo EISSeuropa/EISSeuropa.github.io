@@ -8,7 +8,7 @@ const site = require("./site.js");
 const REPO = "https://github.com/EISSeuropa/EISSeuropa.github.io";
 // The dashboard's own version, shown at the foot of the page. Semantic
 // versioning, rules and history in docs/internal-dashboard.md.
-const VERSION = "2.23.0";
+const VERSION = "2.24.0";
 const everyone = ["staff", "management", "board", "volunteer"];
 const today = new Date().toISOString().slice(0, 10);
 
@@ -162,7 +162,7 @@ function assemble(keyDates, source) {
   }));
 
   // The open release milestones with a due date, soonest first, for the
-  // "Next milestones" card in Platform development status.
+  // "Next milestones" card in Platform development.
   const milestones = open.filter((m) => m.due).map((m, i) => ({
     date: m.due, title: m.title, closed: m.closed, total: m.total, percent: m.percent,
     state: i ? "later" : "next",
