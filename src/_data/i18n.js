@@ -238,6 +238,7 @@ const locales = {
       rolls: {
         heading: "Recent activity",
         closed: "Recently closed",
+        showAll: "Show all: {label}",
         opened: "Still open",
       },
       board: {
@@ -1311,6 +1312,7 @@ const locales = {
       rolls: {
         heading: "Activité récente",
         closed: "Clos récemment",
+        showAll: "Tout afficher : {label}",
         opened: "Encore ouverts",
       },
       board: {
@@ -2261,6 +2263,7 @@ const locales = {
       rolls: {
         heading: "Neueste Aktivität",
         closed: "Kürzlich geschlossen",
+        showAll: "Alle anzeigen: {label}",
         opened: "Noch offen",
       },
       board: {

@@ -810,6 +810,16 @@ h4 { font-size: var(--fs-lg); }
 .apps-done-pause:hover { color: var(--text); border-color: var(--border-strong); }
 .apps-done-pause svg { width: 0.875rem; height: 0.875rem; fill: currentColor; }
 .apps-done-pause .apps-done-play, .apps-done-pause[aria-pressed="true"] .apps-done-hold { display: none; }
+/* The chevron that unfolds a roll into its full list. */
+.apps-done-more svg { fill: none; stroke: currentColor; stroke-width: 2.25; transition: transform var(--motion-base) var(--ease-out); }
+.apps-done-more[aria-expanded="true"] svg { transform: rotate(180deg); }
+.apps-done-more[hidden], .apps-done-pause[hidden] { display: none; }
+/* Unfolded: label and buttons sit at the top, and the pause keeps its place
+   unseen, since nothing rolls. */
+.apps-roll-row:has(.apps-done-more[aria-expanded="true"]) { align-items: start; }
+.apps-roll-row:has(.apps-done-more[aria-expanded="true"]) .apps-roll-label { padding-top: var(--space-2); }
+.apps-done-stage:has(.apps-done-more[aria-expanded="true"]) { align-items: start; }
+.apps-done-stage:has(.apps-done-more[aria-expanded="true"]) [data-apps-done-pause] { visibility: hidden; }
 .apps-done-pause[aria-pressed="true"] .apps-done-play { display: inline; }
 /* Without motion: a plain list, every line in view. */
 .apps-done.apps-done-static { height: auto; overflow: visible; }

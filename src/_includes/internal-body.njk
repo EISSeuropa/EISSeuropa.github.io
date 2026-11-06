@@ -132,6 +132,7 @@
               <p class="apps-roll-label" id="apps-roll-{{ key }}">{{ d.rolls[key] }}</p>
               <div class="apps-done-stage" data-apps-issue-roll="{{ key }}">
                 <ul class="apps-done" data-apps-done role="list" aria-labelledby="apps-roll-{{ key }}"></ul>
+                <button type="button" class="apps-done-pause apps-done-more" data-apps-done-more aria-expanded="false" aria-label="{{ d.rolls.showAll | replace("{label}", d.rolls[key]) }}" title="{{ d.rolls.showAll | replace("{label}", d.rolls[key]) }}" hidden>{{ icon("chevron-down") }}</button>
                 <button type="button" class="apps-done-pause" data-apps-done-pause aria-pressed="false" aria-label="{{ d.board.pause | replace("{label}", d.rolls[key]) }}" hidden><span class="apps-done-hold">{{ icon("pause") }}</span><span class="apps-done-play">{{ icon("play") }}</span></button>
               </div>
             </div>
@@ -160,6 +161,7 @@
                   <li class="apps-done-item"><span class="apps-done-box apps-done-box-{{ key }}" aria-hidden="true"><svg viewBox="0 0 16 16">{{ MARK[key] | safe }}</svg></span><a href="{{ x.url }}" title="{{ x.title }}, {{ (x.at or x.date) | newsDate(lang) }}"><span class="apps-board-site apps-board-site-{{ x.site | lower }}">{{ x.site }}</span> <span class="apps-done-title">{{ x.title }}</span></a></li>
                 {% endfor %}
               </ul>
+              <button type="button" class="apps-done-pause apps-done-more" data-apps-done-more aria-expanded="false" aria-label="{{ d.rolls.showAll | replace("{label}", d.board[key]) }}" title="{{ d.rolls.showAll | replace("{label}", d.board[key]) }}" hidden>{{ icon("chevron-down") }}</button>
               <button type="button" class="apps-done-pause" data-apps-done-pause aria-pressed="false" aria-label="{{ d.board.pause | replace("{label}", d.board[key]) }}" hidden><span class="apps-done-hold">{{ icon("pause") }}</span><span class="apps-done-play">{{ icon("play") }}</span></button>
             </div>
           </div>
@@ -738,8 +740,8 @@
     // its line up. Without motion every line stays in view.
     // One roll per stage: the issues in the Today box, and the board's three.
     function makeRoll(stage) {
-      var list = stage.querySelector("[data-apps-done]"), btn = stage.querySelector("[data-apps-done-pause]");
-      var roll = { key: null, i: 0, hover: false, focus: false, held: false, list: list };
+      var list = stage.querySelector("[data-apps-done]"), btn = stage.querySelector("[data-apps-done-pause]"), more = stage.querySelector("[data-apps-done-more]");
+      var roll = { key: null, i: 0, hover: false, focus: false, held: false, open: false, list: list };
       function lines() { return [].slice.call(list.children); }
       function go(k) {
         var ls = lines(), cur = ls[roll.i], next = ls[k];
@@ -758,9 +760,9 @@
       });
       setInterval(function () {
         var n = lines().length;
-        if (calm || n < 2 || roll.hover || roll.focus || roll.held || document.hidden || !list.offsetParent) return;
+        if (calm || n < 2 || roll.open || roll.hover || roll.focus || roll.held || document.hidden || !list.offsetParent) return;
         go((roll.i + 1) % n);
-      }, 3200);
+      }, 6200);
       stage.addEventListener("pointerenter", function () { roll.hover = true; });
       stage.addEventListener("pointerleave", function () { roll.hover = false; });
       list.addEventListener("focusin", function (e) {
@@ -773,12 +775,21 @@
         roll.held = !roll.held;
         btn.setAttribute("aria-pressed", String(roll.held));
       });
+      // The chevron unfolds the whole list in place and stops the roll; a second
+      // press folds it back to the line it was on.
+      function setOpen(open) {
+        roll.open = open;
+        more.setAttribute("aria-expanded", String(open));
+        list.classList.toggle("apps-done-static", open || calm);
+        btn.hidden = calm || lines().length < 2;
+      }
+      more.addEventListener("click", function () { setOpen(!roll.open); });
       // Called once the lines are in place. The first rises in after a beat.
       roll.start = function (key) {
         roll.key = key;
         roll.i = 0;
-        list.classList.toggle("apps-done-static", calm);
-        btn.hidden = calm || lines().length < 2;
+        setOpen(roll.open);
+        more.hidden = calm || lines().length < 2;
         if (lines().length && !calm) setTimeout(function () { if (roll.key === key) go(0); }, 250);
       };
       return roll;
