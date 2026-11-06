@@ -890,6 +890,7 @@ h4 { font-size: var(--fs-lg); }
 .apps-confpace > .apps-src { position: absolute; top: var(--space-4); right: var(--space-4); }
 .apps-confpace-title { margin: 0 0 var(--space-3); padding-right: var(--space-5); font-size: 1.125rem; }
 .apps-confpace .apps-note { margin: 0; }
+.apps-confpace .apps-note a { text-decoration: underline; }
 .apps-confpace-row + .apps-confpace-row { margin-top: var(--space-4); }
 .apps-confpace-label { margin: 0 0 var(--space-2); font-size: 0.875rem; font-weight: 600; }
 .apps-confpace-when { margin-left: var(--space-2); color: var(--text-muted); font-weight: 400; }
