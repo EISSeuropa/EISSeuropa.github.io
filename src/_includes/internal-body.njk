@@ -505,7 +505,8 @@
 
     {# The dashboard's own version. Rules and history: docs/internal-dashboard.md. #}
     <p class="apps-legend" aria-hidden="true"><span><span class="apps-src is-live"></span> {{ d.live }}</span> <span><span class="apps-src"></span> {{ STORED }}</span></p>
-    <p class="apps-version">{{ d.version | replace("{v}", dashboard.version) }}</p>
+    {# The latest annual report draft (docs/annual-report.md), in English. #}
+    <p class="apps-version">{{ d.version | replace("{v}", dashboard.version) }}{% if annualReport.years.length %}<span data-roles="staff management board"> · <a href="/internal/report-{{ annualReport.years[0].year }}.html" hreflang="en">{{ d.annualReport | replace("{year}", annualReport.years[0].year) }}</a></span>{% endif %}</p>
   </div>
 </div>
 

@@ -30,6 +30,7 @@ Newest first. Rows for 2.20.0 and later were added as each PR was opened.
 
 | Version | Date | PR | Change |
 |---|---|---|---|
+| 2.26.0 | 2026-11-06 | (this PR) | A link to the annual report draft at the foot of the page (staff, management, board) |
 | 2.24.0 | 2026-11-06 | [#2041](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2041) | Both "Recent activity" boxes (the issue rolls and the board's rolls) show for every role, "Platform development status" becomes "Platform development", NetSec report moves to the last tab, and `netsecReport` keeps every month since June 2026 for a month dropdown |
 | 2.23.0 | 2026-11-06 | [#2040](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2040) | A light on each data block (dark green stored, light green live) with a legend at the foot, the three newest tasks to pick up under their count, the role in the address (`?role=board`), and `dashboard.pace` for #2039 |
 | 2.22.1 | 2026-11-06 | [#2038](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2038) | A roll's full list glides open and shut, and its extra lines fade in |

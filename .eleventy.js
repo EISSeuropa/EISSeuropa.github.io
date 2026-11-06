@@ -82,6 +82,8 @@ module.exports = function (eleventyConfig) {
   // Format an ISO date (YYYY-MM-DD) as a long localised date for the News
   // surface — "12 June 2026" / "12 juin 2026" / "12. Juni 2026". Falls back
   // to the raw string if the date can't be parsed.
+  // NetSec's monthly reports summed per year, for the annual report drafts.
+  eleventyConfig.addFilter("netsecYear", require("./src/_data/annualReport.js").netsecYear);
   eleventyConfig.addFilter("newsDate", (iso, lang) => {
     const d = new Date(String(iso).slice(0, 10) + "T00:00:00Z");
     if (isNaN(d.getTime())) return iso;
