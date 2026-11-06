@@ -824,6 +824,11 @@ h4 { font-size: var(--fs-lg); }
 /* Without motion: a plain list, every line in view. */
 .apps-done.apps-done-static { height: auto; overflow: visible; }
 .apps-done.apps-done-static .apps-done-item { position: static; padding-top: var(--space-1); opacity: 1; transform: none; pointer-events: auto; }
+/* An unfolded list wraps a long title onto a second line, under its text and
+   clear of the marker, where the rolling line cuts it with an ellipsis. */
+.apps-done.apps-done-static .apps-done-item { align-items: flex-start; transition: none; }
+.apps-done.apps-done-static .apps-done-item a { white-space: normal; }
+.apps-done.apps-done-static .apps-done-box { margin-top: 0.15rem; }
 @media (prefers-reduced-motion: no-preference) {
   .apps-today { transition: grid-template-rows var(--motion-slow) var(--ease-out), opacity var(--motion-slow) var(--ease-out), margin var(--motion-slow) var(--ease-out); }
   .apps-done-item { transition: opacity 700ms var(--ease-in-out), transform 700ms var(--ease-in-out); }
@@ -837,7 +842,7 @@ h4 { font-size: var(--fs-lg); }
 .apps-rolls { margin: 0 0 var(--space-4); }
 .apps-rolls > .apps-heading { margin-bottom: var(--space-3); }
 .apps-board { margin: 0 0 var(--space-4); }
-.apps-roll-row { display: grid; grid-template-columns: 11rem 1fr; align-items: center; gap: var(--space-3); margin-top: var(--space-2); }
+.apps-roll-row { display: grid; grid-template-columns: 11rem minmax(0, 1fr); align-items: center; gap: var(--space-3); margin-top: var(--space-2); }
 .apps-roll-row:first-child, .apps-today-text[hidden] + .apps-roll-row { margin-top: 0; }
 .apps-roll-row[hidden] { display: none; }
 .apps-roll-row .apps-done-stage { margin-top: 0; }
@@ -846,7 +851,7 @@ h4 { font-size: var(--fs-lg); }
 .apps-done-box-audits { background: hsl(268 45% 48%); }
 .apps-done-box-fixes { background: hsl(142 65% 32%); }
 @media (max-width: 40rem) {
-  .apps-roll-row { grid-template-columns: 1fr; gap: var(--space-1); }
+  .apps-roll-row { grid-template-columns: minmax(0, 1fr); gap: var(--space-1); }
 }
 .apps-board-site { display: inline-block; margin-inline-end: var(--space-1); padding: 0 0.4rem; border-radius: var(--radius-xs); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.02em; vertical-align: 0.1em; }
 .apps-board-site-eiss { background: var(--accent); color: var(--accent-text); }

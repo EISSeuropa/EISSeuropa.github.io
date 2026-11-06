@@ -149,6 +149,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- Opening a roll on the internal dashboard's "Recent activity" kept its chevron in reach. A long title such as #1988 had stretched the opened list past the edge of its box, which hid the chevron that folds it back. Long titles now wrap onto a second line in an opened list, and the lines appear at once rather than mid-animation.
 - The "Last issues closed" roll on the internal dashboard shows for every role, not only staff and "Show all".
 - The IT tab and the Systems tile on the internal dashboard no longer vanish when a single call to GitHub fails during a build. The build retries the call once before hiding the section.
 - The "Last issues closed" roll on the internal dashboard shows again when the browser's own GitHub calls are refused. Unsigned visitors share GitHub's limit of 60 calls an hour per address, and one refused call emptied the roll. The build now carries the last five closed issues, and the page falls back to them.
