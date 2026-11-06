@@ -30,6 +30,7 @@ Newest first. Rows for 2.20.0 and later were added as each PR was opened.
 
 | Version | Date | PR | Change |
 |---|---|---|---|
+| 2.22.1 | 2026-11-06 | (this PR) | A roll's full list glides open and shut, and its extra lines fade in |
 | 2.22.0 | 2026-11-06 | [#2037](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2037) | "Key dates" in Platform development status becomes "Next milestones": the release milestones only, each with its progress |
 | 2.21.0 | 2026-11-06 | [#2033](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2033) | A version number on the dashboard, and this history |
 | 2.20.1 | 2026-11-06 | [#2032](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2032) | An opened roll keeps its chevron in its box, and long titles wrap |

@@ -214,6 +214,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- A roll on the internal dashboard's "Recent activity" now glides open when its chevron is pressed, and the lines that join fade in one after another. It glides shut on a second press. With reduced motion the list opens at once, as before.
 - The "Key dates" card in the internal dashboard's Platform development status tab is now "Next milestones". It lists the open release milestones only (v2.29.0, v2.30.0, v2.31.0), each with its due date, a progress bar and the count of issues closed, linked to its issues. The conference and internship dates it used to repeat sit under Timeline.
 - The internal dashboard's sections are renamed and reordered. The top section is "Timeline", and its stage card is "Conference timeline", with the current stage in its note ("Now: Preparing the call for papers."). The tabs read Apps, Guides, Platform development status (formerly Project status), NetSec report and Platform status (formerly IT monitoring), with Guides moved next to Apps.
 - The host-city timeline on the home page draws the past editions in the accent blue, rail and dots, keeps the rail after the next host grey, and the dot for the next host, Belgrade 2027, pulses three times on load before it rests. With reduced motion it stays still.
