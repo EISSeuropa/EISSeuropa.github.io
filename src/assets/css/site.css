@@ -787,7 +787,7 @@ h4 { font-size: var(--fs-lg); }
 @media (prefers-reduced-motion: no-preference) {
   /* Three pulses as a light turns live, then it rests (RGAA 13.8: motion past
      five seconds needs a pause control). The legend's light stays still. */
-  [data-apps-src].is-live { animation: apps-live-ring 1.4s ease-out 3; }
+  .apps-src.is-live, .apps-dot-nominal[data-apps-src].is-live { animation: apps-live-ring 1.4s ease-out 3; }
 }
 @keyframes apps-live-ring {
   from { box-shadow: 0 0 0 0 hsl(142 72% 55% / 0.7), 0 0 8px 2px hsl(142 72% 55% / 0.55); }
@@ -1013,8 +1013,37 @@ a.apps-agenda-link:hover .apps-agenda-label { text-decoration: underline; }
 /* The NetSec report tab carries NetSec's COST blue and gold. */
 .apps-tabs .apps-tab-netsec::before { content: ""; display: inline-block; width: 0.625rem; height: 0.625rem; margin-inline-end: var(--space-2); border-radius: 2px; background: #ffcc00; box-shadow: inset 0 0 0 2px #003399; vertical-align: -0.05em; }
 .apps-tabs .apps-tab-netsec[aria-selected="true"] { border-bottom-color: #ffcc00; }
-/* The NetSec monthly report panel. */
-.apps-netsec-figure { margin: 0 0 var(--space-1); font-size: 1.25rem; font-weight: 600; }
+/* The NetSec report panel, styled like NetSec's monthly email: COST blue band
+   with the white logo and a gold stripe, gold-ruled summary, tinted stat tiles,
+   WG colour bars. The chart bar is a validated in-band step of the same blue. */
+.apps-netsec { --apps-netsec-ink: #003399; --apps-netsec-tint: #eef2fb; --apps-netsec-bar: #0b47c4; }
+[data-theme="dark"] .apps-netsec { --apps-netsec-ink: hsl(215 100% 80%); --apps-netsec-tint: hsl(222 40% 16%); --apps-netsec-bar: #5b8cf0; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .apps-netsec { --apps-netsec-ink: hsl(215 100% 80%); --apps-netsec-tint: hsl(222 40% 16%); --apps-netsec-bar: #5b8cf0; }
+}
+.apps-netsec-view + .apps-netsec-view { margin-top: var(--space-8); }
+.apps-netsec-band { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: var(--space-1) var(--space-5); padding: var(--space-5) var(--space-6); border-bottom: 4px solid #ffcc00; border-radius: var(--radius-md) var(--radius-md) 0 0; background: #003399; color: #fff; }
+.apps-netsec-logo { grid-row: 1 / span 2; display: block; line-height: 0; }
+.apps-netsec-logo:focus-visible { outline: 2px solid #ffcc00; outline-offset: 4px; }
+.apps-netsec-logo img { display: block; width: 150px; height: auto; filter: brightness(0) invert(1); }
+.apps-netsec-title { margin: 0; color: #fff; font-size: 1.25rem; font-weight: 700; line-height: 1.25; }
+.apps-netsec-lead { margin: 0; color: rgb(255 255 255 / 0.85); font-size: 0.875rem; }
+@media (max-width: 600px) {
+  .apps-netsec-band { grid-template-columns: 1fr; padding: var(--space-4); }
+  .apps-netsec-logo { grid-row: auto; margin-bottom: var(--space-2); }
+}
+.apps-netsec-summary { margin: var(--space-4) 0; padding: var(--space-4) var(--space-5); border-left: 4px solid #ffcc00; border-radius: 6px; background: var(--apps-netsec-tint); }
+.apps-netsec-summary p { margin: 0; }
+.apps-netsec-summary-title { margin: 0 0 var(--space-2); color: var(--apps-netsec-ink); font-size: 1rem; font-weight: 700; }
+.apps-netsec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: var(--space-4); align-items: start; }
+.apps-netsec-h { padding-bottom: var(--space-2); border-bottom: 2px solid var(--apps-netsec-ink); color: var(--apps-netsec-ink); font-weight: 700; }
+.apps-netsec-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr)); gap: var(--space-2); margin: 0 0 var(--space-3); }
+.apps-netsec-tiles div { display: flex; flex-direction: column-reverse; padding: var(--space-3); border-radius: 6px; background: var(--apps-netsec-tint); }
+.apps-netsec-tiles dt { color: var(--text-muted); font-size: 0.75rem; }
+.apps-netsec-tiles dd { margin: 0; color: var(--apps-netsec-ink); font-size: 1.375rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.apps-netsec-wg { margin-top: var(--space-4); padding-left: var(--space-3); border-left: 6px solid var(--wg); }
+.apps-netsec-wg .apps-netsec-sub { margin-top: 0; }
+.apps-netsec-wg p { margin: 0 0 var(--space-1); }
 .apps-netsec-sub { margin: var(--space-4) 0 var(--space-1); font-size: 0.9375rem; font-weight: 600; }
 .apps-netsec-pick { margin: 0 0 var(--space-3); }
 .apps-netsec-pick label { margin-right: var(--space-2); font-weight: 600; }
@@ -1023,6 +1052,24 @@ a.apps-agenda-link:hover .apps-agenda-label { text-decoration: underline; }
 .apps-netsec-list span { display: block; color: var(--text-muted); font-size: 0.8125rem; }
 .apps-netsec-more { margin-top: var(--space-3); }
 .apps-netsec-more summary { cursor: pointer; min-height: 24px; font-weight: 600; }
+/* The since-launch joiners chart. Bars: <= 24px, 4px rounded tops, 2px floor
+   for empty months, one series so no legend, first peak and latest labelled. */
+.apps-netsec-chart { margin: 0 0 var(--space-4); padding: var(--space-5); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elev); box-shadow: var(--shadow-1); }
+.apps-netsec-chart-title { margin: 0 0 var(--space-3); color: var(--apps-netsec-ink); font-weight: 700; }
+.apps-netsec-chart-bars { display: flex; align-items: flex-end; gap: 2px; height: 8rem; padding-top: 1.25rem; border-bottom: 1px solid var(--border); }
+.apps-netsec-chart-col { display: flex; flex: 1; align-items: flex-end; justify-content: center; height: 100%; }
+.apps-netsec-chart-bar { position: relative; width: 100%; max-width: 24px; height: calc(var(--h) * 100%); min-height: 2px; border-radius: 4px 4px 0 0; background: var(--apps-netsec-bar); }
+.apps-netsec-chart-col:hover .apps-netsec-chart-bar { opacity: 0.75; }
+.apps-netsec-chart-bar b { position: absolute; bottom: 100%; left: 50%; padding-bottom: 2px; color: var(--text-muted); font-size: 0.6875rem; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1; transform: translateX(-50%); }
+.apps-netsec-chart-axis { display: flex; justify-content: space-between; margin: var(--space-1) 0 0; color: var(--text-muted); font-size: 0.6875rem; }
+.apps-netsec-chart-table { margin-top: var(--space-2); font-size: 0.8125rem; }
+.apps-netsec-chart-table summary { min-height: 24px; color: var(--text-muted); cursor: pointer; }
+.apps-netsec-chart-table table { margin-top: var(--space-2); border-collapse: collapse; }
+.apps-netsec-chart-table th, .apps-netsec-chart-table td { padding: 2px var(--space-3) 2px 0; text-align: left; font-variant-numeric: tabular-nums; }
+.apps-netsec-chart-table th { color: var(--text-muted); font-weight: 600; }
+@media (prefers-reduced-motion: no-preference) {
+  .apps-netsec-chart-bar { transform-origin: bottom; animation: apps-pace-grow 600ms var(--ease-out) both; }
+}
 .apps-panel[hidden] { display: none; }
 .apps-viewing { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); color: var(--text-muted); font-size: 0.875rem; font-weight: 600; }
 .apps-role {

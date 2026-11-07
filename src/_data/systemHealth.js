@@ -49,8 +49,10 @@ async function repoHealth({ label, site, slug, branch }) {
   const { workflows } = await api(`${slug}/actions/workflows?per_page=100`);
   const active = workflows.filter((w) => w.state === "active" && w.path.startsWith(".github/workflows/"));
   const latest = await Promise.all(active.map(async (w) => {
-    const { workflow_runs: runs } = await api(`${slug}/actions/workflows/${w.id}/runs?branch=${branch}&status=completed&per_page=1`);
-    return { w, run: runs[0] };
+    const { workflow_runs: runs } = await api(`${slug}/actions/workflows/${w.id}/runs?branch=${branch}&status=completed&per_page=5`);
+    // The run that finished last, so a re-run that succeeds clears an earlier-started failure.
+    const run = runs.reduce((a, r) => (!a || r.updated_at > a.updated_at ? r : a), null);
+    return { w, run };
   }));
   const items = latest
     // A workflow with no run on the main branch only checks pull requests, which GitHub reports on the PR.
@@ -63,7 +65,7 @@ async function repoHealth({ label, site, slug, branch }) {
         failed,
         level,
         label: LABELS[level],
-        date: run.created_at.slice(0, 10),
+        date: run.updated_at.slice(0, 10),
         url: run.html_url,
       };
     })

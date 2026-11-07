@@ -131,3 +131,38 @@ module.exports.netsecYear = function (reports, y) {
     merged: sum((r) => r.website.merged), features: sum((r) => r.website.features), fixes: sum((r) => r.website.fixes),
   };
 };
+
+// Every NetSec month since launch folded into one report of the same shape, so
+// the dashboard renders it with the month markup. Lists are concatenated in
+// date order, totals summed, contributors merged by name. `series` holds one
+// row per month for the joiners chart: `h` is the bar height as a share of the
+// tallest, `label` marks the first peak and the latest bar. `last` is the
+// latest month's first day (`end` is exclusive).
+module.exports.netsecAll = function (reports) {
+  const ms = (reports || []).slice().sort((a, b) => a.start.localeCompare(b.start));
+  if (!ms.length) return null;
+  const a = ms[0], z = ms[ms.length - 1];
+  const cat = (f) => ms.flatMap((r) => f(r) || []);
+  const sum = (k) => ms.reduce((s, r) => s + (r.website[k] || 0), 0);
+  const who = {};
+  cat((r) => r.website.contributors).forEach((c) => { who[c.who] = (who[c.who] || 0) + c.commits; });
+  const series = ms.map((r) => ({ start: r.start, joined: r.directory.joined.length, left: r.directory.left.length, profiles: r.directory.to }));
+  const peak = Math.max(1, ...series.map((s) => s.joined));
+  series.forEach((s, i) => { s.h = s.joined / peak; s.label = i === ms.length - 1 || i === series.findIndex((x) => x.joined === peak); });
+  return {
+    all: true, start: a.start, end: z.end, last: z.start, commits: [a.commits[0], z.commits[1]],
+    directory: { from: a.directory.from, to: z.directory.to, joined: cat((r) => r.directory.joined), left: cat((r) => r.directory.left) },
+    coreGroup: cat((r) => r.coreGroup),
+    committee: { from: a.committee.from, to: z.committee.to, joined: cat((r) => r.committee.joined), left: cat((r) => r.committee.left) },
+    groups: z.groups.map((g) => {
+      const all = ms.map((r) => r.groups.find((x) => x.number === g.number)).filter(Boolean);
+      return { ...g, from: all[0].from, joined: all.flatMap((x) => x.joined), left: all.flatMap((x) => x.left) };
+    }),
+    website: {
+      merged: sum("merged"), features: sum("features"), fixes: sum("fixes"), data: sum("data"), add: sum("add"), del: sum("del"),
+      majorFeatures: cat((r) => r.website.majorFeatures), notableFixes: cat((r) => r.website.notableFixes),
+      contributors: Object.entries(who).map(([w, n]) => ({ who: w, commits: n })).sort((x, y) => y.commits - x.commits),
+    },
+    series,
+  };
+};

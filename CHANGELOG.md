@@ -99,6 +99,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
+- The NetSec report tab on the internal dashboard has an "All months" view: the figures since June 2026 in one report, with a bar chart of Directory joiners per month and a table of the same figures. The tab now looks like the NetSec monthly email, with the NetSec logo on a blue band with a gold stripe, a summary box, stat tiles and the working-group colours.
 - The NetSec report tab on the internal dashboard has a Month menu that shows any complete month since June 2026, newest first. `?month=2026-09` links to one month.
 - Annual report drafts at `/internal/report-YYYY.html`, one per year from 2025. Each sets the year's figures for the conference, the Anthology, NetSec and the website beside the year before's, with the change, and lists the prizes, feature releases and audits. Staff add the prose in `src/_data/annualReportNotes.json`, and the page prints or saves as PDF. The internal dashboard links the latest draft for staff, management and the board.
 - A "Conference pace" card in the internal dashboard's conference timeline compares the coming ESSC's abstracts and registrations with the previous edition's at the same number of days before the conference, as two bars on one scale. Staff and management see it. The figures come from Indico exports that staff record with `scripts/conference-pace.py`, and until the first is recorded the card says so.
@@ -156,6 +157,8 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- The Systems light on the internal dashboard reads the newest deploy run. It read the run GitHub listed first, which can be an older failure after a re-run passed, so the dashboard stayed on Critical.
+- A red status dot under Platform status on the internal dashboard no longer glows green when the live figures arrive. The glow is kept for the green dot.
 - The NetSec months on the internal dashboard are computed again. Each month's line counts fired about 140 GitHub API calls at once, and GitHub refuses a burst that size with 403 (its secondary rate limit), so every month failed even after the hourly allowance reset. The calls now go ten at a time (#2047).
 - The internal dashboard's "Main new features" and "Main bug fixes" rolls no longer disappear after a rate-limited build. They cost about 80 GitHub API calls a build, pull-request builds included, and a build whose calls failed left them out. They are now published at `/internal/board-highlights.json`, and pull-request builds and failed builds keep the published ones (#2047).
 - The NetSec tab on the internal dashboard, and the NetSec section of the annual report, no longer disappear after a busy hour of merges. Each build recomputed every NetSec month at about 140 GitHub API calls a month, pull-request builds included, and on 6 November 2026 that used up the Actions token's hourly allowance: one deploy failed, and the next published no months. Pull-request builds now reuse the published months, and a month that cannot be recomputed keeps its published copy (#2047).

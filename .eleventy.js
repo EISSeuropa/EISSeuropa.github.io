@@ -84,6 +84,7 @@ module.exports = function (eleventyConfig) {
   // to the raw string if the date can't be parsed.
   // NetSec's monthly reports summed per year, for the annual report drafts.
   eleventyConfig.addFilter("netsecYear", require("./src/_data/annualReport.js").netsecYear);
+  eleventyConfig.addFilter("netsecAll", require("./src/_data/annualReport.js").netsecAll);
   eleventyConfig.addFilter("newsDate", (iso, lang) => {
     const d = new Date(String(iso).slice(0, 10) + "T00:00:00Z");
     if (isNaN(d.getTime())) return iso;

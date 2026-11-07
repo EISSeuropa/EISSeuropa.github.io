@@ -192,7 +192,11 @@ successor inherits through the handover in section 4.
   `/internal/netsec-reports.json`. A past month never changes, so the next
   build reuses the live months and computes only the one that has just
   ended. The tab opens on the newest month, and a Month menu shows any
-  other (`?month=2026-09` links to one). Bump `VERSION` in the file when the report's logic changes,
+  other (`?month=2026-09` links to one). With two months or more the menu also offers "All months"
+  (`?month=all`), which the `netsecAll` filter in `src/_data/annualReport.js`
+  builds from the same list: the totals since launch, with a bar chart of
+  joiners per month. The tab follows the email's design: blue band with the
+  white logo and a gold stripe, summary box, stat tiles and the WG colours. Bump `VERSION` in the file when the report's logic changes,
   and every month is recomputed. Pull-request builds never recompute: they
   share the Actions token's hourly API allowance with the deploys (#2047).
   A month that cannot be recomputed (no `GITHUB_TOKEN`, a pull-request
