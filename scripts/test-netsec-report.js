@@ -49,6 +49,17 @@ console.warn = () => {};
   process.env.GITHUB_TOKEN = "x";
   assert.strictEqual(await report(), null);
 
+  // The per-commit calls go ten at a time, in order: GitHub refuses a burst of 140.
+  let inFlight = 0, peak = 0;
+  const got = await report.inBatches([...Array(140).keys()], 10, async (i) => {
+    peak = Math.max(peak, ++inFlight);
+    await new Promise((r) => setTimeout(r, 1));
+    inFlight--;
+    return i * 2;
+  });
+  assert.strictEqual(peak, 10, "no more than ten calls at once");
+  assert.deepStrictEqual(got, [...Array(140).keys()].map((i) => i * 2));
+
   console.warn = quiet;
   console.log(`netsec-report: all checks passed (${all.length} months since ${all[all.length - 1].start})`);
 })().catch((e) => { console.warn = quiet; console.error(e); process.exit(1); });
