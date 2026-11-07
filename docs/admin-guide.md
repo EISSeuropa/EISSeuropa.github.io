@@ -164,7 +164,7 @@ successor inherits through the handover in section 4.
   `node scripts/test-board-highlights.js` checks this with `fetch` stubbed. Latest audits is the five newest entries of
   `src/_data/audits.json`, kept by hand: add a line when an audit lands.
   The private `workspace-ops` repo stays out, since the page is public.
-- **Version.** The foot of the page reads "Internal dashboard v2.27.2", from `VERSION` in `src/_data/dashboard.js`. The rules for bumping it and the history are in [internal-dashboard.md](internal-dashboard.md).
+- **Version.** The foot of the page reads "Internal dashboard v2.27.3", from `VERSION` in `src/_data/dashboard.js`. The rules for bumping it and the history are in [internal-dashboard.md](internal-dashboard.md).
 - **Timeline.** The first section under the strip. It holds the
   "Conference timeline" card with its stepper (below; its note opens with
   "Now:" and the current stage), then up to 20 calendar tiles for the
@@ -185,7 +185,8 @@ successor inherits through the handover in section 4.
   `src/_data/netsecReport.js` recomputes it at build from public NetSec
   data: `data/bios.json`, `data/wg.json` and `data/mc-members.json` at the
   last commit before each end of the month, and the month's commits on
-  `main` (one call per commit for its line count, about 140). The build
+  `main` (one call per commit for its line count, about 140, ten at a time:
+  GitHub refuses a larger burst with 403, #2047). The build
   keeps every complete month from June 2026 (`FIRST`, the first month with
   `data/wg.json` at both ends), newest first, and publishes the list at
   `/internal/netsec-reports.json`. A past month never changes, so the next

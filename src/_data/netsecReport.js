@@ -98,6 +98,16 @@ function groups(w0, w1) {
 
 // One commit per squashed PR. Its first line carries the title and "(#n)".
 const KIND = [["feature", /^feat\b/i], ["fix", /^fix\b/i], ["data", /^(data|chore\((roadmap|data|bios|indico|cost)\))\b|^(data|bios|indico|cost)[- ]sync/i]];
+// GitHub answers a burst of parallel calls with 403 (its secondary rate limit,
+// about 100 at once), and a month has about 140 commits. So the per-commit
+// calls go ten at a time (#2047).
+const BATCH = 10;
+async function inBatches(list, n, fn) {
+  const out = [];
+  for (let i = 0; i < list.length; i += n) out.push(...await Promise.all(list.slice(i, i + n).map(fn)));
+  return out;
+}
+
 async function website(base, head, start, end) {
   const commits = [];
   for (let page = 1; ; page++) {
@@ -107,14 +117,14 @@ async function website(base, head, start, end) {
   }
   // ponytail: one call per commit for its line count, about 140 a month, once a
   // month thanks to the live copy. GraphQL would do it in one if this bites.
-  const rows = await Promise.all(commits.map(async (c) => {
+  const rows = await inBatches(commits, BATCH, async (c) => {
     const { stats } = await api(`commits/${c.sha}`);
     const line = c.commit.message.split("\n")[0];
     const pr = (line.match(/\(#(\d+)\)\s*$/) || [])[1];
     const kind = (KIND.find(([, re]) => re.test(line)) || ["other"])[0];
     const who = c.commit.author.name;
     return { title: line.replace(/\s*\(#\d+\)\s*$/, ""), pr: pr ? Number(pr) : null, kind, who, add: stats.additions, del: stats.deletions };
-  }));
+  });
   const q = encodeURIComponent(`repo:${REPO} is:pr is:merged merged:${start}..${isoDayBefore(end)}`);
   const { total_count: merged } = await get(`https://api.github.com/search/issues?per_page=1&q=${q}`);
   const count = (k) => rows.filter((r) => r.kind === k).length;
@@ -188,3 +198,4 @@ module.exports = async function () {
 module.exports.compute = compute;
 module.exports.lastMonth = lastMonth;
 module.exports.months = months;
+module.exports.inBatches = inBatches;
