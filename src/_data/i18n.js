@@ -2264,7 +2264,7 @@ const locales = {
         byMonth: "Nach Monat",
         lead: "COST Action CA24154 · Verzeichnis, Leitung und Aktivität der Website",
         summary: "Zusammenfassung",
-        summaryDirectory: "Das NetSec-Verzeichnis wuchs von {from} auf {to} Profile, mit {joined} Neuzugängen und {left} Abgängen.",
+        summaryDirectory: "Das NetSec-Verzeichnis veränderte sich von {from} auf {to} Profile, mit {joined} Neuzugängen und {left} Abgängen.",
         summaryCore: ["Die Core Group blieb unverändert.", "Die Core Group hatte {n} Änderung.", "Die Core Group hatte {n} Änderungen."],
         summaryWebsite: ["Im Website-Repository wurde {n} Pull Request zusammengeführt.", "Im Website-Repository wurden {n} Pull Requests zusammengeführt."],
         tiles: { profiles: "Profile", net: "Nettoveränderung", prs: "Pull Requests", features: "Funktionen", fixes: "Fehlerbehebungen", data: "Datensynchronisationen" },
