@@ -4,8 +4,8 @@ A planning document to help the maintainer think through what's worth
 doing next, in what order, and at what effort. Organised by **release
 version** (SemVer), the same axis as the GitHub milestones and the
 public [`/roadmap.html`](https://eiss-europa.com/roadmap.html).
-**Last update: 8 November 2026 (v2.29.0 and v2.30.0 resynthesised
-after the corpus issues moved to v2.30.0).**
+**Last update: 8 November 2026 (v2.29.0 cut early, the call for
+papers moved to v2.30.0).**
 
 <!-- AUTOSTAMP:BEGIN -->
 > _Auto-tracked: **165 entries** in [`[Unreleased]`](../CHANGELOG.md#unreleased) since **v2.28.0** (57 Added, 44 Changed, 4 Removed, 60 Fixed). Last refresh by `scripts/sync-roadmap.py`: 8 Nov 2026. Prose in the timeline below may lag; the maintainer resynthesises on release-time §5 sweep._
@@ -55,7 +55,7 @@ other way round, so this is where a new release first appears.
 | v2.26.0 | 25 Jun 2026 | **Shipped** | Introducing the Anthology |
 | v2.27.0 | 19 Aug 2026 | **Shipped** | The Anthology Atlas and the recovered back catalogue |
 | v2.28.0 | 29 Aug 2026 | **Shipped** | A usable Atlas, and a citable theme vocabulary |
-| v2.29.0 | 8 Dec 2026 | Planned | Belvedere, and the call for papers for 2027 |
+| v2.29.0 | 8 Nov 2026 | **Shipped** | Belvedere, and a dashboard for the team |
 | v2.30.0 | 30 Apr 2027 | Planned | The 2027 programme, and the corpus as open data |
 | v2.31.0 | 25 Jun 2027 | Planned | ESSC 2027, and the archive rollover after it |
 
@@ -77,8 +77,8 @@ issues, and they are the organising group's, not ours.
 
 | Release | Due | Conference work in it |
 | --- | --- | --- |
-| v2.29.0 | 8 Dec 2026 | *Save the date*, due 30 September: the edition settled and entered in `conferences.js` (#1522, done) · *Call for papers*, due 10 November: the parked 2027 page activated (#1524, live, issue still open), the edition share cards generated (#1525), the call published and announced (#1526) |
-| v2.30.0 | 30 Apr 2027 | *Selection and notifications*: the prize jury confirmed and the terms published (#1527), proposals due on Indico on 26 January 2027, decisions on open panels and on papers for closed panels on 20 February · *Programme and logistics*: the final programme to participants on 27 February, and the programme page once the accepted papers are known (#1528) |
+| v2.29.0 | 8 Nov 2026 (cut early) | *Save the date*, due 30 September: the edition settled and entered in `conferences.js` (#1522, done) · *Call for papers*, due 10 November: the parked 2027 page activated (#1524, done), the edition share cards generated (#1525, done) |
+| v2.30.0 | 30 Apr 2027 | *Call for papers*, due 10 November: the call published and announced (#1526, moved from v2.29.0) · *Selection and notifications*: the prize jury confirmed and the terms published (#1527), proposals due on Indico on 26 January 2027, decisions on open panels and on papers for closed panels on 20 February · *Programme and logistics*: the final programme to participants on 27 February, and the programme page once the accepted papers are known (#1528) |
 | v2.31.0 | 25 Jun 2027 | *The conference itself*: papers to panel chairs by 27 May for the Best Paper Prize and by 3 June otherwise, then the archive rollover and the abstract pull afterwards (#1529), cut two weeks after the conference so the pull has the final Indico data |
 
 The phase names are the joint group's vocabulary and the NetSec
@@ -289,21 +289,19 @@ public roadmap. And 102 orphaned Mobirise-era images, about 25 MB, came
 out of the repository
 ([#471](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/471)).
 
-### v2.29.0 — Belvedere, and the call for papers for 2027 · target 8 December 2026
+### v2.29.0 — Belvedere, and a dashboard for the team · cut early, 8 November 2026
 
 On 25 October the eight corpus and open-science issues (#1222 to #1251)
 moved to v2.30.0, and the public card was renamed in
 [#1841](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/1841).
-What names v2.29.0 now is what has already shipped against it,
-Belvedere first, and the ESSC 2027 call for papers, whose deadline falls
-inside it. The French corpus strand that gave the release its old name
-needs a reviewer's time that a December cut cannot promise, and the
-conference phases cannot wait for it.
-
-The
+On 8 November the
 [v2.29.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/24)
-is the queryable commitment (rule §10). On 8 November it holds **16**
-open issues against 282 closed.
+held no open issues against 292 closed, so the release was cut a month
+ahead of its 8 December due date. The call for papers
+([#1526](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1526))
+moved to v2.30.0, and the release is named for what it shipped:
+Belvedere, and the internal dashboard that took most of the work since
+October.
 
 - **Belvedere** — the EISS blog, with its first post in English, French
   and German ([#1740](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1740),
@@ -313,8 +311,8 @@ open issues against 282 closed.
   closed).
 - **ESSC 2027, save the date and call for papers** — the edition is in
   `conferences.js` (#1522), `/2027` is live (#1524, closed) and the share
-  cards are generated (#1525, closed). The call itself is still to be
-  published and announced
+  cards are generated (#1525, closed). Publishing and announcing the
+  call moved to v2.30.0
   ([#1526](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1526)).
   The prize jury and the terms for the edition moved to v2.30.0
   ([#1527](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1527)).
@@ -327,9 +325,10 @@ open issues against 282 closed.
   closed). An RGAA 4.1.2 self-audit of 25 pages found 33 non-conforming
   criteria, all fixed and re-tested, and the accessibility statement
   declares against RGAA in a §8 in all three languages, with the RGAA
-  mention in every footer. The label stays *partially conformant* until
-  a screen-reader pass confirms the self-audit
-  ([#1796](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1796)).
+  mention in every footer. A screen-reader pass with VoiceOver on
+  25 October confirmed the self-audit, and the statement declares the
+  site fully conformant
+  ([#1796](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1796), closed).
 - **The team's tools** — work that was not planned for this release
   and is most of what landed against it since October. The internal
   dashboard at `/internal.html` gives staff, management, the board and
@@ -342,9 +341,9 @@ open issues against 282 closed.
   `/internship.html` lists the three volunteer cohorts of 2027, and news
   items are posted to LinkedIn and Bluesky
   ([#2056](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2056)).
-- **Smaller fixes** — among the open issues, the missing flag on a
-  People page profile
-  ([#1836](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1836)).
+- **Smaller fixes** — the missing flag on a People page profile
+  ([#1836](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1836))
+  moved to v2.30.0.
 
 The joint-event programmes for `/JPW2019` and `/joint-2024`
 ([#328](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/328))
