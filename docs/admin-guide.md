@@ -164,20 +164,28 @@ successor inherits through the handover in section 4.
   `node scripts/test-board-highlights.js` checks this with `fetch` stubbed. Latest audits is the five newest entries of
   `src/_data/audits.json`, kept by hand: add a line when an audit lands.
   The private `workspace-ops` repo stays out, since the page is public.
-- **Version.** The foot of the page reads "Internal dashboard v2.27.3", from `VERSION` in `src/_data/dashboard.js`. The rules for bumping it and the history are in [internal-dashboard.md](internal-dashboard.md).
+- **Version.** The foot of the page reads "Internal dashboard v2.29.0", from `VERSION` in `src/_data/dashboard.js`. The rules for bumping it and the history are in [internal-dashboard.md](internal-dashboard.md).
 - **Timeline.** The first section under the strip. It holds the
   "Conference timeline" card with its stepper (below; its note opens with
   "Now:" and the current stage), then up to 20 calendar tiles for the
   coming dates, built by `agenda()` in `src/_data/dashboard.js` from the Key
   dates list, the cohorts in `src/_data/cohorts.json` (call opens,
-  applications close, start) and NetSec's `data/events.json`, read from the
-  NetSec repo at build. NetSec's ESSC entry is left out, since EISS shows
-  it. A tile keeps its date's roles, so release due dates are for staff.
-  Each tile has a kind, set in `agenda()`, shown as the colour of its month
-  band and a tag: conference (blue), internship (teal), release (purple)
-  and NetSec event (COST blue).
-  Moving the tiles to Google Calendar is
-  [#2028](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2028).
+  applications close, start), the other dates in the "EISS dates" calendar
+  and NetSec's `data/events.json`, read from the NetSec repo at build.
+  The calendar holds every public EISS and NetSec date. A date there with an
+  `indico:` line (a copy of an Indico event, written daily by `indico-dates`
+  in `workspace-ops`) or with `site: netsec` is a tile and never a Key date.
+  Its `site:` line (`eiss`, `netsec` or `joint`) sets the EISS or NetSec tag,
+  with `joint` shown as EISS, and its `url:` line the tile's link. Add a
+  NetSec date that is not on Indico, such as an MC plenary, as an all-day event
+  with `site: netsec`. An entry in `events.json` becomes a tile only when the
+  calendar has no date with its Indico ID or with the same day and title
+  (#2028). The ESSC is left out of both sources, since `conferences.js`
+  gives it a tile of its own. A tile keeps its date's roles, so release due
+  dates are for staff. Each tile has a kind, set in `agenda()`, shown as the
+  colour of its month band and a tag: conference (blue), internship (teal),
+  release (purple) and event (COST blue).
+  `node scripts/test-dashboard-agenda.js` checks this with `fetch` stubbed.
 - **NetSec report.** A tab with the NetSec monthly report for the last
   complete month, as the email gives it: Directory joins and leaves, Core
   Group, Management Committee and working-group changes, and the website

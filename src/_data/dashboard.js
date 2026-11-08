@@ -8,7 +8,7 @@ const site = require("./site.js");
 const REPO = "https://github.com/EISSeuropa/EISSeuropa.github.io";
 // The dashboard's own version, shown at the foot of the page. Semantic
 // versioning, rules and history in docs/internal-dashboard.md.
-const VERSION = "2.28.0";
+const VERSION = "2.29.0";
 const everyone = ["staff", "management", "board", "volunteer"];
 const today = new Date().toISOString().slice(0, 10);
 
@@ -56,13 +56,17 @@ function siteDates() {
 }
 
 // The calendar is edited by staff, so the same slips only warn: the build
-// skips or simplifies the entry and the site still deploys.
+// skips or simplifies the entry and the site still deploys. An entry may also
+// carry site (eiss, netsec or joint), url, end and indico, which the
+// workspace-ops indico-dates script writes on its copies of Indico events.
+const CALENDAR_SITES = new Set(["eiss", "netsec", "joint"]);
+const isDay = (d) => /^\d{4}-\d{2}-\d{2}$/.test(d || "");
 function calendarDates(list) {
   const seen = new Set();
   const out = [];
   for (const d of list) {
     const label = String(d.label || "").trim();
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(d.date || "") || !label) {
+    if (!isDay(d.date) || !label) {
       console.warn(`[dashboard] calendar entry skipped: "${label}" on "${d.date}"`);
       continue;
     }
@@ -76,29 +80,44 @@ function calendarDates(list) {
     if (roles.length) entry.roles = roles;
     if (d.stage && d.step) Object.assign(entry, { stage: d.stage, step: d.step, links: Array.isArray(d.links) ? d.links : [] });
     else if (d.stage) console.warn(`[dashboard] calendar stage "${d.stage}" has no step, shown as a plain date`);
+    if (d.site) {
+      if (CALENDAR_SITES.has(String(d.site).toLowerCase())) entry.site = String(d.site).toLowerCase();
+      else console.warn(`[dashboard] calendar site "${d.site}" on "${label}" is not eiss, netsec or joint, left out`);
+    }
+    if (/^https?:\/\//.test(d.url || "")) entry.url = d.url;
+    if (isDay(d.end) && d.end > d.date) entry.end = d.end;
+    if (d.indico) entry.indico = String(d.indico);
     out.push(entry);
   }
   return out.sort(byDate);
 }
 
+// The calendar holds every public EISS and NetSec date. The year's key dates
+// are the EISS ones typed in by staff. Copies of Indico events and NetSec dates
+// go to the calendar tiles only.
+const isKeyDate = (d) => !d.indico && d.site !== "netsec";
+
 async function fetchDates() {
+  let events = [];
   try {
     const res = await fetch(`${WORKSPACE_STATUS}?view=dates`, { signal: AbortSignal.timeout(30000) });
     if (!res.ok) throw new Error(String(res.status));
     const { dates } = await res.json();
     const list = Array.isArray(dates) ? calendarDates(dates) : [];
-    if (list.length) return { keyDates: list, source: "calendar" };
-    console.warn("[dashboard] the dates calendar gave nothing, keyDates in site.js used");
+    events = list.filter((d) => !isKeyDate(d));
+    const keyDates = list.filter(isKeyDate);
+    if (keyDates.length) return { keyDates, source: "calendar", events };
+    console.warn("[dashboard] the dates calendar gave no key dates, keyDates in site.js used");
   } catch (e) {
     console.warn(`[dashboard] dates calendar unavailable (${e.message}), keyDates in site.js used`);
   }
-  return { keyDates: siteDates(), source: "site" };
+  return { keyDates: siteDates(), source: "site", events };
 }
 
 // A date's fr/de overrides, renamed for a stage: its stage is the label.
 const stageLangs = (d) => Object.fromEntries(["fr", "de"].filter((l) => d[l]).map((l) => [l, { label: d[l].stage, step: d[l].step }]));
 
-function assemble(keyDates, source) {
+function assemble(keyDates, source, events = []) {
   // The Key dates timeline keeps the last 30 days, which the page ticks off.
   const PAST_DAYS = 30;
   const dates = [
@@ -169,7 +188,7 @@ function assemble(keyDates, source) {
     url: `${REPO}/issues?q=${encodeURIComponent(`is:issue milestone:${m.title}`)}`,
   }));
 
-  return { version: VERSION, milestones, release, counts, dates, deadlines, phase, onboarding, agenda: agenda(dates), datesSource: source, calendar: site.deadlinesCalendar || null, repo: "EISSeuropa/EISSeuropa.github.io" };
+  return { version: VERSION, milestones, release, counts, dates, deadlines, phase, onboarding, agenda: agenda(dates, events), datesSource: source, calendar: site.deadlinesCalendar || null, repo: "EISSeuropa/EISSeuropa.github.io" };
 }
 
 // The five newest issues still open and the last five closed as done, for the Today
@@ -300,12 +319,15 @@ async function fetchHighlights() {
 
 const audits = [...require("./audits.json")].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 5);
 
-// The calendar tiles under the conference timeline: the coming EISS dates
-// (the Key dates list, internship cohorts) and NetSec's events, soonest first.
-// ponytail: known dates only, for now. #2028 moves them to Google Calendar.
+// The calendar tiles under the conference timeline, soonest first: the coming
+// EISS dates (the Key dates list, internship cohorts), the other dates in the
+// "EISS dates" calendar (Indico events and NetSec dates, #2028), and NetSec's
+// events.json for any NetSec event the calendar does not have yet.
 const cohorts = require("./cohorts.json");
 let netsecEvents = [];
-function agenda(dates) {
+const ESSC = /European Security Studies Conference/;
+const sameEvent = (a, b) => a.date === b.date && a.label.trim().toLowerCase() === b.label.trim().toLowerCase();
+function agenda(dates, events = []) {
   const eiss = dates.filter((d) => d.date >= today)
     .map((d) => ({ ...d, site: "EISS", cat: d.kind === "release" ? "release" : "conference", end: d.kind === "essc" && edition ? edition.endDate : undefined, state: undefined }));
   const intern = cohorts.flatMap((c) => [
@@ -313,11 +335,17 @@ function agenda(dates) {
     { date: c.applyBy, kind: "cohortApply", cohort: c.name },
     { date: c.start, kind: "cohortStart", cohort: c.name },
   ]).filter((d) => d.date >= today).map((d) => ({ ...d, site: "EISS", cat: "internship", roles: everyone, url: "/internship.html" }));
+  // The ESSC has its own tile from conferences.js, so its Indico copy is left out.
+  const calendar = events.filter((d) => d.date >= today && !(edition && d.indico && d.date === edition.startDate) && !ESSC.test(d.label))
+    .map(({ date, end, label, url, site: from, roles }) => ({ date, end, label, url, site: from === "netsec" ? "NetSec" : "EISS", cat: "event", roles: roles || everyone }));
+  const indicoIds = new Set(events.map((d) => d.indico).filter(Boolean));
   // NetSec lists ESSC too, which EISS already shows.
-  const netsec = netsecEvents.filter((e) => e.start.slice(0, 10) >= today && !/European Security Studies Conference/.test(e.summary))
+  const netsec = netsecEvents.filter((e) => e.start.slice(0, 10) >= today && !ESSC.test(e.summary))
     .map((e) => ({ date: e.start.slice(0, 10), end: e.end && e.end.slice(0, 10) > e.start.slice(0, 10) ? e.end.slice(0, 10) : undefined,
-      label: e.summary, url: e.url, site: "NetSec", cat: "event", roles: everyone, tentative: e.status === "TENTATIVE" }));
-  return [...eiss, ...intern, ...netsec].sort(byDate).slice(0, 20);
+      label: e.summary, url: e.url, site: "NetSec", cat: "event", roles: everyone, tentative: e.status === "TENTATIVE", indico: e.indicoEventId }))
+    .filter((e) => !(e.indico && indicoIds.has(String(e.indico))) && !events.some((d) => sameEvent(d, e)))
+    .map(({ indico, ...e }) => e);
+  return [...eiss, ...intern, ...calendar, ...netsec].sort(byDate).slice(0, 20);
 }
 async function fetchNetsecEvents() {
   try {
@@ -330,6 +358,6 @@ async function fetchNetsecEvents() {
 }
 
 module.exports = async function () {
-  const [{ keyDates, source }, recent, highlights, , help] = await Promise.all([fetchDates(), fetchRecent(), fetchHighlights(), fetchNetsecEvents(), fetchHelp()]);
-  return { ...assemble(keyDates, source), recent, help, built: today, pace: pace(), board: { ...highlights, audits } };
+  const [{ keyDates, source, events }, recent, highlights, , help] = await Promise.all([fetchDates(), fetchRecent(), fetchHighlights(), fetchNetsecEvents(), fetchHelp()]);
+  return { ...assemble(keyDates, source, events), recent, help, built: today, pace: pace(), board: { ...highlights, audits } };
 };
