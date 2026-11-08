@@ -8,7 +8,7 @@ const site = require("./site.js");
 const REPO = "https://github.com/EISSeuropa/EISSeuropa.github.io";
 // The dashboard's own version, shown at the foot of the page. Semantic
 // versioning, rules and history in docs/internal-dashboard.md.
-const VERSION = "2.29.0";
+const VERSION = "2.29.1";
 const everyone = ["staff", "management", "board", "volunteer"];
 const today = new Date().toISOString().slice(0, 10);
 
@@ -87,6 +87,11 @@ function calendarDates(list) {
     if (/^https?:\/\//.test(d.url || "")) entry.url = d.url;
     if (isDay(d.end) && d.end > d.date) entry.end = d.end;
     if (d.indico) entry.indico = String(d.indico);
+    // The FR and DE pages' wording, from label_fr, stage_fr, step_fr (and _de) lines.
+    for (const lang of ["fr", "de"]) {
+      const words = Object.fromEntries(["label", "stage", "step"].filter((k) => d[lang] && typeof d[lang][k] === "string" && d[lang][k].trim()).map((k) => [k, d[lang][k].trim()]));
+      if (Object.keys(words).length) entry[lang] = words;
+    }
     out.push(entry);
   }
   return out.sort(byDate);
@@ -337,7 +342,7 @@ function agenda(dates, events = []) {
   ]).filter((d) => d.date >= today).map((d) => ({ ...d, site: "EISS", cat: "internship", roles: everyone, url: "/internship.html" }));
   // The ESSC has its own tile from conferences.js, so its Indico copy is left out.
   const calendar = events.filter((d) => d.date >= today && !(edition && d.indico && d.date === edition.startDate) && !ESSC.test(d.label))
-    .map(({ date, end, label, url, site: from, roles }) => ({ date, end, label, url, site: from === "netsec" ? "NetSec" : "EISS", cat: "event", roles: roles || everyone }));
+    .map(({ date, end, label, url, site: from, roles, fr, de }) => ({ date, end, label, url, site: from === "netsec" ? "NetSec" : "EISS", cat: "event", roles: roles || everyone, fr, de }));
   const indicoIds = new Set(events.map((d) => d.indico).filter(Boolean));
   // NetSec lists ESSC too, which EISS already shows.
   const netsec = netsecEvents.filter((e) => e.start.slice(0, 10) >= today && !ESSC.test(e.summary))

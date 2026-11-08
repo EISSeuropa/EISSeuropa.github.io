@@ -42,7 +42,7 @@ const tiles = (d) => d.agenda.filter((x) => x.cat === "event").map((x) => [x.dat
 
   // The calendar: key dates stay key dates, Indico copies and NetSec dates become tiles.
   calendar = [
-    { date: D1, label: "Proposals due", stage: "Reviewing", step: "Review" },
+    { date: inDays(-1), label: "Proposals due", stage: "Reviewing", step: "Review", fr: { label: "Propositions", stage: "Évaluation", step: "Évaluation", extra: "x" }, de: { label: " " } },
     { date: D2, label: "NetSec workshop", site: "netsec", indico: "41", url: "https://indico.eiss-europa.com/event/41/" },
     { date: D3, end: D4, label: "EISS workshop", site: "eiss", indico: "42", url: "https://indico.eiss-europa.com/event/42/", roles: ["staff"] },
     { date: D4, label: "MC plenary", site: "netsec" },
@@ -53,6 +53,10 @@ const tiles = (d) => d.agenda.filter((x) => x.cat === "event").map((x) => [x.dat
   assert.strictEqual(d.datesSource, "calendar");
   assert.ok(d.dates.some((x) => x.label === "Proposals due"), "a typed EISS date is a key date");
   assert.ok(d.dates.some((x) => x.label === "Bad site"), "an unknown site is dropped and the date kept");
+  const proposals = d.dates.find((x) => x.label === "Proposals due");
+  assert.deepStrictEqual(proposals.fr, { label: "Propositions", stage: "Évaluation", step: "Évaluation" }, "French wording is kept, without unknown keys");
+  assert.strictEqual(proposals.de, undefined, "blank wording is dropped");
+  assert.strictEqual(d.phase && d.phase.fr && d.phase.fr.label, "Évaluation", "the stage keeps its French name");
   assert.ok(!d.dates.some((x) => x.label === "EISS workshop" || x.label === "MC plenary"), "Indico copies and NetSec dates are not key dates");
   assert.deepStrictEqual(tiles(d), [
     [D2, "NetSec workshop", "NetSec", null, "https://indico.eiss-europa.com/event/41/", false],
