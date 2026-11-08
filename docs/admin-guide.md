@@ -164,7 +164,7 @@ successor inherits through the handover in section 4.
   `node scripts/test-board-highlights.js` checks this with `fetch` stubbed. Latest audits is the five newest entries of
   `src/_data/audits.json`, kept by hand: add a line when an audit lands.
   The private `workspace-ops` repo stays out, since the page is public.
-- **Version.** The foot of the page reads "Internal dashboard v2.29.1", from `VERSION` in `src/_data/dashboard.js`. The rules for bumping it and the history are in [internal-dashboard.md](internal-dashboard.md).
+- **Version.** The foot of the page reads "Internal dashboard v2.30.0", from `VERSION` in `src/_data/dashboard.js`. The rules for bumping it and the history are in [internal-dashboard.md](internal-dashboard.md).
 - **Timeline.** The first section under the strip. It holds the
   "Conference timeline" card with its stepper (below; its note opens with
   "Now:" and the current stage), then up to 20 calendar tiles for the
@@ -191,6 +191,12 @@ successor inherits through the handover in section 4.
   dates are for staff. Each tile has a kind, set in `agenda()`, shown as the
   colour of its month band and a tag: conference (blue), internship (teal),
   release (purple) and event (COST blue).
+  Each tile opens its own resource. A key date opens its `url` (a `url:` line
+  in the calendar, or `url` in `keyDates`), or else the app named first in its
+  `links`. A release opens its GitHub milestone page, using the milestone
+  `number` that `scripts/sync-roadmap-progress.py` records (a milestone
+  search until it has one). The ESSC opens its year page, a cohort date
+  `/internship.html`, and a NetSec or Indico date its own page.
   `node scripts/test-dashboard-agenda.js` checks this with `fetch` stubbed.
 - **NetSec report.** A tab with the NetSec monthly report for the last
   complete month, as the email gives it: Directory joins and leaves, Core

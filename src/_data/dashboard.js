@@ -8,7 +8,7 @@ const site = require("./site.js");
 const REPO = "https://github.com/EISSeuropa/EISSeuropa.github.io";
 // The dashboard's own version, shown at the foot of the page. Semantic
 // versioning, rules and history in docs/internal-dashboard.md.
-const VERSION = "2.29.1";
+const VERSION = "2.30.0";
 const everyone = ["staff", "management", "board", "volunteer"];
 const today = new Date().toISOString().slice(0, 10);
 
@@ -119,6 +119,16 @@ async function fetchDates() {
   return { keyDates: siteDates(), source: "site", events };
 }
 
+// Where a tile leads. A release opens its milestone (number from the daily
+// roadmap refresh, or a search until it has one). A key date opens its url,
+// or else the app named first in its links.
+const milestoneUrl = (m) => m.number ? `${REPO}/milestone/${m.number}` : `${REPO}/issues?q=${encodeURIComponent(`is:issue milestone:${m.title}`)}`;
+const linkHref = (links) => {
+  const first = (links || [])[0];
+  const app = first && site.staffLinks.find((a) => a.key === first || a.label === first);
+  return app ? app.href : undefined;
+};
+
 // A date's fr/de overrides, renamed for a stage: its stage is the label.
 const stageLangs = (d) => Object.fromEntries(["fr", "de"].filter((l) => d[l]).map((l) => [l, { label: d[l].stage, step: d[l].step }]));
 
@@ -126,9 +136,9 @@ function assemble(keyDates, source, events = []) {
   // The Key dates timeline keeps the last 30 days, which the page ticks off.
   const PAST_DAYS = 30;
   const dates = [
-    ...(edition ? [{ date: edition.startDate, label: `ESSC ${edition.year}, ${edition.city}`, kind: "essc", year: edition.year, city: edition.city, roles: everyone }] : []),
-    ...open.filter((m) => m.due).map((m) => ({ date: m.due, label: `Release ${m.title} due`, kind: "release", title: m.title, roles: ["staff"] })),
-    ...keyDates.map(({ date, label, roles, fr, de }) => ({ date, label, roles: roles || everyone, fr, de })),
+    ...(edition ? [{ date: edition.startDate, label: `ESSC ${edition.year}, ${edition.city}`, kind: "essc", year: edition.year, city: edition.city, roles: everyone, url: `/${edition.year}.html` }] : []),
+    ...open.filter((m) => m.due).map((m) => ({ date: m.due, label: `Release ${m.title} due`, kind: "release", title: m.title, roles: ["staff"], url: milestoneUrl(m) })),
+    ...keyDates.map(({ date, label, roles, fr, de, url, links }) => ({ date, label, roles: roles || everyone, fr, de, url: url || linkHref(links) })),
   ]
     .filter((d) => d.date >= isoDaysAgo(PAST_DAYS))
     .sort(byDate);
@@ -190,7 +200,7 @@ function assemble(keyDates, source, events = []) {
   const milestones = open.filter((m) => m.due).map((m, i) => ({
     date: m.due, title: m.title, closed: m.closed, total: m.total, percent: m.percent,
     state: i ? "later" : "next",
-    url: `${REPO}/issues?q=${encodeURIComponent(`is:issue milestone:${m.title}`)}`,
+    url: milestoneUrl(m),
   }));
 
   return { version: VERSION, milestones, release, counts, dates, deadlines, phase, onboarding, agenda: agenda(dates, events), datesSource: source, calendar: site.deadlinesCalendar || null, repo: "EISSeuropa/EISSeuropa.github.io" };
