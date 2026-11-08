@@ -25,6 +25,7 @@ alternates:
 {# schema.org Event structured data for this edition (built from
    conferences.js). Renders into the body, which is valid for JSON-LD. #}
 {% set year = "2027" %}
+{% set school = netsecEvents.byUid["summer-school-2027@netsec-cost.eu"] %}
 {% include "event-jsonld.njk" %}
 
 <section class="hero" aria-labelledby="hero-title-2027">
@@ -95,7 +96,7 @@ alternates:
         <article class="tile">
           <div class="tile-icon" aria-hidden="true">{{ icon("calendar") }}</div>
           <h3>NetSec Training School</h3>
-          <p class="muted"><strong>8–11 June 2027</strong>, in parallel with the conference. Applications close on 7 December 2026. The call is on
+          <p class="muted"><strong>{{ school.displayDate.en }}</strong>, in parallel with the conference. Applications close on {{ school.deadline.en }}. The call is on
             <a href="/NetSecSchool.html">the Training School page</a> and on
             <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">netsec-cost.eu</a>.</p>
         </article>

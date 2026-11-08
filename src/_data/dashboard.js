@@ -347,14 +347,10 @@ function agenda(dates, events = []) {
     .map(({ indico, ...e }) => e);
   return [...eiss, ...intern, ...calendar, ...netsec].sort(byDate).slice(0, 20);
 }
+// netsecEvents.js fetches NetSec's events.json once per build and warns when
+// it cannot, in which case the calendar tiles show EISS dates only.
 async function fetchNetsecEvents() {
-  try {
-    const res = await fetch("https://raw.githubusercontent.com/EISSeuropa/netsec.github.io/main/data/events.json", { signal: AbortSignal.timeout(15000) });
-    if (!res.ok) throw new Error(String(res.status));
-    netsecEvents = (await res.json()).events || [];
-  } catch (e) {
-    console.warn(`[dashboard] NetSec events unavailable (${e.message}), the calendar tiles show EISS dates only`);
-  }
+  netsecEvents = (await require("./netsecEvents.js")()).events;
 }
 
 module.exports = async function () {

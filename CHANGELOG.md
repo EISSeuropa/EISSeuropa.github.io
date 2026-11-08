@@ -231,6 +231,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- The NetSec Training School dates and its application deadline on `/2027` (EN, FR, DE) and `/NetSecSchool.html` come from NetSec's `data/events.json`, which follows the "EISS dates" calendar (netsec.github.io#2133). The lead paragraph of `/NetSecSchool.html` gives the dates as "8–11 June 2027" and the conference's in brackets.
 - The NetSec Summer School page opens with the 2027 call for applicants: the NetSec Training School at the University of Belgrade, 8 to 11 June 2027, with who can apply, what participants receive, the four topics and how to apply by 7 December 2026. The About section names NetSec as co-organiser and both host universities, and the NetSec Training School tile on the 2027 conference page, in all three locales, gives the deadline and links to the call.
 - The stored/live lights in the internal dashboard's Recent activity sit to the left of each roll's label, in one column. In Platform status the light is the level dot beside "Nominal", in place of a second dot in the card's corner.
 - The "Live from GitHub, checked X minutes ago" line under the internal dashboard's header is gone. The lights beside each block show the same.

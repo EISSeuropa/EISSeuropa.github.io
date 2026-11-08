@@ -44,10 +44,11 @@ change both, or keep the old shape.
 | NetSec | `directory-index.json` at the site root | EISS `sync-netsec-directory.yml` and `scripts/sync-netsec-directory.mjs`: Anthology authors link to NetSec profiles |
 | EISS | `/data/authors-index.json` | NetSec `scripts/build-profile-pages.py`: profiles link to the Anthology |
 | EISS | `/data/anthology-index.json` | NetSec `assets/js/essc-programme.js`: the ESSC programme links papers |
-| NetSec | `data/events.json` on `main` | EISS `src/_data/dashboard.js`: Timeline tiles on the internal dashboard |
+| NetSec | `data/events.json` on `main` (`uid`, `displayDate`, `applicationDeadline`) | EISS `src/_data/netsecEvents.js`: the Training School dates on `/2027` (EN, FR, DE) and `/NetSecSchool.html`, and through it `src/_data/dashboard.js`: Timeline tiles on the internal dashboard |
 | NetSec | `data/bios.json`, `data/wg.json`, `data/mc-members.json` and the git history of `main` | EISS `src/_data/netsecReport.js`: the NetSec report tab |
 | NetSec and EISS | Workflow runs | EISS `src/_data/systemHealth.js`: Platform status tab |
 | workspace-ops (`status`) | The EISS status web app, and its `?view=dates` | EISS `src/_data/systemHealth.js` (Workspace card) and the Key dates on the dashboard (fallback: `keyDates` in `src/_data/site.js`) |
+| workspace-ops (`status`) | `?view=dates`: the `uid` and `deadline` keys of the "EISS dates" calendar | NetSec `scripts/sync-calendar-dates.py`, in the daily Indico sync: the `start`, `end` and `applicationDeadline` of events not on Indico (netsec.github.io#2133) |
 | EISS | `src/_data/cohorts.json` and `src/_data/board.json` on `master` | workspace-ops `intern-lifecycle`: cohort dates and the Website check column |
 | workspace-ops (`intern-lifecycle`) | A row in the board entries Form's response sheet | EISS `sync-board.yml` (Mondays): the PR that updates `board.json` |
 | EISS | `roleEndDate` in `board.json` | EISS `offboarding.yml`: the website-side leaver issue |
