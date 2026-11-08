@@ -34,6 +34,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { createRequire } from "node:module";
+import { fileURLToPath } from "node:url";
 
 // acorn arrives transitively through Eleventy and is declared in
 // devDependencies so this script does not depend on that staying true. A
@@ -196,7 +197,7 @@ let verified;
 try {
   verified = JSON.parse(
     execFileSync(process.execPath, ["-e",
-      `const r=require(${JSON.stringify(new URL(tmp).pathname)});const d=typeof r==='function'?r():r;` +
+      `const r=require(${JSON.stringify(fileURLToPath(tmp))});const d=typeof r==='function'?r():r;` +
       `let all=[];for(const g of (Object.values(d).find(Array.isArray)||[]))if(g.entries)all=all.concat(g.entries);` +
       `process.stdout.write(JSON.stringify(all.find(e=>e.version===${JSON.stringify(version)})||null));`,
     ], { encoding: "utf8" })
@@ -205,7 +206,7 @@ try {
   console.error(`error: the edited module failed to load (${e.message.split("\n")[0]}). Nothing written.`);
   process.exit(1);
 } finally {
-  try { execFileSync("rm", ["-f", new URL(tmp).pathname]); } catch {}
+  try { execFileSync("rm", ["-f", fileURLToPath(tmp)]); } catch {}
 }
 
 const problems = [];
