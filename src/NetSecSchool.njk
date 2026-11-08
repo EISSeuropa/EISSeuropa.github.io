@@ -2,11 +2,13 @@
 layout: base.njk
 permalink: /NetSecSchool.html
 title: NetSec Early-Career Scholars Summer School
-description: Training and mentoring for early-career researchers in security studies, by EISS and COST Action NetSec. Belgrade, 8 to 11 June 2027. Apply by 7 December 2026.
+eleventyComputed:
+  description: "Training and mentoring for early-career researchers in security studies, by EISS and COST Action NetSec. Belgrade, {{ netsecEvents.byUid['summer-school-2027@netsec-cost.eu'].displayDate.en }}. Apply by {{ netsecEvents.byUid['summer-school-2027@netsec-cost.eu'].deadline.en }}."
 metaImage: /assets/images/NetSecSchool-meta.jpg
 navKey: netsec
 ---
 {% from "icons.njk" import icon %}
+{% set school = netsecEvents.byUid["summer-school-2027@netsec-cost.eu"] %}
 
 <header class="page-header">
   <div class="container">
@@ -21,12 +23,12 @@ navKey: netsec
 <section class="section" id="call-2027" aria-labelledby="call-2027-title">
   <div class="container">
     <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <div class="featured-eyebrow">Call for applicants · Deadline 7 December 2026</div>
+      <div class="featured-eyebrow">Call for applicants · Deadline {{ school.deadline.en }}</div>
       <h2 id="call-2027-title">2027 edition at the University of Belgrade</h2>
       <p class="lead">
         Applications are open for the NetSec Training School at the University of Belgrade, Serbia,
-        from 8 to 11 June 2027, alongside the <a href="/2027.html">European Security Studies
-        Conference</a> on 10 and 11 June. The deadline is 7 December 2026.
+        {{ school.displayDate.en }}, alongside the <a href="/2027.html">European Security Studies
+        Conference</a> ({{ conferences.byYear['2027'].dates.en }}). The deadline is {{ school.deadline.en }}.
       </p>
       <h3>Who can apply</h3>
       <p>
@@ -50,7 +52,7 @@ navKey: netsec
       <p>
         Send a motivation letter, a CV of at most two pages and a 500-word abstract of your research
         proposal to <a href="mailto:ecs.netsec@eiss-europa.com">ecs.netsec@eiss-europa.com</a> by
-        7 December 2026. Questions go to the same address.
+        {{ school.deadline.en }}. Questions go to the same address.
       </p>
       <p style="margin-top: var(--space-5); display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center;">
         <a class="btn btn-primary" href="mailto:ecs.netsec@eiss-europa.com?subject=NetSec%20Training%20School%202027%20application">{{ icon("mail") }} Apply by email</a>

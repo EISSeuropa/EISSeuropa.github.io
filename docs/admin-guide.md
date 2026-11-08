@@ -171,14 +171,20 @@ successor inherits through the handover in section 4.
   coming dates, built by `agenda()` in `src/_data/dashboard.js` from the Key
   dates list, the cohorts in `src/_data/cohorts.json` (call opens,
   applications close, start), the other dates in the "EISS dates" calendar
-  and NetSec's `data/events.json`, read from the NetSec repo at build.
+  and NetSec's `data/events.json`, read from the NetSec repo once per build
+  by `src/_data/netsecEvents.js` (which also gives `/2027` and
+  `/NetSecSchool.html` the Training School dates and deadline).
   The calendar holds every public EISS and NetSec date. A date there with an
   `indico:` line (a copy of an Indico event, written daily by `indico-dates`
   in `workspace-ops`) or with `site: netsec` is a tile and never a Key date.
   Its `site:` line (`eiss`, `netsec` or `joint`) sets the EISS or NetSec tag,
   with `joint` shown as EISS, and its `url:` line the tile's link. Add a
   NetSec date that is not on Indico, such as an MC plenary, as an all-day event
-  with `site: netsec`. An entry in `events.json` becomes a tile only when the
+  with `site: netsec`. When the date is an event in NetSec's `events.json`, add
+  `uid: <its uid>` as well (for example `uid: summer-school-2027@netsec-cost.eu`),
+  and give its application deadline a date of its own with `deadline: <its uid>`.
+  NetSec's daily sync then takes the event's dates from the calendar, and a
+  moved date reaches both sites (netsec.github.io#2133). An entry in `events.json` becomes a tile only when the
   calendar has no date with its Indico ID or with the same day and title
   (#2028). The ESSC is left out of both sources, since `conferences.js`
   gives it a tile of its own. A tile keeps its date's roles, so release due
