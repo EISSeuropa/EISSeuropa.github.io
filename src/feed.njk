@@ -22,7 +22,8 @@ eleventyExcludeFromCollections: true
     id: site.url + "/news.html#news-" + item.slug,
     iso: item.isoDate,
     category: item.type,
-    summary: item.excerpt
+    summary: item.excerpt,
+    newsletter: item.newsletter
   }) -%}
 {%- endfor -%}
 {%- for post in collections.blog | byLang("en") -%}
@@ -54,6 +55,9 @@ eleventyExcludeFromCollections: true
     <updated>{{ item.iso }}</updated>
     <published>{{ item.iso }}</published>
     <category term="{{ item.category }}"/>
+    {%- if item.newsletter %}
+    <category term="newsletter"/>
+    {%- endif %}
     {%- if item.author %}
     <author><name>{{ item.author }}</name></author>
     {%- endif %}

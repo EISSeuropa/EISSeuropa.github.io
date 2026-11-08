@@ -1,0 +1,101 @@
+name: News item
+description: A news item for the website, the feed, the LinkedIn and Bluesky posts and the newsletter.
+title: "news: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        One form for every surface. A publisher reads the item and applies the
+        `news` label, which opens the pull request that adds it to the site.
+        Only the summary is required besides the headline. Leave the rest blank
+        if it does not apply.
+  - type: dropdown
+    id: site
+    attributes:
+      label: Site
+      description: A NetSec-only item goes in the NetSec repository instead.
+      options:
+        - EISS
+        - Joint (EISS and NetSec)
+        - NetSec
+      default: 0
+    validations:
+      required: true
+  - type: input
+    id: headline
+    attributes:
+      label: Headline
+      description: Plain text. Leave blank to use the issue title.
+    validations:
+      required: false
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: >-
+        Up to 300 characters. Shown under the headline on the site and used as
+        the LinkedIn and Bluesky caption.
+    validations:
+      required: true
+  - type: textarea
+    id: body
+    attributes:
+      label: Body
+      description: Optional longer text, used in the newsletter.
+    validations:
+      required: false
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type
+      options:
+        - news
+        - event
+        - paper
+        - press
+        - podcast
+      default: 0
+    validations:
+      required: false
+  - type: input
+    id: link
+    attributes:
+      label: Link
+      description: A full address (https://...) or a page on this site (/2027.html).
+    validations:
+      required: false
+  - type: input
+    id: image
+    attributes:
+      label: Image
+      description: Optional address of an image for the newsletter (https://... or /assets/...).
+    validations:
+      required: false
+  - type: input
+    id: date
+    attributes:
+      label: Publication date
+      description: YYYY-MM-DD. Leave blank for the day the label is applied.
+      placeholder: "2026-11-08"
+    validations:
+      required: false
+  - type: dropdown
+    id: collaborator
+    attributes:
+      label: Collaborator page
+      description: >-
+        The other organisation's LinkedIn page, added by hand as collaborator
+        after the post goes out.
+      options:
+        - None
+        - NetSec
+      default: 0
+    validations:
+      required: false
+  - type: checkboxes
+    id: newsletter
+    attributes:
+      label: Newsletter
+      options:
+        - label: Include in the newsletter
+          required: false
