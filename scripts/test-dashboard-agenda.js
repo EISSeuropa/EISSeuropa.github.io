@@ -42,6 +42,8 @@ const tiles = (d) => d.agenda.filter((x) => x.cat === "event").map((x) => [x.dat
 
   // The calendar: key dates stay key dates, Indico copies and NetSec dates become tiles.
   calendar = [
+    { date: D2, label: "Issue the call", stage: "Call open", step: "Call", links: ["indico"], url: "https://drive.google.com/drive/folders/cfp" },
+    { date: D3, label: "Decisions", stage: "Programme", step: "Programme", links: ["indico", "groups"] },
     { date: inDays(-1), label: "Proposals due", stage: "Reviewing", step: "Review", fr: { label: "Propositions", stage: "Évaluation", step: "Évaluation", extra: "x" }, de: { label: " " } },
     { date: D2, label: "NetSec workshop", site: "netsec", indico: "41", url: "https://indico.eiss-europa.com/event/41/" },
     { date: D3, end: D4, label: "EISS workshop", site: "eiss", indico: "42", url: "https://indico.eiss-europa.com/event/42/", roles: ["staff"] },
@@ -53,6 +55,13 @@ const tiles = (d) => d.agenda.filter((x) => x.cat === "event").map((x) => [x.dat
   assert.strictEqual(d.datesSource, "calendar");
   assert.ok(d.dates.some((x) => x.label === "Proposals due"), "a typed EISS date is a key date");
   assert.ok(d.dates.some((x) => x.label === "Bad site"), "an unknown site is dropped and the date kept");
+  const tile = (label) => d.agenda.find((x) => x.label === label) || {};
+  assert.strictEqual(tile("Issue the call").url, "https://drive.google.com/drive/folders/cfp", "a key date opens its own url");
+  assert.strictEqual(tile("Decisions").url, "https://indico.eiss-europa.com", "without a url, the app named first in its links");
+  const release = d.agenda.find((x) => x.kind === "release");
+  if (release) assert.match(release.url, /\/(milestone\/\d+|issues\?q=)/, "a release opens its milestone");
+  const essc = d.agenda.find((x) => x.kind === "essc");
+  if (essc) assert.strictEqual(essc.url, `/${edition.year}.html`, "the ESSC opens its page");
   const proposals = d.dates.find((x) => x.label === "Proposals due");
   assert.deepStrictEqual(proposals.fr, { label: "Propositions", stage: "Évaluation", step: "Évaluation" }, "French wording is kept, without unknown keys");
   assert.strictEqual(proposals.de, undefined, "blank wording is dropped");

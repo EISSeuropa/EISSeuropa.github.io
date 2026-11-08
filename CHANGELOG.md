@@ -99,6 +99,8 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
+- Each tile under "Timeline" on the internal dashboard opens the resource it is about: the call-for-papers or ESSC 2027 folder on Drive, Indico for the proposal, decision and programme dates, the GitHub milestone page for a release due date, and the ESSC 2027 page for the conference.
+
 - The internal dashboard links the "EISS internal deadlines" Google Calendar under the Timeline tiles, for staff, management, the board and the team ([#2053](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2053)).
 - The tiles under "Timeline" on the internal dashboard read the "EISS dates" Google Calendar as well as the Key dates, the internship cohorts and NetSec's events. Indico events copied into the calendar and NetSec dates added there, such as Management Committee plenaries, show as tiles tagged EISS or NetSec and link to their Indico page. A NetSec event already in the calendar is shown once ([#2028](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2028)).
 

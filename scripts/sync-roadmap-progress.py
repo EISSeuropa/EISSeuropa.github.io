@@ -12,7 +12,7 @@ Each version milestone (title matching `vMAJOR.MINOR.PATCH`) becomes an
 entry keyed by its title:
 
     "v2.25.0": { "closed": 0, "total": 6, "percent": 0,
-                 "state": "open", "due": "2026-07-31" }
+                 "state": "open", "due": "2026-07-31", "number": 12 }
 
 `percent` is closed_issues / (open + closed), GitHub's own milestone
 progress metric. The `Backlog — Under watch` milestone is skipped: it
@@ -108,6 +108,7 @@ def build(milestones: list[dict], counts: dict, today: str) -> dict:
             "percent": percent,
             "state": m.get("state"),
             "due": due,
+            "number": m.get("number"),
         }
 
     def key(t: str) -> tuple:
