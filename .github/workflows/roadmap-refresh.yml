@@ -124,6 +124,18 @@ jobs:
           set -o pipefail
           node scripts/refresh-dashboard-data.js 2>&1 | tee /tmp/dashboard-data.txt
 
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v6
+        with:
+          node-version: "20"
+
+      - name: Refresh the dashboard's NetSec report and board highlights
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -o pipefail
+          node scripts/refresh-dashboard-data.js 2>&1 | tee /tmp/dashboard-data.txt
+
       - name: Compose the PR body
         run: |
           {
