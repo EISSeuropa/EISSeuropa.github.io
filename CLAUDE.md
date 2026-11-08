@@ -490,6 +490,10 @@ surfaces in **one** auto-merged PR on `roadmap-refresh/auto`:
   `src/data/roadmap-progress.json` from the repo's version milestones,
   which drives the progress bars on `/roadmap.html`, and adds the open
   issue, PR and `help wanted` counts shown on `/internal.html`.
+- `scripts/refresh-dashboard-data.js` recomputes the internal dashboard's
+  NetSec report months and board highlights into `src/data/`. Deploys
+  only read those files: computing them at build ran the Actions token's
+  hourly API allowance out on busy days and hid them (#2047, #2083).
 
 So the maintainer never has to refresh the count, the freshness stamp
 or the bars by hand. **What the automation does not do**: rewrite the
