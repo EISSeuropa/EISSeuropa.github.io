@@ -1,10 +1,16 @@
 # Issue-driven news publishing (#634).
 #
 # Label an issue `news` and this workflow turns it into a post: it runs
-# scripts/news-from-issue.py to append an item to src/_data/news.json (issue
-# title → headline, body → excerpt, with optional `Type:` / `URL:` / `Date:`
-# header lines), then opens the standard auto-PR (auto-merge armed, CI-gated).
-# The PR body carries `Closes #<issue>`, so merging it closes the issue.
+# scripts/news-from-issue.py to append an item to src/_data/news.json, then
+# opens the standard auto-PR (auto-merge armed, CI-gated). The issue is
+# either the News item form (.github/ISSUE_TEMPLATE/news.yml, #2058) or free
+# text with optional `Type:` / `URL:` / `Date:` header lines. The PR body
+# carries `Closes #<issue>`, so merging it closes the issue.
+#
+# Only the accounts listed in the repository variable NEWS_PUBLISHERS
+# (GitHub logins, separated by commas or spaces) can publish (#2058). When
+# anyone else applies the label, the run comments on the issue and stops.
+# With the variable unset, nobody can publish.
 #
 # The maintainer publishes by filing a labelled issue from a phone — the
 # two-minute path #634 asks for. Sits on top of the News surface (#96) and
@@ -35,15 +41,42 @@ jobs:
     if: github.event.label.name == 'news'
     runs-on: ubuntu-latest
     steps:
+      - name: Check the publisher
+        id: publisher
+        env:
+          PUBLISHERS: ${{ vars.NEWS_PUBLISHERS }}
+          SENDER: ${{ github.event.sender.login }}
+        run: |
+          allowed=false
+          for login in $(echo "$PUBLISHERS" | tr ',' ' '); do
+            if [ "${login,,}" = "${SENDER,,}" ]; then allowed=true; fi
+          done
+          echo "allowed=$allowed" >> "$GITHUB_OUTPUT"
+          if [ "$allowed" != true ]; then
+            echo "::notice::$SENDER is not in NEWS_PUBLISHERS. Nothing published."
+          fi
+
+      - name: Tell the issue why nothing was published
+        if: steps.publisher.outputs.allowed != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SENDER: ${{ github.event.sender.login }}
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" --repo "${{ github.repository }}" --body \
+            "@$SENDER applied \`news\`, but only the accounts in the NEWS_PUBLISHERS repository variable can publish. Nothing was published. A publisher can remove and re-apply the label."
+
       - name: Check out repository
+        if: steps.publisher.outputs.allowed == 'true'
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Set up Python
+        if: steps.publisher.outputs.allowed == 'true'
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: '3.12'
 
       - name: Append the news item
+        if: steps.publisher.outputs.allowed == 'true'
         env:
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_BODY: ${{ github.event.issue.body }}
@@ -70,6 +103,7 @@ jobs:
           } > /tmp/news-pr-body.md
 
       - name: Open or update the news PR
+        if: steps.publisher.outputs.allowed == 'true'
         id: create-pr
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         with:
@@ -89,7 +123,7 @@ jobs:
       - name: Arm auto-merge on the news PR
         # A title starting `[test]` opens the PR but leaves it unmerged, so
         # the pipeline can be checked without publishing. Close the PR after.
-        if: steps.create-pr.outputs.pull-request-number && !startsWith(github.event.issue.title, '[test]')
+        if: steps.publisher.outputs.allowed == 'true' && steps.create-pr.outputs.pull-request-number && !startsWith(github.event.issue.title, '[test]')
         env:
           # The PAT, so the merge's push to master starts the deploy (a
           # GITHUB_TOKEN merge starts nothing). Falls back until it exists.

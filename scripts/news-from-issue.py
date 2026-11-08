@@ -16,13 +16,30 @@ Inputs (environment variables, set by .github/workflows/news-publish.yml):
                 runner's date so this script never calls a clock — keeps it
                 deterministic + testable)
 
-Optional header keys, any case, anywhere in the first lines of the body:
-  Type: paper | event | press | podcast   (default: news)
-  URL: https://…  or  /internal-page.html  (default: none — text-only item)
-  Date: YYYY-MM-DD                          (default: TODAY)
+Two body shapes are read.
 
-Everything that isn't a recognised header line becomes the excerpt (first
-paragraph, collapsed to a single line, capped at EXCERPT_MAX chars).
+1. The News item issue form (.github/ISSUE_TEMPLATE/news.yml, #2058). GitHub
+   renders each field as a `### Label` heading followed by the answer. The
+   fields map as follows:
+     Site               EISS | Joint (EISS and NetSec) | NetSec. A joint item
+                        gets "site": "joint". A NetSec item stops the run: it
+                        belongs in the NetSec repository.
+     Headline           the title (falls back to the issue title)
+     Summary            the excerpt, and social.text (the LinkedIn and
+                        Bluesky caption), capped at SUMMARY_MAX characters
+     Body               "body", kept whole for the newsletter
+     Type / Link / Publication date   as the header keys below
+     Image              "image" (http(s) or site-root path)
+     Collaborator page  social.collaborator ("netsec")
+     Newsletter         "newsletter": true when the box is ticked
+
+2. Free text, the original shape (#634). Optional header keys, any case, in
+   the first lines of the body:
+     Type: paper | event | press | podcast   (default: news)
+     URL: https://…  or  /internal-page.html  (default: none, text-only item)
+     Date: YYYY-MM-DD                          (default: TODAY)
+   Everything that isn't a recognised header line becomes the excerpt (first
+   paragraph, collapsed to a single line, capped at EXCERPT_MAX chars).
 
 Usage (local test): ISSUE_TITLE=… ISSUE_BODY=… TODAY=2026-06-20 \
     python3 scripts/news-from-issue.py
@@ -40,12 +57,19 @@ NEWS = ROOT / "src" / "_data" / "news.json"
 
 ALLOWED_TYPES = {"paper", "event", "press", "podcast", "news"}
 EXCERPT_MAX = 320
+SUMMARY_MAX = 300
+FORM_HEADING_RE = re.compile(r"^###\s+(.+?)\s*$")
+NO_RESPONSE = "_No response_"
 HEADER_RE = re.compile(r"^\s*(type|url|date)\s*:\s*(.+?)\s*$", re.IGNORECASE)
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 
-def parse_issue(title: str, body: str, today: str) -> dict:
-    title = re.sub(r"^\s*news\s*:\s*", "", (title or "").strip(), flags=re.IGNORECASE)
+def clean_title(title: str) -> str:
+    return re.sub(r"^\s*news\s*:\s*", "", (title or "").strip(), flags=re.IGNORECASE)
+
+
+def parse_free_text(title: str, body: str, today: str) -> dict:
+    title = clean_title(title)
     if not title:
         sys.exit("news-from-issue: empty title after stripping the 'news:' prefix.")
 
@@ -92,6 +116,94 @@ def parse_issue(title: str, body: str, today: str) -> dict:
     if item.get("excerpt"):
         ordered["excerpt"] = item["excerpt"]
     return ordered
+
+
+def form_sections(body: str) -> dict[str, str]:
+    """{lower-cased heading: answer} when the body is an issue form, else {}.
+    A form body opens with a `### ` heading. GitHub writes "_No response_"
+    for a blank optional field, which reads here as an empty answer."""
+    lines = (body or "").replace("\r\n", "\n").split("\n")
+    first = next((ln for ln in lines if ln.strip()), "")
+    if not FORM_HEADING_RE.match(first):
+        return {}
+    sections: dict[str, list[str]] = {}
+    current = None
+    for ln in lines:
+        m = FORM_HEADING_RE.match(ln)
+        if m:
+            current = m.group(1).strip().lower()
+            sections[current] = []
+        elif current is not None:
+            sections[current].append(ln)
+    out = {}
+    for key, val in sections.items():
+        text = "\n".join(val).strip()
+        out[key] = "" if text == NO_RESPONSE else text
+    return out
+
+
+def _cap(text: str, limit: int) -> str:
+    text = " ".join(text.split())
+    if len(text) > limit:
+        print(f"news-from-issue: summary is {len(text)} characters, cut to {limit}.")
+        text = text[: limit - 1].rstrip() + "…"
+    return text
+
+
+def _link(val: str) -> str:
+    val = (val or "").strip()
+    return val if val.startswith(("http://", "https://", "/")) else ""
+
+
+def parse_form(title: str, f: dict[str, str], today: str) -> dict:
+    site = f.get("site", "").strip().lower()
+    if site.startswith("netsec"):
+        sys.exit("news-from-issue: a NetSec item belongs in EISSeuropa/netsec.github.io. "
+                 "Nothing was added here.")
+
+    headline = " ".join(f.get("headline", "").split()) or clean_title(title)
+    if not headline:
+        sys.exit("news-from-issue: no headline and an empty issue title.")
+
+    date = f.get("publication date", "").strip()
+    t = f.get("type", "").strip().lower()
+    item: dict = {
+        "date": date if DATE_RE.match(date) else today,
+        "type": t if t in ALLOWED_TYPES else "news",
+        "title": headline,
+    }
+    if site.startswith("joint"):
+        item["site"] = "joint"
+    url = _link(f.get("link", ""))
+    if url:
+        item["url"] = url
+    summary = _cap(f.get("summary", ""), SUMMARY_MAX)
+    if summary:
+        item["excerpt"] = summary
+    body = f.get("body", "").strip()
+    if body:
+        item["body"] = body
+    image = _link(f.get("image", ""))
+    if image:
+        item["image"] = image
+
+    social: dict = {}
+    if summary:
+        social["text"] = summary
+    if f.get("collaborator page", "").strip().lower() == "netsec":
+        social["collaborator"] = "netsec"
+    if social:
+        item["social"] = social
+    if re.search(r"^\s*-\s*\[[xX]\]", f.get("newsletter", ""), re.M):
+        item["newsletter"] = True
+    return item
+
+
+def parse_issue(title: str, body: str, today: str) -> dict:
+    form = form_sections(body)
+    if form:
+        return parse_form(title, form, today)
+    return parse_free_text(title, body, today)
 
 
 def main() -> None:

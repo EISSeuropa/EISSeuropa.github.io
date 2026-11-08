@@ -99,3 +99,8 @@ jobs:
       # fires on a bulk read and stays out of the way of a targeted one.
       - name: Self-check the bulk-read guard
         run: python3 scripts/test-guard-bulk-read.py
+
+      # The news publisher (#634, #2058): the issue form and the older
+      # free-text shape both parse to the expected news.json item.
+      - name: Self-check the news publisher
+        run: python3 scripts/test-news-from-issue.py

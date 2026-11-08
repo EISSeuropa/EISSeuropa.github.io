@@ -5,7 +5,8 @@ How the News surface works, and how to add an item. Covers the homepage
 label-an-issue automation. Tracked in
 [#96](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/96),
 [#605](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/605),
-[#634](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/634).
+[#634](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/634),
+[#2058](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2058).
 
 ## The data
 
@@ -24,6 +25,17 @@ One hand-curated store, `src/_data/news.json` — a flat array of items:
   open in a new tab); when absent the item is text-only.
 - **excerpt** — optional, ~2 lines.
 
+The News item form (#2058) can also write these. The site pages ignore them.
+
+- **site** — `"joint"` for an item shared with NetSec. Absent means EISS.
+- **body** — the longer text, kept whole for the newsletter.
+- **image** — an image address for the newsletter.
+- **social** — an object. `text` is the LinkedIn and Bluesky caption (the
+  form's summary). `collaborator: "netsec"` names the NetSec page, which is
+  added by hand as collaborator after the post goes out.
+- **newsletter** — `true` when the item goes in the monthly newsletter. The
+  feed tags such an entry with `<category term="newsletter"/>`.
+
 `src/_data/news.js` is the read side: it sorts newest-first, derives a stable
 `slug` + ISO timestamp per item, and splits out the homepage window. Decay:
 items older than 18 months rotate off the homepage (capped at 5) but stay on
@@ -31,36 +43,59 @@ items older than 18 months rotate off the homepage (capped at 5) but stay on
 
 ## Adding an item — two ways
 
-### 1. Label an issue (the phone path)
+### 1. File the News item form (the phone path)
 
-File a GitHub issue, give it the **`news`** label. The
+Open a new issue and pick **News item**
+([`.github/ISSUE_TEMPLATE/news.yml`](../.github/ISSUE_TEMPLATE/news.yml)).
+Only the headline (or the issue title) and the summary are needed.
+
+| Field | Goes to |
+|---|---|
+| Site | EISS: nothing extra. Joint: `"site": "joint"`. NetSec: the run stops, file it in the NetSec repository |
+| Headline | `title` (blank: the issue title, minus a leading `news:`) |
+| Summary | `excerpt` and `social.text`, cut to 300 characters |
+| Body | `body` |
+| Type | `type` (default `news`) |
+| Link | `url` |
+| Image | `image` |
+| Publication date | `date` (blank or not `YYYY-MM-DD`: the day the label is applied) |
+| Collaborator page | `social.collaborator` |
+| Newsletter | `"newsletter": true` |
+
+A publisher reads the issue and applies the **`news`** label. The
 `Publish news from issue` workflow
 ([`.github/workflows/news-publish.yml`](../.github/workflows/news-publish.yml))
 runs [`scripts/news-from-issue.py`](../scripts/news-from-issue.py), which
-appends an item and opens an auto-merging PR. The PR body carries
-`Closes #<issue>`, so the merge closes the issue. With no required checks yet
-(#501), the PR merges as soon as auto-merge is armed, so check the issue
-before labelling it.
+appends the item and opens an auto-merging PR. The PR body carries
+`Closes #<issue>`, so the merge closes the issue. The PR merges once the
+required checks pass, so check the issue before labelling it. A typo that has
+already merged is a one-line edit to `src/_data/news.json`.
 
-- **Title** → the headline (a leading `news:` is stripped).
-- **Body** → the excerpt (first paragraph), unless it opens with optional
-  header lines:
+**Who can publish.** Only the GitHub accounts listed in the repository
+variable `NEWS_PUBLISHERS` (Settings > Secrets and variables > Actions >
+Variables), separated by commas or spaces. When anyone else applies the label,
+the workflow comments on the issue and publishes nothing. With the variable
+unset, nobody can publish. Applying a label also needs Triage access to the
+repository.
 
-  ```
-  Type: paper
-  URL: https://doi.org/…
-  Date: 2026-06-20
+**Free text still works.** An issue that does not use the form becomes an
+item the original way: the title is the headline and the body's first
+paragraph is the excerpt, unless the body opens with optional header lines.
 
-  The paragraph that becomes the excerpt.
-  ```
+```
+Type: paper
+URL: https://doi.org/…
+Date: 2026-06-20
 
-  All three header lines are optional. `Type` defaults to `news`, `Date` to
-  today, `URL` to none. A typo that has already merged is a one-line edit to
-  `src/_data/news.json`.
+The paragraph that becomes the excerpt.
+```
 
-- **Dry run.** Start the title with `[test]` and the workflow opens the PR
-  without arming auto-merge, so nothing publishes. Read the PR, then close it
-  and the issue.
+**Dry run.** Start the title with `[test]` and the workflow opens the PR
+without arming auto-merge, so nothing publishes. Read the PR, then close it
+and the issue.
+
+**Tests.** `python3 scripts/test-news-from-issue.py` checks both body shapes.
+The Build sanity workflow runs it on every PR.
 
 ### 2. Edit the JSON directly
 

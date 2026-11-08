@@ -18,6 +18,11 @@
  *            show the same item titles, like the Anthology paper pages)
  *   url      optional; when present the headline links out, else it's text
  *   excerpt  optional ~2-line summary
+ *   site, body, image, social, newsletter
+ *            optional, written by the News item form (#2058). Only
+ *            `newsletter` reaches a template: the feed tags the entry with
+ *            a "newsletter" category. `social` drives the LinkedIn and
+ *            Bluesky posts.
  *   slug     derived from the title, used for the /news anchor + feed id
  *   isoDate  date as a full ISO instant (midnight UTC) for <time> + Atom
  *
