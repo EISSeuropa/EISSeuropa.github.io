@@ -294,8 +294,8 @@ async function api(url) {
   return res.json();
 }
 
-// The highlights the live site published (/data/board-highlights.json, not
-// under /internal/, which GitHub Pages sends to internal.eiss-europa.com),
+// The highlights the live site published (/data/board-highlights.json, see
+// the note on LIVE in netsecReport.js),
 // kept when they cannot be recomputed. The same rule as netsecReport.js (#2047).
 const LIVE_HIGHLIGHTS = "https://eiss-europa.com/data/board-highlights.json";
 async function liveHighlights() {
