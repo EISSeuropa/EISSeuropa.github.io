@@ -1057,6 +1057,8 @@ a.apps-agenda-link:hover .apps-agenda-label { text-decoration: underline; }
 .apps-netsec-wg p { margin: 0 0 var(--space-1); }
 .apps-netsec-sub { margin: var(--space-4) 0 var(--space-1); font-size: 0.9375rem; font-weight: 600; }
 .apps-netsec-pick { margin: 0 0 var(--space-3); }
+/* The sources note at the foot of each NetSec view. */
+.apps-netsec .apps-netsec-period { margin: var(--space-6) 0 0; padding-top: var(--space-4); border-top: 1px solid var(--border); text-align: justify; hyphens: auto; }
 .apps-netsec-pick label { margin-right: var(--space-2); font-weight: 600; }
 .apps-netsec-muted { color: var(--text-muted); font-size: 0.875rem; }
 .apps-netsec-list { display: grid; gap: var(--space-2); margin: var(--space-2) 0 0; padding: 0; list-style: none; font-size: 0.9375rem; }
@@ -10291,7 +10293,7 @@ html.atlas-welcome .atlas-welcome[hidden] { display: flex; }
   text-decoration: underline;
 }
 
-/* ---------- annual report drafts (/internal/report-YYYY.html) ---------- */
+/* ---------- annual report drafts (/annual-report-YYYY.html) ---------- */
 .report { max-width: 52rem; padding-block: var(--space-7) var(--space-8); }
 .report-header { margin-bottom: var(--space-6); }
 .report-kicker { margin: 0; color: var(--text-muted); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }

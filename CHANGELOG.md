@@ -104,7 +104,11 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
-_Nothing yet._
+### Fixed
+
+- The NetSec report tab on the internal dashboard shows its Month menu again. Its published months and the board highlights moved from `/internal/` to `/data/`: GitHub Pages sends every `eiss-europa.com/internal/` address to `internal.eiss-europa.com`, so each build found no copy, recomputed every month from the GitHub API, and left out the months the hourly API allowance could not cover.
+- The "Annual report (draft)" link at the foot of the internal dashboard opens the report again, now at `/annual-report-YYYY.html`. It led to a page not found at `internal.eiss-europa.com`.
+- The sources note under each NetSec report view has more space above it, a rule over it, and justified text.
 
 ## [2.29.0] · 2026-11-08 — Introducing Belvedere, the EISS blog
 

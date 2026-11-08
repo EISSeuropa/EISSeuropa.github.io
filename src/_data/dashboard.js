@@ -8,7 +8,7 @@ const site = require("./site.js");
 const REPO = "https://github.com/EISSeuropa/EISSeuropa.github.io";
 // The dashboard's own version, shown at the foot of the page. Semantic
 // versioning, rules and history in docs/internal-dashboard.md.
-const VERSION = "2.32.0";
+const VERSION = "2.33.1";
 const everyone = ["staff", "management", "board", "volunteer"];
 const today = new Date().toISOString().slice(0, 10);
 
@@ -294,9 +294,10 @@ async function api(url) {
   return res.json();
 }
 
-// The highlights the live site published (/internal/board-highlights.json),
+// The highlights the live site published (/data/board-highlights.json, not
+// under /internal/, which GitHub Pages sends to internal.eiss-europa.com),
 // kept when they cannot be recomputed. The same rule as netsecReport.js (#2047).
-const LIVE_HIGHLIGHTS = "https://eiss-europa.com/internal/board-highlights.json";
+const LIVE_HIGHLIGHTS = "https://eiss-europa.com/data/board-highlights.json";
 async function liveHighlights() {
   try {
     const r = await fetch(LIVE_HIGHLIGHTS, { signal: AbortSignal.timeout(10000) });
