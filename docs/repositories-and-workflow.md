@@ -24,9 +24,11 @@ details (script IDs, the credential, the operating procedures) are in
 | Releases | SemVer, `scripts/release.sh`, `CHANGELOG.md` | SemVer, `scripts/release.sh`, `CHANGELOG.md` | None |
 | Rules | `CLAUDE.md` and `.claude/skills/` | `CLAUDE.md`, `.github/CLAUDE.md` and `.claude/skills/` | `CLAUDE.md` and `README.md` |
 
-A fourth repository, `EISSeuropa/internal`, holds only the redirect that
-makes `internal.eiss-europa.com` lead to `/internal.html` here
-(`docs/admin-guide.md`).
+A fourth repository, `EISSeuropa/internal-redirect`, holds only the
+redirect that makes `internal.eiss-europa.com` lead to `/internal.html`
+here (`docs/admin-guide.md`). GitHub Pages also publishes it at
+`eiss-europa.com/internal-redirect/`, so its name must not match a path
+on this site.
 
 Dr Arthur Laudrain maintains all three and is the person who merges.
 

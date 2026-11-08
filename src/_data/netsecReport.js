@@ -14,9 +14,10 @@
 // no month at all the tab is hidden, never the build.
 
 const REPO = "EISSeuropa/netsec.github.io";
-// Not under /internal/: GitHub Pages sends every eiss-europa.com/internal/
-// address to the internal.eiss-europa.com repository, where it is a 404, so
-// a copy there was never read back and every build recomputed every month.
+// Under /data/: while the redirect repository was named "internal", GitHub
+// Pages sent every eiss-europa.com/internal/ address to internal.eiss-europa.com,
+// so a copy there was never read back and every build recomputed every month
+// (#2083, docs/admin-guide.md).
 const LIVE = "https://eiss-europa.com/data/netsec-reports.json";
 // The first month with data/wg.json at both ends (it was added on 30 May 2026).
 const FIRST = "2026-06-01";
