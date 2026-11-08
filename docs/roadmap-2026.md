@@ -4,9 +4,8 @@ A planning document to help the maintainer think through what's worth
 doing next, in what order, and at what effort. Organised by **release
 version** (SemVer), the same axis as the GitHub milestones and the
 public [`/roadmap.html`](https://eiss-europa.com/roadmap.html).
-**Last update: 9 October 2026 (resynchronised with the work landed
-against v2.29.0 since the v2.28.0 cut, and v2.31.0 moved to two weeks
-after the conference).**
+**Last update: 8 November 2026 (v2.29.0 and v2.30.0 resynthesised
+after the corpus issues moved to v2.30.0).**
 
 <!-- AUTOSTAMP:BEGIN -->
 > _Auto-tracked: **165 entries** in [`[Unreleased]`](../CHANGELOG.md#unreleased) since **v2.28.0** (57 Added, 44 Changed, 4 Removed, 60 Fixed). Last refresh by `scripts/sync-roadmap.py`: 8 Nov 2026. Prose in the timeline below may lag; the maintainer resynthesises on release-time §5 sweep._
@@ -56,8 +55,8 @@ other way round, so this is where a new release first appears.
 | v2.26.0 | 25 Jun 2026 | **Shipped** | Introducing the Anthology |
 | v2.27.0 | 19 Aug 2026 | **Shipped** | The Anthology Atlas and the recovered back catalogue |
 | v2.28.0 | 29 Aug 2026 | **Shipped** | A usable Atlas, and a citable theme vocabulary |
-| v2.29.0 | 8 Dec 2026 | Planned | The corpus in French, and the data behind it |
-| v2.30.0 | 30 Apr 2027 | Planned | ESSC 2027 programme and logistics |
+| v2.29.0 | 8 Dec 2026 | Planned | Belvedere, and the call for papers for 2027 |
+| v2.30.0 | 30 Apr 2027 | Planned | The 2027 programme, and the corpus as open data |
 | v2.31.0 | 25 Jun 2027 | Planned | ESSC 2027, and the archive rollover after it |
 
 (`v2.24.1` was planned as a pre-ESSC patch but the work grew into a feature-rich minor, so it shipped as the **v2.25.0** *Ready for Stockholm* release instead; the `v2.24.1` milestone is closed as superseded.)
@@ -78,8 +77,8 @@ issues, and they are the organising group's, not ours.
 
 | Release | Due | Conference work in it |
 | --- | --- | --- |
-| v2.29.0 | 8 Dec 2026 | *Save the date*, due 30 September: the edition settled and entered in `conferences.js` (#1522, done) · *Call for papers*, due 10 November: the parked 2027 page activated (#1524, live, issue still open), the edition share cards generated (#1525), the call published and announced (#1526), with the prize jury confirmed and the terms published before it goes out (#1527) |
-| v2.30.0 | 30 Apr 2027 | *Selection and notifications*: proposals due on Indico on 26 January 2027, decisions on open panels and on papers for closed panels on 20 February · *Programme and logistics*: the final programme to participants on 27 February, and the programme page once the accepted papers are known (#1528) |
+| v2.29.0 | 8 Dec 2026 | *Save the date*, due 30 September: the edition settled and entered in `conferences.js` (#1522, done) · *Call for papers*, due 10 November: the parked 2027 page activated (#1524, live, issue still open), the edition share cards generated (#1525), the call published and announced (#1526) |
+| v2.30.0 | 30 Apr 2027 | *Selection and notifications*: the prize jury confirmed and the terms published (#1527), proposals due on Indico on 26 January 2027, decisions on open panels and on papers for closed panels on 20 February · *Programme and logistics*: the final programme to participants on 27 February, and the programme page once the accepted papers are known (#1528) |
 | v2.31.0 | 25 Jun 2027 | *The conference itself*: papers to panel chairs by 27 May for the Best Paper Prize and by 3 June otherwise, then the archive rollover and the abstract pull afterwards (#1529), cut two weeks after the conference so the pull has the final Indico data |
 
 The phase names are the joint group's vocabulary and the NetSec
@@ -290,138 +289,127 @@ public roadmap. And 102 orphaned Mobirise-era images, about 25 MB, came
 out of the repository
 ([#471](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/471)).
 
-### v2.29.0 — The corpus in French, and the data behind it · target 8 December 2026
+### v2.29.0 — Belvedere, and the call for papers for 2027 · target 8 December 2026
 
-The identifier strand that gave this release its old name shipped early,
-inside v2.27.0: the Zenodo DOI, the HAL note and the Software Heritage
-archive are all live and shown on the site. What names the release now
-is the second strand, making the corpus usable in French, which is where
-a large part of the network reads, alongside the metadata work that
-turns the corpus into something other projects can analyse and cite.
-Two further strands ride this release. The first three ESSC 2027 phases
-land here because their deadlines fall inside it, and the accessibility
-declaration lands here as the follow-through the Atlas owes (rule §9).
-Neither of the two named strands has shipped yet, but a good deal else
-has landed against this milestone since the v2.28.0 cut (see *Landed so
-far* below).
+On 25 October the eight corpus and open-science issues (#1222 to #1251)
+moved to v2.30.0, and the public card was renamed in
+[#1841](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/1841).
+What names v2.29.0 now is what has already shipped against it,
+Belvedere first, and the ESSC 2027 call for papers, whose deadline falls
+inside it. The French corpus strand that gave the release its old name
+needs a reviewer's time that a December cut cannot promise, and the
+conference phases cannot wait for it.
 
 The
 [v2.29.0 milestone](https://github.com/EISSeuropa/EISSeuropa.github.io/milestone/24)
-is the queryable commitment (rule §10). On 9 October it holds **16**
-open issues against 120 closed, and the open ones are more than one
-December cut can carry, so part of preparing this
-release is deciding what does not make it. Two things cannot be the
-answer: the ESSC 2027 phases have dates owned by the joint organising
-group, and the French scope is what the release is named after.
-Everything else is negotiable, and the negotiation belongs to the
-release rather than to this document.
+is the queryable commitment (rule §10). On 8 November it holds **16**
+open issues against 282 closed.
 
-- **Landed so far** — already on `master` and in `[Unreleased]`.
-  Belvedere, the EISS blog, has its first post in English, French and
-  German ([#1740](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1740),
-  [#1748](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1748)),
-  with a What's New banner that comes down by 10 November
-  ([#1739](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1739)).
-  The home page was rebuilt around the conference film, the Anthology's
-  figures, a paper of the day, the host-city map, the partners and the
-  membership fees. The Anthology gained a way in by subject and a
-  sortable by-paper view. The RGAA self-audit and its fixes shipped,
-  with the declaration below. The `/2027` page for Belgrade is live, and
-  automated data PRs are checked before they merge.
-- **Persistent identifiers and long-term archiving (shipped in v2.27.0)** — the corpus is
-  deposited on Zenodo as a *dataset* in the `eiss` community, under the
-  concept DOI [10.5281/zenodo.21776209](https://doi.org/10.5281/zenodo.21776209),
-  and `/anthology` carries a "Cite this corpus" block in all three
-  locales. What remains on
-  [#1221](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1221)
-  is the deposited payload: the record still attaches the raw `.js` data
-  modules rather than the JSON export, which arrives with #641. On HAL,
-  the corpus-description note is deposited at
-  [hal-05711925](https://hal.science/hal-05711925) as a **Research
-  report**, which also placed it in LARA, HAL's report portal. A
-  dedicated EISS collection needs a structure registered in AuréHAL and
-  is **deferred, not refused**
+- **Belvedere** — the EISS blog, with its first post in English, French
+  and German ([#1740](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1740),
+  [#1748](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1748)).
+  Its What's New banner came down on schedule
+  ([#1739](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1739),
+  closed).
+- **ESSC 2027, save the date and call for papers** — the edition is in
+  `conferences.js` (#1522), `/2027` is live (#1524, closed) and the share
+  cards are generated (#1525, closed). The call itself is still to be
+  published and announced
+  ([#1526](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1526)).
+  The prize jury and the terms for the edition moved to v2.30.0
+  ([#1527](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1527)).
+- **The home page and the Anthology** — the home page was rebuilt
+  around the conference film, the Anthology's figures, a paper of the
+  day, the host-city map, the partners and the membership fees. The
+  Anthology gained a way in by subject and a sortable by-paper view.
+- **Accessibility, declared against RGAA** — done in substance
+  ([#1225](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1225),
+  closed). An RGAA 4.1.2 self-audit of 25 pages found 33 non-conforming
+  criteria, all fixed and re-tested, and the accessibility statement
+  declares against RGAA in a §8 in all three languages, with the RGAA
+  mention in every footer. The label stays *partially conformant* until
+  a screen-reader pass confirms the self-audit
+  ([#1796](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1796)).
+- **The team's tools** — work that was not planned for this release
+  and is most of what landed against it since October. The internal
+  dashboard at `/internal.html` gives staff, management, the board and
+  volunteers their apps, guides, the joining steps, a conference
+  timeline read from the "EISS dates" calendar, IT monitoring and a
+  NetSec report tab, in three languages. The header carries a staff
+  sign-in menu, one Joining Form serves every role (#1986), and the
+  privacy notice covers it
+  ([#1894](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1894)).
+  `/internship.html` lists the three volunteer cohorts of 2027, and news
+  items are posted to LinkedIn and Bluesky
+  ([#2056](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2056)).
+- **Smaller fixes** — among the open issues, the missing flag on a
+  People page profile
+  ([#1836](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1836)).
+
+The joint-event programmes for `/JPW2019` and `/joint-2024`
+([#328](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/328))
+and the earlier resynchronisation of this document
+([#1619](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1619))
+are closed.
+
+### v2.30.0 — The 2027 programme, and the corpus as open data · target 30 April 2027
+
+Two strands. The conference strand is *selection and notifications* and
+*programme and logistics* (see the *ESSC 2027 preparation* table
+above): the prize jury and terms
+([#1527](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1527)),
+then the programme page once the accepted papers are known
+([#1528](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1528)).
+The corpus strand is the eight issues moved from v2.29.0.
+
+- **Persistent identifiers and long-term archiving** — the Zenodo DOI
+  shipped in v2.27.0
+  ([#1221](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1221),
+  closed) under the concept DOI
+  [10.5281/zenodo.21776209](https://doi.org/10.5281/zenodo.21776209),
+  and the source is archived in Software Heritage
+  ([#1223](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1223),
+  closed), with the SWHID in `README.md`, on `/licensing` and on
+  `/anthology`. The corpus-description note is on HAL at
+  [hal-05711925](https://hal.science/hal-05711925). A dedicated EISS
+  collection needs a structure registered in AuréHAL
   ([#1222](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1222), M).
-  Still open there: the record cites the version DOI rather than the
-  concept DOI, and carries no licence. The source is archived in Software
-  Heritage, with the SWHID shown in `README.md`, on `/licensing` and
-  beside the DOI on `/anthology`, and the per-release refresh rule
-  written down in `docs/corpus-archiving.md`. What keeps
-  [#1223](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1223)
-  open is its last criterion, the HAL software deposit by SWHID, which
-  waits on #1222.
-  This is the cheap path: #795 weighs the Crossref per-paper
+  The HAL record still cites the version DOI rather than the concept DOI
+  and carries no licence. #795 weighs the Crossref per-paper
   alternative, which carries a recurring membership cost and stays
-  undecided. The Zenodo GitHub integration was deliberately left off, to
-  avoid minting a competing software DOI on every release.
+  undecided.
 - **The corpus, readable in French** — the French Anthology comes out
-  of beta on a finite declared scope (the interface, the seventeen
-  theme labels, and the abstracts of papers with at least one
+  of beta on a declared scope (the interface, the seventeen theme
+  labels, and the abstracts of papers with at least one
   French-affiliated author), with a CI check that fails when an
   in-scope entry loses its translation
   ([#1224](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1224), L).
-  Per-theme annotated bibliographies in French follow, generated from
-  the corpus, printable, and licensed for teaching use
-  ([#1226](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1226),
-  L, now *Under watch* rather than committed here).
-  A French-language note on the corpus, published annually, is the
-  companion piece
+  An annual French-language note on the corpus is the companion piece
   ([#1250](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1250), M).
+  Per-theme annotated bibliographies in French are *Under watch*
+  ([#1226](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1226)).
 - **The corpus as data** — an analytical export layered on the raw
   open-data export (#641): per edition, affiliation shares by country
   and thematic distribution, plus co-authorship edges, versioned with
   the corpus and documented in `docs/`
   ([#1227](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1227), M).
   Underneath it, corpus affiliations resolve to ROR identifiers so that
-  any country figure can state its own coverage instead of guessing
+  a country figure can state its own coverage
   ([#1248](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1248),
   M). The automated pass is drafted in
   [#1264](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/1264)
-  and waits on human review, which is the point: two wrong matches
-  scored above 0.97, so publishing country figures off the unreviewed
-  mapping would put confident wrong numbers on the site.
-- **The theme vocabulary, deposited** — v2.28.0 published the seventeen
-  themes as SKOS at `/vocab/themes/`. What remains is making that
-  artefact citable rather than merely fetchable: the Zenodo deposit
-  under its own SemVer, prepared in
-  [#1606](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/1606)
-  and still to be cut
+  and waits on human review: two wrong matches scored above 0.97.
+- **The theme vocabulary, deposited** — the SKOS files at
+  `/vocab/themes/` get a Zenodo deposit under their own SemVer, prepared
+  in [#1606](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/1606)
   ([#1249](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1249)),
-  and an entry for the corpus dataset in Recherche Data Gouv, the French
-  national research-data platform
+  and the corpus dataset is listed in Recherche Data Gouv
   ([#1251](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1251), M).
-- **ESSC 2027, the first two phases** — *save the date* and *call for
-  papers*, five issues with deadlines between 30 September and 10
-  November. *Selection and notifications* moved to v2.30.0, with
-  decisions due on 20 February 2027. *Save the date* is done (#1522)
-  and the page is live, which leaves the share cards (#1525), the call
-  itself (#1526) and the prize jury (#1527). These are set out in the *ESSC
-  2027 preparation* table above rather than repeated here, because the
-  dates belong to the joint organising group.
-- **Accessibility, declared against RGAA** — done in substance
-  ([#1225](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1225),
-  closed). An RGAA 4.1.2 self-audit of 25 pages found 33 non-conforming
-  criteria, all fixed and re-tested, and the accessibility statement now
-  declares against RGAA in a new §8 in all three languages, with the
-  RGAA mention in every footer. The label stays *partially conformant*
-  until a screen-reader pass confirms the self-audit
-  ([#1796](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1796)).
-
-Also carried in the milestone and not belonging to any strand: the
-HAL collection and the Software Heritage software deposit that the
-identifier strand still owes
-([#1222](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1222),
-[#1223](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1223)).
-The joint-event programmes for `/JPW2019` and `/joint-2024`
-([#328](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/328))
-and the previous resynchronisation of this document
-([#1619](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1619))
-are closed.
 
 The French strand depends on a reviewer's time, which is the main risk
-to the date. If it slips, the ESSC 2027 phases still have to land on
-their own deadlines, so they are the part of this release that cannot
-wait for the rest.
+to the date. If it slips, the programme phases still land on their own
+deadlines, so they are the part of this release that cannot wait for
+the rest.
 
 Candidates without committed scope yet, pulled in if a release has
 room: a conference countdown widget, View Transitions API page
