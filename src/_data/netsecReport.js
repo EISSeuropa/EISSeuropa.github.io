@@ -5,7 +5,7 @@
 // data/mc-members.json at the last commit before each end of the month. The
 // website section comes from the month's commits on main (one per squashed PR).
 // A past month never changes, so the build first reuses the months the live
-// site published (/internal/netsec-reports.json) and recomputes only those it
+// site published (/data/netsec-reports.json) and recomputes only those it
 // lacks or holds at an older VERSION. Pull-request builds never recompute: they
 // share the Actions token's hourly API allowance with the deploys, and about
 // 140 calls a month used it up on 6 November 2026 (#2047). A month that cannot
@@ -14,7 +14,10 @@
 // no month at all the tab is hidden, never the build.
 
 const REPO = "EISSeuropa/netsec.github.io";
-const LIVE = "https://eiss-europa.com/internal/netsec-reports.json";
+// Not under /internal/: GitHub Pages sends every eiss-europa.com/internal/
+// address to the internal.eiss-europa.com repository, where it is a 404, so
+// a copy there was never read back and every build recomputed every month.
+const LIVE = "https://eiss-europa.com/data/netsec-reports.json";
 // The first month with data/wg.json at both ends (it was added on 30 May 2026).
 const FIRST = "2026-06-01";
 // Bump when the report's logic changes, so the live copy is not reused.

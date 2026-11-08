@@ -1,4 +1,4 @@
-// The annual report drafts at /internal/report-YYYY.html: one per calendar year
+// The annual report drafts at /annual-report-YYYY.html: one per calendar year
 // from FIRST, each figure beside the year before's, read from the data files
 // the site already renders. Staff add the prose in annualReportNotes.json.
 // NetSec comes from netsecReport, summed per year by the netsecYear filter

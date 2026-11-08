@@ -4,7 +4,7 @@ pagination:
   data: annualReport.years
   size: 1
   alias: r
-permalink: "/internal/report-{{ r.year }}.html"
+permalink: "/annual-report-{{ r.year }}.html"
 eleventyComputed:
   title: "EISS annual report {{ r.year }} (draft)"
 description: "A draft of the EISS annual report, with each figure beside the year before."
@@ -41,7 +41,7 @@ eleventyExcludeFromCollections: true
     <p class="report-meta">Draft. {% if r.toDate %}*Year to date, figures as of {{ r.asOf | newsDate("en") }}.{% else %}Figures for 1 January to 31 December {{ y }}.{% endif %} A dash means no record is kept for that year.</p>
     <p class="report-tools">
       <button type="button" class="btn btn-secondary btn-sm" data-report-print hidden>Print or save as PDF</button>
-      {% for o in annualReport.years %}{% if o.year != y %}<a href="/internal/report-{{ o.year }}.html">{{ o.year }}</a> {% endif %}{% endfor %}
+      {% for o in annualReport.years %}{% if o.year != y %}<a href="/annual-report-{{ o.year }}.html">{{ o.year }}</a> {% endif %}{% endfor %}
       <a href="/internal.html">Dashboard</a>
     </p>
   </header>

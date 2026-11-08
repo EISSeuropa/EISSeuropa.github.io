@@ -595,7 +595,7 @@
             </div>
             </div>
           </div>
-          <p class="apps-note">{{ N.period | replace("{start}", R.start | newsDate(lang)) | replace("{end}", R.end | newsDate(lang)) | replace("{a}", R.commits[0]) | replace("{b}", R.commits[1]) }}</p>
+          <p class="apps-note apps-netsec-period">{{ N.period | replace("{start}", R.start | newsDate(lang)) | replace("{end}", R.end | newsDate(lang)) | replace("{a}", R.commits[0]) | replace("{b}", R.commits[1]) }}</p>
         </article>
         {% endfor %}
       </section>
@@ -604,7 +604,7 @@
     {# The dashboard's own version. Rules and history: docs/internal-dashboard.md. #}
     <p class="apps-legend" aria-hidden="true"><span><span class="apps-src is-live"></span> {{ d.live }}</span> <span><span class="apps-src"></span> {{ STORED }}</span></p>
     {# The latest annual report draft (docs/annual-report.md), in English. #}
-    <p class="apps-version"><a href="https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/internal-dashboard.md#history" hreflang="en">{{ d.version | replace("{v}", dashboard.version) }}</a>{% if annualReport.years.length %}<span data-roles="staff management board"> · <a href="/internal/report-{{ annualReport.years[0].year }}.html" hreflang="en">{{ d.annualReport | replace("{year}", annualReport.years[0].year) }}</a></span>{% endif %}</p>
+    <p class="apps-version"><a href="https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/internal-dashboard.md#history" hreflang="en">{{ d.version | replace("{v}", dashboard.version) }}</a>{% if annualReport.years.length %}<span data-roles="staff management board"> · <a href="/annual-report-{{ annualReport.years[0].year }}.html" hreflang="en">{{ d.annualReport | replace("{year}", annualReport.years[0].year) }}</a></span>{% endif %}</p>
   </div>
 </div>
 

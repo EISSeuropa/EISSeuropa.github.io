@@ -1,6 +1,6 @@
 # Annual report drafts
 
-`/internal/report-YYYY.html` is a draft of the EISS annual report for each calendar year from 2025. The current year reads "year to date". Every figure sits beside the year before's, with the change. Staff write the prose, the build supplies the figures, and the page prints or saves as PDF from the browser. It is linked from the foot of `/internal.html` for staff, management and the board. It is in English only.
+`/annual-report-YYYY.html` is a draft of the EISS annual report for each calendar year from 2025. The current year reads "year to date". Every figure sits beside the year before's, with the change. Staff write the prose, the build supplies the figures, and the page prints or saves as PDF from the browser. It is linked from the foot of `/internal.html` for staff, management and the board. It is in English only.
 
 ## Sections and sources
 
