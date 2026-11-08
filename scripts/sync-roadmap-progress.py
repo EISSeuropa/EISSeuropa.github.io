@@ -63,23 +63,25 @@ DOC = (
 )
 
 
+def gh(args: list[str]) -> str:
+    """Run gh and return its output. On failure, print gh's own message
+    (a rate limit, an expired token) before exiting, so the run log says why."""
+    res = subprocess.run(["gh", *args], capture_output=True, text=True)
+    if res.returncode != 0:
+        print(f"gh {' '.join(args[:2])} failed: {(res.stderr or res.stdout).strip()}", file=sys.stderr)
+        sys.exit(1)
+    return res.stdout
+
+
 def fetch_milestones() -> list[dict]:
     """All milestones (open + closed) via the gh CLI."""
-    res = subprocess.run(
-        ["gh", "api", f"repos/{REPO}/milestones?state=all&per_page=100"],
-        capture_output=True, text=True, check=True,
-    )
-    return json.loads(res.stdout)
+    return json.loads(gh(["api", f"repos/{REPO}/milestones?state=all&per_page=100"]))
 
 
 def fetch_count(query: str) -> int:
     """How many issues or PRs in this repo match a GitHub search query."""
-    res = subprocess.run(
-        ["gh", "api", "-X", "GET", "search/issues", "-f", f"q=repo:{REPO} {query}",
-         "-f", "per_page=1", "--jq", ".total_count"],
-        capture_output=True, text=True, check=True,
-    )
-    return int(res.stdout)
+    return int(gh(["api", "-X", "GET", "search/issues", "-f", f"q=repo:{REPO} {query}",
+                   "-f", "per_page=1", "--jq", ".total_count"]))
 
 
 def fetch_counts() -> dict:
