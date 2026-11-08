@@ -20,11 +20,15 @@ All four are on the failure alarm list (`failure-alarm.yml`). Every issue they
 open is labelled `automated`, gets the nearest open release milestone and is
 assigned to the maintainer accounts. A rerun never files the same issue twice.
 
-The monthly newsletter is not in the repository and has no automation. Its
-eleven 2027 issues are drafted off-repo in the shared *EISS-10-years* folder
-(`newsletter-2027/`, one Mailchimp zip per issue), and Arthur Laudrain sends
-each one by hand. There is no RSS digest
+The monthly newsletter is not in the repository. Its eleven 2027 issues are
+drafted off-repo in the shared *EISS-10-years* folder (`newsletter-2027/`,
+one Mailchimp zip per issue), and Arthur Laudrain sends each one by hand
 ([#1868](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1868)).
+The `newsletter-draft` skill (`.claude/skills/newsletter-draft/`) fills the
+news and dates blocks of an issue from the items flagged `newsletter` in
+`/feed.xml` and NetSec's `news.xml`, and from the "EISS dates" calendar. It
+saves the result in EISS Team > Communications and sends nothing
+([#2060](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2060)).
 
 ## Settings to fill in
 
