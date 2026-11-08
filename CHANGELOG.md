@@ -99,6 +99,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
+- The internal dashboard links the "EISS internal deadlines" Google Calendar under the Timeline tiles, for staff, management, the board and the team ([#2053](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2053)).
 - The tiles under "Timeline" on the internal dashboard read the "EISS dates" Google Calendar as well as the Key dates, the internship cohorts and NetSec's events. Indico events copied into the calendar and NetSec dates added there, such as Management Committee plenaries, show as tiles tagged EISS or NetSec and link to their Indico page. A NetSec event already in the calendar is shown once ([#2028](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2028)).
 
 - Each new news item is posted to the EISS LinkedIn page and to Bluesky (`eissnetwork.bsky.social`) once a reviewer approves the run in the `social` environment. The pipeline is NetSec's, ported, with a ledger so no item is posted twice and a monthly check of the LinkedIn API version. For a joint item the run lists the LinkedIn post, so the NetSec page can be added as collaborator by hand. Posting starts once the secrets are set and `SOCIAL_ENABLED` is `true` ([#2056](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2056)).

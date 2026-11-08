@@ -223,6 +223,13 @@ successor inherits through the handover in section 4.
   deadlines" calendar, which the site never reads. `deadlinesCalendar` in
   `site.js` links it under the Timeline tiles. Either source is the one list of an
   edition's dates, and needs replacing for each new edition.
+  Both calendars were created from admin@ on 8 November 2026, in
+  Europe/Zurich time (#2053). "EISS dates" is public with full details and
+  staff@ edits it. Its public iCal address is the one to give for
+  subscribing:
+  `https://calendar.google.com/calendar/ical/c_776a1a712168ececc884b47ac1ac83aec55f3f823eb991444774844b433c09f4%40group.calendar.google.com/public/basic.ics`.
+  "EISS internal deadlines" is read by team@ and board@ and edited by
+  staff@ and management@, and is not shared with the whole domain.
   A date that opens a stage of the year also carries `stage` (its name on the
   "Now" card), `step` (its short name on the stepper) and `links`. The stage
   runs until the next date that opens one, and the conference stage comes
