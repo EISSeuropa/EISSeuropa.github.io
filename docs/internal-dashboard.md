@@ -30,7 +30,8 @@ Newest first. Rows for 2.20.0 and later were added as each PR was opened.
 
 | Version | Date | PR | Change |
 |---|---|---|---|
-| 2.31.0 | 2026-11-08 | (this PR) | The NetSec report's long lists (Directory profiles, the website's features, fixes and contributors) show six items and a "Show all" button. Working groups sit under Leadership in one column, and the Timeline heading gets the space above it the other sections have |
+| 2.32.0 | 2026-11-08 | (this PR) | The NetSec report's long lists (Directory profiles, the website's features, fixes and contributors) show six items and a "Show all" button. Working groups sit under Leadership in one column, and the Timeline heading gets the space above it the other sections have |
+| 2.31.0 | 2026-11-08 | (this PR) | Board and management see a Board drive tile for the EISS Board shared drive, and board members find "Writing to board@" under Guides (#1987) |
 | 2.30.0 | 2026-11-08 | [#2074](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2074) | Each Timeline tile opens its own resource: a key date its `url` (the CfP or ESSC folder on Drive, Indico) or the app first in its `links`, a release its milestone page, the ESSC its year page; "Next milestones" opens milestone pages too |
 | 2.29.1 | 2026-11-08 | [#2073](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2073) | Dates read from the "EISS dates" calendar keep their French and German label, stage and step, so the FR and DE pages are not left in English (#2053) |
 | 2.29.0 | 2026-11-08 | [#2067](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2067) | The Timeline tiles read the "EISS dates" calendar: copies of Indico events and dates marked `site: netsec` become tiles tagged EISS or NetSec, and NetSec's `events.json` fills in only what the calendar lacks (#2028) |
