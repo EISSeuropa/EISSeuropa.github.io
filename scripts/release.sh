@@ -264,7 +264,11 @@ echo "  Promoting to [$VERSION] · $TODAY and resetting [Unreleased]."
 # preview below and in the published notes. A patch may carry one too, written
 # into [Unreleased] by hand, and then shows on the card and goes by email.
 PATCH_PART="${VERSION##*.}"
-if [[ "$PATCH_PART" == "0" ]] && ! printf '%s\n' "$UNRELEASED_BODY" | grep -q '^### For the team'; then
+# A here-string, not `printf | grep -q`: grep -q exits on the first match, and
+# under pipefail the printf it cut off fails the pipeline once the body is
+# larger than the pipe buffer (16 KB on macOS). v2.29.0's 71 KB body was
+# reported as having no "For the team" section that way.
+if [[ "$PATCH_PART" == "0" ]] && ! grep -q '^### For the team' <<<"$UNRELEASED_BODY"; then
   step "For the team"
   if [[ "$DRY_RUN" == "--dry-run" ]]; then
     echo "  [dry-run] [Unreleased] has no \"### For the team\" section. A real run asks for one."
@@ -359,7 +363,7 @@ if [[ "$DRY_RUN" != "--dry-run" ]]; then
       printf '  Cross-check /roadmap by hand before publishing.\n\n'
       printf '%s\n' "$FLIP_OUT" | sed 's/^/    /'
       printf '\n'
-    elif printf '%s' "$FLIP_OUT" | grep -q 'would flip'; then
+    elif grep -q 'would flip' <<<"$FLIP_OUT"; then
       printf '  The public /roadmap card for v%s is still unshipped:\n\n' "$VERSION"
       printf '%s\n' "$FLIP_OUT" | sed 's/^/  /'
       printf '\n  Apply this now? Type "y" to flip it, anything else to skip: '
