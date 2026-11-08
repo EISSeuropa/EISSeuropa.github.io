@@ -123,6 +123,20 @@
         </div>
       {% endif %}
     </dl>
+
+    {# The release card: an EISS or NetSec website release of the last 14 days,
+       with its "For the team" note or else its lede (src/_data/latestReleases.js).
+       Dismissed on this device, it stays hidden. Without JS it shows until
+       its 14 days are up. The note stays in English, as the changelog has it. #}
+    {% for r in latestReleases %}{% set RC = d.releaseCard %}
+      <aside class="apps-shipped" aria-labelledby="apps-shipped-{{ loop.index }}" data-apps-shipped="{{ r.site | lower }}-{{ r.version }}">
+        <p class="apps-shipped-eyebrow"><span class="apps-board-site apps-board-site-{{ r.site | lower }}">{{ r.site }}</span> {{ RC.label | replace("{version}", r.version) }} · <time datetime="{{ r.date }}">{{ r.date | newsDate(lang) }}</time></p>
+        <h2 class="apps-shipped-title" id="apps-shipped-{{ loop.index }}"{% if lang != "en" %} lang="en"{% endif %}>{{ r.title }}</h2>
+        {% for p in r.note %}<p{% if lang != "en" %} lang="en"{% endif %}>{{ p }}</p>{% endfor %}
+        <p class="apps-shipped-more"><a href="{{ r.url }}">{{ RC.notes }}</a></p>
+        <button type="button" class="apps-shipped-close" data-apps-shipped-close aria-label="{{ RC.dismiss }}" title="{{ RC.dismiss }}" hidden>{{ icon("x") }}</button>
+      </aside>
+    {% endfor %}
     {# The conference timeline: the stage of the conference year with its
        stepper, then the coming dates as calendar tiles. #}
     {% if dashboard.phase or dashboard.agenda.length %}
@@ -590,7 +604,7 @@
     {# The dashboard's own version. Rules and history: docs/internal-dashboard.md. #}
     <p class="apps-legend" aria-hidden="true"><span><span class="apps-src is-live"></span> {{ d.live }}</span> <span><span class="apps-src"></span> {{ STORED }}</span></p>
     {# The latest annual report draft (docs/annual-report.md), in English. #}
-    <p class="apps-version">{{ d.version | replace("{v}", dashboard.version) }}{% if annualReport.years.length %}<span data-roles="staff management board"> · <a href="/internal/report-{{ annualReport.years[0].year }}.html" hreflang="en">{{ d.annualReport | replace("{year}", annualReport.years[0].year) }}</a></span>{% endif %}</p>
+    <p class="apps-version"><a href="https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/internal-dashboard.md#history" hreflang="en">{{ d.version | replace("{v}", dashboard.version) }}</a>{% if annualReport.years.length %}<span data-roles="staff management board"> · <a href="/internal/report-{{ annualReport.years[0].year }}.html" hreflang="en">{{ d.annualReport | replace("{year}", annualReport.years[0].year) }}</a></span>{% endif %}</p>
   </div>
 </div>
 
@@ -1273,6 +1287,28 @@
       });
       pick.hidden = months.length < 2;
       show();
+    })();
+    // The release card: a dismissed release stays hidden on this device, and
+    // focus moves on to the next card or to the Timeline heading.
+    (function () {
+      var KEY = "eiss-apps-shipped-hidden", gone = [];
+      try { gone = JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) {}
+      var cards = [].slice.call(document.querySelectorAll("[data-apps-shipped]"));
+      cards.forEach(function (card) {
+        var id = card.getAttribute("data-apps-shipped");
+        if (gone.indexOf(id) >= 0) { card.hidden = true; return; }
+        var b = card.querySelector("[data-apps-shipped-close]");
+        b.hidden = false;
+        b.addEventListener("click", function () {
+          card.hidden = true;
+          gone = gone.concat(id).slice(-20);
+          try { localStorage.setItem(KEY, JSON.stringify(gone)); } catch (e) {}
+          var next = cards.filter(function (c) { return !c.hidden; })[0];
+          var to = next ? next.querySelector("[data-apps-shipped-close]") : document.querySelector("#apps-conference-heading, #apps-rolls-heading");
+          if (to && !to.matches("button, a, [tabindex]")) to.tabIndex = -1;
+          if (to) to.focus();
+        });
+      });
     })();
     // The NetSec report's long lists show their first CLIP items and a button
     // for the rest. Without this script every list shows in full.

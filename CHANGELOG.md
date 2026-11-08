@@ -16,6 +16,11 @@ Release notes here follow a **hybrid format**: a short prose lede, two-to-five t
 > One- to three-sentence lede in voice. What is this release *about*?
 > Who's it for? Why ship it now?
 
+### For the team
+
+Two to four plain sentences for staff, the board and volunteers: what
+changes in how people work. Optional, and only the heading is fixed.
+
 ### <First theme — name it for the thing that changed>
 
 Prose intro (~2-4 sentences). Inline links to docs / issues where
@@ -85,9 +90,11 @@ audit trail. Same content, terser.
 
 4. **Within a theme**, order content by user impact: headline first, smaller polish after. Within the index, same ordering inside each `####` block.
 
-5. **The release script (`scripts/release.sh`) extracts the `[Unreleased]` body verbatim** into the GitHub Release notes. Eyeball the body before confirming the script's prompt.
+5. **`### For the team`** sits after the lede of a minor or major release (optional on a patch). The release card on the internal dashboard and the release email to staff@, board@ and internship@ show it, or the lede when it is missing. `scripts/release.sh` asks for it when a minor or major has none. The heading text is read by `src/_data/latestReleases.js` and by `workspace-ops/release-notes`, so it stays exactly `### For the team`, in English.
 
-6. **No hard wraps in prose.** Each prose paragraph, blockquote lede, and multi-line bullet must be a single source line. Do not break mid-sentence with a `\n`. GitHub Releases renders markdown with the *break-on-newline* GFM variant; every soft `\n` becomes a `<br>` and forces the prose to render narrow on the Releases page (even though it looks flowing on the `github.com` file view). One long line per paragraph keeps both renderings correct. Code fences, headings, blank lines, and the compare-link footer are unaffected.
+6. **The release script (`scripts/release.sh`) extracts the `[Unreleased]` body verbatim** into the GitHub Release notes. Eyeball the body before confirming the script's prompt.
+
+7. **No hard wraps in prose.** Each prose paragraph, blockquote lede, and multi-line bullet must be a single source line. Do not break mid-sentence with a `\n`. GitHub Releases renders markdown with the *break-on-newline* GFM variant; every soft `\n` becomes a `<br>` and forces the prose to render narrow on the Releases page (even though it looks flowing on the `github.com` file view). One long line per paragraph keeps both renderings correct. Code fences, headings, blank lines, and the compare-link footer are unaffected.
 
 See [`CLAUDE.md`](CLAUDE.md) §4 for the operator-facing version of these rules.
 
@@ -99,6 +106,8 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
+- The internal dashboard shows a card under the status strip for 14 days after an EISS or NetSec website release: the release title, two to four sentences for the team, a link to the release notes, and a button that hides it on that device. A release shows when it is a minor or major one, or when its notes have a "For the team" section. The dashboard's version number at the foot of the page links to its history.
+- Release notes can carry a "For the team" section after the lede, read by the dashboard card and by the release email to staff@, board@ and internship@. `scripts/release.sh` asks for it on a minor or major release that has none, and after a minor release it reminds the person to post a news item when the release brings a feature visitors can see.
 - The long lists in the NetSec report tab of the internal dashboard (new and removed Directory profiles, the website repository's main features, notable fixes and contributors) show their first six items and a "Show all" button that opens the rest and folds it back.
 - The internal dashboard has a "Board drive" tile for board members and management, which opens the EISS Board shared drive, and the board view lists "Writing to board@" under Guides ([#1987](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1987)).
 - Each tile under "Timeline" on the internal dashboard opens the resource it is about: the call-for-papers or ESSC 2027 folder on Drive, Indico for the proposal, decision and programme dates, the GitHub milestone page for a release due date, and the ESSC 2027 page for the conference.

@@ -136,6 +136,14 @@ successor inherits through the handover in section 4.
   Under the release bar, a chart counts the release's issues closed per day
   over the last 30 days, in the browser from the live GitHub call that lists
   the release's closed issues. It stays hidden when that call fails.
+- **Release card.** Under the status strip, for 14 days after an EISS
+  or NetSec release that is a minor or major, or that has a
+  `### For the team` section: the release title, that section (or the
+  lede), and a link to the notes. Each person can hide it, and the
+  browser remembers that under `eiss-apps-shipped-hidden`. EISS's comes
+  from `CHANGELOG.md`, NetSec's from its latest GitHub Release
+  (`src/_data/latestReleases.js`). `node scripts/test-latest-releases.js`
+  checks it with `fetch` stubbed.
 - **Status strip and Today line.** The strip shows the next `keyDates`
   entry, the conference, systems, the next release and tasks to pick up.
   The deadline tile turns amber within 14 days and red within 3. In the
@@ -465,13 +473,30 @@ populated in the hybrid format (see the top of `CHANGELOG.md`).
    cross-check reminder (roadmap, sitemap, translations, README) before
    the confirmation prompt. Walk CLAUDE.md §5 if anything in the
    release changed one of those surfaces. Patch releases skip this.
-3. The script prints the exact release notes it will publish. Read the
+3. A minor or major without a `### For the team` section gets a
+   prompt for one: two to four plain sentences, on one line, on what
+   changes for staff, the board and volunteers. The script puts it
+   after the lede. Press Enter to skip, and the card and the email
+   show the lede instead.
+4. The script prints the exact release notes it will publish. Read the
    lede, the themed sections, and the index aloud. This is the last
    point to abort cleanly, because publishing to GitHub Releases is
    harder to undo than a merge (CLAUDE.md §2).
-4. Type `y` to confirm. The script promotes `[Unreleased]`, commits,
+5. Type `y` to confirm. The script promotes `[Unreleased]`, commits,
    tags `v<version>`, pushes, and runs `gh release create`. It needs
    `gh` authenticated against the repo.
+
+The release then reaches the team in two ways. The internal dashboard
+shows a card for it under the figures for 14 days, until each person
+hides it (`src/_data/latestReleases.js`, from the next daily build).
+Within a day, `workspace-ops/release-notes` emails it to staff@,
+internship@ and, for a minor or major, board@. NetSec releases do the
+same, from NetSec's release notes.
+
+After a minor or major that brings a feature visitors can see, post a
+news item with the News item form and tick Newsletter
+(`news-publishing.md`). It goes to the site, LinkedIn, Bluesky and the
+next newsletter. The script reminds you at the end.
 
 After a minor or major, also flip the just-shipped card on
 `/roadmap.html` (and its FR / DE siblings) from *Planned* to *Shipped*,

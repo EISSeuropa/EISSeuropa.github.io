@@ -873,6 +873,17 @@ h4 { font-size: var(--fs-lg); }
 .apps-board-site-eiss { background: var(--accent); color: var(--accent-text); }
 /* NetSec in the COST/EU blue and gold, apart from EISS's own blue. */
 .apps-board-site-netsec { background: #ffcc00; color: #003399; }
+/* The release card: a website release of the last 14 days, under the figures. */
+.apps-shipped { position: relative; margin: var(--space-4) 0 0; padding: var(--space-4) var(--space-7) var(--space-4) var(--space-5); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: var(--radius-md); background: var(--bg-elev); box-shadow: var(--shadow-1); }
+.apps-shipped[hidden] { display: none; }
+.apps-shipped-eyebrow { margin: 0 0 var(--space-1); color: var(--text-muted); font-size: 0.8125rem; font-weight: 600; }
+.apps-shipped-title { margin: 0 0 var(--space-2); font-size: 1.125rem; }
+.apps-shipped p { max-width: 70ch; margin: 0 0 var(--space-2); }
+.apps-shipped .apps-shipped-more { margin: 0; }
+.apps-shipped-more a { font-weight: 600; text-decoration: underline; }
+.apps-shipped-close { position: absolute; top: var(--space-2); right: var(--space-2); display: inline-flex; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem; padding: 0; border: 0; border-radius: var(--radius-sm); background: none; color: var(--text-muted); font-size: 1.125rem; cursor: pointer; }
+.apps-shipped-close:hover { background: var(--bg-tinted); color: var(--text); }
+.apps-version a { color: inherit; }
 .apps-phase { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); margin: 0 0 var(--space-7); padding: var(--space-4) var(--space-5); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elev); }
 .apps-phase-title { margin: 0 0 var(--space-1); font-size: 1.125rem; }
 .apps-phase .apps-note { margin: 0; }
