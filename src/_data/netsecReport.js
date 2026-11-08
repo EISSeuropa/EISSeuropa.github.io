@@ -4,21 +4,23 @@
 // The Directory, Core Group and MC come from data/bios.json, data/wg.json and
 // data/mc-members.json at the last commit before each end of the month. The
 // website section comes from the month's commits on main (one per squashed PR).
-// A past month never changes, so the build first reuses the months the live
-// site published (/data/netsec-reports.json) and recomputes only those it
-// lacks or holds at an older VERSION. Pull-request builds never recompute: they
-// share the Actions token's hourly API allowance with the deploys, and about
-// 140 calls a month used it up on 6 November 2026 (#2047). A month that cannot
-// be recomputed keeps its live copy, even at an older VERSION, so a build never
-// publishes fewer months than it read. A month with neither is left out. With
-// no month at all the tab is hidden, never the build.
+// The months live in src/data/netsec-reports.json, committed by the daily
+// "Refresh roadmap surfaces" workflow (scripts/refresh-dashboard-data.js). A
+// build only reads that file. The refresh, run with DASHBOARD_REFRESH=1 and a
+// token, recomputes only the months the file lacks or holds at an older
+// VERSION, about 140 API calls each. A month that cannot be recomputed keeps
+// its stored copy, even at an older VERSION, so the file never loses a month.
+// A month with neither is left out. With no month at all the tab is hidden,
+// never the build. Deploys used to recompute and share the Actions token's
+// hourly allowance, which ran out on 6 and 8 November 2026 and hid the tab
+// (#2047, #2083).
+
+const fs = require("fs");
+const path = require("path");
 
 const REPO = "EISSeuropa/netsec.github.io";
-// Under /data/: while the redirect repository was named "internal", GitHub
-// Pages sent every eiss-europa.com/internal/ address to internal.eiss-europa.com,
-// so a copy there was never read back and every build recomputed every month
-// (#2083, docs/admin-guide.md).
-const LIVE = "https://eiss-europa.com/data/netsec-reports.json";
+// EISS_DATA_DIR lets the tests point at a scratch folder.
+const STORE = () => path.join(process.env.EISS_DATA_DIR || path.join(__dirname, "../data"), "netsec-reports.json");
 // The first month with data/wg.json at both ends (it was added on 30 May 2026).
 const FIRST = "2026-06-01";
 // Bump when the report's logic changes, so the live copy is not reused.
@@ -167,17 +169,16 @@ function months(now = new Date()) {
   return out;
 }
 
-async function live(url) {
+function stored() {
   try {
-    const r = await fetch(url, { signal: AbortSignal.timeout(10000) });
-    const j = r.ok ? await r.json() : null;
-    return Array.isArray(j) ? j : null;
-  } catch (e) { return null; } // first build with the archive, or offline
+    const j = JSON.parse(fs.readFileSync(STORE(), "utf8"));
+    return Array.isArray(j) ? j : [];
+  } catch (e) { return []; } // no file yet
 }
 
 module.exports = async function () {
-  const published = ((await live(LIVE)) || []).filter((r) => r && r.start);
-  const recompute = Boolean(process.env.GITHUB_TOKEN) && process.env.GITHUB_EVENT_NAME !== "pull_request";
+  const published = stored().filter((r) => r && r.start);
+  const recompute = process.env.DASHBOARD_REFRESH === "1" && Boolean(process.env.GITHUB_TOKEN);
   const out = [];
   let warned = false;
   // ponytail: one month at a time keeps a backfill under the API's burst limit.
@@ -185,7 +186,7 @@ module.exports = async function () {
     const kept = published.find((r) => r.start === month.start);
     if (kept && kept.version === VERSION) { out.push(kept); continue; }
     if (!recompute) {
-      if (!warned) console.warn(`[netsecReport] ${process.env.GITHUB_TOKEN ? "pull-request build" : "no GITHUB_TOKEN"}, months are not recomputed`);
+      if (!warned && process.env.DASHBOARD_REFRESH === "1") console.warn("[netsecReport] no GITHUB_TOKEN, months are not recomputed");
       warned = true;
       if (kept) out.push(kept);
       continue;
@@ -193,13 +194,14 @@ module.exports = async function () {
     try {
       out.push(await compute(month));
     } catch (e) {
-      console.warn(`[netsecReport] ${month.start} unavailable (${e.message}), ${kept ? "the live copy is kept" : "left out"}`);
+      console.warn(`[netsecReport] ${month.start} unavailable (${e.message}), ${kept ? "the stored copy is kept" : "left out"}`);
       if (kept) out.push(kept);
     }
   }
   return out.length ? out : null;
 };
 module.exports.compute = compute;
+module.exports.STORE = STORE;
 module.exports.lastMonth = lastMonth;
 module.exports.months = months;
 module.exports.inBatches = inBatches;

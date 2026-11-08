@@ -1,6 +1,8 @@
 // The "Where things stand" section of /internal.html. Everything here is
 // public: the page has no sign-in, so private work stays out of it.
 
+const fs = require("fs");
+const path = require("path");
 const progress = require("../data/roadmap-progress.json");
 const conferences = require("./conferences.js");
 const site = require("./site.js");
@@ -8,7 +10,7 @@ const site = require("./site.js");
 const REPO = "https://github.com/EISSeuropa/EISSeuropa.github.io";
 // The dashboard's own version, shown at the foot of the page. Semantic
 // versioning, rules and history in docs/internal-dashboard.md.
-const VERSION = "2.33.1";
+const VERSION = "2.33.2";
 const everyone = ["staff", "management", "board", "volunteer"];
 const today = new Date().toISOString().slice(0, 10);
 
@@ -294,25 +296,21 @@ async function api(url) {
   return res.json();
 }
 
-// The highlights the live site published (/data/board-highlights.json, see
-// the note on LIVE in netsecReport.js),
-// kept when they cannot be recomputed. The same rule as netsecReport.js (#2047).
-const LIVE_HIGHLIGHTS = "https://eiss-europa.com/data/board-highlights.json";
-async function liveHighlights() {
+// The board highlights live in src/data/board-highlights.json, committed by the
+// daily "Refresh roadmap surfaces" workflow, as the NetSec report's months are
+// (see netsecReport.js). A build only reads the file. The refresh
+// (DASHBOARD_REFRESH=1 with a token) recomputes them and keeps the stored ones
+// when its calls fail.
+const HIGHLIGHTS = () => path.join(process.env.EISS_DATA_DIR || path.join(__dirname, "../data"), "board-highlights.json");
+function storedHighlights() {
   try {
-    const r = await fetch(LIVE_HIGHLIGHTS, { signal: AbortSignal.timeout(10000) });
-    const j = r.ok ? await r.json() : null;
+    const j = JSON.parse(fs.readFileSync(HIGHLIGHTS(), "utf8"));
     return j && Array.isArray(j.features) && Array.isArray(j.fixes) ? j : null;
-  } catch (e) { return null; } // first build with the file, or offline
+  } catch (e) { return null; } // no file yet
 }
 async function fetchHighlights() {
   // ponytail: one call per candidate PR for its line count, about 80 a month.
-  // Pull-request builds share the deploys' hourly API allowance, so they reuse
-  // the published highlights, as does a build without a token or one whose calls fail.
-  if (!process.env.GITHUB_TOKEN || process.env.GITHUB_EVENT_NAME === "pull_request") {
-    console.warn(`[dashboard] ${process.env.GITHUB_TOKEN ? "pull-request build" : "no GITHUB_TOKEN"}, the board highlights are the published ones`);
-    return liveHighlights();
-  }
+  if (process.env.DASHBOARD_REFRESH !== "1" || !process.env.GITHUB_TOKEN) return storedHighlights();
   const since = isoDaysAgo(30);
   try {
     const found = await Promise.all(SITES.flatMap(({ slug, site }) => Object.entries(KINDS).map(async ([kind, re]) => {
@@ -327,8 +325,8 @@ async function fetchHighlights() {
     const top = (kind) => found.flat().filter((p) => p.kind === kind).sort((a, b) => b.lines - a.lines).slice(0, 5);
     return { features: top("feature"), fixes: top("fix"), since };
   } catch (e) {
-    const kept = await liveHighlights();
-    console.warn(`[dashboard] board highlights unavailable (${e.message}), ${kept ? "the published ones are kept" : "left out"}`);
+    const kept = storedHighlights();
+    console.warn(`[dashboard] board highlights unavailable (${e.message}), ${kept ? "the stored ones are kept" : "left out"}`);
     return kept;
   }
 }
@@ -373,3 +371,5 @@ module.exports = async function () {
   const [{ keyDates, source, events }, recent, highlights, , help] = await Promise.all([fetchDates(), fetchRecent(), fetchHighlights(), fetchNetsecEvents(), fetchHelp()]);
   return { ...assemble(keyDates, source, events), recent, help, built: today, pace: pace(), board: { ...highlights, audits } };
 };
+module.exports.fetchHighlights = fetchHighlights;
+module.exports.HIGHLIGHTS = HIGHLIGHTS;

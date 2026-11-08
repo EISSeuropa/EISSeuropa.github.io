@@ -169,11 +169,13 @@ successor inherits through the handover in section 4.
   largest `feat` and `fix` pull requests merged in the last 30 days across
   the EISS and NetSec site repos, ranked by lines changed as in the NetSec
   monthly report, with the conventional-commit prefix dropped from the
-  title. `src/_data/dashboard.js` reads them at build with `GITHUB_TOKEN`
-  (one call per candidate PR, about 80) and publishes them at
-  `/data/board-highlights.json`. A build that cannot recompute them (a
-  pull-request build, no token, or failed calls) keeps the published ones
-  (#2047), so the two rolls survive a rate-limited deploy.
+  title. They are stored in `src/data/board-highlights.json`, which the
+  daily *Refresh roadmap surfaces* workflow recomputes with
+  `scripts/refresh-dashboard-data.js` (one API call per candidate PR,
+  about 80) and commits. A build only reads the file, so no deploy spends
+  the Actions token's hourly API allowance on it, and a refresh whose
+  calls fail leaves the last good file in place (#2047, #2083). Dispatch
+  the workflow to refresh them sooner.
   `node scripts/test-board-highlights.js` checks this with `fetch` stubbed. Latest audits is the five newest entries of
   `src/_data/audits.json`, kept by hand: add a line when an audit lands.
   The private `workspace-ops` repo stays out, since the page is public.
@@ -221,10 +223,12 @@ successor inherits through the handover in section 4.
   `main` (one call per commit for its line count, about 140, ten at a time:
   GitHub refuses a larger burst with 403, #2047). The build
   keeps every complete month from June 2026 (`FIRST`, the first month with
-  `data/wg.json` at both ends), newest first, and publishes the list at
-  `/data/netsec-reports.json`. A past month never changes, so the next
-  build reuses the live months and computes only the one that has just
-  ended. The tab opens on the newest month, and a Month menu shows any
+  `data/wg.json` at both ends), newest first, in `src/data/netsec-reports.json`.
+  The daily *Refresh roadmap surfaces* workflow computes the months the
+  file lacks with `scripts/refresh-dashboard-data.js` and commits it, and
+  never writes a file with fewer months than before. A build only reads
+  it. A past month never changes, so after the first of the month the
+  refresh computes one month and the rest of the time none. The tab opens on the newest month, and a Month menu shows any
   other (`?month=2026-09` links to one). With two months or more the menu also offers "All months"
   (`?month=all`), which the `netsecAll` filter in `src/_data/annualReport.js`
   builds from the same list: the totals since launch, with a bar chart of
