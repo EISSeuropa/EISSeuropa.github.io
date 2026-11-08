@@ -220,10 +220,11 @@ const roadmap = {
           // Planned until the release exists. scripts/release.sh offers to flip
           // this card, which is what adds the notes link, and a notesUrl written
           // ahead of the tag is a 404 the link checker rightly fails on.
-          status: "planned",
+          status: "shipped",
           version: "v2.29.0",
-          milestone: "v2.29.0",
-          when: { en: "8 December 2026 · v2.29.0", fr: "8 décembre 2026 · v2.29.0", de: "8. Dezember 2026 · v2.29.0" },
+          notesUrl: notes("v2.29.0"),
+          changes: 175,
+          when: { en: "8 November 2026 · v2.29.0", fr: "8 novembre 2026 · v2.29.0", de: "8. November 2026 · v2.29.0" },
           title: {
             en: "Introducing Belvedere, the EISS blog",
             fr: "Présentation de Belvédère, le blog de l’EISS",

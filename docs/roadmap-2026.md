@@ -8,7 +8,7 @@ public [`/roadmap.html`](https://eiss-europa.com/roadmap.html).
 papers moved to v2.30.0).**
 
 <!-- AUTOSTAMP:BEGIN -->
-> _Auto-tracked: **165 entries** in [`[Unreleased]`](../CHANGELOG.md#unreleased) since **v2.28.0** (57 Added, 44 Changed, 4 Removed, 60 Fixed). Last refresh by `scripts/sync-roadmap.py`: 8 Nov 2026. Prose in the timeline below may lag; the maintainer resynthesises on release-time §5 sweep._
+> _Auto-tracked: `[Unreleased]` is empty since **v2.28.0**. Last refresh by `scripts/sync-roadmap.py`: 8 Nov 2026._
 <!-- AUTOSTAMP:END -->
 
 > **Sync convention.** This file is the authoritative planning source.

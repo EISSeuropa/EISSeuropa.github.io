@@ -104,6 +104,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+_Nothing yet._
+
+## [2.29.0] · 2026-11-08 — Introducing Belvedere, the EISS blog
+
 > v2.29.0 ships a month ahead of its milestone date. It brings Belvedere, the EISS blog in three languages, the ESSC 2027 page for Belgrade, a rebuilt home page, and an accessibility statement that declares full conformance with RGAA 4.1.2. Most of the work since October went into the internal dashboard, which gives staff, management, the board and volunteers one page for their apps, guides, dates and the state of the websites.
 
 ### For the team
@@ -1663,7 +1667,8 @@ Preview MCP screenshots of `/index.fr.html`, `/index.de.html`, `/initiative.de.h
 
 *Originally tagged as **v2.0.0**; renumbered to **v2.0.0r** in the v2.13.0r retroactive cleanup so the SemVer signal matches the actual scope of the change.*
 
-[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.28.0...HEAD
+[Unreleased]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.29.0...HEAD
+[2.29.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.28.0...v2.29.0
 [2.28.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.27.0...v2.28.0
 [2.27.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.26.0...v2.27.0
 [2.26.0]: https://github.com/EISSeuropa/EISSeuropa.github.io/compare/v2.25.0...v2.26.0

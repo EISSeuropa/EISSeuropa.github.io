@@ -3,8 +3,8 @@
   "generatedAt": "2026-11-08",
   "source": "https://github.com/EISSeuropa/EISSeuropa.github.io/milestones",
   "counts": {
-    "openIssues": 102,
-    "openPRs": 2,
+    "openIssues": 96,
+    "openPRs": 1,
     "helpWanted": 13
   },
   "milestones": {
@@ -13,56 +13,64 @@
       "total": 73,
       "percent": 100,
       "state": "closed",
-      "due": "2026-06-09"
+      "due": "2026-06-09",
+      "number": 7
     },
     "v2.25.0": {
       "closed": 31,
       "total": 31,
       "percent": 100,
       "state": "closed",
-      "due": "2026-06-09"
+      "due": "2026-06-09",
+      "number": 8
     },
     "v2.26.0": {
       "closed": 161,
       "total": 161,
       "percent": 100,
       "state": "closed",
-      "due": "2026-06-30"
+      "due": "2026-06-30",
+      "number": 9
     },
     "v2.27.0": {
       "closed": 129,
       "total": 129,
       "percent": 100,
       "state": "closed",
-      "due": "2026-09-30"
+      "due": "2026-09-30",
+      "number": 10
     },
     "v2.28.0": {
       "closed": 71,
       "total": 71,
       "percent": 100,
       "state": "closed",
-      "due": "2026-08-29"
+      "due": "2026-08-29",
+      "number": 11
     },
     "v2.29.0": {
-      "closed": 282,
-      "total": 298,
-      "percent": 95,
+      "closed": 293,
+      "total": 293,
+      "percent": 100,
       "state": "open",
-      "due": "2026-12-08"
+      "due": "2026-12-08",
+      "number": 24
     },
     "v2.30.0": {
-      "closed": 5,
-      "total": 26,
-      "percent": 19,
+      "closed": 8,
+      "total": 41,
+      "percent": 20,
       "state": "open",
-      "due": "2027-04-30"
+      "due": "2027-04-30",
+      "number": 17
     },
     "v2.31.0": {
       "closed": 0,
       "total": 3,
       "percent": 0,
       "state": "open",
-      "due": "2027-06-25"
+      "due": "2027-06-25",
+      "number": 18
     }
   }
 }
