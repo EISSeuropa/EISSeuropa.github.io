@@ -14,9 +14,9 @@ Every related issue and PR carries the `EISS10` label.
 | `social-queue.yml` | 1 March, June, September and December, 07:00 UTC | Renders the next quarter's post cards, uploads them as a 90-day run artifact, and opens an issue *Social queue: 2027Qn #EISS10 posts* with every caption and a checkbox per platform. |
 | `campaign-metrics.yml` | 1st of each month, 07:00 UTC | Opens *Campaign metrics: YYYY-MM* with last month's figures filled in where they can be read (news items and Belvedere posts from `/feed.xml`, Anthology abstract coverage, alumni count) and rows to type in by hand (LinkedIn and X followers, newsletter subscribers). Reports January to December 2027 only. |
 | `offboarding.yml` | Mondays, 07:00 UTC | Opens *Offboarding: name* for every `roleEndDate` in `src/_data/board.json` that passed in the previous seven days: invite to the EISS Alumni LinkedIn group, confirm the *EISS community* listing, check their files are in the EISS Team shared drive, update the Volunteer handbook, remove them from Proton Pass and rotate the shared passwords. |
-| `feed-to-bluesky.yml` | After each deploy of `master` | Dormant. Bluesky is put aside ([#1856](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1856)), and the job is skipped while `vars.BLUESKY_HANDLE` is unset. |
+| `social-post.yml` | After a change to `src/_data/news.json` on `master` | Posts each new news item to the EISS LinkedIn page and to Bluesky (`eissnetwork.bsky.social`) after a reviewer approves it in the `social` environment. Skipped while `vars.SOCIAL_ENABLED` is not `true`. See `docs/news-publishing.md` ([#2056](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2056)). |
 
-All four are on the failure alarm list (`failure-alarm.yml`). Every issue they
+All four are on the failure alarm list, with `linkedin-version-check.yml`, which keeps the LinkedIn API version current (`failure-alarm.yml`). Every issue they
 open is labelled `automated`, gets the nearest open release milestone and is
 assigned to the maintainer accounts. A rerun never files the same issue twice.
 
@@ -31,7 +31,7 @@ each one by hand. There is no RSS digest
 | Setting | Where | Value |
 | --- | --- | --- |
 | `SOCIAL_ASSIGNEE` | Repository variable | The social media owner's GitHub handle (Eugenio Sanchez). The queue, metrics and offboarding issues are then also assigned to him. |
-| `BLUESKY_HANDLE`, `BLUESKY_APP_PASSWORD` | Variable, secret | Only if Bluesky is taken up. An app password, never the account password. |
+| `BLUESKY_HANDLE` | Repository variable | `eissnetwork.bsky.social`, for the follower count in the metrics issue. Posting uses the secrets of the `social` environment instead (`docs/news-publishing.md`). |
 
 Set `SOCIAL_ASSIGNEE` only once the person has accepted repository access
 (Triage role is enough). `gh issue create --assignee` fails for a handle
@@ -55,9 +55,8 @@ tracked in [#1883](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/188
   (`src/assets/images/brand/eiss-10-lockup.svg`, the anniversary logo, and
   `eiss-10-roundel.svg`, the profile picture) and the export set of logos,
   profile pictures, banners and email images. See `BRAND.md` for the marks.
-- `scripts/campaign-metrics.py`, `scripts/offboarding-due.py`,
-  `scripts/feed-to-bluesky.py`: the logic behind the workflows, each runnable
-  locally.
+- `scripts/campaign-metrics.py`, `scripts/offboarding-due.py`: the logic
+  behind the workflows, each runnable locally.
 
 ## Regenerating assets
 

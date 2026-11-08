@@ -99,6 +99,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
+- Each new news item is posted to the EISS LinkedIn page and to Bluesky (`eissnetwork.bsky.social`) once a reviewer approves the run in the `social` environment. The pipeline is NetSec's, ported, with a ledger so no item is posted twice and a monthly check of the LinkedIn API version. For a joint item the run lists the LinkedIn post, so the NetSec page can be added as collaborator by hand. Posting starts once the secrets are set and `SOCIAL_ENABLED` is `true` ([#2056](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2056)).
 - The NetSec report tab on the internal dashboard has an "All months" view: the figures since June 2026 in one report, with a bar chart of Directory joiners per month and a table of the same figures. The tab now looks like the NetSec monthly email, with the NetSec logo on a blue band with a gold stripe, a summary box, stat tiles and the working-group colours.
 - The NetSec report tab on the internal dashboard has a Month menu that shows any complete month since June 2026, newest first. `?month=2026-09` links to one month.
 - Annual report drafts at `/internal/report-YYYY.html`, one per year from 2025. Each sets the year's figures for the conference, the Anthology, NetSec and the website beside the year before's, with the change, and lists the prizes, feature releases and audits. Staff add the prose in `src/_data/annualReportNotes.json`, and the page prints or saves as PDF. The internal dashboard links the latest draft for staff, management and the board.
@@ -223,6 +224,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 - The image credits line is gone from the site footer. It credited Euro-SWAMOS and Barcelona images that the site no longer shows. The Prague photo on `/2024` now carries its CC BY 2.0 credit in a caption under the photo.
 - 19 images that no page used, among them third-party headshots and institution logos left over from the old site, are no longer published.
 - 102 orphaned images from the Mobirise era, about 25 MB, no longer cloned on checkout or served to the site. They were passthrough-copied into every deploy while no page, stylesheet, feed or serialisation referenced them: AMP-era screen captures, superseded logo files and stray crops. Verified against the built output rather than by name, so the share cards that are assembled at build time and never named literally were not caught in it.
+- `feed-to-bluesky.yml` and `scripts/feed-to-bluesky.py`, dormant since #1867, are gone. The LinkedIn and Bluesky pipeline replaces them ([#2056](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2056)).
 
 ### Changed
 

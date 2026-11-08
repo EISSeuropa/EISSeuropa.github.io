@@ -1,0 +1,4 @@
+{
+  "_comment": "LinkedIn Marketing API version (YYYYMM) sent as the LinkedIn-Version header by scripts/social-post.py. LinkedIn supports each version for about 12 months, then a request with it returns HTTP 426. .github/workflows/linkedin-version-check.yml keeps this pin current through an auto-merging PR. The LINKEDIN_API_VERSION environment variable overrides it. See docs/news-publishing.md.",
+  "version": "202607"
+}

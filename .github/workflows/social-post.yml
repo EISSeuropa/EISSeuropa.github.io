@@ -1,0 +1,157 @@
+# Post EISS news to LinkedIn and Bluesky, approval-gated (#2056).
+#
+# Ported from EISSeuropa/netsec.github.io social-bluesky.yml, news only.
+#
+# Flow:
+#   1. `preview` runs scripts/social-post.py --dry-run, writes the exact posts
+#      to the run summary and counts how many are pending. No secrets.
+#   2. `publish` runs only when something is pending and the repository
+#      variable SOCIAL_ENABLED is `true`. It targets the `social` environment,
+#      so GitHub holds it for a required reviewer, who reads the preview and
+#      approves. The ledger update returns in an auto-merging PR on
+#      `social/ledger`.
+#
+# A news item whose `social.collaborator` is set gets a line in the run
+# summary with the LinkedIn post link: the other page is added as
+# collaborator by hand.
+#
+# Both jobs first fold in the keys on `social/ledger`, because that PR can
+# still be open when the next run composes (NetSec run 30129049311).
+#
+# Until the secrets exist, leave SOCIAL_ENABLED unset: the preview still runs
+# and the publish job is skipped. With SOCIAL_ENABLED set and a channel's
+# secrets missing, that channel is skipped, and with none configured the
+# script posts nothing and exits cleanly.
+#
+# Secrets on the `social` environment: BSKY_HANDLE, BSKY_APP_PASSWORD,
+# LINKEDIN_ORG_ID, LINKEDIN_ACCESS_TOKEN, LINKEDIN_REFRESH_TOKEN,
+# LINKEDIN_CLIENT_ID, LINKEDIN_CLIENT_SECRET. Set-up: docs/news-publishing.md.
+
+name: Post news to LinkedIn and Bluesky
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'src/_data/news.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: social-post
+  cancel-in-progress: false
+
+jobs:
+  preview:
+    name: Preview the pending posts
+    runs-on: ubuntu-latest
+    outputs:
+      count: ${{ steps.compose.outputs.count }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+
+      - name: Fold in a ledger that has not reached master yet
+        run: bash scripts/social-fold-ledger.sh
+
+      - name: Compose (dry run) into the run summary
+        id: compose
+        run: |
+          {
+            echo "### LinkedIn and Bluesky: pending posts (preview)"
+            echo ""
+            echo '```'
+            python3 scripts/social-post.py --dry-run
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          N=$(python3 scripts/social-post.py --count)
+          echo "count=$N" >> "$GITHUB_OUTPUT"
+          if [ "$N" = "0" ]; then
+            echo "::notice::Nothing pending. The publish job is skipped."
+          elif [ "${{ vars.SOCIAL_ENABLED }}" != "true" ]; then
+            echo "::notice::$N post(s) pending, but SOCIAL_ENABLED is not true. Nothing is posted."
+          else
+            echo "::notice::$N post(s) pending. The publish job is waiting for approval."
+          fi
+
+  publish:
+    name: Approve, then post
+    needs: preview
+    if: needs.preview.outputs.count != '0' && vars.SOCIAL_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    environment: social
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+
+      - name: Fold in a ledger that has not reached master yet
+        run: bash scripts/social-fold-ledger.sh
+
+      - name: Post and update the ledger
+        env:
+          BSKY_HANDLE: ${{ secrets.BSKY_HANDLE }}
+          BSKY_APP_PASSWORD: ${{ secrets.BSKY_APP_PASSWORD }}
+          LINKEDIN_ORG_ID: ${{ secrets.LINKEDIN_ORG_ID }}
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_REFRESH_TOKEN: ${{ secrets.LINKEDIN_REFRESH_TOKEN }}
+          LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
+          LINKEDIN_CLIENT_SECRET: ${{ secrets.LINKEDIN_CLIENT_SECRET }}
+        run: python3 scripts/social-post.py --live --channel all
+
+      - name: Move the ledger onto the current master
+        # The approval can hold this job for a day. Reset to master's tip and
+        # re-add only the keys master lacks, so the PR is a pure append.
+        run: |
+          cp data/social-posted.json /tmp/ledger.json
+          git fetch --depth=1 origin master
+          git reset --hard --quiet FETCH_HEAD
+          python3 - <<'PY'
+          import json, pathlib
+          led = pathlib.Path("data/social-posted.json")
+          cur = json.loads(led.read_text(encoding="utf-8"))
+          extra = [k for k in json.loads(pathlib.Path("/tmp/ledger.json").read_text(encoding="utf-8"))["posted"]
+                   if k not in cur["posted"]]
+          cur["posted"] += extra
+          led.write_text(json.dumps(cur, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+          print(f"::notice::Carried {len(extra)} new key(s) onto master's ledger.")
+          PY
+
+      - name: Persist the ledger through an auto-merging PR
+        id: create-pr
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
+        with:
+          token: ${{ secrets.AUTOPR_TOKEN || secrets.GITHUB_TOKEN }}
+          branch: social/ledger
+          base: master
+          delete-branch: true
+          add-paths: data/social-posted.json
+          title: 'chore(social): record published LinkedIn and Bluesky posts'
+          commit-message: |
+            chore(social): record published LinkedIn and Bluesky posts
+
+            Updates data/social-posted.json after an approved post (#2056).
+          body: |
+            Records the keys of the news items just posted, so they are not
+            posted again. Auto-generated by the social-post workflow.
+          labels: automated
+
+      - name: Arm auto-merge on the ledger PR
+        if: steps.create-pr.outputs.pull-request-number
+        env:
+          GH_TOKEN: ${{ secrets.AUTOPR_TOKEN || secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr merge "${{ steps.create-pr.outputs.pull-request-number }}" \
+            --squash --auto --repo "${{ github.repository }}"

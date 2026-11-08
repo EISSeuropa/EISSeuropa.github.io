@@ -1,8 +1,9 @@
 # Quarterly social queue for the anniversary year (#1866).
 #
-# LinkedIn's page-posting API needs partner approval and X's API is paid,
-# so the #EISS10 posts are scheduled by hand in each platform's own
-# scheduler, a quarter at a time. On the first of December, March, June
+# The #EISS10 posts are campaign cards with their own schedule, so they are
+# scheduled by hand in each platform's own scheduler, a quarter at a time.
+# News items reach LinkedIn and Bluesky on their own through social-post.yml
+# (#2056). X gets no automation. On the first of December, March, June
 # and September this workflow renders the next quarter's cards and
 # captions with scripts/make-anniversary-posts.py (#1865), uploads the
 # cards as a run artifact and opens an issue holding every caption with a
