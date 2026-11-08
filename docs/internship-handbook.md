@@ -6,10 +6,8 @@ For people who have joined the EISS as a volunteer or on a
 cohort dates, the tracks and the terms of the placement. This file covers everything operational, and it is the one to
 come back to once the induction call is over.
 
-English only. Rule §1 of `CLAUDE.md` forbids machine translation, and
-this file changes every cycle, so hand-translating it into French and
-German would be a permanent cost for no reader benefit. The public page
-is translated. This is not.
+English only. The public page is translated. This file changes every
+cycle, so it is not.
 
 ---
 

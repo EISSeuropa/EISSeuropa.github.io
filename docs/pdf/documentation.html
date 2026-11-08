@@ -862,10 +862,10 @@ flowchart LR
   <p>Each translated page is a sibling template with the same name stem: <code>membership.njk</code>, <code>membership.fr.njk</code>, <code>membership.de.njk</code>, published at <code>/membership.html</code>, <code>/membership.fr.html</code> and <code>/membership.de.html</code>. Every page declares its alternates, the language switcher links between them, and each carries <code>hreflang</code> links for search engines. Interface strings (navigation, footer, search, badges) come from one catalogue, <code>src/_data/i18n.js</code>, and a check keeps its English, French and German key sets identical.</p>
 
   <h2>What is translated, and what is not</h2>
-  <p>Twenty-seven pages have French and German versions, among them the home page, the Initiative, membership, the board, the Anthology, the blog, and the accessibility, licensing and privacy pages. Archive year pages, special events and individual paper pages stay in English. Translated pages carry a beta ribbon that says they are translated by hand.</p>
+  <p>Twenty-seven pages have French and German versions, among them the home page, the Initiative, membership, the board, the Anthology, the blog, and the accessibility, licensing and privacy pages. Archive year pages, special events and individual paper pages stay in English. Translated pages carry a beta ribbon that says the English version is authoritative.</p>
   <div class="card callout">
-    <h4>Drafted by Claude, reviewed by people</h4>
-    <p style="margin:0">French and German copy may be drafted by Claude. A person who reads the language reviews it, and the page carries the beta ribbon until a native speaker signs off.</p>
+    <h4>Machine translation, approved by merging</h4>
+    <p style="margin:0">French and German copy may come from Claude or another translation tool. Merging the pull request approves the translation, and the page keeps the beta ribbon.</p>
   </div>
 
   <h2>Keeping translations in step: the drift checker</h2>

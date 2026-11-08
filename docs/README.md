@@ -6,6 +6,7 @@ Maintainer-facing docs for [eiss-europa.com](https://eiss-europa.com)
 
 | Doc | What it covers |
 |---|---|
+| [repositories-and-workflow.md](repositories-and-workflow.md) | The three EISS repositories (this site, NetSec, workspace-ops), the data contracts between them, where work and documents live, and the tools of local and cloud Claude sessions. Read first when new to the code. |
 | [architecture.md](architecture.md) | Build pipeline, data sources, sync jobs, CI gates, deploy — the data-flow map. |
 | [internal-dashboard.md](internal-dashboard.md) | The internal dashboard's own version number: the semantic versioning rules, how to bump it, and its history from 1.0.0. |
 | [admin-guide.md](admin-guide.md) | Operator and handover guide: who holds what access, what runs unattended, and what a successor needs on day one. |
