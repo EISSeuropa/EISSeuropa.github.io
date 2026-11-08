@@ -62,10 +62,10 @@ same release. If yes but too big to fit, open a tracking issue
   on HTML-touching PRs, but a release moment is the right place to
   confirm zero drift before stamping a version.
 - Did any EN copy change in this release? FR / DE need updating
-  (Claude drafts, a reader of the language reviews, per rule §1).
-- The `status: beta` ribbon on `*.fr.njk` / `*.de.njk` marks copy not
-  yet signed off by a native speaker; if a translation has been re-verified
-  against current EN, consider whether the *beta* marker still applies.
+  (machine translation is fine, and merging the PR approves it, per rule §1).
+- The `status: beta` ribbon on `*.fr.njk` / `*.de.njk` says the English
+  version is authoritative. It is not a review flag. Dropping it from a
+  page is a maintainer decision.
 
 ### 4. Repo docs
 

@@ -15,6 +15,39 @@ authoritative for EISS.
 
 ---
 
+## 0. The three EISS repositories and the team workflow
+
+Kept identical in the three repositories' `CLAUDE.md`. The full map,
+with every cross-repo data contract and the cloud-session tools, is
+[`docs/repositories-and-workflow.md`](https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/repositories-and-workflow.md)
+in the EISS site repository. Read it before a change that reads or
+publishes data another repository uses.
+
+- `EISSeuropa.github.io` (public, `master`): eiss-europa.com in
+  Eleventy, with the Anthology, the conference pages and the internal
+  dashboard.
+- `netsec.github.io` (public, `main`): netsec-cost.eu in hand-written
+  HTML (EN, FR, DE), with the NetSec Directory.
+- `workspace-ops` (private, `main`): the Apps Script projects behind
+  EISS's Google Workspace (joining and leaving, backups, the status web
+  app). Merging to `main` deploys them.
+- The three connect through published files and addresses: NetSec's
+  `directory-index.json`, EISS's `authors-index.json` and
+  `anthology-index.json`, NetSec data read by the EISS dashboard, EISS's
+  `cohorts.json` and `board.json` read by `intern-lifecycle`, and the
+  status web app read by the dashboard. A rename on one side breaks the
+  other without failing its own CI.
+- A change to a website, its code or an automation is a GitHub issue
+  with a milestone. Team work with an owner and a date is a task in the
+  Tasks tab of the project's Google Chat space. Never both. Volunteers
+  pick up `help wanted` issues.
+- How a system works goes in its repository. How EISS operates it and
+  who holds access go in the EISS DevOps handbook (EISS Restricted >
+  DevOps). Secrets go only in the password manager.
+- Sessions run on the maintainer's Mac (`gh`, `clasp`, the desktop app)
+  or in the cloud at claude.ai/code (the GitHub connector). §2 gives the
+  cloud equivalents.
+
 ## 1. Language & translation
 
 - **British English** in user-facing copy (site pages, the accessibility
@@ -22,12 +55,15 @@ authoritative for EISS.
   bodies, PR descriptions that an external reader might see). Internal
   commit messages and code comments can be more relaxed but should not
   flip mid-document.
-- **FR and DE: Claude may draft, a person reviews.** Claude can write
-  the FR and DE copy. A person who reads the language reviews it, and the
-  page keeps `status: beta` (the ribbon) until a native speaker signs
-  off. The PR body says which strings are Claude drafts. Never paste
-  unreviewed output from a translation tool (DeepL, Google Translate),
-  and never ship FR/DE copy nobody has been asked to review.
+- **FR and DE: machine translation is allowed, and merging approves
+  it.** Anyone may produce FR and DE copy with Claude, DeepL, Google
+  Translate or any other tool. Merging the PR is the approval of the
+  translation: no separate native-speaker sign-off is needed before it
+  ships. The PR body says which strings are machine translations, so the
+  person merging knows what they are approving. The `status: beta` ribbon
+  is unchanged ("the English version is authoritative") and is not tied
+  to a review. Dropping it from a page stays a maintainer decision
+  (`docs/i18n.md`). The same rule holds on the NetSec site.
 
 ## 2. Pull-request workflow
 
@@ -43,6 +79,18 @@ authoritative for EISS.
   required check or a conflict blocks the merge, which is the
   frozen-branch exception below. Anything else it surfaces (a review
   tweak, a refinement) still takes a fresh branch and a fresh PR.
+- **In a cloud session** (claude.ai/code) the rules are the same and
+  the tools differ. `gh` works for search only, and there is no desktop
+  app. Work on the `claude/...` branch the session names, created from
+  freshly fetched `origin/master` before the first edit. Open the PR
+  with the GitHub connector's `create_pull_request`, set its milestone
+  with `issue_write` (method `update`, the PR number, the milestone
+  number), arm auto-merge with `enable_pr_auto_merge` (`SQUASH`), and
+  use `subscribe_pr_activity` for Auto-fix. Issues go through
+  `issue_write` with `milestone`. Search with
+  `gh api -X GET search/issues` or `search/code`. `add_repo` attaches
+  another repository. The full table is in
+  `docs/repositories-and-workflow.md`.
 - **Carve-out: visual changes need preview review.** When the PR
   changes something a human will see (layout shifts, new components,
   copy that's visible above the fold, anything affecting brand
@@ -343,7 +391,7 @@ is being edited anyway.
   results, or a known-limitations list.
 - FR / DE drift checker (`scripts/check-i18n-drift.py`) runs in CI on
   every HTML-touching PR. When it flags drift, refresh the
-  translation manually before merging.
+  translation (by hand or by machine, §1) before merging.
 
 ## 10. Milestone tagging
 
@@ -590,8 +638,8 @@ Eleventy sites it reads:
 Repo-specific "when NOT to be lazy": a green `npx @11ty/eleventy` is not
 "it works" (§14). The ponytail "one runnable check" here is a render plus a
 computed-style read at desktop and phone width, not a screenshot. And FR/DE
-drafts are not a shortcut past review (§1): they ship as beta and a reader
-of the language checks them. Mark deliberate simplifications with a `ponytail:` comment
+copy goes through a PR like any other change: merging it approves the
+translation (§1). Mark deliberate simplifications with a `ponytail:` comment
 (fits the existing one-line `# label` comment style).
 
 ### Delegate reads, keep the decisions
