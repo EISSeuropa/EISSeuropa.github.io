@@ -92,12 +92,12 @@ needs nothing.
 
 ## 2. Create the per-year page
 
-Copy `src/2027.njk` to `src/<YEAR>.njk` (and its FR/DE siblings) and:
+Copy `src/2026.njk` to `src/<YEAR>.njk` (and its FR/DE siblings) and:
 
 - Replace city / venue / partner-logo references in the prose. The
   conference dates are not typed: the front-matter `description` and the
-  page read `conferences.byYear[year].dates.<lang>` from the entry above, so
-  change `'2027'` in `eleventyComputed` to the new year
+  page should read `conferences.byYear[year].dates.<lang>` from the entry
+  above, as `src/2027.njk` does in its `eleventyComputed` block
 - Swap the host institution in `homePartners` in `src/_data/site.js` for
   the new one (name in EN / FR / DE, URL, logo). The homepage partner
   strip under the host-city timeline names the next conference's partners.
