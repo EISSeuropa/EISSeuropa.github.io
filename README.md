@@ -127,6 +127,7 @@ The format of `[Unreleased]` notes adapts to the release tier:
 
 - **Patch releases** ship the `### Index of changes` block only, with no lede and no themed sections. People reading patch notes care about specifics, not narrative.
 - **Minor / major releases** ship the full hybrid: a one- to three-sentence lede, two-to-four themed sub-sections, and the index of changes.
+- A `### For the team` section after the lede gives staff, the board and volunteers two to four plain sentences on what changes for them. The internal dashboard's release card and the release email show it. `scripts/release.sh` asks for it on a minor or major release.
 
 If you can't write a meaningful lede about a release, it's a patch. The format mirrors the actual significance.
 

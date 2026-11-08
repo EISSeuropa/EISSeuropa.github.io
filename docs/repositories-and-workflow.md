@@ -52,6 +52,8 @@ change both, or keep the old shape.
 | EISS | `src/_data/cohorts.json` and `src/_data/board.json` on `master` | workspace-ops `intern-lifecycle`: cohort dates and the Website check column |
 | workspace-ops (`intern-lifecycle`) | A row in the board entries Form's response sheet | EISS `sync-board.yml` (Mondays): the PR that updates `board.json` |
 | EISS | `roleEndDate` in `board.json` | EISS `offboarding.yml`: the website-side leaver issue |
+| NetSec | Its latest GitHub Release (`releases/latest`): the name `vX.Y.Z — Title`, the body's `### For the team` section or its lede | EISS `src/_data/latestReleases.js`: the release card on the internal dashboard |
+| EISS and NetSec | The `releases.atom` feed of each repository, and the `For the team` heading in a release body | workspace-ops `release-notes`: the release email to staff@, board@ and internship@ |
 | Indico (`indico.eiss-europa.com`, hosted apart from all three) | Category exports | `sync-indico.py` in both sites. Neither repository changes Indico |
 
 The name key that joins people across the two sites is `name_key()`,
