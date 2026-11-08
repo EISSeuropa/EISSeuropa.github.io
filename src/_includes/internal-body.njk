@@ -468,7 +468,7 @@
       {% set N = d.netsec %}
       {% set views = ([netsecReport | netsecAll] if netsecReport.length > 1 else []).concat(netsecReport) %}
       {% set WG = ["#0973de", "#10b981", "#8457ea", "#f59e0b"] %}
-      <section class="apps-panel apps-netsec" id="netsec" data-apps-panel aria-label="{{ N.tab }}">
+      <section class="apps-panel apps-netsec" id="netsec" data-apps-panel aria-label="{{ N.tab }}" data-apps-clip-more="{{ N.showMore }}" data-apps-clip-less="{{ N.showFewer }}">
         <p class="apps-netsec-pick" data-apps-netsec-pick hidden><label for="apps-netsec-month">{{ N.month }}</label>
           <select id="apps-netsec-month">{% for R in views %}{% if R.all %}<option value="all">{{ N.allMonths }}</option><optgroup label="{{ N.byMonth }}">{% else %}<option value="{{ R.start | truncate(7, true, "") }}"{% if R.start == netsecReport[0].start %} selected{% endif %}>{{ R.start | monthYear(lang) }}</option>{% endif %}{% endfor %}{% if views[0].all %}</optgroup>{% endif %}</select></p>
         {% for R in views %}{% set W = R.website %}{% set net = R.directory.to - R.directory.from %}{% set nc = R.coreGroup.length %}
@@ -516,7 +516,7 @@
               {% for key in ["joined", "left"] %}{% if R.directory[key].length %}
                 <details class="apps-netsec-more"{% if key == "joined" and not R.all %} open{% endif %}>
                   <summary>{{ N.profileLists[key] }} ({{ R.directory[key].length }})</summary>
-                  <ul class="apps-netsec-list" role="list">
+                  <ul class="apps-netsec-list" role="list" data-apps-clip>
                     {% for m in R.directory[key] %}<li><a href="{{ m.url }}">{{ m.name }}</a><span>{{ m.affiliation }} ({{ m.country }})</span></li>{% endfor %}
                   </ul>
                 </details>
@@ -535,16 +535,18 @@
               <p class="apps-netsec-muted">{{ N.lines | replace("{add}", W.add | thousands(lang)) | replace("{del}", W.del | thousands(lang)) }}</p>
               {% for key in ["majorFeatures", "notableFixes"] %}{% if W[key].length %}
                 <h4 class="apps-netsec-sub">{{ N[key] }}</h4>
-                <ul class="apps-netsec-list" role="list">
+                <ul class="apps-netsec-list" role="list" data-apps-clip>
                   {% for x in W[key] %}<li>{% if x.url %}<a href="{{ x.url }}">{{ x.title }}</a>{% else %}{{ x.title }}{% endif %}<span>{% if x.pr %}#{{ x.pr }}, {% endif %}+{{ x.add | thousands(lang) }}/−{{ x.del | thousands(lang) }}</span></li>{% endfor %}
                 </ul>
               {% endif %}{% endfor %}
               <h4 class="apps-netsec-sub">{{ N.contributors }}</h4>
-              <ul class="apps-netsec-list" role="list">
+              <ul class="apps-netsec-list" role="list" data-apps-clip>
                 {% for c in W.contributors %}<li>{{ c.who }}<span>{{ N.commits[0 if c.commits == 1 else 1] | replace("{n}", c.commits) }}</span></li>{% endfor %}
               </ul>
             </div>
 
+            {# Leadership with the working groups under it, in one column. #}
+            <div class="apps-netsec-stack">
             <div class="apps-status-card">
               {{ SRC | replace("@", "") | safe }}
               <h3 class="apps-status-title apps-netsec-h">{{ N.leadership }}</h3>
@@ -576,6 +578,7 @@
                   {% endif %}{% endfor %}
                 </div>
               {% endfor %}
+            </div>
             </div>
           </div>
           <p class="apps-note">{{ N.period | replace("{start}", R.start | newsDate(lang)) | replace("{end}", R.end | newsDate(lang)) | replace("{a}", R.commits[0]) | replace("{b}", R.commits[1]) }}</p>
@@ -1270,6 +1273,32 @@
       });
       pick.hidden = months.length < 2;
       show();
+    })();
+    // The NetSec report's long lists show their first CLIP items and a button
+    // for the rest. Without this script every list shows in full.
+    (function () {
+      var sec = document.getElementById("netsec");
+      if (!sec) return;
+      var CLIP = 6, more = sec.getAttribute("data-apps-clip-more"), less = sec.getAttribute("data-apps-clip-less");
+      [].forEach.call(sec.querySelectorAll("[data-apps-clip]"), function (ul, i) {
+        var n = ul.children.length;
+        if (n <= CLIP + 1) return;
+        ul.id = "apps-netsec-clip-" + i;
+        ul.classList.add("is-clipped");
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "apps-netsec-toggle";
+        b.setAttribute("aria-controls", ul.id);
+        b.setAttribute("aria-expanded", "false");
+        b.textContent = more.replace("{n}", n);
+        b.addEventListener("click", function () {
+          var open = !ul.classList.toggle("is-clipped");
+          b.setAttribute("aria-expanded", String(open));
+          b.textContent = open ? less : more.replace("{n}", n);
+          if (!open && b.getBoundingClientRect().top < 0) b.scrollIntoView({ block: "center" });
+        });
+        ul.after(b);
+      });
     })();
     // A block's light turns live once its figures come from the live load.
     function markLive(key) {

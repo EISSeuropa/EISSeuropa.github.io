@@ -8,7 +8,7 @@ const site = require("./site.js");
 const REPO = "https://github.com/EISSeuropa/EISSeuropa.github.io";
 // The dashboard's own version, shown at the foot of the page. Semantic
 // versioning, rules and history in docs/internal-dashboard.md.
-const VERSION = "2.30.0";
+const VERSION = "2.31.0";
 const everyone = ["staff", "management", "board", "volunteer"];
 const today = new Date().toISOString().slice(0, 10);
 
