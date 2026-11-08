@@ -1,4 +1,7 @@
 {
+  "permissions": {
+    "allow": ["mcp__claude-code-remote__add_repo"]
+  },
   "hooks": {
     "PreToolUse": [
       {
@@ -14,5 +17,5 @@
       }
     ]
   },
-  "_doc": "Committed, shared Claude Code settings for the EISS repo. One PreToolUse guard, failing open: guard-bulk-read.py refuses a whole-file read of anything over 800 lines and names the targeted alternative, so archiveProgrammes.js (10,463 lines) and site.css (8,633) stop landing in the context whole. Ported from NetSec, where the hook and its reasoning live in EISSeuropa/netsec.github.io#1794. Personal, machine-local overrides belong in the gitignored .claude/settings.local.json."
+  "_doc": "Committed, shared Claude Code settings for the EISS repo. One permission rule: cloud sessions may attach another EISS repository with add_repo (needed for workspace-ops, CLAUDE.md §0). One PreToolUse guard, failing open: guard-bulk-read.py refuses a whole-file read of anything over 800 lines and names the targeted alternative, so archiveProgrammes.js (10,463 lines) and site.css (8,633) stop landing in the context whole. Ported from NetSec, where the hook and its reasoning live in EISSeuropa/netsec.github.io#1794. Personal, machine-local overrides belong in the gitignored .claude/settings.local.json."
 }
