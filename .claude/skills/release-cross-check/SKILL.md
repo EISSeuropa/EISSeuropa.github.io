@@ -1,12 +1,12 @@
 ---
 name: release-cross-check
-description: "Release-time five-point cross-check for EISS: the roadmap, sitemap, translations, repo docs and Anthology abstract-coverage surfaces to verify before cutting a minor or major release, plus milestone hygiene. Use when cutting a release, running scripts/release.sh, or asked what to check before a release. Skip for patch releases."
+description: "Release-time six-point cross-check for EISS: the roadmap, sitemap, translations, repo docs, Anthology abstract-coverage and team-announcement surfaces (the For the team note, the dashboard release card, the EISS release notes email, the news item) to verify before cutting a minor or major release, plus milestone hygiene. Use when cutting a release, running scripts/release.sh, or asked what to check before a release. Skip for patch releases."
 ---
 
-# 5. Release-time five-point cross-check (minor / major only)
+# 5. Release-time six-point cross-check (minor / major only)
 
 Every **minor (`X.Y.0` where `Y > prev`) or major (`X.0.0`)
-release** should trigger a deliberate check across five surfaces
+release** should trigger a deliberate check across six surfaces
 before `scripts/release.sh` runs. Skip the cross-check on **patch
 releases** (`X.Y.Z` where `Z > 0`); they're scoped to small fixes
 and the overhead isn't justified. The release script's
@@ -114,7 +114,61 @@ same release. If yes but too big to fit, open a tracking issue
   (confirmed by `scripts/probe-indico-subcontribs.py`), so those paper
   abstracts must be hand-added here from the organisers' files.
 
-### 6. Milestone hygiene (gate, not a surface)
+### 6. Announcements (the "For the team" note and where it goes)
+
+The release notes reach people beyond GitHub. Four places read them,
+and the first three need nothing done by hand once the release exists:
+
+- **The release card on `/internal.html`**, built by
+  `src/_data/latestReleases.js` from the newest released section of
+  `CHANGELOG.md`. It shows for 14 days after a minor or major release,
+  or a patch whose notes have `### For the team`. It shows that section,
+  or the lede when there is none, at most three paragraphs, with links
+  reduced to their text.
+- **The release email**, sent by the "EISS release notes" Apps Script
+  project (`workspace-ops/release-notes`, admin@, daily early-morning
+  trigger). It reads `releases.atom`, so it goes out the morning after
+  the GitHub Release is published, from "EISS releases" with no reply
+  address. Subject: `EISS website vX.Y.Z: <title>`. A minor or major
+  goes to staff@, internship@ and board@, a patch with "For the team" to
+  staff@ and internship@, a patch without it to nobody. A release more
+  than 14 days old is never sent, and each release is sent once. Its run
+  stamps "Release notes" in the "EISS system status" Sheet.
+- **The NetSec card** on the same dashboard, from NetSec's latest GitHub
+  Release. A NetSec release follows the same rule and the same email.
+- **A news item**, by hand. After a minor, `release.sh` asks whether the
+  release brings a feature visitors can see. If it does, file the News
+  item form with Newsletter ticked (`docs/news-publishing.md`): it goes
+  to the site, the feed, LinkedIn and Bluesky after the `social`
+  approval, and the next newsletter. The What's New banner is a separate
+  decision (the `whats-new-banner` skill).
+
+Before running `release.sh`, check:
+
+- `[Unreleased]` has `### For the team` after the lede, with its heading
+  spelt exactly that way, in English. Both readers match the heading
+  text.
+- The note reads on its own under the release title, as the email and
+  the card show nothing else. Whatever the title names should appear in
+  the note. Write it for staff, the board and volunteers, who are not
+  developers: plain sentences, no file paths, no issue numbers. Two to
+  four sentences in one paragraph.
+- The note says nothing that board@ should not read, since a minor goes
+  to the board.
+- The title is final. It is the card's heading, the email subject and
+  the GitHub Release name, and none of them changes after the email has
+  gone.
+
+To preview both, promote a copy of `CHANGELOG.md` the way `release.sh`
+does, then feed it to `card()` in `latestReleases.js` and the rendered
+section to `noteOf_()` and `message_()` in `release-notes/Code.gs`.
+`node test.mjs` in that folder covers the parser.
+
+After the release, check the next morning that the email arrived and
+that "Release notes" in the status Sheet is green. The card appears on
+`/internal.html` with the deploy of the release commit.
+
+### 7. Milestone hygiene (gate, not a surface)
 
 - Every issue closed by this release carries the matching milestone.
 - Every issue still open and tagged with a milestone that just shipped

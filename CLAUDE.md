@@ -661,7 +661,7 @@ and report, never to run git or write.
 Four task-specific procedures live as skills rather than in this file, so they
 load when invoked instead of costing context every session. Invoke by name.
 
-- `release-cross-check` — the five-point cross-check before cutting a minor or
+- `release-cross-check` — the six-point cross-check before cutting a minor or
   major release, plus milestone hygiene (was §5).
 - `whats-new-banner` — when to activate the site-wide announcement banner, and
   how (was §12).

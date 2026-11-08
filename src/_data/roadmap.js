@@ -225,9 +225,9 @@ const roadmap = {
           milestone: "v2.29.0",
           when: { en: "8 December 2026 · v2.29.0", fr: "8 décembre 2026 · v2.29.0", de: "8. Dezember 2026 · v2.29.0" },
           title: {
-            en: "Belvedere, and a dashboard for the team",
-            fr: "Belvédère, et un tableau de bord pour l’équipe",
-            de: "Belvedere und ein Dashboard für das Team",
+            en: "Introducing Belvedere, the EISS blog",
+            fr: "Présentation de Belvédère, le blog de l’EISS",
+            de: "Belvedere, der EISS-Blog, stellt sich vor",
           },
           desc: {
             en: "Belvedere, the EISS blog, in three languages, a home page that leads with the next conference and shows the film, a paper of the day and the host cities, an accessibility statement that declares full conformance with the French RGAA standard, and the page for ESSC 2027 in Belgrade. The internal dashboard gives staff, the board and volunteers their apps, guides, dates and the state of the websites, in three languages.",

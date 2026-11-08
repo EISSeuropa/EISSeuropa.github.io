@@ -9,9 +9,10 @@ built HTML, and `check-a11y-browser.mjs` runs axe-core in headless Chrome,
 which is the only check here that sees layout, computed colour, a phone
 viewport and scripted markup (#1626).
 
-Pair this with the release-time five-point cross-check, which now lives in
+Pair this with the release-time six-point cross-check, which now lives in
 the `release-cross-check` skill rather than in CLAUDE.md (roadmap, sitemap,
-translations, repo docs, Anthology abstract coverage). This doc is the
+translations, repo docs, Anthology abstract coverage, team announcements).
+This doc is the
 *mechanical* gate and that one is the *editorial* gate.
 
 ## Phase 0 — automation (run from the repo root)

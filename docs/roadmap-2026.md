@@ -55,7 +55,7 @@ other way round, so this is where a new release first appears.
 | v2.26.0 | 25 Jun 2026 | **Shipped** | Introducing the Anthology |
 | v2.27.0 | 19 Aug 2026 | **Shipped** | The Anthology Atlas and the recovered back catalogue |
 | v2.28.0 | 29 Aug 2026 | **Shipped** | A usable Atlas, and a citable theme vocabulary |
-| v2.29.0 | 8 Nov 2026 | **Shipped** | Belvedere, and a dashboard for the team |
+| v2.29.0 | 8 Nov 2026 | **Shipped** | Introducing Belvedere, the EISS blog |
 | v2.30.0 | 30 Apr 2027 | Planned | The 2027 programme, and the corpus as open data |
 | v2.31.0 | 25 Jun 2027 | Planned | ESSC 2027, and the archive rollover after it |
 
@@ -289,7 +289,7 @@ public roadmap. And 102 orphaned Mobirise-era images, about 25 MB, came
 out of the repository
 ([#471](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/471)).
 
-### v2.29.0 — Belvedere, and a dashboard for the team · cut early, 8 November 2026
+### v2.29.0 — Introducing Belvedere, the EISS blog · cut early, 8 November 2026
 
 On 25 October the eight corpus and open-science issues (#1222 to #1251)
 moved to v2.30.0, and the public card was renamed in
@@ -299,9 +299,8 @@ On 8 November the
 held no open issues against 292 closed, so the release was cut a month
 ahead of its 8 December due date. The call for papers
 ([#1526](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1526))
-moved to v2.30.0, and the release is named for what it shipped:
-Belvedere, and the internal dashboard that took most of the work since
-October.
+moved to v2.30.0, and the release is named for Belvedere, the EISS
+blog. The internal dashboard took most of the work since October.
 
 - **Belvedere** — the EISS blog, with its first post in English, French
   and German ([#1740](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1740),

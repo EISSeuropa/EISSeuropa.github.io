@@ -108,19 +108,19 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### For the team
 
-The internal dashboard at internal.eiss-europa.com is the place to start: apps, guides, the joining steps, the conference timeline and the state of both websites, in English, French and German, for each role. Dates added to the "EISS dates" Google Calendar appear on it without a change to the website. A news item filed through the "News item" form on GitHub goes to the site, the feed and the newsletter, and to LinkedIn and Bluesky once a reviewer approves it. Daily tasks live in the Tasks tabs of the Google Chat spaces.
-
-### The internal dashboard
-
-`/internal.html`, also reached at `internal.eiss-europa.com`, is an apps dashboard for staff, management, board members and volunteers, modelled on Google Workspace's "Your apps" page. A first visit asks for the reader's role and walks a newcomer through joining EISS one step at a time, in the order the accounts are made. The page opens on a conference timeline: a stepper of the conference year, then tiles for the coming deadlines, internship cohorts, release dates and NetSec events, read from the "EISS dates" Google Calendar ([#2028](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2028)).
-
-Its tabs hold the apps, the guides, the development status of the two websites, the status of every automation and of the GitHub and Google services EISS relies on, and a monthly NetSec report with an "All months" view. A "Recent activity" box rolls through the latest closed and open issues and the main features and fixes across both websites. The dashboard is in all three languages, carries its own version number, and shows a card for 14 days after each EISS or NetSec website release. Annual report drafts at `/internal/report-YYYY.html` set each year's figures beside the year before's.
+Belvedere, the EISS blog, is live in English, French and German, and volunteers can write a signed post for it on a topic of their choice. The internal dashboard at internal.eiss-europa.com is the place to start for each role: apps, guides, the joining steps, the conference timeline and the state of both websites, with dates read from the "EISS dates" Google Calendar. A news item filed through the "News item" form on GitHub goes to the site, the feed and the newsletter, and to LinkedIn and Bluesky once a reviewer approves it. Daily tasks live in the Tasks tabs of the Google Chat spaces.
 
 ### Belvedere, and ESSC 2027 in Belgrade
 
 Belvedere, the EISS blog, opened with a post introducing the blog and its first writers, in English, French and German, with its own mark and share cards ([#1740](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1740)). Posts can carry captioned illustrations. Each new news item is posted to LinkedIn and Bluesky after a reviewer approves the run ([#2056](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2056)).
 
 The tenth European Security Studies Conference has its page at `/2027`: 10 and 11 June 2027 at the University of Belgrade, Faculty of Political Science, with the NetSec Training School alongside from 8 to 11 June, the two conference chairs and the organisers' logos. The NetSec Summer School page opens with the call for applicants. `/internship.html` is about half its former length and lists the three volunteer cohorts of 2027 with their application windows. The 2027 call for papers itself is tracked for v2.30.0 ([#1526](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1526)).
+
+### The internal dashboard
+
+`/internal.html`, also reached at `internal.eiss-europa.com`, is an apps dashboard for staff, management, board members and volunteers, modelled on Google Workspace's "Your apps" page. A first visit asks for the reader's role and walks a newcomer through joining EISS one step at a time, in the order the accounts are made. The page opens on a conference timeline: a stepper of the conference year, then tiles for the coming deadlines, internship cohorts, release dates and NetSec events, read from the "EISS dates" Google Calendar ([#2028](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2028)).
+
+Its tabs hold the apps, the guides, the development status of the two websites, the status of every automation and of the GitHub and Google services EISS relies on, and a monthly NetSec report with an "All months" view. A "Recent activity" box rolls through the latest closed and open issues and the main features and fixes across both websites. The dashboard is in all three languages, carries its own version number, and shows a card for 14 days after each EISS or NetSec website release. Annual report drafts at `/internal/report-YYYY.html` set each year's figures beside the year before's.
 
 ### The home page and the Anthology
 
