@@ -144,7 +144,7 @@ try:
     mod.parse_issue("x", MINIMAL.replace("EISS\n", "NetSec\n", 1), TODAY)
     raise AssertionError("a NetSec item must stop the run")
 except SystemExit as e:
-    assert "netsec.github.io" in str(e)
+    assert str(e).startswith("news-from-issue: a NetSec item belongs in")
 
 # End to end on a copy of the repo layout: appends once, then is idempotent.
 with tempfile.TemporaryDirectory() as tmp:
