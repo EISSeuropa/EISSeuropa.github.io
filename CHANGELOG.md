@@ -99,6 +99,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
+- The long lists in the NetSec report tab of the internal dashboard (new and removed Directory profiles, the website repository's main features, notable fixes and contributors) show their first six items and a "Show all" button that opens the rest and folds it back.
 - The internal dashboard has a "Board drive" tile for board members and management, which opens the EISS Board shared drive, and the board view lists "Writing to board@" under Guides ([#1987](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1987)).
 - Each tile under "Timeline" on the internal dashboard opens the resource it is about: the call-for-papers or ESSC 2027 folder on Drive, Indico for the proposal, decision and programme dates, the GitHub milestone page for a release due date, and the ESSC 2027 page for the conference.
 
@@ -164,6 +165,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- The "Timeline" heading on the internal dashboard has the same space above it as the other sections, and the NetSec report tab keeps the working groups under Leadership in one column at every width.
 - The Systems light on the internal dashboard reads the newest deploy run. It read the run GitHub listed first, which can be an older failure after a re-run passed, so the dashboard stayed on Critical.
 - A red status dot under Platform status on the internal dashboard no longer glows green when the live figures arrive. The glow is kept for the green dot.
 - The NetSec months on the internal dashboard are computed again. Each month's line counts fired about 140 GitHub API calls at once, and GitHub refuses a burst that size with 403 (its secondary rate limit), so every month failed even after the hourly allowance reset. The calls now go ten at a time (#2047).

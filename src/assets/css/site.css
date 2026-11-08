@@ -879,7 +879,7 @@ h4 { font-size: var(--fs-lg); }
 .apps-phase-links { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
 /* The conference timeline: the "Now" card, then the coming dates as calendar
    tiles in one row that scrolls sideways. */
-.apps-conference { margin: 0 0 var(--space-6); }
+.apps-conference { margin: var(--space-6) 0; }
 .apps-conference > .apps-heading { margin-bottom: var(--space-3); }
 .apps-conference .apps-phase { margin-bottom: var(--space-3); }
 /* The conference's pace (#2039): this edition's bar against the previous
@@ -1052,6 +1052,12 @@ a.apps-agenda-link:hover .apps-agenda-label { text-decoration: underline; }
 .apps-netsec-list span { display: block; color: var(--text-muted); font-size: 0.8125rem; }
 .apps-netsec-more { margin-top: var(--space-3); }
 .apps-netsec-more summary { cursor: pointer; min-height: 24px; font-weight: 600; }
+/* Leadership with the working groups under it, as one grid column. */
+.apps-netsec-stack { display: grid; gap: var(--space-4); }
+/* A long list shows its first six items until its button opens the rest. */
+.apps-netsec-list.is-clipped > li:nth-child(n+7) { display: none; }
+.apps-netsec-toggle { min-height: 24px; margin-top: var(--space-2); padding: 0; border: 0; background: none; color: var(--apps-netsec-ink); font: inherit; font-size: 0.875rem; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+.apps-netsec-toggle:hover { text-decoration-thickness: 2px; }
 /* The since-launch joiners chart. Bars: <= 24px, 4px rounded tops, 2px floor
    for empty months, one series so no legend, first peak and latest labelled. */
 .apps-netsec-chart { margin: 0 0 var(--space-4); padding: var(--space-5); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elev); box-shadow: var(--shadow-1); }
