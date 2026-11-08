@@ -1,0 +1,12 @@
+{
+  "_documentation": "Ledger for scripts/social-post.py (#2056). `posted` holds the key (news::<date>::<slug>) of every news.json item already posted to LinkedIn and Bluesky, so re-runs publish nothing. The pipeline appends here after a post. Seeded on 8 November 2026 with every item then in news.json, which had been posted by hand or not at all. Edit by hand only to re-post an item on purpose.",
+  "posted": [
+    "news::2026-10-06::essc-2027-comes-to-belgrade-with-the-netsec-training-school-alongside",
+    "news::2026-09-29::three-new-volunteers-and-a-blog-called-belvedere",
+    "news::2026-07-13::new-leadership-chiara-ruffa-and-moritz-weiss-appointed-eiss-co-directors",
+    "news::2026-06-12::the-european-security-studies-conference-closes-in-stockholm",
+    "news::2026-06-12::two-papers-win-the-2026-european-security-studies-prize",
+    "news::2026-06-09::the-inaugural-netsec-early-career-scholars-summer-school",
+    "news::2025-06-13::eiss-2025-the-annual-conference-in-thessaloniki"
+  ]
+}

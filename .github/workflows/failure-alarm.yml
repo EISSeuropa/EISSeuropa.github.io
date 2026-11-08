@@ -41,7 +41,8 @@ on:
       - Anniversary social queue
       - Offboarding prompt
       - Campaign metrics
-      - Feed to Bluesky
+      - Post news to LinkedIn and Bluesky
+      - Check LinkedIn API version
     types: [completed]
 
 permissions:
