@@ -164,7 +164,7 @@ successor inherits through the handover in section 4.
   `node scripts/test-board-highlights.js` checks this with `fetch` stubbed. Latest audits is the five newest entries of
   `src/_data/audits.json`, kept by hand: add a line when an audit lands.
   The private `workspace-ops` repo stays out, since the page is public.
-- **Version.** The foot of the page reads "Internal dashboard v2.29.0", from `VERSION` in `src/_data/dashboard.js`. The rules for bumping it and the history are in [internal-dashboard.md](internal-dashboard.md).
+- **Version.** The foot of the page reads "Internal dashboard v2.29.1", from `VERSION` in `src/_data/dashboard.js`. The rules for bumping it and the history are in [internal-dashboard.md](internal-dashboard.md).
 - **Timeline.** The first section under the strip. It holds the
   "Conference timeline" card with its stepper (below; its note opens with
   "Now:" and the current stage), then up to 20 calendar tiles for the
@@ -236,6 +236,9 @@ successor inherits through the handover in section 4.
   `https://calendar.google.com/calendar/ical/c_776a1a712168ececc884b47ac1ac83aec55f3f823eb991444774844b433c09f4%40group.calendar.google.com/public/basic.ics`.
   "EISS internal deadlines" is read by team@ and board@ and edited by
   staff@ and management@, and is not shared with the whole domain.
+  A date's French and German wording goes in `label_fr`, `stage_fr` and
+  `step_fr` lines (and the same with `_de`), which the FR and DE pages show
+  in place of the English. A line left out falls back to the English.
   A date that opens a stage of the year also carries `stage` (its name on the
   "Now" card), `step` (its short name on the stepper) and `links`. The stage
   runs until the next date that opens one, and the conference stage comes
