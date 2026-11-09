@@ -10,7 +10,13 @@
         "title": "Security over diplomacy: the rising role of the Ministry of defense in the French Arctic Policy",
         "year": 2026,
         "journal": "The Polar Journal",
-        "doi": "https://doi.org/10.1080/2154896x.2025.2603866"
+        "doi": "https://doi.org/10.1080/2154896X.2025.2603866"
+      },
+      {
+        "title": "On the use of numbers in foreign policy : from datafication to datafiction. Lessons from the French and British Arctic policies",
+        "year": 2025,
+        "journal": null,
+        "doi": "https://doi.org/10.70675/91232709z1984z40a2za69ez0711091483dc"
       },
       {
         "title": "Quantifying International Conflicts",
@@ -29,12 +35,6 @@
         "year": 2023,
         "journal": "Cités : Philosophie, politique, Histoire",
         "doi": "https://doi.org/10.3917/cite.095.0083"
-      },
-      {
-        "title": "Diplomats, Soldiers, and Armed Conflict Databases: Another French Exception?",
-        "year": 2023,
-        "journal": "Global Studies Quarterly",
-        "doi": "https://doi.org/10.1093/isagsq/ksad027"
       }
     ]
   },
@@ -45,6 +45,12 @@
     "surname": "Calcara",
     "letter": "C",
     "works": [
+      {
+        "title": "Is this the end of armaments cooperation as we know it? Technological change and the rise of software",
+        "year": 2026,
+        "journal": "International Affairs",
+        "doi": "https://doi.org/10.1093/ia/iiag157"
+      },
       {
         "title": "Crossing the Valley of Death: Why Some EU Technology Initiatives Fail Before Operationalisation",
         "year": 2026,
@@ -68,12 +74,6 @@
         "year": 2025,
         "journal": null,
         "doi": null
-      },
-      {
-        "title": "Unpacking the target state response to wedging and binding strategies: The case of 5G",
-        "year": 2025,
-        "journal": "Contemporary Security Policy",
-        "doi": "https://doi.org/10.1080/13523260.2025.2553654"
       }
     ]
   },
@@ -378,6 +378,12 @@
     "surname": "Meijer",
     "letter": "M",
     "works": [
+      {
+        "title": "The Origins of War and Peace in the Human Species",
+        "year": 2026,
+        "journal": "Cambridge University Press",
+        "doi": "https://doi.org/10.1017/9781009714488"
+      },
       {
         "title": "The evolutionary roots of war and peace",
         "year": 2025,
