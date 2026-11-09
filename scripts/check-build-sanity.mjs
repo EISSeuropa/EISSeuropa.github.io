@@ -769,16 +769,17 @@ function checkCorpusCitationMeta() {
 // ---------------------------------------------------------------------------
 // npm overrides that upstream has made redundant (#1976).
 //
-// package.json pins minimatch under @11ty/recursive-copy to clear
-// GHSA-g3hv-75wg-m249, which the copier's own ^3.1.5 range could not reach.
-// An override outliving its reason holds back whatever upstream picks next,
-// so this fails once the parent's declared range already starts at the
-// patched floor, or once the parent is no longer installed. node_modules
+// Each entry is a parent package, the child the override pins and the
+// patched floor that justified it. An override outliving its reason holds
+// back whatever upstream picks next, so this fails once the parent's
+// declared range already starts at the patched floor, or once the parent
+// no longer depends on the child or is no longer installed. node_modules
 // keeps the parent's original package.json, so its declared range is
 // readable even while the override is active.
-const OVERRIDE_FLOORS = {
-  "@11ty/recursive-copy": { minimatch: "11.0.1" },
-};
+//
+// Empty since @11ty/recursive-copy 4.0.6 (with Eleventy 3.1.8) dropped
+// minimatch, the dependency pinned to clear GHSA-g3hv-75wg-m249.
+const OVERRIDE_FLOORS = {};
 const verTuple = (v) => (v.match(/\d+(?:\.\d+){0,2}/)?.[0] ?? "0").split(".").map(Number);
 const verGte = (a, b) => {
   const [x, y] = [verTuple(a), verTuple(b)];
