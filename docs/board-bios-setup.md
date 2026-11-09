@@ -363,6 +363,36 @@ If a submitter picks a role label that isn't in the table (e.g. you
 forgot Step 2), the script falls back to "Board Member" and logs a
 warning visible in the PR body.
 
+## Adding a new country
+
+Every non-empty `country` in `board.json` needs a flag.
+`scripts/check-board-flags.mjs` runs in the Build sanity job, which is a
+required check, and fails when a country has no alias in
+`src/_data/countryFlags.js` or when a flag code there has no SVG in
+`src/assets/images/flags/` or in the built `_site/` (#1836, #2103). So
+when a submitter enters a country the site has not seen before, or
+misspells one, the weekly `board-sync/auto` PR goes red and cannot
+merge until it is fixed.
+
+The CI log names the person and the country. To fix it:
+
+1. For a misspelling, ask the submitter to correct their Form entry,
+   or correct the cell in the Sheet, and re-run the workflow.
+2. For a real new country, add its lowercase name (and any common
+   variants) to `ALIASES` in `src/_data/countryFlags.js`, mapped to
+   the ISO 3166-1 alpha-2 code.
+3. If the code is new, add `<code>.svg` to `src/assets/images/flags/`
+   from [HatScripts/circle-flags](https://github.com/HatScripts/circle-flags)
+   (MIT).
+4. Open a small PR. Once it merges, update the sync PR's branch so
+   its checks re-run.
+
+Check it locally with `npm run build && node scripts/check-board-flags.mjs`.
+The lookup matches the templates (lowercase, trimmed), so case and
+surrounding spaces do not matter. An empty country is allowed and shows
+no flag. Removing an SVG also means removing every alias that points at
+its code, since the check covers every code in the table, used or not.
+
 ## Editing or removing a bio
 
 - **Edit the Sheet directly.** The response sheet is just data:
