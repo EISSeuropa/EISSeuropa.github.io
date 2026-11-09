@@ -106,10 +106,12 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- The internal dashboard's header is shorter: a welcome line, and a note asking people to log in only with their EISS account and recommending a dedicated Chrome profile.
 - The staff sign-in menu in the header opens with a reminder to sign in with an eiss-europa.com account, and the internal dashboard says that a Google "request access" page means a personal account is signed in. Board members were requesting access to EISS files from their personal Gmail.
 
 ### Fixed
 
+- The internal dashboard's release figure and its "Next milestones" card move on to v2.30.0. They had stayed at 100% on v2.29.0, whose milestone was still open after the release. A version with its own section in the changelog now counts as released.
 - In the internal dashboard's NetSec report, a Directory card links its profile only while the NetSec directory lists it. A member who left, or whose profile moved after a name change, appears as plain text. The old address of a renamed profile failed the link check.
 - The NetSec report tab and the "Main new features" and "Main bug fixes" rolls on the internal dashboard no longer disappear after a busy day of deploys. Their figures are stored in `src/data/` and refreshed once a day by the roadmap refresh workflow, and a deploy only reads them. Each deploy used to recompute them from the GitHub API, and when the hourly allowance ran out it published empty copies.
 - The NetSec report tab on the internal dashboard shows its Month menu again. Its published months and the board highlights moved from `/internal/` to `/data/`: GitHub Pages sends every `eiss-europa.com/internal/` address to `internal.eiss-europa.com`, so each build found no copy, recomputed every month from the GitHub API, and left out the months the hourly API allowance could not cover.

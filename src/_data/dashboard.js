@@ -10,13 +10,21 @@ const site = require("./site.js");
 const REPO = "https://github.com/EISSeuropa/EISSeuropa.github.io";
 // The dashboard's own version, shown at the foot of the page. Semantic
 // versioning, rules and history in docs/internal-dashboard.md.
-const VERSION = "2.33.3";
+const VERSION = "2.33.4";
 const everyone = ["staff", "management", "board", "volunteer"];
 const today = new Date().toISOString().slice(0, 10);
 
+// A milestone left open after its release (v2.29.0 shipped on 8 November
+// 2026 with its milestone still open) would otherwise stay the "next
+// release" at 100%. A version with its own section in CHANGELOG.md has
+// shipped, whatever GitHub says.
+const released = new Set(
+  [...fs.readFileSync(path.join(__dirname, "../../CHANGELOG.md"), "utf8").matchAll(/^## \[(\d+\.\d+\.\d+)\]/gm)].map((m) => `v${m[1]}`),
+);
+
 // The JSON is ordered by version, so the first open milestone is the next one.
 const open = Object.entries(progress.milestones || {})
-  .filter(([, m]) => m.state === "open")
+  .filter(([title, m]) => m.state === "open" && !released.has(title))
   .map(([title, m]) => ({ title, ...m }));
 const next = open[0];
 const release = next && next.total
