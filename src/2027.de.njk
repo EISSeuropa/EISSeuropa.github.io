@@ -99,6 +99,11 @@ alternates:
   </div>
 </section>
 
+{# The call for papers: switched on by cfp.published in conferences.js,
+   once EISS and COST approve the text (#1526). Until then, the card below. #}
+{% if conferences.byYear[year].cfp.published %}
+{% include "cfp.njk" %}
+{% else %}
 <section class="section-tight" id="call-for-papers" aria-labelledby="cfp-title">
   <div class="container">
     <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
@@ -116,6 +121,7 @@ alternates:
     </article>
   </div>
 </section>
+{% endif %}
 
 <section class="section-tight" id="chairs" aria-labelledby="chairs-title">
   <div class="container">

@@ -16,7 +16,8 @@ alternates:
    for papers and the programme are not out yet, so the page carries no
    programme grid. Travel guidance lives once, on NetSec's ESSC 2027 page
    (#practical), and the venue card links to it rather than copying it.
-   When the call for papers is published, add it here (#1526). When the
+   The call for papers is built (src/_includes/cfp.njk) and waits for
+   cfp.published in conferences.js (#1526). When the
    programme exists, bring back the speaking-chairing, programme-grid and
    programme-pdf includes from /2026, and add a Belgrade hero photo
    (docs/new-conference.md). #}
@@ -105,6 +106,11 @@ alternates:
   </div>
 </section>
 
+{# The call for papers: switched on by cfp.published in conferences.js,
+   once EISS and COST approve the text (#1526). Until then, the card below. #}
+{% if conferences.byYear[year].cfp.published %}
+{% include "cfp.njk" %}
+{% else %}
 <section class="section-tight" id="call-for-papers" aria-labelledby="cfp-title">
   <div class="container">
     <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
@@ -122,6 +128,7 @@ alternates:
     </article>
   </div>
 </section>
+{% endif %}
 
 <section class="section-tight" id="chairs" aria-labelledby="chairs-title">
   <div class="container">
