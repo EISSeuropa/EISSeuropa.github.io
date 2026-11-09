@@ -85,10 +85,12 @@ jobs:
             linkedin-version-check workflow.
           labels: automated
 
-      - name: Arm auto-merge on the pin PR
+      # Merge once the four required checks pass. The "Restrict updates"
+      # ruleset blocks auto-merge, so the owner's PAT merges with --admin
+      # after the checks (scripts/merge-bot-pr.sh, docs/branch-protection.md).
+      - name: Merge once the required checks pass
         if: steps.create-pr.outputs.pull-request-number
         env:
-          GH_TOKEN: ${{ secrets.AUTOPR_TOKEN || secrets.GITHUB_TOKEN }}
-        run: |
-          gh pr merge "${{ steps.create-pr.outputs.pull-request-number }}" \
-            --squash --auto --repo "${{ github.repository }}"
+          GH_TOKEN: ${{ secrets.AUTOPR_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: scripts/merge-bot-pr.sh "${{ steps.create-pr.outputs.pull-request-number }}"

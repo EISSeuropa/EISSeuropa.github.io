@@ -46,25 +46,27 @@ _Closed [#501](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/501)._ 
 - `Verify translations match their English sources` (`i18n-drift.yml`)
 - `Duplicate data keys + empty href/src` (`sanity-check.yml`)
 
-All four run on every `pull_request` with no path filter, so none can fail to report. `strict_required_status_checks_policy` is `false` (see below). Auto-merge now waits for the four to pass before merging.
+All four run on every `pull_request` with no path filter, so none can fail to report. `strict_required_status_checks_policy` is `false` (see below). The bots' merge script waits for the four to pass before merging (see *Restrict updates* below).
 
-**Bot PRs.** The sync bots open and merge their PRs with the `AUTOPR_TOKEN` fine-grained PAT (this repo, contents + pull-requests read/write), so their `pull_request` runs start without an approval. The four required checks run on bot PRs like any other, so a bad sync stops at its PR and never reaches `master`. Auto-merge goes through once they pass, about two minutes after the PR opens. When a required check fails on a `*/auto` branch, the failure alarm opens an issue titled with that branch, since the PR otherwise sits unmerged with nobody watching. If the secret goes missing, the bots fall back to `GITHUB_TOKEN`, whose PRs wait for an approval nobody gives, so their auto-merge would hang. When the PAT expires, the sync workflows fail and the failure alarm assigns an issue.
+**Bot PRs.** The sync bots open and merge their PRs with the `AUTOPR_TOKEN` fine-grained PAT of the owner account (this repo, contents + pull-requests read/write), so their `pull_request` runs start without an approval. The four required checks run on bot PRs like any other, so a bad sync stops at its PR and never reaches `master`. `scripts/merge-bot-pr.sh` waits for the four, then merges with `--admin`, about two minutes after the PR opens. When a required check fails, the script stops and the workflow fails, and on a `*/auto` branch the failure alarm opens an issue titled with that branch. The `--admin` merge needs the owner's PAT: with the secret missing or expired, the merge step fails and the failure alarm assigns an issue.
 
 **Left out on purpose.** Link-check is path-filtered (third-party bandwidth), so it would not report on every PR. CodeQL reports failure when cancelled and neutral on bot PRs.
 
 **Admin bypass.** The Admin role still bypasses the ruleset, so `release.sh` can push the release commit, and an admin can override a stuck check from the merge box. Auto-merge never bypasses: it always waits.
 
+### Restrict updates (live since 9 November 2026)
+
+Ruleset `26861118` has one rule, `update`, on the default branch, with the Admin role as its only bypass. Only bypass actors can update `master`, so a collaborator cannot merge a PR, even with the four checks green. The repository belongs to a personal account, where every collaborator can push and merge and only the owner is admin. A ruleset is the only way to keep merging with the owner.
+
+Auto-merge does not apply the bypass, so an armed PR waits forever with "Cannot update this protected ref" (seen on #2108). Consequences:
+
+- Nobody arms auto-merge. The maintainer merges from the merge box by ticking *Merge without waiting for requirements to be met (bypass rules)*, after the four checks pass. On a PR where auto-merge is armed, disable it first: the box is hidden until then.
+- The bots merge with `scripts/merge-bot-pr.sh`, which waits for the four required checks and then runs `gh pr merge --squash --admin` as the owner. It never merges past a failing or missing check. Its list of four checks must stay in step with ruleset `17259266`.
+- CLAUDE.md §2 forbids `--admin` for people. The bot script is the one exception, because it waits for the checks itself.
+
 ## Who can merge
 
-The `pull_request` rule requires no approval, so anyone with the Write
-role or above can merge their own PR once the four checks pass. From
-November 2026, new collaborators get the Triage role and contribute from
-a fork (`docs/repositories-and-workflow.md`, *Contributing from a
-fork*). Triage cannot push to the repository or merge, so their PRs
-wait for the maintainer. This keeps zero approvals for the maintainer's
-own PRs and the bots, which a required review would block. Collaborators
-who already hold Write keep it until their role is changed in
-**Settings → Collaborators and teams**.
+Only the owner account, through the bypass of ruleset `26861118`, by hand or through the bots' PAT. Collaborators can push branches, open PRs and label issues, but their PRs wait for the maintainer (`docs/repositories-and-workflow.md`, *Collaborators*). Zero required approvals stays: the maintainer's own PRs and the bots would deadlock on a review nobody else can give.
 
 ## Not enabled (and why)
 - **Required reviews / approvals** — would deadlock a solo repo.

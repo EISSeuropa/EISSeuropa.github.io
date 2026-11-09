@@ -13,7 +13,7 @@
 #     verdict to each review-band candidate, when the ANTHROPIC_API_KEY
 #     secret is set. It never writes paperLinks.json — a no-op until the
 #     secret is configured. See docs/publication-matching.md.
-#   - Opens a PR on `publications-sync/auto` and auto-merges it, so the
+#   - Opens a PR on `publications-sync/auto` and merges it once its checks pass, so the
 #     auto-confirmed matches go live and the queue is refreshed.
 #
 # Two tiers (the maintainer's chosen policy)
@@ -157,29 +157,12 @@ jobs:
           gh pr edit "${{ steps.create-pr.outputs.pull-request-number }}" \
             --repo "${{ github.repository }}" --add-label needs-review
 
-      # Auto-merge: publishes the auto-confirmed (high-confidence) matches and
-      # refreshes the queue. CodeQL + build + build-sanity + link-check still
-      # gate it. The review band is plain queue data, not published by this.
-      - name: Arm auto-merge on the PR
+      # Merge once the four required checks pass. The "Restrict updates"
+      # ruleset blocks auto-merge, so the owner's PAT merges with --admin
+      # after the checks (scripts/merge-bot-pr.sh, docs/branch-protection.md).
+      - name: Merge once the required checks pass
         if: steps.create-pr.outputs.pull-request-number
         env:
-          # The PAT, so the merge's push to master starts the deploy (a
-          # GITHUB_TOKEN merge starts nothing). Falls back until it exists.
-          GH_TOKEN: ${{ secrets.AUTOPR_TOKEN || secrets.GITHUB_TOKEN }}
-        run: |
-          pr="${{ steps.create-pr.outputs.pull-request-number }}"
-          repo="${{ github.repository }}"
-          for attempt in 1 2 3 4 5; do
-            if gh pr merge "$pr" --squash --auto --repo "$repo"; then
-              echo "Auto-merge armed (attempt $attempt)."; exit 0
-            fi
-            state=$(gh pr view "$pr" --repo "$repo" --json state,autoMergeRequest \
-              -q '.state + " auto=" + ((.autoMergeRequest != null) | tostring)' || true)
-            echo "Attempt $attempt failed; PR state: $state"
-            case "$state" in
-              MERGED*)    echo "Already merged."; exit 0 ;;
-              *auto=true) echo "Auto-merge already enabled."; exit 0 ;;
-            esac
-            sleep 15
-          done
-          echo "::error::Could not arm auto-merge after 5 attempts."; exit 1
+          GH_TOKEN: ${{ secrets.AUTOPR_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: scripts/merge-bot-pr.sh "${{ steps.create-pr.outputs.pull-request-number }}"

@@ -67,17 +67,17 @@ publishes data another repository uses.
 
 ## 2. Pull-request workflow
 
-- **Auto-merge by default.** Open the PR with `gh pr create`, then arm
-  auto-merge with `gh pr merge --auto --squash`. Four checks are required
-  (#501, `docs/branch-protection.md`), so auto-merge waits for them. Only
-  `gh pr merge --admin` bypasses them: don't. **Exception: PRs from a
-  fork.** Collaborators with the Triage role work from a fork and
-  cannot merge. Their PRs never arm auto-merge and wait for the
-  maintainer (`docs/repositories-and-workflow.md`, *Contributing from a
-  fork*).
+- **Only the maintainer merges.** Open the PR with `gh pr create` and do
+  not arm auto-merge. The "Restrict updates" ruleset (`26861118`) lets
+  only the owner update `master`, and auto-merge never applies that
+  bypass, so an armed PR waits forever and hides the bypass box. The
+  maintainer merges from the merge box with the bypass once the four
+  required checks pass (#501, `docs/branch-protection.md`). Never
+  `gh pr merge --admin` in a session. The one `--admin` is
+  `scripts/merge-bot-pr.sh`, which the bots run after their checks pass.
 - **Turn on Auto-fix for every PR.** Right after `gh pr create` (and
   `bind_pr` if the app has not picked the PR up), switch on the desktop
-  app's Auto-fix with `set_monitor`, whether or not auto-merge is armed.
+  app's Auto-fix with `set_monitor`.
   It wakes the session on CI failures, merge conflicts and review
   comments. A CI or conflict fix goes to the PR's own branch: a failing
   required check or a conflict blocks the merge, which is the
@@ -89,8 +89,8 @@ publishes data another repository uses.
   freshly fetched `origin/master` before the first edit. Open the PR
   with the GitHub connector's `create_pull_request`, set its milestone
   with `issue_write` (method `update`, the PR number, the milestone
-  number), arm auto-merge with `enable_pr_auto_merge` (`SQUASH`), and
-  use `subscribe_pr_activity` for Auto-fix. Issues go through
+  number), do not arm auto-merge, and use `subscribe_pr_activity` for
+  Auto-fix. Issues go through
   `issue_write` with `milestone`. Search with
   `gh api -X GET search/issues` or `search/code`. `add_repo` attaches
   another repository. The full table is in
@@ -98,8 +98,7 @@ publishes data another repository uses.
 - **Carve-out: visual changes need preview review.** When the PR
   changes something a human will see (layout shifts, new components,
   copy that's visible above the fold, anything affecting brand
-  identity), do NOT arm auto-merge. Leave the PR open and ask the
-  maintainer to eyeball the Cloudflare or Netlify deploy preview
+  identity), ask the maintainer to eyeball the Cloudflare or Netlify deploy preview
   before merging. The brand rollout (PRs #154 / #155 / #156) is the
   canonical example of the carve-out done well.
 - **Carve-out: release notes.** When cutting a release via
