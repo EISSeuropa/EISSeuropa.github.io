@@ -1,1 +1,2397 @@
-[]
+[
+  {
+    "version": 1,
+    "start": "2026-10-01",
+    "end": "2026-11-01",
+    "commits": [
+      "4b99a081",
+      "93b009f2"
+    ],
+    "directory": {
+      "from": 98,
+      "to": 122,
+      "joined": [
+        {
+          "name": "Prof. Alexander Evans",
+          "affiliation": "London School of Economics",
+          "country": "United Kingdom",
+          "url": "https://netsec-cost.eu/people/alexander-evans.html"
+        },
+        {
+          "name": "Prof. Ana E. Juncos",
+          "affiliation": "University of Bristol",
+          "country": "United Kingdom",
+          "url": "https://netsec-cost.eu/people/ana-e-juncos.html"
+        },
+        {
+          "name": "Dr Arzu Demirel",
+          "affiliation": "Hacettepe University",
+          "country": "Türkiye",
+          "url": "https://netsec-cost.eu/people/arzu-demirel.html"
+        },
+        {
+          "name": "Dr Céline Rodrigues",
+          "affiliation": "Universidade Portucalense, IPRI-NOVA",
+          "country": "Portugal",
+          "url": "https://netsec-cost.eu/people/celine-rodrigues.html"
+        },
+        {
+          "name": "Dr Constantinos Adamides",
+          "affiliation": "University of Nicosia",
+          "country": "Cyprus",
+          "url": "https://netsec-cost.eu/people/constantinos-adamides.html"
+        },
+        {
+          "name": "Dr Gürkan Gür",
+          "affiliation": "Zurich University of Applied Sciences (ZHAW)",
+          "country": "Switzerland",
+          "url": "https://netsec-cost.eu/people/gurkan-gur.html"
+        },
+        {
+          "name": "Dr Hugo Meijer",
+          "affiliation": "Sciences Po, Paris",
+          "country": "France",
+          "url": "https://netsec-cost.eu/people/hugo-meijer.html"
+        },
+        {
+          "name": "Prof. Iztok Prezelj",
+          "affiliation": "University of Ljubljana",
+          "country": "Slovenia",
+          "url": "https://netsec-cost.eu/people/iztok-prezelj.html"
+        },
+        {
+          "name": "Mr Khalil Talhaoui",
+          "affiliation": "University of Exeter",
+          "country": "United Kingdom",
+          "url": "https://netsec-cost.eu/people/khalil-talhaoui.html"
+        },
+        {
+          "name": "Dr Khaoula Boukir",
+          "affiliation": "Ibn Tofail University",
+          "country": "Morocco",
+          "url": "https://netsec-cost.eu/people/khaoula-boukir.html"
+        },
+        {
+          "name": "Dr Liliana Pasquale",
+          "affiliation": "University College Dublin",
+          "country": "Ireland",
+          "url": "https://netsec-cost.eu/people/liliana-pasquale.html"
+        },
+        {
+          "name": "Mr Lukas Wahden",
+          "affiliation": "Sciences Po Paris (CERI)",
+          "country": "France",
+          "url": "https://netsec-cost.eu/people/lukas-wahden.html"
+        },
+        {
+          "name": "Dr Marcel Berni",
+          "affiliation": "Military Academy at the Swiss Federal Institute of Technology (ETH) in Zurich",
+          "country": "Switzerland",
+          "url": "https://netsec-cost.eu/people/marcel-berni.html"
+        },
+        {
+          "name": "Prof. Marina Henke",
+          "affiliation": "Hertie School",
+          "country": "Germany",
+          "url": "https://netsec-cost.eu/people/marina-henke.html"
+        },
+        {
+          "name": "Ms Nadine Klopf",
+          "affiliation": "Kiel University",
+          "country": "Germany",
+          "url": "https://netsec-cost.eu/people/nadine-klopf.html"
+        },
+        {
+          "name": "Dr Noela Mahmutaj",
+          "affiliation": "University of Tirana",
+          "country": "Albania",
+          "url": "https://netsec-cost.eu/people/noela-mahmutaj.html"
+        },
+        {
+          "name": "Prof. Olivier Schmitt",
+          "affiliation": "Institute for Military Operations, Royal Danish Defence College",
+          "country": "Denmark",
+          "url": "https://netsec-cost.eu/people/olivier-schmitt.html"
+        },
+        {
+          "name": "Prof. Pınar Bilgin",
+          "affiliation": "Bilkent University",
+          "country": "Türkiye",
+          "url": "https://netsec-cost.eu/people/p-nar-bilgin.html"
+        },
+        {
+          "name": "Dr Roie Yellinek",
+          "affiliation": "The Geopolitics Lab",
+          "country": "Israel",
+          "url": "https://netsec-cost.eu/people/roie-yellinek.html"
+        },
+        {
+          "name": "Dr Sandra Cvikić",
+          "affiliation": "Ivo Pilar Institut of Social Sciences, Regional Center Vukovar",
+          "country": "Croatia",
+          "url": "https://netsec-cost.eu/people/sandra-cvikic.html"
+        },
+        {
+          "name": "Prof. Sanne Cornelia J. Verschuren",
+          "affiliation": "Boston University",
+          "country": "United States",
+          "url": "https://netsec-cost.eu/people/sanne-cornelia-j-verschuren.html"
+        },
+        {
+          "name": "Dr Sonja Stojanovic Gajic",
+          "affiliation": "Center for Advanced Studies, the University of Rijeka",
+          "country": "Croatia",
+          "url": "https://netsec-cost.eu/people/sonja-stojanovic-gajic.html"
+        },
+        {
+          "name": "Mr Tawhidur Rahman",
+          "affiliation": "Bangladesh",
+          "country": "Bangladesh",
+          "url": "https://netsec-cost.eu/people/tawhidur-rahman.html"
+        },
+        {
+          "name": "Dr Tim Sweijs",
+          "affiliation": "The Hague Centre for Strategic Studies",
+          "country": "Netherlands",
+          "url": "https://netsec-cost.eu/people/tim-sweijs.html"
+        }
+      ],
+      "left": []
+    },
+    "coreGroup": [
+      {
+        "kind": "appointed",
+        "name": "Dr Arthur Laudrain",
+        "role": "Science Communication Coordinator Co-Leader"
+      },
+      {
+        "kind": "left",
+        "name": "Dr John N.T. Helferich",
+        "role": "Science Communication Coordinator Co-Leader"
+      },
+      {
+        "kind": "left",
+        "name": "Dr Šárka Kolmašová",
+        "role": "WG4 Co-Leader"
+      },
+      {
+        "kind": "post",
+        "role": "WG4 Co-Leader",
+        "was": "Dr Šárka Kolmašová",
+        "now": null
+      }
+    ],
+    "committee": {
+      "from": 51,
+      "to": 49,
+      "joined": [
+        {
+          "name": "Dr Henrique Garbino",
+          "country": "Sweden"
+        }
+      ],
+      "left": [
+        {
+          "name": "Mr Henrique Garbino",
+          "country": "Sweden"
+        },
+        {
+          "name": "Dr Dmytro Uzlov",
+          "country": "Ukraine"
+        },
+        {
+          "name": "Mr Vladyslav Vilihura",
+          "country": "Ukraine"
+        }
+      ]
+    },
+    "groups": [
+      {
+        "number": 1,
+        "name": "Building the Network",
+        "from": 92,
+        "to": 92,
+        "lead": "Prof. Filip Ejdus",
+        "coLead": "Prof. Nikolaos Tzifakis",
+        "joined": [
+          {
+            "name": "Dr Ludovica Castelli",
+            "country": "United States"
+          }
+        ],
+        "left": [
+          {
+            "name": "Dr Ludovica Castelli",
+            "country": "Italy"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "name": "Transfer of Knowledge",
+        "from": 82,
+        "to": 82,
+        "lead": "Dr John N.T. Helferich",
+        "coLead": "Dr Eliza Gheorghe",
+        "joined": [
+          {
+            "name": "Dr Draga Gajic",
+            "country": "Bosnia & Herzegovina"
+          }
+        ],
+        "left": [
+          {
+            "name": "Ms Draga Gajic",
+            "country": "Bosnia & Herzegovina"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "name": "Fostering the Next Generation of Scholars",
+        "from": 91,
+        "to": 91,
+        "lead": "Dr Chiara Ruffa",
+        "coLead": "Dr Silvia D'Amato",
+        "joined": [
+          {
+            "name": "Dr Draga Gajic",
+            "country": "Bosnia & Herzegovina"
+          },
+          {
+            "name": "Dr Henrique Garbino",
+            "country": "Sweden"
+          },
+          {
+            "name": "Dr Ludovica Castelli",
+            "country": "United States"
+          }
+        ],
+        "left": [
+          {
+            "name": "Ms Draga Gajic",
+            "country": "Bosnia & Herzegovina"
+          },
+          {
+            "name": "Mr Henrique Garbino",
+            "country": "Sweden"
+          },
+          {
+            "name": "Dr Ludovica Castelli",
+            "country": "Italy"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "name": "Inclusion, Representativeness & Ethics",
+        "from": 46,
+        "to": 47,
+        "lead": "Dr Revecca Pedi",
+        "coLead": null,
+        "joined": [
+          {
+            "name": "Dr Draga Gajic",
+            "country": "Bosnia & Herzegovina"
+          },
+          {
+            "name": "Dr Sarka Kolmasova",
+            "country": "Czechia"
+          }
+        ],
+        "left": [
+          {
+            "name": "Ms Draga Gajic",
+            "country": "Bosnia & Herzegovina"
+          }
+        ]
+      }
+    ],
+    "website": {
+      "merged": 134,
+      "features": 18,
+      "fixes": 20,
+      "data": 29,
+      "add": 12178,
+      "del": 6124,
+      "majorFeatures": [
+        {
+          "title": "feat(home): cut the home page from twelve sections to five",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2013",
+          "pr": 2013,
+          "add": 126,
+          "del": 1030
+        },
+        {
+          "title": "feat(events): derive event dates and the home fallback from events.json",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2008",
+          "pr": 2008,
+          "add": 483,
+          "del": 358
+        },
+        {
+          "title": "feat(essc-2027): add practical information for Belgrade",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1994",
+          "pr": 1994,
+          "add": 310,
+          "del": 14
+        },
+        {
+          "title": "feat(roadmap): add a quarter navigator to the roadmap",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2068",
+          "pr": 2068,
+          "add": 275,
+          "del": 19
+        },
+        {
+          "title": "feat(essc-2027): icons and a compact layout for practical information",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1996",
+          "pr": 1996,
+          "add": 138,
+          "del": 113
+        },
+        {
+          "title": "feat(directory): bring search into the first screen, add map links, fix overlaps",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2073",
+          "pr": 2073,
+          "add": 162,
+          "del": 83
+        },
+        {
+          "title": "feat(directory): link the Network Map from the heading and the toolbar",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2075",
+          "pr": 2075,
+          "add": 135,
+          "del": 37
+        },
+        {
+          "title": "feat(og): set Net and Sec in the general social card in the logo gradient",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2060",
+          "pr": 2060,
+          "add": 137,
+          "del": 12
+        },
+        {
+          "title": "feat(bios): place a new unthemed keyword under its suggested theme during the sync",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2034",
+          "pr": 2034,
+          "add": 108,
+          "del": 13
+        },
+        {
+          "title": "feat(essc-2027): prev/next arrows on the practical sliders",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2001",
+          "pr": 2001,
+          "add": 102,
+          "del": 13
+        }
+      ],
+      "notableFixes": [
+        {
+          "title": "fix(roadmap): list entries newest first and reattach orphaned v1.17.0 chips",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2064",
+          "pr": 2064,
+          "add": 770,
+          "del": 762
+        },
+        {
+          "title": "fix(network-map): draw WG leaders on their own hub and answer searches for undrawn people",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2072",
+          "pr": 2072,
+          "add": 112,
+          "del": 34
+        },
+        {
+          "title": "fix(sync-cost): drop a leadership role cost.eu no longer lists",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1978",
+          "pr": 1978,
+          "add": 87,
+          "del": 3
+        },
+        {
+          "title": "fix(ci): harden the directory journeys and the Pagefind build against sync-PR flakes",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2039",
+          "pr": 2039,
+          "add": 54,
+          "del": 17
+        },
+        {
+          "title": "fix(layout): no page is wider than a 320px screen",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2004",
+          "pr": 2004,
+          "add": 52,
+          "del": 18
+        },
+        {
+          "title": "fix(bios): fail the data shape check on an unthemed keyword",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2006",
+          "pr": 2006,
+          "add": 54,
+          "del": 7
+        },
+        {
+          "title": "fix(social): escape LinkedIn's reserved characters so posts are not cut",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1989",
+          "pr": 1989,
+          "add": 44,
+          "del": 1
+        },
+        {
+          "title": "fix(i18n): ignore cost.eu stat digits when hashing for drift",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2044",
+          "pr": 2044,
+          "add": 28,
+          "del": 9
+        }
+      ],
+      "contributors": [
+        {
+          "who": "EISS Tech Coordinator",
+          "commits": 128
+        },
+        {
+          "who": "dependabot[bot]",
+          "commits": 6
+        },
+        {
+          "who": "EISS",
+          "commits": 1
+        }
+      ]
+    }
+  },
+  {
+    "version": 1,
+    "start": "2026-09-01",
+    "end": "2026-10-01",
+    "commits": [
+      "177aa583",
+      "4b99a081"
+    ],
+    "directory": {
+      "from": 84,
+      "to": 98,
+      "joined": [
+        {
+          "name": "Mr Adam Hanzel",
+          "affiliation": "Metropolitan University Prague",
+          "country": "Czechia",
+          "url": "https://netsec-cost.eu/people/adam-hanzel.html"
+        },
+        {
+          "name": "Dr Aliaksei Kazharski",
+          "affiliation": "Charles University",
+          "country": "Czechia",
+          "url": "https://netsec-cost.eu/people/aliaksei-kazharski.html"
+        },
+        {
+          "name": "Ms Antonia-Laura Pup",
+          "affiliation": "European University Institute",
+          "country": "Italy",
+          "url": "https://netsec-cost.eu/people/antonia-laura-pup.html"
+        },
+        {
+          "name": "Dr Betul Dogan Akkas",
+          "affiliation": "Ankara University",
+          "country": "Türkiye",
+          "url": "https://netsec-cost.eu/people/betul-dogan-akkas.html"
+        },
+        {
+          "name": "Prof. Giray SADIK",
+          "affiliation": "Ankara Yildirim Beyazit University (AYBU)",
+          "country": "Türkiye",
+          "url": "https://netsec-cost.eu/people/giray-sadik.html"
+        },
+        {
+          "name": "Dr Henrique Garbino",
+          "affiliation": "Swedish Defence University",
+          "country": "Sweden",
+          "url": "https://netsec-cost.eu/people/henrique-garbino.html"
+        },
+        {
+          "name": "Mr Jacob Grech",
+          "affiliation": "European University Institute",
+          "country": "Italy",
+          "url": "https://netsec-cost.eu/people/jacob-grech.html"
+        },
+        {
+          "name": "Dr Laura Íñigo Álvarez",
+          "affiliation": "Universidade Nova de Lisboa",
+          "country": "Portugal",
+          "url": "https://netsec-cost.eu/people/laura-inigo-alvarez.html"
+        },
+        {
+          "name": "Dr Ludovica Castelli",
+          "affiliation": "Harvard's Belfer Center",
+          "country": "United States",
+          "url": "https://netsec-cost.eu/people/ludovica-castelli.html"
+        },
+        {
+          "name": "Mr Mahmoud Javadi",
+          "affiliation": "Vrije Universiteit Brussel (VUB)",
+          "country": "Belgium",
+          "url": "https://netsec-cost.eu/people/mahmoud-javadi.html"
+        },
+        {
+          "name": "Dr Mykhailo Mosora",
+          "affiliation": "Carpathian Institute of Analytics \"FrankoLytics\"",
+          "country": "Ukraine",
+          "url": "https://netsec-cost.eu/people/mykhailo-mosora.html"
+        },
+        {
+          "name": "Mr Pavle Nedić",
+          "affiliation": "Institute of International Politics and Economics",
+          "country": "Serbia",
+          "url": "https://netsec-cost.eu/people/pavle-nedic.html"
+        },
+        {
+          "name": "Dr Rafael Hurtado-Valdivieso",
+          "affiliation": "Colombian Navy",
+          "country": "Colombia",
+          "url": "https://netsec-cost.eu/people/rafael-hurtado-valdivieso.html"
+        },
+        {
+          "name": "Mr Richard Skalt",
+          "affiliation": "TÜV SÜD",
+          "country": "Germany",
+          "url": "https://netsec-cost.eu/people/richard-skalt.html"
+        }
+      ],
+      "left": []
+    },
+    "coreGroup": [
+      {
+        "kind": "appointed",
+        "name": "Dr John N.T. Helferich",
+        "role": "Science Communication Coordinator Co-Leader"
+      }
+    ],
+    "committee": {
+      "from": 51,
+      "to": 51,
+      "joined": [],
+      "left": []
+    },
+    "groups": [
+      {
+        "number": 1,
+        "name": "Building the Network",
+        "from": 77,
+        "to": 92,
+        "lead": "Prof. Filip Ejdus",
+        "coLead": "Prof. Nikolaos Tzifakis",
+        "joined": [
+          {
+            "name": "Dr Andriy Tyushka",
+            "country": "Poland"
+          },
+          {
+            "name": "Dr Armela Xhaho",
+            "country": "Albania"
+          },
+          {
+            "name": "Dr Arzu Demirel",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Mr Avnihan Kirisik",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Ms Ece Günen",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Mr Fabio Iguavita Duarte",
+            "country": "Czechia"
+          },
+          {
+            "name": "Dr Francesco Giumelli",
+            "country": "Netherlands"
+          },
+          {
+            "name": "Prof Giray Sadik",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Dr Marco Marsili",
+            "country": "Portugal"
+          },
+          {
+            "name": "Dr Maria Constantinescu",
+            "country": "Romania"
+          },
+          {
+            "name": "Dr Ringailė Kuokštytė",
+            "country": "Lithuania"
+          },
+          {
+            "name": "Dr Thomas Bonnie James",
+            "country": "United Kingdom"
+          },
+          {
+            "name": "Dr Tolga Cikrikci",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Prof Tom Sauer",
+            "country": "Belgium"
+          },
+          {
+            "name": "Ms Zane Šime",
+            "country": "Norway"
+          }
+        ],
+        "left": []
+      },
+      {
+        "number": 2,
+        "name": "Transfer of Knowledge",
+        "from": 66,
+        "to": 82,
+        "lead": "Dr John N.T. Helferich",
+        "coLead": "Dr Eliza Gheorghe",
+        "joined": [
+          {
+            "name": "Dr Andriy Tyushka",
+            "country": "Poland"
+          },
+          {
+            "name": "Prof Anna Krasteva",
+            "country": "Bulgaria"
+          },
+          {
+            "name": "Dr Arzu Demirel",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Dr Carla Sofia Ferreira Fernandes",
+            "country": "Portugal"
+          },
+          {
+            "name": "Mr Fabio Iguavita Duarte",
+            "country": "Czechia"
+          },
+          {
+            "name": "Dr Francesco Giumelli",
+            "country": "Netherlands"
+          },
+          {
+            "name": "Prof Giray Sadik",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Dr Linde Desmaele",
+            "country": "Netherlands"
+          },
+          {
+            "name": "Dr Maria Constantinescu",
+            "country": "Romania"
+          },
+          {
+            "name": "Dr Matthew Porges",
+            "country": "Slovakia"
+          },
+          {
+            "name": "Prof Mehmet Isik",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Dr Mustafa Onur Yalçın",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Dr Ringailė Kuokštytė",
+            "country": "Lithuania"
+          },
+          {
+            "name": "Dr Thomas Bonnie James",
+            "country": "United Kingdom"
+          },
+          {
+            "name": "Dr Tolga Cikrikci",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Ms Zane Šime",
+            "country": "Norway"
+          }
+        ],
+        "left": []
+      },
+      {
+        "number": 3,
+        "name": "Fostering the Next Generation of Scholars",
+        "from": 80,
+        "to": 91,
+        "lead": "Dr Chiara Ruffa",
+        "coLead": "Dr Silvia D'Amato",
+        "joined": [
+          {
+            "name": "Dr Andriy Tyushka",
+            "country": "Poland"
+          },
+          {
+            "name": "Dr Armela Xhaho",
+            "country": "Albania"
+          },
+          {
+            "name": "Dr Arzu Demirel",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Mr Avnihan Kirisik",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Ms Ece Günen",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Dr Francesco Giumelli",
+            "country": "Netherlands"
+          },
+          {
+            "name": "Prof Giray Sadik",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Mr Henrique Garbino",
+            "country": "Sweden"
+          },
+          {
+            "name": "Prof Mehmet Isik",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Dr Thomas Bonnie James",
+            "country": "United Kingdom"
+          },
+          {
+            "name": "Ms Zane Šime",
+            "country": "Norway"
+          }
+        ],
+        "left": []
+      },
+      {
+        "number": 4,
+        "name": "Inclusion, Representativeness & Ethics",
+        "from": 40,
+        "to": 46,
+        "lead": "Dr Revecca Pedi",
+        "coLead": "Dr Šárka Kolmašová",
+        "joined": [
+          {
+            "name": "Dr Aleksandar Grizhev",
+            "country": "North Macedonia"
+          },
+          {
+            "name": "Dr Marco Marsili",
+            "country": "Portugal"
+          },
+          {
+            "name": "Dr Maria Constantinescu",
+            "country": "Romania"
+          },
+          {
+            "name": "Prof Mehmet Isik",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Dr Mustafa Onur Yalçın",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Dr Thomas Bonnie James",
+            "country": "United Kingdom"
+          },
+          {
+            "name": "Ms Zane Šime",
+            "country": "Norway"
+          }
+        ],
+        "left": [
+          {
+            "name": "Dr Fitim Kastrati",
+            "country": "Kosovo*"
+          }
+        ]
+      }
+    ],
+    "website": {
+      "merged": 141,
+      "features": 13,
+      "fixes": 25,
+      "data": 26,
+      "add": 14276,
+      "del": 4365,
+      "majorFeatures": [
+        {
+          "title": "feat(year-review): publish the Year in Review page in three locales",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1851",
+          "pr": 1851,
+          "add": 1528,
+          "del": 5
+        },
+        {
+          "title": "feat(year-review): assemble the Action year into data/year-review.json",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1848",
+          "pr": 1848,
+          "add": 1379,
+          "del": 2
+        },
+        {
+          "title": "feat(seo): generate Event structured data from data/events.json",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1838",
+          "pr": 1838,
+          "add": 890,
+          "del": 137
+        },
+        {
+          "title": "feat(home): reorder the sections and shorten About (#1888)",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1914",
+          "pr": 1914,
+          "add": 283,
+          "del": 424
+        },
+        {
+          "title": "feat(home): Now row under the hero, and the groundwork for announcing the conference",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1881",
+          "pr": 1881,
+          "add": 443,
+          "del": 69
+        },
+        {
+          "title": "feat(analytics): count page views with a cookieless aggregate counter",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1849",
+          "pr": 1849,
+          "add": 467,
+          "del": 23
+        },
+        {
+          "title": "feat(scripts): derive which builders a change has made stale",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1800",
+          "pr": 1800,
+          "add": 263,
+          "del": 0
+        },
+        {
+          "title": "feat(home): ESSC 2026 photo strip between Working Groups and Events (#1887)",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1903",
+          "pr": 1903,
+          "add": 135,
+          "del": 81
+        },
+        {
+          "title": "feat(home): figures strip under the Now row (#1882)",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1900",
+          "pr": 1900,
+          "add": 212,
+          "del": 2
+        },
+        {
+          "title": "feat(news): one-line summary on the home page news cards (#1889)",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1901",
+          "pr": 1901,
+          "add": 84,
+          "del": 46
+        }
+      ],
+      "notableFixes": [
+        {
+          "title": "fix(directory): live facet counts, and a real no-match state",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1783",
+          "pr": 1783,
+          "add": 330,
+          "del": 24
+        },
+        {
+          "title": "fix(home): drop duplicate links, point nav News at the News page (#1884)",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1893",
+          "pr": 1893,
+          "add": 160,
+          "del": 183
+        },
+        {
+          "title": "fix(seo): bring slides under inject-seo and guard page registration (#1850)",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1858",
+          "pr": 1858,
+          "add": 226,
+          "del": 53
+        },
+        {
+          "title": "fix(home): six defects from the home page audit",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1880",
+          "pr": 1880,
+          "add": 228,
+          "del": 15
+        },
+        {
+          "title": "fix(network-map): let the Directory's spelling of a name win over the roster",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1836",
+          "pr": 1836,
+          "add": 84,
+          "del": 60
+        },
+        {
+          "title": "fix(directory): fold accents and match word by word in search",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1784",
+          "pr": 1784,
+          "add": 130,
+          "del": 4
+        },
+        {
+          "title": "fix(a11y): take hub and swatch label colour from the fill's luminance",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1837",
+          "pr": 1837,
+          "add": 79,
+          "del": 45
+        },
+        {
+          "title": "fix(indico): apply the venue's own time zone instead of the instance default",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1845",
+          "pr": 1845,
+          "add": 82,
+          "del": 15
+        }
+      ],
+      "contributors": [
+        {
+          "who": "EISS Tech Coordinator",
+          "commits": 137
+        },
+        {
+          "who": "dependabot[bot]",
+          "commits": 4
+        }
+      ]
+    }
+  },
+  {
+    "version": 1,
+    "start": "2026-08-01",
+    "end": "2026-09-01",
+    "commits": [
+      "0eebfbff",
+      "177aa583"
+    ],
+    "directory": {
+      "from": 74,
+      "to": 84,
+      "joined": [
+        {
+          "name": "Dr Andriy Tyushka",
+          "affiliation": "College of Europe (Natolin)",
+          "country": "Poland",
+          "url": "https://netsec-cost.eu/people/andriy-tyushka.html"
+        },
+        {
+          "name": "Mr Avnihan Kırışık",
+          "affiliation": "Ankara University & Mersin University",
+          "country": "Türkiye",
+          "url": "https://netsec-cost.eu/people/avnihan-k-r-s-k.html"
+        },
+        {
+          "name": "Carla Sofia Ferreira Fernandes",
+          "affiliation": "Centre for Functional Ecology",
+          "country": "Portugal",
+          "url": "https://netsec-cost.eu/people/carla-sofia-ferreira-fernandes.html"
+        },
+        {
+          "name": "Mr Francisco Javier Montilla Aguilera",
+          "affiliation": "Universidad de Granada",
+          "country": "Spain",
+          "url": "https://netsec-cost.eu/people/francisco-javier-montilla-aguilera.html"
+        },
+        {
+          "name": "Prof. Joe Burton",
+          "affiliation": "Lancaster University",
+          "country": "United Kingdom",
+          "url": "https://netsec-cost.eu/people/joe-burton.html"
+        },
+        {
+          "name": "Dr Ken McDonagh",
+          "affiliation": "Dublin City University",
+          "country": "Ireland",
+          "url": "https://netsec-cost.eu/people/ken-mcdonagh.html"
+        },
+        {
+          "name": "Mr Leonardo Pesci",
+          "affiliation": "Université Catholique de Lille",
+          "country": "France",
+          "url": "https://netsec-cost.eu/people/leonardo-pesci.html"
+        },
+        {
+          "name": "Dr Li Yang",
+          "affiliation": "Horizon Europe ReConnect China Project",
+          "country": "Belgium",
+          "url": "https://netsec-cost.eu/people/li-yang.html"
+        },
+        {
+          "name": "Mr Pablo Arriazu",
+          "affiliation": "National University of Distance Education (UNED)",
+          "country": "Spain",
+          "url": "https://netsec-cost.eu/people/pablo-arriazu.html"
+        },
+        {
+          "name": "Prof. Sprincean Serghei",
+          "affiliation": "Moldova State University. Institute of Legal, Political and Sociological Research",
+          "country": "Moldova",
+          "url": "https://netsec-cost.eu/people/sprincean-serghei.html"
+        }
+      ],
+      "left": []
+    },
+    "coreGroup": [],
+    "committee": {
+      "from": 51,
+      "to": 51,
+      "joined": [],
+      "left": []
+    },
+    "groups": [
+      {
+        "number": 1,
+        "name": "Building the Network",
+        "from": 77,
+        "to": 77,
+        "lead": "Prof. Filip Ejdus",
+        "coLead": "Prof. Nikolaos Tzifakis",
+        "joined": [],
+        "left": []
+      },
+      {
+        "number": 2,
+        "name": "Transfer of Knowledge",
+        "from": 66,
+        "to": 66,
+        "lead": "Dr John N.T. Helferich",
+        "coLead": "Dr Eliza Gheorghe",
+        "joined": [],
+        "left": []
+      },
+      {
+        "number": 3,
+        "name": "Fostering the Next Generation of Scholars",
+        "from": 80,
+        "to": 80,
+        "lead": "Dr Chiara Ruffa",
+        "coLead": "Dr Silvia D'Amato",
+        "joined": [],
+        "left": []
+      },
+      {
+        "number": 4,
+        "name": "Inclusion, Representativeness & Ethics",
+        "from": 40,
+        "to": 40,
+        "lead": "Dr Revecca Pedi",
+        "coLead": "Dr Šárka Kolmašová",
+        "joined": [],
+        "left": []
+      }
+    ],
+    "website": {
+      "merged": 199,
+      "features": 2,
+      "fixes": 13,
+      "data": 73,
+      "add": 28897,
+      "del": 73142,
+      "majorFeatures": [
+        {
+          "title": "feat(network-map): signpost the map from the site",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1598",
+          "pr": 1598,
+          "add": 762,
+          "del": 394
+        },
+        {
+          "title": "feat(network-map): filter co-panel arcs by conference edition",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1596",
+          "pr": 1596,
+          "add": 382,
+          "del": 317
+        }
+      ],
+      "notableFixes": [
+        {
+          "title": "fix(network-map): read every conference edition, not one frozen file",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1589",
+          "pr": 1589,
+          "add": 590,
+          "del": 401
+        },
+        {
+          "title": "fix(profile-pages): restamp the site.js cache-bust after the rename",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1583",
+          "pr": 1583,
+          "add": 243,
+          "del": 243
+        },
+        {
+          "title": "fix(network-map): match surname-first author spellings",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1599",
+          "pr": 1599,
+          "add": 132,
+          "del": 31
+        },
+        {
+          "title": "fix(network-map): match author names as bibliographies write them",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1593",
+          "pr": 1593,
+          "add": 137,
+          "del": 4
+        },
+        {
+          "title": "fix(spotlight): no repeat inside six months",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1535",
+          "pr": 1535,
+          "add": 111,
+          "del": 10
+        },
+        {
+          "title": "fix(data-shape): validate the Network Map edition fields",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1608",
+          "pr": 1608,
+          "add": 120,
+          "del": 1
+        },
+        {
+          "title": "fix(social): drop the LinkedIn profile-link comment, it never worked",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1640",
+          "pr": 1640,
+          "add": 30,
+          "del": 87
+        },
+        {
+          "title": "fix(events): hold the MC plenary date as provisional until it is confirmed",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1490",
+          "pr": 1490,
+          "add": 41,
+          "del": 39
+        }
+      ],
+      "contributors": [
+        {
+          "who": "EISS Tech Coordinator",
+          "commits": 199
+        },
+        {
+          "who": "dependabot[bot]",
+          "commits": 1
+        },
+        {
+          "who": "EISS",
+          "commits": 1
+        }
+      ]
+    }
+  },
+  {
+    "version": 1,
+    "start": "2026-07-01",
+    "end": "2026-08-01",
+    "commits": [
+      "b17afcf4",
+      "0eebfbff"
+    ],
+    "directory": {
+      "from": 51,
+      "to": 74,
+      "joined": [
+        {
+          "name": "Dr Alin Barbantan",
+          "affiliation": "Romanian Academy",
+          "country": "Romania",
+          "url": "https://netsec-cost.eu/people/alin-barbantan.html"
+        },
+        {
+          "name": "Dr Athanasios Skraparlis",
+          "affiliation": "University of West Attica",
+          "country": "Greece",
+          "url": "https://netsec-cost.eu/people/athanasios-skraparlis.html"
+        },
+        {
+          "name": "Dr Daniela Mechkaroska",
+          "affiliation": "University for Information Science and Technology “St. Paul the Apostle”",
+          "country": "North Macedonia",
+          "url": "https://netsec-cost.eu/people/daniela-mechkaroska.html"
+        },
+        {
+          "name": "Prof. Danilo Kalezic",
+          "affiliation": "University of Montenegro",
+          "country": "Montenegro",
+          "url": "https://netsec-cost.eu/people/danilo-kalezic.html"
+        },
+        {
+          "name": "Prof. David Matsaberidze",
+          "affiliation": "Ivane Javakhishvili Tbilisi State University",
+          "country": "Georgia",
+          "url": "https://netsec-cost.eu/people/david-matsaberidze.html"
+        },
+        {
+          "name": "Dr David Morgan-Owen",
+          "affiliation": "University of St Andrews",
+          "country": "United Kingdom",
+          "url": "https://netsec-cost.eu/people/david-morgan-owen.html"
+        },
+        {
+          "name": "Dr Eda KUŞKU SÖNMEZ",
+          "affiliation": "Samsun University",
+          "country": "Türkiye",
+          "url": "https://netsec-cost.eu/people/eda-kusku-sonmez.html"
+        },
+        {
+          "name": "Dr Esra Merve Boztosun-Çalışkan",
+          "affiliation": "Istanbul Medipol University",
+          "country": "Türkiye",
+          "url": "https://netsec-cost.eu/people/esra-merve-boztosun-cal-skan.html"
+        },
+        {
+          "name": "Dr Gayane Harutyunyan",
+          "affiliation": "Public Administration Academy of the Republic of Armenia",
+          "country": "Armenia",
+          "url": "https://netsec-cost.eu/people/gayane-harutyunyan.html"
+        },
+        {
+          "name": "Ms Giulia Biselli",
+          "affiliation": "CASD",
+          "country": "Italy",
+          "url": "https://netsec-cost.eu/people/giulia-biselli.html"
+        },
+        {
+          "name": "Prof. Huw Bennett",
+          "affiliation": "Cardiff University",
+          "country": "United Kingdom",
+          "url": "https://netsec-cost.eu/people/huw-bennett.html"
+        },
+        {
+          "name": "Mr Immanuel Rummel",
+          "affiliation": "ETH Zürich, Center for Security Studies",
+          "country": "Switzerland",
+          "url": "https://netsec-cost.eu/people/immanuel-rummel.html"
+        },
+        {
+          "name": "Prof. Islam Jusufi",
+          "affiliation": "Independent Researcher",
+          "country": "North Macedonia",
+          "url": "https://netsec-cost.eu/people/islam-jusufi.html"
+        },
+        {
+          "name": "Mr Johannes Lucht",
+          "affiliation": "ETH Zurich",
+          "country": "Switzerland",
+          "url": "https://netsec-cost.eu/people/johannes-lucht.html"
+        },
+        {
+          "name": "Dr Kire Babanoski",
+          "affiliation": "Faculty of Security, Skopje, University \"St. Kliment Ohridski\", Bitola",
+          "country": "North Macedonia",
+          "url": "https://netsec-cost.eu/people/kire-babanoski.html"
+        },
+        {
+          "name": "Mr Martin Haváček",
+          "affiliation": "VSB, Technical University of Ostrava",
+          "country": "Czechia",
+          "url": "https://netsec-cost.eu/people/martin-havacek.html"
+        },
+        {
+          "name": "Dr Mehmet Babacan",
+          "affiliation": "Yildiz Technical University",
+          "country": "Türkiye",
+          "url": "https://netsec-cost.eu/people/mehmet-babacan.html"
+        },
+        {
+          "name": "Dr Niklas Karlén",
+          "affiliation": "Swedish Defence University",
+          "country": "Sweden",
+          "url": "https://netsec-cost.eu/people/niklas-karlen.html"
+        },
+        {
+          "name": "Prof. Paulina Polko",
+          "affiliation": "Akademia WSB, WSB University",
+          "country": "Poland",
+          "url": "https://netsec-cost.eu/people/paulina-polko.html"
+        },
+        {
+          "name": "Prof. Pavlosioannis Koktsidis",
+          "affiliation": "Anatolia American University",
+          "country": "Greece",
+          "url": "https://netsec-cost.eu/people/pavlosioannis-koktsidis.html"
+        },
+        {
+          "name": "Dr Pınar Akgül",
+          "affiliation": "Giresun University",
+          "country": "Türkiye",
+          "url": "https://netsec-cost.eu/people/p-nar-akgul.html"
+        },
+        {
+          "name": "Dr Tanja Pavleska",
+          "affiliation": "Jozef Stefan Institute",
+          "country": "Slovenia",
+          "url": "https://netsec-cost.eu/people/tanja-pavleska.html"
+        },
+        {
+          "name": "Dr Tolga Çıkrıkçı",
+          "affiliation": "Giresun University",
+          "country": "Türkiye",
+          "url": "https://netsec-cost.eu/people/tolga-c-kr-kc.html"
+        },
+        {
+          "name": "Dr Zane Šime",
+          "affiliation": "Rīga Stradiņš University, RSU",
+          "country": "Latvia",
+          "url": "https://netsec-cost.eu/people/zane-sime.html"
+        }
+      ],
+      "left": [
+        {
+          "name": "Prof. Pavlos Koktsidis",
+          "affiliation": "Anatolia American University",
+          "country": "Greece",
+          "url": "https://netsec-cost.eu/people/pavlos-koktsidis.html"
+        }
+      ]
+    },
+    "coreGroup": [
+      {
+        "kind": "appointed",
+        "name": "Dr Eliza Gheorghe",
+        "role": "WG2 Co-Leader"
+      },
+      {
+        "kind": "appointed",
+        "name": "Prof. Nikolaos Tzifakis",
+        "role": "WG1 Co-Leader"
+      },
+      {
+        "kind": "left",
+        "name": "Prof. Filip Ejdus",
+        "role": "WG1 Co-Leader"
+      },
+      {
+        "kind": "left",
+        "name": "Ms Alisa Kerschbaum",
+        "role": "WG2 Co-Leader"
+      },
+      {
+        "kind": "post",
+        "role": "WG1 Co-Leader",
+        "was": "Prof. Filip Ejdus",
+        "now": "Prof. Nikolaos Tzifakis"
+      },
+      {
+        "kind": "post",
+        "role": "WG2 Co-Leader",
+        "was": "Ms Alisa Kerschbaum",
+        "now": "Dr Eliza Gheorghe"
+      }
+    ],
+    "committee": {
+      "from": 51,
+      "to": 51,
+      "joined": [
+        {
+          "name": "Dr Daniela Mechkaroska",
+          "country": "North Macedonia"
+        }
+      ],
+      "left": [
+        {
+          "name": "Prof Daniela Mechkaroska",
+          "country": "North Macedonia"
+        }
+      ]
+    },
+    "groups": [
+      {
+        "number": 1,
+        "name": "Building the Network",
+        "from": 78,
+        "to": 77,
+        "lead": "Prof. Filip Ejdus",
+        "coLead": "Prof. Nikolaos Tzifakis",
+        "joined": [],
+        "left": [
+          {
+            "name": "Dr Nikolaos Tzifakis",
+            "country": "Greece"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "name": "Transfer of Knowledge",
+        "from": 66,
+        "to": 66,
+        "lead": "Dr John N.T. Helferich",
+        "coLead": "Dr Eliza Gheorghe",
+        "joined": [
+          {
+            "name": "Dr Daniela Mechkaroska",
+            "country": "North Macedonia"
+          }
+        ],
+        "left": [
+          {
+            "name": "Prof Daniela Mechkaroska",
+            "country": "North Macedonia"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "name": "Fostering the Next Generation of Scholars",
+        "from": 81,
+        "to": 80,
+        "lead": "Dr Chiara Ruffa",
+        "coLead": "Dr Silvia D'Amato",
+        "joined": [
+          {
+            "name": "Dr Daniela Mechkaroska",
+            "country": "North Macedonia"
+          }
+        ],
+        "left": [
+          {
+            "name": "Prof Daniela Mechkaroska",
+            "country": "North Macedonia"
+          },
+          {
+            "name": "Dr Lindita Licaj",
+            "country": "Albania"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "name": "Inclusion, Representativeness & Ethics",
+        "from": 42,
+        "to": 40,
+        "lead": "Dr Revecca Pedi",
+        "coLead": "Dr Šárka Kolmašová",
+        "joined": [],
+        "left": [
+          {
+            "name": "Dr Alena Lochmannová",
+            "country": "Czechia"
+          },
+          {
+            "name": "Dr Lindita Licaj",
+            "country": "Albania"
+          }
+        ]
+      }
+    ],
+    "website": {
+      "merged": 181,
+      "features": 15,
+      "fixes": 20,
+      "data": 83,
+      "add": 54542,
+      "del": 18197,
+      "majorFeatures": [
+        {
+          "title": "feat(atlas): derive data/atlas.json from wg.json (#764 walking skeleton)",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1311",
+          "pr": 1311,
+          "add": 2313,
+          "del": 0
+        },
+        {
+          "title": "feat(home): cinematic visual layer for the home page",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1329",
+          "pr": 1329,
+          "add": 1117,
+          "del": 563
+        },
+        {
+          "title": "feat(search): result-type filter chips in the search overlay (#1404)",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1466",
+          "pr": 1466,
+          "add": 849,
+          "del": 578
+        },
+        {
+          "title": "feat(directory): warm prefilled contact intro for mentorship + STSM (#1171 part 1)",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1291",
+          "pr": 1291,
+          "add": 854,
+          "del": 547
+        },
+        {
+          "title": "feat(directory): constellation band, mentorship lines, country flag strip",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1337",
+          "pr": 1337,
+          "add": 887,
+          "del": 503
+        },
+        {
+          "title": "feat: make \"Start where you are\" a site-wide side-drawer",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1325",
+          "pr": 1325,
+          "add": 813,
+          "del": 493
+        },
+        {
+          "title": "feat(atlas): put the Atlas prototype inside the site, in three languages",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1417",
+          "pr": 1417,
+          "add": 886,
+          "del": 343
+        },
+        {
+          "title": "feat(directory): let mentors flag full capacity and mentees flag a match",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1415",
+          "pr": 1415,
+          "add": 596,
+          "del": 507
+        },
+        {
+          "title": "feat(home): Phase 2 IA doc + audience-track strip across three locales",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1293",
+          "pr": 1293,
+          "add": 702,
+          "del": 221
+        },
+        {
+          "title": "feat(directory): cinematic response to filtering and loading",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1333",
+          "pr": 1333,
+          "add": 606,
+          "del": 253
+        }
+      ],
+      "notableFixes": [
+        {
+          "title": "fix(sync): search stubs for every member + durable hand corrections",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1387",
+          "pr": 1387,
+          "add": 3039,
+          "del": 41
+        },
+        {
+          "title": "fix(flags): give every country flag one consistent size",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1422",
+          "pr": 1422,
+          "add": 622,
+          "del": 593
+        },
+        {
+          "title": "fix(directory): one research area at a time in the mentorship panel",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1450",
+          "pr": 1450,
+          "add": 573,
+          "del": 533
+        },
+        {
+          "title": "fix(directory): name the mentorship wizard's pickers for assistive tech",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1393",
+          "pr": 1393,
+          "add": 339,
+          "del": 281
+        },
+        {
+          "title": "fix(js): one shared avatar-initials + theme-title-case helper (#1194)",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1289",
+          "pr": 1289,
+          "add": 290,
+          "del": 289
+        },
+        {
+          "title": "fix(directory): let the mentorship area picker scroll instead of dismissing",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1383",
+          "pr": 1383,
+          "add": 228,
+          "del": 215
+        },
+        {
+          "title": "fix(social): keep the LinkedIn API version current, and stop failing silently",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1434",
+          "pr": 1434,
+          "add": 428,
+          "del": 5
+        },
+        {
+          "title": "fix(directory): calmer mentorship sentence + readable rank badges in dark mode",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1380",
+          "pr": 1380,
+          "add": 216,
+          "del": 211
+        }
+      ],
+      "contributors": [
+        {
+          "who": "EISS Tech Coordinator",
+          "commits": 179
+        },
+        {
+          "who": "dependabot[bot]",
+          "commits": 3
+        },
+        {
+          "who": "Arthur L",
+          "commits": 3
+        },
+        {
+          "who": "EISS",
+          "commits": 1
+        }
+      ]
+    }
+  },
+  {
+    "version": 1,
+    "start": "2026-06-01",
+    "end": "2026-07-01",
+    "commits": [
+      "0a34afa7",
+      "b17afcf4"
+    ],
+    "directory": {
+      "from": 14,
+      "to": 51,
+      "joined": [
+        {
+          "name": "Dr Alexander Lanoszka",
+          "affiliation": "University of Waterloo",
+          "country": "Canada",
+          "url": "https://netsec-cost.eu/people/alexander-lanoszka.html"
+        },
+        {
+          "name": "Dr Alexandra Brankova",
+          "affiliation": "Swedish Defence University",
+          "country": "Sweden",
+          "url": "https://netsec-cost.eu/people/alexandra-brankova.html"
+        },
+        {
+          "name": "Anna Pagnacco",
+          "affiliation": "ETH Zurich, Center for Security Studies",
+          "country": "Switzerland",
+          "url": "https://netsec-cost.eu/people/anna-pagnacco.html"
+        },
+        {
+          "name": "Ms Anna Seliverstova",
+          "affiliation": "Linnaeus University",
+          "country": "Sweden",
+          "url": "https://netsec-cost.eu/people/anna-seliverstova.html"
+        },
+        {
+          "name": "Mr Archishman Goswami",
+          "affiliation": "University of Oxford",
+          "country": "United Kingdom",
+          "url": "https://netsec-cost.eu/people/archishman-goswami.html"
+        },
+        {
+          "name": "Ms Clara Jammot",
+          "affiliation": "King's College London",
+          "country": "United Kingdom",
+          "url": "https://netsec-cost.eu/people/clara-jammot.html"
+        },
+        {
+          "name": "Mr Fabio Iguavita Duarte",
+          "affiliation": "Czech Technical University",
+          "country": "Czechia",
+          "url": "https://netsec-cost.eu/people/fabio-iguavita-duarte.html"
+        },
+        {
+          "name": "Mr Francesco Canossi",
+          "affiliation": "Independent",
+          "country": "Italy",
+          "url": "https://netsec-cost.eu/people/francesco-canossi.html"
+        },
+        {
+          "name": "Dr Gesine Weber",
+          "affiliation": "Center for Security Studies, ETH Zürich",
+          "country": "Switzerland",
+          "url": "https://netsec-cost.eu/people/gesine-weber.html"
+        },
+        {
+          "name": "Dr Gil Baram",
+          "affiliation": "Bar Ilan and UC Berkeley",
+          "country": "United States",
+          "url": "https://netsec-cost.eu/people/gil-baram.html"
+        },
+        {
+          "name": "Ms Isabelle Haynes",
+          "affiliation": "Charles University",
+          "country": "Czechia",
+          "url": "https://netsec-cost.eu/people/isabelle-haynes.html"
+        },
+        {
+          "name": "Dr Ivan Zaccagnini",
+          "affiliation": "ETH Zurich, Center for Security Studies",
+          "country": "Switzerland",
+          "url": "https://netsec-cost.eu/people/ivan-zaccagnini.html"
+        },
+        {
+          "name": "Dr Julia Carver",
+          "affiliation": "Leiden University",
+          "country": "Netherlands",
+          "url": "https://netsec-cost.eu/people/julia-carver.html"
+        },
+        {
+          "name": "Ms Kara Schneider",
+          "affiliation": "UNESCO",
+          "country": "France",
+          "url": "https://netsec-cost.eu/people/kara-schneider.html"
+        },
+        {
+          "name": "Ms Laura Lisboa",
+          "affiliation": "Sciences Po",
+          "country": "France",
+          "url": "https://netsec-cost.eu/people/laura-lisboa.html"
+        },
+        {
+          "name": "Dr Linde Desmaele",
+          "affiliation": "Leiden University",
+          "country": "Netherlands",
+          "url": "https://netsec-cost.eu/people/linde-desmaele.html"
+        },
+        {
+          "name": "Lucian Bumeder",
+          "affiliation": "IFSH",
+          "country": "Germany",
+          "url": "https://netsec-cost.eu/people/lucian-bumeder.html"
+        },
+        {
+          "name": "Mr Marco Cifra",
+          "affiliation": "CASD",
+          "country": "Italy",
+          "url": "https://netsec-cost.eu/people/marco-cifra.html"
+        },
+        {
+          "name": "Dr Marius Ghincea",
+          "affiliation": "ETH Zurich",
+          "country": "Switzerland",
+          "url": "https://netsec-cost.eu/people/marius-ghincea.html"
+        },
+        {
+          "name": "Prof. Mark Rhinard",
+          "affiliation": "Stockholm University",
+          "country": "Sweden",
+          "url": "https://netsec-cost.eu/people/mark-rhinard.html"
+        },
+        {
+          "name": "Dr Marko Kovačević",
+          "affiliation": "University of Belgrade, Faculty of Political Science",
+          "country": "Serbia",
+          "url": "https://netsec-cost.eu/people/marko-kovacevic.html"
+        },
+        {
+          "name": "Dr Mattia Sguazzini",
+          "affiliation": "University of Genoa",
+          "country": "Italy",
+          "url": "https://netsec-cost.eu/people/mattia-sguazzini.html"
+        },
+        {
+          "name": "Ms Meret Steybe",
+          "affiliation": "ETH Zurich, Center for Security Studies",
+          "country": "Switzerland",
+          "url": "https://netsec-cost.eu/people/meret-steybe.html"
+        },
+        {
+          "name": "Prof. Monika Sus",
+          "affiliation": "Polish Academy of Sciences",
+          "country": "Poland",
+          "url": "https://netsec-cost.eu/people/monika-sus.html"
+        },
+        {
+          "name": "Prof. Nikolaos Tzifakis",
+          "affiliation": "University of the Peloponnese",
+          "country": "Greece",
+          "url": "https://netsec-cost.eu/people/nikolaos-tzifakis.html"
+        },
+        {
+          "name": "Prof. Pavlos Koktsidis",
+          "affiliation": "Anatolia American University",
+          "country": "Greece",
+          "url": "https://netsec-cost.eu/people/pavlos-koktsidis.html"
+        },
+        {
+          "name": "Mr Pieter Zhao",
+          "affiliation": "Erasmus University Rotterdam",
+          "country": "Netherlands",
+          "url": "https://netsec-cost.eu/people/pieter-zhao.html"
+        },
+        {
+          "name": "Ms Rusudan Zabakhidze",
+          "affiliation": "Swedish Defence University",
+          "country": "Sweden",
+          "url": "https://netsec-cost.eu/people/rusudan-zabakhidze.html"
+        },
+        {
+          "name": "Ms Sara Russo",
+          "affiliation": "CASD",
+          "country": "Italy",
+          "url": "https://netsec-cost.eu/people/sara-russo.html"
+        },
+        {
+          "name": "Mr Saurav Narain",
+          "affiliation": "Leiden University",
+          "country": "Netherlands",
+          "url": "https://netsec-cost.eu/people/saurav-narain.html"
+        },
+        {
+          "name": "Prof. Seyithan Ahmet Ates",
+          "affiliation": "Ankara University of Social Sciences",
+          "country": "Türkiye",
+          "url": "https://netsec-cost.eu/people/seyithan-ahmet-ates.html"
+        },
+        {
+          "name": "Dr Sophie Enos-Attali",
+          "affiliation": "Catholic University of Paris",
+          "country": "France",
+          "url": "https://netsec-cost.eu/people/sophie-enos-attali.html"
+        },
+        {
+          "name": "Ms Teodora Stoicescu",
+          "affiliation": "National University of Political Studies and Public Administration",
+          "country": "Romania",
+          "url": "https://netsec-cost.eu/people/teodora-stoicescu.html"
+        },
+        {
+          "name": "Ms Vasiliki Plessia Aravani",
+          "affiliation": "Vienna School of International Studies, University of Vienna",
+          "country": "Austria",
+          "url": "https://netsec-cost.eu/people/vasiliki-plessia-aravani.html"
+        },
+        {
+          "name": "Dr Wendy He",
+          "affiliation": "College of Fellows, University of Tübingen",
+          "country": "Germany",
+          "url": "https://netsec-cost.eu/people/wendy-he.html"
+        },
+        {
+          "name": "Ms Yanina Shved-Dogrul",
+          "affiliation": "Bogazici University",
+          "country": "Türkiye",
+          "url": "https://netsec-cost.eu/people/yanina-shved-dogrul.html"
+        },
+        {
+          "name": "Ms Yijun Xu",
+          "affiliation": "Free University of Berlin",
+          "country": "Germany",
+          "url": "https://netsec-cost.eu/people/yijun-xu.html"
+        }
+      ],
+      "left": []
+    },
+    "coreGroup": [
+      {
+        "kind": "appointed",
+        "name": "Dr Moritz Weiss",
+        "role": "Action Chair"
+      },
+      {
+        "kind": "appointed",
+        "name": "Prof. Filip Ejdus",
+        "role": "WG1 Co-Leader"
+      },
+      {
+        "kind": "appointed",
+        "name": "Prof. Filip Ejdus",
+        "role": "WG1 Leader"
+      },
+      {
+        "kind": "left",
+        "name": "Dr. Moritz Weiss",
+        "role": "Action Chair"
+      },
+      {
+        "kind": "left",
+        "name": "Dr. Moritz Weiss",
+        "role": "WG1 Leader"
+      },
+      {
+        "kind": "left",
+        "name": "Prof Filip Ejdus",
+        "role": "WG1 Co-Leader"
+      },
+      {
+        "kind": "left",
+        "name": "Dr Arthur Laudrain",
+        "role": "MC member · Switzerland"
+      },
+      {
+        "kind": "post",
+        "role": "WG1 Leader",
+        "was": "Dr. Moritz Weiss",
+        "now": "Prof. Filip Ejdus"
+      },
+      {
+        "kind": "post",
+        "role": "WG1 Co-Leader",
+        "was": "Prof Filip Ejdus",
+        "now": "Prof. Filip Ejdus"
+      }
+    ],
+    "committee": {
+      "from": 49,
+      "to": 51,
+      "joined": [
+        {
+          "name": "Dr Dmytro Uzlov",
+          "country": "Ukraine"
+        },
+        {
+          "name": "Mr Vladyslav Vilihura",
+          "country": "Ukraine"
+        }
+      ],
+      "left": []
+    },
+    "groups": [
+      {
+        "number": 1,
+        "name": "Building the Network",
+        "from": 61,
+        "to": 78,
+        "lead": "Prof. Filip Ejdus",
+        "coLead": "Prof. Filip Ejdus",
+        "joined": [
+          {
+            "name": "Dr David Curran",
+            "country": "United Kingdom"
+          },
+          {
+            "name": "Dr Eda Kuşku Sönmez",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Mr Furkan Sarper Koseoglu",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Ms Giulia Biselli",
+            "country": "Italy"
+          },
+          {
+            "name": "Dr Keara Barrett",
+            "country": "Ireland"
+          },
+          {
+            "name": "Ms Laurena Kalaja",
+            "country": "Albania"
+          },
+          {
+            "name": "Mr Lorenz Sommer",
+            "country": "Germany"
+          },
+          {
+            "name": "Mr Martin Haváček",
+            "country": "Czechia"
+          },
+          {
+            "name": "Dr Moritz Weiss",
+            "country": "Germany"
+          },
+          {
+            "name": "Dr Pinar Caglayan",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Dr Ruzica Cubela Bajramovic",
+            "country": "Bosnia & Herzegovina"
+          },
+          {
+            "name": "Mr Saurav Narain",
+            "country": "Netherlands"
+          },
+          {
+            "name": "Dr Seyithan Ahmet Ateş",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Prof Tănase Tasențe",
+            "country": "Romania"
+          },
+          {
+            "name": "Dr Teemu Häkkinen",
+            "country": "Finland"
+          },
+          {
+            "name": "Mr Theo Zacharis",
+            "country": "Greece"
+          },
+          {
+            "name": "Prof Violeta Vasiliauskienė",
+            "country": "Lithuania"
+          }
+        ],
+        "left": []
+      },
+      {
+        "number": 2,
+        "name": "Transfer of Knowledge",
+        "from": 49,
+        "to": 66,
+        "lead": "Dr John N.T. Helferich",
+        "coLead": "Ms Alisa Kerschbaum",
+        "joined": [
+          {
+            "name": "Ms Aurelija Pūraitė",
+            "country": "Lithuania"
+          },
+          {
+            "name": "Mr Burak Toraman",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Dr David Curran",
+            "country": "United Kingdom"
+          },
+          {
+            "name": "Ms Draga Gajic",
+            "country": "Bosnia & Herzegovina"
+          },
+          {
+            "name": "Mr Furkan Sarper Koseoglu",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Ms Giulia Biselli",
+            "country": "Italy"
+          },
+          {
+            "name": "Prof Ice Ilijevski",
+            "country": "North Macedonia"
+          },
+          {
+            "name": "Dr Keara Barrett",
+            "country": "Ireland"
+          },
+          {
+            "name": "Dr Mehmet Babacan",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Ms Miranda Tedeshvili",
+            "country": "Georgia"
+          },
+          {
+            "name": "Dr Ruzica Cubela Bajramovic",
+            "country": "Bosnia & Herzegovina"
+          },
+          {
+            "name": "Prof Savas Bicer",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Dr Tahir Azad",
+            "country": "United Kingdom"
+          },
+          {
+            "name": "Prof Tănase Tasențe",
+            "country": "Romania"
+          },
+          {
+            "name": "Dr Teemu Häkkinen",
+            "country": "Finland"
+          },
+          {
+            "name": "Ms Yagnyashri Kodaru",
+            "country": "Germany"
+          },
+          {
+            "name": "Dr Yusuf Özer",
+            "country": "Türkiye"
+          }
+        ],
+        "left": []
+      },
+      {
+        "number": 3,
+        "name": "Fostering the Next Generation of Scholars",
+        "from": 65,
+        "to": 81,
+        "lead": "Dr Chiara Ruffa",
+        "coLead": "Dr Silvia D'Amato",
+        "joined": [
+          {
+            "name": "Ms Ajsela Toci",
+            "country": "Albania"
+          },
+          {
+            "name": "Ms Aurelija Pūraitė",
+            "country": "Lithuania"
+          },
+          {
+            "name": "Dr David Curran",
+            "country": "United Kingdom"
+          },
+          {
+            "name": "Ms Draga Gajic",
+            "country": "Bosnia & Herzegovina"
+          },
+          {
+            "name": "Dr Eda Kuşku Sönmez",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Mr Eugenio Sánchez",
+            "country": "France"
+          },
+          {
+            "name": "Mr Furkan Sarper Koseoglu",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Ms Giulia Biselli",
+            "country": "Italy"
+          },
+          {
+            "name": "Prof Ice Ilijevski",
+            "country": "North Macedonia"
+          },
+          {
+            "name": "Dr Keara Barrett",
+            "country": "Ireland"
+          },
+          {
+            "name": "Ms Laurena Kalaja",
+            "country": "Albania"
+          },
+          {
+            "name": "Mr Martin Haváček",
+            "country": "Czechia"
+          },
+          {
+            "name": "Ms Miranda Tedeshvili",
+            "country": "Georgia"
+          },
+          {
+            "name": "Dr Muammer Öztürk",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Prof Tănase Tasențe",
+            "country": "Romania"
+          },
+          {
+            "name": "Dr Yusuf Özer",
+            "country": "Türkiye"
+          }
+        ],
+        "left": []
+      },
+      {
+        "number": 4,
+        "name": "Inclusion, Representativeness & Ethics",
+        "from": 30,
+        "to": 42,
+        "lead": "Dr Revecca Pedi",
+        "coLead": "Dr Šárka Kolmašová",
+        "joined": [
+          {
+            "name": "Prof Abdelouahid Ezzarfi",
+            "country": "Morocco"
+          },
+          {
+            "name": "Prof Daniela Castilhos",
+            "country": "Portugal"
+          },
+          {
+            "name": "Dr David Curran",
+            "country": "United Kingdom"
+          },
+          {
+            "name": "Ms Draga Gajic",
+            "country": "Bosnia & Herzegovina"
+          },
+          {
+            "name": "Dr Elif Kara",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Dr Fitim Kastrati",
+            "country": "Kosovo*"
+          },
+          {
+            "name": "Ms Giulia Biselli",
+            "country": "Italy"
+          },
+          {
+            "name": "Dr Keara Barrett",
+            "country": "Ireland"
+          },
+          {
+            "name": "Ms Monica Grau Sarabia",
+            "country": "Spain"
+          },
+          {
+            "name": "Dr Pinar Caglayan",
+            "country": "Türkiye"
+          },
+          {
+            "name": "Mr Saurav Narain",
+            "country": "Netherlands"
+          },
+          {
+            "name": "Prof Tănase Tasențe",
+            "country": "Romania"
+          }
+        ],
+        "left": []
+      }
+    ],
+    "website": {
+      "merged": 768,
+      "features": 79,
+      "fixes": 77,
+      "data": 301,
+      "add": 116940,
+      "del": 47452,
+      "majorFeatures": [
+        {
+          "title": "feat(directory): real shareable profile pages at /people/<slug> (#762)",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/852",
+          "pr": 852,
+          "add": 10011,
+          "del": 54
+        },
+        {
+          "title": "feat(essc): archive ESSC 2026 as a past conference, freeze its programme",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/897",
+          "pr": 897,
+          "add": 4188,
+          "del": 332
+        },
+        {
+          "title": "feat(directory): link profiles to the EISS Anthology + gold prize pill",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1144",
+          "pr": 1144,
+          "add": 3610,
+          "del": 462
+        },
+        {
+          "title": "feat(directory): expand role badge to \"Management Committee\" (#1002)",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1021",
+          "pr": 1021,
+          "add": 2206,
+          "del": 210
+        },
+        {
+          "title": "feat(seo): emit FAQPage + DefinedTermSet JSON-LD on FAQ/glossary (#766)",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/769",
+          "pr": 769,
+          "add": 2186,
+          "del": 13
+        },
+        {
+          "title": "feat(essc): make programme renderer year-configurable + add hidden ESSC 2027 template",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/895",
+          "pr": 895,
+          "add": 1571,
+          "del": 11
+        },
+        {
+          "title": "feat(directory): enrich individual profile pages — two-column, themes, similar people",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1140",
+          "pr": 1140,
+          "add": 957,
+          "del": 552
+        },
+        {
+          "title": "feat(news): cap home block at 3, mobile Read-more, fix prize tag",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1231",
+          "pr": 1231,
+          "add": 442,
+          "del": 1063
+        },
+        {
+          "title": "feat(events): dedicated Events page with upcoming/past split (#927)",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/930",
+          "pr": 930,
+          "add": 1169,
+          "del": 322
+        },
+        {
+          "title": "feat(training-school): rebuild the page around editions (COST name, archive, gallery)",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1041",
+          "pr": 1041,
+          "add": 1207,
+          "del": 215
+        }
+      ],
+      "notableFixes": [
+        {
+          "title": "fix(slides): dark-mode heading legibility + list the gallery in the sitemap",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1109",
+          "pr": 1109,
+          "add": 1154,
+          "del": 375
+        },
+        {
+          "title": "fix(people): translate country names, surface all MC reps, fix overlap, spell out MC chip",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1245",
+          "pr": 1245,
+          "add": 622,
+          "del": 437
+        },
+        {
+          "title": "fix(directory): clear off-roster WGs + remove the MBA/Russo duplicate",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/953",
+          "pr": 953,
+          "add": 43,
+          "del": 705
+        },
+        {
+          "title": "fix(naming): call the members directory \"the Directory\", not \"the Network\"",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1090",
+          "pr": 1090,
+          "add": 373,
+          "del": 372
+        },
+        {
+          "title": "fix(directory): drop duplicate title-only \"Mr\" card + guard against it",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/908",
+          "pr": 908,
+          "add": 56,
+          "del": 687
+        },
+        {
+          "title": "fix(directory): collapse 'Mrs.Yanina'-style duplicate; strip dotted titles",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/949",
+          "pr": 949,
+          "add": 57,
+          "del": 686
+        },
+        {
+          "title": "fix(directory): harden the bios pipeline against bad links, missing themes, and unharmonised employers",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/795",
+          "pr": 795,
+          "add": 337,
+          "del": 141
+        },
+        {
+          "title": "fix(wg-pills): consistent, readable WG-pill label contrast across all pages",
+          "url": "https://github.com/EISSeuropa/netsec.github.io/pull/1249",
+          "pr": 1249,
+          "add": 226,
+          "del": 217
+        }
+      ],
+      "contributors": [
+        {
+          "who": "EISS Tech Coordinator",
+          "commits": 750
+        },
+        {
+          "who": "github-actions[bot]",
+          "commits": 23
+        },
+        {
+          "who": "dependabot[bot]",
+          "commits": 4
+        },
+        {
+          "who": "EISS",
+          "commits": 2
+        }
+      ]
+    }
+  }
+]

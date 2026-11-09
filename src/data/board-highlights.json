@@ -1,1 +1,97 @@
-{"features":[],"fixes":[]}
+{
+  "features": [
+    {
+      "kind": "feature",
+      "site": "EISS",
+      "n": 2010,
+      "title": "French and German versions of the dashboard",
+      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2010",
+      "at": "2026-11-04",
+      "lines": 2871
+    },
+    {
+      "kind": "feature",
+      "site": "EISS",
+      "n": 2062,
+      "title": "Post EISS news to LinkedIn and Bluesky",
+      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2062",
+      "at": "2026-11-08",
+      "lines": 1859
+    },
+    {
+      "kind": "feature",
+      "site": "EISS",
+      "n": 1845,
+      "title": "Lead the homepage with the next conference",
+      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/1845",
+      "at": "2026-10-25",
+      "lines": 914
+    },
+    {
+      "kind": "feature",
+      "site": "EISS",
+      "n": 1873,
+      "title": "Automation behind the #EISS10 campaign",
+      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/1873",
+      "at": "2026-10-25",
+      "lines": 826
+    },
+    {
+      "kind": "feature",
+      "site": "EISS",
+      "n": 1980,
+      "title": "Halve the volunteering page and put Apply at the top",
+      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/1980",
+      "at": "2026-11-01",
+      "lines": 776
+    }
+  ],
+  "fixes": [
+    {
+      "kind": "fix",
+      "site": "NetSec",
+      "n": 2064,
+      "title": "List entries newest first and reattach orphaned v1.17.0 chips",
+      "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2064",
+      "at": "2026-10-25",
+      "lines": 1532
+    },
+    {
+      "kind": "fix",
+      "site": "EISS",
+      "n": 2085,
+      "title": "Store the NetSec months and board highlights, refresh them daily",
+      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2085",
+      "at": "2026-11-08",
+      "lines": 259
+    },
+    {
+      "kind": "fix",
+      "site": "NetSec",
+      "n": 2072,
+      "title": "Draw WG leaders on their own hub and answer searches for undrawn people",
+      "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2072",
+      "at": "2026-10-25",
+      "lines": 146
+    },
+    {
+      "kind": "fix",
+      "site": "EISS",
+      "n": 2048,
+      "title": "Keep NetSec months through a rate-limited build",
+      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2048",
+      "at": "2026-11-06",
+      "lines": 93
+    },
+    {
+      "kind": "fix",
+      "site": "EISS",
+      "n": 2049,
+      "title": "Keep the board highlights through a rate-limited build",
+      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2049",
+      "at": "2026-11-06",
+      "lines": 88
+    }
+  ],
+  "since": "2026-10-10"
+}
