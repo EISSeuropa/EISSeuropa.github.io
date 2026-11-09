@@ -166,6 +166,10 @@ Then run `--mark-fresh` for each language to fill in the SHA.
 
 Add the new edition's public dates to the "EISS dates" Google Calendar, one all-day event per date with the label as its title (the event format is in `status/README.md` of the private `workspace-ops` repo), and its internal deadlines to "EISS internal deadlines". Then, in `src/_data/site.js`, replace `keyDates`, which stays as the fallback, with the same public dates. Give each date that opens a stage of the year a `stage`, a `step` (the short name the dashboard's stepper shows, "Call open", "Review") and `links`. The conference stage comes from the edition in `conferences.js`. `/internal.html` reads this one list for the deadline tile, the stepper and the Key dates timeline, and the build stops on a stage with no `step` or a date listed twice.
 
+## 5a. The call for papers
+
+`src/_includes/cfp.njk` renders the call section of a conference page. The edition's entry in `conferences.js` carries a `cfp` object: `published` (the switch), `opens` (the day the call is issued), `submitUrl` (the Indico event), `pdf` and `themes` (one entry per closed panel). The key dates are every EISS date on the "EISS dates" calendar after `opens` and before the conference, so they match `/internal.html`. NetSec's ESSC page gives only the proposals deadline and links here. While `published` is false the page keeps its "coming soon" card. Fill `themes` and switch `published` on in one PR, and only once the call is approved (for 2027, EISS and COST: EISSeuropa/netsec.github.io#1563). Both repositories are public, so unapproved text stays out of them until then.
+
 ## 6. Verify and ship
 
 ```bash

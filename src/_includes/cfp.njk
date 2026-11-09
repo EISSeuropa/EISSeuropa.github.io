@@ -1,0 +1,130 @@
+{#- cfp.njk: the call for papers section of a conference page (#1526).
+
+    Needs `year` and `lang` set by the page. Reads conferences.byYear[year].cfp
+    for the switch, the submission link, the PDF and the closed panels, and
+    dashboard.deadlines (the "EISS dates" calendar) for the dates. The pages
+    include it only while cfp.published is true, so nothing here renders
+    before the call is approved.
+
+    The FR and DE strings are machine translations (CLAUDE.md §1). The
+    descriptions of the three submission types are placeholders: replace
+    them with the approved wording when the call is published. -#}
+{% from "icons.njk" import icon %}
+{%- set conf = conferences.byYear[year] -%}
+{%- set cfp = conf.cfp -%}
+{%- set T = {
+  en: {
+    eyebrow: "Call for papers",
+    title: "Call for panels, papers and posters",
+    lede: "Panel, paper and poster proposals for the " + conf.ordinal + "th European Security Studies Conference are open until {date}.",
+    ledeNoDate: "Panel, paper and poster proposals for the " + conf.ordinal + "th European Security Studies Conference are open.",
+    submit: "Submit a proposal on Indico",
+    pdf: "Read the full call (PDF)",
+    typesTitle: "Three ways to take part",
+    types: [
+      { icon: "users", title: "Panel proposals", text: "A complete open panel, with its chair and speakers." },
+      { icon: "file-text", title: "Paper proposals", text: "A paper for one of the closed panels." },
+      { icon: "lightbulb", title: "Poster proposals", text: "Early work by PhD and Master's students, presented as a poster." }
+    ],
+    themesTitle: "Closed panels",
+    chair: "Chair",
+    datesTitle: "Key dates",
+    more: "Papers by PhD students and early-career scholars are considered for the <a href=\"{prizes}\">European Security Studies Prize</a>. The <a href=\"{school}\">NetSec Training School</a> runs alongside the conference."
+  },
+  fr: {
+    eyebrow: "Appel à communications",
+    title: "Appel à panels, communications et posters",
+    lede: "Les propositions de panels, de communications et de posters pour la " + conf.ordinal + "e European Security Studies Conference sont ouvertes jusqu'au {date}.",
+    ledeNoDate: "Les propositions de panels, de communications et de posters pour la " + conf.ordinal + "e European Security Studies Conference sont ouvertes.",
+    submit: "Soumettre une proposition sur Indico",
+    pdf: "Lire l'appel complet (PDF)",
+    typesTitle: "Trois façons de participer",
+    types: [
+      { icon: "users", title: "Propositions de panels", text: "Un panel ouvert complet, avec sa présidence et ses intervenants." },
+      { icon: "file-text", title: "Propositions de communications", text: "Une communication pour l'un des panels fermés." },
+      { icon: "lightbulb", title: "Propositions de posters", text: "Des travaux en cours de doctorants et d'étudiants de master, présentés sous forme de poster." }
+    ],
+    themesTitle: "Panels fermés",
+    chair: "Présidence",
+    datesTitle: "Dates clés",
+    more: "Les communications des doctorants et des chercheurs en début de carrière concourent pour le <a href=\"{prizes}\">European Security Studies Prize</a>. L'<a href=\"{school}\">École de formation NetSec</a> se tient en parallèle de la conférence."
+  },
+  de: {
+    eyebrow: "Call for Papers",
+    title: "Call for Panels, Papers und Poster",
+    lede: "Vorschläge für Panels, Papers und Poster für die " + conf.ordinal + ". European Security Studies Conference können bis zum {date} eingereicht werden.",
+    ledeNoDate: "Vorschläge für Panels, Papers und Poster für die " + conf.ordinal + ". European Security Studies Conference können eingereicht werden.",
+    submit: "Vorschlag auf Indico einreichen",
+    pdf: "Den vollständigen Call lesen (PDF)",
+    typesTitle: "Drei Wege zur Teilnahme",
+    types: [
+      { icon: "users", title: "Panel-Vorschläge", text: "Ein vollständiges offenes Panel mit Vorsitz und Vortragenden." },
+      { icon: "file-text", title: "Paper-Vorschläge", text: "Ein Paper für eines der geschlossenen Panels." },
+      { icon: "lightbulb", title: "Poster-Vorschläge", text: "Laufende Arbeiten von Promovierenden und Masterstudierenden, als Poster präsentiert." }
+    ],
+    themesTitle: "Geschlossene Panels",
+    chair: "Vorsitz",
+    datesTitle: "Wichtige Termine",
+    more: "Papers von Promovierenden und Forschenden am Anfang ihrer Laufbahn werden für den <a href=\"{prizes}\">European Security Studies Prize</a> berücksichtigt. Die <a href=\"{school}\">NetSec Training School</a> findet parallel zur Konferenz statt."
+  }
+}[lang] -%}
+{#- Every EISS key date between the call's opening and the conference. -#}
+{%- set cfpDates = [] -%}
+{%- for d in dashboard.deadlines -%}
+  {%- if d.date > cfp.opens and d.date < conf.startDate -%}{%- set _ = cfpDates.push(d) -%}{%- endif -%}
+{%- endfor -%}
+<section class="section-tight" id="call-for-papers" aria-labelledby="cfp-title">
+  <div class="container">
+    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div class="featured-eyebrow">{{ T.eyebrow }}</div>
+      <h2 id="cfp-title">{{ T.title }}</h2>
+      <p class="lead">
+        {%- if cfpDates.length %}{{ T.lede | replace("{date}", cfpDates[0].date | newsDate(lang)) }}{% else %}{{ T.ledeNoDate }}{% endif -%}
+      </p>
+      <p class="hero-actions" style="margin-block: var(--space-5) 0;">
+        <a class="btn btn-primary" href="{{ cfp.submitUrl }}" target="_blank" rel="noopener">{{ icon("arrow-right") }} {{ T.submit }} {{ icon("external-link") }}</a>
+        {%- if cfp.pdf %}
+        <a class="btn btn-secondary" href="{{ cfp.pdf }}">{{ icon("download") }} {{ T.pdf }}</a>
+        {%- endif %}
+      </p>
+
+      <h3 style="margin-top: var(--space-7);">{{ T.typesTitle }}</h3>
+      <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr)); margin-block: var(--space-4) 0;">
+        {%- for t in T.types %}
+        <article class="tile">
+          <div class="tile-icon" aria-hidden="true">{{ icon(t.icon) }}</div>
+          <h4>{{ t.title }}</h4>
+          <p class="muted">{{ t.text }}</p>
+        </article>
+        {%- endfor %}
+      </div>
+
+      {%- if cfp.themes.length %}
+      <h3 style="margin-top: var(--space-7);">{{ T.themesTitle }}</h3>
+      <dl class="definition-list">
+        {%- for theme in cfp.themes %}
+        <div>
+          <dt>{{ loop.index }}. {{ theme.title[lang] or theme.title.en }}</dt>
+          <dd>{{ T.chair }}: {{ theme.chair }}</dd>
+          <dd>{{ theme.text[lang] or theme.text.en }}</dd>
+        </div>
+        {%- endfor %}
+      </dl>
+      {%- endif %}
+
+      {%- if cfpDates.length %}
+      <h3 style="margin-top: var(--space-7);">{{ T.datesTitle }}</h3>
+      <dl class="definition-list">
+        {%- for d in cfpDates %}
+        <div>
+          <dt><time datetime="{{ d.date }}">{{ d.date | newsDate(lang) }}</time></dt>
+          <dd>{{ (d[lang] and d[lang].label) or d.label }}</dd>
+        </div>
+        {%- endfor %}
+      </dl>
+      {%- endif %}
+
+      <p>{{ T.more | replace("{prizes}", "/prizes.html" | localizedHref(lang)) | replace("{school}", "/NetSecSchool.html" | localizedHref(lang)) | safe }}</p>
+    </article>
+  </div>
+</section>

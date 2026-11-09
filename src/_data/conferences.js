@@ -81,6 +81,25 @@ const conferences = [
     // photo. Add a Belgrade stem (-480x270, -800x450, -1600x900) when one
     // is chosen (docs/new-conference.md step 1).
     hasOwnPage: true,
+    // The call for papers section on /2027 (src/_includes/cfp.njk, #1526).
+    // While `published` is false the page keeps its "coming soon" card and
+    // nothing below renders. Set it to true only once
+    // EISSeuropa/netsec.github.io#1563 records approval from EISS and COST,
+    // in the same PR that fills `themes` from the approved text.
+    // The dates come from the "EISS dates" calendar through dashboard.js:
+    // every EISS key date after `opens` and before the conference.
+    cfp: {
+      published: false,
+      opens: "2026-11-10",
+      // The Annual Conferences category until #1558 creates the ESSC 2027
+      // event on Indico. Then point this at the event.
+      submitUrl: "https://indico.eiss-europa.com/category/1/",
+      // The approved call as a PDF in src/assets/, if there is one.
+      pdf: null,
+      // One entry per closed panel, in the order of the call:
+      // { title: { en, fr, de }, chair: "Name (Institution)", text: { en, fr, de } }
+      themes: [],
+    },
   },
   {
     slug: "2026",

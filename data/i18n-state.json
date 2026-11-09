@@ -256,14 +256,14 @@
     "src/2027.njk": {
       "fr": {
         "file": "src/2027.fr.njk",
-        "source_sha1": "9efb4d8dcdef0e7de06739a8234a00a5b75eeac0",
-        "translated_on": "2026-11-08",
+        "source_sha1": "312cfc88f925bd8014d759f1cc79bb6450acc810",
+        "translated_on": "2026-11-09",
         "status": "beta"
       },
       "de": {
         "file": "src/2027.de.njk",
-        "source_sha1": "9efb4d8dcdef0e7de06739a8234a00a5b75eeac0",
-        "translated_on": "2026-11-08",
+        "source_sha1": "312cfc88f925bd8014d759f1cc79bb6450acc810",
+        "translated_on": "2026-11-09",
         "status": "beta"
       }
     }
