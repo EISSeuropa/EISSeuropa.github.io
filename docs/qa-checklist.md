@@ -26,6 +26,7 @@ node scripts/check-a11y-browser.mjs      # 3b. axe in headless Chrome, 375 + 128
 ./scripts/check-links.sh                 # 4. internal + external links resolve in _site/
 node scripts/check-build-sanity.mjs      # 5. undefined CSS classes, cross-block class
                                          #    collisions, sitemap coverage, share cards
+node scripts/check-board-flags.mjs       # 5b. every board country has a flag alias and SVG
 # 6. privacy grep — no third party contacted on page load:
 grep -rIn 'fonts.googleapis\|fonts.gstatic\|google.com/maps/embed\|googletagmanager\|google-analytics\|youtube.com/embed' _site/ \
   | grep -v 'data-pagefind-ignore' || echo "clean"
@@ -38,7 +39,7 @@ Notes:
   player that only loads on click) is fine and expected — eyeball each
   hit rather than treating any match as a fail.
 - CI already runs the build, drift checker, link checker, build-sanity
-  and the browser accessibility pass on every PR (and CodeQL). This phase is the *local, all-at-once*
+  (with the board flag check) and the browser accessibility pass on every PR (and CodeQL). This phase is the *local, all-at-once*
   rehearsal before stamping a release or the day before a conference.
 - `check-build-sanity.mjs` takes upwards of ten minutes locally against
   well under two on CI, so it is fair to let CI hold that gate and run the
@@ -58,6 +59,7 @@ Notes:
 | Links | `check-links.sh` | any internal link 404s; external 404s triaged (some are flaky) |
 | Privacy | the grep above | any **load-time** third-party request that isn't click-gated |
 | Build sanity | `check-build-sanity.mjs` | any undefined CSS class, cross-block class collision, or missing paper page in the sitemap |
+| Board flags | `check-board-flags.mjs` | a non-empty country in `board.json` with no alias in `countryFlags.js`, or a mapped code with no SVG in source or `_site/` (`docs/board-bios-setup.md`, *Adding a new country*) |
 | Working tree | `git status` | stray scratch / probe files staged (CLAUDE.md §8) |
 | Accessibility claim | §7 and §8 of `/accessibility.html` | the release changes a page in the RGAA sample (`src/_data/rgaaAudit.json`) or a component on it, and the affected criteria in `docs/rgaa-audit-2026-10.md` have not been re-checked |
 
