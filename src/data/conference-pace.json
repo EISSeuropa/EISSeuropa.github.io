@@ -1,0 +1,12 @@
+{
+  "_documentation": "Days before each conference on which each abstract or registration arrived, latest first. Written by scripts/conference-pace.py from Indico exports (#2039). No personal data. Read by src/_data/dashboard.js.",
+  "measures": {
+    "registrations": {
+      "2026": {
+        "start": "2026-06-11",
+        "recorded": "2026-11-09",
+        "daysOut": [78, 78, 77, 73, 73, 73, 73, 73, 73, 73, 73, 73, 72, 72, 72, 72, 72, 72, 72, 71, 71, 71, 71, 71, 71, 71, 70, 70, 70, 70, 70, 69, 69, 69, 69, 69, 67, 66, 65, 65, 65, 65, 65, 65, 64, 64, 64, 64, 63, 63, 60, 60, 60, 59, 58, 58, 58, 57, 57, 56, 56, 56, 56, 55, 54, 54, 54, 53, 53, 52, 52, 52, 52, 52, 52, 52, 52, 52, 52, 50, 49, 49, 48, 48, 46, 45, 43, 43, 37, 37, 35, 35, 31, 30, 30, -20, -20]
+      }
+    }
+  }
+}
