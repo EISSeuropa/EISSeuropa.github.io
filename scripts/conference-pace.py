@@ -9,7 +9,7 @@ the CSV. src/_data/dashboard.js reads the file at build and compares this
 edition with the previous one at the same number of days out.
 
     python3 scripts/conference-pace.py --edition 2026 --measure abstracts \\
-        --column "Submitted" ~/Downloads/abstracts-2026.csv
+        --column "Submission date" ~/Downloads/abstracts-2026.csv
 
 Run it once per past edition to seed the history, then again whenever a
 fresh count is wanted. Each run replaces that edition's list for that
