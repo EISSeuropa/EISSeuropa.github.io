@@ -43,6 +43,7 @@ on:
       - Campaign metrics
       - Post news to LinkedIn and Bluesky
       - Check LinkedIn API version
+      - Close released milestone
     types: [completed]
 
 permissions:

@@ -175,6 +175,8 @@ that "Release notes" in the status Sheet is green. The card appears on
   has either been ticked off in the release notes or moved to the
   next milestone with a one-line reason in the issue thread.
 - The release should not ship with its own milestone holding open work.
+  Publishing the release closes its milestone (`close-milestone.yml`).
+  If work is still open the run fails and the failure alarm files an issue.
   See rule §10.
 
 This is a deliberate friction-point: cutting a minor release here is
