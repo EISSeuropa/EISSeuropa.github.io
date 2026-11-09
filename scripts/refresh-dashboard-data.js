@@ -30,7 +30,7 @@ async function main() {
 
   const reportsFile = netsecReport.STORE();
   const before = read(reportsFile, []);
-  const months = (await netsecReport()) || [];
+  const months = (await netsecReport.reports()) || [];
   const lost = before.filter((b) => b && b.start && !months.some((m) => m.start === b.start));
   if (lost.length) console.log(`NetSec report: kept the stored file, the new run lacks ${lost.map((m) => m.start).join(", ")}.`);
   else if (JSON.stringify(months) === JSON.stringify(before)) console.log(`NetSec report: unchanged, ${months.length} months.`);

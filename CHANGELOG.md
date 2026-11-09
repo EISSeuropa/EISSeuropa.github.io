@@ -110,6 +110,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- In the internal dashboard's NetSec report, a Directory card links its profile only while the NetSec directory lists it. A member who left, or whose profile moved after a name change, appears as plain text. The old address of a renamed profile failed the link check.
 - The NetSec report tab and the "Main new features" and "Main bug fixes" rolls on the internal dashboard no longer disappear after a busy day of deploys. Their figures are stored in `src/data/` and refreshed once a day by the roadmap refresh workflow, and a deploy only reads them. Each deploy used to recompute them from the GitHub API, and when the hourly allowance ran out it published empty copies.
 - The NetSec report tab on the internal dashboard shows its Month menu again. Its published months and the board highlights moved from `/internal/` to `/data/`: GitHub Pages sends every `eiss-europa.com/internal/` address to `internal.eiss-europa.com`, so each build found no copy, recomputed every month from the GitHub API, and left out the months the hourly API allowance could not cover.
 - The "Annual report (draft)" link at the foot of the internal dashboard opens the report again, now at `/annual-report-YYYY.html`. It led to a page not found at `internal.eiss-europa.com`.

@@ -534,7 +534,7 @@
                 <details class="apps-netsec-more"{% if key == "joined" and not R.all %} open{% endif %}>
                   <summary>{{ N.profileLists[key] }} ({{ R.directory[key].length }})</summary>
                   <ul class="apps-netsec-list" role="list" data-apps-clip>
-                    {% for m in R.directory[key] %}<li><a href="{{ m.url }}">{{ m.name }}</a><span>{{ m.affiliation }} ({{ m.country }})</span></li>{% endfor %}
+                    {% for m in R.directory[key] %}<li>{% if m.url %}<a href="{{ m.url }}">{{ m.name }}</a>{% else %}{{ m.name }}{% endif %}<span>{{ m.affiliation }} ({{ m.country }})</span></li>{% endfor %}
                   </ul>
                 </details>
               {% endif %}{% endfor %}

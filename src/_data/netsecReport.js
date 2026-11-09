@@ -169,6 +169,21 @@ function months(now = new Date()) {
   return out;
 }
 
+// A Directory card links its profile only while the NetSec directory index
+// lists it. A member who left, or whose profile moved to a new address (the
+// id changes with the name), has no page at the stored address.
+function linkCurrent(reports) {
+  let slugs;
+  try {
+    const dir = JSON.parse(fs.readFileSync(path.join(__dirname, "netsecDirectory.json"), "utf8"));
+    slugs = new Set((dir.members || []).map((m) => m.slug));
+  } catch (e) { return reports; } // no index: keep the links as stored
+  const check = (c) => (c.url && !slugs.has(c.url.replace(/^.*\/people\/|\.html$/g, "")) ? { ...c, url: null } : c);
+  return reports.map((r) => (r.directory
+    ? { ...r, directory: { ...r.directory, joined: r.directory.joined.map(check), left: r.directory.left.map(check) } }
+    : r));
+}
+
 function stored() {
   try {
     const j = JSON.parse(fs.readFileSync(STORE(), "utf8"));
@@ -176,7 +191,8 @@ function stored() {
   } catch (e) { return []; } // no file yet
 }
 
-module.exports = async function () {
+// The months as stored. The refresh writes these back, so they keep every link.
+async function reports() {
   const published = stored().filter((r) => r && r.start);
   const recompute = process.env.DASHBOARD_REFRESH === "1" && Boolean(process.env.GITHUB_TOKEN);
   const out = [];
@@ -199,9 +215,16 @@ module.exports = async function () {
     }
   }
   return out.length ? out : null;
+}
+
+module.exports = async function () {
+  const out = await reports();
+  return out && linkCurrent(out);
 };
 module.exports.compute = compute;
 module.exports.STORE = STORE;
 module.exports.lastMonth = lastMonth;
 module.exports.months = months;
 module.exports.inBatches = inBatches;
+module.exports.linkCurrent = linkCurrent;
+module.exports.reports = reports;
