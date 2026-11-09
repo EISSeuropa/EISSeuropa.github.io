@@ -17,7 +17,8 @@
 // src/assets/images/flags/ (source: HatScripts/circle-flags, MIT).
 // CI checks non-empty board countries and source/built SVGs with
 // scripts/check-board-flags.mjs. The text fallback stays available when
-// rendering incomplete data locally. See docs/board-flag-ci.md.
+// rendering incomplete data locally. See "Adding a new country" in
+// docs/board-bios-setup.md.
 
 const ALIASES = {
   // English names
