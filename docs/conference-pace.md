@@ -11,10 +11,10 @@ How many abstracts, and later registrations, the coming ESSC has at today's dist
    python3 scripts/conference-pace.py --edition 2027 --measure abstracts ~/Downloads/abstracts.csv
    ```
 
-3. Run it again with the column that holds the submission or registration date:
+3. Run it again with the column that holds the submission or registration date. Indico calls it `Submission date` for abstracts and `Registration date` for registrations. The abstracts export only includes it when the column is shown in the abstracts list, so add it there before exporting.
 
    ```
-   python3 scripts/conference-pace.py --edition 2027 --measure abstracts --column "Submitted" ~/Downloads/abstracts.csv
+   python3 scripts/conference-pace.py --edition 2027 --measure abstracts --column "Submission date" ~/Downloads/abstracts.csv
    ```
 
 4. Commit `src/data/conference-pace.json` in a PR.
