@@ -20,7 +20,7 @@ details (script IDs, the credential, the operating procedures) are in
 | Default branch | `master` | `main` | `main` |
 | Built with | Eleventy 3 and Nunjucks (`src/`) | Hand-written HTML in three locales, JSON read in the browser, Python builders | Apps Script (`.gs`), deployed with clasp 3 |
 | Deploys | GitHub Pages, on every push to `master` | GitHub Pages, on every push to `main` | "Deploy Apps Script" workflow, on every merge to `main` |
-| Merging | Squash, auto-merge, four required checks | Squash, auto-merge | Merge commit, by the maintainer |
+| Merging | Squash, four required checks, only the maintainer merges | Squash, auto-merge | Merge commit, by the maintainer |
 | Releases | SemVer, `scripts/release.sh`, `CHANGELOG.md` | SemVer, `scripts/release.sh`, `CHANGELOG.md` | None |
 | Rules | `CLAUDE.md` and `.claude/skills/` | `CLAUDE.md`, `.github/CLAUDE.md` and `.claude/skills/` | `CLAUDE.md` and `README.md` |
 
@@ -98,8 +98,8 @@ that both need.
 
 - The two sites: branch from a freshly fetched default branch, set the
   milestone, add an `[Unreleased]` bullet for a visible change, open the
-  PR, arm squash auto-merge, and leave a visual change for a preview
-  review. After the PR opens, its branch is frozen: follow-ups go in a
+  PR, and leave it for the maintainer to merge (on EISS) or arm squash
+  auto-merge (on NetSec). Leave a visual change for a preview review. After the PR opens, its branch is frozen: follow-ups go in a
   fresh PR. Each `CLAUDE.md` §2 has the detail.
 - `workspace-ops`: open a PR. The "Tests" workflow runs every project's
   `test*.mjs`. Merging deploys the changed projects, and stops on a
@@ -110,56 +110,40 @@ that both need.
   other machine-translation tool. Merging the PR approves the
   translation. The PR says which strings are machine translations.
 
-## Contributing from a fork
+## Collaborators
 
-New collaborators on this site get the Triage role and work from a fork.
-Triage can label, set milestones, assign and close issues and PRs, but
-cannot push to this repository, merge or arm auto-merge. Only the
-maintainer merges their PRs. The ruleset is unchanged
+`EISSeuropa.github.io` belongs to a personal account, so a collaborator
+has a single level of access: push and merge. The "Restrict updates"
+ruleset blocks every merge into `master` except the owner's, so a
+collaborator's PR always waits for the maintainer
 (`docs/branch-protection.md`).
 
 Once:
 
-1. Accept the Triage invitation.
-2. Fork `EISSeuropa/EISSeuropa.github.io`, clone the fork and add this
-   repository as `upstream`:
-   ```
-   git clone https://github.com/<your-login>/EISSeuropa.github.io
-   git remote add upstream https://github.com/EISSeuropa/EISSeuropa.github.io
-   ```
-3. Leave Actions disabled on the fork, as GitHub sets it. The scheduled
-   workflows need secrets the fork does not have.
+1. Accept the invitation to the repository.
+2. Clone it: `git clone https://github.com/EISSeuropa/EISSeuropa.github.io`.
 
 For each change:
 
-1. Branch from freshly fetched `upstream/master`:
+1. Branch from freshly fetched `origin/master`:
    ```
-   git fetch upstream
-   git checkout -b <branch> upstream/master
+   git fetch origin
+   git checkout -b <branch> origin/master
    ```
-2. Commit, then push to the fork with `git push -u origin <branch>`.
-3. Open the PR against `EISSeuropa/EISSeuropa.github.io` `master`, with
-   head `<your-login>:<branch>`. Leave "Allow edits by maintainers"
-   ticked.
-4. Set the milestone and labels on the PR. Do not arm auto-merge.
-5. On a first PR, the checks wait until the maintainer approves the run.
-6. Answer review comments by pushing to the same branch, and say in the
+2. Commit, then push with `git push -u origin <branch>`.
+3. Open the PR against `master`. Set the milestone and labels.
+4. Do not arm auto-merge. It cannot merge under the ruleset and only
+   hides the maintainer's merge button.
+5. Answer review comments by pushing to the same branch, and say in the
    PR when it is ready. If it conflicts with `master`, rebase onto
-   `upstream/master` and force-push to the fork.
-7. After the merge, delete the branch and update the fork's `master`
-   with "Sync fork" or `git fetch upstream`.
+   `origin/master` and force-push your branch.
+6. After the merge, delete the branch.
 
-Issues stay in this repository and need no fork.
+A fork works the same way, with the fork as `origin` and this repository
+as `upstream`. It is not needed.
 
-Deploy previews may not build for fork PRs. For a visual change, build
-and check it locally at desktop and phone width (`npm ci`, then
-`npm run build`, CLAUDE.md §14). Workflows that need secrets do not run
-on fork PRs. None of the four required checks needs one.
-
-A cloud Claude session for a fork contributor runs on the fork, with the
-Claude GitHub App installed there. It pushes its `claude/...` branch to
-the fork, opens the PR against this repository with head
-`<your-login>:<branch>`, and does not arm auto-merge.
+A cloud Claude session for a collaborator works on its `claude/...`
+branch as usual and does not arm auto-merge.
 
 ## Claude sessions
 
@@ -171,7 +155,7 @@ tools differ.
 |---|---|---|
 | Branch | `git fetch origin && git checkout -b <branch> origin/<default>` | The session names a `claude/...` branch. Create or reset it from freshly fetched `origin/<default>` before the first edit |
 | Open a PR | `gh pr create --milestone ...` | GitHub connector `create_pull_request`, then `issue_write` (method `update`, the PR number, the milestone number) to set the milestone |
-| Auto-merge | `gh pr merge --auto --squash` | `enable_pr_auto_merge` with `mergeMethod: SQUASH` |
+| Merge | EISS: none, the maintainer merges with the bypass. NetSec: `gh pr merge --auto --squash` | EISS: none. NetSec: `enable_pr_auto_merge` with `mergeMethod: SQUASH` |
 | Auto-fix | `set_monitor` in the desktop app | `subscribe_pr_activity` |
 | Issues | `gh issue create --milestone ...` | `issue_write` (method `create`, `milestone` number) |
 | Search | `gh` | `gh api -X GET search/issues` or `search/code` (search only) |

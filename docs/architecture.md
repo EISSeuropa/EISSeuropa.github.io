@@ -129,8 +129,8 @@ See `netsec-directory-integration.md`.
 
 Each sync opens an auto-PR rather than pushing to `master`, using the
 `AUTOPR_TOKEN` PAT so the four required checks run on it. The five that
-auto-merge (roadmap, ORCID, publications, NetSec directory, news) merge
-once those checks pass. Board and Indico PRs wait for a person. `sync-publications.yml` auto-merges too, but only the
+merge themselves (roadmap, ORCID, publications, NetSec directory, news) do
+so through `scripts/merge-bot-pr.sh` once those checks pass. Board and Indico PRs wait for a person. `sync-publications.yml` merges itself too, but only the
 **high-confidence** matches are published; its mid-confidence "review band"
 rides along as queue data and is published only when a human confirms it by
 hand (`confirm-publication.mjs <slug>`), since a wrong match mis-cites.
