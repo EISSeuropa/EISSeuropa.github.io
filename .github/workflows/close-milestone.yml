@@ -1,0 +1,52 @@
+# Close a release's milestone once the release is published.
+#
+# scripts/release.sh ends at `gh release create`, and closing the version
+# milestone was a manual step that got missed: v2.29.0 shipped on
+# 8 November 2026 with its milestone still open, and the internal
+# dashboard kept showing it as the next release at 100%.
+#
+# On `release: published`, the milestone titled exactly like the tag
+# (v2.29.0) is closed when it holds no open issue or PR. With open work
+# left, the run fails and the failure alarm opens an issue: that work
+# moves to the next milestone by hand, with a reason in each thread
+# (release-cross-check skill, section 7). A tag with no milestone of its
+# own, such as most patches, is skipped.
+#
+# workflow_dispatch takes a tag, to close a milestone a past release left open.
+#
+# No third-party actions, so nothing to SHA-pin: the step uses the
+# preinstalled gh CLI with the runner's GITHUB_TOKEN.
+name: Close released milestone
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag whose milestone to close, e.g. v2.29.0"
+        required: true
+
+permissions:
+  issues: write
+
+jobs:
+  close:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Close the milestone named after the tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: |
+          set -euo pipefail
+          ms=$(gh api "repos/${GITHUB_REPOSITORY}/milestones?state=all&per_page=100" \
+            --jq "[.[] | select(.title == \"${TAG}\")][0] // empty")
+          if [ -z "$ms" ]; then echo "No milestone titled ${TAG}, nothing to close."; exit 0; fi
+          number=$(jq -r .number <<<"$ms"); state=$(jq -r .state <<<"$ms"); open=$(jq -r .open_issues <<<"$ms")
+          if [ "$state" = closed ]; then echo "${TAG} (milestone ${number}) is already closed."; exit 0; fi
+          if [ "$open" -gt 0 ]; then
+            echo "::error::${TAG} (milestone ${number}) still holds ${open} open issue(s) or PR(s). Move them to the next milestone, then run this workflow with tag ${TAG}."
+            exit 1
+          fi
+          gh api -X PATCH "repos/${GITHUB_REPOSITORY}/milestones/${number}" -f state=closed --jq '"Closed \(.title) (milestone \(.number))."'
