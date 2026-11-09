@@ -33,4 +33,4 @@ The "Conference pace" card in the conference timeline on `/internal.html` shows 
 
 ## Later
 
-Step 3 of #2039, kept for later, replaces the manual export with an authenticated Indico fetch in the daily sync. See [indico-api-token.md](indico-api-token.md).
+Step 3 of #2039, replacing the manual export, is tracked in #2101. Indico's token API has no abstract dates and gives registration dates only one registrant at a time, so #2101 proposes a daily task in the NetSec dispatch plugin instead of a fetch in the daily sync.
