@@ -7,6 +7,8 @@
 #   - empty or junk href="" / src="" (and literal undefined / null /
 #     [object Object]) in the built _site/ (looks interactive but does
 #     nothing, or a template read a missing/wrong-typed value — issue #478)
+# Also runs check-board-flags.mjs to require mappings for supplied board
+# countries and the matching SVGs in source and build output (#1836).
 #
 # These slip past Eleventy (builds duplicate-key objects without error)
 # and the link checker (an empty href is a no-op, not a broken link).
@@ -58,6 +60,13 @@ jobs:
 
       - name: Build site
         run: npm run build
+
+      # Unknown countries render readable text, so neither compilation nor
+      # link checking catches a missing flag mapping (#1836).
+      - name: Check board flag coverage and assets
+        run: |
+          node --test scripts/test-board-flags.mjs
+          node scripts/check-board-flags.mjs
 
       - name: Run build-sanity check
         run: node scripts/check-build-sanity.mjs

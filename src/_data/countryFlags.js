@@ -15,6 +15,9 @@
 // plus the raw country text — visible but unstyled. Add the
 // missing entry here and download the matching SVG to
 // src/assets/images/flags/ (source: HatScripts/circle-flags, MIT).
+// CI checks non-empty board countries and source/built SVGs with
+// scripts/check-board-flags.mjs. The text fallback stays available when
+// rendering incomplete data locally. See docs/board-flag-ci.md.
 
 const ALIASES = {
   // English names
