@@ -940,7 +940,8 @@ h4 { font-size: var(--fs-lg); }
 .apps-confpace-num { flex: none; width: 7.5rem; }
 .apps-confpace-bars strong { font-variant-numeric: tabular-nums; }
 .apps-confpace-track { flex: 1; height: 0.5rem; overflow: hidden; border-radius: var(--radius-full); background: var(--border); }
-.apps-confpace-bar { display: block; height: 100%; border-radius: inherit; background: var(--accent); }
+.apps-confpace-bar { display: block; height: 100%; border-radius: inherit; }
+.apps-confpace-now .apps-confpace-bar { background: var(--accent); }
 .apps-confpace-prev .apps-confpace-bar { background: var(--text-muted); }
 .apps-confpace-total { color: var(--text-muted); font-size: 0.8125rem; white-space: nowrap; }
 @media (prefers-reduced-motion: no-preference) {
