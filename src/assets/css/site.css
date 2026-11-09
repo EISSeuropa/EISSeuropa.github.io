@@ -739,6 +739,12 @@ h4 { font-size: var(--fs-lg); }
   animation: apps-rise 800ms var(--ease-out) 320ms both;
 }
 
+.apps-hero-note a {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .apps-stats {
   position: relative;
   display: grid;
