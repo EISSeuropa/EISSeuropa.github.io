@@ -104,6 +104,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+### Changed
+
+- The staff sign-in menu in the header opens with a reminder to sign in with an eiss-europa.com account, and the internal dashboard says that a Google "request access" page means a personal account is signed in. Board members were requesting access to EISS files from their personal Gmail.
+
 ### Fixed
 
 - The NetSec report tab and the "Main new features" and "Main bug fixes" rolls on the internal dashboard no longer disappear after a busy day of deploys. Their figures are stored in `src/data/` and refreshed once a day by the roadmap refresh workflow, and a deploy only reads them. Each deploy used to recompute them from the GitHub API, and when the hourly allowance ran out it published empty copies.

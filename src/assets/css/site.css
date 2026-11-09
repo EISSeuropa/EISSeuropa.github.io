@@ -659,6 +659,22 @@ h4 { font-size: var(--fs-lg); }
   text-decoration: none;
 }
 
+/* The account reminder at the top of the panel. Wraps at the panel's
+   minimum width, where the links do not. */
+.staff-menu-note {
+  max-inline-size: 15rem;
+  margin: 0 0 var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  border-block-end: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+  line-height: 1.45;
+}
+
+.staff-menu-domain {
+  white-space: nowrap;
+}
+
 .staff-menu-sep {
   margin: var(--space-1) 0;
   border: 0;
@@ -713,6 +729,14 @@ h4 { font-size: var(--fs-lg); }
   margin: 0 auto;
   color: hsl(210 30% 86%);
   animation: apps-rise 800ms var(--ease-out) 280ms both;
+}
+
+.apps-hero-note {
+  max-width: 38rem;
+  margin: var(--space-3) auto 0;
+  color: hsl(210 30% 86%);
+  font-size: var(--fs-sm);
+  animation: apps-rise 800ms var(--ease-out) 320ms both;
 }
 
 .apps-stats {
