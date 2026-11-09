@@ -121,8 +121,8 @@ const locales = {
       boardDrive: "Board drive",
       boardDriveNote: "EISS Board shared drive",
       accountNote: "Sign in with your eiss-europa.com account. If Google asks you to request access, switch to that account.",
-      accessNote: "Google asking you to request access means you are signed in with a personal account. Switch to your eiss-europa.com account, in your EISS Chrome profile.",
-      chromeProfile: "EISS Chrome profile",
+      accessNote: "Please only log in using your EISS account. To make your experience smooth and avoid confusion with your personal Google account, we recommend using a dedicated Chrome profile.",
+      chromeProfile: "dedicated Chrome profile",
       meet: "Meet",
       meetNote: "Video calls",
       chat: "Team chat",
@@ -133,7 +133,7 @@ const locales = {
 
     // The internal dashboard (src/_includes/internal-body.njk). js: its script.
     dash: {
-      lead: "Shortcuts to the apps EISS uses. Each one asks you to sign in, with your eiss-europa.com account for the Google apps.",
+      lead: "Welcome to the EISS Dashboard, your central page for all the tools, resources, and information you might need.",
       welcomeClose: "Close the welcome",
       welcomeTitle: "Welcome to EISS",
       welcomeLead: "Which describes you? You get the steps for your role, one at a time.",
@@ -1238,8 +1238,8 @@ const locales = {
       boardDrive: "Drive du bureau",
       boardDriveNote: "Drive partagé EISS Board",
       accountNote: "Connectez-vous avec votre compte eiss-europa.com. Si Google vous propose de demander l'accès, passez à ce compte.",
-      accessNote: "Si Google vous propose de demander l'accès, vous êtes connecté avec un compte personnel. Passez à votre compte eiss-europa.com, dans votre profil Chrome EISS.",
-      chromeProfile: "profil Chrome EISS",
+      accessNote: "Veuillez vous connecter uniquement avec votre compte EISS. Pour une utilisation fluide et pour éviter toute confusion avec votre compte Google personnel, nous vous recommandons d'utiliser un profil Chrome dédié.",
+      chromeProfile: "profil Chrome dédié",
       meet: "Meet",
       meetNote: "Appels vidéo",
       chat: "Discussion d'équipe",
@@ -1250,7 +1250,7 @@ const locales = {
 
     // The internal dashboard (src/_includes/internal-body.njk). js: its script.
     dash: {
-      lead: "Raccourcis vers les applications de l'EISS. Chacune demande une connexion, avec votre compte eiss-europa.com pour les applications Google.",
+      lead: "Bienvenue sur le tableau de bord de l'EISS, votre page centrale pour tous les outils, ressources et informations dont vous pourriez avoir besoin.",
       welcomeClose: "Fermer l'accueil",
       welcomeTitle: "Bienvenue à l'EISS",
       welcomeLead: "Quel est votre rôle ? Vous verrez les étapes qui vous concernent, une à une.",
@@ -2231,8 +2231,8 @@ const locales = {
       boardDrive: "Vorstandsablage",
       boardDriveNote: "Geteilte Ablage EISS Board",
       accountNote: "Melden Sie sich mit Ihrem eiss-europa.com-Konto an. Wenn Google Sie auffordert, Zugriff anzufordern, wechseln Sie zu diesem Konto.",
-      accessNote: "Wenn Google Sie auffordert, Zugriff anzufordern, sind Sie mit einem privaten Konto angemeldet. Wechseln Sie zu Ihrem eiss-europa.com-Konto, in Ihrem EISS-Chrome-Profil.",
-      chromeProfile: "EISS-Chrome-Profil",
+      accessNote: "Bitte melden Sie sich nur mit Ihrem EISS-Konto an. Damit alles reibungslos funktioniert und es nicht zu Verwechslungen mit Ihrem privaten Google-Konto kommt, empfehlen wir ein eigenes Chrome-Profil.",
+      chromeProfile: "eigenes Chrome-Profil",
       meet: "Meet",
       meetNote: "Videoanrufe",
       chat: "Team-Chat",
@@ -2243,7 +2243,7 @@ const locales = {
 
     // The internal dashboard (src/_includes/internal-body.njk). js: its script.
     dash: {
-      lead: "Verknüpfungen zu den Anwendungen der EISS. Jede verlangt eine Anmeldung, bei den Google-Anwendungen mit Ihrem eiss-europa.com-Konto.",
+      lead: "Willkommen im EISS-Dashboard, Ihrer zentralen Seite für alle Werkzeuge, Ressourcen und Informationen, die Sie benötigen.",
       welcomeClose: "Begrüßung schließen",
       welcomeTitle: "Willkommen bei der EISS",
       welcomeLead: "Was trifft auf Sie zu? Sie sehen die Schritte für Ihre Rolle, einen nach dem anderen.",
