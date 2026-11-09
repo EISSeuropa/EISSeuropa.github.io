@@ -3,7 +3,7 @@
   "generatedAt": "2026-11-09",
   "source": "https://github.com/EISSeuropa/EISSeuropa.github.io/milestones",
   "counts": {
-    "openIssues": 101,
+    "openIssues": 102,
     "openPRs": 1,
     "helpWanted": 13
   },
@@ -57,9 +57,9 @@
       "number": 24
     },
     "v2.30.0": {
-      "closed": 18,
-      "total": 55,
-      "percent": 33,
+      "closed": 20,
+      "total": 57,
+      "percent": 35,
       "state": "open",
       "due": "2027-04-30",
       "number": 17
