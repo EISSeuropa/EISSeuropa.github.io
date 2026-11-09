@@ -162,6 +162,7 @@
       <details class="staff-menu" data-nav-group>
         <summary class="icon-btn staff-menu-summary" aria-label="{{ t.staffMenu.label }}" title="{{ t.staffMenu.label }}">{{ icon("lock") }}</summary>
         <div class="staff-menu-panel" role="group" aria-label="{{ t.staffMenu.label }}">
+          <p class="staff-menu-note">{{ t.staffMenu.accountNote | replace("eiss-europa.com", '<span class="staff-menu-domain">eiss-europa.com</span>') | safe }}</p>
           {% for link in site.staffLinks | selectattr("menu") | sort(false, true, "menu") %}
             {% if link.sep %}<hr class="staff-menu-sep">{% endif %}
             <a class="staff-menu-link" href="{{ link.href | localizedHref(lang) }}"{% if link.href[0] != "/" %} target="_blank" rel="noopener"{% endif %}>{{ icon(link.icon) }}{{ t.staffMenu[link.key] }}</a>
