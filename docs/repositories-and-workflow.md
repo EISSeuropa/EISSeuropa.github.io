@@ -110,6 +110,57 @@ that both need.
   other machine-translation tool. Merging the PR approves the
   translation. The PR says which strings are machine translations.
 
+## Contributing from a fork
+
+New collaborators on this site get the Triage role and work from a fork.
+Triage can label, set milestones, assign and close issues and PRs, but
+cannot push to this repository, merge or arm auto-merge. Only the
+maintainer merges their PRs. The ruleset is unchanged
+(`docs/branch-protection.md`).
+
+Once:
+
+1. Accept the Triage invitation.
+2. Fork `EISSeuropa/EISSeuropa.github.io`, clone the fork and add this
+   repository as `upstream`:
+   ```
+   git clone https://github.com/<your-login>/EISSeuropa.github.io
+   git remote add upstream https://github.com/EISSeuropa/EISSeuropa.github.io
+   ```
+3. Leave Actions disabled on the fork, as GitHub sets it. The scheduled
+   workflows need secrets the fork does not have.
+
+For each change:
+
+1. Branch from freshly fetched `upstream/master`:
+   ```
+   git fetch upstream
+   git checkout -b <branch> upstream/master
+   ```
+2. Commit, then push to the fork with `git push -u origin <branch>`.
+3. Open the PR against `EISSeuropa/EISSeuropa.github.io` `master`, with
+   head `<your-login>:<branch>`. Leave "Allow edits by maintainers"
+   ticked.
+4. Set the milestone and labels on the PR. Do not arm auto-merge.
+5. On a first PR, the checks wait until the maintainer approves the run.
+6. Answer review comments by pushing to the same branch, and say in the
+   PR when it is ready. If it conflicts with `master`, rebase onto
+   `upstream/master` and force-push to the fork.
+7. After the merge, delete the branch and update the fork's `master`
+   with "Sync fork" or `git fetch upstream`.
+
+Issues stay in this repository and need no fork.
+
+Deploy previews may not build for fork PRs. For a visual change, build
+and check it locally at desktop and phone width (`npm ci`, then
+`npm run build`, CLAUDE.md §14). Workflows that need secrets do not run
+on fork PRs. None of the four required checks needs one.
+
+A cloud Claude session for a fork contributor runs on the fork, with the
+Claude GitHub App installed there. It pushes its `claude/...` branch to
+the fork, opens the PR against this repository with head
+`<your-login>:<branch>`, and does not arm auto-merge.
+
 ## Claude sessions
 
 A session runs either on the maintainer's Mac (Claude Code desktop or

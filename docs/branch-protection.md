@@ -54,6 +54,18 @@ All four run on every `pull_request` with no path filter, so none can fail to re
 
 **Admin bypass.** The Admin role still bypasses the ruleset, so `release.sh` can push the release commit, and an admin can override a stuck check from the merge box. Auto-merge never bypasses: it always waits.
 
+## Who can merge
+
+The `pull_request` rule requires no approval, so anyone with the Write
+role or above can merge their own PR once the four checks pass. From
+November 2026, new collaborators get the Triage role and contribute from
+a fork (`docs/repositories-and-workflow.md`, *Contributing from a
+fork*). Triage cannot push to the repository or merge, so their PRs
+wait for the maintainer. This keeps zero approvals for the maintainer's
+own PRs and the bots, which a required review would block. Collaborators
+who already hold Write keep it until their role is changed in
+**Settings → Collaborators and teams**.
+
 ## Not enabled (and why)
 - **Required reviews / approvals** — would deadlock a solo repo.
 - **Merge queue.** Not needed at this volume. It would serialise merges and ease the §4 CHANGELOG race if that ever recurs.

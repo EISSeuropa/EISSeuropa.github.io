@@ -70,7 +70,11 @@ publishes data another repository uses.
 - **Auto-merge by default.** Open the PR with `gh pr create`, then arm
   auto-merge with `gh pr merge --auto --squash`. Four checks are required
   (#501, `docs/branch-protection.md`), so auto-merge waits for them. Only
-  `gh pr merge --admin` bypasses them: don't.
+  `gh pr merge --admin` bypasses them: don't. **Exception: PRs from a
+  fork.** Collaborators with the Triage role work from a fork and
+  cannot merge. Their PRs never arm auto-merge and wait for the
+  maintainer (`docs/repositories-and-workflow.md`, *Contributing from a
+  fork*).
 - **Turn on Auto-fix for every PR.** Right after `gh pr create` (and
   `bind_pr` if the app has not picked the PR up), switch on the desktop
   app's Auto-fix with `set_monitor`, whether or not auto-merge is armed.
