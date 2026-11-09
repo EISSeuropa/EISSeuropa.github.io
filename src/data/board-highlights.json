@@ -67,6 +67,15 @@
     },
     {
       "kind": "fix",
+      "site": "EISS",
+      "n": 2103,
+      "title": "Catch missing board country flags and SVG assets",
+      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2103",
+      "at": "2026-11-09",
+      "lines": 249
+    },
+    {
+      "kind": "fix",
       "site": "NetSec",
       "n": 2072,
       "title": "Draw WG leaders on their own hub and answer searches for undrawn people",
@@ -82,15 +91,6 @@
       "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2048",
       "at": "2026-11-06",
       "lines": 93
-    },
-    {
-      "kind": "fix",
-      "site": "EISS",
-      "n": 2049,
-      "title": "Keep the board highlights through a rate-limited build",
-      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2049",
-      "at": "2026-11-06",
-      "lines": 88
     }
   ],
   "since": "2026-10-10"
