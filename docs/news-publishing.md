@@ -111,7 +111,8 @@ adds the item to `src/_data/news.json` and opens a PR. It starts in two ways:
 The PR waits for the maintainer. Merging it publishes the item on the site and
 the feed, and queues the LinkedIn and Bluesky posts for approval in the
 `social` environment. To change the item first, edit the entry on the PR's
-branch. To drop it, close the PR and the issue. The PR body carries
+branch. To drop it, close the PR and the issue. The PR body mentions the
+person who filed the issue, so GitHub notifies them, and carries
 `Closes #<issue>`, so the merge closes the issue.
 
 **Post preview.** Every PR that changes `src/_data/news.json`, from the form or
