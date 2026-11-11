@@ -20,6 +20,15 @@
     },
     {
       "kind": "feature",
+      "site": "NetSec",
+      "n": 2146,
+      "title": "News item issue form with FR and DE machine translation",
+      "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2146",
+      "at": "2026-11-11",
+      "lines": 942
+    },
+    {
+      "kind": "feature",
       "site": "EISS",
       "n": 1845,
       "title": "Lead the homepage with the next conference",
@@ -35,15 +44,6 @@
       "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/1873",
       "at": "2026-10-25",
       "lines": 826
-    },
-    {
-      "kind": "feature",
-      "site": "EISS",
-      "n": 1980,
-      "title": "Halve the volunteering page and put Apply at the top",
-      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/1980",
-      "at": "2026-11-01",
-      "lines": 776
     }
   ],
   "fixes": [
@@ -93,5 +93,5 @@
       "lines": 93
     }
   ],
-  "since": "2026-10-11"
+  "since": "2026-10-12"
 }
