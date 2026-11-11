@@ -54,5 +54,18 @@
     "title": "EISS 2025: the annual conference in Thessaloniki",
     "url": "/2025.html",
     "excerpt": "The 2025 edition met at the University of Macedonia. The full programme and a photo gallery are in the archive."
+  },
+  {
+    "date": "2026-11-08",
+    "type": "news",
+    "title": "TES TEST TEST",
+    "site": "joint",
+    "url": "https://eiss-europa.com",
+    "excerpt": "TES TEST TEST summary",
+    "body": "TES TEST TEST body",
+    "social": {
+      "text": "TES TEST TEST summary",
+      "collaborator": "netsec"
+    }
   }
 ]
