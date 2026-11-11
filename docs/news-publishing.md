@@ -85,7 +85,7 @@ Only the headline (or the issue title) and the summary are needed.
 | Summary | `excerpt` and `social.text`, cut to 300 characters |
 | Body | `body` |
 | Type | `type` (default `news`) |
-| Link | `url` |
+| Link | `url`: an existing page, never a new one. The headline links to it and the social posts end with it. Blank: the posts link to the item in `/news` |
 | Image | `image` |
 | Publication date | `date` (blank or not `YYYY-MM-DD`: the day the run starts) |
 | Collaborator page | `social.collaborator` |
