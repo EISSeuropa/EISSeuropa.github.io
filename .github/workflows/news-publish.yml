@@ -85,12 +85,13 @@ jobs:
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_BODY: ${{ github.event.issue.body }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
         run: |
           set -o pipefail
           export TODAY="$(date -u +%F)"
           python3 scripts/news-from-issue.py | tee /tmp/news-add.txt
           {
-            echo "Auto-generated from issue #${ISSUE_NUMBER} (labelled \`news\`)."
+            echo "Generated from issue #${ISSUE_NUMBER}, filed by @${ISSUE_AUTHOR}."
             echo ""
             echo "Script output:"
             echo ""
