@@ -1,20 +1,21 @@
 # Issue-driven news publishing (#634).
 #
-# Label an issue `news` and this workflow turns it into a post: it runs
-# scripts/news-from-issue.py to append an item to src/_data/news.json, then
-# opens the standard auto-PR, merged once the required checks pass. The issue is
-# either the News item form (.github/ISSUE_TEMPLATE/news.yml, #2058) or free
-# text with optional `Type:` / `URL:` / `Date:` header lines. The PR body
-# carries `Closes #<issue>`, so merging it closes the issue.
+# A News item issue (.github/ISSUE_TEMPLATE/news.yml, #2058) becomes a PR that
+# adds the item to src/_data/news.json. The run starts in two ways:
 #
-# Only the accounts listed in the repository variable NEWS_PUBLISHERS
-# (GitHub logins, separated by commas or spaces) can publish (#2058). When
-# anyone else applies the label, the run comments on the issue and stops.
-# With the variable unset, nobody can publish.
+#   - a publisher files the form: the run starts when the issue is opened;
+#   - a publisher applies the `news` label, to an issue someone else filed or
+#     to a free-text issue with optional `Type:` / `URL:` / `Date:` lines.
 #
-# The maintainer publishes by filing a labelled issue from a phone — the
-# two-minute path #634 asks for. Sits on top of the News surface (#96) and
-# the Atom feed (#605), which both read news.json.
+# The PR waits for the maintainer, who reads it and merges it. Nothing reaches
+# the site, the feed or the social posts before that merge. The PR body carries
+# `Closes #<issue>`, so merging it closes the issue.
+#
+# Publishers are the accounts in the repository variable NEWS_PUBLISHERS
+# (GitHub logins, separated by commas, semicolons or spaces). An issue opened by anyone
+# else is left for a publisher to label, with no comment. A label applied by
+# anyone else gets a comment saying nothing was published. With the variable
+# unset, nobody can publish.
 #
 # Action pins mirror the other workflows (SHA-pinned, CLAUDE.md §2).
 
@@ -22,7 +23,7 @@ name: Publish news from issue
 
 on:
   issues:
-    types: [labeled]
+    types: [opened, labeled]
 
 permissions:
   contents: write
@@ -37,8 +38,11 @@ concurrency:
 
 jobs:
   publish:
-    name: Append the news item and open an auto-PR
-    if: github.event.label.name == 'news'
+    name: Append the news item and open a PR
+    # A form issue starts with its Site field. Any other new issue is ignored.
+    if: >-
+      (github.event.action == 'labeled' && github.event.label.name == 'news')
+      || (github.event.action == 'opened' && startsWith(github.event.issue.body, '### Site'))
     runs-on: ubuntu-latest
     steps:
       - name: Check the publisher
@@ -48,7 +52,7 @@ jobs:
           SENDER: ${{ github.event.sender.login }}
         run: |
           allowed=false
-          for login in $(echo "$PUBLISHERS" | tr ',' ' '); do
+          for login in $(echo "$PUBLISHERS" | tr ',;' '  '); do
             if [ "${login,,}" = "${SENDER,,}" ]; then allowed=true; fi
           done
           echo "allowed=$allowed" >> "$GITHUB_OUTPUT"
@@ -57,7 +61,7 @@ jobs:
           fi
 
       - name: Tell the issue why nothing was published
-        if: steps.publisher.outputs.allowed != 'true'
+        if: steps.publisher.outputs.allowed != 'true' && github.event.action == 'labeled'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SENDER: ${{ github.event.sender.login }}
@@ -94,10 +98,10 @@ jobs:
             cat /tmp/news-add.txt
             echo '```'
             echo ""
-            echo "The item was appended to \`src/_data/news.json\`; it surfaces"
-            echo "on the homepage \"Latest\" section, the \`/news\` archive, and"
-            echo "the Atom feed. Edit the JSON entry in this PR to tweak the"
-            echo "headline, excerpt, type, link, or date before merging."
+            echo "The item was added to \`src/_data/news.json\`. Merging this PR publishes it"
+            echo "on the homepage, the \`/news\` archive and the Atom feed, and queues the"
+            echo "LinkedIn and Bluesky posts for approval in the \`social\` environment."
+            echo "To change anything first, edit the entry on this branch."
             echo ""
             echo "Closes #${ISSUE_NUMBER}"
           } > /tmp/news-pr-body.md
@@ -119,15 +123,3 @@ jobs:
           body-path: /tmp/news-pr-body.md
           labels: |
             automated
-
-      # Merge once the four required checks pass. The "Restrict updates"
-      # ruleset blocks auto-merge, so the owner's PAT merges with --admin
-      # after the checks (scripts/merge-bot-pr.sh, docs/branch-protection.md).
-      - name: Merge once the required checks pass
-        # A title starting `[test]` opens the PR but leaves it unmerged, so
-        # the pipeline can be checked without publishing. Close the PR after.
-        if: steps.publisher.outputs.allowed == 'true' && steps.create-pr.outputs.pull-request-number && !startsWith(github.event.issue.title, '[test]')
-        env:
-          GH_TOKEN: ${{ secrets.AUTOPR_TOKEN }}
-          GH_REPO: ${{ github.repository }}
-        run: scripts/merge-bot-pr.sh "${{ steps.create-pr.outputs.pull-request-number }}"
