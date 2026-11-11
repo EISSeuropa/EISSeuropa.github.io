@@ -5,10 +5,10 @@ body:
   - type: markdown
     attributes:
       value: |
-        One form for every surface. A publisher reads the item and applies the
-        `news` label, which opens the pull request that adds it to the site.
-        Only the summary is required besides the headline. Leave the rest blank
-        if it does not apply.
+        One form for every surface. When a publisher files it, or applies the
+        `news` label, a pull request opens that adds the item to the site. The
+        item is published when the maintainer merges that pull request. Only the summary is required besides the headline. Leave the
+        rest blank if it does not apply.
   - type: dropdown
     id: site
     attributes:

@@ -58,7 +58,7 @@ Only the headline (or the issue title) and the summary are needed.
 | Type | `type` (default `news`) |
 | Link | `url` |
 | Image | `image` |
-| Publication date | `date` (blank or not `YYYY-MM-DD`: the day the label is applied) |
+| Publication date | `date` (blank or not `YYYY-MM-DD`: the day the run starts) |
 | Collaborator page | `social.collaborator` |
 | Newsletter | `"newsletter": true` |
 
@@ -67,20 +67,27 @@ dropdown that sets `default` also lists `None` or `n/a` as an option. The
 Collaborator page dropdown says `No collaborator` for that reason, and
 `scripts/test-news-from-issue.py` fails on either word.
 
-A publisher reads the issue and applies the **`news`** label. The
-`Publish news from issue` workflow
+The `Publish news from issue` workflow
 ([`.github/workflows/news-publish.yml`](../.github/workflows/news-publish.yml))
 runs [`scripts/news-from-issue.py`](../scripts/news-from-issue.py), which
-appends the item and opens an auto-merging PR. The PR body carries
-`Closes #<issue>`, so the merge closes the issue. The PR merges once the
-required checks pass, so check the issue before labelling it. A typo that has
-already merged is a one-line edit to `src/_data/news.json`.
+adds the item to `src/_data/news.json` and opens a PR. It starts in two ways:
 
-**Who can publish.** Only the GitHub accounts listed in the repository
-variable `NEWS_PUBLISHERS` (Settings > Secrets and variables > Actions >
-Variables), separated by commas or spaces. When anyone else applies the label,
-the workflow comments on the issue and publishes nothing. With the variable
-unset, nobody can publish. Applying a label also needs Triage access to the
+- A publisher files the form. The run starts as soon as the issue is opened.
+- A publisher applies the **`news`** label, to a form issue someone else
+  filed or to a free-text issue.
+
+The PR waits for the maintainer. Merging it publishes the item on the site and
+the feed, and queues the LinkedIn and Bluesky posts for approval in the
+`social` environment. To change the item first, edit the entry on the PR's
+branch. To drop it, close the PR and the issue. The PR body carries
+`Closes #<issue>`, so the merge closes the issue.
+
+**Publishers.** The GitHub accounts listed in the repository variable
+`NEWS_PUBLISHERS` (Settings > Secrets and variables > Actions > Variables),
+separated by commas, semicolons or spaces. A form issue opened by anyone else waits, with
+no comment, until a publisher applies the label. A label applied by anyone
+else gets a comment saying nothing was published. With the variable unset,
+nobody can publish. Applying a label also needs Triage access to the
 repository.
 
 **Free text still works.** An issue that does not use the form becomes an
@@ -94,10 +101,6 @@ Date: 2026-06-20
 
 The paragraph that becomes the excerpt.
 ```
-
-**Dry run.** Start the title with `[test]` and the workflow opens the PR
-without arming auto-merge, so nothing publishes. Read the PR, then close it
-and the issue.
 
 **Tests.** `python3 scripts/test-news-from-issue.py` checks both body shapes.
 The Build sanity workflow runs it on every PR.

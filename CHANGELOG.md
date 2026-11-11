@@ -106,6 +106,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- A News item issue filed by a publisher opens its pull request straight away, with no label needed, and the pull request waits for the maintainer to merge it. It used to need the `news` label and then merged itself once the checks passed.
 - The internal dashboard's header is shorter: a welcome line, and a note asking people to log in only with their EISS account and recommending a dedicated Chrome profile.
 - The staff sign-in menu in the header opens with a reminder to sign in with an eiss-europa.com account, and the internal dashboard says that a Google "request access" page means a personal account is signed in. Board members were requesting access to EISS files from their personal Gmail.
 
