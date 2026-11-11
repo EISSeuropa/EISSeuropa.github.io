@@ -143,3 +143,10 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5
+        # The action gives up on a hung Pages deployment after 8 minutes and
+        # fails the run, which the failure alarm reports. Its default of 10
+        # minutes matched the job's cap, and the job cap won by a second, so
+        # a hung deploy ended as `cancelled`, which the alarm ignores. That
+        # happened on 4 and 10 November 2026 and left the live site stale.
+        with:
+          timeout: 480000
