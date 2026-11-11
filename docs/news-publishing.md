@@ -21,6 +21,9 @@ Ready:
   up the `social` environment and the LinkedIn token the same day. The
   repository cannot read secrets, so check Settings > Environments > `social`
   for all seven before the first post.
+- The PR preview comment, the `publish` label merge and the
+  `publish-news-item` skill. The `publish` label has to exist in the
+  repository (Issues > Labels) before it can be applied.
 
 Not yet done:
 
@@ -110,6 +113,25 @@ the feed, and queues the LinkedIn and Bluesky posts for approval in the
 `social` environment. To change the item first, edit the entry on the PR's
 branch. To drop it, close the PR and the issue. The PR body carries
 `Closes #<issue>`, so the merge closes the issue.
+
+**Post preview.** Every PR that changes `src/_data/news.json`, from the form or
+by hand, gets a comment with the exact LinkedIn and Bluesky text
+(`.github/workflows/news-preview.yml`). The comment is updated on each push, so
+the item and its posts are read in one place before the merge.
+
+**Merging from the phone.** The GitHub app does not offer the owner's bypass.
+Applying the **`publish`** label to a news PR merges it instead
+(`.github/workflows/news-merge.yml`): `scripts/merge-bot-pr.sh` waits for the
+four required checks and merges with the owner's `AUTOPR_TOKEN`. It merges only
+when the label comes from an account in the repository variable
+`NEWS_APPROVERS` (the repository owner when the variable is unset) and the PR
+changes `src/_data/news.json` and nothing else. Otherwise it comments, removes
+the label and merges nothing.
+
+**Asking a Claude session.** A request such as "announce the call" goes through
+the `publish-news-item` skill (`.claude/skills/publish-news-item/SKILL.md`). It
+builds the item with `scripts/news-from-issue.py`, the same mapping as the form,
+and opens one PR, which then gets the same preview and merge.
 
 **Publishers.** The GitHub accounts listed in the repository variable
 `NEWS_PUBLISHERS` (Settings > Secrets and variables > Actions > Variables),
