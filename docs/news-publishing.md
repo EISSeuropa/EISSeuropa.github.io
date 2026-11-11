@@ -62,6 +62,11 @@ Only the headline (or the issue title) and the summary are needed.
 | Collaborator page | `social.collaborator` |
 | Newsletter | `"newsletter": true` |
 
+GitHub drops the form from the issue chooser, without an error, when a
+dropdown that sets `default` also lists `None` or `n/a` as an option. The
+Collaborator page dropdown says `No collaborator` for that reason, and
+`scripts/test-news-from-issue.py` fails on either word.
+
 A publisher reads the issue and applies the **`news`** label. The
 `Publish news from issue` workflow
 ([`.github/workflows/news-publish.yml`](../.github/workflows/news-publish.yml))

@@ -111,6 +111,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- The News item form appears in the list of issue forms. Its Collaborator page dropdown offered `None` beside a default choice, which GitHub does not accept, so the form was hidden.
 - The internal dashboard's release figure and its "Next milestones" card move on to v2.30.0. They had stayed at 100% on v2.29.0, whose milestone was still open after the release. A version with its own section in the changelog now counts as released.
 - In the internal dashboard's NetSec report, a Directory card links its profile only while the NetSec directory lists it. A member who left, or whose profile moved after a name change, appears as plain text. The old address of a renamed profile failed the link check.
 - The NetSec report tab and the "Main new features" and "Main bug fixes" rolls on the internal dashboard no longer disappear after a busy day of deploys. Their figures are stored in `src/data/` and refreshed once a day by the roadmap refresh workflow, and a deploy only reads them. Each deploy used to recompute them from the GitHub API, and when the hourly allowance ran out it published empty copies.
