@@ -8,6 +8,35 @@ label-an-issue automation. Tracked in
 [#634](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/634),
 [#2058](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2058).
 
+## Status (11 November 2026)
+
+Ready:
+
+- The News item form is in the issue chooser
+  ([#2116](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2116)).
+- A form filed by a publisher opens its PR at once, and the PR waits for the
+  maintainer ([#2121](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2121)).
+  Tested on 11 November with issue #2120, whose PR #2122 was closed unmerged.
+- `NEWS_PUBLISHERS` and `SOCIAL_ENABLED` (`true`) are set. The maintainer set
+  up the `social` environment and the LinkedIn token the same day. The
+  repository cannot read secrets, so check Settings > Environments > `social`
+  for all seven before the first post.
+
+Not yet done:
+
+- No item has been posted through the pipeline. The first real news item is
+  the live test: read the preview in the run summary, approve, then check both
+  accounts. A LinkedIn 403 means NetSec's app cannot post for the EISS page,
+  and EISS needs its own app (Set-up, step 1).
+- The Seville workshop item (11 November) merged before `SOCIAL_ENABLED` was
+  set. It carries `"social": "skip"`, so the next run does not post it.
+- The newsletter does not use the pipeline yet. The form's Newsletter box tags
+  the item in the feed, and nothing reads the tag until the newsletter is
+  switched on.
+
+The step-by-step guide for publishers is "How to publish a news item" in EISS
+Team > Communications on the Drive.
+
 ## The data
 
 One hand-curated store, `src/_data/news.json` — a flat array of items:
@@ -178,7 +207,23 @@ with every item then in `news.json`.
    product for an EISS app.
 2. Create the token with `scripts/linkedin-token.py` (`auth-url`, then
    `exchange`), signed in as an administrator of the EISS page. The scope is
-   `w_organization_social`.
+   `w_organization_social`. What caught the first run on a Mac:
+   - Run it from the repository folder with `/usr/bin/python3`. A python.org
+     build fails with `CERTIFICATE_VERIFY_FAILED`.
+   - Replace each `<...>` placeholder, brackets included, with the value in
+     single quotes. zsh reads a bare `<` or `>` as a redirection
+     (`parse error near \n`), and an unmatched quote leaves it at `quote>`.
+   - `exchange` needs all four values: `--client-id`, `--client-secret`,
+     `--redirect-uri` (the same one as `auth-url`) and `--code`.
+   - The code is the `code=` value in the address bar after approving, up to
+     the `&state=eiss`. An unquoted `&` sends the command to the background
+     and cuts the code. Copy the whole address into `URL='...'` and extract
+     it with Python's `urllib.parse.parse_qs` to avoid copying by hand.
+   - A code works once and expires after about 30 minutes. "authorization
+     code not found" means it expired, was used, or was cut short: approve
+     again for a fresh one.
+   - Clear the shell history afterwards (`history -p`), since it holds the
+     client secret.
 3. Create a Bluesky app password for `eissnetwork.bsky.social` (Settings >
    Privacy and security > App passwords). Never the account password.
 4. Create the `social` environment (Settings > Environments) with a required
@@ -197,6 +242,8 @@ With no channel configured, nothing is posted and the ledger is untouched.
 - **The LinkedIn token** lasts about 60 days. The script renews it with the
   refresh token on a 401. When the refresh token expires too (about a year),
   run `scripts/linkedin-token.py` again and replace the two token secrets.
+  If `exchange` printed no refresh token, the access token cannot renew
+  itself: repeat step 2 of the set-up every 60 days or so.
   NetSec's `docs/admin-guide.md` has the same procedure.
 - **The LinkedIn API version** is pinned in `data/linkedin-api-version.json`.
   `linkedin-version-check.yml` reads LinkedIn's list of active versions on
