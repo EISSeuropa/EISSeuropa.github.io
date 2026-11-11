@@ -87,7 +87,7 @@ body:
         The other organisation's LinkedIn page, added by hand as collaborator
         after the post goes out.
       options:
-        - None
+        - No collaborator
         - NetSec
       default: 0
     validations:

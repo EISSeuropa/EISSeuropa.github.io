@@ -123,7 +123,7 @@ next week
 
 ### Collaborator page
 
-None
+No collaborator
 
 ### Newsletter
 
@@ -160,5 +160,13 @@ with tempfile.TemporaryDirectory() as tmp:
                        capture_output=True)
     data = json.loads(news.read_text())
     assert len(data) == 1 and data[0]["newsletter"] is True, data
+
+# GitHub hides the whole form from the issue chooser when a dropdown with a
+# default lists "None" or "n/a" as an option (#2058 shipped one and the form
+# never appeared). The option text is also what the script reads back.
+import re
+form = (HERE.parent / ".github" / "ISSUE_TEMPLATE" / "news.yml").read_text()
+bad = re.findall(r"^\s+-\s*[\"']?(none|n/a)[\"']?\s*$", form, re.M | re.I)
+assert not bad, f"news.yml lists a reserved dropdown option: {bad}"
 
 print("test-news-from-issue: all checks passed")
