@@ -106,6 +106,8 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- The home page's conference badge reads "Submissions open" in English, French and German while the 2027 call for papers is open, with a link to submit on Indico. It read "Registration not yet open".
+- The 2027 call for papers on `/2027.html` lists its practical information (panel format, one paper per participant, travel funding, keynote and roundtables) and says more about the European Security Studies Prize: who is eligible, the €1,000 award with the *Journal of Strategic Studies*, and how to be considered.
 - The call for papers for the 2027 conference in Belgrade is on `/2027.html` in English, French and German: the three submission types, the eight closed panels with their chairs, the key dates to 26 January 2027, a link to submit on the conference's Indico event, and the full call as a PDF. The French and German panel descriptions are machine translations.
 - A News item issue filed by a publisher opens its pull request straight away, with no label needed, and the pull request waits for the maintainer to merge it. It used to need the `news` label and then merged itself once the checks passed.
 - The internal dashboard's header is shorter: a welcome line, and a note asking people to log in only with their EISS account and recommending a dedicated Chrome profile.

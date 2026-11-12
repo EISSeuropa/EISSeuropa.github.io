@@ -309,6 +309,13 @@ liveness with a visual cue. The pulsing accent ring on the
 registration badge in `/2026.njk` is the canonical example.
 Mechanism descriptions belong in the maintainer docs.
 
+**Conference pages carry the same information on both sites.** The
+ESSC page on netsec-cost.eu and the `/YYYY` page on eiss-europa.com
+give the same call, panels, key dates, prize and practical
+information. A change to one goes to the other in the same session, as
+a PR in each repository. The EISS `cfp` data in `conferences.js` is
+the text both use.
+
 ## 7. Prose voice (em dashes, semicolons, AI patterns)
 
 These apply to every piece of prose I author in this project: the

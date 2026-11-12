@@ -7,8 +7,8 @@
     before the call is approved.
 
     The FR and DE strings are machine translations (CLAUDE.md §1). The
-    descriptions of the three submission types and the `rules` line follow
-    the wording of the 2027 call. -#}
+    descriptions of the three submission types follow the wording of the
+    2027 call. The practical points are edition data (cfp.practical). -#}
 {% from "icons.njk" import icon %}
 {%- set conf = conferences.byYear[year] -%}
 {%- set cfp = conf.cfp -%}
@@ -26,11 +26,11 @@
       { icon: "file-text", title: "Paper proposals", text: "A paper for one of the pre-established closed panels below." },
       { icon: "lightbulb", title: "Poster proposals", text: "For PhD and Master's students presenting early work. The abstract is up to 200 words." }
     ],
-    rules: "Each participant presents one paper. The COST Action NetSec offers a limited number of travel grants to active participants: say in your proposal if you would like to be considered.",
+    practicalTitle: "Practical information",
     themesTitle: "Closed panels",
     chair: "Chair",
     datesTitle: "Key dates",
-    more: "Papers by PhD students and early-career scholars are considered for the <a href=\"{prizes}\">European Security Studies Prize</a>. The <a href=\"{school}\">NetSec Training School</a> runs alongside the conference."
+    more: "Papers by PhD students and early-career scholars (up to three years after the PhD) are considered for the <a href=\"{prizes}\">European Security Studies Prize</a>, awarded with the <i>Journal of Strategic Studies</i>: €1,000 and a senior scholar's mentoring towards submission to the journal. To be considered, send the paper to the panel chair by the prize deadline above. The <a href=\"{school}\">NetSec Training School</a> runs alongside the conference."
   },
   fr: {
     eyebrow: "Appel à communications",
@@ -45,11 +45,11 @@
       { icon: "file-text", title: "Propositions de communications", text: "Une communication pour l'un des panels fermés présentés ci-dessous." },
       { icon: "lightbulb", title: "Propositions de posters", text: "Pour les doctorants et les étudiants de master qui présentent des travaux en cours. Le résumé compte 200 mots au plus." }
     ],
-    rules: "Chaque participant présente une seule communication. L'Action COST NetSec offre un nombre limité de bourses de voyage aux participants actifs : indiquez dans votre proposition si vous souhaitez en bénéficier.",
+    practicalTitle: "Informations pratiques",
     themesTitle: "Panels fermés",
     chair: "Présidence",
     datesTitle: "Dates clés",
-    more: "Les communications des doctorants et des chercheurs en début de carrière concourent pour le <a href=\"{prizes}\">European Security Studies Prize</a>. L'<a href=\"{school}\">École de formation NetSec</a> se tient en parallèle de la conférence."
+    more: "Les communications des doctorants et des chercheurs en début de carrière (jusqu'à trois ans après le doctorat) concourent pour le <a href=\"{prizes}\">European Security Studies Prize</a>, décerné avec le <i>Journal of Strategic Studies</i> : 1 000 € et l'accompagnement d'un chercheur confirmé pour soumettre l'article à la revue. Pour concourir, envoyez la communication à la présidence du panel avant la date limite du prix indiquée ci-dessus. L'<a href=\"{school}\">École de formation NetSec</a> se tient en parallèle de la conférence."
   },
   de: {
     eyebrow: "Call for Papers",
@@ -64,11 +64,11 @@
       { icon: "file-text", title: "Paper-Vorschläge", text: "Ein Paper für eines der unten aufgeführten geschlossenen Panels." },
       { icon: "lightbulb", title: "Poster-Vorschläge", text: "Für Promovierende und Masterstudierende, die laufende Arbeiten vorstellen. Das Abstract umfasst höchstens 200 Wörter." }
     ],
-    rules: "Jede Person präsentiert ein Paper. Die COST-Aktion NetSec vergibt eine begrenzte Zahl von Reisestipendien an aktiv Teilnehmende: Geben Sie im Vorschlag an, ob Sie berücksichtigt werden möchten.",
+    practicalTitle: "Praktische Informationen",
     themesTitle: "Geschlossene Panels",
     chair: "Vorsitz",
     datesTitle: "Wichtige Termine",
-    more: "Papers von Promovierenden und Forschenden am Anfang ihrer Laufbahn werden für den <a href=\"{prizes}\">European Security Studies Prize</a> berücksichtigt. Die <a href=\"{school}\">NetSec Training School</a> findet parallel zur Konferenz statt."
+    more: "Papers von Promovierenden und Forschenden am Anfang ihrer Laufbahn (bis drei Jahre nach der Promotion) werden für den <a href=\"{prizes}\">European Security Studies Prize</a> berücksichtigt, der gemeinsam mit dem <i>Journal of Strategic Studies</i> vergeben wird: 1.000 € und die Begleitung durch eine erfahrene Forscherin oder einen erfahrenen Forscher bei der Einreichung bei der Zeitschrift. Senden Sie das Paper dazu bis zur oben genannten Frist für den Prize an den Panel-Vorsitz. Die <a href=\"{school}\">NetSec Training School</a> findet parallel zur Konferenz statt."
   }
 }[lang] -%}
 {#- Every EISS key date between the call's opening and the conference. -#}
@@ -101,7 +101,14 @@
         </article>
         {%- endfor %}
       </div>
-      <p style="margin-top: var(--space-5);">{{ T.rules }}</p>
+      {%- if cfp.practical %}
+      <h3 style="margin-top: var(--space-7);">{{ T.practicalTitle }}</h3>
+      <ul>
+        {%- for item in (cfp.practical[lang] or cfp.practical.en) %}
+        <li>{{ item }}</li>
+        {%- endfor %}
+      </ul>
+      {%- endif %}
 
       {%- if cfp.themes.length %}
       <h3 style="margin-top: var(--space-7);">{{ T.themesTitle }}</h3>
