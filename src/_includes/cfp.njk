@@ -7,8 +7,8 @@
     before the call is approved.
 
     The FR and DE strings are machine translations (CLAUDE.md §1). The
-    descriptions of the three submission types are placeholders: replace
-    them with the approved wording when the call is published. -#}
+    descriptions of the three submission types and the `rules` line follow
+    the wording of the 2027 call. -#}
 {% from "icons.njk" import icon %}
 {%- set conf = conferences.byYear[year] -%}
 {%- set cfp = conf.cfp -%}
@@ -22,10 +22,11 @@
     pdf: "Read the full call (PDF)",
     typesTitle: "Three ways to take part",
     types: [
-      { icon: "users", title: "Panel proposals", text: "A complete open panel, with its chair and speakers." },
-      { icon: "file-text", title: "Paper proposals", text: "A paper for one of the closed panels." },
-      { icon: "lightbulb", title: "Poster proposals", text: "Early work by PhD and Master's students, presented as a poster." }
+      { icon: "users", title: "Panel proposals", text: "An open panel: a panel title, a chair and four speakers. The chair is also the discussant." },
+      { icon: "file-text", title: "Paper proposals", text: "A paper for one of the pre-established closed panels below." },
+      { icon: "lightbulb", title: "Poster proposals", text: "For PhD and Master's students presenting early work. The abstract is up to 200 words." }
     ],
+    rules: "Each participant presents one paper. The COST Action NetSec offers a limited number of travel grants to active participants: say in your proposal if you would like to be considered.",
     themesTitle: "Closed panels",
     chair: "Chair",
     datesTitle: "Key dates",
@@ -40,10 +41,11 @@
     pdf: "Lire l'appel complet (PDF)",
     typesTitle: "Trois façons de participer",
     types: [
-      { icon: "users", title: "Propositions de panels", text: "Un panel ouvert complet, avec sa présidence et ses intervenants." },
-      { icon: "file-text", title: "Propositions de communications", text: "Une communication pour l'un des panels fermés." },
-      { icon: "lightbulb", title: "Propositions de posters", text: "Des travaux en cours de doctorants et d'étudiants de master, présentés sous forme de poster." }
+      { icon: "users", title: "Propositions de panels", text: "Un panel ouvert : un titre, une présidence et quatre intervenants. La présidence assure aussi la discussion." },
+      { icon: "file-text", title: "Propositions de communications", text: "Une communication pour l'un des panels fermés présentés ci-dessous." },
+      { icon: "lightbulb", title: "Propositions de posters", text: "Pour les doctorants et les étudiants de master qui présentent des travaux en cours. Le résumé compte 200 mots au plus." }
     ],
+    rules: "Chaque participant présente une seule communication. L'Action COST NetSec offre un nombre limité de bourses de voyage aux participants actifs : indiquez dans votre proposition si vous souhaitez en bénéficier.",
     themesTitle: "Panels fermés",
     chair: "Présidence",
     datesTitle: "Dates clés",
@@ -58,10 +60,11 @@
     pdf: "Den vollständigen Call lesen (PDF)",
     typesTitle: "Drei Wege zur Teilnahme",
     types: [
-      { icon: "users", title: "Panel-Vorschläge", text: "Ein vollständiges offenes Panel mit Vorsitz und Vortragenden." },
-      { icon: "file-text", title: "Paper-Vorschläge", text: "Ein Paper für eines der geschlossenen Panels." },
-      { icon: "lightbulb", title: "Poster-Vorschläge", text: "Laufende Arbeiten von Promovierenden und Masterstudierenden, als Poster präsentiert." }
+      { icon: "users", title: "Panel-Vorschläge", text: "Ein offenes Panel: ein Titel, ein Vorsitz und vier Vortragende. Der Vorsitz ist zugleich Diskutant." },
+      { icon: "file-text", title: "Paper-Vorschläge", text: "Ein Paper für eines der unten aufgeführten geschlossenen Panels." },
+      { icon: "lightbulb", title: "Poster-Vorschläge", text: "Für Promovierende und Masterstudierende, die laufende Arbeiten vorstellen. Das Abstract umfasst höchstens 200 Wörter." }
     ],
+    rules: "Jede Person präsentiert ein Paper. Die COST-Aktion NetSec vergibt eine begrenzte Zahl von Reisestipendien an aktiv Teilnehmende: Geben Sie im Vorschlag an, ob Sie berücksichtigt werden möchten.",
     themesTitle: "Geschlossene Panels",
     chair: "Vorsitz",
     datesTitle: "Wichtige Termine",
@@ -98,6 +101,7 @@
         </article>
         {%- endfor %}
       </div>
+      <p style="margin-top: var(--space-5);">{{ T.rules }}</p>
 
       {%- if cfp.themes.length %}
       <h3 style="margin-top: var(--space-7);">{{ T.themesTitle }}</h3>
