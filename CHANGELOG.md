@@ -115,6 +115,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- The 2027 call for papers names the chair of closed panel 6 as Nicolas Blarel.
 - The News item form appears in the list of issue forms. Its Collaborator page dropdown offered `None` beside a default choice, which GitHub does not accept, so the form was hidden.
 - The internal dashboard's release figure and its "Next milestones" card move on to v2.30.0. They had stayed at 100% on v2.29.0, whose milestone was still open after the release. A version with its own section in the changelog now counts as released.
 - In the internal dashboard's NetSec report, a Directory card links its profile only while the NetSec directory lists it. A member who left, or whose profile moved after a name change, appears as plain text. The old address of a renamed profile failed the link check.
