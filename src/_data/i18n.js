@@ -776,6 +776,8 @@ const locales = {
       // src/_data/indico.json (annualConferences[year].url).
       upcoming: "Registration open",
       notYetOpen: "Registration not yet open",
+      submissionsOpen: "Submissions open",
+      submitOnIndico: "Submit on Indico",
       closed: "Registration closed",
       happeningNow: "Happening now",
       past: "Past edition",
@@ -1818,6 +1820,8 @@ const locales = {
     registrationBadge: {
       upcoming: "Inscriptions ouvertes",
       notYetOpen: "Inscriptions pas encore ouvertes",
+      submissionsOpen: "Soumissions ouvertes",
+      submitOnIndico: "Soumettre sur Indico",
       closed: "Inscriptions fermées",
       happeningNow: "En cours",
       past: "Édition passée",
@@ -2811,6 +2815,8 @@ const locales = {
     registrationBadge: {
       upcoming: "Anmeldung offen",
       notYetOpen: "Anmeldung noch nicht geöffnet",
+      submissionsOpen: "Einreichungen geöffnet",
+      submitOnIndico: "Auf Indico einreichen",
       closed: "Anmeldung geschlossen",
       happeningNow: "Findet jetzt statt",
       past: "Vergangene Ausgabe",

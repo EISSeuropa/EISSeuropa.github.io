@@ -6547,7 +6547,8 @@ a.paper-theme-chip:focus-visible { border-color: var(--accent); color: var(--acc
   animation: registrationBadgePulse 1.6s infinite;
 }
 
-.registration-badge--upcoming .registration-badge__dot {
+.registration-badge--upcoming .registration-badge__dot,
+.registration-badge--submissions-open .registration-badge__dot {
   background: #5bff8a;
 }
 

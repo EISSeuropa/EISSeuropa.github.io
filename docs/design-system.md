@@ -325,10 +325,12 @@ Preserve whitespace outside the comment, including any whitespace-control marker
 - **`archive-programme.njk`** — past programmes in the **same** `.programme-*`
   markup, keyed by `archiveSlug` into `archiveProgrammes.js`. Used by
   every `/YYYY` archive page + `/Ukraine` + `/JPW2019` + `/joint-2024`.
-- **`registration-badge.njk`** — status pill (`not-yet-open` / `upcoming` /
-  `registration-closed` / `happening-now` / `past`) computed from
-  `conferences.js` dates + `registrationStatus`. Only `"open"` shows
-  "Registration open". Unset means not yet open. On `/2026` and the homepage hero.
+- **`registration-badge.njk`** — status pill (`submissions-open` / `not-yet-open` /
+  `upcoming` / `registration-closed` / `happening-now` / `past`) computed from
+  `conferences.js` dates, `cfp` and `registrationStatus`. A published call
+  between `cfp.opens` and `cfp.closes` shows "Submissions open" with a link to
+  `cfp.submitUrl`. Otherwise only `"open"` shows "Registration open", and unset
+  means not yet open. On `/2026` and the homepage hero.
 - **`countdown.njk`** — "N days until ESSC" pill; rendered at build
   (`daysUntil`) and recomputed live in theme.js.
 - **`conference-media.njk`** — data-driven "Session recordings" block;

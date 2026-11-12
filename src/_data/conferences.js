@@ -92,10 +92,38 @@ const conferences = [
     cfp: {
       published: true,
       opens: "2026-11-10",
+      // The proposals deadline. Until then the registration badge (home page
+      // hero and /2027) reads "Submissions open".
+      closes: "2027-01-26",
       // The ESSC 2027 event on Indico.
       submitUrl: "https://indico.eiss-europa.com/event/25/",
       // The approved call as a PDF.
       pdf: "/assets/files/EISS-2027-call-for-papers.pdf",
+      // The call's practical points, shown as a list on /2027 and on NetSec's
+      // ESSC 2027 page. FR and DE are machine translations (CLAUDE.md §1).
+      practical: {
+        en: [
+          "Each panel has four presentations of 10 minutes. The chair, who is also the discussant, gives 10 minutes of feedback, and about 40 minutes of questions from the audience follow.",
+          "Each participant presents one paper.",
+          "EISS and the University of Belgrade do not fund travel or accommodation, and applicants are advised to seek funding from their home institution. The COST Action NetSec offers a limited number of travel grants (flight and a daily allowance for three days) to active participants: say in your proposal if you would like to be considered. The organising committee contacts those who are eligible.",
+          "Participants in the NetSec Training School are reimbursed by the school.",
+          "The programme includes a keynote lecture and thematic roundtables, announced with the final programme.",
+        ],
+        fr: [
+          "Chaque panel comprend quatre présentations de 10 minutes. La présidence, qui assure aussi la discussion, fait 10 minutes de commentaires, suivies d'environ 40 minutes de questions du public.",
+          "Chaque participant présente une seule communication.",
+          "L'EISS et l'Université de Belgrade ne financent ni le voyage ni l'hébergement, et il est conseillé de solliciter un financement auprès de son institution. L'Action COST NetSec offre un nombre limité de bourses de voyage (vol et indemnité journalière pour trois jours) aux participants actifs : indiquez dans votre proposition si vous souhaitez en bénéficier. Le comité d'organisation contacte les personnes éligibles.",
+          "Les participants de l'École de formation NetSec sont remboursés par l'école.",
+          "Le programme comprend une conférence plénière et des tables rondes thématiques, annoncées avec le programme définitif.",
+        ],
+        de: [
+          "Jedes Panel umfasst vier Vorträge von je 10 Minuten. Der Vorsitz, zugleich Diskutant, gibt 10 Minuten Feedback, danach folgen rund 40 Minuten Fragen aus dem Publikum.",
+          "Jede Person präsentiert ein Paper.",
+          "EISS und die Universität Belgrad finanzieren weder Reise noch Unterkunft. Bitte bemühen Sie sich um eine Förderung durch Ihre Heimatinstitution. Die COST-Aktion NetSec vergibt eine begrenzte Zahl von Reisestipendien (Flug und Tagegeld für drei Tage) an aktiv Teilnehmende: Geben Sie im Vorschlag an, ob Sie berücksichtigt werden möchten. Das Organisationskomitee meldet sich bei den Berechtigten.",
+          "Teilnehmende der NetSec Training School erhalten ihre Kosten von der Training School erstattet.",
+          "Das Programm umfasst einen Keynote-Vortrag und thematische Roundtables, die mit dem endgültigen Programm bekanntgegeben werden.",
+        ],
+      },
       // One entry per closed panel, in the order of the call:
       // { title: { en, fr, de }, chair: "Name (Institution)", text: { en, fr, de } }
       themes: [
