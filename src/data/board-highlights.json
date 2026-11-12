@@ -21,6 +21,15 @@
     {
       "kind": "feature",
       "site": "NetSec",
+      "n": 2148,
+      "title": "WG2 Policy Workshop 2027 page and call for applications (Seville)",
+      "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2148",
+      "at": "2026-11-11",
+      "lines": 1455
+    },
+    {
+      "kind": "feature",
+      "site": "NetSec",
       "n": 2146,
       "title": "News item issue form with FR and DE machine translation",
       "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2146",
@@ -35,15 +44,6 @@
       "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/1845",
       "at": "2026-10-25",
       "lines": 914
-    },
-    {
-      "kind": "feature",
-      "site": "EISS",
-      "n": 1873,
-      "title": "Automation behind the #EISS10 campaign",
-      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/1873",
-      "at": "2026-10-25",
-      "lines": 826
     }
   ],
   "fixes": [
@@ -77,21 +77,21 @@
     {
       "kind": "fix",
       "site": "NetSec",
+      "n": 2159,
+      "title": "Link ESSC 2027 to Indico event 25, and accept an unpublished programme",
+      "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2159",
+      "at": "2026-11-12",
+      "lines": 149
+    },
+    {
+      "kind": "fix",
+      "site": "NetSec",
       "n": 2072,
       "title": "Draw WG leaders on their own hub and answer searches for undrawn people",
       "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2072",
       "at": "2026-10-25",
       "lines": 146
-    },
-    {
-      "kind": "fix",
-      "site": "EISS",
-      "n": 2048,
-      "title": "Keep NetSec months through a rate-limited build",
-      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2048",
-      "at": "2026-11-06",
-      "lines": 93
     }
   ],
-  "since": "2026-10-12"
+  "since": "2026-10-13"
 }
