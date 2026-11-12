@@ -94,10 +94,10 @@ const conferences = [
       opens: "2026-11-10",
       // The ESSC 2027 event on Indico.
       submitUrl: "https://indico.eiss-europa.com/event/25/",
-      // The approved call as a PDF in src/assets/, if there is one.
-      pdf: null,
+      // The approved call as a PDF.
+      pdf: "/assets/files/EISS-2027-call-for-papers.pdf",
       // One entry per closed panel, in the order of the call:
-      // { title: { en, fr, de }, chair: "Name (Institution)", backupChair?, text: { en, fr, de } }
+      // { title: { en, fr, de }, chair: "Name (Institution)", text: { en, fr, de } }
       themes: [
         {
           title: {
@@ -197,7 +197,6 @@ const conferences = [
             de: "Sicherheit jenseits des Staates: Umgang mit transnationalen Bedrohungen und Verwundbarkeiten",
           },
           chair: "John Helferich (University of Oxford)",
-          backupChair: "Moritz Weiss (LMU Munich)",
           text: {
             en: "Contemporary security challenges increasingly transcend national borders and traditional state-centred approaches to security governance. From geopolitical instability and technological disruption to economic interdependence and transnational threats, states, international organisations, private actors, and civil society face an increasingly complex landscape of risks and vulnerabilities. This panel examines how diverse actors and institutions respond to these challenges, focusing on the evolving dynamics of cooperation, competition, and governance across national, regional, and global levels. Drawing on a range of theoretical and methodological approaches, it seeks to advance our understanding of how transnational threats are identified, managed, and addressed in a changing global security environment.",
             fr: "Les défis de sécurité contemporains dépassent de plus en plus les frontières nationales et les approches traditionnelles de la gouvernance de la sécurité centrées sur l'État. Instabilité géopolitique, ruptures technologiques, interdépendance économique et menaces transnationales placent les États, les organisations internationales, les acteurs privés et la société civile face à un ensemble de plus en plus complexe de risques et de vulnérabilités. Ce panel examine comment des acteurs et des institutions divers répondent à ces défis, en s'intéressant aux dynamiques de coopération, de compétition et de gouvernance aux niveaux national, régional et mondial. En s'appuyant sur un éventail d'approches théoriques et méthodologiques, il cherche à mieux comprendre comment les menaces transnationales sont identifiées, gérées et traitées dans un environnement de sécurité mondial en mutation.",

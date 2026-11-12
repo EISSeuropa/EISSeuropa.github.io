@@ -29,7 +29,6 @@
     rules: "Each participant presents one paper. The COST Action NetSec offers a limited number of travel grants to active participants: say in your proposal if you would like to be considered.",
     themesTitle: "Closed panels",
     chair: "Chair",
-    backupChair: "Back-up chair",
     datesTitle: "Key dates",
     more: "Papers by PhD students and early-career scholars are considered for the <a href=\"{prizes}\">European Security Studies Prize</a>. The <a href=\"{school}\">NetSec Training School</a> runs alongside the conference."
   },
@@ -49,7 +48,6 @@
     rules: "Chaque participant présente une seule communication. L'Action COST NetSec offre un nombre limité de bourses de voyage aux participants actifs : indiquez dans votre proposition si vous souhaitez en bénéficier.",
     themesTitle: "Panels fermés",
     chair: "Présidence",
-    backupChair: "Présidence suppléante",
     datesTitle: "Dates clés",
     more: "Les communications des doctorants et des chercheurs en début de carrière concourent pour le <a href=\"{prizes}\">European Security Studies Prize</a>. L'<a href=\"{school}\">École de formation NetSec</a> se tient en parallèle de la conférence."
   },
@@ -69,7 +67,6 @@
     rules: "Jede Person präsentiert ein Paper. Die COST-Aktion NetSec vergibt eine begrenzte Zahl von Reisestipendien an aktiv Teilnehmende: Geben Sie im Vorschlag an, ob Sie berücksichtigt werden möchten.",
     themesTitle: "Geschlossene Panels",
     chair: "Vorsitz",
-    backupChair: "Stellvertretender Vorsitz",
     datesTitle: "Wichtige Termine",
     more: "Papers von Promovierenden und Forschenden am Anfang ihrer Laufbahn werden für den <a href=\"{prizes}\">European Security Studies Prize</a> berücksichtigt. Die <a href=\"{school}\">NetSec Training School</a> findet parallel zur Konferenz statt."
   }
@@ -112,7 +109,7 @@
         {%- for theme in cfp.themes %}
         <div>
           <dt>{{ loop.index }}. {{ theme.title[lang] or theme.title.en }}</dt>
-          <dd>{{ T.chair }}: {{ theme.chair }}{% if theme.backupChair %}. {{ T.backupChair }}: {{ theme.backupChair }}{% endif %}</dd>
+          <dd>{{ T.chair }}: {{ theme.chair }}</dd>
           <dd>{{ theme.text[lang] or theme.text.en }}</dd>
         </div>
         {%- endfor %}
