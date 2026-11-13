@@ -104,6 +104,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+### Added
+
+- The Anthology paper index has a note inviting authors to email corrections to their entry or the abstract of their paper, in English, French and German. Part of [#1863](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1863).
+
 ### Changed
 
 - `/2027.html` is 9,700 px tall on a phone, down from 19,200, in English, French and German. Each closed panel shows its title and chair, and its description opens on a tap. The key dates are a timeline above the panels. A bar pinned under the header links to the six sections and marks the one on screen.

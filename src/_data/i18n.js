@@ -1071,6 +1071,7 @@ const locales = {
       // /papers index (EN + FR + DE share one include, this is the
       // chrome). Paper titles, author names, affiliations, panel names and
       // theme labels are translated, the rest is not (see `note`).
+      correctionNote: "Found an error in an entry, or want to send the abstract of your paper? Email the title and year to",
       eyebrow: "The ESSC corpus",
       title: "Papers",
       lead: "Every paper presented at a European Security Studies Conference, drawn from the programmes of every edition. Browse the whole corpus, or filter by year and theme. Use the site search to find a specific title or author.",
@@ -2073,6 +2074,7 @@ const locales = {
     },
 
     papers: {
+      correctionNote: "Une erreur dans une notice, ou le résumé de votre communication à transmettre ? Envoyez le titre et l'année à",
       eyebrow: "Le corpus de l'ESSC",
       title: "Communications",
       lead: "Toutes les communications présentées lors d'une European Security Studies Conference, à partir des programmes de chaque édition. Parcourez l'ensemble du corpus ou filtrez par année et par thème. Utilisez la recherche du site pour trouver un titre ou un auteur précis.",
@@ -3068,6 +3070,7 @@ const locales = {
     },
 
     papers: {
+      correctionNote: "Fehler in einem Eintrag gefunden, oder möchten Sie das Abstract Ihres Beitrags senden? Schicken Sie Titel und Jahr an",
       eyebrow: "Das ESSC-Korpus",
       title: "Beiträge",
       lead: "Alle Beiträge, die auf einer European Security Studies Conference vorgestellt wurden, zusammengestellt aus den Programmen jeder Ausgabe. Durchsuchen Sie das gesamte Korpus oder filtern Sie nach Jahr und Thema. Nutzen Sie die Seitensuche, um einen bestimmten Titel oder Autor zu finden.",

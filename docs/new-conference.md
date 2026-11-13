@@ -270,6 +270,8 @@ descriptions at any detail level or auth, so hand-add those from the
 organisers' files. Put any such abstract there, never in
 `paperAbstracts.json`.
 
+Authors can also send an abstract or a correction by email, through the note above the Anthology paper index (#1863). Before adding an emailed abstract, check that the paper is `abstractEligible` (keynotes, roundtables and posters are not) and that the sender is an author. It then goes in `paperAbstractsManual.json` like the others. Corrections to titles or authors go to the programme source the entry came from.
+
 After syncing, run `node scripts/check-abstract-coverage.mjs` to see
 which abstracts failed to attach: it lists every stranded entry by
 year with its closest programme title, so title drift is easy to tell
