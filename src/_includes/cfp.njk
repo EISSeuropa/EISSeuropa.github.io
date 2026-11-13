@@ -6,6 +6,11 @@
     include it only while cfp.published is true, so nothing here renders
     before the call is approved.
 
+    Kept between editions. A conference page drops this include once its
+    programme is live, and the next edition's page picks it up again, so
+    do not delete it, conf-nav.njk or the `cfp-` and `confnav` styles as
+    unused (docs/new-conference.md, "The call-for-papers state").
+
     The FR and DE strings are machine translations (CLAUDE.md §1). The
     descriptions of the three submission types follow the wording of the
     2027 call. The practical points are edition data (cfp.practical). -#}
@@ -92,7 +97,7 @@
       </p>
 
       <h3 style="margin-top: var(--space-7);">{{ T.typesTitle }}</h3>
-      <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr)); margin-block: var(--space-4) 0;">
+      <div class="tile-grid cfp-types" style="grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr)); margin-block: var(--space-4) 0;">
         {%- for t in T.types %}
         <article class="tile">
           <div class="tile-icon" aria-hidden="true">{{ icon(t.icon) }}</div>
@@ -101,38 +106,44 @@
         </article>
         {%- endfor %}
       </div>
+
+      {%- if cfpDates.length %}
+      <h3 id="key-dates" style="margin-top: var(--space-7);">{{ T.datesTitle }}</h3>
+      <ol class="cfp-dates">
+        {%- for d in cfpDates %}
+        <li><time datetime="{{ d.date }}">{{ d.date | newsDate(lang) }}</time><span>{{ (d[lang] and d[lang].label) or d.label }}</span></li>
+        {%- endfor %}
+      </ol>
+      {%- endif %}
+
+      {#- Each closed panel is a native <details>: the title and chair stay
+          visible and the description opens on demand. Eight open
+          descriptions ran to fifteen phone screens. The chair sits outside
+          the <summary>, since the build links the name to a profile and a
+          link inside a summary swallows the tap. theme.js opens every
+          panel for printing. -#}
+      {%- if cfp.themes.length %}
+      <h3 id="closed-panels" style="margin-top: var(--space-7);">{{ T.themesTitle }}</h3>
+      <div class="cfp-panels">
+        {%- for theme in cfp.themes %}
+        <div class="cfp-panel">
+          <details>
+            <summary>{{ loop.index }}. {{ theme.title[lang] or theme.title.en }}</summary>
+            <p>{{ theme.text[lang] or theme.text.en }}</p>
+          </details>
+          <p class="cfp-panel-chair">{{ T.chair }}: {{ theme.chair }}</p>
+        </div>
+        {%- endfor %}
+      </div>
+      {%- endif %}
+
       {%- if cfp.practical %}
-      <h3 style="margin-top: var(--space-7);">{{ T.practicalTitle }}</h3>
+      <h3 id="format" style="margin-top: var(--space-7);">{{ T.practicalTitle }}</h3>
       <ul>
         {%- for item in (cfp.practical[lang] or cfp.practical.en) %}
         <li>{{ item }}</li>
         {%- endfor %}
       </ul>
-      {%- endif %}
-
-      {%- if cfp.themes.length %}
-      <h3 style="margin-top: var(--space-7);">{{ T.themesTitle }}</h3>
-      <dl class="definition-list">
-        {%- for theme in cfp.themes %}
-        <div>
-          <dt>{{ loop.index }}. {{ theme.title[lang] or theme.title.en }}</dt>
-          <dd>{{ T.chair }}: {{ theme.chair }}</dd>
-          <dd>{{ theme.text[lang] or theme.text.en }}</dd>
-        </div>
-        {%- endfor %}
-      </dl>
-      {%- endif %}
-
-      {%- if cfpDates.length %}
-      <h3 style="margin-top: var(--space-7);">{{ T.datesTitle }}</h3>
-      <dl class="definition-list">
-        {%- for d in cfpDates %}
-        <div>
-          <dt><time datetime="{{ d.date }}">{{ d.date | newsDate(lang) }}</time></dt>
-          <dd>{{ (d[lang] and d[lang].label) or d.label }}</dd>
-        </div>
-        {%- endfor %}
-      </dl>
       {%- endif %}
 
       <p>{{ T.more | replace("{prizes}", "/prizes.html" | localizedHref(lang)) | replace("{school}", "/NetSecSchool.html" | localizedHref(lang)) | safe }}</p>

@@ -106,6 +106,8 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- `/2027.html` is 9,700 px tall on a phone, down from 19,200, in English, French and German. Each closed panel shows its title and chair, and its description opens on a tap. The key dates are a timeline above the panels. A bar pinned under the header links to the six sections and marks the one on screen.
+- On a phone, the "Jointly organised with" strip on the conference pages lists each organiser as a row, logo beside name. The three stacked cards took 570 px.
 - The home page's conference badge reads "Submissions open" in English, French and German while the 2027 call for papers is open, with a link to submit on Indico. It read "Registration not yet open".
 - The 2027 call for papers on `/2027.html` lists its practical information (panel format, one paper per participant, travel funding, keynote and roundtables) and says more about the European Security Studies Prize: who is eligible, the €1,000 award with the *Journal of Strategic Studies*, and how to be considered.
 - The call for papers for the 2027 conference in Belgrade is on `/2027.html` in English, French and German: the three submission types, the eight closed panels with their chairs, the key dates to 26 January 2027, a link to submit on the conference's Indico event, and the full call as a PDF. The French and German panel descriptions are machine translations.
