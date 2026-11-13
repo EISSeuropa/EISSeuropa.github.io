@@ -389,7 +389,7 @@ A board member submitted or updated their bio. To publish it:
    workflow* on `master`. Wait ~30 seconds.
 2. If anything changed, a PR opens on the `board-sync/auto` branch,
    labelled `automated` and `data-sync`, and you are assigned to it
-   (you get the notification). If nothing changed, the run is a clean
+   (you get the notification), with the accounts in `PROFILE_APPROVERS`. If nothing changed, the run is a clean
    no-op and no PR appears.
 3. Open the PR. The body carries a human-readable "What changed"
    summary plus the run log. The diff touches only
@@ -400,7 +400,9 @@ A board member submitted or updated their bio. To publish it:
    so there is no allowlist: if something unexpected arrives, you simply
    do not merge.
 5. Merge with **Squash and merge**. Deploy fires and `/board.html`
-   updates within a couple of minutes.
+   updates within a couple of minutes. An account in `PROFILE_APPROVERS`
+   merges by applying the `publish` label instead
+   ([`board-bios-setup.md`](board-bios-setup.md)).
 
 ### Expire or remove a board member
 

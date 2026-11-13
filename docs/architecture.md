@@ -135,8 +135,8 @@ so through `scripts/merge-bot-pr.sh` once those checks pass. Board, Indico and n
 rides along as queue data and is published only when a human confirms it by
 hand (`confirm-publication.mjs <slug>`), since a wrong match mis-cites.
 
-**`failure-alarm.yml`** watches the syncs, the deploy and the required
-checks. On a `failure`, `timed_out` or `startup_failure` on `master`, or
+**`failure-alarm.yml`** watches the syncs, the deploy, the required
+checks, the news publisher and the weekly link check. On a `failure`, `timed_out` or `startup_failure` on `master`, or
 on a sync's `*/auto` PR branch, it opens (or threads a comment onto) a
 `CI alarm` issue, labelled `automated` + `bug` and assigned to the
 maintainer accounts so it arrives as a notification. It ignores

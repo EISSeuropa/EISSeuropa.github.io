@@ -44,6 +44,8 @@ on:
       - Post news to LinkedIn and Bluesky
       - Check LinkedIn API version
       - Close released milestone
+      - Publish news from issue
+      - Link check
     types: [completed]
 
 permissions:

@@ -108,26 +108,40 @@ adds the item to `src/_data/news.json` and opens a PR. It starts in two ways:
 - A publisher applies the **`news`** label, to a form issue someone else
   filed or to a free-text issue.
 
-The PR waits for the maintainer. Merging it publishes the item on the site and
+The PR waits for the maintainer or an approver (see *Merging with the
+`publish` label* below), and is assigned to the accounts in `NEWS_APPROVERS`,
+so GitHub notifies them. Merging it publishes the item on the site and
 the feed, and queues the LinkedIn and Bluesky posts for approval in the
 `social` environment. To change the item first, edit the entry on the PR's
 branch. To drop it, close the PR and the issue. The PR body mentions the
 person who filed the issue, so GitHub notifies them, and carries
 `Closes #<issue>`, so the merge closes the issue.
 
+**When a run fails.** The run comments on the issue, names the person who
+started it and links the run. Nothing was published. The failure alarm also
+opens an issue for the maintainer (#2134).
+
 **Post preview.** Every PR that changes `src/_data/news.json`, from the form or
 by hand, gets a comment with the exact LinkedIn and Bluesky text
 (`.github/workflows/news-preview.yml`). The comment is updated on each push, so
 the item and its posts are read in one place before the merge.
 
-**Merging from the phone.** The GitHub app does not offer the owner's bypass.
-Applying the **`publish`** label to a news PR merges it instead
+**Merging with the `publish` label.** Only the owner can merge into `master`,
+and the GitHub app does not offer the owner's bypass. Applying the
+**`publish`** label to a news PR merges it instead
 (`.github/workflows/news-merge.yml`): `scripts/merge-bot-pr.sh` waits for the
 four required checks and merges with the owner's `AUTOPR_TOKEN`. It merges only
 when the label comes from an account in the repository variable
-`NEWS_APPROVERS` (the repository owner when the variable is unset) and the PR
+`NEWS_APPROVERS` (GitHub logins separated by commas, or the repository owner
+when the variable is unset) and the PR
 changes `src/_data/news.json` and nothing else. Otherwise it comments, removes
-the label and merges nothing.
+the label and merges nothing. A merge that fails, for example on a required
+check, comments with a link to the run and removes the label, so it can be
+applied again. An approver other than the owner needs collaborator access to
+apply a label. The same label merges a board profile PR for the accounts in
+`PROFILE_APPROVERS` (`docs/board-bios-setup.md`). `python3
+scripts/test-news-merge.py` checks which PRs the label may merge, and Build
+sanity runs it.
 
 **Asking a Claude session.** A request such as "announce the call" goes through
 the `publish-news-item` skill (`.claude/skills/publish-news-item/SKILL.md`). It
