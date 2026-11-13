@@ -23,7 +23,7 @@ Maintainer-facing docs for [eiss-europa.com](https://eiss-europa.com)
 | [indico-api-token.md](indico-api-token.md) | Indico API token setup for the authenticated sync. |
 | [conference-pace.md](conference-pace.md) | Recording the conference's abstracts and registrations from Indico exports, for the dashboard's comparison with the previous edition. |
 | [annual-report.md](annual-report.md) | The annual report drafts at /annual-report-YYYY.html: sections, sources, and where staff write the prose. |
-| [new-conference.md](new-conference.md) | Per-year-page rollover procedure for a new ESSC. |
+| [new-conference.md](new-conference.md) | Per-year-page rollover procedure for a new ESSC, with the call-for-papers page template in `templates/`. |
 | [news-publishing.md](news-publishing.md) | The News surface: the homepage "Latest" section, the `/news` archive, the Atom feed, and how an item gets added. |
 | [anniversary-2027.md](anniversary-2027.md) | The #EISS10 anniversary automation: the four workflows, the settings to fill in, regenerating the logos and post cards, and what to switch off in January 2028. |
 | [publication-matching.md](publication-matching.md) | Linking ESSC papers to their later-published versions: the matcher, the review queue, the confirm step, the monthly sync. |

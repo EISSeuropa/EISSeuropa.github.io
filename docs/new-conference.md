@@ -92,7 +92,12 @@ needs nothing.
 
 ## 2. Create the per-year page
 
-Copy `src/2026.njk` to `src/<YEAR>.njk` (and its FR/DE siblings) and:
+A conference page has two states, and a new edition starts in the first.
+
+- **Call-for-papers state**, from the announcement until the programme is out. Copy `docs/templates/conference-page-call-state.njk` (and its `.fr` and `.de` siblings) to `src/<YEAR>.njk`. Step 5a below describes it.
+- **Programme state**, once Indico holds the programme. Copy the programme blocks from `src/2026.njk` (the speaking-chairing, programme-grid and programme-pdf includes) into the page in place of the `cfp.njk` include.
+
+In either state:
 
 - Replace city / venue / partner-logo references in the prose. The
   conference dates are not typed: the front-matter `description` and the
@@ -166,7 +171,32 @@ Then run `--mark-fresh` for each language to fill in the SHA.
 
 Add the new edition's public dates to the "EISS dates" Google Calendar, one all-day event per date with the label as its title (the event format is in `status/README.md` of the private `workspace-ops` repo), and its internal deadlines to "EISS internal deadlines". Then, in `src/_data/site.js`, replace `keyDates`, which stays as the fallback, with the same public dates. Give each date that opens a stage of the year a `stage`, a `step` (the short name the dashboard's stepper shows, "Call open", "Review") and `links`. The conference stage comes from the edition in `conferences.js`. `/internal.html` reads this one list for the deadline tile, the stepper and the Key dates timeline, and the build stops on a stage with no `step` or a date listed twice.
 
-## 5a. The call for papers
+## 5a. The call-for-papers state
+
+This state is a kept template. It was designed for the 2027 edition (#2141) and is meant to be reused every year, so nothing in it is deleted when a page moves on to its programme.
+
+**What it is made of**
+
+| Piece | File | Role |
+| --- | --- | --- |
+| Page skeleton | `docs/templates/conference-page-call-state.njk` (+ `.fr`, `.de`) | The whole page in its call state: hero, section bar, organisers strip, "Two events" card, the call, chairs, venue, funding. A snapshot of `src/2027.njk`, not built. |
+| The call | `src/_includes/cfp.njk` | Submission types, key dates timeline, closed panels as `<details>`, format and funding, prize. Trilingual. Reads `conferences.byYear[year].cfp`. |
+| Section bar | `src/_includes/conf-nav.njk` | The bar pinned under the header. Trilingual. |
+| Styles | `site.css`, sections "call for papers (cfp.njk)" and "conference section bar (conf-nav.njk)" | The `cfp-` and `confnav` classes. |
+| Script | `theme.js`, "Conference section bar" block, and the print block's `.cfp-panel details` selector | Marks the section on screen and opens the panels for printing. |
+
+**Starting a new edition's call**
+
+1. Copy the three template files to `src/<YEAR>.njk`, `.fr.njk` and `.de.njk`. Replace what names 2027 or Belgrade: `permalink`, `title`, `metaImage`, `alternates`, `{% set year %}`, the Training School uid, the hero copy, the host in `jointOrgs`, the chairs' names and the venue card.
+2. Add the edition's `cfp` object to `conferences.js` (described below). The page shows a "coming soon" card until `cfp.published` is true.
+3. Keep the ids `call-for-papers`, `key-dates`, `closed-panels`, `format`, `chairs` and `venue`. The section bar links to them.
+4. Mirror the call on NetSec's ESSC page (CLAUDE.md §6). Its template is `docs/templates/essc-call-state.html.txt` in `netsec.github.io`.
+
+**When the programme goes live**
+
+Swap the `cfp.njk` include for the programme blocks from `src/2026.njk`. Leave `cfp.njk`, `conf-nav.njk`, their styles and their script in the repository: no page uses them between a programme going live and the next call, and they are not dead code. If the page keeps a section bar in its programme state, give `conf-nav.njk` a second list of links for that state instead of writing a new bar. If `cfp.njk` or `conf-nav.njk` changes in a way the page skeleton depends on, refresh the three template files from the live call-state page in the same PR.
+
+**The include and its data**
 
 `src/_includes/cfp.njk` renders the call section of a conference page. Each closed panel is a `<details>` (`.cfp-panel`), with the chair outside the `<summary>`, since the build links chair names to profiles. `src/_includes/conf-nav.njk` is the section bar pinned under the header while the call is published: its links name the ids `call-for-papers`, `key-dates`, `closed-panels`, `format`, `chairs` and `venue`, so a page that includes it keeps those ids. `theme.js` marks the section on screen. The edition's entry in `conferences.js` carries a `cfp` object: `published` (the switch), `opens` (the day the call is issued), `submitUrl` (the Indico event), `pdf` and `themes` (one entry per closed panel). The key dates are every EISS date on the "EISS dates" calendar after `opens` and before the conference, so they match `/internal.html`. NetSec's ESSC page gives only the proposals deadline and links here. While `published` is false the page keeps its "coming soon" card. Fill `themes` and switch `published` on in one PR, and only once the call is approved (for 2027, EISS and COST: EISSeuropa/netsec.github.io#1563). Both repositories are public, so unapproved text stays out of them until then.
 

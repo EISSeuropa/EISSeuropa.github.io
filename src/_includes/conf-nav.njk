@@ -3,6 +3,8 @@
     header, so a reader deep in the call still sees where they are and can
     jump. Plain anchors: without JS the links still work. theme.js marks the
     section on screen with aria-current and keeps the bar under the header.
+    Kept between editions with cfp.njk: do not delete it as unused while
+    no page is in its call state (docs/new-conference.md).
     Needs `lang`. The FR and DE labels are machine translations (CLAUDE.md §1). -#}
 {%- set N = {
   en: { label: "On this page", items: [["call-for-papers", "Call"], ["key-dates", "Key dates"], ["closed-panels", "Closed panels"], ["format", "Format"], ["chairs", "Chairs"], ["venue", "Venue"]] },

@@ -1,0 +1,196 @@
+---
+layout: base.njk
+permalink: /2027.fr.html
+title: Conférence 2027 — Belgrade
+eleventyComputed:
+  description: "European Security Studies Conference, {{ conferences.byYear['2027'].dates.fr }} à la Faculté de sciences politiques de l'Université de Belgrade. Organisée conjointement par l'Action COST NetSec, EISS et l'Université de Belgrade."
+metaImage: /assets/images/2027-meta.fr.jpg
+navKey: conferences
+lang: fr
+status: beta
+alternates:
+  en: /2027.html
+  fr: /2027.fr.html
+  de: /2027.de.html
+---
+{# TEMPLATE, not built (Eleventy reads src/ only). The call-for-papers
+   state of a conference page, saved from src/2027.fr.njk in November 2026
+   so the structure outlives the 2027 page's move to its live programme.
+   To use it: copy to src/<YEAR>.fr.njk and follow docs/new-conference.md,
+   "The call-for-papers state". Everything that names 2027 or Belgrade
+   is edition copy to replace. #}
+{% from "icons.njk" import icon %}
+
+{# schema.org Event structured data for this edition (built from
+   conferences.js). Renders into the body, which is valid for JSON-LD. #}
+{% set year = "2027" %}
+{% set school = netsecEvents.byUid["summer-school-2027@netsec-cost.eu"] %}
+{% include "event-jsonld.njk" %}
+
+<section class="hero" aria-labelledby="hero-title-2027">
+  <div class="container hero-inner">
+    <p class="reveal" style="font-size: var(--fs-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: hsl(0 0% 100% / 0.85); margin-bottom: var(--space-3);">
+      Prochaine conférence annuelle
+    </p>
+    <h1 id="hero-title-2027" class="reveal reveal-delay-1" style="font-size: clamp(2.25rem, 1.6rem + 3vw, 4rem);">
+      European Security Studies Conference 2027
+    </h1>
+    <p class="hero-tagline reveal reveal-delay-2">
+      Organisée conjointement par l'Action COST NetSec, l'Initiative européenne pour les études de
+      sécurité (EISS) et la Faculté de sciences politiques de l'Université de Belgrade.
+    </p>
+    <div class="hero-actions reveal reveal-delay-3">
+      <a class="btn btn-primary" href="#call-for-papers">{{ icon("file-text") }} Appel à communications</a>
+      <a class="btn btn-ghost" href="#venue">{{ icon("map-pin") }} Hôte et lieu</a>
+    </div>
+    <p class="reveal reveal-delay-3" style="margin-top: var(--space-6); font-size: var(--fs-sm); color: hsl(0 0% 100% / 0.9);">
+      <strong>{{ conferences.byYear[year].dates.fr }}</strong>
+      <span aria-hidden="true">&nbsp;·&nbsp;</span>
+      Université de Belgrade, Serbie
+    </p>
+    <div class="reveal reveal-delay-3 conf-status-row">
+      {% include "countdown.njk" %}
+    </div>
+  </div>
+</section>
+
+{% if conferences.byYear[year].cfp.published %}{% include "conf-nav.njk" %}{% endif %}
+
+<section class="section" aria-label="Organisateurs de la conférence" style="padding-block: var(--space-5);">
+  <div class="container">
+    {%- set jointOrgs = [
+      {
+        "name": "Initiative européenne pour les études de sécurité (EISS)",
+        "url": "https://eiss-europa.com/",
+        "logo": "/assets/images/partners/eiss-lockup.svg"
+      },
+      {
+        "name": "NetSec (Action COST CA24154)",
+        "url": "https://netsec-cost.eu/",
+        "logo": "/assets/images/partners/netsec.svg"
+      },
+      {
+        "name": "Université de Belgrade, Faculté de sciences politiques",
+        "url": "https://www.fpn.bg.ac.rs/",
+        "logo": "/assets/images/partners/belgrade-fpn.png"
+      }
+    ] -%}
+    {%- set jointOrgsLabel = "Organisée conjointement par" -%}
+    {% include "joint-orgs.njk" %}
+  </div>
+</section>
+
+<section class="section-tight" aria-labelledby="week-title">
+  <div class="container">
+    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div class="featured-eyebrow">Une semaine à Belgrade</div>
+      <h2 id="week-title">Deux événements, l'un après l'autre</h2>
+      <p class="lead">
+        EISS et l'Action COST NetSec vous invitent à deux événements à la Faculté de sciences
+        politiques de l'Université de Belgrade.
+      </p>
+      <div class="tile-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr)); margin-block: var(--space-5) 0;">
+        <article class="tile">
+          <div class="tile-icon" aria-hidden="true">{{ icon("calendar") }}</div>
+          <h3>European Security Studies Conference</h3>
+          <p class="muted"><strong>{{ conferences.byYear[year].dates.fr }}</strong>. La dixième conférence annuelle.</p>
+        </article>
+        <article class="tile">
+          <div class="tile-icon" aria-hidden="true">{{ icon("calendar") }}</div>
+          <h3>École de formation NetSec</h3>
+          <p class="muted"><strong>{{ school.displayDate.fr }}</strong>, en parallèle de la conférence. Candidatures jusqu'au {{ school.deadline.fr }}. L'appel figure sur
+            <a href="/NetSecSchool.html">la page de l'École de formation</a> et sur
+            <a href="https://netsec-cost.eu/" target="_blank" rel="noopener">netsec-cost.eu</a>.</p>
+        </article>
+      </div>
+    </article>
+  </div>
+</section>
+
+{# The call for papers: switched on by cfp.published in conferences.js,
+   once EISS and COST approve the text (#1526). Until then, the card below. #}
+{% if conferences.byYear[year].cfp.published %}
+{% include "cfp.njk" %}
+{% else %}
+<section class="section-tight" id="call-for-papers" aria-labelledby="cfp-title">
+  <div class="container">
+    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div class="featured-eyebrow">Appel à communications</div>
+      <h2 id="cfp-title">Début novembre 2026</h2>
+      <p class="lead">
+        L'appel à communications sera publié ici début novembre 2026 au plus tard. Il précisera les
+        thèmes et la date limite de soumission.
+      </p>
+      <p>
+        <a class="btn btn-secondary btn-sm" href="{{ site.newsletterUrl }}" target="_blank" rel="noopener">
+          {{ icon("mail") }} Le recevoir par e-mail {{ icon("external-link") }}
+        </a>
+      </p>
+    </article>
+  </div>
+</section>
+{% endif %}
+
+<section class="section-tight" id="chairs" aria-labelledby="chairs-title">
+  <div class="container">
+    <h2 id="chairs-title">Présidence de la conférence</h2>
+    <div class="people-grid">
+      {%- set boardPeople = boardSorted.leadership.concat(boardSorted.boardMembers) %}
+      {%- for chairName in ["Prof. Filip Ejdus", "Dr Arthur Laudrain"] %}
+        {%- for person in boardPeople %}{% if person.name == chairName %}
+      <article class="person">
+        <img class="person-photo" src="{{ person.photo }}" alt="{{ person.alt or person.name }}" loading="lazy">
+        <div class="person-body">
+          <p class="person-name">{{ person.name }}</p>
+          <p class="person-position" lang="en">{{ person.position }}</p>
+          <p class="person-institution" lang="en">{{ person.institution }}</p>
+        </div>
+      </article>
+        {%- endif %}{% endfor %}
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="venue" aria-labelledby="venue-title">
+  <div class="container">
+    <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div class="featured-eyebrow">Hôte et lieu</div>
+      <h2 id="venue-title">Université de Belgrade, Faculté de sciences politiques</h2>
+      <p class="lead">
+        Chaque année, la European Security Studies Conference se tient dans un pays européen différent.
+        La conférence 2027 a lieu à la Faculté de sciences politiques de l'Université de Belgrade, en Serbie.
+      </p>
+      <p>
+        <a class="btn btn-secondary btn-sm" href="https://netsec-cost.eu/essc-2027.fr.html#practical" target="_blank" rel="noopener">
+          {{ icon("map-pin") }} Informations pratiques {{ icon("external-link") }}
+        </a>
+      </p>
+    </article>
+  </div>
+</section>
+
+<section class="section-tight" aria-labelledby="netsec-title">
+  <div class="container">
+    <article class="card" style="display: grid; grid-template-columns: 1fr; gap: var(--space-5); padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
+      <div>
+        <div class="featured-eyebrow">Financement et partenaires</div>
+        <h2 id="netsec-title" style="margin-bottom: var(--space-3);">Soutenu par Horizon Europe</h2>
+        <p class="muted">
+          L'Action COST Networking European Security Knowledge (NetSec) (CA24154) est soutenue par
+          le programme Horizon de l'Union européenne.
+        </p>
+        <p style="margin-top: var(--space-4);">
+          <a class="btn btn-secondary btn-sm" href="https://netsec-cost.eu/" target="_blank" rel="noopener">
+            Visiter netsec-cost.eu {{ icon("external-link") }}
+          </a>
+        </p>
+      </div>
+      <figure style="margin: 0; max-width: 28rem;">
+        <img src="/assets/images/en-funded20by20the20eu-pantone-1529x321.jpg"
+             alt="Financé par l'Union européenne — Programme Horizon."
+             loading="lazy">
+      </figure>
+    </article>
+  </div>
+</section>
