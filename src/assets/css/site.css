@@ -8576,8 +8576,8 @@ a.open-panel-link:focus-visible {
 @media (max-width: 720px) {
   .joint-orgs-list {
     grid-template-columns: 1fr;
-    max-width: 320px;
-    gap: var(--space-4);
+    max-width: 22rem;
+    gap: var(--space-3);
   }
 }
 
@@ -8640,6 +8640,22 @@ a.joint-orgs-card:hover .joint-orgs-name {
   color: var(--accent);
 }
 
+@media (max-width: 720px) {
+  /* A row per organiser on a phone: logo left, name right. Stacked
+     cards took most of a screen before the page's first section. */
+  .joint-orgs-card {
+    flex-direction: row;
+    gap: var(--space-4);
+  }
+  .joint-orgs-logo-slot {
+    flex: 0 0 7rem;
+    width: 7rem;
+    height: 4rem;
+    padding: var(--space-2) var(--space-3);
+  }
+  .joint-orgs-name { text-align: left; max-width: none; }
+}
+
 /* Dark-mode polish: the white logo slot stays white (institutional marks
    are designed for light substrates — Stockholm University's navy
    #002F5F wordmark, NetSec's grey marks), the border becomes transparent
@@ -8672,6 +8688,153 @@ a.joint-orgs-card:hover .joint-orgs-name {
     transform: none;
   }
 }
+
+/* ---------- call for papers (cfp.njk) ----------------------------------
+   Key dates as a compact timeline and the closed panels as native
+   <details>, so the call fits a phone without fifteen screens of panel
+   descriptions. */
+.cfp-dates {
+  list-style: none;
+  margin: var(--space-4) 0 0;
+  padding: 0 0 0 1.6rem;
+  position: relative;
+}
+.cfp-dates::before {
+  content: "";
+  position: absolute;
+  left: 0.4rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--border);
+}
+.cfp-dates > li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: var(--text-muted);
+}
+.cfp-dates > li + li { margin-top: var(--space-4); }
+.cfp-dates > li::before {
+  content: "";
+  position: absolute;
+  left: calc(-1.2rem - 5px);
+  top: 0.4rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--bg-elev);
+}
+.cfp-dates time { font-weight: 700; color: var(--text); }
+@media (min-width: 640px) {
+  .cfp-dates > li { flex-direction: row; gap: var(--space-4); }
+  .cfp-dates time { flex: 0 0 11rem; }
+}
+
+.cfp-panels {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+.cfp-panel {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.cfp-panel summary {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-4) var(--space-4) var(--space-1);
+  font-weight: 700;
+  color: var(--text);
+  line-height: var(--lh-snug);
+  cursor: pointer;
+  list-style: none;
+  border-radius: var(--radius-md);
+}
+.cfp-panel summary::-webkit-details-marker { display: none; }
+.cfp-panel summary::after {
+  content: "";
+  width: 0.6rem;
+  height: 0.6rem;
+  border-right: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+  transform: rotate(45deg);
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+.cfp-panel details[open] > summary::after { transform: rotate(-135deg); }
+.cfp-panel details > p {
+  margin: 0;
+  padding: var(--space-2) var(--space-4);
+  color: var(--text-muted);
+  line-height: var(--lh-relaxed);
+}
+.cfp-panel-chair {
+  margin: 0;
+  padding: 0 var(--space-4) var(--space-4);
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cfp-panel summary::after { transition: none; }
+}
+
+/* On a phone the three submission types read as rows: icon left, text right. */
+@media (max-width: 639px) {
+  .cfp-types .tile {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: var(--space-4);
+    padding: var(--space-4);
+  }
+  .cfp-types .tile-icon { grid-row: 1 / span 2; margin-bottom: 0; }
+  .cfp-types .tile h4 { margin-bottom: var(--space-1); }
+}
+
+/* ---------- conference section bar (conf-nav.njk) ----------------------
+   Pinned under the sticky chrome. theme.js publishes the chrome's bottom
+   edge as --confnav-top and marks the section on screen. One scrolling
+   row of links on a phone. */
+.confnav {
+  position: sticky;
+  top: var(--confnav-top, 4rem);
+  z-index: 40;
+  background: var(--surface-nav);
+  -webkit-backdrop-filter: saturate(var(--saturate)) blur(var(--blur-nav));
+  backdrop-filter: saturate(var(--saturate)) blur(var(--blur-nav));
+  border-bottom: 1px solid var(--border);
+}
+.confnav-list {
+  list-style: none;
+  margin-block: 0;
+  padding-block: var(--space-2);
+  display: flex;
+  gap: var(--space-2);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.confnav-list::-webkit-scrollbar { display: none; }
+.confnav-list a {
+  display: block;
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--text-muted);
+}
+.confnav-list a:hover { color: var(--text); background: var(--accent-soft); }
+.confnav-list a[aria-current="true"] {
+  color: var(--accent-text);
+  background: var(--accent);
+}
+/* Anchor landings clear the bar as well as the chrome. */
+main:has(.confnav) [id] { scroll-margin-top: 3.75rem; }
 
 /* ---------- print stylesheet -------------------------------------------
    Optimised for attendees printing the conference programme. Forces a

@@ -55,6 +55,8 @@ alternates:
   </div>
 </section>
 
+{% if conferences.byYear[year].cfp.published %}{% include "conf-nav.njk" %}{% endif %}
+
 <section class="section" aria-label="Conference organisers" style="padding-block: var(--space-5);">
   <div class="container">
     {%- set jointOrgs = [

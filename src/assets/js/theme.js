@@ -422,7 +422,7 @@
    on-screen state afterwards. Covers both Chrome/Firefox (`beforeprint` /
    `afterprint`) and Safari (the `print` media-query change event). */
 (function () {
-  var SEL = "details.programme-contribs";
+  var SEL = "details.programme-contribs, .cfp-panel details";
   function openForPrint() {
     document.querySelectorAll(SEL).forEach(function (d) {
       if (d.dataset.printPrev === undefined) d.dataset.printPrev = d.open ? "1" : "0";
@@ -445,6 +445,41 @@
       else if (mq.addListener) mq.addListener(onChange);
     } catch (e) {}
   }
+})();
+
+/* Conference section bar (conf-nav.njk). Keeps the bar pinned under the
+   sticky chrome and marks the section on screen with aria-current. The
+   links are plain anchors, so the bar works without this. */
+(function () {
+  var nav = document.querySelector("[data-confnav]");
+  if (!nav) return;
+  var list = nav.querySelector("ul");
+  var links = [].slice.call(nav.querySelectorAll('a[href^="#"]'));
+  var targets = links.map(function (a) { return document.getElementById(a.hash.slice(1)); });
+  var current = null, queued = false;
+  function update() {
+    queued = false;
+    var chrome = document.querySelector(".sticky-chrome");
+    var top = chrome ? Math.round(chrome.getBoundingClientRect().bottom) : 0;
+    nav.style.setProperty("--confnav-top", top + "px");
+    /* The reading line sits just under the bar. */
+    var line = top + nav.offsetHeight + 24, active = null;
+    targets.forEach(function (t, i) {
+      if (t && t.getBoundingClientRect().top <= line) active = links[i];
+    });
+    if (active === current) return;
+    if (current) current.removeAttribute("aria-current");
+    current = active;
+    if (!active) return;
+    active.setAttribute("aria-current", "true");
+    /* Keep the marked link visible in the scrolling row on a phone. */
+    list.scrollLeft = active.offsetLeft - (list.clientWidth - active.offsetWidth) / 2;
+  }
+  function queue() { if (!queued) { queued = true; requestAnimationFrame(update); } }
+  window.addEventListener("scroll", queue, { passive: true });
+  window.addEventListener("resize", queue, { passive: true });
+  window.addEventListener("load", update);
+  update();
 })();
 
 /* Conference countdown. Recomputes the day count live from the target
