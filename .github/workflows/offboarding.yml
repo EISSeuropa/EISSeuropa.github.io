@@ -2,12 +2,14 @@
 #
 # Departures are recorded in src/_data/board.json with a roleEndDate, and
 # entries are never deleted. Every Monday this workflow lists the roles
-# that ended in the previous seven days (scripts/offboarding-due.py) and
-# opens one issue per leaver with the steps no tool can take for us:
-# inviting them to the EISS Alumni LinkedIn group (#1861), confirming
-# they are happy to stay listed under "EISS community" on /board, moving
-# their files into the EISS Team Drive folder, updating the Intern
-# handbook and cutting their Proton Pass access.
+# that end in the coming seven days or ended in the past seven
+# (scripts/offboarding-due.py, #2143) and opens one issue per leaver with
+# the website side of leaving: thanking them while they still have their
+# account, inviting them to the EISS Alumni LinkedIn group (#1861) and
+# confirming they are happy to stay listed under "EISS community" on
+# /board. Accounts, Drive and apps outside Google are the leaver checklist
+# email of the lifecycle script in workspace-ops, sent seven days before
+# the End date (#1986).
 #
 # Idempotent: an issue with exactly that title, open or closed, is left alone.
 # Issues carry the `automated` label and the nearest open release
@@ -44,14 +46,16 @@ jobs:
           [ -s /tmp/due.tsv ] || { echo "Nobody left this week"; exit 0; }
           ms=$(gh api "repos/${GITHUB_REPOSITORY}/milestones?state=open&sort=due_on&direction=asc" \
             --jq '[.[] | select(.due_on != null and .due_on >= (now | todate))][0].title // "Backlog — Under watch"')
+          today=$(date -u +%F)
           while IFS=$'\t' read -r name role end; do
             title="Offboarding: ${name}"
+            if [[ "$end" < "$today" ]]; then when="left on"; else when="leaves on"; fi
             # The search is fuzzy, so compare whole titles: "Offboarding: Ali" must not match "Offboarding: Ali Gohar".
             if gh issue list --state all --limit 100 --search "\"${title}\" in:title" --json title --jq '.[].title' | grep -Fxq "$title"; then
               echo "Already filed: ${name}"; continue
             fi
             cat > /tmp/body.md <<BODY
-          ${name} (${role}) left on ${end}, per \`src/_data/board.json\`.
+          ${name} (${role}) ${when} ${end}, per \`src/_data/board.json\`.
 
           - [ ] Thank them, and ask whether they are happy to stay listed under *EISS community* on /board
           - [ ] Invite them to the EISS Alumni LinkedIn group (#1861)
