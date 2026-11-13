@@ -95,7 +95,7 @@ needs nothing.
 A conference page has two states, and a new edition starts in the first.
 
 - **Call-for-papers state**, from the announcement until the programme is out. Copy `docs/templates/conference-page-call-state.njk` (and its `.fr` and `.de` siblings) to `src/<YEAR>.njk`. Step 5a below describes it.
-- **Programme state**, once Indico holds the programme. Copy the programme blocks from `src/2026.njk` (the speaking-chairing, programme-grid and programme-pdf includes) into the page in place of the `cfp.njk` include.
+- **Programme state**, once Indico holds the programme. Start from `docs/templates/conference-page-programme-state.njk` (and its `.fr` and `.de` siblings): take its registration badge, "Speaking or chairing?" card, programme grid, programme PDF and travel blocks into the page in place of the `cfp.njk` include. `src/2026.njk` is no guide here: since June 2026 it is an archive page on `archive-programme.njk`, and no built page includes `programme-grid.njk` or `speaking-chairing.njk` between editions. [indico-programme-integration.md](indico-programme-integration.md) covers the data behind the grid.
 
 In either state:
 
@@ -194,7 +194,7 @@ This state is a kept template. It was designed for the 2027 edition (#2141) and 
 
 **When the programme goes live**
 
-Swap the `cfp.njk` include for the programme blocks from `src/2026.njk`. Leave `cfp.njk`, `conf-nav.njk`, their styles and their script in the repository: no page uses them between a programme going live and the next call, and they are not dead code. If the page keeps a section bar in its programme state, give `conf-nav.njk` a second list of links for that state instead of writing a new bar. If `cfp.njk` or `conf-nav.njk` changes in a way the page skeleton depends on, refresh the three template files from the live call-state page in the same PR.
+Swap the `cfp.njk` include for the programme blocks from `docs/templates/conference-page-programme-state.njk`. Leave `cfp.njk`, `conf-nav.njk`, their styles and their script in the repository: no page uses them between a programme going live and the next call, and they are not dead code. If the page keeps a section bar in its programme state, give `conf-nav.njk` a second list of links for that state instead of writing a new bar. If `cfp.njk` or `conf-nav.njk` changes in a way the page skeleton depends on, refresh the three template files from the live call-state page in the same PR.
 
 **The include and its data**
 
