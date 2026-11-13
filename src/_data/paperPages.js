@@ -70,6 +70,7 @@ module.exports = function () {
         conferenceUrl: p.conferenceUrl, // bare edition page; paper-page-body appends #panel-/#programme
         panel: p.panel,
         abstract: p.abstract || null,
+        abstractEligible: p.abstractEligible,
         abstractUrl: p.abstractUrl || null,
         publishedUrl: p.publishedUrl || null,
         doi: p.doi || null,

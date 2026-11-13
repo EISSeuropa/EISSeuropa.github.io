@@ -71,6 +71,9 @@ jobs:
       - name: Run build-sanity check
         run: node scripts/check-build-sanity.mjs
 
+      - name: Check Anthology author correction routes
+        run: python3 scripts/test-paper-feedback.py
+
       # A malformed .bib does not fail the build, it fails in a reader's LaTeX
       # compile weeks later, so it needs its own gate (#1254).
       - name: Run citation-export check

@@ -104,6 +104,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
+### Added
+
+- The Anthology's by-paper index and existing paper pages offer a prefilled email route for corrections, with an invitation to supply an abstract only for eligible records without one. Title-only records can be corrected directly from the index without a new landing page. English, French and German interface copy. Part of [#1863](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1863).
+
 ### Changed
 
 - The home page's conference badge reads "Submissions open" in English, French and German while the 2027 call for papers is open, with a link to submit on Indico. It read "Registration not yet open".

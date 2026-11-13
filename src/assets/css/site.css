@@ -6298,6 +6298,14 @@ a.speaker-paper-title:hover {
 /* /papers — the cross-year paper index (#632). The filter chrome reuses
    the .speaker-filters / .speaker-field / .speaker-clear / .speaker-status
    panel above; the list below is a one-card-per-paper stack. */
+.paper-feedback {
+  margin: var(--space-3) 0;
+  font-size: var(--fs-sm);
+}
+.paper-feedback a {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
 .paper-index {
   list-style: none;
   margin: 0;

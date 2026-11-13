@@ -1067,6 +1067,15 @@ const locales = {
       atlasLink: "See their papers on the Atlas",
     },
 
+    paperFeedback: {
+      correction: "Suggest a correction by email",
+      correctionOrAbstract: "Suggest a correction or send an abstract by email",
+      emailHint: "Correction links open an email draft. Alternatively, email the paper title, year and reference to",
+      reviewNote: "Suggestions are reviewed before any changes are published.",
+      request: "Please describe the correction and include a supporting source, if available:",
+      abstractRequest: "To supply the missing abstract, paste the abstract text below and confirm that you are an author:",
+    },
+
     papers: {
       // /papers index (EN + FR + DE share one include, this is the
       // chrome). Paper titles, author names, affiliations, panel names and
@@ -2072,6 +2081,15 @@ const locales = {
       atlasLink: "Voir ses communications sur l'Atlas",
     },
 
+    paperFeedback: {
+      correction: "Proposer une correction par courriel",
+      correctionOrAbstract: "Proposer une correction ou envoyer un résumé par courriel",
+      emailHint: "Les liens de correction ouvrent un brouillon de courriel. Il est aussi possible d'envoyer le titre, l'année et la référence de la communication à",
+      reviewNote: "Les suggestions sont examinées avant toute publication des modifications.",
+      request: "Décrivez la correction et joignez une source, si possible :",
+      abstractRequest: "Pour fournir le résumé manquant, collez son texte ci-dessous et confirmez que vous faites partie des auteurs :",
+    },
+
     papers: {
       eyebrow: "Le corpus de l'ESSC",
       title: "Communications",
@@ -3065,6 +3083,15 @@ const locales = {
       attendedLabel: "Ausgaben",
       coauthorsLabel: "Gemeinsam verfasst mit",
       atlasLink: "Ihre Beiträge im Atlas ansehen",
+    },
+
+    paperFeedback: {
+      correction: "Eine Korrektur per E-Mail vorschlagen",
+      correctionOrAbstract: "Eine Korrektur vorschlagen oder ein Abstract per E-Mail senden",
+      emailHint: "Die Korrekturlinks öffnen einen E-Mail-Entwurf. Alternativ können Titel, Jahr und Referenz des Beitrags per E-Mail gesendet werden an",
+      reviewNote: "Vorschläge werden geprüft, bevor Änderungen veröffentlicht werden.",
+      request: "Bitte beschreiben Sie die Korrektur und geben Sie nach Möglichkeit eine Quelle an:",
+      abstractRequest: "Um das fehlende Abstract beizusteuern, fügen Sie den Text unten ein und bestätigen Sie, dass Sie zu den Autorinnen oder Autoren gehören:",
     },
 
     papers: {

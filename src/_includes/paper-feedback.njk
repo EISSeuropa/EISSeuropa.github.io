@@ -1,0 +1,17 @@
+{# Shared by the by-paper index (including title-only records) and paper pages.
+   Uses the corpus eligibility flag, never guesses from a title or page URL. #}
+{% macro paperFeedback(p, site, labels) %}
+  {%- set inviteAbstract = p.abstractEligible and not p.abstract -%}
+  {%- set action = labels.correction -%}
+  {%- if inviteAbstract %}{% set action = labels.correctionOrAbstract %}{% endif -%}
+  {%- set subject = "Anthology record: " ~ p.year ~ " / " ~ p.slug -%}
+  {%- set body = "Title: " ~ p.title ~ "\r\nYear: " ~ p.year ~ "\r\nReference: " ~ p.slug ~ "\r\nRecord: " ~ site.url ~ "/anthology.html?view=papers&paper=" ~ p.slug ~ "\r\n\r\n" ~ labels.request ~ "\r\n" -%}
+  {%- if inviteAbstract %}{% set body = body ~ labels.abstractRequest ~ "\r\n" %}{% endif -%}
+  <p class="paper-feedback">
+    <a href="mailto:{{ site.contactEmail }}?subject={{ subject | urlencode | replace("'", "%27") }}&amp;body={{ body | urlencode | replace("'", "%27") }}" aria-label="{{ action }}: {{ p.title }}">{{ action }}</a>
+  </p>
+{% endmacro %}
+
+{% macro contactNote(site, labels) %}
+  <p class="paper-feedback">{{ labels.emailHint }} <a href="mailto:{{ site.contactEmail }}">{{ site.contactEmail }}</a>. {{ labels.reviewNote }}</p>
+{% endmacro %}

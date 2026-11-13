@@ -16,6 +16,7 @@
    No locale parameter. Optional paper fields and their data defaults are
    defined in src/_data/paperPages.js. #}
 {% from "icons.njk" import icon %}
+{% from "paper-feedback.njk" import paperFeedback, contactNote %}
 
 {# Mobile-only sticky Back (#889, item 4). Keeps an entry-aware exit in reach
    while scrolling a long abstract. Hidden on desktop, where the breadcrumb sits
@@ -128,6 +129,8 @@
       {# Panel title links to that panel's anchor in the edition programme. #}
       <p class="muted" lang="en"><strong>Panel:</strong> <a href="{{ paper.conferenceUrl }}#panel-{{ paper.panel | slugify }}">{{ paper.panel }}</a></p>
       {%- endif %}
+      {{ paperFeedback(paper, site, i18n.en.paperFeedback) }}
+      {{ contactNote(site, i18n.en.paperFeedback) }}
       {# Adaptive Back (#889). Stands apart from the secondary actions and is a
          touch larger, with a return arrow. Baseline: a real anchor to the index
          at this paper's row. paper-back.js upgrades it to history.back() with

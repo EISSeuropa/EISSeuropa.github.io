@@ -9,8 +9,11 @@
    [data-paper-status]; filtering matches on data attributes, not visible
    text, so it stays locale-agnostic. #}
 {% from "icons.njk" import icon %}
+{% from "paper-feedback.njk" import paperFeedback, contactNote %}
 {%- set t = i18n[lang or "en"] -%}
 {%- set p18n = t.papers -%}
+
+{{ contactNote(site, t.paperFeedback) }}
 
 <div class="speaker-filters" role="search">
   <div class="speaker-field speaker-field--search">
@@ -160,6 +163,7 @@
         {%- for th in p.theme %}{% set dot = paperIndex.themeDot[th] %}<span class="paper-theme-chip"{% if dot %} style="--chip-dot: {{ dot }}"{% endif %}>{{ paperIndex.themeLabels[th][lang or "en"] or th }}</span>{% endfor %}
       </p>
       {%- endif %}
+      {{ paperFeedback(p, site, t.paperFeedback) }}
     </article>
   </li>
   {%- endif %}
