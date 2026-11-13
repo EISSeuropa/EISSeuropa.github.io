@@ -12,6 +12,8 @@
 {%- set t = i18n[lang or "en"] -%}
 {%- set p18n = t.papers -%}
 
+<p class="muted" style="font-size: var(--fs-sm); max-width: 44rem;">{{ p18n.correctionNote }} <a href="mailto:{{ site.contactEmail }}?subject=Anthology">{{ site.contactEmail }}</a>.</p>
+
 <div class="speaker-filters" role="search">
   <div class="speaker-field speaker-field--search">
     <label class="speaker-field-label" for="paper-find">{{ p18n.findLabel }}</label>
