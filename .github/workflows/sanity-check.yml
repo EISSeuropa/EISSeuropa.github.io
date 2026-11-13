@@ -120,3 +120,7 @@ jobs:
       # free-text shape both parse to the expected news.json item.
       - name: Self-check the news publisher
         run: python3 scripts/test-news-from-issue.py
+
+      # Which PRs the `publish` label may merge, and for whom (#2135).
+      - name: Self-check the publish label merge
+        run: python3 scripts/test-news-merge.py

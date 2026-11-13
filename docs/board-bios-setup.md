@@ -11,6 +11,15 @@ and wiring the published Sheet into the sync workflow.
 3. A PR appears. You review the diff (one file, `src/_data/board.json`)
    and click Merge.
 
+A second reader can do step 3 (#2135). The PR is assigned to the accounts in
+the repository variable `PROFILE_APPROVERS` (GitHub logins separated by
+commas), next to the maintainer. One of them reads the diff and applies the
+`publish` label, and `.github/workflows/news-merge.yml` merges the PR once the
+four required checks pass. The label merges only a PR that changes
+`src/_data/board.json` and headshots in `src/assets/images/board/`, and only
+for those accounts. With the variable unset, only the repository owner can
+use the label. `docs/news-publishing.md` has the detail.
+
 ## How the pipeline works
 
 ```

@@ -95,6 +95,15 @@ jobs:
             echo "_Triggered: \`${{ github.event_name }}\` · run_id: \`${{ github.run_id }}\`_"
           } > /tmp/board-pr-body.md
 
+      - name: List the profile approvers
+        id: approvers
+        env:
+          APPROVERS: ${{ vars.PROFILE_APPROVERS }}
+        run: |
+          # Comma-separated, as `assignees` takes them. They can merge this PR
+          # with the `publish` label (news-merge.yml, #2135).
+          echo "list=$(echo "APB-LDN,$APPROVERS" | tr -s ';, ' ',' | sed 's/,$//')" >> "$GITHUB_OUTPUT"
+
       - name: Open or update PR if board.json or photos changed
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         with:
@@ -129,7 +138,7 @@ jobs:
           # action updates the existing PR with a new commit on the
           # `board-sync/auto` branch, GitHub re-notifies the
           # assignee on the new push.
-          assignees: APB-LDN
+          assignees: ${{ steps.approvers.outputs.list }}
           labels: |
             automated
             data-sync
