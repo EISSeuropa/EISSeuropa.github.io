@@ -56,7 +56,7 @@ Notes:
 | Translation drift | `check-i18n-drift.py` | any FR/DE page stale against its EN source |
 | Accessibility (static) | `a11y_lint.py` | new errors vs the last clean run |
 | Accessibility (rendered) | `check-a11y-browser.mjs` | any violation new or worse against `data/a11y-baseline.json`. When a fix lowers a count, re-run with `--update-baseline` in the same PR so the improvement is locked in |
-| Links | `check-links.sh` | any internal link 404s; external 404s triaged (some are flaky) |
+| Links | `check-links.sh` | any broken internal target or fragment, external 404 or other HTTP error, or DNS resolution failure. Final external HTTP 502/503/504 responses retain the existing retries and are reported as unreachable without failing (#2092, ported from EISSeuropa/netsec.github.io#2127) |
 | Privacy | the grep above | any **load-time** third-party request that isn't click-gated |
 | Build sanity | `check-build-sanity.mjs` | any undefined CSS class, cross-block class collision, or missing paper page in the sitemap |
 | Board flags | `check-board-flags.mjs` | a non-empty country in `board.json` with no alias in `countryFlags.js`, or a mapped code with no SVG in source or `_site/` (`docs/board-bios-setup.md`, *Adding a new country*) |

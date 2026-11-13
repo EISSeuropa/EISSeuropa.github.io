@@ -349,10 +349,9 @@ def check_external(url, _retry=True, _attempt=1):
         # unrelated pull request, then answered normally on a re-run of the
         # same commit minutes later: a wobble measured in minutes, not in
         # seconds. So a 5xx now gets the same shape of patience a timeout got
-        # in #1417, three attempts on a widening pause. A genuine outage still
-        # fails, because all three attempts have to 5xx, which is what
-        # separates this from the 429 and timeout cases below: those report
-        # the host as alive, this one still counts as broken.
+        # in #1417, three attempts on a widening pause. Final 502, 503 and 504
+        # responses are reported as unreachable below (#2092). Other 5xx
+        # responses still count as broken after the retries.
         if 500 <= e.code < 600 and _attempt < len(SERVER_ERROR_PAUSES) + 1:
             time.sleep(SERVER_ERROR_PAUSES[_attempt - 1])
             return check_external(url, _retry=_retry, _attempt=_attempt + 1)
@@ -483,6 +482,13 @@ if not internal_only and external_links:
                 print(
                     f"  ⚠ {url}  (connection cut on {len(TIMEOUT_SCHEDULE)} attempts — "
                     f"unreachable from CI, not counted as broken)"
+                )
+            elif status in ("HTTP 502", "HTTP 503", "HTTP 504"):
+                # Ported from EISSeuropa/netsec.github.io#2127. A server or
+                # gateway outage does not establish that the link is dead.
+                # Keep the final status visible, including in quiet mode.
+                print(
+                    f"  ⚠ {url}  ({status} — unreachable from CI, not counted as broken)"
                 )
             elif isinstance(status, int) and 200 <= status < 400:
                 if not quiet:
