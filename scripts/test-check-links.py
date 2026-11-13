@@ -12,7 +12,8 @@ SKIP_HOSTS are pinned:
     5xx that clears -> retried on a widening pause, then passes (#1423)
     TLS cut        -> retried, then reported unreachable rather than broken
     conn reset     -> same, one layer down (#1628)
-    5xx every time -> still broken, after every attempt is spent
+    502/503/504    -> retried, then reported unreachable without failing
+    other 5xx/DNS -> still broken
     hanging host   -> every attempt in TIMEOUT_SCHEDULE is made, then reported
                       as slow rather than broken (#1417)
 
@@ -21,6 +22,8 @@ No framework and no dependencies. Run it directly:
     python3 scripts/test-check-links.py
 """
 import http.server, socketserver, threading, re, sys, urllib.error, urllib.request, ssl, socket, time, errno
+import subprocess, tempfile
+from pathlib import Path
 
 # Extract check_external + its helpers from the shell script's inline python.
 src = open('scripts/check-links.sh', encoding='utf-8').read()
@@ -66,9 +69,9 @@ urllib.request.urlopen = ns['urllib'].request.urlopen = real
 print(f'  ENETUNREACH then 200 -> {st!r} after {calls["n"]} attempt(s)')
 fails += [] if (st == 200 and calls['n'] == 2) else ['ENETUNREACH should be retried once and then succeed']
 
-# A 5xx that clears must not fail the build, and one that never clears must
-# (#1423). The pauses are shrunk here so the case runs in about a second; the
-# shape is what is being pinned: three attempts, then the verdict.
+# A 5xx that clears must pass. A repeated 503 keeps its final HTTP status
+# after three attempts, then the report treats it as unreachable (#2092).
+# Shrink the pauses while preserving the retry schedule.
 ns['SERVER_ERROR_PAUSES'] = (0.05, 0.05)
 flap = {'n': 0}
 class Flap(H):
@@ -81,7 +84,7 @@ srv2 = socketserver.TCPServer(('127.0.0.1', 0), Flap); port2 = srv2.server_addre
 threading.Thread(target=srv2.serve_forever, daemon=True).start()
 u, st = check_external(f'http://127.0.0.1:{port2}/flap')
 print(f'  503, 503, then 200 -> {st!r} after {flap["n"]} attempt(s)')
-fails += [] if st == 200 else ['a 5xx that clears within three attempts must not be called broken']
+fails += [] if (st == 200 and flap['n'] == 3) else ['a 5xx that clears must pass after three attempts']
 
 down = {'n': 0}
 class Down(H):
@@ -93,7 +96,47 @@ srv3 = socketserver.TCPServer(('127.0.0.1', 0), Down); port3 = srv3.server_addre
 threading.Thread(target=srv3.serve_forever, daemon=True).start()
 u, st = check_external(f'http://127.0.0.1:{port3}/down')
 print(f'  503 every time -> {st!r} after {down["n"]} attempt(s)')
-fails += [] if st == 'HTTP 503' else ['a host that 5xxs every attempt must still be broken']
+fails += [] if (st == 'HTTP 503' and down['n'] == 3) else ['repeated 503 must preserve the final status after three attempts']
+
+# Exercise the complete inline checker, including the result loop and exit
+# status. Fake only network responses and sleeps, so retries still execute.
+# No public hosts are contacted, including for the DNS failure.
+def report_case(status, expected_exit, attempts, internal=False, quiet=False):
+    prefix = f'''
+import socket, time, urllib.error, urllib.request
+def response(req, **kw):
+    print("NETWORK_ATTEMPT", flush=True)
+    if {status!r} == "dns":
+        raise urllib.error.URLError(socket.gaierror(socket.EAI_NONAME, "Name or service not known"))
+    raise urllib.error.HTTPError(req.full_url, {status!r}, "test response", {{}}, None)
+urllib.request.urlopen = response
+time.sleep = lambda seconds: None
+'''
+    with tempfile.TemporaryDirectory() as tmp:
+        href = '/missing.html' if internal else 'https://checker.invalid/test'
+        Path(tmp, 'index.html').write_text(f'<a href="{href}">test</a>', encoding='utf-8')
+        result = subprocess.run(
+            [sys.executable, '-c', prefix + inline, tmp, '0', str(int(quiet))],
+            capture_output=True, text=True, timeout=10,
+        )
+    label = f'{status}, internal={internal}, quiet={quiet}'
+    print(f'  report {label} -> exit {result.returncode}')
+    errors = []
+    if result.returncode != expected_exit or result.stdout.count('NETWORK_ATTEMPT') != attempts:
+        errors.append(f'{label}: wrong exit status or retry count: {result.stdout} {result.stderr}')
+    if expected_exit == 0:
+        if f'HTTP {status}' not in result.stdout or 'unreachable from CI, not counted as broken' not in result.stdout or 'EXTERNAL BROKEN' in result.stdout:
+            errors.append(f'{label}: final status must be visibly reported as unreachable')
+    elif ('INTERNAL BROKEN' if internal else 'EXTERNAL BROKEN') not in result.stdout:
+        errors.append(f'{label}: broken links must remain in the failure report')
+    return errors
+
+for status in (502, 503, 504):
+    for quiet in (False, True):
+        fails += report_case(status, 0, 3, quiet=quiet)
+for status in (404, 410, 500, 501, 505, 'dns'):
+    fails += report_case(status, 1, 3 if isinstance(status, int) and status >= 500 else 1)
+fails += report_case(503, 1, 0, internal=True)
 
 # A TLS connection cut mid-read must be retried and then reported as
 # unreachable, not counted as broken (#1423). Simulated by raising the same
@@ -149,5 +192,7 @@ fails += [] if (st == 'timeout' and len(connections) == 3) else \
     ['a hanging host should exhaust TIMEOUT_SCHEDULE and report "timeout", not broken']
 
 srv.shutdown()
-print('\nFAIL: ' + '; '.join(fails) if fails else '\nall nine behaviours correct')
+srv2.shutdown()
+srv3.shutdown()
+print('\nFAIL: ' + '; '.join(fails) if fails else '\nall link-check behaviours correct')
 sys.exit(1 if fails else 0)
