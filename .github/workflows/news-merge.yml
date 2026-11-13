@@ -1,23 +1,30 @@
-# Merge a news PR by applying the `publish` label, from the GitHub app.
+# Merge a news or board profile PR by applying the `publish` label.
 #
 # The "Restrict updates" ruleset lets only the owner update master, and the
 # owner's bypass is not offered in the GitHub mobile app. Applying `publish`
 # to a PR hands the merge to scripts/merge-bot-pr.sh, which waits for the four
 # required checks and merges with the owner's AUTOPR_TOKEN, as the sync bots
-# do (docs/branch-protection.md).
+# do (docs/branch-protection.md). It also lets a second reader approve these
+# two kinds of PR without the owner's login (#2135).
 #
-# The run merges only when both hold:
-#   - the label was applied by an account in the repository variable
-#     NEWS_APPROVERS (GitHub logins, separated by commas, semicolons or
-#     spaces), or by the repository owner when the variable is unset;
-#   - the PR changes src/_data/news.json and nothing else.
-# Otherwise it comments on the PR and removes the label.
+# The files a PR changes decide its kind, and each kind has its own
+# repository variable of approvers (GitHub logins, separated by commas):
+#   - src/_data/news.json and nothing else: NEWS_APPROVERS;
+#   - src/_data/board.json and files in src/assets/images/board/, and nothing
+#     else (the PR of sync-board.yml): PROFILE_APPROVERS.
+# An unset variable means the repository owner. The run merges only when the
+# label comes from an approver of the PR's kind. Otherwise it comments on the
+# PR and removes the label. A merge that fails does the same, with a link to
+# the run (#2134).
 #
-# The merge then starts social-post.yml as usual.
+# The first step runs before the checkout, so it never runs code from the PR.
+# scripts/test-news-merge.py lifts its shell out of this file and checks it.
+#
+# A news merge then starts social-post.yml as usual.
 #
 # Action pins mirror the other workflows (SHA-pinned, CLAUDE.md §2).
 
-name: Merge a news PR on the publish label
+name: Merge a data PR on the publish label
 
 on:
   pull_request:
@@ -45,21 +52,30 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
           PR: ${{ github.event.pull_request.number }}
-          APPROVERS: ${{ vars.NEWS_APPROVERS || github.repository_owner }}
+          NEWS_APPROVERS: ${{ vars.NEWS_APPROVERS || github.repository_owner }}
+          PROFILE_APPROVERS: ${{ vars.PROFILE_APPROVERS || github.repository_owner }}
           SENDER: ${{ github.event.sender.login }}
         run: |
           set -euo pipefail
           reason=""
-          allowed=false
-          for login in $(echo "$APPROVERS" | tr ',;' '  '); do
-            if [ "${login,,}" = "${SENDER,,}" ]; then allowed=true; fi
-          done
-          if [ "$allowed" != true ]; then
-            reason="@$SENDER applied \`publish\`, but only the accounts in NEWS_APPROVERS can merge a news PR this way."
+          files=$(gh pr view "$PR" --repo "$REPO" --json files --jq '.files[].path' | sort -u)
+          # grep -v finds a file outside the kind's list. No such file: that kind.
+          if [ -z "$files" ]; then
+            reason="This PR changes no file, so the \`publish\` label cannot merge it."
+          elif ! grep -qvx 'src/_data/news\.json' <<<"$files"; then
+            variable=NEWS_APPROVERS
+          elif ! grep -qvEx 'src/_data/board\.json|src/assets/images/board/[^/]+' <<<"$files"; then
+            variable=PROFILE_APPROVERS
           else
-            files=$(gh pr view "$PR" --repo "$REPO" --json files --jq '.files[].path' | sort -u)
-            if [ "$files" != "src/_data/news.json" ]; then
-              reason="This PR changes more than \`src/_data/news.json\`, so the \`publish\` label cannot merge it. Merge it from the merge box instead. Changed files: $(echo "$files" | tr '\n' ' ')"
+            reason="The \`publish\` label merges a PR that changes only \`src/_data/news.json\`, or only \`src/_data/board.json\` and headshots in \`src/assets/images/board/\`. This PR changes other files, so merge it from the merge box instead. Changed files: $(echo "$files" | tr '\n' ' ')"
+          fi
+          if [ -z "$reason" ]; then
+            allowed=false
+            for login in $(echo "${!variable}" | tr ',;' '  '); do
+              if [ "${login,,}" = "${SENDER,,}" ]; then allowed=true; fi
+            done
+            if [ "$allowed" != true ]; then
+              reason="@$SENDER applied \`publish\`, but only the accounts in $variable can merge this PR that way."
             fi
           fi
           if [ -n "$reason" ]; then
@@ -80,3 +96,14 @@ jobs:
           GH_TOKEN: ${{ secrets.AUTOPR_TOKEN }}
           GH_REPO: ${{ github.repository }}
         run: scripts/merge-bot-pr.sh "${{ github.event.pull_request.number }}"
+
+      - name: Tell the PR that the merge failed
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh pr comment "$PR" --repo "$REPO" --body "The \`publish\` label did not merge this PR. The run shows why: $RUN_URL. Nothing was merged. Apply the label again once the cause is fixed."
+          gh pr edit "$PR" --repo "$REPO" --remove-label publish || true
