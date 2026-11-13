@@ -422,9 +422,12 @@ How a member leaves depends on which kind they are.
   community* section at the foot of `/board`. Don't delete the entry:
   the record of who served stays on the page. Open a small PR, review,
   squash-merge.
-- **Offboarding, either kind.** The Monday after a `roleEndDate`
-  passes, [`offboarding.yml`](../.github/workflows/offboarding.yml)
-  opens an *Offboarding: name* issue with the website side of the
+- **Offboarding, either kind.** On the Monday in the week before a
+  `roleEndDate`, [`offboarding.yml`](../.github/workflows/offboarding.yml)
+  opens an *Offboarding: name* issue, in the same week as the lifecycle
+  script's leaver email and while the person still has their account. An
+  end date entered up to a week after the departure is caught on the next
+  Monday (#2143). The issue carries the website side of the
   checklist: the *EISS community* consent, the alumni LinkedIn
   invitation and an optional thank-you post. Accounts, groups, shared
   drives and apps outside Google (Proton Pass among them) are the

@@ -124,3 +124,7 @@ jobs:
       # Which PRs the `publish` label may merge, and for whom (#2135).
       - name: Self-check the publish label merge
         run: python3 scripts/test-news-merge.py
+
+      # The offboarding prompt's window around each end date (#2143).
+      - name: Self-check the offboarding window
+        run: python3 scripts/test-offboarding-due.py

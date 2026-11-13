@@ -22,8 +22,9 @@ Ready:
   repository cannot read secrets, so check Settings > Environments > `social`
   for all seven before the first post.
 - The PR preview comment, the `publish` label merge and the
-  `publish-news-item` skill. The `publish` label has to exist in the
-  repository (Issues > Labels) before it can be applied.
+  `publish-news-item` skill. The first run of `news-publish.yml` creates the
+  `news` and `publish` labels when they are missing
+  ([#2142](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2142)).
 
 Not yet done:
 
@@ -36,6 +37,20 @@ Not yet done:
 - The newsletter does not use the pipeline yet. The form's Newsletter box tags
   the item in the feed, and nothing reads the tag until the newsletter is
   switched on.
+
+### Handing approval to someone else
+
+Three settings, all under Settings in the repository, let a second person run
+news without the maintainer (#2142). Each takes GitHub logins.
+
+| Setting | Where | What it lets them do |
+|---|---|---|
+| `NEWS_PUBLISHERS` | Secrets and variables > Actions > Variables | File a News item that opens a PR, or start one with the `news` label |
+| `NEWS_APPROVERS` | Secrets and variables > Actions > Variables | Merge the PR with the `publish` label, and be assigned to it |
+| Required reviewers of `social` | Environments > `social` | Approve the LinkedIn and Bluesky posts after the merge |
+
+They also need collaborator access to apply a label. Leaving any one out stops
+the item at that step and leaves it for the maintainer.
 
 The step-by-step guide for publishers is "How to publish a news item" in EISS
 Team > Communications on the Drive.
