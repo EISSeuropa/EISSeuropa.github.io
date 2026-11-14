@@ -5713,7 +5713,7 @@ a.programme-live-tag:focus-visible {
    Alphabetical list of everyone who has presented across ESSC editions,
    built from the corpus.js data spine. */
 .speaker-az {
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-4);
 }
 .speaker-az ul {
   display: flex;
@@ -5738,6 +5738,15 @@ a.programme-live-tag:focus-visible {
 .speaker-az a:hover {
   color: var(--accent);
   border-color: var(--accent);
+}
+/* One row on a phone, scrolled sideways, instead of three wrapped rows. */
+@media (max-width: 640px) {
+  .speaker-az ul {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-block-end: 0.35rem;
+  }
+  .speaker-az li { flex: none; }
 }
 
 .speaker-index {
@@ -6207,23 +6216,6 @@ a.speaker-paper-title:hover {
   border-radius: 12px;
 }
 
-/* At-a-glance edition-year pills under the name. */
-.speaker-years {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3rem;
-  margin: 0.35rem 0 0;
-}
-.speaker-year-pill {
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  color: var(--accent-hover); /* accent-hover: plain accent is 4.2:1 on its own tint (RGAA 3.2) */
-  background: var(--accent-soft);
-  border-radius: 999px;
-  padding: 0.05rem 0.5rem;
-  line-height: 1.5;
-}
-
 /* Per-speaker theme chips (also the text Pagefind indexes for theme search). */
 .speaker-themes {
   display: flex;
@@ -6231,14 +6223,15 @@ a.speaker-paper-title:hover {
   gap: 0.3rem;
   margin: 0.35rem 0 0;
 }
-/* Reciprocal Atlas link (#1189) on each by-person entry. */
+/* Reciprocal Atlas link (#1189) and co-authors, inside the papers
+   disclosure under the list. */
 .speaker-atlas {
-  margin: 0.35rem 0 0;
+  margin: 0.5rem 0 0;
   font-size: var(--fs-xs);
 }
 /* Co-author line (#1150): names anchor to their own entries on this page. */
 .speaker-coauthors {
-  margin: 0.35rem 0 0;
+  margin: 0.5rem 0 0;
   font-size: var(--fs-xs);
   color: var(--text-muted);
 }

@@ -98,12 +98,6 @@
       {%- if s.affiliation %}
       <p class="speaker-aff muted" lang="en">{{ s.affiliation }}</p>
       {%- endif %}
-      {%- if s.years.length %}
-      <p class="speaker-years">
-        <span class="sr-only">{{ s18n.attendedLabel }}: </span>
-        {%- for y in s.years %}<span class="speaker-year-pill">{{ y }}</span>{% endfor %}
-      </p>
-      {%- endif %}
       {%- if s.themes.length %}
       <p class="speaker-themes">
         {#- Same Atlas hue as the by-paper chips (#1660). These hold the stable
@@ -112,22 +106,9 @@
         {%- for th in s.themes %}{% set dot = paperIndex.themeDot[corpus.themeLabels[th].en] %}<span class="speaker-theme-chip"{% if dot %} style="--chip-dot: {{ dot }}"{% endif %}>{{ corpus.themeLabels[th][lang or "en"] or corpus.themeLabels[th].en }}</span>{% endfor %}
       </p>
       {%- endif %}
-      {%- if s.count %}
-      {# Reciprocal Atlas link (#1189). The map pins this person's papers via
-         the ?author= deep link (#1190). EN-only page, hence hreflang. #}
-      <p class="speaker-atlas">
-        <a href="/anthology-atlas.html?author={{ s.name | urlencode | replace("'", "%27") }}"{% if (lang or "en") != "en" %} hreflang="en"{% endif %}>{{ s18n.atlasLink }}</a>
-      </p>
-      {%- endif %}
-      {%- if coauthorsIndex[s.key] %}
-      {# Co-authors (#1150): the Atlas's co-authorship relation joined back
-         onto the entry. Each name anchors to that person's own entry. #}
-      <p class="speaker-coauthors">{{ s18n.coauthorsLabel }}
-        {%- for c in coauthorsIndex[s.key] %} <a href="#person-{{ c.slug }}" lang="en">{{ c.name }}</a>{% if not loop.last %},{% endif %}{% endfor %}
-      </p>
-      {%- endif %}
       <details class="speaker-papers">
-        <summary>{{ s.count }} {{ s18n.contributionOne if s.count == 1 else s18n.contributionMany }}{% if s.firstYear %} · {{ s.firstYear }}{% if s.lastYear != s.firstYear %}–{{ s.lastYear }}{% endif %}{% endif %}</summary>
+        {#- The years were also pills under the name. They now live here only. #}
+        <summary>{{ s.count }} {{ s18n.contributionOne if s.count == 1 else s18n.contributionMany }}{% if s.years.length %} · {{ s.years | join(", ") }}{% endif %}</summary>
         <ul role="list">
           {%- for p in s.papers %}
           <li>
@@ -139,6 +120,21 @@
           </li>
           {%- endfor %}
         </ul>
+        {#- Atlas link and co-authors are about the papers, so they open with them. #}
+        {%- if coauthorsIndex[s.key] %}
+        {# Co-authors (#1150): the Atlas's co-authorship relation joined back
+           onto the entry. Each name anchors to that person's own entry. #}
+        <p class="speaker-coauthors">{{ s18n.coauthorsLabel }}
+          {%- for c in coauthorsIndex[s.key] %} <a href="#person-{{ c.slug }}" lang="en">{{ c.name }}</a>{% if not loop.last %},{% endif %}{% endfor %}
+        </p>
+        {%- endif %}
+        {%- if s.count %}
+        {# Reciprocal Atlas link (#1189). The map pins this person's papers via
+           the ?author= deep link (#1190). EN-only page, hence hreflang. #}
+        <p class="speaker-atlas">
+          <a href="/anthology-atlas.html?author={{ s.name | urlencode | replace("'", "%27") }}"{% if (lang or "en") != "en" %} hreflang="en"{% endif %}>{{ s18n.atlasLink }}</a>
+        </p>
+        {%- endif %}
       </details>
     </div>
   </li>

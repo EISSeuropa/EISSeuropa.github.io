@@ -106,6 +106,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- The Anthology by-person view is about a third shorter. Each entry shows the name, affiliation and theme chips, then one line with the number of contributions and the years. The papers, co-authors and the Atlas link open from that line. The year pills under the name are gone, since the same years were on that line. On a phone the A to Z letters sit on one row that scrolls sideways, here and on `/publications`.
 - The Anthology by-paper view is shorter above the list. The research-theme links are collapsed at every width. Sort, "Published only" and the prize filter sit behind "More options", which opens when a link sets one of them. The paper count and the .bib and .ris buttons share one row. The row of edition links is gone, since the Event menu narrows the list to one edition. Under an edition heading a paper card no longer repeats the edition name, and its panel name links to the paper's slot in the programme. The French and German "More options" labels are machine translations.
 - `/2027.html` is 9,700 px tall on a phone, down from 19,200, in English, French and German. Each closed panel shows its title and chair, and its description opens on a tap. The key dates are a timeline above the panels. A bar pinned under the header links to the six sections and marks the one on screen.
 - On a phone, the "Jointly organised with" strip on the conference pages lists each organiser as a row, logo beside name. The three stacked cards took 570 px.
