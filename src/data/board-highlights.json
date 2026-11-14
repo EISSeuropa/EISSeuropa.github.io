@@ -11,6 +11,15 @@
     },
     {
       "kind": "feature",
+      "site": "NetSec",
+      "n": 2167,
+      "title": "Section bar, collapsible closed panels, key dates first",
+      "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2167",
+      "at": "2026-11-13",
+      "lines": 2151
+    },
+    {
+      "kind": "feature",
       "site": "EISS",
       "n": 2062,
       "title": "Post EISS news to LinkedIn and Bluesky",
@@ -20,30 +29,21 @@
     },
     {
       "kind": "feature",
+      "site": "EISS",
+      "n": 2141,
+      "title": "Section bar, collapsible closed panels, key dates timeline",
+      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2141",
+      "at": "2026-11-13",
+      "lines": 1600
+    },
+    {
+      "kind": "feature",
       "site": "NetSec",
       "n": 2148,
       "title": "WG2 Policy Workshop 2027 page and call for applications (Seville)",
       "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2148",
       "at": "2026-11-11",
       "lines": 1455
-    },
-    {
-      "kind": "feature",
-      "site": "NetSec",
-      "n": 2146,
-      "title": "News item issue form with FR and DE machine translation",
-      "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2146",
-      "at": "2026-11-11",
-      "lines": 942
-    },
-    {
-      "kind": "feature",
-      "site": "EISS",
-      "n": 1845,
-      "title": "Lead the homepage with the next conference",
-      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/1845",
-      "at": "2026-10-25",
-      "lines": 914
     }
   ],
   "fixes": [
@@ -93,5 +93,5 @@
       "lines": 146
     }
   ],
-  "since": "2026-10-14"
+  "since": "2026-10-15"
 }
