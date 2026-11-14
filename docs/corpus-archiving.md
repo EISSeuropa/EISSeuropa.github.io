@@ -288,12 +288,11 @@ badge.
 
 ### The badges are checked-in copies
 
-The three stickers on the README and in the Anthology header (Zenodo DOI,
+The three stickers on the README and on the Anthology page (Zenodo DOI,
 archived repository, archived source tree) are static SVGs in
-`src/assets/images/badges/`, not hotlinks. On the page they sit in the open,
-above the two disclosures, and they carry the DOI and the SWHID in their alt
-text, so the "Cite this corpus" panel holds only the reference string and the
-HAL note. Zenodo rate-limits
+`src/assets/images/badges/`, not hotlinks. On the page they sit inside the
+"Cite this corpus" panel, under the reference string and the HAL note, and
+they carry the DOI and the SWHID in their alt text. Zenodo rate-limits
 GitHub's image proxy, which returned 429 often enough that the DOI badge
 rendered as a broken image on the README, and hotlinking on the site would
 have added a third-party request for every visitor on top of that.
