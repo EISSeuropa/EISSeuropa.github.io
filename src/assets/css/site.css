@@ -6089,6 +6089,9 @@ a.speaker-paper-title:hover {
   background: var(--bg-elev);
   border: 1px solid var(--border-strong);
 }
+/* `.btn` sets display, which beats the hidden attribute, so the button
+   showed before any filter was set. */
+.speaker-clear[hidden] { display: none; }
 .speaker-clear:hover,
 .speaker-clear:focus-visible {
   border-color: var(--accent);
@@ -6109,46 +6112,38 @@ a.speaker-paper-title:hover {
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
-/* The summary is a control, so it looks like one, the same reasoning and the
-   same chevron idiom as the Atlas filter disclosure (#1508). It only appears
-   where the block actually collapses: above 640px the details stays open and
-   the row would be a control that does nothing worth doing. */
+/* Collapsed at every width, so the summary is the control. Same chevron
+   idiom as the Atlas filter disclosure (#1508). */
 .theme-doors__summary {
-  display: none;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
 }
 .theme-doors__count {
   font-size: var(--fs-xs);
   margin-inline-start: auto;
 }
-@media (max-width: 640px) {
-  .theme-doors__summary {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    cursor: pointer;
-    padding: 0.6rem 0.7rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-  }
-  /* `display: flex` drops the browser's own marker, so the chevron is the
-     only affordance and has to be there. */
-  .theme-doors__summary::-webkit-details-marker { display: none; }
-  .theme-doors__summary::marker { content: ""; }
-  .theme-doors__summary:hover { border-color: var(--border-strong); }
-  .theme-doors__summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .theme-doors__chevron {
-    display: inline-flex;
-    color: var(--accent);
-    inline-size: 14px;
-    block-size: 14px;
-    transition: transform var(--motion-fast) var(--ease-out);
-  }
-  .theme-doors__chevron .icon { inline-size: 14px; block-size: 14px; }
-  .theme-doors[open] .theme-doors__chevron { transform: rotate(180deg); }
-  .theme-doors__list { margin-block-start: var(--space-3); }
+/* `display: flex` drops the browser's own marker, so the chevron is the
+   only affordance and has to be there. */
+.theme-doors__summary::-webkit-details-marker { display: none; }
+.theme-doors__summary::marker { content: ""; }
+.theme-doors__summary:hover { border-color: var(--border-strong); }
+.theme-doors__summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.theme-doors__chevron {
+  display: inline-flex;
+  color: var(--accent);
+  inline-size: 14px;
+  block-size: 14px;
+  transition: transform var(--motion-fast) var(--ease-out);
 }
+.theme-doors__chevron .icon { inline-size: 14px; block-size: 14px; }
+.theme-doors[open] .theme-doors__chevron { transform: rotate(180deg); }
 .theme-doors > nav {
-  margin-block-start: var(--space-2);
+  margin-block-start: var(--space-3);
 }
 .theme-doors__list {
   list-style: none;
@@ -6278,21 +6273,42 @@ a.speaker-paper-title:hover {
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-2);
-  margin: 0 0 var(--space-4);
 }
 .paper-export[hidden] { display: none; }
-.paper-export__label {
+/* The count and the export buttons share one row above the list. */
+.paper-listbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  margin: 0 0 var(--space-4);
+}
+.paper-listbar .speaker-status { margin: 0; }
+/* Sort and the two checkboxes, behind a disclosure in the filter panel. */
+.paper-more {
+  flex: 1 1 100%;
+}
+.paper-more__summary {
+  cursor: pointer;
+  inline-size: fit-content;
   font-size: var(--fs-sm);
   font-weight: 600;
-  color: var(--text-muted);
-  margin-right: var(--space-1);
+  color: var(--accent);
 }
-/* The hint takes the whole row below the buttons rather than squeezing between
-   them, so the two controls stay side by side at narrow widths. */
+.paper-more__summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.paper-more__body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3) var(--space-4);
+  margin-block-start: var(--space-3);
+}
 .paper-export__hint {
   flex: 1 1 100%;
   font-size: var(--fs-xs);
 }
+.paper-export__hint:empty { display: none; }
 .paper-export button[disabled] { opacity: 0.5; cursor: default; }
 
 /* /papers — the cross-year paper index (#632). The filter chrome reuses
@@ -6306,37 +6322,7 @@ a.speaker-paper-title:hover {
   gap: var(--space-3);
   max-width: 52rem;
 }
-/* Edition jump nav and heading rows (#1643), the by-paper twin of .speaker-az
-   and .speaker-letter-h. Wider labels than a single letter, so the pills wrap
-   rather than sitting on a min-width. */
-.paper-editions {
-  margin-bottom: var(--space-5);
-}
-.paper-editions ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.paper-editions[hidden] {
-  display: none;
-}
-.paper-editions a {
-  display: inline-flex;
-  padding: 0.25rem 0.6rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  font-weight: 600;
-  font-size: var(--fs-sm);
-  text-decoration: none;
-}
-.paper-editions a:hover,
-.paper-editions a:focus-visible {
-  border-color: var(--accent);
-  color: var(--accent);
-}
+/* Edition heading rows (#1643), the by-paper twin of .speaker-letter-h. */
 .paper-edition-row[hidden] {
   display: none;
 }
@@ -6385,12 +6371,25 @@ a.speaker-paper-title:hover {
   margin: 0.35rem 0 0;
   font-size: var(--fs-sm);
 }
+.paper-meta__link {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem var(--space-3);
+  min-width: 0;
+  text-decoration: none;
+}
+.paper-meta__link:hover .paper-panel,
+.paper-meta__link:focus-visible .paper-panel { text-decoration: underline; }
 .paper-edition {
   font-weight: 600;
 }
 .paper-panel {
   min-width: 0;
+  color: var(--text-muted);
 }
+/* Under an edition heading the card's edition name repeats it. */
+.paper-index--grouped .paper-meta__link:has(.paper-panel) .paper-edition { display: none; }
 .paper-themes {
   display: flex;
   flex-wrap: wrap;

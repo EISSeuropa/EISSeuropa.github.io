@@ -12,8 +12,6 @@
 {%- set t = i18n[lang or "en"] -%}
 {%- set p18n = t.papers -%}
 
-<p class="muted" style="font-size: var(--fs-sm); max-width: 44rem;">{{ p18n.correctionNote }} <a href="mailto:{{ site.contactEmail }}?subject=Anthology">{{ site.contactEmail }}</a>.</p>
-
 <div class="speaker-filters" role="search">
   <div class="speaker-field speaker-field--search">
     <label class="speaker-field-label" for="paper-find">{{ p18n.findLabel }}</label>
@@ -40,43 +38,40 @@
       {%- endfor %}
     </select>
   </div>
-  {# Sort (#1642). 511 rows arrived in build order with no way to ask for
-     anything else, while the by-person view has been alphabetical with a jump
-     nav since #756. The default is the order paperIndex already produces,
-     newest edition first, so the control changes nothing until it is used. #}
-  <div class="speaker-field">
-    <label class="speaker-field-label" for="paper-sort">{{ p18n.sortLabel }}</label>
-    <select id="paper-sort" data-paper-sort>
-      <option value="edition-desc">{{ p18n.sortEditionDesc }}</option>
-      <option value="edition-asc">{{ p18n.sortEditionAsc }}</option>
-      <option value="title">{{ p18n.sortTitle }}</option>
-    </select>
-  </div>
-  <div class="speaker-field speaker-field--check">
-    <label class="speaker-field-label--check" for="paper-published">
-      <input type="checkbox" id="paper-published" data-paper-published data-label="{{ p18n.publishedOnly }}">
-      {{ p18n.publishedOnly }}
-    </label>
-  </div>
-  <div class="speaker-field speaker-field--check">
-    <label class="speaker-field-label--check" for="paper-prize">
-      <input type="checkbox" id="paper-prize" data-paper-prize data-label="{{ p18n.prizeOnly }}">
-      {{ p18n.prizeOnly }}
-    </label>
-  </div>
   <button type="button" class="btn btn-sm speaker-clear" data-paper-clear hidden>{{ p18n.clear }}</button>
+  {# Sort and the two narrowing checkboxes sit behind a disclosure (native
+     <details>). paper-filter.js opens it when the URL sets any of them, so a
+     deep link never hides an active filter. #}
+  <details class="paper-more" data-paper-more>
+    <summary class="paper-more__summary">{{ p18n.moreOptions }}</summary>
+    <div class="paper-more__body">
+    {# Sort (#1642). 511 rows arrived in build order with no way to ask for
+       anything else, while the by-person view has been alphabetical with a jump
+       nav since #756. The default is the order paperIndex already produces,
+       newest edition first, so the control changes nothing until it is used. #}
+    <div class="speaker-field">
+      <label class="speaker-field-label" for="paper-sort">{{ p18n.sortLabel }}</label>
+      <select id="paper-sort" data-paper-sort>
+        <option value="edition-desc">{{ p18n.sortEditionDesc }}</option>
+        <option value="edition-asc">{{ p18n.sortEditionAsc }}</option>
+        <option value="title">{{ p18n.sortTitle }}</option>
+      </select>
+    </div>
+    <div class="speaker-field speaker-field--check">
+      <label class="speaker-field-label--check" for="paper-published">
+        <input type="checkbox" id="paper-published" data-paper-published data-label="{{ p18n.publishedOnly }}">
+        {{ p18n.publishedOnly }}
+      </label>
+    </div>
+    <div class="speaker-field speaker-field--check">
+      <label class="speaker-field-label--check" for="paper-prize">
+        <input type="checkbox" id="paper-prize" data-paper-prize data-label="{{ p18n.prizeOnly }}">
+        {{ p18n.prizeOnly }}
+      </label>
+    </div>
+    </div>
+  </details>
 </div>
-
-{# Edition jump nav (#1643), the by-paper twin of the A to Z nav on the
-   by-person view. Hidden by paper-filter.js when the list is sorted by title,
-   where an edition anchor points at nothing in particular. #}
-<nav class="paper-editions" aria-label="{{ p18n.jumpToEdition }}" data-paper-editions>
-  <ul>
-  {%- for ed in paperIndex.editions %}
-    <li><a href="#ed-{{ ed.key | replace("/", "") | replace(".html", "") }}">{{ ed.label }}{% if ed.year %} {{ ed.year }}{% endif %}</a></li>
-  {%- endfor %}
-  </ul>
-</nav>
 
 {# Filter status, announced to assistive tech (role=status → polite live
    region). The data-msg-* strings are the localised templates
@@ -88,6 +83,7 @@
    is off screen, and clearing a filter used to confirm nothing. Rendering it
    here also gives the no-JS page a count. paper-filter.js only writes when
    the text actually changes, so this does not announce itself on load. #}
+<div class="paper-listbar">
 <p class="speaker-status" role="status" aria-live="polite" data-paper-status
    data-msg-all="{{ p18n.resultsAll }}"
    data-msg-none="{{ p18n.noMatch }}"
@@ -101,13 +97,13 @@
    not a control that would export the unfiltered 511. The button labels carry
    the count, which paper-export.js keeps in step with the filter. #}
 <div class="paper-export" data-paper-export hidden>
-  <span class="paper-export__label">{{ p18n.exportLabel }}</span>
   <button type="button" class="btn btn-secondary btn-sm" data-export-format="bib">{{ icon("download") }} <span data-export-text>{{ p18n.exportBib }}</span></button>
   <button type="button" class="btn btn-secondary btn-sm" data-export-format="ris">{{ icon("download") }} <span data-export-text>{{ p18n.exportRis }}</span></button>
-  <span class="paper-export__hint muted">{{ p18n.exportHint }}</span>
+  <span class="paper-export__hint muted"></span>
+</div>
 </div>
 
-<ol class="paper-index" role="list" data-paper-list>
+<ol class="paper-index paper-index--grouped" role="list" data-paper-list>
   {#- Grouped under an edition heading (#1643), the by-paper twin of the letter
       rows on the by-person view. paper-filter.js hides a heading whose papers
       have all been filtered out, the way speaker-filter.js already hides an
@@ -149,8 +145,11 @@
       <p class="paper-aff muted" lang="en">{{ p.affiliations | join(' · ') }}</p>
       {%- endif %}
       <p class="paper-meta">
-        <a class="paper-edition" href="{{ p.programmeUrl }}">{{ p.conferenceLabel }}{% if p.year %} {{ p.year }}{% endif %}</a>
-        {%- if p.panel %}<span class="paper-panel muted" lang="en">{{ p.panel }}</span>{% endif %}
+        {#- One link to the paper's slot in the programme. Under an edition
+            heading the edition name is hidden by CSS, so a card with a panel
+            reads as its panel alone. #}
+        <a class="paper-meta__link" href="{{ p.programmeUrl }}"><span class="paper-edition">{{ p.conferenceLabel }}{% if p.year %} {{ p.year }}{% endif %}</span>
+        {%- if p.panel %}<span class="paper-panel" lang="en">{{ p.panel }}</span>{% endif %}</a>
       </p>
       {%- if p.theme.length %}
       <p class="paper-themes">

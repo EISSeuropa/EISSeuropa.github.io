@@ -42,7 +42,7 @@
   var pubCheck = document.querySelector("[data-paper-published]");
   var prizeCheck = document.querySelector("[data-paper-prize]");
   var sortEl = document.querySelector("[data-paper-sort]");
-  var editionsNavEl = document.querySelector("[data-paper-editions]");
+  var moreEl = document.querySelector("[data-paper-more]");
   var clearEl = document.querySelector("[data-paper-clear]");
   var statusEl = document.querySelector("[data-paper-status]");
   var entries = [].slice.call(list.querySelectorAll("[data-paper-entry]"));
@@ -90,11 +90,10 @@
       });
     }
     list.appendChild(frag);
-    // An edition anchor points at nothing in a title order, and a heading
-    // between two unrelated titles is a false grouping.
+    // A heading between two unrelated titles is a false grouping.
     var byEdition = sort !== "title";
     headings.forEach(function (h) { h.hidden = !byEdition; });
-    if (editionsNavEl) editionsNavEl.hidden = !byEdition;
+    list.classList.toggle("paper-index--grouped", byEdition);
   }
 
   var norm = function (s) {
@@ -252,6 +251,8 @@
   restore("sort", sortEl);
   if (pubCheck && new URL(window.location.href).searchParams.get("published") === "1") pubCheck.checked = true;
   if (prizeCheck && new URL(window.location.href).searchParams.get("prize") === "1") prizeCheck.checked = true;
+  if (moreEl && ((sortEl && sortEl.value !== "edition-desc") ||
+      (pubCheck && pubCheck.checked) || (prizeCheck && prizeCheck.checked))) moreEl.open = true;
   var qParam = new URL(window.location.href).searchParams.get("q");
   if (findEl && qParam) findEl.value = qParam;
   apply();

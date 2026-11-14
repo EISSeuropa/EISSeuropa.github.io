@@ -104,12 +104,9 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ## [Unreleased]
 
-### Added
-
-- The Anthology paper index has a note inviting authors to email corrections to their entry or the abstract of their paper, in English, French and German. Part of [#1863](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/1863).
-
 ### Changed
 
+- The Anthology by-paper view is shorter above the list. The research-theme links are collapsed at every width. Sort, "Published only" and the prize filter sit behind "More options", which opens when a link sets one of them. The paper count and the .bib and .ris buttons share one row. The row of edition links is gone, since the Event menu narrows the list to one edition. Under an edition heading a paper card no longer repeats the edition name, and its panel name links to the paper's slot in the programme. The French and German "More options" labels are machine translations.
 - `/2027.html` is 9,700 px tall on a phone, down from 19,200, in English, French and German. Each closed panel shows its title and chair, and its description opens on a tap. The key dates are a timeline above the panels. A bar pinned under the header links to the six sections and marks the one on screen.
 - On a phone, the "Jointly organised with" strip on the conference pages lists each organiser as a row, logo beside name. The three stacked cards took 570 px.
 - The home page's conference badge reads "Submissions open" in English, French and German while the 2027 call for papers is open, with a link to submit on Indico. It read "Registration not yet open".
@@ -121,6 +118,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- The Clear button on the Anthology and publications filters shows only once a filter is set. It was visible from the start.
 - The 2027 call for papers names the chair of closed panel 6 as Nicolas Blarel.
 - The News item form appears in the list of issue forms. Its Collaborator page dropdown offered `None` beside a default choice, which GitHub does not accept, so the form was hidden.
 - The internal dashboard's release figure and its "Next milestones" card move on to v2.30.0. They had stayed at 100% on v2.29.0, whose milestone was still open after the release. A version with its own section in the changelog now counts as released.
