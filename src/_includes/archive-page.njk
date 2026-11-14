@@ -46,25 +46,6 @@
       </div>
     </dl>
 
-    {# The three deposit stickers, the same ones the repository README carries.
-       Out in the open rather than inside the disclosure below: they are the
-       fastest way to see that the corpus is deposited and archived, which is
-       lost when they sit behind a summary nobody opens. Each carries its
-       identifier in the alt text, so the DOI and the SWHID reach a screen
-       reader without a text row repeating them.
-
-       Served from our own assets rather than hotlinked. Zenodo throttles
-       GitHub's image proxy, which is why the DOI badge intermittently renders
-       broken on the README, and hotlinking would move that flakiness onto the
-       site along with a third-party request per visitor. They are static SVGs,
-       so refresh them when the DOI or the SWHID moves. The curl commands are
-       in docs/corpus-archiving.md. #}
-    <p class="deposit-badges">
-      <a href="{{ site.corpus.doiUrl }}"><img src="/assets/images/badges/zenodo-doi.svg" alt="DOI {{ site.corpus.doi }}, deposited on Zenodo" width="191" height="20"></a>
-      <a href="{{ site.corpus.swhOriginUrl }}"><img src="/assets/images/badges/swh-origin.svg" alt="Software repository archived in Software Heritage" width="140" height="20"></a>
-      <a href="{{ site.corpus.swhidUrl }}"><img src="/assets/images/badges/swh-dir.svg" alt="Source tree archived in Software Heritage as {{ site.corpus.swhid }}" width="410" height="20"></a>
-    </p>
-
     {# Wayfinding to the Anthology Atlas — the force-directed map of the same
        corpus the stats above count. In the header on purpose: at the foot of
        the page (where #1134 first put it) it sat ~87,000px down, below the
@@ -75,24 +56,8 @@
       {% include "atlas-signpost.njk" %}
     </div>
 
-    {# Per-year abstract coverage, collapsed by default (native <details>, no
-       JS). Bars render from paperIndex.years; coverage = abstracts on file /
-       papers eligible for one. #}
-    <details class="coverage-detail">
-      <summary>{{ n18n.coverageSummary }}</summary>
-      <div class="coverage-bars">
-        {%- for y in paperIndex.years %}
-        <div class="coverage-row">
-          <span class="coverage-year">{{ y.year }}</span>
-          <span class="coverage-track"><span class="coverage-fill" style="width: {{ y.coverage }}%"></span></span>
-          <span class="coverage-count">{{ y.withAbstract }}<span class="coverage-of">/{{ y.eligible }}</span></span>
-          <span class="coverage-pct">{{ y.coverage }}%</span>
-        </div>
-        {%- endfor %}
-      </div>
-      <p class="coverage-note">{{ n18n.coverageNote }}</p>
-    </details>
-
+    {# The two panels share a row. An open one takes the full width. #}
+    <div class="anthology-panels">
     {# Renewal and collaboration by edition (#1566). Same disclosure treatment
        as the coverage bars above, and for the same reason: this header already
        carries the stats row, the badges and two panels, so a fourth block is
@@ -146,14 +111,23 @@
       <p class="cite-corpus-note">{{ n18n.citeBody }}</p>
       <p class="cite-corpus-label">{{ n18n.citeLabel }}</p>
       <code class="cite-corpus-ref">{{ site.corpus.citation }}</code>
-      {# The DOI and the SWHID are the badges above, so the panel keeps only
-         what they cannot show: the corpus note in HAL, which describes what
-         the dataset contains, how it is built and where it stops. #}
+      {# The corpus note in HAL describes what the dataset contains, how it is
+         built and where it stops. The DOI and the SWHID are the badges below. #}
       <p class="cite-corpus-doi">
         <span class="cite-corpus-doi-label">{{ n18n.citeHalLabel }}</span>
         <a href="{{ site.corpus.halUrl }}">{{ site.corpus.halId }}</a>
       </p>
+      {#- The deposit stickers (DOI, Software Heritage), the same as the
+          repository README, beside the reference they identify. Self-hosted:
+          Zenodo throttles image proxies. Refresh them when the DOI or the
+          SWHID moves (docs/corpus-archiving.md). #}
+      <p class="deposit-badges">
+        <a href="{{ site.corpus.doiUrl }}"><img src="/assets/images/badges/zenodo-doi.svg" alt="DOI {{ site.corpus.doi }}, deposited on Zenodo" width="191" height="20"></a>
+        <a href="{{ site.corpus.swhOriginUrl }}"><img src="/assets/images/badges/swh-origin.svg" alt="Software repository archived in Software Heritage" width="140" height="20"></a>
+        <a href="{{ site.corpus.swhidUrl }}"><img src="/assets/images/badges/swh-dir.svg" alt="Source tree archived in Software Heritage as {{ site.corpus.swhid }}" width="410" height="20"></a>
+      </p>
     </details>
+    </div>
   </div>
 </header>
 
@@ -179,6 +153,23 @@
         | replace("{min}", releaseScope.minCoverage)
         | replace("{missing}", releaseScope.missingAbstracts)
         | replace("{eligible}", releaseScope.eligibleOut) }} <a href="mailto:{{ site.contactEmail }}?subject=Anthology">{{ n18n.earlyAccessCta }}</a></p>
+      {#- Per-year abstract coverage, collapsed (native <details>, no JS). It
+          sits with the notice that quotes the same figures. Bars from
+          paperIndex.years; coverage = abstracts on file / eligible papers. #}
+      <details class="coverage-detail">
+        <summary>{{ n18n.coverageSummary }}</summary>
+        <div class="coverage-bars">
+          {%- for y in paperIndex.years %}
+          <div class="coverage-row">
+            <span class="coverage-year">{{ y.year }}</span>
+            <span class="coverage-track"><span class="coverage-fill" style="width: {{ y.coverage }}%"></span></span>
+            <span class="coverage-count">{{ y.withAbstract }}<span class="coverage-of">/{{ y.eligible }}</span></span>
+            <span class="coverage-pct">{{ y.coverage }}%</span>
+          </div>
+          {%- endfor %}
+        </div>
+        <p class="coverage-note">{{ n18n.coverageNote }}</p>
+      </details>
     </aside>
 
     {# data-msg-failed is the loader's error string (#1641), kept on the

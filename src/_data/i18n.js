@@ -973,7 +973,7 @@ const locales = {
       // reuse the speakers.* and papers.* blocks below.
       eyebrow: "EISS conferences & workshops",
       title: "The European Security Studies Anthology",
-      lead: "Every paper presented at an EISS conference or workshop since 2017, and everyone who presented it. Many carry an abstract, citation details and a link to the published version. Browse by person or by paper, and filter by year or theme.",
+      lead: "Every paper presented at an EISS conference or workshop since 2017, and everyone who presented it. Many carry an abstract, citation details and a link to the published version.",
       themeDoorsHeading: "Browse by research theme",
       loadingView: "Loading this view…",
       loadFailedView: "This view could not be loaded. Press the tab again to retry.",
@@ -2000,7 +2000,7 @@ const locales = {
     navigator: {
       eyebrow: "Conférences et ateliers de l'EISS",
       title: "L'Anthologie des études de sécurité européennes",
-      lead: "Chaque communication présentée lors d'une conférence ou d'un atelier de l'EISS depuis 2017, et toutes les personnes qui les ont présentées. Beaucoup comportent un résumé, des références de citation et un lien vers la version publiée. Parcourez par personne ou par communication, et filtrez par année ou par thème.",
+      lead: "Chaque communication présentée lors d'une conférence ou d'un atelier de l'EISS depuis 2017, et toutes les personnes qui les ont présentées. Beaucoup comportent un résumé, des références de citation et un lien vers la version publiée.",
       themeDoorsHeading: "Parcourir par thème de recherche",
       loadingView: "Chargement de cette vue…",
       loadFailedView: "Cette vue n'a pas pu être chargée. Appuyez de nouveau sur l'onglet pour réessayer.",
@@ -2992,7 +2992,7 @@ const locales = {
     navigator: {
       eyebrow: "EISS-Konferenzen und -Workshops",
       title: "Die Anthologie der europäischen Sicherheitsstudien",
-      lead: "Jeder Beitrag, der seit 2017 auf einer EISS-Konferenz oder einem Workshop vorgestellt wurde, und alle, die ihn vorgestellt haben. Viele tragen ein Abstract, Zitationsangaben und einen Link zur veröffentlichten Fassung. Durchsuchen Sie nach Person oder nach Beitrag und filtern Sie nach Jahr oder Thema.",
+      lead: "Jeder Beitrag, der seit 2017 auf einer EISS-Konferenz oder einem Workshop vorgestellt wurde, und alle, die ihn vorgestellt haben. Viele tragen ein Abstract, Zitationsangaben und einen Link zur veröffentlichten Fassung.",
       themeDoorsHeading: "Nach Forschungsthema durchsuchen",
       loadingView: "Diese Ansicht wird geladen …",
       loadFailedView: "Diese Ansicht konnte nicht geladen werden. Drücken Sie erneut auf den Reiter, um es noch einmal zu versuchen.",
