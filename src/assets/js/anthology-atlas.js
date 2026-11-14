@@ -35,6 +35,9 @@
   const findListEl = document.getElementById('atlas-find-list');
   // Copy-link row (#1445) and the text twin of the current view (#1446).
   const shareRowEl = document.getElementById('atlas-shareopts');
+  // Set on the seventeen theme pages (#1255), empty on the whole map.
+  const pageThemeName = (document.querySelector('.atlas-shell[data-atlas-theme]') || { getAttribute: () => '' })
+    .getAttribute('data-atlas-theme') || '';
   const shareBtnEl = document.getElementById('atlas-share');
   const listEl = document.getElementById('atlas-list');
   // The link after the canvas lands on the list, so open it on the way (RGAA 1.1.8).
@@ -1124,7 +1127,20 @@
 
   // "Is this still the default map?" Drives the copy-link row: a button that
   // copies the bare URL of the page you are already on is noise.
+  // A theme page arriving on its own theme is that page's plain view: its
+  // address already links to it, so Copy link and Clear stay out of sight.
+  function atThemePageDefault() {
+    if (!pageThemeName || activeHubs.size !== 1) return false;
+    const only = hubs.find((h) => activeHubs.has(h.id));
+    return !!only && only.name === pageThemeName
+      && lens === 'papers' && activeEditions.size === editions.length
+      && !collabOnly && !abstractsOnly && !paperEdgesOn && !bridge
+      && (!pinnedHub || pinnedHub.name === pageThemeName)
+      && !spotlightSet && !spotlight;
+  }
+
   function viewIsFiltered() {
+    if (atThemePageDefault()) return false;
     return lens !== 'papers'
       || activeEditions.size !== editions.length
       || activeHubs.size !== hubs.length
@@ -1597,6 +1613,10 @@
     const noun = lens === 'authors' ? t('authors', 'authors') : t('papers', 'papers');
 
     hubNameEl.textContent = hubLabel(hub);
+    // On a theme page its own panel would repeat the lede's figures and the
+    // feed and identifier links at the foot, and link to the page itself.
+    const ownPage = !!pageThemeName && hub.name === pageThemeName;
+    hubMetaEl.hidden = ownPage;
 
     // Corpus figures where the build has them, the map's own count otherwise
     // (the Untagged hub is not a research theme and has no page behind it).
@@ -1674,7 +1694,7 @@
     // rule (atlasThemePages.js) already guarantees the shape. Assert it here
     // and the URL can only ever be a same-origin path.
     const slug = facts && facts.slug;
-    if (slug && /^[a-z0-9-]+$/.test(slug)) {
+    if (!ownPage && slug && /^[a-z0-9-]+$/.test(slug)) {
       [[t('hubOpenPage', 'Open its Atlas page'), '/anthology-atlas/theme/' + slug + themeSuffix + '.html'],
        [t('hubFollow', 'Follow this theme'), '/feeds/themes/' + slug + '.xml']].forEach(([text, href]) => {
         const a = document.createElement('a');
@@ -1690,7 +1710,7 @@
     // slug above does, so nothing read out of the document can become a
     // scheme. The key is stable and locale-agnostic, unlike the slug.
     const key = facts && facts.key;
-    if (key && /^[a-z0-9-]+$/.test(key)) {
+    if (!ownPage && key && /^[a-z0-9-]+$/.test(key)) {
       const a = document.createElement('a');
       a.className = 'atlas-hub__link';
       a.href = '/vocab/themes/' + key + '/';
@@ -1734,6 +1754,7 @@
     };
 
     hubNameEl.textContent = label(a) + ' / ' + label(b);
+    hubMetaEl.hidden = false;
     hubMetaEl.textContent = fill(t(key, fallbacks[key]), { count: both.length });
 
     // Each side stays one press away, so a bridge is a place to look from

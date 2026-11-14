@@ -466,10 +466,6 @@
     </p>
     </details>
     {%- if atlasTheme %}
-    {# The query-string form stays the canonical shareable filter and is already
-       indexed, so the theme page points at its equivalent rather than replacing
-       it (#1255 step 6). #}
-    <p class="atlas-themes__alt muted"><a href="{{ atlasHref }}?themes={{ atlasTheme.name | urlencode }}">{{ a.themesNavOpenFull }}</a></p>
     {# Visible subscribe affordance (#1256 step 4): an unadvertised feed is a
        feed nobody uses, and the <link rel="alternate"> in the head is invisible
        to anyone whose browser stopped surfacing feeds. #}
