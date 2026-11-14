@@ -211,13 +211,9 @@
        pages are per locale (#1495).
        data-pagefind-ignore: a nav affordance pointing at pages that index
        themselves. #}
-    {# Rendered open, and archive.js closes it on a narrow viewport. Seventeen
-       chips are 206px tall at 1280px and 685px on a 375px phone, one or two
-       per line, which put 685px between the view toggle and the first row of
-       the list. Same shape as the Atlas filter disclosure: open in the markup
-       so the no-JS page shows everything, the script does the collapsing, and
-       the summary is hidden by CSS at the width where nothing collapses. #}
-    <details class="theme-doors" id="theme-doors" data-theme-doors open>
+    {# Collapsed at every width. The Theme menu in the papers filters narrows
+       the list the same way. These doors lead to the Atlas theme pages. #}
+    <details class="theme-doors" id="theme-doors" data-theme-doors>
       <summary class="theme-doors__summary">
         <span class="theme-doors__chevron" aria-hidden="true">{{ icon("chevron-down") }}</span>
         <span class="theme-doors__h" id="theme-doors-h">{{ n18n.themeDoorsHeading }}</span>
