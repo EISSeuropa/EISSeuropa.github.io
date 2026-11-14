@@ -32,11 +32,9 @@
 {%- set _allWorks = [] -%}
 {%- set _members = [] -%}
 {%- set _years = [] -%}
-{%- set _letters = [] -%}
 {%- for m in orcidWorks -%}
   {%- if m.works.length -%}
     {%- set _ = _members.push(m) -%}
-    {%- if m.letter and m.letter not in _letters -%}{%- set _ = _letters.push(m.letter) -%}{%- endif -%}
     {%- for w in m.works -%}
       {%- set _ = _allWorks.push(w) -%}
       {%- if w.year and w.year not in _years -%}{%- set _ = _years.push(w.year) -%}{%- endif -%}
@@ -50,7 +48,6 @@
     <h1>{{ o.membersHeading }}</h1>
     <p class="lead" style="max-width: 48rem;">{{ o.membersPageLead }}</p>
     {%- if _allWorks.length %}
-    <p class="muted" style="font-size: var(--fs-sm);">{{ o.stats | replace("{works}", _allWorks.length) | replace("{members}", _members.length) }}</p>
 
     <div class="speaker-filters" role="search">
       <div class="speaker-field speaker-field--search">
@@ -71,30 +68,25 @@
     </div>
 
     {# Filter status, announced to assistive tech (role=status → polite live
-       region). Empty when nothing is filtered; publications-filter.js fills the
-       localised data-msg-* templates and marks the empty state. #}
+       region). Unfiltered it carries the totals, which used to be a separate
+       line above the filters. publications-filter.js fills the localised
+       data-msg-* templates and marks the empty state. #}
+    {%- set _all = o.stats | replace("{works}", _allWorks.length) | replace("{members}", _members.length) %}
     <p class="speaker-status" role="status" aria-live="polite" data-pub-status
+       data-msg-all="{{ _all }}"
        data-msg-none="{{ o.filterNone }}"
        data-msg-one="{{ o.filterOne }}"
-       data-msg-many="{{ o.filterMany }}"></p>
+       data-msg-many="{{ o.filterMany }}">{{ _all }}</p>
 
-    {# A–Z jump rail, same design as the Anthology by-person view. Members are
-       surname-sorted (sync-orcid), so the letters run in order. #}
-    <nav class="speaker-az" aria-label="{{ t.speakers.jumpToLetter }}">
-      <ul>{%- for L in _letters %}<li><a href="#ltr-{{ L }}">{{ L }}</a></li>{% endfor %}</ul>
-    </nav>
-
+    {# No A to Z rail or letter headings. With a few dozen members, nearly
+       every letter held one person, and the search box finds a name. #}
     <div class="member-pubs" data-pub-list>
       {%- for m in orcidWorks %}
       {%- if m.works.length %}
-      {%- set _prevL = orcidWorks[loop.index0 - 1].letter if not loop.first else "" %}
-      {%- if m.letter != _prevL %}
-      <h2 class="speaker-letter-h" id="ltr-{{ m.letter }}" data-pub-letter="{{ m.letter }}">{{ m.letter }}</h2>
-      {%- endif %}
-      <section class="member-pub-group" data-pub-group data-member="{{ m.slug }}" data-letter="{{ m.letter }}">
+      <section class="member-pub-group" data-pub-group data-member="{{ m.slug }}">
         <div class="member-pub-head">
           {{ headshot(m.slug) }}
-          <h3 class="member-pub-name"><a href="/board/{{ m.slug }}.html" lang="en">{{ m.name }}</a></h3>
+          <h2 class="member-pub-name"><a href="/board/{{ m.slug }}.html" lang="en">{{ m.name }}</a></h2>
         </div>
         <ul class="member-works" role="list">
           {%- for w in m.works %}
