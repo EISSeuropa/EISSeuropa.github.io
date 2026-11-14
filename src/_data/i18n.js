@@ -1071,7 +1071,6 @@ const locales = {
       // /papers index (EN + FR + DE share one include, this is the
       // chrome). Paper titles, author names, affiliations, panel names and
       // theme labels are translated, the rest is not (see `note`).
-      correctionNote: "Found an error in an entry, or want to send the abstract of your paper? Email the title and year to",
       eyebrow: "The ESSC corpus",
       title: "Papers",
       lead: "Every paper presented at a European Security Studies Conference, drawn from the programmes of every edition. Browse the whole corpus, or filter by year and theme. Use the site search to find a specific title or author.",
@@ -1096,16 +1095,14 @@ const locales = {
       sortEditionDesc: "Edition, newest first",
       sortEditionAsc: "Edition, oldest first",
       sortTitle: "Title, A to Z",
-      jumpToEdition: "Jump to an edition",
+      moreOptions: "More options",
       resultsAll: "All {n} papers",
       resultsOne: "{n} paper",
       resultsMany: "{n} papers",
       noMatch: "No papers match.",
       matching: 'matching "{q}"',
-      exportLabel: "Export these references",
       exportBib: "Download .bib",
-      exportRis: "Download .ris",
-      exportHint: "Downloads the references currently listed, in the order shown."
+      exportRis: "Download .ris"
     },
 
     outputs: {
@@ -2074,7 +2071,6 @@ const locales = {
     },
 
     papers: {
-      correctionNote: "Une erreur dans une notice, ou le résumé de votre communication à transmettre ? Envoyez le titre et l'année à",
       eyebrow: "Le corpus de l'ESSC",
       title: "Communications",
       lead: "Toutes les communications présentées lors d'une European Security Studies Conference, à partir des programmes de chaque édition. Parcourez l'ensemble du corpus ou filtrez par année et par thème. Utilisez la recherche du site pour trouver un titre ou un auteur précis.",
@@ -2097,16 +2093,14 @@ const locales = {
       sortEditionDesc: "Édition, de la plus récente",
       sortEditionAsc: "Édition, de la plus ancienne",
       sortTitle: "Titre, de A à Z",
-      jumpToEdition: "Aller à une édition",
+      moreOptions: "Plus d'options",
       resultsAll: "Les {n} communications",
       resultsOne: "{n} communication",
       resultsMany: "{n} communications",
       noMatch: "Aucune communication ne correspond.",
       matching: 'correspondant à « {q} »',
-      exportLabel: "Exporter ces références",
       exportBib: "Télécharger .bib",
-      exportRis: "Télécharger .ris",
-      exportHint: "Télécharge les références actuellement affichées, dans l'ordre indiqué."
+      exportRis: "Télécharger .ris"
     },
 
     outputs: {
@@ -3070,7 +3064,6 @@ const locales = {
     },
 
     papers: {
-      correctionNote: "Fehler in einem Eintrag gefunden, oder möchten Sie das Abstract Ihres Beitrags senden? Schicken Sie Titel und Jahr an",
       eyebrow: "Das ESSC-Korpus",
       title: "Beiträge",
       lead: "Alle Beiträge, die auf einer European Security Studies Conference vorgestellt wurden, zusammengestellt aus den Programmen jeder Ausgabe. Durchsuchen Sie das gesamte Korpus oder filtern Sie nach Jahr und Thema. Nutzen Sie die Seitensuche, um einen bestimmten Titel oder Autor zu finden.",
@@ -3093,16 +3086,14 @@ const locales = {
       sortEditionDesc: "Ausgabe, neueste zuerst",
       sortEditionAsc: "Ausgabe, älteste zuerst",
       sortTitle: "Titel, A bis Z",
-      jumpToEdition: "Zu einer Ausgabe springen",
+      moreOptions: "Weitere Optionen",
       resultsAll: "Alle {n} Beiträge",
       resultsOne: "{n} Beitrag",
       resultsMany: "{n} Beiträge",
       noMatch: "Keine Beiträge gefunden.",
       matching: 'passend zu „{q}“',
-      exportLabel: "Diese Literaturangaben exportieren",
       exportBib: ".bib herunterladen",
-      exportRis: ".ris herunterladen",
-      exportHint: "Lädt die derzeit angezeigten Literaturangaben in der dargestellten Reihenfolge herunter."
+      exportRis: ".ris herunterladen"
     },
 
     outputs: {
