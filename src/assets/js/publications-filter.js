@@ -25,7 +25,6 @@
   var statusEl = document.querySelector("[data-pub-status]");
   var entries = [].slice.call(list.querySelectorAll("[data-pub-entry]"));
   var groups = [].slice.call(list.querySelectorAll("[data-pub-group]"));
-  var letterHeads = [].slice.call(list.querySelectorAll("[data-pub-letter]"));
 
   var norm = function (s) {
     return String(s || "")
@@ -51,13 +50,6 @@
       g.hidden = !g.querySelector("[data-pub-entry]:not([hidden])");
     });
     // Hide an A–Z letter heading when every group under that letter is hidden.
-    letterHeads.forEach(function (h) {
-      var letter = h.getAttribute("data-pub-letter");
-      var anyVisible = groups.some(function (g) {
-        return !g.hidden && g.getAttribute("data-letter") === letter;
-      });
-      h.hidden = !anyVisible;
-    });
 
     var filtering = !!(year || q);
     if (clearEl) clearEl.hidden = !filtering;
@@ -66,7 +58,7 @@
       // The region stays in the page and only its text changes: unhiding it
       // in the same step as filling it is not announced (RGAA 7.5).
       if (!filtering) {
-        statusEl.textContent = "";
+        statusEl.textContent = statusEl.dataset.msgAll || "";
       } else {
         var d = statusEl.dataset;
         if (visible === 0) {
