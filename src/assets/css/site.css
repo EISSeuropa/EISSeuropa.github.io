@@ -3698,8 +3698,22 @@ a[href^="http"]:not([class]) {
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
-  margin: var(--space-4) 0 0;
+  margin: var(--space-3) 0 0;
 }
+/* Renewal and citation disclosures on one row in the Anthology header. An
+   open panel takes the full width, so its content is never squeezed. */
+.anthology-panels {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-3) var(--space-6);
+  margin-top: var(--space-5);
+}
+.anthology-panels > details { margin-top: 0; }
+.anthology-panels > details[open] { flex-basis: 100%; }
+/* The coverage bars inside the early-access notice, under its sentence. */
+.anthology-notice > .coverage-detail { flex-basis: 100%; max-width: none; margin-top: 0; }
+.anthology-notice > .coverage-detail > :not(summary) { max-width: 32rem; }
 .deposit-badges img {
   display: block;
   max-width: 100%;
@@ -7363,7 +7377,7 @@ body.search-open { overflow: hidden; }
 }
 .coverage-row {
   display: grid;
-  grid-template-columns: 2.6rem 1fr auto 2.6rem;
+  grid-template-columns: 2.6rem 1fr auto 3.2rem; /* 2.6rem broke "100%" over two lines */
   align-items: center;
   gap: 0.6rem;
   font-size: var(--fs-sm);
