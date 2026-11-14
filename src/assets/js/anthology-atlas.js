@@ -1908,6 +1908,9 @@
   function buildStats() {
     statsEl.replaceChildren();
     buildFindings();
+    // The Papers-lens figures repeat the lede and the Anthology header, so the
+    // tiles show in the Authors lens only. The tour skips a hidden target.
+    statsEl.hidden = lens !== 'authors';
     let rows;
     if (lens === 'authors') {
       const collaborating = authors.filter((a) => a.coCount).length;
@@ -2165,6 +2168,8 @@
     // would quietly cost the tour its editions and themes steps. The tour is
     // the one moment the filters are the subject, so open them for it.
     if (filtersEl) filtersEl.open = true;
+    const keyEl = document.getElementById('atlas-key');
+    if (keyEl) keyEl.open = true;
     // Viewport-aware split (NetSec's isPhone pattern): phones get a shorter
     // walkthrough that skips the lens-switching Authors step, whose control
     // row wraps off-screen at 375px.
