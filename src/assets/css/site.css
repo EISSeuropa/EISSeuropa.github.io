@@ -9540,6 +9540,7 @@ a.profile-pub-title:hover { text-decoration: underline; }
 
 /* Below the map since #1430, so the margin is above the tiles, not below. */
 .atlas-stats { display: flex; gap: 10px; flex-wrap: wrap; margin: 18px 0 0; }
+.atlas-stats[hidden] { display: none; }
 /* `--surface` is the frosted-glass fill and is only ever correct alongside the
    blur + shadow that make it read as glass. These tiles carried the fill on its
    own, which rendered as a flat murky box: the one place on the site using the
@@ -9557,6 +9558,9 @@ a.profile-pub-title:hover { text-decoration: underline; }
 /* A flex/`display` rule beats the UA [hidden] style, so re-assert it for the
    lens-toggled control rows + legends (Collaborators-only, Authors legend). */
 .atlas-controls[hidden], .atlas-legend[hidden] { display: none; }
+/* Lens, lens options and search on one row. The rows inside keep their own
+   gaps; the toolbar only lays them side by side. */
+.atlas-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 0 20px; }
 .atlas-controls .lbl { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); margin-right: 2px; }
 /* Filter chip. The series colour rides on a dot, never on the fill: chips used
    to be a saturated fill with white text, which failed WCAG AA on 27 of 35
@@ -9764,6 +9768,14 @@ a.profile-pub-title:hover { text-decoration: underline; }
   padding: 6px 0;
 }
 .atlas-list__summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* Map key (legend and interaction hints), closed by default. Same text
+   disclosure as the list above. */
+.atlas-key { margin: 0; }
+.atlas-key__summary {
+  cursor: pointer; font-size: var(--fs-sm); font-weight: 600; color: var(--accent);
+  padding: 6px 0;
+}
+.atlas-key__summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .atlas-list__lede { font-size: var(--fs-sm); margin: 2px 0 10px; }
 /* The rows are tabular, so they are a table (#1496): three fields, the same
    three every time, and a screen reader can move by column and say which one
@@ -10019,11 +10031,15 @@ a.profile-pub-title:hover { text-decoration: underline; }
 
 /* Theme wayfinding under the map (#1255). Own prefix per rule §15. */
 .atlas-themes { margin: var(--space-6) 0 0; }
+.atlas-themes__summary { cursor: pointer; }
+.atlas-themes__summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .atlas-themes__h {
+  display: inline;
   font-size: var(--fs-md);
-  margin: 0 0 var(--space-3);
+  margin: 0;
   color: var(--text);
 }
+.atlas-themes__more[open] > .atlas-themes__list { margin-block-start: var(--space-3); }
 .atlas-themes__list {
   list-style: none;
   margin: 0;

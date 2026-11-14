@@ -111,13 +111,15 @@
        and the tour teaches all four to the same reader a moment later, so
        the strip was holding 251px of the first screen to say twice what the
        tour says once. The map is what a first visit should open on. #}
-    <p class="atlas-welcome-lede">{{ a.welcomeLede | replace("{papers}", anthologyAtlas.papers | length) | replace("{editions}", anthologyAtlas.years | length) | replace("{themes}", anthologyAtlas.themes | length) }}</p>
+    <p class="atlas-welcome-lede">{{ a.welcomeLede }}</p>
     <div class="atlas-welcome-actions">
       <button class="tour-btn tour-btn-primary" type="button" id="atlas-welcome-tour">{{ a.welcomeTour }}</button>
       <button class="atlas-welcome-dismiss" type="button" id="atlas-welcome-dismiss" aria-controls="atlas-welcome">{{ a.welcomeDismiss }}</button>
     </div>
   </aside>
 
+  {# Lens, the lens's own options and the search share one row (wraps on a phone). #}
+  <div class="atlas-toolbar">
   <div class="atlas-controls" id="atlas-lens" role="group" aria-label="{{ a.lensAria }}">
     <span class="lbl">{{ a.lensLabel }}</span>
     <!-- lens chips (Papers / Authors) injected by anthology-atlas.js -->
@@ -139,6 +141,7 @@
     {# Typing a name that is not in the corpus, or one the current filters
        hide, used to do nothing at all. #}
     <span class="atlas-find__msg" id="atlas-find-msg" role="status"></span>
+  </div>
   </div>
 
   {# Copy-link (#1445). The lens, the chips, the toggles and the current
@@ -327,6 +330,9 @@
     </div>
   </aside>
 
+  {# Closed by default. The tour opens it for its legend step. #}
+  <details class="atlas-key" id="atlas-key">
+  <summary class="atlas-key__summary">{{ a.keySummary }}</summary>
   <div class="atlas-legend" id="atlas-legend">
     <span><span class="sw sw-theme"></span>{{ a.legendColour }}</span>
     <span><span class="sw sw-page"></span>{{ a.legendHasPage }}</span>
@@ -344,6 +350,7 @@
     <span>{{ a.hintHub }}</span>
     <span>{{ a.hintZoom }}</span>
   </div>
+  </details>
 
   {# The corpus figures read as context for the map, so they sit under it
      rather than above it, where they were part of the 1074px of chrome a
@@ -440,7 +447,10 @@
      each theme page links back plus sideways to the others. Rendered from
      atlasThemePages, so a new theme in the corpus joins the list on its own. #}
   <nav class="atlas-themes" aria-label="{% if atlasTheme %}{{ a.themesNavOther }}{% else %}{{ a.themesNavHeading }}{% endif %}">
-    <h2 class="atlas-themes__h">{% if atlasTheme %}{{ a.themesNavOther }}{% else %}{{ a.themesNavHeading }}{% endif %}</h2>
+    {#- Collapsed. The hubs on the map and the theme chips in Filters reach
+        the same themes. -#}
+    <details class="atlas-themes__more">
+    <summary class="atlas-themes__summary"><h2 class="atlas-themes__h">{% if atlasTheme %}{{ a.themesNavOther }}{% else %}{{ a.themesNavHeading }}{% endif %}</h2></summary>
     <ul class="atlas-themes__list">
       {%- for t in atlasThemePages %}
       {%- if not atlasTheme or t.slug != atlasTheme.slug %}
@@ -454,6 +464,7 @@
     <p class="atlas-themes__vocab muted">
       <a href="/vocab/themes/">{{ a.themesNavVocab }}</a>
     </p>
+    </details>
     {%- if atlasTheme %}
     {# The query-string form stays the canonical shareable filter and is already
        indexed, so the theme page points at its equivalent rather than replacing
