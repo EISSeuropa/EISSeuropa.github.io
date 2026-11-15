@@ -106,6 +106,8 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- A shared link to a paper page previews with the Anthology card and names the authors and the conference before the abstract. A shared link to a profile under `/board/` previews with the People card in the page's language. Both used the home page card. Paper pages and Belvedere posts declare themselves as articles to link previews.
+- The image description in a link preview gives the text on the card in the page's language. It gave the page title, which on shared cards such as the past-conference card named a page the card does not show.
 - `/publications` lists members without the A to Z letters and the letter headings, since nearly every letter held one person and the search box finds a name. The publication and member totals sit on the line above the list, which shows the filtered count once a filter is set.
 - The seventeen Atlas theme pages show less that repeats the page. "Copy link to this view" and "Clear" appear once the view changes, since the page address already links to the theme. The theme's own panel keeps the themes it shares papers with and drops its figures, which the introduction gives, and its links to the page itself, the feed and the identifier, which the foot of the page gives. The "Open this theme on the full Atlas" link is gone, since the page is that view.
 - The Anthology header is shorter. The introduction drops its sentence on browsing and filtering. The DOI and Software Heritage stickers sit in "Cite this corpus", beside the reference they identify. "Abstract coverage by year" opens from the "Still filling in" notice, which quotes the same figures. "Renewal and collaboration by edition" and "Cite this corpus" share one line. The French and German introductions lose the same sentence.
@@ -123,6 +125,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- 42 paper pages showed `&#39;` or `&quot;` in place of an apostrophe or quotation mark in the browser tab and in link previews. The title was escaped twice. Profile pages and theme vocabulary pages had the same fault waiting for a name with an apostrophe.
 - The abstract coverage bars on the Anthology show "100%" on one line. The column was too narrow and broke it in two.
 - The Clear button on the Anthology and publications filters shows only once a filter is set. It was visible from the start.
 - The 2027 call for papers names the chair of closed panel 6 as Nicolas Blarel.

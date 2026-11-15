@@ -13,9 +13,15 @@ pagination:
 layout: base.njk
 permalink: "/papers/{{ paper.slug }}.html"
 navKey: "navigator"
+# Shared links preview with the Anthology card, typed as an article, and the
+# description names who gave the paper and where before the abstract.
+metaImage: /assets/images/anthology-meta.jpg
+ogType: article
 eleventyComputed:
-  title: "{{ paper.title }}"
-  description: "{{ (paper.abstract or paper.title) | striptags | truncate(155) }}"
+  # `| safe`: base.njk escapes these when it prints them, so escaping here too
+  # put a literal "&#39;" in 42 titles' tabs and share cards.
+  title: "{{ paper.title | safe }}"
+  description: "{{ (paper.authorNames | join(', ') + ' (' + paper.conferenceName + '). ' + (paper.abstract or '') | striptags) | trim | truncate(200) | safe }}"
 ---
 {# Per-paper landing page (#794). One template paginates over paperPages to
    emit /papers/<slug>.html for every abstract- or published-link-bearing

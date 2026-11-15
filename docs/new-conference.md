@@ -141,7 +141,9 @@ python3 scripts/make-share-cards.py
 ```
 
 The script writes `<YEAR>-meta.jpg`, `<YEAR>-meta.fr.jpg`, `<YEAR>-meta.de.jpg`
-to `src/assets/images/`. Point the new page's front-matter `metaImage`
+to `src/assets/images/`, and rewrites `src/_data/shareCardAlt.json`, the
+text of each card that `base.njk` gives as the preview image's alt. Commit
+both. Point the new page's front-matter `metaImage`
 (EN + FR + DE) at `/assets/images/<YEAR>-meta.jpg`.
 
 ## 4. Update the i18n drift state
@@ -228,7 +230,9 @@ Conference" card.
 - Remove the year's entry from `CARDS` in `scripts/make-share-cards.py`
   and delete its `<year>-meta.*` files (otherwise the generator keeps
   producing an unreferenced per-year card — a `check-build-sanity` /
-  orphan check will flag it).
+  orphan check will flag it). Then run
+  `python3 scripts/make-share-cards.py --alt-only` to drop its alt text
+  from `src/_data/shareCardAlt.json`.
 
 A second one for the **Atlas card**, which is drawn from the corpus and so
 carries the paper, author and theme counts as they stood when it was last
