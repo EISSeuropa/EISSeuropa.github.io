@@ -108,7 +108,9 @@ python3 scripts/make-share-cards.py anthology-atlas
 
 Look at the output rather than trusting the exit code, and check the figures
 line matches the corpus. `check-build-sanity.mjs` catches a card that is
-missing, not one that is out of date.
+missing, not one that is out of date. The daily roadmap refresh redraws any
+card whose figures changed (`make-share-cards.py --refresh`, #2157), so this
+is a check that it did.
 
 ## Pre-conference extras (the weeks before an ESSC)
 

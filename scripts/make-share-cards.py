@@ -12,26 +12,31 @@ preview of /board.html looks different from /membership.html.
 
 Pipeline
 --------
-1. For each entry in CARDS below, write a temp SVG with the page's
-   eyebrow / title / subtitle substituted into TEMPLATE.
-2. Convert each SVG to a 1200×630 PNG using macOS qlmanage (no extra
-   dependencies). The output PNG is saved into src/assets/images/
-   alongside the existing -meta files.
-3. Optionally re-encode to JPG via `sips` for smaller file sizes,
-   matching the existing .jpg convention.
+1. For each entry in CARDS below (and each Atlas theme), fill TEMPLATE
+   with the page's eyebrow / title / subtitle.
+2. scripts/card_raster.py renders the SVG with headless Chrome (or macOS
+   qlmanage), keeps the 1200×630 band and writes the JPEG to
+   src/assets/images/ (#2153). Chrome is on GitHub's runners and in cloud
+   sessions, so any machine can regenerate a card.
+3. src/_data/shareCardAlt.json records the text of every card, for
+   og:image:alt and for --refresh.
 
-Re-run after editing CARDS or TEMPLATE. Outputs are deterministic
-unless qlmanage's renderer changes — small libpng quantisation drift
-is possible between macOS versions, which is fine for share cards.
+Re-run after editing CARDS or TEMPLATE. Needs Chrome or Chromium (or
+CHROME_BIN), node, and Pillow from scripts/requirements.txt.
 
 Usage
 -----
-    python3 scripts/make-share-cards.py
+    python3 scripts/make-share-cards.py              # every template and Atlas card
+    python3 scripts/make-share-cards.py board news   # only those slugs
     python3 scripts/make-share-cards.py --alt-only   # only src/_data/shareCardAlt.json
+    python3 scripts/make-share-cards.py --refresh    # cards whose text changed (daily, #2157)
+    python3 scripts/make-share-cards.py --papers     # one card per paper page (deploy, #2156)
 """
 from __future__ import annotations
 
 import base64
+import hashlib
+import importlib.util
 import json
 import re
 import shutil
@@ -42,6 +47,7 @@ from html import escape
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import card_raster  # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = ROOT / "src" / "assets" / "images"
 BRAND_DIR = ROOT / "src" / "assets" / "images" / "brand"
@@ -341,7 +347,7 @@ TEMPLATE = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" wi
 
   <!-- Eyebrow / title / subtitle stack, lower-left -->
   <g font-family="'Inter', -apple-system, system-ui, sans-serif" fill="#0C3A5E">
-    <text x="80" y="600" font-size="30" font-weight="700" letter-spacing="3" fill="#007bc6">{eyebrow}</text>
+    <text x="80" y="{eyebrow_y}" font-size="30" font-weight="700" letter-spacing="3" fill="#007bc6">{eyebrow}</text>
     {title_block}
     {subtitle_block}
   </g>
@@ -458,7 +464,9 @@ def build_motif(name: str = "logo-mark.svg") -> str:
         if name == "belvedere-mark.svg"
         else 'x="800" y="120" width="400" height="400"'
         if name in SQUARE_MARKS
-        else 'x="610" y="150" width="760" height="341"'
+        # Low enough that the band shows most of the constellation. At
+        # y=150 the crop kept only a few stray lines and half a node (#2153).
+        else 'x="690" y="236" width="640" height="287"'
     )
     # anthology-mark.svg paints its hub with fill="currentColor" so one asset
     # can recolour per surface. Inside this card there is nothing to inherit
@@ -471,78 +479,101 @@ def build_motif(name: str = "logo-mark.svg") -> str:
     )
 
 
-TITLE_TOP = 700  # baseline of the title's first line (within the band)
+# The text stack is laid out from the bottom up (#2153). It used to start at a
+# fixed title baseline, so a two-line title pushed the subtitle down to 9 px
+# above the eiss-europa.com line while a one-line card kept 78 px. Anchoring
+# the subtitle to the footer keeps that gap the same on every card, and a
+# longer title grows upwards into the empty space under the lockup.
+FOOTER_Y = 866        # baseline of the eiss-europa.com line
+SUBTITLE_Y = 812      # baseline of the subtitle, or of the title's last line
+EYEBROW_MIN_Y = 560   # keeps the eyebrow clear of the lockup (bottom at 485)
 
 
-def build_title_block(title: str) -> tuple[str, int]:
-    """Return (svg_text_markup, last_baseline_y) for the title, wrapped to
-    one or two lines via layout_title()."""
-    size, lines = layout_title(title)
+def layout_long_title(title: str, max_lines: int = 4) -> tuple[int, list[str]]:
+    """Greedy wrap for paper titles, which run to 190 characters: the largest
+    size at which the title fits in `max_lines`, with an ellipsis on the last
+    line if it does not fit even at the smallest size."""
+    words = title.split()
+    for size in (60, 54, 48, 44, 40, 36):
+        per_line = int(_TITLE_RUNWAY / (_CHAR_W * size))
+        lines, line = [], ""
+        for word in words:
+            if line and len(line) + 1 + len(word) > per_line:
+                lines.append(line)
+                line = word
+            else:
+                line = f"{line} {word}".strip()
+        lines.append(line)
+        if len(lines) <= max_lines and all(len(x) <= per_line for x in lines):
+            return size, lines
+    kept = lines[:max_lines]
+    kept[-1] = kept[-1][: per_line - 1].rstrip(" ,:;") + "\u2026"
+    return size, kept
+
+
+def build_title_block(title: str, last_baseline: int, max_lines: int = 2) -> tuple[str, int, int]:
+    """Return (svg_text_markup, first_baseline_y, font_size) for the title,
+    with its last line on `last_baseline`."""
+    size, lines = layout_title(title) if max_lines <= 2 else layout_long_title(title, max_lines)
     spacing = round(size * 1.12)
+    first = last_baseline - (len(lines) - 1) * spacing
     tspans = "".join(
         f'<tspan x="80" dy="{0 if i == 0 else spacing}">{escape(line)}</tspan>'
         for i, line in enumerate(lines)
     )
     markup = (
-        f'<text x="80" y="{TITLE_TOP}" font-size="{size}" font-weight="800" '
-        f'letter-spacing="-1.5">{tspans}</text>'
+        f'<text x="80" y="{first}" font-size="{size}" font-weight="800" '
+        # -1.5 suits the 66 to 96 px titles. A paper title at 36 px needs
+        # proportionally less, or the letters run together.
+        f'letter-spacing="{max(-1.5, round(-size / 64, 1))}">{tspans}</text>'
     )
-    return markup, TITLE_TOP + (len(lines) - 1) * spacing
+    return markup, first, size
 
 
-def render(strings: dict, lockup: str, motif: str, font_face: str,
-           motif_opacity: float = 0.5) -> Path:
-    """Write the template SVG with the given language's strings, return the
-    temp-file path. `strings` has `eyebrow`, `title`, and optional
-    `subtitle`. `lockup`/`motif`/`font_face` are built once in main()."""
-    title_block, title_bottom = build_title_block(strings["title"])
+def svg_markup(strings: dict, lockup: str, motif: str, font_face: str,
+               motif_opacity: float = 0.5, max_title_lines: int = 2) -> str:
+    """The template filled with one language's strings. `strings` has
+    `eyebrow`, `title`, and optional `subtitle`. `lockup`/`motif`/`font_face`
+    are built once by the caller."""
     subtitle_block = ""
+    last_title_baseline = SUBTITLE_Y
     if strings.get("subtitle"):
         sub_size = fit_subtitle_size(strings["subtitle"])
-        sub_y = title_bottom + sub_size + 28
         subtitle_block = (
-            f'<text x="80" y="{sub_y}" font-size="{sub_size}" font-weight="500" '
+            f'<text x="80" y="{SUBTITLE_Y}" font-size="{sub_size}" font-weight="500" '
             f'fill="#46627A">{escape(strings["subtitle"])}</text>'
         )
-    svg = TEMPLATE.format(
+        last_title_baseline = SUBTITLE_Y - sub_size - 26
+    title_block, first, size = build_title_block(strings["title"], last_title_baseline, max_title_lines)
+    # Cap height of Inter is about 0.73 em; 40 px from the title's cap line.
+    eyebrow_y = max(EYEBROW_MIN_Y, round(first - 0.73 * size - 40))
+    return TEMPLATE.format(
         font_face=font_face,
         lockup=lockup,
         motif=motif,
         motif_opacity=motif_opacity,
-        eyebrow=escape(strings["eyebrow"]).upper(),
+        # Uppercase first: escape() writes an apostrophe as &#x27;, and .upper()
+        # made that &#X27;, which is not XML. qlmanage let it pass, Chrome does not.
+        eyebrow=escape(strings["eyebrow"].upper()),
+        eyebrow_y=eyebrow_y,
         title_block=title_block,
         subtitle_block=subtitle_block,
     )
+
+
+def render(strings: dict, lockup: str, motif: str, font_face: str,
+           motif_opacity: float = 0.5) -> Path:
+    """svg_markup() written to a temp file; returns its path."""
     tmp = Path(tempfile.mkstemp(suffix=".svg", prefix="meta-")[1])
-    tmp.write_text(svg, encoding="utf-8")
+    tmp.write_text(svg_markup(strings, lockup, motif, font_face, motif_opacity), encoding="utf-8")
     return tmp
 
 
 def rasterize(svg_path: Path, dest_name: str) -> Path:
-    """Render the SVG to a 1200×1200 PNG via qlmanage, centre-crop it to the
-    1200×630 landscape OG ratio with sips, then re-encode as JPG. qlmanage
-    renders onto a square thumbnail canvas, so the template fills the whole
-    square and lays its content out in the centred band that the crop keeps.
-    `dest_name` is the filename, e.g. `index-meta.jpg` / `board-meta.fr.jpg`."""
-    work = Path(tempfile.mkdtemp(prefix="meta-out-"))
-    subprocess.run(
-        ["qlmanage", "-t", "-s", "1200", "-o", str(work), str(svg_path)],
-        check=True, capture_output=True,
-    )
-    png_path = work / f"{svg_path.name}.png"
-    if not png_path.exists():
-        sys.exit(f"qlmanage didn't produce expected output at {png_path}")
-
-    # Centre-crop the square render to the 1200×630 landscape band, then
-    # encode JPG. sips `-c H W` crops to height×width anchored on centre.
-    jpg_dest = OUT_DIR / dest_name
-    subprocess.run(
-        ["sips", "-c", "630", "1200",
-         "-s", "format", "jpeg", "-s", "formatOptions", "88",
-         str(png_path), "--out", str(jpg_dest)],
-        check=True, capture_output=True,
-    )
-    return jpg_dest
+    """Render the 1200×1200 SVG and keep the centred 1200×630 band as
+    `src/assets/images/<dest_name>`, e.g. `index-meta.jpg`. Chrome or
+    qlmanage, whichever card_raster finds (#2153)."""
+    return card_raster.rasterize(svg_path, 1200, 630, OUT_DIR / dest_name)
 
 
 def dest_filename(slug: str, lang: str) -> str:
@@ -550,6 +581,40 @@ def dest_filename(slug: str, lang: str) -> str:
     front-matter references continue to work). Other languages get a
     suffix that base.njk auto-swaps to when `lang != "en"`."""
     return f"{slug}-meta.jpg" if lang == "en" else f"{slug}-meta.{lang}.jpg"
+
+
+def atlas_catalog() -> dict:
+    return json.loads(subprocess.run(
+        ["node", "-e",
+         "const i=require('./src/_data/i18n.js');const d=typeof i==='function'?i():i;"
+         "process.stdout.write(JSON.stringify({en:d.en.atlas,fr:d.fr.atlas,de:d.de.atlas}))"],
+        cwd=ROOT, capture_output=True, text=True, check=True).stdout)
+
+
+def atlas_map_strings(corpus: dict | None = None, cat: dict | None = None) -> dict:
+    """{lang: (title, subtitle)} for the Atlas map card. Shared by the card
+    and its alt text, so the two cannot disagree (#2158)."""
+    from atlas_map_card import load_corpus
+
+    corpus = corpus or load_corpus()
+    cat = cat or atlas_catalog()
+    papers = len(corpus.get("papers", []))
+    authors = len(corpus.get("authors", []))
+    theme_count = len(corpus.get("themes", []))
+    return {
+        lang: (a["title"], f"{papers} {a['papers']} · {authors} {a['authors']} · "
+                           f"{theme_count} {a['statThemes']}")
+        for lang, a in cat.items()
+    }
+
+
+def anthology_module():
+    """make-anthology-social.py, which owns the anthology-meta cards."""
+    spec = importlib.util.spec_from_file_location(
+        "make_anthology_social", ROOT / "scripts" / "make-anthology-social.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
 
 
 def make_atlas_map_cards() -> None:
@@ -574,79 +639,190 @@ def make_atlas_map_cards() -> None:
          "process.stdout.write(JSON.stringify(m()))"],
         cwd=ROOT, capture_output=True, text=True, check=True).stdout)
 
-    papers = len(corpus.get("papers", []))
-    authors = len(corpus.get("authors", []))
-    theme_count = len(corpus.get("themes", []))
+    strings = atlas_map_strings(corpus, cat)
     work = Path(tempfile.mkdtemp(prefix="atlas-map-"))
     for lang in ("en", "fr", "de"):
         a = cat[lang]
         labels = {t["name"]: (t.get("label") or {}).get(lang, t["name"]) for t in themes}
         labels["__untagged__"] = a["untagged"]
-        subtitle = (f"{papers} {a['papers']} · {authors} {a['authors']} · "
-                    f"{theme_count} {a['statThemes']}")
-        svg_path = write_card(lang, a["title"], subtitle, labels,
+        title, subtitle = strings[lang]
+        svg_path = write_card(lang, title, subtitle, labels,
                               work / f"atlas-map-{lang}.svg")
         out = rasterize(svg_path, dest_filename("anthology-atlas", lang))
         print(f"  \u2713 {out.relative_to(ROOT)}  ({out.stat().st_size // 1024} KB)")
 
 
 ALT_INDEX = ROOT / "src" / "_data" / "shareCardAlt.json"
+LOGO = {"en": "EISS logo", "fr": "Logo de l'EISS", "de": "EISS-Logo"}
+COLON = {"en": ":", "fr": " :", "de": ":"}
 
 
-def write_alt_index() -> None:
-    """Write the text each card shows, keyed by its file name, so base.njk can
-    give og:image:alt the words on the card rather than the page title. The
-    shared cards (home, past, board, Anthology) carry other words than most
-    pages that use them, and Bluesky, Mastodon and LinkedIn read this alt to
-    screen-reader users. Cards made elsewhere (anthology, anthology-atlas) are
-    absent, and base.njk falls back to the page title for those.
+def card_alt(lang: str, t: dict) -> str:
+    """The alt text of a house-template card: what the card says, in order."""
+    subtitle = t.get("subtitle", "").replace(" · ", ", ")
+    return (f"{LOGO[lang]}. {t['eyebrow']}{COLON[lang]} {t['title']}."
+            + (f" {subtitle}." if subtitle else ""))
 
-    Runs on every generation and alone with `--alt-only`, which needs no
-    rasteriser, so the index can be refreshed off a Mac."""
-    logo = {"en": "EISS logo", "fr": "Logo de l'EISS", "de": "EISS-Logo"}
-    colon = {"en": ":", "fr": "\u00a0:", "de": ":"}
+
+def alt_index() -> dict:
+    """The text each card shows, keyed by its file name, so base.njk can give
+    og:image:alt the words on the card rather than the page title. The shared
+    cards (home, past, board) carry other words than most pages that use them,
+    and Bluesky, Mastodon and LinkedIn read this alt to screen-reader users.
+
+    It is also the fingerprint `--refresh` compares: a data-derived card whose
+    entry changes is a card whose figures changed (#2157)."""
     index = {}
     for card in CARDS + atlas_theme_cards():
         for lang, t in card["i18n"].items():
-            subtitle = t["subtitle"].replace(" · ", ", ")
-            index[dest_filename(card["slug"], lang)] = (
-                f"{logo[lang]}. {t['eyebrow']}{colon[lang]} {t['title']}. {subtitle}.")
+            index[dest_filename(card["slug"], lang)] = card_alt(lang, t)
+    # The two cards drawn by other code (#2158).
+    for lang, t in anthology_module().og_strings().items():
+        index[dest_filename("anthology", lang)] = (
+            f"{LOGO[lang]}. {t['kicker']}{COLON[lang]} The European Security Studies Anthology. "
+            f"{t['lead']} {t['stats'].replace(' · ', ', ')}.")
+    for lang, (title, subtitle) in atlas_map_strings().items():
+        index[dest_filename("anthology-atlas", lang)] = (
+            f"{title}{COLON[lang]} {subtitle.replace(' · ', ', ')}.")
+    return index
+
+
+def write_alt_index(index: dict | None = None) -> dict:
+    index = index if index is not None else alt_index()
     ALT_INDEX.write_text(json.dumps(index, ensure_ascii=False, indent=2,
                                     sort_keys=True) + "\n", encoding="utf-8")
-    print(f"  \u2713 {ALT_INDEX.relative_to(ROOT)}  ({len(index)} cards)")
+    print(f"  ✓ {ALT_INDEX.relative_to(ROOT)}  ({len(index)} cards)")
+    return index
+
+
+def render_cards(only: set[str] | None = None, langs: dict | None = None) -> None:
+    """Regenerate house-template cards. `only` limits to slugs, `langs`
+    ({slug: {lang, ...}}) to some languages of a slug."""
+    lockup, motif, font_face = build_lockup(), build_motif(), inter_face()
+    jobs = []
+    # Atlas theme cards are appended rather than written into CARDS, since they
+    # are derived from the corpus rather than authored here (#1255).
+    for card in CARDS + atlas_theme_cards():
+        if only is not None and card["slug"] not in only:
+            continue
+        card_motif = build_motif(card["motif"]) if card.get("motif") else motif
+        for lang, strings in card["i18n"].items():
+            if langs and card["slug"] in langs and lang not in langs[card["slug"]]:
+                continue
+            # A card whose mark is its subject (the blog) shows it at full strength.
+            svg = svg_markup(strings, lockup, card_motif, font_face, card.get("motif_opacity", 0.5))
+            jobs.append((svg, 1200, 630, OUT_DIR / dest_filename(card["slug"], lang)))
+    card_raster.rasterize_many(jobs)
+    for *_, dest in jobs:
+        print(f"  ✓ {dest.relative_to(ROOT)}  ({dest.stat().st_size // 1024} KB)")
+
+
+def refresh() -> None:
+    """Regenerate only the cards whose text changed, and the alt index.
+
+    Run daily by roadmap-refresh.yml (#2157). The Atlas theme, Atlas map and
+    Anthology cards print figures from the corpus, so they go stale whenever
+    the corpus grows. Comparing the alt index before and after finds exactly
+    those cards, and a card whose text is unchanged is never re-encoded, so
+    the daily pull request stays empty on a quiet day."""
+    old = json.loads(ALT_INDEX.read_text(encoding="utf-8")) if ALT_INDEX.exists() else {}
+    new = alt_index()
+    changed = sorted(f for f in new if new[f] != old.get(f)
+                     or not (OUT_DIR / f).exists())
+    if not changed and old == new:
+        print("  share cards current")
+        return
+    by_slug: dict[str, set[str]] = {}
+    for f in changed:
+        m = re.match(r"(.+)-meta(?:\.([a-z]{2}))?\.jpg$", f)
+        by_slug.setdefault(m.group(1), set()).add(m.group(2) or "en")
+    if "anthology" in by_slug:
+        anthology_module().main()  # the OG cards and the social images share the figures
+    if "anthology-atlas" in by_slug:
+        make_atlas_map_cards()
+    rest = {k: v for k, v in by_slug.items() if k not in ("anthology", "anthology-atlas")}
+    if rest:
+        render_cards(set(rest), rest)
+    write_alt_index(new)
+
+
+# ---------------------------------------------------------------------------
+# One card per paper page (#2156).
+#
+# 315 cards are not committed: at about 60 KB each they would add 20 MB to the
+# repository every time the template changes. The deploy job makes them before
+# Eleventy runs, into the gitignored src/assets/images/papers/, and keeps them
+# in the Actions cache. src/_data/paperCards.js lists the cards present, and
+# paper.njk falls back to the Anthology card for a paper without one, so a
+# deploy preview or a local build without Chrome still builds.
+PAPER_DIR = OUT_DIR / "papers"
+PAPER_MANIFEST = PAPER_DIR / "manifest.json"
+
+
+def paper_card_strings(p: dict) -> dict:
+    conf = re.sub(r"^European Security Studies Conference (\d{4})$", r"ESSC \1",
+                  p["conferenceName"])
+    authors = p["authorNames"]
+    byline = ", ".join(authors)
+    if len(byline) > 80 and len(authors) > 3:
+        byline = ", ".join(authors[:3]) + " et al."
+    return {"eyebrow": f"Anthology · {conf}", "title": p["title"], "subtitle": byline}
+
+
+def make_paper_cards() -> None:
+    papers = json.loads(subprocess.run(
+        ["node", "-e",
+         "const m=require('./src/_data/paperPages.js');"
+         "process.stdout.write(JSON.stringify((typeof m==='function'?m():m).map("
+         "p=>({slug:p.slug,title:p.title,conferenceName:p.conferenceName,authorNames:p.authorNames}))))"],
+        cwd=ROOT, capture_output=True, text=True, check=True, timeout=120).stdout)
+    # A card is redrawn when its text or the drawing code changes.
+    code = hashlib.sha256(b"".join(
+        (ROOT / "scripts" / f).read_bytes() for f in ("make-share-cards.py", "card_raster.py"))
+    ).hexdigest()[:12]
+    PAPER_DIR.mkdir(parents=True, exist_ok=True)
+    old = json.loads(PAPER_MANIFEST.read_text(encoding="utf-8")) if PAPER_MANIFEST.exists() else {}
+    lockup, motif, font_face = build_lockup(), build_motif("anthology-mark.svg"), inter_face()
+    manifest, jobs = {}, []
+    for p in papers:
+        strings = paper_card_strings(p)
+        key = hashlib.sha256((code + json.dumps(strings, sort_keys=True)).encode()).hexdigest()[:16]
+        # Title first: a screen reader should reach the paper before the edition.
+        alt = (f"{LOGO['en']}. {strings['title']}. {strings['subtitle']}. "
+               f"{strings['eyebrow'].replace(' · ', ', ')}.")
+        manifest[p["slug"]] = {"key": key, "alt": alt}
+        dest = PAPER_DIR / f"{p['slug']}.jpg"
+        if old.get(p["slug"], {}).get("key") != key or not dest.exists():
+            jobs.append((svg_markup(strings, lockup, motif, font_face, 0.5, 4), 1200, 630, dest))
+    for stale in PAPER_DIR.glob("*.jpg"):
+        if stale.stem not in manifest:
+            stale.unlink()
+    card_raster.rasterize_many(jobs)
+    PAPER_MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=1, sort_keys=True),
+                              encoding="utf-8")
+    print(f"  ✓ {PAPER_DIR.relative_to(ROOT)}  ({len(jobs)} drawn, "
+          f"{len(manifest) - len(jobs)} cached, {len(manifest)} papers)")
 
 
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    if sys.argv[1:] == ["--alt-only"]:
+    args = sys.argv[1:]
+    if args == ["--alt-only"]:
         write_alt_index()
         return
-    write_alt_index()
-    # Optional slug filter: `make-share-cards.py news anthology` regenerates
-    # only those cards, leaving the rest untouched (qlmanage/sips output can
-    # drift by a few bytes between machines, so regenerating everything would
-    # dirty cards you didn't mean to change). No args → regenerate all.
-    only = set(sys.argv[1:])
-    if not only or "anthology-atlas" in only:
+    if args == ["--refresh"]:
+        refresh()
+        return
+    if args == ["--papers"]:
+        make_paper_cards()
+        return
+    # Optional slug filter: `make-share-cards.py news board` regenerates only
+    # those cards. No args → regenerate all house-template and Atlas cards.
+    only = set(args) or None
+    if only is None or "anthology-atlas" in only:
         make_atlas_map_cards()
-    lockup = build_lockup()
-    motif = build_motif()
-    font_face = inter_face()
-    # Atlas theme cards are appended rather than written into CARDS, since they
-    # are derived from the corpus rather than authored here (#1255).
-    for card in CARDS + atlas_theme_cards():
-        if only and card["slug"] not in only:
-            continue
-        card_motif = build_motif(card["motif"]) if card.get("motif") else motif
-        for lang, strings in card["i18n"].items():
-            # A card whose mark is its subject (the blog) shows it at full strength.
-            svg = render(strings, lockup, card_motif, font_face, card.get("motif_opacity", 0.5))
-            try:
-                out = rasterize(svg, dest_filename(card["slug"], lang))
-                size_kb = out.stat().st_size // 1024
-                print(f"  ✓ {out.relative_to(ROOT)}  ({size_kb} KB)")
-            finally:
-                svg.unlink(missing_ok=True)
+    render_cards(only)
+    write_alt_index()
 
 
 if __name__ == "__main__":

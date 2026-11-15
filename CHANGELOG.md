@@ -106,6 +106,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- A shared link to a paper page previews with a card for that paper, showing its title, its authors and the conference it was given at, for all 315 paper pages. The cards are drawn when the site is deployed. A preview of a page without one shows the Anthology card.
+- The share cards keep the same space between the text and the `eiss-europa.com` line whatever the length of the title. On a card with a two-line title, such as the home page and 2027 cards and the Atlas theme cards, the subtitle sat 9 px above that line, against 78 px on a one-line card. The constellation in the corner shows its shape. It showed a few lines and half a node.
+- The Anthology card and its square, story and poster images give the corpus figures: 511 papers, 494 scholars and 12 EISS conferences. They said "~500 papers, ~500 scholars, dozens of EISS events". The Anthology, Atlas and Atlas theme cards are redrawn within a day of their figures changing.
+- The image description in a link preview of the Anthology and Atlas pages gives the text on the card, in the page's language. It gave the page title.
 - A shared link to a paper page previews with the Anthology card and names the authors and the conference before the abstract. A shared link to a profile under `/board/` previews with the People card in the page's language. Both used the home page card. Paper pages and Belvedere posts declare themselves as articles to link previews.
 - The image description in a link preview gives the text on the card in the page's language. It gave the page title, which on shared cards such as the past-conference card named a page the card does not show.
 - `/publications` lists members without the A to Z letters and the letter headings, since nearly every letter held one person and the search box finds a name. The publication and member totals sit on the line above the list, which shows the filtered count once a filter is set.
