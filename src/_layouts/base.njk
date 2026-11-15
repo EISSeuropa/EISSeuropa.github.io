@@ -171,11 +171,17 @@
     {%- set localisedMeta = rawMeta -%}
   {%- endif -%}
 
+  {#- The image alt is the text on the card (src/_data/shareCardAlt.json, written
+      by scripts/make-share-cards.py), since a shared card often carries other
+      words than the page title. Cards the script does not make fall back to
+      the page title. -#}
+  {%- set metaAlt = shareCardAlt[localisedMeta | replace("/assets/images/", "")] or (title or homeTitle or site.fullName) -%}
+
   {# Open Graph (Facebook, LinkedIn, Mastodon, Bluesky preview cards) #}
   {#- Map the page language to a valid Open Graph locale (language_TERRITORY).
       A bare {{ lang|upper }} produced the invalid "en_EN"; English is en_GB. -#}
   {%- set ogLocale = {"en": "en_GB", "fr": "fr_FR", "de": "de_DE"}[lang] or "en_GB" -%}
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="{{ ogType or 'website' }}">
   <meta property="og:site_name" content="{{ site.title }}">
   <meta property="og:title" content="{{ title or homeTitle or site.fullName }}">
   <meta property="og:description" content="{{ description or site.description }}">
@@ -185,14 +191,14 @@
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="{{ title or homeTitle or site.fullName }}">
+  <meta property="og:image:alt" content="{{ metaAlt }}">
 
   {# Twitter / X Card #}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ title or homeTitle or site.fullName }}">
   <meta name="twitter:description" content="{{ description or site.description }}">
   <meta name="twitter:image" content="{{ site.url }}{{ localisedMeta }}">
-  <meta name="twitter:image:alt" content="{{ title or homeTitle or site.fullName }}">
+  <meta name="twitter:image:alt" content="{{ metaAlt }}">
   {% if site.social.twitterHandle %}<meta name="twitter:site" content="{{ site.social.twitterHandle }}">{% endif %}
 
   {# JSON-LD Organization schema — gives Google the canonical signal

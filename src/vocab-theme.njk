@@ -8,7 +8,7 @@ permalink: "/vocab/themes/{{ concept.key }}/index.html"
 navKey: "navigator"
 lang: en
 eleventyComputed:
-  title: "{{ concept.prefLabel.en }}"
+  title: "{{ concept.prefLabel.en | safe }}"
   description: "A concept in the European security studies theme vocabulary, tagging {{ concept.count }} papers in the Anthology."
   redirectTo: "{{ concept.pages.en }}"
 ---

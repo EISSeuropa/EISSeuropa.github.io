@@ -6,10 +6,12 @@ pagination:
 layout: base.njk
 permalink: "/board/{{ profile.slug }}{{ profile.suffix }}.html"
 navKey: ""
+# The People card, localised by base.njk, in place of the home page card.
+metaImage: /assets/images/board-meta.jpg
 eleventyComputed:
   lang: "{{ profile.lang }}"
-  title: "{{ profile.person.name }}"
-  description: "{{ profile.person.name }}, {{ profile.person.role }} — European Initiative for Security Studies."
+  title: "{{ profile.person.name | safe }}"
+  description: "{{ profile.person.name | safe }}, {{ profile.person.role | safe }} — European Initiative for Security Studies."
   status: "{% if profile.lang != 'en' %}beta{% endif %}"
 ---
 {# Per-person profile page (#756 phase 2). One template paginates over

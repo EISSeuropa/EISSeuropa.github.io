@@ -27,6 +27,7 @@ is possible between macOS versions, which is fine for share cards.
 Usage
 -----
     python3 scripts/make-share-cards.py
+    python3 scripts/make-share-cards.py --alt-only   # only src/_data/shareCardAlt.json
 """
 from __future__ import annotations
 
@@ -589,8 +590,38 @@ def make_atlas_map_cards() -> None:
         print(f"  \u2713 {out.relative_to(ROOT)}  ({out.stat().st_size // 1024} KB)")
 
 
+ALT_INDEX = ROOT / "src" / "_data" / "shareCardAlt.json"
+
+
+def write_alt_index() -> None:
+    """Write the text each card shows, keyed by its file name, so base.njk can
+    give og:image:alt the words on the card rather than the page title. The
+    shared cards (home, past, board, Anthology) carry other words than most
+    pages that use them, and Bluesky, Mastodon and LinkedIn read this alt to
+    screen-reader users. Cards made elsewhere (anthology, anthology-atlas) are
+    absent, and base.njk falls back to the page title for those.
+
+    Runs on every generation and alone with `--alt-only`, which needs no
+    rasteriser, so the index can be refreshed off a Mac."""
+    logo = {"en": "EISS logo", "fr": "Logo de l'EISS", "de": "EISS-Logo"}
+    colon = {"en": ":", "fr": "\u00a0:", "de": ":"}
+    index = {}
+    for card in CARDS + atlas_theme_cards():
+        for lang, t in card["i18n"].items():
+            subtitle = t["subtitle"].replace(" · ", ", ")
+            index[dest_filename(card["slug"], lang)] = (
+                f"{logo[lang]}. {t['eyebrow']}{colon[lang]} {t['title']}. {subtitle}.")
+    ALT_INDEX.write_text(json.dumps(index, ensure_ascii=False, indent=2,
+                                    sort_keys=True) + "\n", encoding="utf-8")
+    print(f"  \u2713 {ALT_INDEX.relative_to(ROOT)}  ({len(index)} cards)")
+
+
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    if sys.argv[1:] == ["--alt-only"]:
+        write_alt_index()
+        return
+    write_alt_index()
     # Optional slug filter: `make-share-cards.py news anthology` regenerates
     # only those cards, leaving the rest untouched (qlmanage/sips output can
     # drift by a few bytes between machines, so regenerating everything would
