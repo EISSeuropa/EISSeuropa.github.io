@@ -173,8 +173,13 @@ python3 scripts/make-share-cards.py anthology-atlas
 the same `mulberry32` seed, the same ring of hubs, the same attraction,
 repulsion, damping and clamping, the same theme wheel, and the same 320 ticks
 `anthology-atlas.js` runs on load. It emits SVG, which `make-share-cards.py`
-rasterises through the same qlmanage pipeline as every other card, so no
-dependency joins the build (rule §16.3).
+rasterises through `scripts/card_raster.py` like every other card (headless
+Chrome, or qlmanage on a Mac), so no npm dependency joins the build (rule
+§16.3).
+
+The daily roadmap refresh runs `make-share-cards.py --refresh`, which redraws
+this card, the Atlas theme cards and the Anthology card whenever their figures
+change (#2157). The command below is for redrawing by hand.
 
 Run it when the corpus changes visibly, e.g. after a new edition lands. It
 regenerates English as well as French and German: the card is no longer a

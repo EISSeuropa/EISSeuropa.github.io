@@ -47,3 +47,7 @@ data/ror-cache.json
 # winner is frozen as a committed SVG in src/assets/images/brand/. Only the
 # frozen mark belongs in the repo. Regenerate the rest freely.
 data/mark-candidates/
+
+# Per-paper share cards, made by the deploy job and kept in the Actions cache,
+# never committed (#2156). scripts/make-share-cards.py --papers
+src/assets/images/papers/

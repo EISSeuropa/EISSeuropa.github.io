@@ -171,11 +171,11 @@
     {%- set localisedMeta = rawMeta -%}
   {%- endif -%}
 
-  {#- The image alt is the text on the card (src/_data/shareCardAlt.json, written
-      by scripts/make-share-cards.py), since a shared card often carries other
-      words than the page title. Cards the script does not make fall back to
-      the page title. -#}
-  {%- set metaAlt = shareCardAlt[localisedMeta | replace("/assets/images/", "")] or (title or homeTitle or site.fullName) -%}
+  {#- The image alt is the text on the card: `metaImageAlt` where a page sets it
+      (the per-paper cards, #2156), else src/_data/shareCardAlt.json, written by
+      scripts/make-share-cards.py, since a shared card often carries other words
+      than the page title. Cards in neither fall back to the page title. -#}
+  {%- set metaAlt = metaImageAlt or shareCardAlt[localisedMeta | replace("/assets/images/", "")] or (title or homeTitle or site.fullName) -%}
 
   {# Open Graph (Facebook, LinkedIn, Mastodon, Bluesky preview cards) #}
   {#- Map the page language to a valid Open Graph locale (language_TERRITORY).

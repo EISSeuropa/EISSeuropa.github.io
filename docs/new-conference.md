@@ -243,8 +243,9 @@ three languages:
 python3 scripts/make-share-cards.py anthology-atlas
 ```
 
-Nothing fails if you forget: the card is still there and still valid, it
-just shows the previous edition's figures. See
+The daily roadmap refresh redraws it, and the Anthology and Atlas theme
+cards, within a day of the corpus changing (`make-share-cards.py --refresh`,
+#2157). Run the command to have it at once. See
 [anthology-machine-readable.md](anthology-machine-readable.md#the-atlas-card-is-the-map).
 
 This is the same swap, in reverse, that step 3 does for the new edition,

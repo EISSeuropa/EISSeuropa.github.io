@@ -15,10 +15,10 @@ Outputs (all light-brand, official EISS lockup, name-led):
 Because this owns anthology-meta.jpg, the `anthology` entry is removed from
 make-share-cards.py's CARDS table (single owner).
 
-Rasterising: macOS qlmanage renders an SVG into a square thumbnail at -s S
-(longer side = S), so we author each canvas at its true WxH, render at
-S = max(W, H), then sips centre-crops to WxH. Same trick make-share-cards.py
-uses for the 1200x630 crop, generalised to any aspect.
+Rasterising: each canvas is authored on a square S = max(W, H) with the
+content in the centred WxH band, and scripts/card_raster.py (headless Chrome,
+or macOS qlmanage) renders it and keeps that band. The figures come from the
+corpus (#2157).
 
 Re-run after editing. Reuses make-share-cards.py's font + brand-SVG helpers.
 """
@@ -62,22 +62,45 @@ OG = {
     "en": {
         "kicker": "Open access research archive",
         "lead": "Every EISS conference paper since 2017, and everyone who gave it.",
-        "stats": "~500 papers · ~500 scholars · dozens of EISS events",
+        "stats": "{papers} papers · {scholars} scholars · {events} EISS conferences",
         "open": "Free · open access",
     },
     "fr": {
         "kicker": "Archive de recherche en libre accès",
         "lead": "Chaque communication des conférences EISS depuis 2017, et qui l'a présentée.",
-        "stats": "~500 communications · ~500 chercheurs · des dizaines d'événements EISS",
+        "stats": "{papers} communications · {scholars} chercheurs · {events} conférences EISS",
         "open": "Libre accès",
     },
     "de": {
         "kicker": "Open-Access-Forschungsarchiv",
         "lead": "Jeder Beitrag der EISS-Konferenzen seit 2017, und alle, die ihn gehalten haben.",
-        "stats": "~500 Beiträge · ~500 Wissenschaftler · Dutzende EISS-Veranstaltungen",
+        "stats": "{papers} Beiträge · {scholars} Wissenschaftler · {events} EISS-Konferenzen",
         "open": "Open Access",
     },
 }
+
+def figures() -> dict:
+    """The three figures the cards print, read from the same data the
+    Anthology header shows (#2157): the deduplicated paper count, the speaker
+    count and the editions. They were typed in as "~500 · ~500 · dozens" and
+    drifted from the page."""
+    import json
+    out = subprocess.run(
+        ["node", "-e",
+         "const f=(m)=>typeof m==='function'?m():m;"
+         "const p=f(require('./src/_data/paperIndex.js'));const c=f(require('./src/_data/corpus.js'));"
+         "process.stdout.write(JSON.stringify({papers:p.stats.paperCount,"
+         "scholars:c.stats.speakerCount,events:c.stats.editions}))"],
+        cwd=ROOT, capture_output=True, text=True, check=True, timeout=120,
+    ).stdout
+    return json.loads(out)
+
+
+def og_strings(fig: dict | None = None) -> dict:
+    """OG with the figures filled in, per language."""
+    fig = fig or figures()
+    return {lang: {**t, "stats": t["stats"].format(**fig)} for lang, t in OG.items()}
+
 
 FEATURES = [
     "Browse by person or by paper",
@@ -162,7 +185,7 @@ def build_og(strings: dict) -> str:
     return "".join(s)
 
 
-def build_square() -> str:
+def build_square(fig: dict) -> str:
     W = H = 1080
     s = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">', _defs()]
     s.append(f'<rect width="{W}" height="{H}" fill="url(#bg)"/>')
@@ -175,9 +198,9 @@ def build_square() -> str:
     s.append(_text(80, 470, 104, BLUE, "Anthology", weight=700, spacing="-2"))
     s.append(_text(80, 540, 30, SLATE, "Every EISS conference paper since 2017,", weight=400))
     s.append(_text(80, 580, 30, SLATE, "and everyone who gave it.", weight=400))
-    s.append(_stat_cell(80, 632, 290, 130, "~500", "papers"))
-    s.append(_stat_cell(395, 632, 290, 130, "~500", "scholars"))
-    s.append(_stat_cell(710, 632, 290, 130, "dozens", "of EISS events"))
+    s.append(_stat_cell(80, 632, 290, 130, str(fig["papers"]), "papers"))
+    s.append(_stat_cell(395, 632, 290, 130, str(fig["scholars"]), "scholars"))
+    s.append(_stat_cell(710, 632, 290, 130, str(fig["events"]), "EISS conferences"))
     for i, feat in enumerate(FEATURES[:3]):
         s.append(_feature(82, 838 + i * 56, 28, feat))
     s.append(_text(80, 1008, 34, BLUE, URL, weight=500))
@@ -185,7 +208,7 @@ def build_square() -> str:
     return "".join(s)
 
 
-def build_story() -> str:
+def build_story(fig: dict) -> str:
     # Portrait 1080x1920. qlmanage renders square, so author a 1920x1920 canvas
     # with the content in the centred 1080-wide band [420, 1500]; rasterize()
     # crops to 1080x1920. bx offsets every x into that band.
@@ -206,9 +229,9 @@ def build_story() -> str:
     s.append(_text(L, 832, 34, SLATE, "and everyone who gave it.", weight=400))
     gap = 24
     cw = (CW - 2 * gap) / 3
-    s.append(_stat_cell(L, 908, cw, 158, "~500", "papers"))
-    s.append(_stat_cell(L + cw + gap, 908, cw, 158, "~500", "scholars"))
-    s.append(_stat_cell(L + 2 * (cw + gap), 908, cw, 158, "dozens", "events"))
+    s.append(_stat_cell(L, 908, cw, 158, str(fig["papers"]), "papers"))
+    s.append(_stat_cell(L + cw + gap, 908, cw, 158, str(fig["scholars"]), "scholars"))
+    s.append(_stat_cell(L + 2 * (cw + gap), 908, cw, 158, str(fig["events"]), "conferences"))
     for i, feat in enumerate(FEATURES):
         s.append(_feature(L + 4, 1176 + i * 84, 34, feat))
     s.append(f'<line x1="{L}" y1="1636" x2="{R}" y2="1636" stroke="{HAIR}" stroke-width="2"/>')
@@ -240,7 +263,7 @@ def _qr(x: float, y: float, size: float, data: str) -> str:
     return "".join(parts)
 
 
-def build_poster() -> str:
+def build_poster(fig: dict) -> str:
     # A4 portrait 1240x1754 (print + social). Authored in a 1754 square with the
     # content in the centred 1240-wide band; rasterize() crops to 1240x1754.
     # L/R are the actual left/right content edges (80px poster margins), so the
@@ -262,9 +285,9 @@ def build_poster() -> str:
     s.append(_text(L, 730, 32, SLATE, "and everyone who gave it.", weight=400))
     gap = 24
     cw = (CW - 2 * gap) / 3
-    s.append(_stat_cell(L, 804, cw, 162, "~500", "papers"))
-    s.append(_stat_cell(L + cw + gap, 804, cw, 162, "~500", "scholars"))
-    s.append(_stat_cell(L + 2 * (cw + gap), 804, cw, 162, "dozens", "of EISS events"))
+    s.append(_stat_cell(L, 804, cw, 162, str(fig["papers"]), "papers"))
+    s.append(_stat_cell(L + cw + gap, 804, cw, 162, str(fig["scholars"]), "scholars"))
+    s.append(_stat_cell(L + 2 * (cw + gap), 804, cw, 162, str(fig["events"]), "EISS conferences"))
     for i, feat in enumerate(FEATURES):
         s.append(_feature(L + 4, 1066 + i * 82, 34, feat))
     # Footer: hairline, CTA text left, scannable QR right — all above the rule.
@@ -279,32 +302,26 @@ def build_poster() -> str:
 
 
 def rasterize(svg: str, w: int, h: int, dest: Path) -> None:
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    tmp = Path(tempfile.mkstemp(suffix=".svg", prefix="anth-")[1])
-    tmp.write_text(svg, encoding="utf-8")
-    work = Path(tempfile.mkdtemp(prefix="anth-out-"))
-    try:
-        s = max(w, h)
-        subprocess.run(["qlmanage", "-t", "-s", str(s), "-o", str(work), str(tmp)],
-                       check=True, capture_output=True)
-        png = work / f"{tmp.name}.png"
-        if not png.exists():
-            sys.exit(f"qlmanage produced no output for {dest.name}")
-        subprocess.run(["sips", "-c", str(h), str(w), "-s", "format", "jpeg",
-                        "-s", "formatOptions", "88", str(png), "--out", str(dest)],
-                       check=True, capture_output=True)
-        print(f"  ✓ {dest.relative_to(ROOT)}  ({dest.stat().st_size // 1024} KB)")
-    finally:
-        tmp.unlink(missing_ok=True)
+    """Chrome or qlmanage, whichever card_raster finds (#2153)."""
+    _msc.card_raster.rasterize(svg, w, h, dest)
+    print(f"  \u2713 {dest.relative_to(ROOT)}  ({dest.stat().st_size // 1024} KB)")
+
+
+def make_og_cards(langs=None, fig: dict | None = None) -> None:
+    """Only the three 1200×630 cards, for make-share-cards.py --refresh."""
+    for lang, strings in og_strings(fig).items():
+        if langs and lang not in langs:
+            continue
+        name = "anthology-meta.jpg" if lang == "en" else f"anthology-meta.{lang}.jpg"
+        rasterize(build_og(strings), 1200, 630, OUT / name)
 
 
 def main() -> None:
-    for lang, strings in OG.items():
-        name = "anthology-meta.jpg" if lang == "en" else f"anthology-meta.{lang}.jpg"
-        rasterize(build_og(strings), 1200, 630, OUT / name)
-    rasterize(build_square(), 1080, 1080, SOCIAL / "anthology-square.jpg")
-    rasterize(build_story(), 1080, 1920, SOCIAL / "anthology-story.jpg")
-    rasterize(build_poster(), 1240, 1754, SOCIAL / "anthology-poster.jpg")
+    fig = figures()
+    make_og_cards(fig=fig)
+    rasterize(build_square(fig), 1080, 1080, SOCIAL / "anthology-square.jpg")
+    rasterize(build_story(fig), 1080, 1920, SOCIAL / "anthology-story.jpg")
+    rasterize(build_poster(fig), 1240, 1754, SOCIAL / "anthology-poster.jpg")
 
 
 if __name__ == "__main__":

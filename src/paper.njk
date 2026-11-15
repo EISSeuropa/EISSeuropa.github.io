@@ -13,11 +13,13 @@ pagination:
 layout: base.njk
 permalink: "/papers/{{ paper.slug }}.html"
 navKey: "navigator"
-# Shared links preview with the Anthology card, typed as an article, and the
-# description names who gave the paper and where before the abstract.
-metaImage: /assets/images/anthology-meta.jpg
+# Typed as an article, and the description names who gave the paper and where
+# before the abstract. The share card is the paper's own when the deploy job
+# made one (#2156, src/_data/paperCards.js), and the Anthology card otherwise.
 ogType: article
 eleventyComputed:
+  metaImage: "{% if paperCards[paper.slug] %}/assets/images/papers/{{ paper.slug }}.jpg{% else %}/assets/images/anthology-meta.jpg{% endif %}"
+  metaImageAlt: "{{ paperCards[paper.slug].alt | safe if paperCards[paper.slug] }}"
   # `| safe`: base.njk escapes these when it prints them, so escaping here too
   # put a literal "&#39;" in 42 titles' tabs and share cards.
   title: "{{ paper.title | safe }}"

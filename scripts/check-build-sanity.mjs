@@ -645,6 +645,41 @@ function checkNoDuplicateInputs() {
 }
 
 // ---------------------------------------------------------------------------
+// No double-escaped titles or meta tags (#2159).
+//
+// eleventyComputed output is autoescaped, and base.njk escapes the value again
+// when it prints it, so a computed title without `| safe` reaches the page as
+// "&amp;#39;". 42 paper pages showed "Government&#39;s" in the browser tab and
+// in every link preview until #2154. It appears only for text with an
+// apostrophe, a quotation mark or an ampersand, so a sample of pages misses it.
+function checkDoubleEscapedMeta() {
+  const files = htmlFiles("_site");
+  if (!files.length) return;
+  const bad = /&amp;(#\d+|#x[0-9a-f]+|quot|amp|lt|gt|apos);/i;
+  const hits = [];
+  for (const f of files) {
+    const head = readFileSync(f, "utf8").split("</head>")[0];
+    const tags = [
+      ...head.matchAll(/<title>[^<]*<\/title>/g),
+      ...head.matchAll(/<meta\s[^>]*content="[^"]*"[^>]*>/g),
+    ];
+    for (const [tag] of tags) {
+      if (bad.test(tag)) {
+        hits.push(`${f.replace(/^_site\//, "")}: ${tag.slice(0, 120)}`);
+        break;
+      }
+    }
+  }
+  if (hits.length) {
+    problems.push(
+      `${hits.length} page(s) with a double-escaped <title> or <meta> tag. A computed title or description ` +
+        `needs \`| safe\`, since base.njk escapes it again: ${hits.slice(0, 3).join(" | ")}` +
+        `${hits.length > 3 ? ` (+${hits.length - 3})` : ""}`
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
 // No orphaned share cards (#474 follow-up).
 //
 // docs/new-conference.md tells the maintainer to delete a year's <year>-meta.*
@@ -664,7 +699,9 @@ function checkOrphanShareCards() {
   if (!files.length) return; // no build to read; other checks already warn
   const referenced = new Set();
   for (const f of files) {
-    for (const m of readFileSync(f, "utf8").matchAll(/og:image"\s+content="[^"]*\/([^"/]+\.jpg)"/g)) {
+    // The path under /assets/images/, so the per-paper cards in papers/ (#2156)
+    // are looked up where they are.
+    for (const m of readFileSync(f, "utf8").matchAll(/og:image"\s+content="[^"]*\/assets\/images\/([^"]+\.jpg)"/g)) {
       referenced.add(m[1]);
     }
   }
@@ -687,7 +724,7 @@ function checkOrphanShareCards() {
   // an og:image that 404s. Nothing saw it: the link checker reads links, not
   // meta tags, and a preview crawler is the first thing to notice, by which
   // point the link is out in the world looking broken.
-  const missing = [...referenced].filter((f) => !onDisk.has(f));
+  const missing = [...referenced].filter((f) => !existsSync(join(dir, f)));
   if (missing.length) {
     problems.push(
       `${missing.length} page(s) advertise a share card that does not exist: ${missing.slice(0, 6).join(", ")}` +
@@ -820,6 +857,7 @@ checkThemeSpread();
 checkThemeRuleDrift();
 checkSitemapCoverage();
 checkNoDuplicateInputs();
+checkDoubleEscapedMeta();
 checkOrphanShareCards();
 checkCorpusCitationMeta();
 
@@ -829,4 +867,4 @@ if (problems.length) {
   console.error("");
   process.exit(1);
 }
-console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, no cross-block CSS class collisions, people hovercard index resolvable, theme spread within bounds, theme patterns identical across their two copies, every paper page in the sitemap, no duplicate build inputs, no orphaned or missing share cards, Anthology corpus citation metadata intact, no redundant npm overrides).");
+console.log("✓ build-sanity check passed (no duplicate data keys, no scheme-less board links, no empty/junk href/src, no undefined CSS classes, no cross-block CSS class collisions, people hovercard index resolvable, theme spread within bounds, theme patterns identical across their two copies, every paper page in the sitemap, no duplicate build inputs, no double-escaped meta tags, no orphaned or missing share cards, Anthology corpus citation metadata intact, no redundant npm overrides).");

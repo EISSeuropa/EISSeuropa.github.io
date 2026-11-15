@@ -89,6 +89,31 @@ jobs:
 
       - run: npm install --no-audit --no-fund
 
+      # One share card per paper page (#2156), drawn before Eleventy so
+      # src/_data/paperCards.js sees them. Not committed: the cache keeps them
+      # between runs and the manifest redraws only cards whose text or drawing
+      # code changed. A failure here leaves the paper pages on the Anthology
+      # card and never blocks a deploy.
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Restore the per-paper share cards
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: src/assets/images/papers
+          key: paper-cards-${{ hashFiles('scripts/make-share-cards.py', 'scripts/card_raster.py', 'src/_data/paper*.js*', 'src/_data/citations.js', 'src/assets/images/brand/*.svg') }}
+          restore-keys: paper-cards-
+
+      - name: Draw the per-paper share cards
+        continue-on-error: true
+        run: |
+          pip install -r scripts/requirements.txt
+          python3 scripts/make-share-cards.py --papers
+
       - run: npm run build
         env:
           # src/_data/systemHealth.js reads workflow runs from the GitHub API.
