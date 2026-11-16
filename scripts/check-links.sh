@@ -179,6 +179,12 @@ SKIP_HOSTS = {
                                 # anonymous HEAD/GET, same academic-publisher
                                 # anti-bot class as doi.org / shs.cairn.info.
                                 # The journal page opens fine in a browser.
+    "opensource.org",           # The MIT licence page, linked from
+                                # /licensing (all three locales). Returns
+                                # 403 to the checker and to curl whatever
+                                # the User-Agent since 16 November 2026,
+                                # same anti-bot class as eur-lex. Opens
+                                # fine in a browser.
 }
 
 # Board members' personal sites used to accumulate here, one entry per member,
