@@ -105,7 +105,7 @@ jobs:
           echo "list=$(echo "APB-LDN,$APPROVERS" | tr -s ';, ' ',' | sed 's/,$//')" >> "$GITHUB_OUTPUT"
 
       - name: Open or update PR if board.json or photos changed
-        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
+        uses: peter-evans/create-pull-request@3ffccacd46053766916f087ce41d627c0b8cf2d1 # v8
         with:
           token: ${{ secrets.AUTOPR_TOKEN || secrets.GITHUB_TOKEN }}
           branch: board-sync/auto
