@@ -929,21 +929,28 @@ h4 { font-size: var(--fs-lg); }
 .apps-confpace > .apps-src { position: absolute; top: var(--space-4); right: var(--space-4); }
 .apps-confpace-title { margin: 0 0 var(--space-3); padding-right: var(--space-5); font-size: 1.125rem; }
 .apps-confpace .apps-note { margin: 0; }
+.apps-confpace-intro { max-width: 40rem; margin: calc(-1 * var(--space-2)) 0 var(--space-4); color: var(--text-muted); font-size: 0.875rem; }
 .apps-confpace .apps-note a { text-decoration: underline; }
 .apps-confpace-row + .apps-confpace-row { margin-top: var(--space-4); }
 .apps-confpace-label { margin: 0 0 var(--space-2); font-size: 0.875rem; font-weight: 600; }
 .apps-confpace-when { margin-left: var(--space-2); color: var(--text-muted); font-weight: 400; }
-.apps-confpace-bars { display: grid; gap: var(--space-1); max-width: 32rem; margin: 0; }
+.apps-confpace-bars { display: grid; gap: var(--space-1); max-width: 44rem; margin: 0; }
 .apps-confpace-bars > div { display: grid; grid-template-columns: 3rem minmax(0, 1fr); align-items: center; gap: var(--space-3); }
 .apps-confpace-bars dt { color: var(--text-muted); font-size: 0.8125rem; font-variant-numeric: tabular-nums; }
 .apps-confpace-bars dd { display: flex; align-items: center; gap: var(--space-2); margin: 0; font-size: 0.875rem; }
-.apps-confpace-num { flex: none; width: 7.5rem; }
+.apps-confpace-num { flex: none; width: 17rem; }
 .apps-confpace-bars strong { font-variant-numeric: tabular-nums; }
 .apps-confpace-track { flex: 1; height: 0.5rem; overflow: hidden; border-radius: var(--radius-full); background: var(--border); }
 .apps-confpace-bar { display: block; height: 100%; border-radius: inherit; }
 .apps-confpace-now .apps-confpace-bar { background: var(--accent); }
 .apps-confpace-prev .apps-confpace-bar { background: var(--text-muted); }
-.apps-confpace-total { color: var(--text-muted); font-size: 0.8125rem; white-space: nowrap; }
+.apps-confpace-total { color: var(--text-muted); font-size: 0.8125rem; }
+@media (max-width: 40rem) {
+  .apps-confpace-bars > div { align-items: end; }
+  .apps-confpace-bars dd { flex-wrap: wrap; row-gap: var(--space-1); }
+  .apps-confpace-track { flex: 0 0 100%; }
+  .apps-confpace-num { flex: 1 1 100%; width: auto; min-width: 0; }
+}
 @media (prefers-reduced-motion: no-preference) {
   .apps-confpace-bar { animation: apps-confpace-grow 900ms var(--ease-out) both; }
 }

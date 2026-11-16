@@ -106,6 +106,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- The "Conference pace" card on the internal dashboard says what it compares. A line under the heading names the two editions and the scale of the bars, the coming edition's figure reads "so far", and the previous edition's reads, for example, "0 of 162 at the same time last year". On a phone each figure sits under its bar. The French and German wording is a machine translation.
 - The "Conference pace" card on the internal dashboard is refreshed from Indico every day, with the coming edition's abstracts and registrations. It changed only when someone exported them from Indico by hand, and showed no ESSC 2027 abstracts.
 - Every page shows a banner saying the ESSC 2027 call is open, linking to the call on `/2027.html` in English, French and German, as netsec-cost.eu does. It runs until mid-December 2026.
 - A shared link to a paper page previews with a card for that paper, showing its title, its authors and the conference it was given at, for all 315 paper pages. The cards are drawn when the site is deployed. A preview of a page without one shows the Anthology card.
