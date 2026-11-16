@@ -77,21 +77,21 @@
     {
       "kind": "fix",
       "site": "NetSec",
-      "n": 2159,
-      "title": "Link ESSC 2027 to Indico event 25, and accept an unpublished programme",
-      "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2159",
-      "at": "2026-11-12",
-      "lines": 149
+      "n": 2200,
+      "title": "Keyword theme placement by recurring words, and map WG hubs from the bio",
+      "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2200",
+      "at": "2026-11-16",
+      "lines": 234
     },
     {
       "kind": "fix",
-      "site": "NetSec",
-      "n": 2072,
-      "title": "Draw WG leaders on their own hub and answer searches for undrawn people",
-      "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2072",
-      "at": "2026-10-25",
-      "lines": 146
+      "site": "EISS",
+      "n": 2154,
+      "title": "Link previews for papers, profiles and the card alt text",
+      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2154",
+      "at": "2026-11-15",
+      "lines": 172
     }
   ],
-  "since": "2026-10-16"
+  "since": "2026-10-17"
 }
