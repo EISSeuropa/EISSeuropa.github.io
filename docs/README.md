@@ -21,7 +21,7 @@ Maintainer-facing docs for [eiss-europa.com](https://eiss-europa.com)
 | [board-bios-setup.md](board-bios-setup.md) | The Form → `board.json` → board page bios pipeline. |
 | [indico-programme-integration.md](indico-programme-integration.md) | The live ESSC programme grid from the Indico sync. |
 | [indico-api-token.md](indico-api-token.md) | Indico API token setup for the authenticated sync. |
-| [conference-pace.md](conference-pace.md) | Recording the conference's abstracts and registrations from Indico exports, for the dashboard's comparison with the previous edition. |
+| [conference-pace.md](conference-pace.md) | The daily refresh of the conference's abstracts and registrations from Indico, its bot token, and recording an edition by hand, for the dashboard's comparison with the previous edition. |
 | [annual-report.md](annual-report.md) | The annual report drafts at /annual-report-YYYY.html: sections, sources, and where staff write the prose. |
 | [new-conference.md](new-conference.md) | Per-year-page rollover procedure for a new ESSC, with the call-for-papers and live-programme page templates in `templates/`. |
 | [news-publishing.md](news-publishing.md) | The News surface: the homepage "Latest" section, the `/news` archive, the Atom feed, and how an item gets added. |

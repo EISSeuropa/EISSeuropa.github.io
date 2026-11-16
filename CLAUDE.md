@@ -249,7 +249,8 @@ same PR. Reconstructing a release batch from the git log at release
 time loses nuance and burns time; capturing the bullet while the
 context is fresh is cheap. Exempt: Dependabot PRs, the automated
 data-refresh PRs (`indico-sync/auto`, `bios-sync/auto`,
-`roadmap-refresh/auto`, `netsec-directory-sync/auto`), and any
+`roadmap-refresh/auto`, `netsec-directory-sync/auto`,
+`conference-pace/auto`), and any
 internal-only commit (docs-only refresh, CI tooling, working-tree
 hygiene). When in doubt, add the bullet. Cutting a release becomes:
 review what's already there, decide on the title,
@@ -430,7 +431,8 @@ that track the roadmap and when to create a new milestone are in the
   leaving it blank. Creating a milestone is a roadmap decision (see the
   set above) and is not yours to make.
 - **Exempt:** the automated data-refresh PRs (`indico-sync/auto`,
-  `bios-sync/auto`, `roadmap-refresh/auto`, `netsec-directory-sync/auto`)
+  `bios-sync/auto`, `roadmap-refresh/auto`, `netsec-directory-sync/auto`,
+  `conference-pace/auto`)
   and Dependabot. Same list as the §4 CHANGELOG exemption.
 - **When an issue slips to a later release.** Update the milestone in
   the same edit that records the reslip, with a one-line reason in

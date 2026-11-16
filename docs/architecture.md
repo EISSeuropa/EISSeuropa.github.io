@@ -118,6 +118,10 @@ is ambient rather than topical, and belongs on the panel side only.
   `netsecDirectory.json` (NetSec member directory, for the Anthology
   cross-links; weekly + a `repository_dispatch` fast path). See
   `netsec-directory-integration.md`.
+- **`sync-conference-pace.yml`** (daily, 03:20 UTC) → `conference-pace.py
+  --from-indico` → `src/data/conference-pace.json` (days before the
+  conference of each abstract and registration, for the dashboard's
+  Conference pace card). Needs `INDICO_PACE_TOKEN`. See `conference-pace.md`.
 - **`deploy.yml`** also runs on a daily schedule so build-time values
   (countdown, registration status) don't drift between content changes.
 

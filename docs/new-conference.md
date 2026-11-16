@@ -173,6 +173,8 @@ Then run `--mark-fresh` for each language to fill in the SHA.
 
 Add the new edition's public dates to the "EISS dates" Google Calendar, one all-day event per date with the label as its title (the event format is in `status/README.md` of the private `workspace-ops` repo), and its internal deadlines to "EISS internal deadlines". Then, in `src/_data/site.js`, replace `keyDates`, which stays as the fallback, with the same public dates. Give each date that opens a stage of the year a `stage`, a `step` (the short name the dashboard's stepper shows, "Call open", "Review") and `links`. The conference stage comes from the edition in `conferences.js`. `/internal.html` reads this one list for the deadline tile, the stepper and the Key dates timeline, and the build stops on a stage with no `step` or a date listed twice.
 
+**Conference pace.** When the edition's Indico event exists, give the *EISS Website Sync Bot* the *Abstracts* and *Registration (check-in only)* permissions on it (Settings > Protection > Permissions). The daily *Sync conference pace* workflow then records its abstracts and registrations for the dashboard. It finds the event by the `startDate` above, so the two must match. Details in [conference-pace.md](conference-pace.md).
+
 ## 5a. The call-for-papers state
 
 This state is a kept template. It was designed for the 2027 edition (#2141) and is meant to be reused every year, so nothing in it is deleted when a page moves on to its programme.
