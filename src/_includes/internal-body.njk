@@ -176,6 +176,8 @@
         {% if P %}<span class="apps-src" role="img" aria-label="{{ PST }}" title="{{ PST }}"></span>{% endif %}
         <h3 class="apps-confpace-title">{{ d.confPace.heading }}</h3>
         {% if P %}
+          {% set PM = P.measures.abstracts or P.measures.registrations %}
+          {% if PM and PM.previous %}<p class="apps-confpace-intro">{{ d.confPace.intro | replace("{edition}", PM.edition) | replace("{previous}", PM.previous.edition) }}</p>{% endif %}
           {% for key in ["abstracts", "registrations"] %}{% set m = P.measures[key] %}{% if m %}
             {% set top = m.previous.total if m.previous and m.previous.total > (m.count or 0) else (m.count or 1) %}
             {% set dp = d.confPace.daysOut %}
@@ -184,7 +186,7 @@
               <dl class="apps-confpace-bars">
                 <div class="apps-confpace-now">
                   <dt>{{ m.edition }}</dt>
-                  <dd><span class="apps-confpace-track" aria-hidden="true"><span class="apps-confpace-bar" style="width: {{ ((m.count or 0) / top * 100) | round(1) }}%"></span></span><span class="apps-confpace-num"><strong>{{ m.count if m.recorded else d.confPace.notRecorded }}</strong></span></dd>
+                  <dd><span class="apps-confpace-track" aria-hidden="true"><span class="apps-confpace-bar" style="width: {{ ((m.count or 0) / top * 100) | round(1) }}%"></span></span><span class="apps-confpace-num">{% if m.recorded %}<strong>{{ m.count }}</strong> <span class="apps-confpace-total">{{ d.confPace.soFar }}</span>{% else %}<strong>{{ d.confPace.notRecorded }}</strong>{% endif %}</span></dd>
                 </div>
                 {% if m.previous %}
                   <div class="apps-confpace-prev">
