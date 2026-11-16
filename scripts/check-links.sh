@@ -193,15 +193,16 @@ SKIP_HOSTS = {
 # check_external() as the "alive" answer it is, so the skip is no longer needed
 # and their links are checked again like everyone else (#1367).
 
-# Domains skipped together with ALL their subdomains. SKIP_HOSTS matches an
-# exact hostname, which misses country subdomains. LinkedIn serves member
-# profiles on www. and on country hosts (tr., fr., de., …, sourced from board
-# submissions); every one returns HTTP 999 to automated requests regardless of
-# UA but opens fine for any logged-out visitor. Skipping the whole domain
-# covers present and future board members without a per-subdomain allowlist.
-SKIP_DOMAINS = {
-    "linkedin.com",
-}
+# Domains skipped together with ALL their subdomains, from
+# scripts/link-check-skip-domains.txt (#2168): well-known sites that refuse
+# automated requests, limited to those an EISS page is likely to cite. SKIP_HOSTS
+# matches an exact hostname, which misses country subdomains such as LinkedIn's
+# tr., fr. and de. profile hosts (HTTP 999 to any automated request).
+def load_skip_domains(path="scripts/link-check-skip-domains.txt"):
+    with open(path, encoding="utf-8") as fh:
+        return {line.split("#", 1)[0].strip() for line in fh} - {""}
+
+SKIP_DOMAINS = load_skip_domains()
 
 internal_links = {}  # (file, target) for de-dupe display
 external_links = {}  # url -> first-seen source file

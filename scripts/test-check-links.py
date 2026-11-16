@@ -191,6 +191,23 @@ print(f'  hanging host -> {st!r} after {len(connections)} attempt(s)')
 fails += [] if (st == 'timeout' and len(connections) == 3) else \
     ['a hanging host should exhaust TIMEOUT_SCHEDULE and report "timeout", not broken']
 
+# The skip list file: parsed by the script's own loader, at most 200
+# domains, bare lower-case domains, no duplicates, and none of EISS's own.
+lstart = inline.index('def load_skip_domains')
+lns = {}
+exec(compile(inline[lstart:inline.index('SKIP_DOMAINS = load_skip_domains()')], 'skip-loader', 'exec'), lns)
+domains = lns['load_skip_domains']()
+lines = [l.split('#', 1)[0].strip() for l in open('scripts/link-check-skip-domains.txt', encoding='utf-8')]
+lines = [l for l in lines if l]
+print(f'  skip list -> {len(domains)} domains')
+fails += [] if len(domains) <= 200 else ['the skip list must hold at most 200 domains']
+fails += [] if len(lines) == len(domains) else ['the skip list has a duplicate line']
+bad = [d for d in domains if not re.fullmatch(r'[a-z0-9-]+(\.[a-z0-9-]+)+', d)]
+fails += [] if not bad else [f'not a bare lower-case domain: {bad}']
+own = [d for d in domains if any(d == o or d.endswith('.' + o) or o.endswith('.' + d)
+                                 for o in ('eiss-europa.com', 'netsec-cost.eu', 'github.com', 'github.io'))]
+fails += [] if not own else [f'the skip list must not hide our own sites: {own}']
+
 srv.shutdown()
 srv2.shutdown()
 srv3.shutdown()
