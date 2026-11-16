@@ -68,6 +68,10 @@ Log in as the bot user. Then:
    - `read:user`, sometimes required for type-field on session detail.
 4. **Do not** grant write scopes (`registrants`, `everything`, etc.) for
    this token. Writes deserve a separate, deliberately-issued token.
+
+The same bot holds a second token, `INDICO_PACE_TOKEN`, with the scope
+`read:everything`, for the conference pace. Its setup and the event
+permissions it needs are in [`conference-pace.md`](conference-pace.md).
 5. Save. Indico shows the token **once**. Copy it now.
 
 ## Step 4 — Drop the token into GitHub Actions secrets
