@@ -768,7 +768,6 @@ h4 { font-size: var(--fs-lg); }
   margin: var(--space-2) 0 0;
   padding-inline-start: 1.25rem;
 }
-.apps-signin p { margin: var(--space-2) 0 0; }
 .apps-signin a { color: #fff; text-decoration: underline; text-underline-offset: 2px; }
 
 .apps-stats {
