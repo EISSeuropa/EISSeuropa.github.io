@@ -629,7 +629,7 @@
         <p class="apps-annual-pick" data-apps-annual-pick hidden><label for="apps-annual-year">{{ A.year }}</label>
           <select id="apps-annual-year">{% for r in annualReport.years %}<option value="{{ r.year }}"{% if r.draft %} data-roles="staff management"{% endif %}>{{ (d.annualReport if r.draft else A.title) | replace("{year}", r.year) }}</option>{% endfor %}</select></p>
         {% for r in annualReport.years %}
-          <article class="apps-status-card apps-annual-view" data-apps-annual-year="{{ r.year }}"{% if r.draft %} data-roles="staff management"{% endif %}>
+          <article class="apps-status-card" data-apps-annual-year="{{ r.year }}"{% if r.draft %} data-roles="staff management"{% endif %}>
             <h2 class="apps-status-title">{{ (d.annualReport if r.draft else A.title) | replace("{year}", r.year) }}</h2>
             <p>{{ (A.toDate if r.toDate else A.fullYear) | replace("{year}", r.year) | replace("{date}", r.asOf | newsDate(lang)) }}</p>
             <p><a class="btn btn-primary btn-sm" href="/annual-report-{{ r.year }}.html" hreflang="en">{{ A.open }}</a></p>
