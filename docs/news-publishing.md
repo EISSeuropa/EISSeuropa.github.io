@@ -34,9 +34,10 @@ Not yet done:
   and EISS needs its own app (Set-up, step 1).
 - The Seville workshop item (11 November) merged before `SOCIAL_ENABLED` was
   set. It carries `"social": "skip"`, so the next run does not post it.
-- The newsletter does not use the pipeline yet. The form's Newsletter box tags
-  the item in the feed, and nothing reads the tag until the newsletter is
-  switched on.
+- The newsletter does not use the pipeline yet. The form has no Newsletter box
+  and no Body field for now. The script still reads both, so an older issue
+  that has them still works, and a `"newsletter": true` added by hand still
+  tags the item in the feed.
 
 ### Handing approval to someone else
 
@@ -76,7 +77,8 @@ The News item form (#2058) can also write these. The site pages ignore them.
 
 - **site** — `"joint"` for an item shared with NetSec. Absent means EISS.
 - **body** — the longer text, kept whole for the newsletter.
-- **image** — an image address for the newsletter.
+- **image** — an image on the site (`/assets/...`), used as the picture of the
+  LinkedIn and Bluesky posts. Blank, or an `https://` address: the site card.
 - **social** — an object. `text` is the LinkedIn and Bluesky caption (the
   form's summary). `collaborator: "netsec"` names the NetSec page, which is
   added by hand as collaborator after the post goes out.
@@ -95,20 +97,20 @@ items older than 18 months rotate off the homepage (capped at 5) but stay on
 Open a new issue and pick **News item**
 ([`.github/ISSUE_TEMPLATE/news.yml`](../.github/ISSUE_TEMPLATE/news.yml)).
 Only the headline and the summary are needed. Every field has a description
-written for someone who has never filed the form.
+written for someone who has never filed the form. The intro says that the
+issue title ("Add a title") only names the issue and the PR, and that the
+Headline is the title on the site and in the posts.
 
 | Field | Goes to |
 |---|---|
 | Site | EISS: nothing extra. Joint: `"site": "joint"`. NetSec: the run stops, file it in the NetSec repository |
 | Headline | `title`. Required, up to 100 characters. A longer one stops the run |
 | Summary | `excerpt` and `social.text`. Up to 300 characters. A longer one stops the run, so a cut never lands inside a link (#2189) |
-| Body | `body` |
 | Type | `type` (default `news`) |
 | Link | `url`: an existing page, never a new one. The headline links to it and the social posts end with it. Blank: the posts link to the item in `/news` |
-| Image | `image` |
+| Image | `image`: a site image (`/assets/...`), the picture of the social posts |
 | Publication date | `date` (blank or not `YYYY-MM-DD`: the day the run starts) |
 | Collaborator page | `social.collaborator` |
-| Newsletter | `"newsletter": true` |
 
 GitHub drops the form from the issue chooser, without an error, when a
 dropdown that sets `default` also lists `None` or `n/a` as an option. The

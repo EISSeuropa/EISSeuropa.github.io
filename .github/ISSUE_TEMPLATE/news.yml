@@ -1,5 +1,5 @@
 name: News item
-description: A news item for the website, the feed, the LinkedIn and Bluesky posts and the newsletter.
+description: A news item for the website, the feed and the LinkedIn and Bluesky posts.
 title: "news: "
 body:
   - type: markdown
@@ -11,7 +11,7 @@ body:
 
         Headline and Summary are required. Leave any other field blank if it does not apply. Write plain text everywhere: no links, no bold, no hashtags copied from LinkedIn. The web address goes in the Link field.
 
-        You can leave the issue title as it is.
+        The "Add a title" box at the top only names this request on GitHub, so the team can find it in the list of issues. It does not appear on the website or in the posts, and you can leave it as "news:". The Headline field below is the title readers see.
   - type: dropdown
     id: site
     attributes:
@@ -32,8 +32,8 @@ body:
     attributes:
       label: Headline
       description: >-
-        The title of the item, up to 100 characters. It opens the LinkedIn and
-        Bluesky posts. Example: "ESSC 2027: the call for papers is open".
+        The title readers see, up to 100 characters. It is the title of the item
+        on the website and the first line of the LinkedIn and Bluesky posts. Example: "ESSC 2027: the call for papers is open".
       placeholder: "ESSC 2027: the call for papers is open"
     validations:
       required: true
@@ -48,15 +48,6 @@ body:
         shorten it.
     validations:
       required: true
-  - type: textarea
-    id: body
-    attributes:
-      label: Body
-      description: >-
-        Optional. A longer text for the monthly newsletter, of any length. It
-        does not appear on the website or in the posts.
-    validations:
-      required: false
   - type: dropdown
     id: type
     attributes:
@@ -93,8 +84,10 @@ body:
     attributes:
       label: Image
       description: >-
-        Optional. The web address of an image for the newsletter, starting with
-        https://. The website and the posts do not show it.
+        Optional. The picture for the LinkedIn and Bluesky posts. It must
+        already be on eiss-europa.com: write its address from /assets/, for
+        example /assets/images/news-meta.jpg. Leave it blank to use the
+        standard EISS picture. The website does not show it.
     validations:
       required: false
   - type: input
@@ -121,11 +114,3 @@ body:
       default: 0
     validations:
       required: false
-  - type: checkboxes
-    id: newsletter
-    attributes:
-      label: Newsletter
-      description: Tick the box to also put this item in the next monthly newsletter.
-      options:
-        - label: Include in the newsletter
-          required: false

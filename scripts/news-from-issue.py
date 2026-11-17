@@ -33,11 +33,14 @@ Two body shapes are read.
    A headline or summary over its limit stops the run. The message is
    written for the person who filed the form: the workflow posts it on the
    issue.
-     Body               "body", kept whole for the newsletter
+     Body               "body", kept whole for the newsletter (off the form
+                        for now, still read for older issues)
      Type / Link / Publication date   as the header keys below
-     Image              "image" (http(s) or site-root path)
+     Image              "image" (http(s) or site-root path; a site image is
+                        the picture of the social posts)
      Collaborator page  social.collaborator ("netsec")
-     Newsletter         "newsletter": true when the box is ticked
+     Newsletter         "newsletter": true when the box is ticked (off the
+                        form for now, still read for older issues)
 
 2. Free text, the original shape (#634). Optional header keys, any case, in
    the first lines of the body:

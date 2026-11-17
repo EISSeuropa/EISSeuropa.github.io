@@ -165,7 +165,7 @@ stops("news:", MINIMAL, "Headline is empty")
 form_text = (HERE.parent / ".github" / "ISSUE_TEMPLATE" / "news.yml").read_text()
 blocks = re.split(r"^  - type: ", form_text, flags=re.M)[1:]
 fields = {re.search(r"^    id: (\S+)", b, re.M).group(1): b for b in blocks if not b.startswith("markdown")}
-assert len(fields) == 10, sorted(fields)
+assert len(fields) == 8, sorted(fields)
 for fid, b in fields.items():
     assert re.search(r"^      description: \S", b, re.M), f"{fid} has no description"
 assert "required: true" in fields["headline"], "the Headline is not required"

@@ -21,13 +21,11 @@ are required.
 | Site | `EISS`, or `Joint (EISS and NetSec)` for an item organised by EISS with NetSec. A NetSec-only item goes in `EISSeuropa/netsec.github.io`, with that repository's own skill. |
 | Headline | Plain text, up to 100 characters |
 | Summary | Up to 300 characters. The site's excerpt and the LinkedIn and Bluesky caption |
-| Body | Optional longer text, kept for the newsletter |
 | Type | `news`, `event`, `paper`, `press` or `podcast` |
 | Link | The address of an existing page the item is about, or a page added in the same PR |
-| Image | Optional image address for the newsletter |
+| Image | Optional. An image on the site (`/assets/...`), the picture of the LinkedIn and Bluesky posts |
 | Publication date | `YYYY-MM-DD`, blank for today |
 | Collaborator page | `NetSec` for a joint item, otherwise `No collaborator` |
-| Newsletter | Ticked only when the person asks. The newsletter is not switched on yet |
 
 Write the summary in the person's words. Shorten it only to fit 300
 characters, and say so. The script stops on a headline over 100 characters or a
@@ -52,10 +50,6 @@ EISS
 
 <summary>
 
-### Body
-
-_No response_
-
 ### Type
 
 event
@@ -75,10 +69,6 @@ _No response_
 ### Collaborator page
 
 No collaborator
-
-### Newsletter
-
-- [ ] Include in the newsletter
 EOF
 )" python3 scripts/news-from-issue.py
 ```
