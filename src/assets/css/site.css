@@ -827,7 +827,8 @@ h4 { font-size: var(--fs-lg); }
 /* The status colours would vanish on the tile's own fill. */
 .apps-stat.apps-stat-issue .apps-dot, .apps-stat.apps-stat-critical .apps-dot { background: currentColor; box-shadow: none; animation: none; }
 /* What moved since the last visit, beside a strip figure. */
-.apps-delta { display: inline-block; margin-inline-start: var(--space-2); padding: 0.125rem 0.5rem; border-radius: var(--radius-full); background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); font-size: 0.8125rem; font-weight: 600; line-height: 1.4; vertical-align: 0.3em; white-space: nowrap; }
+/* --accent-hover, not --accent: 4.1:1 on the tinted chip failed AA. */
+.apps-delta { display: inline-block; margin-inline-start: var(--space-2); padding: 0.125rem 0.5rem; border-radius: var(--radius-full); background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent-hover); font-size: 0.8125rem; font-weight: 600; line-height: 1.4; vertical-align: 0.3em; white-space: nowrap; }
 @media (prefers-reduced-motion: no-preference) {
   .apps-delta { animation: apps-rise 500ms var(--ease-out) 1s both; }
 }
@@ -1093,6 +1094,9 @@ a.apps-agenda-link:hover .apps-agenda-label { text-decoration: underline; }
 .apps-tabs [role="tab"]:hover { color: var(--text); }
 .apps-tabs [role="tab"][aria-selected="true"] { border-bottom-color: var(--accent); color: var(--text); }
 .apps-tabs .apps-dot[hidden] { display: none; }
+/* The Updates tab's count of changes since the last visit. */
+.apps-tab-count { display: inline-flex; align-items: center; justify-content: center; min-width: 1.375rem; height: 1.375rem; padding: 0 0.375rem; border-radius: 999px; background: var(--accent); color: var(--accent-text); font-size: 0.75rem; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.apps-tab-count[hidden] { display: none; }
 /* The NetSec report tab carries NetSec's COST blue and gold. */
 .apps-tabs .apps-tab-netsec::before { content: ""; display: inline-block; width: 0.625rem; height: 0.625rem; margin-inline-end: var(--space-2); border-radius: 2px; background: #ffcc00; box-shadow: inset 0 0 0 2px #003399; vertical-align: -0.05em; }
 .apps-tabs .apps-tab-netsec[aria-selected="true"] { border-bottom-color: #ffcc00; }

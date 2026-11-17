@@ -134,9 +134,9 @@ successor inherits through the handover in section 4.
   `help wanted` counts come from `src/data/roadmap-progress.json`, which
   the daily *Refresh roadmap surfaces* workflow rewrites. The "Next
   milestones" card lists the open release milestones with a due date,
-  soonest first, each with its progress bar and "X of Y issues closed",
+  soonest first, each with its progress bar and "Issues closed: X of Y",
   linked to its issues. It keeps the timeline's countdown and "Today"
-  marker. Conference and internship dates sit under Timeline, not here.
+  marker. Conference and internship dates sit in the Updates tab, not here.
   `src/_data/dashboard.js` assembles all of it.
   Under the release bar, a chart counts the release's issues closed per day
   over the last 30 days, in the browser from the live GitHub call that lists
@@ -159,7 +159,9 @@ successor inherits through the handover in section 4.
   at a time: the last five issues closed as done (green tick) and the five
   newest issues still open (amber "i"). Issues labelled `automated` and
   "not planned" closures are left out. The rolls show for every role. They
-  and the board's rolls sit under one "Recent activity" heading. Every roll moves on every 6.2 s (`setInterval` in `makeRoll`),
+  and the board's rolls open the Updates tab, above the conference
+  timeline. The tab counts what changed since the last visit until it is
+  opened. Every roll moves on every 6.2 s (`setInterval` in `makeRoll`),
   and its chevron button unfolds the whole list and stops that roll until
   folded again.
 - **For the board.** Every role gets a box under
