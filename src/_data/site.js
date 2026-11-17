@@ -206,14 +206,15 @@ module.exports = {
   // mail./groups. custom domains are http only, so they are not linked.
   staffLinks: [
     { href: "https://indico.eiss-europa.com", key: "indico", icon: "ticket", roles: ["staff", "management", "board", "volunteer"] },
-    { href: "https://mail.google.com/a/eiss-europa.com", key: "mail", icon: "mail", roles: ["staff", "management", "board", "volunteer"], menu: 2 },
+    { href: "https://mail.google.com/a/eiss-europa.com", key: "mail", icon: "mail", roles: ["staff", "management", "board", "volunteer"] },
     // contact@ and internship@ are collaborative inboxes, worked in Groups.
-    { href: "https://groups.google.com/a/eiss-europa.com", key: "groups", icon: "inbox", roles: ["staff", "management", "volunteer"], menu: 3 },
-    { href: "https://calendar.google.com/a/eiss-europa.com", key: "calendar", icon: "calendar", roles: ["staff", "management", "board", "volunteer"], menu: 5 },
-    { href: "https://drive.google.com/a/eiss-europa.com", key: "drive", icon: "folder", roles: ["staff", "management", "board", "volunteer"], menu: 4 },
+    { href: "https://groups.google.com/a/eiss-europa.com", key: "groups", icon: "inbox", roles: ["staff", "management", "volunteer"] },
+    { href: "https://calendar.google.com/a/eiss-europa.com", key: "calendar", icon: "calendar", roles: ["staff", "management", "board", "volunteer"] },
+    { href: "https://drive.google.com/a/eiss-europa.com", key: "drive", icon: "folder", roles: ["staff", "management", "board", "volunteer"] },
     { href: "https://drive.google.com/drive/folders/0AEaDgMvcPVVyUk9PVA", key: "boardDrive", icon: "folder", roles: ["board", "management"] },
     { href: "https://meet.google.com/", key: "meet", icon: "video", roles: ["staff", "management", "board", "volunteer"] },
-    { href: "/internal.html", key: "allApps", icon: "layout-grid", menu: 6, sep: true },
+    // Google's account recovery: works only while self-service recovery is on in the Admin console.
+    { href: "https://accounts.google.com/signin/recovery", key: "recover", icon: "lock", roles: ["staff", "management", "board", "volunteer"] },
     {
       href: "https://docs.google.com/forms/d/e/1FAIpQLSevC0tbQwCA4ZNfdk_pCY5xUvmFjuQbIIpddDXLF5TdSoKfcw/viewform",
       key: "internForm",
@@ -221,8 +222,20 @@ module.exports = {
       roles: ["staff", "management"],
     },
     // Daily tasks live in Chat spaces.
-    { href: "https://chat.google.com/", key: "chat", icon: "users", roles: ["staff", "management", "volunteer"], menu: 1 },
+    { href: "https://chat.google.com/", key: "chat", icon: "users", roles: ["staff", "management", "volunteer"] },
     { href: "https://www.linkedin.com/groups/42830462/", key: "alumni", icon: "linkedin", roles: ["staff", "management", "board", "volunteer"] },
+  ],
+
+  // The padlock menu in the header: the dashboard's tabs, then the dashboard
+  // itself. `needs` names the data its tab is built from: no data, no tab, no
+  // entry. Labels are t.staffMenu.<key>.
+  staffMenu: [
+    { href: "/internal.html#apps", key: "myApps", icon: "layout-grid" },
+    { href: "/internal.html#guides", key: "guides", icon: "book-open" },
+    { href: "/internal.html#it", key: "platformStatus", icon: "shield", needs: "systemHealth", dot: true },
+    { href: "/internal.html#netsec", key: "netsecReports", icon: "file-text", needs: "netsecReport" },
+    { href: "https://accounts.google.com/signin/recovery", key: "recover", icon: "lock" },
+    { href: "/internal.html", key: "allApps", icon: "arrow-right", sep: true },
   ],
 
   // The guides on /internal.html. Roles work as in staffLinks.
@@ -262,6 +275,7 @@ module.exports = {
       steps: [
         { id: "chrome", fr: { key: "À faire en premier", title: "Créer un profil Chrome pour l'EISS", text: "Dans Chrome, ajoutez un nouveau profil et connectez-vous à votre compte EISS dans ce profil, jamais dans la fenêtre de votre compte Google personnel. N'ouvrez les applications EISS, les liens Drive et ce tableau de bord que depuis ce profil. Le mélange des comptes est la cause de la plupart des erreurs « accès refusé »." }, de: { key: "Zuerst erledigen", title: "Ein Chrome-Profil für die EISS anlegen", text: "Fügen Sie in Chrome ein neues Profil hinzu und melden Sie sich dort mit Ihrem EISS-Konto an, nie in dem Fenster, das Sie für Ihr privates Google-Konto nutzen. Öffnen Sie EISS-Anwendungen, Drive-Links und dieses Dashboard nur aus diesem Profil. Vermischte Konten sind die Ursache der meisten „Kein Zugriff“-Fehler." }, key: "Do this first", title: "Make a Chrome profile for EISS", roles: ["staff", "management", "board", "volunteer"], text: "In Chrome, add a new profile and sign in to your EISS account there, never in the window you use for your personal Google account. Open EISS apps, Drive links and this dashboard only from that profile. Mixed accounts are the cause of most \"no access\" errors.", links: [{ href: "https://support.google.com/chrome/answer/2364824", label: "Add a Chrome profile", fr: { label: "Ajouter un profil Chrome" }, de: { label: "Chrome-Profil hinzufügen" }, icon: "user-plus" }] },
         { id: "account", fr: { title: "Se connecter et choisir son mot de passe", text: "Dans votre profil EISS, connectez-vous à Gmail avec votre adresse EISS et le mot de passe temporaire. Google vous demande ensuite de choisir le vôtre." }, de: { title: "Anmelden und Passwort wählen", text: "Melden Sie sich in Ihrem EISS-Profil bei Gmail mit Ihrer EISS-Adresse und dem vorläufigen Passwort an. Google bittet Sie dann, ein eigenes zu wählen." }, title: "Sign in and choose your password", roles: ["staff", "management", "board", "volunteer"], text: "In your EISS profile, sign in to Gmail with your EISS address and the temporary password. Google then asks you to choose your own.", links: ["mail"] },
+        { id: "recovery", fr: { title: "Ajouter une adresse e-mail de récupération", text: "Dans votre compte Google EISS, ajoutez votre adresse personnelle comme adresse e-mail de récupération. Si vous oubliez votre mot de passe, Google peut y envoyer un code." }, de: { title: "Eine Wiederherstellungs-E-Mail-Adresse hinzufügen", text: "Fügen Sie in Ihrem EISS-Google-Konto Ihre private Adresse als Wiederherstellungs-E-Mail-Adresse hinzu. Wenn Sie Ihr Passwort vergessen, kann Google dorthin einen Code senden." }, title: "Add a recovery email", roles: ["staff", "management", "board", "volunteer"], text: "In your EISS Google Account, add your personal address as the recovery email. If you forget your password, Google can send a code there.", links: [{ href: "https://support.google.com/accounts/answer/183723", label: "Set up a recovery email", fr: { label: "Configurer une adresse de récupération" }, de: { label: "Wiederherstellungsadresse einrichten" }, icon: "lock" }] },
         { id: "guide", fr: { title: "Suivre le guide d'arrivée", text: "Il s'ouvre une fois que vous êtes connecté et vous guide pour la validation en deux étapes." }, de: { title: "Dem Einstiegsleitfaden folgen", text: "Er öffnet sich, sobald Sie angemeldet sind, und führt Sie durch die Bestätigung in zwei Schritten." }, title: "Follow the Joining Guide", roles: ["staff", "management", "board", "volunteer"], text: "It opens once you are signed in, and takes you through 2-Step Verification.", links: ["Joining Guide"] },
         { id: "role", fr: { title: "Lire le guide de votre rôle" }, de: { title: "Den Leitfaden für Ihre Rolle lesen" }, title: "Read the guide for your role", roles: ["staff", "management", "board", "volunteer"], links: [
           "Volunteer handbook",
