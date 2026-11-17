@@ -717,7 +717,7 @@ h4 { font-size: var(--fs-lg); }
 }
 .apps-hero-inner { position: relative; }
 .apps-hero-logo {
-  width: min(100%, 46rem);
+  width: min(100%, 34rem);
   margin-inline: auto;
   color: hsl(0 0% 100%);
   filter: drop-shadow(0 6px 28px hsl(203 100% 60% / 0.35));
@@ -738,13 +738,6 @@ h4 { font-size: var(--fs-lg); }
   font-variant-numeric: tabular-nums;
   animation: apps-rise 800ms var(--ease-out) 200ms both;
 }
-.apps-hero-lead {
-  max-width: 38rem;
-  margin: 0 auto;
-  color: hsl(210 30% 86%);
-  animation: apps-rise 800ms var(--ease-out) 280ms both;
-}
-
 .apps-hero-note {
   max-width: 38rem;
   margin: var(--space-3) auto 0;
@@ -996,6 +989,8 @@ h4 { font-size: var(--fs-lg); }
 @keyframes apps-confpace-grow { from { width: 0; } }
 .apps-agenda { display: flex; gap: var(--space-3); margin: 0; padding: 0 0 var(--space-2); list-style: none; overflow-x: auto; scroll-snap-type: x proximity; }
 .apps-agenda-tile { flex: 0 0 10.5rem; scroll-snap-align: start; }
+/* Set by the script while more tiles lie past the right edge. */
+.apps-agenda.apps-agenda-more { mask-image: linear-gradient(to right, #000 calc(100% - 4rem), transparent); }
 .apps-agenda-link { display: flex; flex-direction: column; height: 100%; overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elev); color: var(--text); text-decoration: none; box-shadow: var(--shadow-1); }
 a.apps-agenda-link:hover { border-color: var(--border-strong); box-shadow: var(--shadow-2); }
 a.apps-agenda-link:hover .apps-agenda-label { text-decoration: underline; }
@@ -1140,6 +1135,17 @@ a.apps-agenda-link:hover .apps-agenda-label { text-decoration: underline; }
 /* The annual reports menu, as the NetSec one. */
 .apps-annual-pick { margin: 0 0 var(--space-3); }
 .apps-annual-pick label { margin-right: var(--space-2); font-weight: 600; }
+/* The Month and Year menus, styled like the "Viewing as" menu. */
+.apps-netsec-pick select,
+.apps-annual-pick select {
+  min-height: 44px;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elev);
+  color: var(--text);
+  font: inherit;
+}
 .apps-netsec-muted { color: var(--text-muted); font-size: 0.875rem; }
 .apps-netsec-list { display: grid; gap: var(--space-2); margin: var(--space-2) 0 0; padding: 0; list-style: none; font-size: 0.9375rem; }
 .apps-netsec-list span { display: block; color: var(--text-muted); font-size: 0.8125rem; }
@@ -1426,6 +1432,7 @@ html:has(.apps-welcome[open]) { overflow: hidden; }
 .apps-status {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  align-items: start;
   gap: var(--space-4);
 }
 .apps-health-brand a { display: inline-block; }
@@ -1585,7 +1592,17 @@ html:has(.apps-welcome[open]) { overflow: hidden; }
 }
 
 @media (max-width: 640px) {
-  .apps-tabs [role="tab"] { padding-inline: var(--space-3); }
+  /* One row of tabs that scrolls sideways, in place of three wrapped rows. */
+  .apps-tabbar > .apps-tabs { flex-wrap: nowrap; width: 100%; overflow-x: auto; scrollbar-width: none; }
+  .apps-tabs::-webkit-scrollbar { display: none; }
+  .apps-tabs [role="tab"] { flex: none; padding-inline: var(--space-3); white-space: nowrap; }
+  /* The release note: its first paragraph, cut at four lines. */
+  .apps-shipped-note { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 4; line-clamp: 4; }
+  .apps-shipped-note ~ .apps-shipped-note { display: none; }
+  .apps-hero-logo { width: min(100%, 18rem); }
+  /* Inline links at least 24px tall to tap (WCAG 2.2, 2.5.8). */
+  .apps-note > a, .apps-shipped-more a, .apps-version a { display: inline-block; padding-block: 0.25rem; }
+  .apps-signin summary { padding-block: 0.25rem; }
   .apps-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
   .apps-tile { min-height: 8.5rem; padding: var(--space-4); }
   .apps-go { display: none; }

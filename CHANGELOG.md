@@ -135,6 +135,9 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 - A News item issue filed by a publisher opens its pull request straight away, with no label needed, and the pull request waits for the maintainer to merge it. It used to need the `news` label and then merged itself once the checks passed.
 - The internal dashboard's header is shorter: a welcome line, and a note asking people to log in only with their EISS account and recommending a dedicated Chrome profile.
 - The staff sign-in menu in the header opens with a reminder to sign in with an eiss-europa.com account, and the internal dashboard asks people to log in only with their EISS account and recommends a dedicated Chrome profile. Board members were requesting access to EISS files from their personal Gmail.
+- The internal dashboard opens on the apps. The tabs and Your apps follow the figures strip and the release card, and Timeline and the activity rolls move below the tab panels. The first app tile is about half as far down the page as before, on desktop and on a phone. The header drops its welcome sentence and its lockup is smaller. On a phone the tabs stay on one row that scrolls sideways, and the release note is cut at four lines with a link to the full notes.
+- The guide tiles on the internal dashboard carry a note, like the app tiles. "Joining steps" and "Joining Guide" now say which is which.
+- The internal dashboard's deadline tiles fade at the right edge while more lie beyond it.
 
 ### Fixed
 
@@ -152,6 +155,10 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 - The internal dashboard's "Can't sign in?" box links "Reset my password" to Google's account recovery page, the page the Apps tile opens, in place of the steps to follow on Google's sign-in page. The tile's note says Google sends a code to the recovery email or phone, and admin@eiss-europa.com is a mail link.
 - The "Next milestones" card on the internal dashboard no longer shows "(%)" for a milestone with no issues.
 - Pages with people's names no longer have a blank strip under the footer. The hidden name card that opens on hover sat after the footer until first used.
+- The internal dashboard reads "1 open pull request" and "1 task to pick up" in the singular, and "Issues closed: 0 of 1" in place of "0 of 1 issues closed". The live update keeps the singular when a count changes.
+- The progress of the next release shows once on the internal dashboard's Platform development tab, in its Next release card. Next milestones repeated it, and the Next release card stretched to the height of its neighbour.
+- The Annual reports tab on the internal dashboard says no report is published only to a role that sees none. It showed under a visible draft. Its Year menu, and the NetSec reports Month menu, are styled like the "Viewing as" menu, and the Year menu lists "2026 (draft)".
+- Small links on the internal dashboard have at least 24px to tap on a phone.
 
 ## [2.29.0] · 2026-11-08 — Introducing Belvedere, the EISS blog
 
