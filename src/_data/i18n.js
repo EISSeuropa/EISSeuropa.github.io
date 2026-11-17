@@ -141,7 +141,6 @@ const locales = {
     // The internal dashboard (src/_includes/internal-body.njk). js: its script.
     dash: {
       signin: { summary: "Can't sign in?", address: "Forgot your EISS address? It is in the welcome email sent to your personal address.", password: "Forgot your password? Reset my password.", locked: "No recovery details? Write to admin@eiss-europa.com, and add a recovery email to your account.", recovery: "add a recovery email to your account" },
-      lead: "Welcome to the EISS Dashboard, your central page for all the tools, resources, and information you might need.",
       welcomeClose: "Close the welcome",
       welcomeTitle: "Welcome to EISS",
       welcomeLead: "Which describes you? You get the steps for your role, one at a time.",
@@ -173,7 +172,7 @@ const locales = {
       tabGuides: "Guides",
       tabIt: "Platform status",
       needsAttention: ", needs attention",
-      annual: { tab: "Annual reports", year: "Year", title: "Annual report {year}", toDate: "Year to date, figures as of {date}.", fullYear: "1 January to 31 December {year}.", open: "Open the report", empty: "No annual report has been published yet. Drafts show to Staff and Management." },
+      annual: { tab: "Annual reports", year: "Year", title: "Annual report {year}", toDate: "Year to date, figures as of {date}.", fullYear: "1 January to 31 December {year}.", open: "Open the report", draftYear: "{year} (draft)", empty: "No annual report has been published yet. Drafts show to Staff and Management." },
       netsec: {
         tab: "NetSec reports",
         heading: "Monthly report, {month}",
@@ -224,7 +223,7 @@ const locales = {
       yourApps: "Your apps",
       filterApps: "Filter apps",
       nextRelease: "Next release",
-      issuesClosed: "{closed} of {total} issues closed",
+      issuesClosed: "Issues closed: {closed} of {total}",
       daysAgo30: "30 days ago",
       today: "Today",
       daysWithClosures: "Days with closures",
@@ -233,9 +232,9 @@ const locales = {
       progress: "{title} progress",
       onGithub: "On GitHub",
       counts: {
-        issues: "open issues",
-        prs: "open pull requests",
-        tasks: "tasks to pick up",
+        issues: ["open issue", "open issues"],
+        prs: ["open pull request", "open pull requests"],
+        tasks: ["task to pick up", "tasks to pick up"],
       },
       keyDates: "Key dates",
       nextMilestones: "Next milestones",
@@ -1268,7 +1267,6 @@ const locales = {
     // The internal dashboard (src/_includes/internal-body.njk). js: its script.
     dash: {
       signin: { summary: "Impossible de vous connecter ?", address: "Vous avez oublié votre adresse EISS ? Elle figure dans l'e-mail de bienvenue envoyé à votre adresse personnelle.", password: "Vous avez oublié votre mot de passe ? Réinitialiser mon mot de passe.", locked: "Aucune information de récupération ? Écrivez à admin@eiss-europa.com, et ajoutez une adresse e-mail de récupération à votre compte.", recovery: "ajoutez une adresse e-mail de récupération à votre compte" },
-      lead: "Bienvenue sur le tableau de bord de l'EISS, votre page centrale pour tous les outils, ressources et informations dont vous pourriez avoir besoin.",
       welcomeClose: "Fermer l'accueil",
       welcomeTitle: "Bienvenue à l'EISS",
       welcomeLead: "Quel est votre rôle ? Vous verrez les étapes qui vous concernent, une à une.",
@@ -1300,7 +1298,7 @@ const locales = {
       tabGuides: "Guides",
       tabIt: "État de la plateforme",
       needsAttention: ", à vérifier",
-      annual: { tab: "Rapports annuels", year: "Année", title: "Rapport annuel {year} (en anglais)", toDate: "Année en cours, chiffres au {date}.", fullYear: "Du 1er janvier au 31 décembre {year}.", open: "Ouvrir le rapport", empty: "Aucun rapport annuel n’est encore publié. Les projets s’affichent pour le Personnel et la Direction." },
+      annual: { tab: "Rapports annuels", year: "Année", title: "Rapport annuel {year} (en anglais)", toDate: "Année en cours, chiffres au {date}.", fullYear: "Du 1er janvier au 31 décembre {year}.", open: "Ouvrir le rapport", draftYear: "{year} (projet)", empty: "Aucun rapport annuel n’est encore publié. Les projets s’affichent pour le Personnel et la Direction." },
       netsec: {
         tab: "Rapports NetSec",
         heading: "Rapport mensuel, {month}",
@@ -1351,7 +1349,7 @@ const locales = {
       yourApps: "Vos applications",
       filterApps: "Filtrer les applications",
       nextRelease: "Prochaine version",
-      issuesClosed: "{closed} tickets clos sur {total}",
+      issuesClosed: "Tickets clos : {closed} sur {total}",
       daysAgo30: "Il y a 30 jours",
       today: "Aujourd'hui",
       daysWithClosures: "Jours avec des tickets clos",
@@ -1360,9 +1358,9 @@ const locales = {
       progress: "Avancement de {title}",
       onGithub: "Sur GitHub",
       counts: {
-        issues: "tickets ouverts",
-        prs: "pull requests ouvertes",
-        tasks: "tâches à prendre",
+        issues: ["ticket ouvert", "tickets ouverts"],
+        prs: ["pull request ouverte", "pull requests ouvertes"],
+        tasks: ["tâche à prendre", "tâches à prendre"],
       },
       keyDates: "Dates clés",
       nextMilestones: "Prochaines étapes",
@@ -2271,7 +2269,6 @@ const locales = {
     // The internal dashboard (src/_includes/internal-body.njk). js: its script.
     dash: {
       signin: { summary: "Anmeldung klappt nicht?", address: "EISS-Adresse vergessen? Sie steht in der Willkommens-E-Mail an Ihre private Adresse.", password: "Passwort vergessen? Mein Passwort zurücksetzen.", locked: "Keine Wiederherstellungsdaten? Schreiben Sie an admin@eiss-europa.com, und fügen Sie Ihrem Konto eine Wiederherstellungs-E-Mail-Adresse hinzu.", recovery: "fügen Sie Ihrem Konto eine Wiederherstellungs-E-Mail-Adresse hinzu" },
-      lead: "Willkommen im EISS-Dashboard, Ihrer zentralen Seite für alle Werkzeuge, Ressourcen und Informationen, die Sie benötigen.",
       welcomeClose: "Begrüßung schließen",
       welcomeTitle: "Willkommen bei der EISS",
       welcomeLead: "Was trifft auf Sie zu? Sie sehen die Schritte für Ihre Rolle, einen nach dem anderen.",
@@ -2303,7 +2300,7 @@ const locales = {
       tabGuides: "Leitfäden",
       tabIt: "Plattformstatus",
       needsAttention: ", braucht Aufmerksamkeit",
-      annual: { tab: "Jahresberichte", year: "Jahr", title: "Jahresbericht {year} (auf Englisch)", toDate: "Laufendes Jahr, Zahlen vom {date}.", fullYear: "1. Januar bis 31. Dezember {year}.", open: "Bericht öffnen", empty: "Noch ist kein Jahresbericht veröffentlicht. Entwürfe sehen Personal und Leitung." },
+      annual: { tab: "Jahresberichte", year: "Jahr", title: "Jahresbericht {year} (auf Englisch)", toDate: "Laufendes Jahr, Zahlen vom {date}.", fullYear: "1. Januar bis 31. Dezember {year}.", open: "Bericht öffnen", draftYear: "{year} (Entwurf)", empty: "Noch ist kein Jahresbericht veröffentlicht. Entwürfe sehen Personal und Leitung." },
       netsec: {
         tab: "NetSec-Berichte",
         heading: "Monatsbericht, {month}",
@@ -2354,7 +2351,7 @@ const locales = {
       yourApps: "Ihre Anwendungen",
       filterApps: "Anwendungen filtern",
       nextRelease: "Nächste Version",
-      issuesClosed: "{closed} von {total} Issues geschlossen",
+      issuesClosed: "Geschlossene Issues: {closed} von {total}",
       daysAgo30: "Vor 30 Tagen",
       today: "Heute",
       daysWithClosures: "Tage mit geschlossenen Issues",
@@ -2363,9 +2360,9 @@ const locales = {
       progress: "Fortschritt von {title}",
       onGithub: "Auf GitHub",
       counts: {
-        issues: "offene Issues",
-        prs: "offene Pull-Requests",
-        tasks: "Aufgaben zum Übernehmen",
+        issues: ["offenes Issue", "offene Issues"],
+        prs: ["offener Pull-Request", "offene Pull-Requests"],
+        tasks: ["Aufgabe zum Übernehmen", "Aufgaben zum Übernehmen"],
       },
       keyDates: "Wichtige Termine",
       nextMilestones: "Nächste Meilensteine",

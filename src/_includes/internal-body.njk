@@ -24,6 +24,8 @@
 {% from "icons.njk" import icon %}
 {%- set t = i18n[lang or "en"] -%}
 {%- set d = t.dash -%}
+{#- One of a [singular, plural] pair. French counts 0 and 1 as singular. -#}
+{%- macro plural(pair, n, lang) -%}{{ pair[0 if ((n < 2) if lang == "fr" else (n == 1)) else 1] }}{%- endmacro -%}
 {#- A data block's light: dark green while it shows the build's figures, light
     green and glowing once the live load replaces them (data-apps-src names the
     load). The legend sits at the foot of the page. -#}
@@ -40,7 +42,6 @@
       <div class="apps-hero-logo">{% inlineSvg "assets/images/brand/eiss-10-lockup.svg" %}</div>
       <h1 class="apps-hero-title">{{ t.staffMenu.heading }}</h1>
       <p class="apps-hero-clock" data-apps-clock hidden></p>
-      <p class="apps-hero-lead">{{ d.lead }}</p>
       {%- set hl = "" if (lang or "en") == "en" else "?hl=" + lang -%}
       {%- set profileLink = '<a href="https://support.google.com/chrome/answer/2364824' + hl + '" target="_blank" rel="noopener">' + t.staffMenu.chromeProfile + '</a>' %}
       <p class="apps-hero-note">{{ t.staffMenu.accessNote | replace(t.staffMenu.chromeProfile, profileLink) | safe }}</p>
@@ -134,7 +135,7 @@
       {% endif %}
       {% if dashboard.counts %}
         <div class="apps-stat">
-          <dt>{{ d.counts.tasks }}</dt>
+          <dt data-apps-live-label="tasks">{{ plural(d.counts.tasks, dashboard.counts[2].value, lang) }}</dt>
           <dd><a href="{{ dashboard.counts[2].url }}" data-apps-live="tasks">{{ dashboard.counts[2].value }}</a></dd>
         </div>
       {% endif %}
@@ -148,146 +149,11 @@
       <aside class="apps-shipped" aria-labelledby="apps-shipped-{{ loop.index }}" data-apps-shipped="{{ r.site | lower }}-{{ r.version }}">
         <p class="apps-shipped-eyebrow"><span class="apps-board-site apps-board-site-{{ r.site | lower }}">{{ r.site }}</span> {{ RC.label | replace("{version}", r.version) }} · <time datetime="{{ r.date }}">{{ r.date | newsDate(lang) }}</time></p>
         <h2 class="apps-shipped-title" id="apps-shipped-{{ loop.index }}"{% if lang != "en" %} lang="en"{% endif %}>{{ r.title }}</h2>
-        {% for p in r.note %}<p{% if lang != "en" %} lang="en"{% endif %}>{{ p }}</p>{% endfor %}
+        {% for p in r.note %}<p class="apps-shipped-note"{% if lang != "en" %} lang="en"{% endif %}>{{ p }}</p>{% endfor %}
         <p class="apps-shipped-more"><a href="{{ r.url }}">{{ RC.notes }}</a></p>
         <button type="button" class="apps-shipped-close" data-apps-shipped-close aria-label="{{ RC.dismiss }}" title="{{ RC.dismiss }}" hidden>{{ icon("x") }}</button>
       </aside>
     {% endfor %}
-    {# The conference timeline: the stage of the conference year with its
-       stepper, then the coming dates as calendar tiles. #}
-    {% if dashboard.phase or dashboard.agenda.length %}
-    <section class="apps-conference" aria-labelledby="apps-conference-heading">
-    <h2 class="apps-heading" id="apps-conference-heading">{{ d.agenda.heading }}</h2>
-    {% if dashboard.phase %}
-      <div class="apps-phase">
-        <div>
-          <h3 class="apps-phase-title">{{ d.agenda.conference }}</h3>
-          {% set np = dashboard.phase.noteParts %}
-          <p class="apps-note">{{ d.now | replace("{label}", d.esscOn | replace("{year}", dashboard.phase.year) if dashboard.phase.conference else ((dashboard.phase[lang] and dashboard.phase[lang].label) or dashboard.phase.label)) }}. {% if np.kind == "until" %}{{ d.inCityUntil | replace("{city}", np.city) | replace("{date}", np.date | newsDate(lang)) }}{% elif np %}{{ d.nextUp | replace("{label}", d.esscOpens | replace("{year}", np.year) | replace("{city}", np.city) if np.kind == "essc" else ((np[lang] and np[lang].label) or np.label)) | replace("{date}", np.date | newsDate(lang)) }}{% endif %}</p>
-        </div>
-        <ul class="apps-phase-links" role="list">
-          {% for l in dashboard.phase.links %}
-            <li data-roles="{{ l.roles | join(' ') }}"><a class="btn btn-secondary btn-sm" href="{{ l.href }}">{{ icon(l.icon) }} {{ t.staffMenu[l.key] or l.label }}</a></li>
-          {% endfor %}
-        </ul>
-        <ol class="apps-steps" aria-label="{{ d.stagesLabel }}" style="--apps-steps-n: {{ dashboard.phase.steps.length }}; --apps-steps-fill: {{ dashboard.phase.fill }}">
-          {% for s in dashboard.phase.steps %}
-            <li class="apps-step apps-step-{{ s.state }}"{% if s.state == "now" %} aria-current="step"{% endif %}><span class="apps-step-dot" aria-hidden="true"></span><span class="apps-step-label">{{ (s[lang] and s[lang].step) or s.step }}{% if s.state == "done" %}<span class="sr-only">{{ d.done }}</span>{% endif %}</span></li>
-          {% endfor %}
-        </ol>
-      </div>
-    {% endif %}
-
-    {# The conference's pace (#2039): abstracts and registrations for this
-       edition, against the previous edition at the same distance from its
-       conference. Bars share one scale, the previous edition's final total.
-       Figures from scripts/conference-pace.py, procedure in docs/conference-pace.md. #}
-    {% set P = dashboard.pace %}
-    {% if dashboard.phase %}
-      <div class="apps-confpace" data-roles="staff management">
-        {% set PST = d.stored | replace("{date}", (P.recorded if P and P.recorded else dashboard.built) | newsDate(lang)) %}
-        {% if P %}<span class="apps-src" role="img" aria-label="{{ PST }}" title="{{ PST }}"></span>{% endif %}
-        <h3 class="apps-confpace-title">{{ d.confPace.heading }}</h3>
-        {% if P %}
-          {% set PM = P.measures.abstracts or P.measures.registrations %}
-          {% if PM and PM.previous %}<p class="apps-confpace-intro">{{ d.confPace.intro | replace("{edition}", PM.edition) | replace("{previous}", PM.previous.edition) }}</p>{% endif %}
-          {% for key in ["abstracts", "registrations"] %}{% set m = P.measures[key] %}{% if m %}
-            {% set top = m.previous.total if m.previous and m.previous.total > (m.count or 0) else (m.count or 1) %}
-            {% set dp = d.confPace.daysOut %}
-            <div class="apps-confpace-row">
-              <p class="apps-confpace-label">{{ d.confPace[key] }} <span class="apps-confpace-when">{{ (dp[0] if (m.daysOut < 2 if lang == "fr" else m.daysOut == 1) else dp[1]) | replace("{n}", m.daysOut) }}</span></p>
-              <dl class="apps-confpace-bars">
-                <div class="apps-confpace-now">
-                  <dt>{{ m.edition }}</dt>
-                  <dd><span class="apps-confpace-track" aria-hidden="true"><span class="apps-confpace-bar" style="width: {{ ((m.count or 0) / top * 100) | round(1) }}%"></span></span><span class="apps-confpace-num">{% if m.recorded %}<strong>{{ m.count }}</strong> <span class="apps-confpace-total">{{ d.confPace.soFar }}</span>{% else %}<strong>{{ d.confPace.notRecorded }}</strong>{% endif %}</span></dd>
-                </div>
-                {% if m.previous %}
-                  <div class="apps-confpace-prev">
-                    <dt>{{ m.previous.edition }}</dt>
-                    <dd><span class="apps-confpace-track" aria-hidden="true"><span class="apps-confpace-bar" style="width: {{ (m.previous.count / top * 100) | round(1) }}%"></span></span><span class="apps-confpace-num"><strong>{{ m.previous.count }}</strong> <span class="apps-confpace-total">{{ d.confPace.ofTotal | replace("{total}", m.previous.total) }}</span></span></dd>
-                  </div>
-                {% endif %}
-              </dl>
-            </div>
-          {% endif %}{% endfor %}
-        {% else %}
-          <p class="apps-note">{{ d.confPace.empty }} <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/conference-pace.md">{{ d.confPace.how }}</a></p>
-        {% endif %}
-      </div>
-    {% endif %}
-
-    {# Calendar tiles for the coming EISS and NetSec dates, soonest first, from
-       dashboard.agenda. One row that scrolls sideways. #}
-    {% if dashboard.agenda.length %}
-      <ul class="apps-agenda" role="list" aria-label="{{ d.agenda.list }}">
-        {% for x in dashboard.agenda %}
-          {% set label %}{% if x.kind == "essc" %}{{ d.esscDate | replace("{year}", x.year) | replace("{city}", x.city) }}{% elif x.kind == "release" %}{{ d.releaseDue | replace("{title}", x.title) }}{% elif x.cohort %}{{ d.agenda[x.kind] | replace("{cohort}", x.cohort[lang] or x.cohort.en) }}{% else %}{{ (x[lang] and x[lang].label) or x.label }}{% endif %}{% endset %}
-          <li class="apps-agenda-tile apps-agenda-{{ x.cat }}" data-roles="{{ x.roles | join(' ') }}">
-            {% if x.url %}<a class="apps-agenda-link" href="{{ x.url | localizedHref(lang) if x.url.startsWith('/') else x.url }}">{% else %}<div class="apps-agenda-link">{% endif %}
-              <span class="apps-agenda-month">{{ x.date | monthShort(lang) }}</span>
-              <time class="apps-agenda-day" datetime="{{ x.date }}">{{ x.date.slice(8, 10) | int }}{% if x.end and x.end.slice(0, 7) == x.date.slice(0, 7) %}–{{ x.end.slice(8, 10) | int }}{% endif %}</time>
-              <span class="apps-agenda-label">{{ label | trim | safe }}{% if x.tentative %} <span class="apps-agenda-tbc">({{ d.agenda.tentative }})</span>{% endif %}</span>
-              <span class="apps-agenda-tags"><span class="apps-board-site apps-board-site-{{ x.site | lower }}">{{ x.site }}</span> <span class="apps-agenda-cat">{{ d.agenda.cat[x.cat] }}</span></span>
-            {% if x.url %}</a>{% else %}</div>{% endif %}
-          </li>
-        {% endfor %}
-      </ul>
-      {% if dashboard.calendar %}<p class="apps-note"><a href="{{ dashboard.calendar }}">{{ d.allDeadlines }}</a></p>{% endif %}
-    {% endif %}
-    </section>
-    {% endif %}
-
-    {# The rolling modules, for every role: the issues, then the features,
-       audits and fixes. Each row is one roll. #}
-    <section class="apps-rolls" aria-labelledby="apps-rolls-heading">
-    <h2 class="apps-heading" id="apps-rolls-heading">{{ d.rolls.heading }}</h2>
-    <div class="apps-today" data-apps-today hidden>
-      <div class="apps-today-clip">
-        <div class="apps-today-box">
-          <p class="apps-today-text" data-apps-today-text hidden></p>
-          {% for key in ["closed", "opened"] %}
-            <div class="apps-roll-row" data-apps-issue-row="{{ key }}" hidden>
-              <p class="apps-roll-label" id="apps-roll-{{ key }}">{{ SRC | replace("@", "rolls") | safe }} {{ d.rolls[key] }}</p>
-              <div class="apps-done-stage" data-apps-issue-roll="{{ key }}">
-                <ul class="apps-done" data-apps-done role="list" aria-labelledby="apps-roll-{{ key }}"></ul>
-                <button type="button" class="apps-done-pause apps-done-more" data-apps-done-more aria-expanded="false" aria-label="{{ d.rolls.showAll | replace("{label}", d.rolls[key]) }}" title="{{ d.rolls.showAll | replace("{label}", d.rolls[key]) }}" hidden>{{ icon("chevron-down") }}</button>
-                <button type="button" class="apps-done-pause" data-apps-done-pause aria-pressed="false" aria-label="{{ d.board.pause | replace("{label}", d.rolls[key]) }}" hidden><span class="apps-done-hold">{{ icon("pause") }}</span><span class="apps-done-play">{{ icon("play") }}</span></button>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
-
-    {# The month's main features and fixes in both site repos, and the latest
-       formal audits, each rolling like the issues above. Every role sees them.
-       Without JS (or motion) the lines stack. #}
-    {% set B = dashboard.board %}
-    {% set MARK = {
-      features: '<path d="M8 4v8M4 8h8"/>',
-      audits: '<path d="M7 4a3 3 0 1 0 0 6a3 3 0 1 0 0-6M9.2 9.2l3 3"/>',
-      fixes: '<path d="M3.5 8.5l3 3 6-7"/>'
-    } %}
-    <div class="apps-board">
-      <div class="apps-today-box">
-        {% for key in ["features", "audits", "fixes"] %}{% if B[key] and B[key].length %}
-          <div class="apps-roll-row">
-            <p class="apps-roll-label" id="apps-board-{{ key }}">{{ SRC | replace("@", "") | safe }} {{ d.board[key] }}</p>
-            <div class="apps-done-stage" data-apps-roll>
-              <ul class="apps-done apps-done-static" data-apps-done role="list" aria-labelledby="apps-board-{{ key }}">
-                {% for x in B[key] %}
-                  <li class="apps-done-item"><span class="apps-done-box apps-done-box-{{ key }}" aria-hidden="true"><svg viewBox="0 0 16 16">{{ MARK[key] | safe }}</svg></span><a href="{{ x.url }}" title="{{ x.title }}, {{ (x.at or x.date) | newsDate(lang) }}"><span class="apps-board-site apps-board-site-{{ x.site | lower }}">{{ x.site }}</span> <span class="apps-done-title">{{ x.title }}</span></a></li>
-                {% endfor %}
-              </ul>
-              <button type="button" class="apps-done-pause apps-done-more" data-apps-done-more aria-expanded="false" aria-label="{{ d.rolls.showAll | replace("{label}", d.board[key]) }}" title="{{ d.rolls.showAll | replace("{label}", d.board[key]) }}" hidden>{{ icon("chevron-down") }}</button>
-              <button type="button" class="apps-done-pause" data-apps-done-pause aria-pressed="false" aria-label="{{ d.board.pause | replace("{label}", d.board[key]) }}" hidden><span class="apps-done-hold">{{ icon("pause") }}</span><span class="apps-done-play">{{ icon("play") }}</span></button>
-            </div>
-          </div>
-        {% endif %}{% endfor %}
-      </div>
-    </div>
-    </section>
-
     <div class="apps-admin" id="admin">
       <h2 class="apps-heading">{{ d.admin }}</h2>
       <ul class="apps-grid" role="list">
@@ -370,6 +236,7 @@
             <a class="apps-tile apps-tile-short" href="{{ guide.href | localizedHref(lang) }}">
               <span class="apps-icon">{{ icon(guide.icon) }}</span>
               <span class="apps-label">{{ (guide[lang] and guide[lang].label) or guide.label }}</span>
+              {% set gnote = (guide[lang] and guide[lang].note) or guide.note %}{% if gnote %}<span class="apps-note">{{ gnote }}</span>{% endif %}
               <span class="apps-go">{{ icon("arrow-right") }}</span>
             </a>
           </li>
@@ -411,7 +278,7 @@
             <h3 class="apps-status-title">{{ d.onGithub }}</h3>
             <ul class="apps-counts" role="list">
               {% for c in dashboard.counts %}
-                <li data-roles="{{ c.roles | join(' ') }}"><a href="{{ c.url }}"><strong data-apps-live="{{ ['issues', 'prs', 'tasks'][loop.index0] }}">{{ c.value }}</strong> {{ d.counts[c.key] }}</a></li>
+                <li data-roles="{{ c.roles | join(' ') }}"><a href="{{ c.url }}"><strong data-apps-live="{{ ['issues', 'prs', 'tasks'][loop.index0] }}">{{ c.value }}</strong> <span data-apps-live-label="{{ ['issues', 'prs', 'tasks'][loop.index0] }}">{{ plural(d.counts[c.key], c.value, lang) }}</span></a></li>
               {% endfor %}
             </ul>
             <ul class="apps-help" data-apps-help role="list" aria-label="{{ d.newestTasks }}"{% if not dashboard.help.length %} hidden{% endif %}>
@@ -429,7 +296,8 @@
               {% for m in dashboard.milestones %}
                 {% if m.state == "next" %}<li class="apps-timeline-today" data-apps-timeline-today aria-hidden="true"><span>{{ d.today }}</span></li>{% endif %}
                 <li class="apps-timeline-item apps-timeline-{{ m.state }}" data-roles="staff management board volunteer" data-date="{{ m.date }}"><span class="apps-timeline-dot" aria-hidden="true"></span><time datetime="{{ m.date }}">{{ m.date | newsDate(lang) }}</time> <span class="apps-timeline-label"><a href="{{ m.url }}">{{ d.releaseDue | replace("{title}", m.title) }}</a></span><span class="apps-timeline-when" data-apps-timeline-when></span>
-                  <span class="apps-timeline-detail"><progress class="apps-progress" value="{{ m.closed }}" max="{{ m.total }}" aria-label="{{ d.progress | replace("{title}", m.title) }}">{{ m.percent }}%</progress>{{ d.issuesClosed | replace("{closed}", m.closed) | replace("{total}", m.total) }}{% if m.total %} ({{ m.percent }}%){% endif %}</span></li>
+                  {%- if not (m.state == "next" and dashboard.release) %}
+                  <span class="apps-timeline-detail"><progress class="apps-progress" value="{{ m.closed }}" max="{{ m.total }}" aria-label="{{ d.progress | replace("{title}", m.title) }}">{{ m.percent }}%</progress>{{ d.issuesClosed | replace("{closed}", m.closed) | replace("{total}", m.total) }}{% if m.total %} ({{ m.percent }}%){% endif %}</span>{% endif %}</li>
               {% endfor %}
             </ol>
           </div>
@@ -629,7 +497,7 @@
       {% set A = d.annual %}
       <section class="apps-panel" id="annual" data-apps-panel aria-label="{{ A.tab }}">
         <p class="apps-annual-pick" data-apps-annual-pick hidden><label for="apps-annual-year">{{ A.year }}</label>
-          <select id="apps-annual-year">{% for r in annualReport.years %}<option value="{{ r.year }}"{% if r.draft %} data-roles="staff management"{% endif %}>{{ (d.annualReport if r.draft else A.title) | replace("{year}", r.year) }}</option>{% endfor %}</select></p>
+          <select id="apps-annual-year">{% for r in annualReport.years %}<option value="{{ r.year }}"{% if r.draft %} data-roles="staff management"{% endif %}>{{ (A.draftYear if r.draft else "{year}") | replace("{year}", r.year) }}</option>{% endfor %}</select></p>
         {% for r in annualReport.years %}
           <article class="apps-status-card" data-apps-annual-year="{{ r.year }}"{% if r.draft %} data-roles="staff management"{% endif %}>
             <h2 class="apps-status-title">{{ (d.annualReport if r.draft else A.title) | replace("{year}", r.year) }}</h2>
@@ -637,9 +505,144 @@
             <p><a class="btn btn-primary btn-sm" href="/annual-report-{{ r.year }}.html" hreflang="en">{{ A.open }}</a></p>
           </article>
         {% endfor %}
-        {% if not annualReport.published %}<p class="apps-note">{{ A.empty }}</p>{% endif %}
+        {% if not annualReport.published %}<p class="apps-note" data-apps-annual-empty data-roles="board volunteer">{{ A.empty }}</p>{% endif %}
       </section>
     {% endif %}
+
+    {# The conference timeline: the stage of the conference year with its
+       stepper, then the coming dates as calendar tiles. #}
+    {% if dashboard.phase or dashboard.agenda.length %}
+    <section class="apps-conference" aria-labelledby="apps-conference-heading">
+    <h2 class="apps-heading" id="apps-conference-heading">{{ d.agenda.heading }}</h2>
+    {% if dashboard.phase %}
+      <div class="apps-phase">
+        <div>
+          <h3 class="apps-phase-title">{{ d.agenda.conference }}</h3>
+          {% set np = dashboard.phase.noteParts %}
+          <p class="apps-note">{{ d.now | replace("{label}", d.esscOn | replace("{year}", dashboard.phase.year) if dashboard.phase.conference else ((dashboard.phase[lang] and dashboard.phase[lang].label) or dashboard.phase.label)) }}. {% if np.kind == "until" %}{{ d.inCityUntil | replace("{city}", np.city) | replace("{date}", np.date | newsDate(lang)) }}{% elif np %}{{ d.nextUp | replace("{label}", d.esscOpens | replace("{year}", np.year) | replace("{city}", np.city) if np.kind == "essc" else ((np[lang] and np[lang].label) or np.label)) | replace("{date}", np.date | newsDate(lang)) }}{% endif %}</p>
+        </div>
+        <ul class="apps-phase-links" role="list">
+          {% for l in dashboard.phase.links %}
+            <li data-roles="{{ l.roles | join(' ') }}"><a class="btn btn-secondary btn-sm" href="{{ l.href }}">{{ icon(l.icon) }} {{ t.staffMenu[l.key] or l.label }}</a></li>
+          {% endfor %}
+        </ul>
+        <ol class="apps-steps" aria-label="{{ d.stagesLabel }}" style="--apps-steps-n: {{ dashboard.phase.steps.length }}; --apps-steps-fill: {{ dashboard.phase.fill }}">
+          {% for s in dashboard.phase.steps %}
+            <li class="apps-step apps-step-{{ s.state }}"{% if s.state == "now" %} aria-current="step"{% endif %}><span class="apps-step-dot" aria-hidden="true"></span><span class="apps-step-label">{{ (s[lang] and s[lang].step) or s.step }}{% if s.state == "done" %}<span class="sr-only">{{ d.done }}</span>{% endif %}</span></li>
+          {% endfor %}
+        </ol>
+      </div>
+    {% endif %}
+
+    {# The conference's pace (#2039): abstracts and registrations for this
+       edition, against the previous edition at the same distance from its
+       conference. Bars share one scale, the previous edition's final total.
+       Figures from scripts/conference-pace.py, procedure in docs/conference-pace.md. #}
+    {% set P = dashboard.pace %}
+    {% if dashboard.phase %}
+      <div class="apps-confpace" data-roles="staff management">
+        {% set PST = d.stored | replace("{date}", (P.recorded if P and P.recorded else dashboard.built) | newsDate(lang)) %}
+        {% if P %}<span class="apps-src" role="img" aria-label="{{ PST }}" title="{{ PST }}"></span>{% endif %}
+        <h3 class="apps-confpace-title">{{ d.confPace.heading }}</h3>
+        {% if P %}
+          {% set PM = P.measures.abstracts or P.measures.registrations %}
+          {% if PM and PM.previous %}<p class="apps-confpace-intro">{{ d.confPace.intro | replace("{edition}", PM.edition) | replace("{previous}", PM.previous.edition) }}</p>{% endif %}
+          {% for key in ["abstracts", "registrations"] %}{% set m = P.measures[key] %}{% if m %}
+            {% set top = m.previous.total if m.previous and m.previous.total > (m.count or 0) else (m.count or 1) %}
+            {% set dp = d.confPace.daysOut %}
+            <div class="apps-confpace-row">
+              <p class="apps-confpace-label">{{ d.confPace[key] }} <span class="apps-confpace-when">{{ (dp[0] if (m.daysOut < 2 if lang == "fr" else m.daysOut == 1) else dp[1]) | replace("{n}", m.daysOut) }}</span></p>
+              <dl class="apps-confpace-bars">
+                <div class="apps-confpace-now">
+                  <dt>{{ m.edition }}</dt>
+                  <dd><span class="apps-confpace-track" aria-hidden="true"><span class="apps-confpace-bar" style="width: {{ ((m.count or 0) / top * 100) | round(1) }}%"></span></span><span class="apps-confpace-num">{% if m.recorded %}<strong>{{ m.count }}</strong> <span class="apps-confpace-total">{{ d.confPace.soFar }}</span>{% else %}<strong>{{ d.confPace.notRecorded }}</strong>{% endif %}</span></dd>
+                </div>
+                {% if m.previous %}
+                  <div class="apps-confpace-prev">
+                    <dt>{{ m.previous.edition }}</dt>
+                    <dd><span class="apps-confpace-track" aria-hidden="true"><span class="apps-confpace-bar" style="width: {{ (m.previous.count / top * 100) | round(1) }}%"></span></span><span class="apps-confpace-num"><strong>{{ m.previous.count }}</strong> <span class="apps-confpace-total">{{ d.confPace.ofTotal | replace("{total}", m.previous.total) }}</span></span></dd>
+                  </div>
+                {% endif %}
+              </dl>
+            </div>
+          {% endif %}{% endfor %}
+        {% else %}
+          <p class="apps-note">{{ d.confPace.empty }} <a href="https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/conference-pace.md">{{ d.confPace.how }}</a></p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {# Calendar tiles for the coming EISS and NetSec dates, soonest first, from
+       dashboard.agenda. One row that scrolls sideways. #}
+    {% if dashboard.agenda.length %}
+      <ul class="apps-agenda" role="list" aria-label="{{ d.agenda.list }}">
+        {% for x in dashboard.agenda %}
+          {% set label %}{% if x.kind == "essc" %}{{ d.esscDate | replace("{year}", x.year) | replace("{city}", x.city) }}{% elif x.kind == "release" %}{{ d.releaseDue | replace("{title}", x.title) }}{% elif x.cohort %}{{ d.agenda[x.kind] | replace("{cohort}", x.cohort[lang] or x.cohort.en) }}{% else %}{{ (x[lang] and x[lang].label) or x.label }}{% endif %}{% endset %}
+          <li class="apps-agenda-tile apps-agenda-{{ x.cat }}" data-roles="{{ x.roles | join(' ') }}">
+            {% if x.url %}<a class="apps-agenda-link" href="{{ x.url | localizedHref(lang) if x.url.startsWith('/') else x.url }}">{% else %}<div class="apps-agenda-link">{% endif %}
+              <span class="apps-agenda-month">{{ x.date | monthShort(lang) }}</span>
+              <time class="apps-agenda-day" datetime="{{ x.date }}">{{ x.date.slice(8, 10) | int }}{% if x.end and x.end.slice(0, 7) == x.date.slice(0, 7) %}–{{ x.end.slice(8, 10) | int }}{% endif %}</time>
+              <span class="apps-agenda-label">{{ label | trim | safe }}{% if x.tentative %} <span class="apps-agenda-tbc">({{ d.agenda.tentative }})</span>{% endif %}</span>
+              <span class="apps-agenda-tags"><span class="apps-board-site apps-board-site-{{ x.site | lower }}">{{ x.site }}</span> <span class="apps-agenda-cat">{{ d.agenda.cat[x.cat] }}</span></span>
+            {% if x.url %}</a>{% else %}</div>{% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+      {% if dashboard.calendar %}<p class="apps-note"><a href="{{ dashboard.calendar }}">{{ d.allDeadlines }}</a></p>{% endif %}
+    {% endif %}
+    </section>
+    {% endif %}
+
+    {# The rolling modules, for every role: the issues, then the features,
+       audits and fixes. Each row is one roll. #}
+    <section class="apps-rolls" aria-labelledby="apps-rolls-heading">
+    <h2 class="apps-heading" id="apps-rolls-heading">{{ d.rolls.heading }}</h2>
+    <div class="apps-today" data-apps-today hidden>
+      <div class="apps-today-clip">
+        <div class="apps-today-box">
+          <p class="apps-today-text" data-apps-today-text hidden></p>
+          {% for key in ["closed", "opened"] %}
+            <div class="apps-roll-row" data-apps-issue-row="{{ key }}" hidden>
+              <p class="apps-roll-label" id="apps-roll-{{ key }}">{{ SRC | replace("@", "rolls") | safe }} {{ d.rolls[key] }}</p>
+              <div class="apps-done-stage" data-apps-issue-roll="{{ key }}">
+                <ul class="apps-done" data-apps-done role="list" aria-labelledby="apps-roll-{{ key }}"></ul>
+                <button type="button" class="apps-done-pause apps-done-more" data-apps-done-more aria-expanded="false" aria-label="{{ d.rolls.showAll | replace("{label}", d.rolls[key]) }}" title="{{ d.rolls.showAll | replace("{label}", d.rolls[key]) }}" hidden>{{ icon("chevron-down") }}</button>
+                <button type="button" class="apps-done-pause" data-apps-done-pause aria-pressed="false" aria-label="{{ d.board.pause | replace("{label}", d.rolls[key]) }}" hidden><span class="apps-done-hold">{{ icon("pause") }}</span><span class="apps-done-play">{{ icon("play") }}</span></button>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    {# The month's main features and fixes in both site repos, and the latest
+       formal audits, each rolling like the issues above. Every role sees them.
+       Without JS (or motion) the lines stack. #}
+    {% set B = dashboard.board %}
+    {% set MARK = {
+      features: '<path d="M8 4v8M4 8h8"/>',
+      audits: '<path d="M7 4a3 3 0 1 0 0 6a3 3 0 1 0 0-6M9.2 9.2l3 3"/>',
+      fixes: '<path d="M3.5 8.5l3 3 6-7"/>'
+    } %}
+    <div class="apps-board">
+      <div class="apps-today-box">
+        {% for key in ["features", "audits", "fixes"] %}{% if B[key] and B[key].length %}
+          <div class="apps-roll-row">
+            <p class="apps-roll-label" id="apps-board-{{ key }}">{{ SRC | replace("@", "") | safe }} {{ d.board[key] }}</p>
+            <div class="apps-done-stage" data-apps-roll>
+              <ul class="apps-done apps-done-static" data-apps-done role="list" aria-labelledby="apps-board-{{ key }}">
+                {% for x in B[key] %}
+                  <li class="apps-done-item"><span class="apps-done-box apps-done-box-{{ key }}" aria-hidden="true"><svg viewBox="0 0 16 16">{{ MARK[key] | safe }}</svg></span><a href="{{ x.url }}" title="{{ x.title }}, {{ (x.at or x.date) | newsDate(lang) }}"><span class="apps-board-site apps-board-site-{{ x.site | lower }}">{{ x.site }}</span> <span class="apps-done-title">{{ x.title }}</span></a></li>
+                {% endfor %}
+              </ul>
+              <button type="button" class="apps-done-pause apps-done-more" data-apps-done-more aria-expanded="false" aria-label="{{ d.rolls.showAll | replace("{label}", d.board[key]) }}" title="{{ d.rolls.showAll | replace("{label}", d.board[key]) }}" hidden>{{ icon("chevron-down") }}</button>
+              <button type="button" class="apps-done-pause" data-apps-done-pause aria-pressed="false" aria-label="{{ d.board.pause | replace("{label}", d.board[key]) }}" hidden><span class="apps-done-hold">{{ icon("pause") }}</span><span class="apps-done-play">{{ icon("play") }}</span></button>
+            </div>
+          </div>
+        {% endif %}{% endfor %}
+      </div>
+    </div>
+    </section>
 
     {# The dashboard's own version. Rules and history: docs/internal-dashboard.md. #}
     <p class="apps-legend" aria-hidden="true"><span><span class="apps-src is-live"></span> {{ d.live }}</span> <span><span class="apps-src"></span> {{ STORED }}</span></p>
@@ -648,7 +651,7 @@
 </div>
 
 <script type="application/json" id="apps-i18n">{{ d.js | dump | safe }}</script>
-<script type="application/json" id="apps-dash">{{ { next: d.next, finish: d.finish, today: d.today, done: d.done, levels: d.levels, automationsFailing: d.automationsFailing, automationsOk: d.automationsOk, issuesClosed: d.issuesClosed } | dump | safe }}</script>
+<script type="application/json" id="apps-dash">{{ { next: d.next, finish: d.finish, today: d.today, done: d.done, levels: d.levels, automationsFailing: d.automationsFailing, automationsOk: d.automationsOk, issuesClosed: d.issuesClosed, counts: d.counts } | dump | safe }}</script>
 <script type="application/json" id="apps-data">{{ { deadlines: dashboard.deadlines, release: dashboard.release, counts: dashboard.counts, repo: dashboard.repo, recent: dashboard.recent, health: systemHealth } | dump | safe }}</script>
 <script>
   (function () {
@@ -768,6 +771,8 @@
         var on = t.getAttribute("data-apps-tab") === name;
         t.setAttribute("aria-selected", on);
         t.tabIndex = on ? 0 : -1;
+        // On a phone the tabs scroll sideways: bring the selected one into view.
+        if (on && tablist.scrollWidth > tablist.clientWidth) tablist.scrollLeft = t.offsetLeft - (tablist.clientWidth - t.offsetWidth) / 2;
       });
       panels.forEach(function (panel) { panel.hidden = panel.id !== name; });
     }
@@ -1341,6 +1346,7 @@
       var sel = pick.querySelector("select");
       var opts = [].slice.call(sel.options);
       var views = [].slice.call(document.querySelectorAll("[data-apps-annual-year]"));
+      var empty = document.querySelector("[data-apps-annual-empty]");
       function allowed(o) { var r = o.getAttribute("data-roles"); return !r || roleSelect.value === "all" || (" " + r + " ").indexOf(" " + roleSelect.value + " ") > -1; }
       function sync() {
         var ok = opts.filter(allowed);
@@ -1348,6 +1354,8 @@
         if (ok.length && sel.selectedOptions[0].disabled) sel.value = ok[0].value;
         pick.hidden = ok.length < 2;
         views.forEach(function (v) { v.hidden = v.getAttribute("data-apps-annual-year") !== sel.value; });
+        // "None published" only while the role sees no year at all.
+        if (empty) empty.hidden = ok.length > 0;
       }
       var linked = new URLSearchParams(location.search).get("year");
       if (linked && sel.querySelector('[value="' + CSS.escape(linked) + '"]')) sel.value = linked;
@@ -1360,8 +1368,17 @@
       roleSelect.addEventListener("change", sync);
       sync();
     })();
+    // The deadline tiles fade at the right edge while more lie beyond it.
+    (function () {
+      var row = document.querySelector(".apps-agenda");
+      if (!row) return;
+      function edge() { row.classList.toggle("apps-agenda-more", row.scrollLeft + row.clientWidth < row.scrollWidth - 4); }
+      row.addEventListener("scroll", edge, { passive: true });
+      addEventListener("resize", edge);
+      edge();
+    })();
     // The release card: a dismissed release stays hidden on this device, and
-    // focus moves on to the next card or to the Timeline heading.
+    // focus moves on to the next card or to the selected tab.
     (function () {
       var KEY = "eiss-apps-shipped-hidden", gone = [];
       try { gone = JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) {}
@@ -1376,7 +1393,7 @@
           gone = gone.concat(id).slice(-20);
           try { localStorage.setItem(KEY, JSON.stringify(gone)); } catch (e) {}
           var next = cards.filter(function (c) { return !c.hidden; })[0];
-          var to = next ? next.querySelector("[data-apps-shipped-close]") : document.querySelector("#apps-conference-heading, #apps-rolls-heading");
+          var to = next ? next.querySelector("[data-apps-shipped-close]") : document.querySelector('[role="tab"][aria-selected="true"], #apps-heading');
           if (to && !to.matches("button, a, [tabindex]")) to.tabIndex = -1;
           if (to) to.focus();
         });
@@ -1434,6 +1451,7 @@
     function applyLive(live, at) {
       ["issues", "prs", "tasks"].forEach(function (k) {
         document.querySelectorAll('[data-apps-live="' + k + '"]').forEach(function (el) { el.textContent = live[k]; });
+        document.querySelectorAll('[data-apps-live-label="' + k + '"]').forEach(function (el) { el.textContent = pl(DASH.counts[k], live[k]); });
       });
       if (live.help) renderHelp(live.help);
       markLive("counts");

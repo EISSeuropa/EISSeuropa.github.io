@@ -8,7 +8,7 @@ The number lives once, as `VERSION` in `src/_data/dashboard.js`.
 
 The number is MAJOR.MINOR.PATCH, after [Semantic Versioning 2.0.0](https://semver.org/).
 
-- **MAJOR** goes up for a redesign that changes the page's structure, so that a reader has to find things again. The role-based layout of #1951 was the one major change so far.
+- **MAJOR** goes up for a redesign that changes the page's structure, so that a reader has to find things again. The role-based layout of #1951 and the apps-first order of 3.0.0 are the major changes so far.
 - **MINOR** goes up for anything new a reader can see or use: a section, a tab, a roll, a control. This is the `feat(internal)` PRs.
 - **PATCH** goes up for a fix that changes no feature: a layout bug, a broken interaction, a wrong figure. This is the `fix(internal)` PRs.
 
@@ -30,6 +30,7 @@ Newest first. Rows for 2.20.0 and later were added as each PR was opened.
 
 | Version | Date | PR | Change |
 |---|---|---|---|
+| 3.0.0 | 2026-11-17 | | The tabs and Your apps follow the figures strip and the release card. Timeline and the activity rolls move below the tab panels. The first app tile starts about 1,200px down at 1280×800, from 2,270px, and about 1,350px down on a phone, from 3,170px. The header drops its welcome sentence and its lockup is smaller. On a phone the tabs stay on one row that scrolls sideways, and the release note is cut at four lines. Guide tiles carry a note. The deadline tiles fade at the right edge while more lie beyond. Next milestones leaves the progress of the next release to the Next release card. The Platform development cards keep their own heights. Counts of issues, pull requests and tasks take a singular for one (French: for 0 and 1), and "Issues closed: 64 of 101" replaces "64 of 101 issues closed". The NetSec Month and Annual Year menus are styled like Viewing as. The Year menu lists "2026 (draft)". "No annual report has been published yet" shows only to a role that sees no year. Small links on a phone have at least 24px to tap. Issues #2179 to #2182 |
 | 2.36.1 | 2026-11-17 | | The "Can't sign in?" password line links "Reset my password" to Google's account recovery, the page the Apps tile opens, in place of the steps on Google's sign-in page. The tile's note says Google sends a code to the recovery email or phone. admin@eiss-europa.com is a mail link. A milestone with no issues no longer shows "(%)" in Next milestones |
 | 2.36.0 | 2026-11-17 | | An Annual reports tab after NetSec reports (renamed from "NetSec report") replaces the annual report link at the foot of the page. A Year menu shows one year at a time (`?year=2025` links to one) and opens its report. Drafts show to staff and management only. A year marked `"final": true` in `annualReportNotes.json` shows to every role. The board, which saw the draft link, no longer sees drafts |
 | 2.35.0 | 2026-11-17 | [#2175](https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2175) | A "Reset my password" tile under Your apps opens Google's account recovery page. The last "Can't sign in?" item sends people without recovery details to admin@eiss-europa.com and links "add a recovery email to your account" in the sentence. A link to `#signin` opens the box: the padlock menu's note links "Guide" there |
