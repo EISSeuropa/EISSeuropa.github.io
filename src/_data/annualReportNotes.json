@@ -1,4 +1,4 @@
 {
-  "_documentation": "Staff-written prose for the annual report drafts at /annual-report-YYYY.html. One object per year. Each key (foreword, conference, anthology, netsec, website, ahead) holds a list of paragraphs, shown above that section's figures. A missing key shows a 'to be written' marker on screen, left out of print. Plain text: no HTML. See docs/annual-report.md.",
+  "_documentation": "Staff-written prose for the annual report drafts at /annual-report-YYYY.html. One object per year. Each key (foreword, conference, anthology, netsec, website, ahead) holds a list of paragraphs, shown above that section's figures. A missing key shows a 'to be written' marker on screen, left out of print. Plain text: no HTML. \"final\": true publishes the year: its page drops \"draft\" and the dashboard's Annual reports tab shows it to every role, where drafts show to staff and management only. See docs/annual-report.md.",
   "2026": {}
 }

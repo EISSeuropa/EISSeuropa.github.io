@@ -308,6 +308,7 @@
         <button type="button" role="tab" id="apps-tab-status" aria-controls="status" data-apps-tab="status">{{ d.tabStatus }}</button>
         {% if systemHealth %}<button type="button" role="tab" id="apps-tab-it" aria-controls="it" data-apps-tab="it" data-roles="staff">{{ d.tabIt }} <span class="apps-dot apps-dot-{{ systemHealth.summary.level }}" data-apps-it-dot aria-hidden="true"{% if not systemHealth.summary.url %} hidden{% endif %}></span><span class="sr-only" data-apps-it-note{% if not systemHealth.summary.url %} hidden{% endif %}>{{ d.needsAttention }}</span></button>{% endif %}
         {% if netsecReport %}<button type="button" role="tab" id="apps-tab-netsec" aria-controls="netsec" data-apps-tab="netsec" class="apps-tab-netsec">{{ d.netsec.tab }}</button>{% endif %}
+        {% if annualReport.years.length %}<button type="button" role="tab" id="apps-tab-annual" aria-controls="annual" data-apps-tab="annual">{{ d.annual.tab }}</button>{% endif %}
       </div>
       <div class="apps-viewing">
         <label for="apps-role">{{ d.viewingAs }}</label>
@@ -617,10 +618,30 @@
       </section>
     {% endif %}
 
+    {# The annual reports (docs/annual-report.md), in English, one year in sight
+       (?year=2025 links to one). A year stays a draft, for staff and
+       management only, until annualReportNotes.json marks it final. The
+       options carry the same data-roles: CSS hides them in Chrome and
+       Firefox, the script disables them for Safari. #}
+    {% if annualReport.years.length %}
+      {% set A = d.annual %}
+      <section class="apps-panel" id="annual" data-apps-panel aria-label="{{ A.tab }}">
+        <p class="apps-annual-pick" data-apps-annual-pick hidden><label for="apps-annual-year">{{ A.year }}</label>
+          <select id="apps-annual-year">{% for r in annualReport.years %}<option value="{{ r.year }}"{% if r.draft %} data-roles="staff management"{% endif %}>{{ (d.annualReport if r.draft else A.title) | replace("{year}", r.year) }}</option>{% endfor %}</select></p>
+        {% for r in annualReport.years %}
+          <article class="apps-status-card apps-annual-view" data-apps-annual-year="{{ r.year }}"{% if r.draft %} data-roles="staff management"{% endif %}>
+            <h2 class="apps-status-title">{{ (d.annualReport if r.draft else A.title) | replace("{year}", r.year) }}</h2>
+            <p>{{ (A.toDate if r.toDate else A.fullYear) | replace("{year}", r.year) | replace("{date}", r.asOf | newsDate(lang)) }}</p>
+            <p><a class="btn btn-primary btn-sm" href="/annual-report-{{ r.year }}.html" hreflang="en">{{ A.open }}</a></p>
+          </article>
+        {% endfor %}
+        {% if not annualReport.published %}<p class="apps-note">{{ A.empty }}</p>{% endif %}
+      </section>
+    {% endif %}
+
     {# The dashboard's own version. Rules and history: docs/internal-dashboard.md. #}
     <p class="apps-legend" aria-hidden="true"><span><span class="apps-src is-live"></span> {{ d.live }}</span> <span><span class="apps-src"></span> {{ STORED }}</span></p>
-    {# The latest annual report draft (docs/annual-report.md), in English. #}
-    <p class="apps-version"><a href="https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/internal-dashboard.md#history" hreflang="en">{{ d.version | replace("{v}", dashboard.version) }}</a>{% if annualReport.years.length %}<span data-roles="staff management board"> · <a href="/annual-report-{{ annualReport.years[0].year }}.html" hreflang="en">{{ d.annualReport | replace("{year}", annualReport.years[0].year) }}</a></span>{% endif %}</p>
+    <p class="apps-version"><a href="https://github.com/EISSeuropa/EISSeuropa.github.io/blob/master/docs/internal-dashboard.md#history" hreflang="en">{{ d.version | replace("{v}", dashboard.version) }}</a></p>
   </div>
 </div>
 
@@ -1308,6 +1329,34 @@
       });
       pick.hidden = months.length < 2;
       show();
+    })();
+    // The annual reports menu: one year in sight, linkable as ?year=2025. Years
+    // the role may not see are disabled (Safari ignores CSS on options), and
+    // the menu moves off one. The newest the role sees is the default.
+    (function () {
+      var pick = document.querySelector("[data-apps-annual-pick]");
+      if (!pick) return;
+      var sel = pick.querySelector("select");
+      var opts = [].slice.call(sel.options);
+      var views = [].slice.call(document.querySelectorAll("[data-apps-annual-year]"));
+      function allowed(o) { var r = o.getAttribute("data-roles"); return !r || roleSelect.value === "all" || (" " + r + " ").indexOf(" " + roleSelect.value + " ") > -1; }
+      function sync() {
+        var ok = opts.filter(allowed);
+        opts.forEach(function (o) { o.disabled = ok.indexOf(o) < 0; });
+        if (ok.length && sel.selectedOptions[0].disabled) sel.value = ok[0].value;
+        pick.hidden = ok.length < 2;
+        views.forEach(function (v) { v.hidden = v.getAttribute("data-apps-annual-year") !== sel.value; });
+      }
+      var linked = new URLSearchParams(location.search).get("year");
+      if (linked && sel.querySelector('[value="' + CSS.escape(linked) + '"]')) sel.value = linked;
+      sel.addEventListener("change", function () {
+        sync();
+        var u = new URL(location.href);
+        if (sel.value === sel.options[0].value) u.searchParams.delete("year"); else u.searchParams.set("year", sel.value);
+        history.replaceState(null, "", u);
+      });
+      roleSelect.addEventListener("change", sync);
+      sync();
     })();
     // The release card: a dismissed release stays hidden on this device, and
     // focus moves on to the next card or to the Timeline heading.
