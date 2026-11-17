@@ -961,6 +961,8 @@ h4 { font-size: var(--fs-lg); }
 /* The conference timeline: the "Now" card, then the coming dates as calendar
    tiles in one row that scrolls sideways. */
 .apps-conference { margin: var(--space-6) 0; }
+/* The calendar tiles at the top of the Updates tab. */
+.apps-dates { margin: 0 0 var(--space-5); }
 .apps-conference > .apps-heading { margin-bottom: var(--space-3); }
 .apps-conference .apps-phase { margin-bottom: var(--space-3); }
 /* The conference's pace (#2039): this edition's bar against the previous
