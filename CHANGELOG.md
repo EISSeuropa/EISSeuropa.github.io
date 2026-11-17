@@ -140,6 +140,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 - The internal dashboard's deadline tiles fade at the right edge while more lie beyond it.
 - The internal dashboard has an Updates tab after Apps, with the recent activity and then the conference timeline. Both sat below the other tabs at the foot of the page. The tab shows how many things changed since the last visit, and the next-deadline figure at the top opens it.
 - The release card on the internal dashboard opens folded, with the release title and a link to the release notes. "Show summary" unfolds its note.
+- The coming dates open the Updates tab on the internal dashboard, above the recent activity and the conference timeline. They were at the foot of the tab.
 
 ### Fixed
 

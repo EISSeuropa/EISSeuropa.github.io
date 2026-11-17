@@ -231,11 +231,33 @@
       <p class="apps-note apps-filter-empty" data-apps-filter-empty hidden></p>
     </section>
 
-    {# Updates: the rolling activity (with "since your last visit"), then the
-       conference timeline. Every role sees both. Without JS the panel
+    {# Updates: the coming dates as calendar tiles, the rolling activity (with
+       "since your last visit"), then the conference timeline. Every role sees both. Without JS the panel
        stacks after Apps like the others. #}
     <section class="apps-panel" id="updates" data-apps-panel aria-labelledby="apps-updates-heading">
       <h2 class="apps-heading apps-section-heading" id="apps-updates-heading">{{ d.tabUpdates }}</h2>
+      {# Calendar tiles for the coming EISS and NetSec dates, soonest first, from
+         dashboard.agenda. One row that scrolls sideways. #}
+      {% if dashboard.agenda.length %}
+      <section class="apps-dates" aria-labelledby="apps-dates-heading">
+        <h3 class="sr-only" id="apps-dates-heading">{{ d.keyDates }}</h3>
+        <ul class="apps-agenda" role="list" aria-label="{{ d.agenda.list }}">
+          {% for x in dashboard.agenda %}
+            {% set label %}{% if x.kind == "essc" %}{{ d.esscDate | replace("{year}", x.year) | replace("{city}", x.city) }}{% elif x.kind == "release" %}{{ d.releaseDue | replace("{title}", x.title) }}{% elif x.cohort %}{{ d.agenda[x.kind] | replace("{cohort}", x.cohort[lang] or x.cohort.en) }}{% else %}{{ (x[lang] and x[lang].label) or x.label }}{% endif %}{% endset %}
+            <li class="apps-agenda-tile apps-agenda-{{ x.cat }}" data-roles="{{ x.roles | join(' ') }}">
+              {% if x.url %}<a class="apps-agenda-link" href="{{ x.url | localizedHref(lang) if x.url.startsWith('/') else x.url }}">{% else %}<div class="apps-agenda-link">{% endif %}
+                <span class="apps-agenda-month">{{ x.date | monthShort(lang) }}</span>
+                <time class="apps-agenda-day" datetime="{{ x.date }}">{{ x.date.slice(8, 10) | int }}{% if x.end and x.end.slice(0, 7) == x.date.slice(0, 7) %}–{{ x.end.slice(8, 10) | int }}{% endif %}</time>
+                <span class="apps-agenda-label">{{ label | trim | safe }}{% if x.tentative %} <span class="apps-agenda-tbc">({{ d.agenda.tentative }})</span>{% endif %}</span>
+                <span class="apps-agenda-tags"><span class="apps-board-site apps-board-site-{{ x.site | lower }}">{{ x.site }}</span> <span class="apps-agenda-cat">{{ d.agenda.cat[x.cat] }}</span></span>
+              {% if x.url %}</a>{% else %}</div>{% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+        {% if dashboard.calendar %}<p class="apps-note"><a href="{{ dashboard.calendar }}">{{ d.allDeadlines }}</a></p>{% endif %}
+      </section>
+      {% endif %}
+
       {# The rolling modules, for every role: the issues, then the features,
          audits and fixes. Each row is one roll. #}
       <section class="apps-rolls" aria-labelledby="apps-rolls-heading">
@@ -288,8 +310,8 @@
       </section>
 
       {# The conference timeline: the stage of the conference year with its
-         stepper, then the coming dates as calendar tiles. #}
-      {% if dashboard.phase or dashboard.agenda.length %}
+         stepper, then its pace. The calendar tiles open the tab. #}
+      {% if dashboard.phase %}
       <section class="apps-conference" aria-labelledby="apps-conference-heading">
       <h3 class="sr-only" id="apps-conference-heading">{{ d.agenda.heading }}</h3>
       {% if dashboard.phase %}
@@ -350,24 +372,6 @@
         </div>
       {% endif %}
 
-      {# Calendar tiles for the coming EISS and NetSec dates, soonest first, from
-         dashboard.agenda. One row that scrolls sideways. #}
-      {% if dashboard.agenda.length %}
-        <ul class="apps-agenda" role="list" aria-label="{{ d.agenda.list }}">
-          {% for x in dashboard.agenda %}
-            {% set label %}{% if x.kind == "essc" %}{{ d.esscDate | replace("{year}", x.year) | replace("{city}", x.city) }}{% elif x.kind == "release" %}{{ d.releaseDue | replace("{title}", x.title) }}{% elif x.cohort %}{{ d.agenda[x.kind] | replace("{cohort}", x.cohort[lang] or x.cohort.en) }}{% else %}{{ (x[lang] and x[lang].label) or x.label }}{% endif %}{% endset %}
-            <li class="apps-agenda-tile apps-agenda-{{ x.cat }}" data-roles="{{ x.roles | join(' ') }}">
-              {% if x.url %}<a class="apps-agenda-link" href="{{ x.url | localizedHref(lang) if x.url.startsWith('/') else x.url }}">{% else %}<div class="apps-agenda-link">{% endif %}
-                <span class="apps-agenda-month">{{ x.date | monthShort(lang) }}</span>
-                <time class="apps-agenda-day" datetime="{{ x.date }}">{{ x.date.slice(8, 10) | int }}{% if x.end and x.end.slice(0, 7) == x.date.slice(0, 7) %}–{{ x.end.slice(8, 10) | int }}{% endif %}</time>
-                <span class="apps-agenda-label">{{ label | trim | safe }}{% if x.tentative %} <span class="apps-agenda-tbc">({{ d.agenda.tentative }})</span>{% endif %}</span>
-                <span class="apps-agenda-tags"><span class="apps-board-site apps-board-site-{{ x.site | lower }}">{{ x.site }}</span> <span class="apps-agenda-cat">{{ d.agenda.cat[x.cat] }}</span></span>
-              {% if x.url %}</a>{% else %}</div>{% endif %}
-            </li>
-          {% endfor %}
-        </ul>
-        {% if dashboard.calendar %}<p class="apps-note"><a href="{{ dashboard.calendar }}">{{ d.allDeadlines }}</a></p>{% endif %}
-      {% endif %}
       </section>
       {% endif %}
     </section>
@@ -1397,7 +1401,9 @@
       if (!row) return;
       function edge() { row.classList.toggle("apps-agenda-more", row.scrollLeft + row.clientWidth < row.scrollWidth - 4); }
       row.addEventListener("scroll", edge, { passive: true });
-      addEventListener("resize", edge);
+      // The row sits in the Updates tab, hidden at load: measure again when it shows.
+      if (window.ResizeObserver) new ResizeObserver(edge).observe(row);
+      else addEventListener("resize", edge);
       edge();
     })();
     // The release card: a dismissed release stays hidden on this device, and

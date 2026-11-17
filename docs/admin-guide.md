@@ -182,10 +182,10 @@ successor inherits through the handover in section 4.
   `src/_data/audits.json`, kept by hand: add a line when an audit lands.
   The private `workspace-ops` repo stays out, since the page is public.
 - **Version.** The foot of the page reads "Internal dashboard v2.30.0", from `VERSION` in `src/_data/dashboard.js`. The rules for bumping it and the history are in [internal-dashboard.md](internal-dashboard.md).
-- **Timeline.** The first section under the strip. It holds the
-  "Conference timeline" card with its stepper (below; its note opens with
-  "Now:" and the current stage), then up to 20 calendar tiles for the
-  coming dates, built by `agenda()` in `src/_data/dashboard.js` from the Key
+- **Updates tab.** It opens with up to 20 calendar tiles for the
+  coming dates, then the activity rolls, then the "Conference timeline"
+  card with its stepper (below; its note opens with "Now:" and the
+  current stage) and the conference pace. The tiles are built by `agenda()` in `src/_data/dashboard.js` from the Key
   dates list, the cohorts in `src/_data/cohorts.json` (call opens,
   applications close, start), the other dates in the "EISS dates" calendar
   and NetSec's `data/events.json`, read from the NetSec repo once per build
