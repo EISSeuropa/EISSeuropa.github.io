@@ -24,9 +24,15 @@ Two body shapes are read.
      Site               EISS | Joint (EISS and NetSec) | NetSec. A joint item
                         gets "site": "joint". A NetSec item stops the run: it
                         belongs in the NetSec repository.
-     Headline           the title (falls back to the issue title)
+     Headline           the title, up to HEADLINE_MAX characters (falls back
+                        to the issue title, for issues filed before the
+                        form required it)
      Summary            the excerpt, and social.text (the LinkedIn and
-                        Bluesky caption), capped at SUMMARY_MAX characters
+                        Bluesky caption), up to SUMMARY_MAX characters
+
+   A headline or summary over its limit stops the run. The message is
+   written for the person who filed the form: the workflow posts it on the
+   issue.
      Body               "body", kept whole for the newsletter
      Type / Link / Publication date   as the header keys below
      Image              "image" (http(s) or site-root path)
@@ -57,6 +63,7 @@ NEWS = ROOT / "src" / "_data" / "news.json"
 
 ALLOWED_TYPES = {"paper", "event", "press", "podcast", "news"}
 EXCERPT_MAX = 320
+HEADLINE_MAX = 100
 SUMMARY_MAX = 300
 FORM_HEADING_RE = re.compile(r"^###\s+(.+?)\s*$")
 NO_RESPONSE = "_No response_"
@@ -71,7 +78,7 @@ def clean_title(title: str) -> str:
 def parse_free_text(title: str, body: str, today: str) -> dict:
     title = clean_title(title)
     if not title:
-        sys.exit("news-from-issue: empty title after stripping the 'news:' prefix.")
+        sys.exit("The issue title is empty after 'news:'. Edit the issue and write the headline in its title.")
 
     meta = {"type": "news", "url": "", "date": today}
     excerpt_lines: list[str] = []
@@ -142,12 +149,10 @@ def form_sections(body: str) -> dict[str, str]:
     return out
 
 
-def _cap(text: str, limit: int) -> str:
-    text = " ".join(text.split())
+def _check_length(field: str, text: str, limit: int) -> None:
     if len(text) > limit:
-        print(f"news-from-issue: summary is {len(text)} characters, cut to {limit}.")
-        text = text[: limit - 1].rstrip() + "…"
-    return text
+        sys.exit(f"The {field} is {len(text)} characters long, and the limit is {limit}. "
+                 f"Edit the issue and shorten the {field} by at least {len(text) - limit} characters.")
 
 
 def _link(val: str) -> str:
@@ -158,12 +163,13 @@ def _link(val: str) -> str:
 def parse_form(title: str, f: dict[str, str], today: str) -> dict:
     site = f.get("site", "").strip().lower()
     if site.startswith("netsec"):
-        sys.exit("news-from-issue: a NetSec item belongs in EISSeuropa/netsec.github.io. "
-                 "Nothing was added here.")
+        sys.exit("The Site is NetSec, and this form publishes on the EISS website only. "
+                 "Edit the issue and pick EISS or Joint, or ask the maintainer to post a NetSec-only item.")
 
     headline = " ".join(f.get("headline", "").split()) or clean_title(title)
     if not headline:
-        sys.exit("news-from-issue: no headline and an empty issue title.")
+        sys.exit("The Headline is empty. Edit the issue and write a headline.")
+    _check_length("Headline", headline, HEADLINE_MAX)
 
     date = f.get("publication date", "").strip()
     t = f.get("type", "").strip().lower()
@@ -177,7 +183,8 @@ def parse_form(title: str, f: dict[str, str], today: str) -> dict:
     url = _link(f.get("link", ""))
     if url:
         item["url"] = url
-    summary = _cap(f.get("summary", ""), SUMMARY_MAX)
+    summary = " ".join(f.get("summary", "").split())
+    _check_length("Summary", summary, SUMMARY_MAX)
     if summary:
         item["excerpt"] = summary
     body = f.get("body", "").strip()

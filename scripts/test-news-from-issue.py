@@ -8,6 +8,7 @@ No framework. Run it directly:
 import importlib.util
 import json
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -133,18 +134,48 @@ item = mod.parse_issue("news: From the title", MINIMAL, TODAY)
 assert item == {"date": TODAY, "type": "news", "title": "From the title", "excerpt": "Short.",
                 "image": "/assets/img/x.png", "social": {"text": "Short."}}, item
 
-# A long summary is cut to 300 characters.
-long_form = MINIMAL.replace("Short.", "word " * 100)
-item = mod.parse_issue("Long", long_form, TODAY)
-assert len(item["excerpt"]) == 300 and item["excerpt"].endswith("…"), len(item["excerpt"])
-assert item["social"]["text"] == item["excerpt"]
+# A summary over 300 characters stops the run and says by how much (#2189).
+def stops(title, body, *needles):
+    try:
+        mod.parse_issue(title, body, TODAY)
+    except SystemExit as e:
+        for n in needles:
+            assert n in str(e), (n, str(e))
+        return
+    raise AssertionError("expected the run to stop")
+
+stops("Long", MINIMAL.replace("Short.", "word " * 100), "Summary is 499 characters", "limit is 300", "at least 199")
+
+# Exactly 300 characters passes, whole.
+item = mod.parse_issue("Fits", MINIMAL.replace("Short.", "x" * 300), TODAY)
+assert len(item["excerpt"]) == 300 and item["social"]["text"] == item["excerpt"]
+
+# A headline over 100 characters stops the run, from the field or the title.
+stops("news:", MINIMAL.replace("_No response_\n\n### Summary", "h" * 101 + "\n\n### Summary", 1),
+      "Headline is 101 characters", "limit is 100")
+stops("news: " + "h" * 101, MINIMAL, "Headline is 101 characters")
+item = mod.parse_issue("news: " + "h" * 100, MINIMAL, TODAY)
+assert item["title"] == "h" * 100
+
+# No headline and the form's default title (#2189).
+stops("news:", MINIMAL, "Headline is empty")
+
+# The form requires the headline and gives every field a description.
+# Stdlib only: each field is a block starting at "  - type:".
+form_text = (HERE.parent / ".github" / "ISSUE_TEMPLATE" / "news.yml").read_text()
+blocks = re.split(r"^  - type: ", form_text, flags=re.M)[1:]
+fields = {re.search(r"^    id: (\S+)", b, re.M).group(1): b for b in blocks if not b.startswith("markdown")}
+assert len(fields) == 10, sorted(fields)
+for fid, b in fields.items():
+    assert re.search(r"^      description: \S", b, re.M), f"{fid} has no description"
+assert "required: true" in fields["headline"], "the Headline is not required"
 
 # A NetSec item stops the run.
 try:
     mod.parse_issue("x", MINIMAL.replace("EISS\n", "NetSec\n", 1), TODAY)
     raise AssertionError("a NetSec item must stop the run")
 except SystemExit as e:
-    assert str(e).startswith("news-from-issue: a NetSec item belongs in")
+    assert str(e).startswith("The Site is NetSec"), str(e)
 
 # End to end on a copy of the repo layout: appends once, then is idempotent.
 with tempfile.TemporaryDirectory() as tmp:

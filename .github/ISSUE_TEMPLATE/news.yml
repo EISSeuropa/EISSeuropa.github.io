@@ -5,15 +5,21 @@ body:
   - type: markdown
     attributes:
       value: |
-        One form for every surface. When a publisher files it, or applies the
-        `news` label, a pull request opens that adds the item to the site. The
-        item is published when the maintainer merges that pull request. Only the summary is required besides the headline. Leave the
-        rest blank if it does not apply.
+        Fill in this form to announce something on eiss-europa.com, LinkedIn and Bluesky.
+
+        After you submit it, a robot turns the form into a draft. Nothing is public until the maintainer approves that draft. If something goes wrong, the robot leaves a comment on this issue saying what to change.
+
+        Headline and Summary are required. Leave any other field blank if it does not apply. Write plain text everywhere: no links, no bold, no hashtags copied from LinkedIn. The web address goes in the Link field.
+
+        You can leave the issue title as it is.
   - type: dropdown
     id: site
     attributes:
       label: Site
-      description: A NetSec-only item goes in the NetSec repository instead.
+      description: >-
+        Who the news is from. Pick "EISS" for EISS news, or "Joint (EISS and
+        NetSec)" for something EISS organises with NetSec. For news from
+        NetSec alone, do not use this form: ask the maintainer.
       options:
         - EISS
         - Joint (EISS and NetSec)
@@ -25,29 +31,41 @@ body:
     id: headline
     attributes:
       label: Headline
-      description: Plain text. Leave blank to use the issue title.
+      description: >-
+        The title of the item, up to 100 characters. It opens the LinkedIn and
+        Bluesky posts. Example: "ESSC 2027: the call for papers is open".
+      placeholder: "ESSC 2027: the call for papers is open"
     validations:
-      required: false
+      required: true
   - type: textarea
     id: summary
     attributes:
       label: Summary
       description: >-
-        Up to 300 characters. Shown under the headline on the site and used as
-        the LinkedIn and Bluesky caption.
+        One or two sentences, up to 300 characters including spaces. It appears
+        under the headline on the website and is the text of the LinkedIn and
+        Bluesky posts. A longer summary stops the robot, which then asks you to
+        shorten it.
     validations:
       required: true
   - type: textarea
     id: body
     attributes:
       label: Body
-      description: Optional longer text, used in the newsletter.
+      description: >-
+        Optional. A longer text for the monthly newsletter, of any length. It
+        does not appear on the website or in the posts.
     validations:
       required: false
   - type: dropdown
     id: type
     attributes:
       label: Type
+      description: >-
+        The label shown next to the item on the website. "event" is for a
+        conference, workshop, call or deadline, "paper" for a publication,
+        "press" for media coverage, "podcast" for an episode, and "news" for
+        anything else.
       options:
         - news
         - event
@@ -62,26 +80,30 @@ body:
     attributes:
       label: Link
       description: >-
-        Optional. The address of an existing page the item is about, such as
-        the event page or the paper. This does not create a page. The headline
-        on the site links to it, and the LinkedIn and Bluesky posts end with it.
-        Use a full address (https://...) or a page on this site (/2027.html).
-        If left blank, the headline has no link and the posts link to the item
-        in the news archive.
+        Optional. The web address of a page that already exists, such as the
+        event page or the paper. The headline on the website links to it, and
+        the LinkedIn and Bluesky posts end with it. Copy the full address from
+        your browser, starting with https://. Leave it blank if there is no
+        page: the posts then link to the item on the website.
+      placeholder: "https://eiss-europa.com/2027.html"
     validations:
       required: false
   - type: input
     id: image
     attributes:
       label: Image
-      description: Optional address of an image for the newsletter (https://... or /assets/...).
+      description: >-
+        Optional. The web address of an image for the newsletter, starting with
+        https://. The website and the posts do not show it.
     validations:
       required: false
   - type: input
     id: date
     attributes:
       label: Publication date
-      description: YYYY-MM-DD. Leave blank for the day the label is applied.
+      description: >-
+        Optional. The date shown on the item, written year-month-day with
+        dashes, for example 2026-11-08. Leave it blank to use today's date.
       placeholder: "2026-11-08"
     validations:
       required: false
@@ -90,8 +112,9 @@ body:
     attributes:
       label: Collaborator page
       description: >-
-        The other organisation's LinkedIn page, added by hand as collaborator
-        after the post goes out.
+        Pick "NetSec" if NetSec's LinkedIn page should be added to the LinkedIn
+        post as a collaborator. The maintainer adds it by hand after the post
+        goes out. Otherwise keep "No collaborator".
       options:
         - No collaborator
         - NetSec
@@ -102,6 +125,7 @@ body:
     id: newsletter
     attributes:
       label: Newsletter
+      description: Tick the box to also put this item in the next monthly newsletter.
       options:
         - label: Include in the newsletter
           required: false
