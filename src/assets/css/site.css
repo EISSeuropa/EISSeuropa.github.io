@@ -942,8 +942,15 @@ h4 { font-size: var(--fs-lg); }
 .apps-shipped-eyebrow { margin: 0 0 var(--space-1); color: var(--text-muted); font-size: 0.8125rem; font-weight: 600; }
 .apps-shipped-title { margin: 0 0 var(--space-2); font-size: 1.125rem; }
 .apps-shipped p { max-width: 70ch; margin: 0 0 var(--space-2); }
-.apps-shipped .apps-shipped-more { margin: 0; }
+.apps-shipped .apps-shipped-more { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-4); margin: 0; }
 .apps-shipped-more a { font-weight: 600; text-decoration: underline; }
+.apps-shipped-body[hidden] { display: none; }
+/* "Show summary": unfolds the release's note above the link. */
+.apps-shipped-toggle { display: inline-flex; align-items: center; gap: var(--space-1); min-height: 24px; padding: 0; border: 0; background: none; color: var(--text-muted); font: inherit; font-size: 0.875rem; font-weight: 600; cursor: pointer; }
+.apps-shipped-toggle:hover { color: var(--text); }
+.apps-shipped-toggle[hidden] { display: none; }
+.apps-shipped-toggle .icon { transition: transform var(--motion-fast) var(--ease-out); }
+.apps-shipped-toggle[aria-expanded="true"] .icon { transform: rotate(180deg); }
 .apps-shipped-close { position: absolute; top: var(--space-2); right: var(--space-2); display: inline-flex; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem; padding: 0; border: 0; border-radius: var(--radius-sm); background: none; color: var(--text-muted); font-size: 1.125rem; cursor: pointer; }
 .apps-shipped-close:hover { background: var(--bg-tinted); color: var(--text); }
 .apps-version a { color: inherit; }
@@ -1600,9 +1607,6 @@ html:has(.apps-welcome[open]) { overflow: hidden; }
   .apps-tabbar > .apps-tabs { flex-wrap: nowrap; width: 100%; overflow-x: auto; scrollbar-width: none; }
   .apps-tabs::-webkit-scrollbar { display: none; }
   .apps-tabs [role="tab"] { flex: none; padding-inline: var(--space-3); white-space: nowrap; }
-  /* The release note: its first paragraph, cut at four lines. */
-  .apps-shipped-note { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 4; line-clamp: 4; }
-  .apps-shipped-note ~ .apps-shipped-note { display: none; }
   .apps-hero-logo { width: min(100%, 18rem); }
   /* Inline links at least 24px tall to tap (WCAG 2.2, 2.5.8). */
   .apps-note > a, .apps-shipped-more a, .apps-version a { display: inline-block; padding-block: 0.25rem; }
