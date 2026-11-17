@@ -44,6 +44,17 @@
       {%- set hl = "" if (lang or "en") == "en" else "?hl=" + lang -%}
       {%- set profileLink = '<a href="https://support.google.com/chrome/answer/2364824' + hl + '" target="_blank" rel="noopener">' + t.staffMenu.chromeProfile + '</a>' %}
       <p class="apps-hero-note">{{ t.staffMenu.accessNote | replace(t.staffMenu.chromeProfile, profileLink) | safe }}</p>
+      {#- Native disclosure: works without JS. The steps follow Google's
+          account recovery, which an administrator can switch off. -#}
+      <details class="apps-signin">
+        <summary>{{ d.signin.summary }}</summary>
+        <ul role="list">
+          <li>{{ d.signin.address }}</li>
+          <li>{{ d.signin.password }}</li>
+          <li>{{ d.signin.locked }}</li>
+        </ul>
+        <p><a href="https://support.google.com/accounts/answer/183723{{ hl }}" target="_blank" rel="noopener">{{ d.signin.recovery }}</a></p>
+      </details>
     </div>
   </header>
 
