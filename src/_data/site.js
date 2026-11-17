@@ -213,6 +213,8 @@ module.exports = {
     { href: "https://drive.google.com/a/eiss-europa.com", key: "drive", icon: "folder", roles: ["staff", "management", "board", "volunteer"], menu: 4 },
     { href: "https://drive.google.com/drive/folders/0AEaDgMvcPVVyUk9PVA", key: "boardDrive", icon: "folder", roles: ["board", "management"] },
     { href: "https://meet.google.com/", key: "meet", icon: "video", roles: ["staff", "management", "board", "volunteer"] },
+    // Google's account recovery: works only while self-service recovery is on in the Admin console.
+    { href: "https://accounts.google.com/signin/recovery", key: "recover", icon: "lock", roles: ["staff", "management", "board", "volunteer"] },
     { href: "/internal.html", key: "allApps", icon: "layout-grid", menu: 6, sep: true },
     {
       href: "https://docs.google.com/forms/d/e/1FAIpQLSevC0tbQwCA4ZNfdk_pCY5xUvmFjuQbIIpddDXLF5TdSoKfcw/viewform",
