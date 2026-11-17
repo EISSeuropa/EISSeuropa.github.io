@@ -94,13 +94,14 @@ items older than 18 months rotate off the homepage (capped at 5) but stay on
 
 Open a new issue and pick **News item**
 ([`.github/ISSUE_TEMPLATE/news.yml`](../.github/ISSUE_TEMPLATE/news.yml)).
-Only the headline (or the issue title) and the summary are needed.
+Only the headline and the summary are needed. Every field has a description
+written for someone who has never filed the form.
 
 | Field | Goes to |
 |---|---|
 | Site | EISS: nothing extra. Joint: `"site": "joint"`. NetSec: the run stops, file it in the NetSec repository |
-| Headline | `title` (blank: the issue title, minus a leading `news:`) |
-| Summary | `excerpt` and `social.text`, cut to 300 characters |
+| Headline | `title`. Required, up to 100 characters. A longer one stops the run |
+| Summary | `excerpt` and `social.text`. Up to 300 characters. A longer one stops the run, so a cut never lands inside a link (#2189) |
 | Body | `body` |
 | Type | `type` (default `news`) |
 | Link | `url`: an existing page, never a new one. The headline links to it and the social posts end with it. Blank: the posts link to the item in `/news` |
@@ -133,7 +134,12 @@ person who filed the issue, so GitHub notifies them, and carries
 `Closes #<issue>`, so the merge closes the issue.
 
 **When a run fails.** The run comments on the issue, names the person who
-started it and links the run. Nothing was published. The failure alarm also
+started it and links the run. Nothing was published. When the script stopped
+on the form's content (an empty or too long headline, a too long summary, Site
+set to NetSec), the comment quotes the reason, how to edit the issue, and that
+a publisher re-applies `news` to try again. Those messages are the plain ones
+in `scripts/news-from-issue.py`. A message prefixed `news-from-issue:` is a
+fault in the repository and gets the generic comment. The failure alarm also
 opens an issue for the maintainer (#2134).
 
 **Post preview.** Every PR that changes `src/_data/news.json`, from the form or

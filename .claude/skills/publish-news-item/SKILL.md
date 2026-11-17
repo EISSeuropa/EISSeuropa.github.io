@@ -19,7 +19,7 @@ are required.
 | Form field | What it takes |
 |---|---|
 | Site | `EISS`, or `Joint (EISS and NetSec)` for an item organised by EISS with NetSec. A NetSec-only item goes in `EISSeuropa/netsec.github.io`, with that repository's own skill. |
-| Headline | Plain text |
+| Headline | Plain text, up to 100 characters |
 | Summary | Up to 300 characters. The site's excerpt and the LinkedIn and Bluesky caption |
 | Body | Optional longer text, kept for the newsletter |
 | Type | `news`, `event`, `paper`, `press` or `podcast` |
@@ -30,7 +30,8 @@ are required.
 | Newsletter | Ticked only when the person asks. The newsletter is not switched on yet |
 
 Write the summary in the person's words. Shorten it only to fit 300
-characters, and say so.
+characters, and say so. The script stops on a headline over 100 characters or a
+summary over 300.
 
 ## 2. Build the item with the form's script
 

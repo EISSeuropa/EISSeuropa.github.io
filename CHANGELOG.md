@@ -112,6 +112,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- The News item form needs a headline, of up to 100 characters, and the summary is limited to 300 characters. Every field explains in plain words what it is for and where it appears. A run that stops on the form's content says why on the issue (an empty or too long headline, a summary too long by a given number of characters) and how to edit the issue and try again. A summary over 300 characters was cut, sometimes inside a link (#2189).
 - The "Conference pace" card on the internal dashboard says what it compares. A line under the heading names the two editions and the scale of the bars, the coming edition's figure reads "so far", and the previous edition's reads, for example, "0 of 162 at the same time last year". On a phone each figure sits under its bar. The French and German wording is a machine translation.
 - The "Conference pace" card on the internal dashboard is refreshed from Indico every day, with the coming edition's abstracts and registrations. It changed only when someone exported them from Indico by hand, and showed no ESSC 2027 abstracts.
 - Every page shows a banner saying the ESSC 2027 call is open, linking to the call on `/2027.html` in English, French and German, as netsec-cost.eu does. It runs until mid-December 2026.
