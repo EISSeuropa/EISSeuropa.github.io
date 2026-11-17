@@ -149,6 +149,9 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 - The NetSec report tab on the internal dashboard shows its Month menu again. Its published months and the board highlights moved from `/internal/` to `/data/`: GitHub Pages sends every `eiss-europa.com/internal/` address to `internal.eiss-europa.com`, so each build found no copy, recomputed every month from the GitHub API, and left out the months the hourly API allowance could not cover.
 - The "Annual report (draft)" link at the foot of the internal dashboard opens the report again, now at `/annual-report-YYYY.html`. It led to a page not found at `internal.eiss-europa.com`.
 - The sources note under each NetSec report view has more space above it, a rule over it, and justified text.
+- The internal dashboard's "Can't sign in?" box links "Reset my password" to Google's account recovery page, the page the Apps tile opens, in place of the steps to follow on Google's sign-in page. The tile's note says Google sends a code to the recovery email or phone, and admin@eiss-europa.com is a mail link.
+- The "Next milestones" card on the internal dashboard no longer shows "(%)" for a milestone with no issues.
+- Pages with people's names no longer have a blank strip under the footer. The hidden name card that opens on hover sat after the footer until first used.
 
 ## [2.29.0] · 2026-11-08 — Introducing Belvedere, the EISS blog
 

@@ -44,15 +44,17 @@
       {%- set hl = "" if (lang or "en") == "en" else "?hl=" + lang -%}
       {%- set profileLink = '<a href="https://support.google.com/chrome/answer/2364824' + hl + '" target="_blank" rel="noopener">' + t.staffMenu.chromeProfile + '</a>' %}
       <p class="apps-hero-note">{{ t.staffMenu.accessNote | replace(t.staffMenu.chromeProfile, profileLink) | safe }}</p>
-      {#- Native disclosure: works without JS. The steps follow Google's
-          account recovery, which an administrator can switch off. -#}
+      {#- Native disclosure: works without JS. The password line links to
+          Google's account recovery, the same page as the Apps tile, which
+          an administrator can switch off. -#}
       <details class="apps-signin" id="signin">
         <summary>{{ d.signin.summary }}</summary>
         <ul role="list">
           <li>{{ d.signin.address }}</li>
-          <li>{{ d.signin.password }}</li>
+          {%- set resetLink = '<a href="https://accounts.google.com/signin/recovery" target="_blank" rel="noopener">' + t.staffMenu.recover + '</a>' %}
+          <li>{{ d.signin.password | replace(t.staffMenu.recover, resetLink) | safe }}</li>
           {%- set recoveryLink = '<a href="https://support.google.com/accounts/answer/183723' + hl + '" target="_blank" rel="noopener">' + d.signin.recovery + '</a>' %}
-          <li>{{ d.signin.locked | replace(d.signin.recovery, recoveryLink) | safe }}</li>
+          <li>{{ d.signin.locked | replace(d.signin.recovery, recoveryLink) | replace("admin@eiss-europa.com", '<a href="mailto:admin@eiss-europa.com">admin@eiss-europa.com</a>') | safe }}</li>
         </ul>
       </details>
     </div>
@@ -427,7 +429,7 @@
               {% for m in dashboard.milestones %}
                 {% if m.state == "next" %}<li class="apps-timeline-today" data-apps-timeline-today aria-hidden="true"><span>{{ d.today }}</span></li>{% endif %}
                 <li class="apps-timeline-item apps-timeline-{{ m.state }}" data-roles="staff management board volunteer" data-date="{{ m.date }}"><span class="apps-timeline-dot" aria-hidden="true"></span><time datetime="{{ m.date }}">{{ m.date | newsDate(lang) }}</time> <span class="apps-timeline-label"><a href="{{ m.url }}">{{ d.releaseDue | replace("{title}", m.title) }}</a></span><span class="apps-timeline-when" data-apps-timeline-when></span>
-                  <span class="apps-timeline-detail"><progress class="apps-progress" value="{{ m.closed }}" max="{{ m.total }}" aria-label="{{ d.progress | replace("{title}", m.title) }}">{{ m.percent }}%</progress>{{ d.issuesClosed | replace("{closed}", m.closed) | replace("{total}", m.total) }} ({{ m.percent }}%)</span></li>
+                  <span class="apps-timeline-detail"><progress class="apps-progress" value="{{ m.closed }}" max="{{ m.total }}" aria-label="{{ d.progress | replace("{title}", m.title) }}">{{ m.percent }}%</progress>{{ d.issuesClosed | replace("{closed}", m.closed) | replace("{total}", m.total) }}{% if m.total %} ({{ m.percent }}%){% endif %}</span></li>
               {% endfor %}
             </ol>
           </div>

@@ -131,7 +131,7 @@ const locales = {
       meet: "Meet",
       meetNote: "Video calls",
       recover: "Reset my password",
-      recoverNote: "Forgot your password",
+      recoverNote: "Google sends a code to your recovery email or phone",
       chat: "Team chat",
       chatNote: "Rooms, tasks and polls",
       alumni: "Alumni community",
@@ -140,7 +140,7 @@ const locales = {
 
     // The internal dashboard (src/_includes/internal-body.njk). js: its script.
     dash: {
-      signin: { summary: "Can't sign in?", address: "Forgot your EISS address? It is in the welcome email sent to your personal address.", password: "Forgot your password? On the Google sign-in page, choose \"Forgot password?\". Google sends a code to the recovery email or phone on your account.", locked: "No recovery details? Write to admin@eiss-europa.com, and add a recovery email to your account.", recovery: "add a recovery email to your account" },
+      signin: { summary: "Can't sign in?", address: "Forgot your EISS address? It is in the welcome email sent to your personal address.", password: "Forgot your password? Reset my password.", locked: "No recovery details? Write to admin@eiss-europa.com, and add a recovery email to your account.", recovery: "add a recovery email to your account" },
       lead: "Welcome to the EISS Dashboard, your central page for all the tools, resources, and information you might need.",
       welcomeClose: "Close the welcome",
       welcomeTitle: "Welcome to EISS",
@@ -1258,7 +1258,7 @@ const locales = {
       meet: "Meet",
       meetNote: "Appels vidéo",
       recover: "Réinitialiser mon mot de passe",
-      recoverNote: "Mot de passe oublié",
+      recoverNote: "Google envoie un code à votre adresse ou numéro de récupération",
       chat: "Discussion d'équipe",
       chatNote: "Salons, tâches et sondages",
       alumni: "Communauté des anciens",
@@ -1267,7 +1267,7 @@ const locales = {
 
     // The internal dashboard (src/_includes/internal-body.njk). js: its script.
     dash: {
-      signin: { summary: "Impossible de vous connecter ?", address: "Vous avez oublié votre adresse EISS ? Elle figure dans l'e-mail de bienvenue envoyé à votre adresse personnelle.", password: "Vous avez oublié votre mot de passe ? Sur la page de connexion Google, choisissez « Mot de passe oublié ? ». Google envoie un code à l'adresse ou au numéro de récupération de votre compte.", locked: "Aucune information de récupération ? Écrivez à admin@eiss-europa.com, et ajoutez une adresse e-mail de récupération à votre compte.", recovery: "ajoutez une adresse e-mail de récupération à votre compte" },
+      signin: { summary: "Impossible de vous connecter ?", address: "Vous avez oublié votre adresse EISS ? Elle figure dans l'e-mail de bienvenue envoyé à votre adresse personnelle.", password: "Vous avez oublié votre mot de passe ? Réinitialiser mon mot de passe.", locked: "Aucune information de récupération ? Écrivez à admin@eiss-europa.com, et ajoutez une adresse e-mail de récupération à votre compte.", recovery: "ajoutez une adresse e-mail de récupération à votre compte" },
       lead: "Bienvenue sur le tableau de bord de l'EISS, votre page centrale pour tous les outils, ressources et informations dont vous pourriez avoir besoin.",
       welcomeClose: "Fermer l'accueil",
       welcomeTitle: "Bienvenue à l'EISS",
@@ -2261,7 +2261,7 @@ const locales = {
       meet: "Meet",
       meetNote: "Videoanrufe",
       recover: "Mein Passwort zurücksetzen",
-      recoverNote: "Passwort vergessen",
+      recoverNote: "Google sendet einen Code an Ihre Wiederherstellungsadresse oder -nummer",
       chat: "Team-Chat",
       chatNote: "Räume, Aufgaben und Umfragen",
       alumni: "Alumni-Netzwerk",
@@ -2270,7 +2270,7 @@ const locales = {
 
     // The internal dashboard (src/_includes/internal-body.njk). js: its script.
     dash: {
-      signin: { summary: "Anmeldung klappt nicht?", address: "EISS-Adresse vergessen? Sie steht in der Willkommens-E-Mail an Ihre private Adresse.", password: "Passwort vergessen? Wählen Sie auf der Google-Anmeldeseite „Passwort vergessen?“. Google sendet einen Code an die Wiederherstellungs-E-Mail-Adresse oder -Telefonnummer Ihres Kontos.", locked: "Keine Wiederherstellungsdaten? Schreiben Sie an admin@eiss-europa.com, und fügen Sie Ihrem Konto eine Wiederherstellungs-E-Mail-Adresse hinzu.", recovery: "fügen Sie Ihrem Konto eine Wiederherstellungs-E-Mail-Adresse hinzu" },
+      signin: { summary: "Anmeldung klappt nicht?", address: "EISS-Adresse vergessen? Sie steht in der Willkommens-E-Mail an Ihre private Adresse.", password: "Passwort vergessen? Mein Passwort zurücksetzen.", locked: "Keine Wiederherstellungsdaten? Schreiben Sie an admin@eiss-europa.com, und fügen Sie Ihrem Konto eine Wiederherstellungs-E-Mail-Adresse hinzu.", recovery: "fügen Sie Ihrem Konto eine Wiederherstellungs-E-Mail-Adresse hinzu" },
       lead: "Willkommen im EISS-Dashboard, Ihrer zentralen Seite für alle Werkzeuge, Ressourcen und Informationen, die Sie benötigen.",
       welcomeClose: "Begrüßung schließen",
       welcomeTitle: "Willkommen bei der EISS",
