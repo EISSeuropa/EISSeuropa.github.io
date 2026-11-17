@@ -136,7 +136,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 - The internal dashboard's header is shorter: a welcome line, and a note asking people to log in only with their EISS account and recommending a dedicated Chrome profile.
 - The staff sign-in menu in the header opens with a reminder to sign in with an eiss-europa.com account, and the internal dashboard asks people to log in only with their EISS account and recommends a dedicated Chrome profile. Board members were requesting access to EISS files from their personal Gmail.
 - The internal dashboard opens on the apps. The tabs and Your apps follow the figures strip and the release card, and Timeline and the activity rolls move below the tab panels. The first app tile is about half as far down the page as before, on desktop and on a phone. The header drops its welcome sentence and its lockup is smaller. On a phone the tabs stay on one row that scrolls sideways, and the release note is cut at four lines with a link to the full notes.
-- The guide tiles on the internal dashboard carry a note, like the app tiles. "Joining steps" and "Joining Guide" now say which is which.
+- The guide tiles on the internal dashboard carry a note, like the app tiles, saying what each guide covers. "Joining steps" and "Joining Guide" now say which is which.
 - The internal dashboard's deadline tiles fade at the right edge while more lie beyond it.
 
 ### Fixed
