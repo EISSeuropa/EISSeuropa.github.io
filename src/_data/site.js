@@ -206,16 +206,15 @@ module.exports = {
   // mail./groups. custom domains are http only, so they are not linked.
   staffLinks: [
     { href: "https://indico.eiss-europa.com", key: "indico", icon: "ticket", roles: ["staff", "management", "board", "volunteer"] },
-    { href: "https://mail.google.com/a/eiss-europa.com", key: "mail", icon: "mail", roles: ["staff", "management", "board", "volunteer"], menu: 2 },
+    { href: "https://mail.google.com/a/eiss-europa.com", key: "mail", icon: "mail", roles: ["staff", "management", "board", "volunteer"] },
     // contact@ and internship@ are collaborative inboxes, worked in Groups.
-    { href: "https://groups.google.com/a/eiss-europa.com", key: "groups", icon: "inbox", roles: ["staff", "management", "volunteer"], menu: 3 },
-    { href: "https://calendar.google.com/a/eiss-europa.com", key: "calendar", icon: "calendar", roles: ["staff", "management", "board", "volunteer"], menu: 5 },
-    { href: "https://drive.google.com/a/eiss-europa.com", key: "drive", icon: "folder", roles: ["staff", "management", "board", "volunteer"], menu: 4 },
+    { href: "https://groups.google.com/a/eiss-europa.com", key: "groups", icon: "inbox", roles: ["staff", "management", "volunteer"] },
+    { href: "https://calendar.google.com/a/eiss-europa.com", key: "calendar", icon: "calendar", roles: ["staff", "management", "board", "volunteer"] },
+    { href: "https://drive.google.com/a/eiss-europa.com", key: "drive", icon: "folder", roles: ["staff", "management", "board", "volunteer"] },
     { href: "https://drive.google.com/drive/folders/0AEaDgMvcPVVyUk9PVA", key: "boardDrive", icon: "folder", roles: ["board", "management"] },
     { href: "https://meet.google.com/", key: "meet", icon: "video", roles: ["staff", "management", "board", "volunteer"] },
     // Google's account recovery: works only while self-service recovery is on in the Admin console.
     { href: "https://accounts.google.com/signin/recovery", key: "recover", icon: "lock", roles: ["staff", "management", "board", "volunteer"] },
-    { href: "/internal.html", key: "allApps", icon: "layout-grid", menu: 6, sep: true },
     {
       href: "https://docs.google.com/forms/d/e/1FAIpQLSevC0tbQwCA4ZNfdk_pCY5xUvmFjuQbIIpddDXLF5TdSoKfcw/viewform",
       key: "internForm",
@@ -223,8 +222,20 @@ module.exports = {
       roles: ["staff", "management"],
     },
     // Daily tasks live in Chat spaces.
-    { href: "https://chat.google.com/", key: "chat", icon: "users", roles: ["staff", "management", "volunteer"], menu: 1 },
+    { href: "https://chat.google.com/", key: "chat", icon: "users", roles: ["staff", "management", "volunteer"] },
     { href: "https://www.linkedin.com/groups/42830462/", key: "alumni", icon: "linkedin", roles: ["staff", "management", "board", "volunteer"] },
+  ],
+
+  // The padlock menu in the header: the dashboard's tabs, then the dashboard
+  // itself. `needs` names the data its tab is built from: no data, no tab, no
+  // entry. Labels are t.staffMenu.<key>.
+  staffMenu: [
+    { href: "/internal.html#apps", key: "myApps", icon: "layout-grid" },
+    { href: "/internal.html#guides", key: "guides", icon: "book-open" },
+    { href: "/internal.html#it", key: "platformStatus", icon: "shield", needs: "systemHealth", dot: true },
+    { href: "/internal.html#netsec", key: "netsecReports", icon: "file-text", needs: "netsecReport" },
+    { href: "https://accounts.google.com/signin/recovery", key: "recover", icon: "lock" },
+    { href: "/internal.html", key: "allApps", icon: "arrow-right", sep: true },
   ],
 
   // The guides on /internal.html. Roles work as in staffLinks.

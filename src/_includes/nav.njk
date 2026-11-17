@@ -156,17 +156,22 @@
 
       {% include "theme-toggle.njk" %}
 
-      {# Staff sign-in: Workspace shortcuts behind a padlock, the
-         site.staffLinks entries with a `menu` number, in that order. The same native `<details>` and
-         `data-nav-group` behaviour as the language menu above. #}
+      {# Staff sign-in: the dashboard's tabs behind a padlock, from
+         site.staffMenu. An entry whose tab needs data the build lacks
+         (systemHealth, netsecReport) is left out, as the tab is. The
+         Platform status dot is the build's level. The same native
+         `<details>` and `data-nav-group` behaviour as the language menu above. #}
+      {%- set staffData = { systemHealth: systemHealth, netsecReport: netsecReport } -%}
       <details class="staff-menu" data-nav-group>
         <summary class="icon-btn staff-menu-summary" aria-label="{{ t.staffMenu.label }}" title="{{ t.staffMenu.label }}">{{ icon("lock") }}</summary>
         <div class="staff-menu-panel" role="group" aria-label="{{ t.staffMenu.label }}">
           <p class="staff-menu-note">{{ t.staffMenu.accountNote | replace("eiss-europa.com", '<span class="staff-menu-domain">eiss-europa.com</span>') | safe }}</p>
-          {% for link in site.staffLinks | selectattr("menu") | sort(false, true, "menu") %}
+          {% for link in site.staffMenu %}{% if not link.needs or staffData[link.needs] %}
             {% if link.sep %}<hr class="staff-menu-sep">{% endif %}
-            <a class="staff-menu-link" href="{{ link.href | localizedHref(lang) }}"{% if link.href[0] != "/" %} target="_blank" rel="noopener"{% endif %}>{{ icon(link.icon) }}{{ t.staffMenu[link.key] }}</a>
-          {% endfor %}
+            {%- set to = link.href.split("#") %}
+            <a class="staff-menu-link" href="{{ to[0] | localizedHref(lang) }}{% if to[1] %}#{{ to[1] }}{% endif %}"{% if link.href[0] != "/" %} target="_blank" rel="noopener"{% endif %}>{{ icon(link.icon) }}{{ t.staffMenu[link.key] }}
+              {%- if link.dot %}{% set level = systemHealth.summary.level %}<span class="staff-menu-dot staff-menu-dot-{{ level }}" aria-hidden="true"></span><span class="sr-only">, {{ t.dash.levels[level] }}</span>{% endif %}</a>
+          {% endif %}{% endfor %}
         </div>
       </details>
       <button class="icon-btn nav-menu-toggle"

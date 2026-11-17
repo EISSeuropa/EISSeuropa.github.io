@@ -302,8 +302,10 @@ Preserve whitespace outside the comment, including any whitespace-control marker
   (`[data-search-trigger]`).
 - **Staff menu** (`.staff-menu`, in `nav.njk`) — the padlock button
   beside the theme toggle. A native `<details>` like the nav groups,
-  built from the `site.staffLinks` entries with a `menu` number, in that
-  order, labels from `t.staffMenu`. No heading: the padlock names it. Hidden below 360 px.
+  built from `site.staffMenu`: the dashboard's tabs (My apps, Guides,
+  Platform status with the build's level dot, NetSec reports), Reset my
+  password, then the dashboard itself. An entry whose tab needs data the
+  build lacks is left out. Labels from `t.staffMenu`. No heading: the padlock names it. Hidden below 360 px.
 - **`footer.njk`** — co-branding, funding-style credit, legal-links row
   (terms / privacy / accessibility / sitemap / licensing / roadmap /
   press kit), socials. `data-pagefind-ignore`.
