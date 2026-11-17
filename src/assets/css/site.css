@@ -745,6 +745,32 @@ h4 { font-size: var(--fs-lg); }
   text-underline-offset: 2px;
 }
 
+/* The "Can't sign in?" disclosure under the hero note. */
+.apps-signin {
+  max-width: 38rem;
+  margin: var(--space-2) auto 0;
+  color: hsl(210 30% 86%);
+  font-size: var(--fs-sm);
+  text-align: start;
+  animation: apps-rise 800ms var(--ease-out) 340ms both;
+}
+.apps-signin summary {
+  width: fit-content;
+  margin: 0 auto;
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.apps-signin ul {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-2) 0 0;
+  padding-inline-start: 1.25rem;
+}
+.apps-signin p { margin: var(--space-2) 0 0; }
+.apps-signin a { color: #fff; text-decoration: underline; text-underline-offset: 2px; }
+
 .apps-stats {
   position: relative;
   display: grid;
