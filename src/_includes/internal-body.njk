@@ -144,13 +144,15 @@
     {# The release card: an EISS or NetSec website release of the last 14 days,
        with its "For the team" note or else its lede (src/_data/latestReleases.js).
        Dismissed on this device, it stays hidden. Without JS it shows until
-       its 14 days are up. The note stays in English, as the changelog has it. #}
+       its 14 days are up. The note stays in English, as the changelog has it.
+       The script folds the note away behind "Show summary". Without JS it
+       shows in full. #}
     {% for r in latestReleases %}{% set RC = d.releaseCard %}
       <aside class="apps-shipped" aria-labelledby="apps-shipped-{{ loop.index }}" data-apps-shipped="{{ r.site | lower }}-{{ r.version }}">
         <p class="apps-shipped-eyebrow"><span class="apps-board-site apps-board-site-{{ r.site | lower }}">{{ r.site }}</span> {{ RC.label | replace("{version}", r.version) }} · <time datetime="{{ r.date }}">{{ r.date | newsDate(lang) }}</time></p>
         <h2 class="apps-shipped-title" id="apps-shipped-{{ loop.index }}"{% if lang != "en" %} lang="en"{% endif %}>{{ r.title }}</h2>
-        {% for p in r.note %}<p class="apps-shipped-note"{% if lang != "en" %} lang="en"{% endif %}>{{ p }}</p>{% endfor %}
-        <p class="apps-shipped-more"><a href="{{ r.url }}">{{ RC.notes }}</a></p>
+        {% if r.note.length %}<div class="apps-shipped-body" id="apps-shipped-body-{{ loop.index }}" data-apps-shipped-body>{% for p in r.note %}<p{% if lang != "en" %} lang="en"{% endif %}>{{ p }}</p>{% endfor %}</div>{% endif %}
+        <p class="apps-shipped-more"><a href="{{ r.url }}">{{ RC.notes }}</a>{% if r.note.length %}<button type="button" class="apps-shipped-toggle" data-apps-shipped-toggle data-show="{{ RC.show }}" data-hide="{{ RC.hide }}" aria-expanded="true" aria-controls="apps-shipped-body-{{ loop.index }}" hidden><span data-apps-shipped-toggle-text>{{ RC.hide }}</span> {{ icon("chevron-down") }}</button>{% endif %}</p>
         <button type="button" class="apps-shipped-close" data-apps-shipped-close aria-label="{{ RC.dismiss }}" title="{{ RC.dismiss }}" hidden>{{ icon("x") }}</button>
       </aside>
     {% endfor %}
@@ -1407,6 +1409,19 @@
       cards.forEach(function (card) {
         var id = card.getAttribute("data-apps-shipped");
         if (gone.indexOf(id) >= 0) { card.hidden = true; return; }
+        // The note starts folded: the eyebrow, title and release notes link show.
+        var body = card.querySelector("[data-apps-shipped-body]"), toggle = card.querySelector("[data-apps-shipped-toggle]");
+        if (body && toggle) {
+          var label = toggle.querySelector("[data-apps-shipped-toggle-text]");
+          var fold = function (open) {
+            body.hidden = !open;
+            toggle.setAttribute("aria-expanded", open);
+            label.textContent = toggle.getAttribute(open ? "data-hide" : "data-show");
+          };
+          fold(false);
+          toggle.hidden = false;
+          toggle.addEventListener("click", function () { fold(body.hidden); });
+        }
         var b = card.querySelector("[data-apps-shipped-close]");
         b.hidden = false;
         b.addEventListener("click", function () {

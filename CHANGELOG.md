@@ -139,6 +139,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 - The guide tiles on the internal dashboard carry a note, like the app tiles, saying what each guide covers. "Joining steps" and "Joining Guide" now say which is which.
 - The internal dashboard's deadline tiles fade at the right edge while more lie beyond it.
 - The internal dashboard has an Updates tab after Apps, with the recent activity and then the conference timeline. Both sat below the other tabs at the foot of the page. The tab shows how many things changed since the last visit, and the next-deadline figure at the top opens it.
+- The release card on the internal dashboard opens folded, with the release title and a link to the release notes. "Show summary" unfolds its note.
 
 ### Fixed
 
