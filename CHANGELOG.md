@@ -106,7 +106,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
-- The padlock menu in the header leads to the internal dashboard's tabs: My apps, Guides, Platform status with a dot for its current level, NetSec reports, then Reset my password and the dashboard itself. Its note links to the dashboard's "Can't sign in?" box. It listed Chat, Mail, Groups, Drive and Calendar, which stay as tiles on the dashboard. The French and German labels are machine translations.
+- The staff sign-in menu in the header (the padlock) leads to the internal dashboard's tabs: My apps, Guides, Platform status with a dot for its current level, NetSec reports, then Reset my password and the dashboard itself. Its note links to the dashboard's "Can't sign in?" box. It listed Chat, Mail, Groups, Drive and Calendar, which stay as tiles on the dashboard. The French and German wording is a machine translation.
 - The internal dashboard helps people who cannot sign in to their EISS account. A "Can't sign in?" disclosure under the hero says where to find a forgotten EISS address (the welcome email), how to reset a password through Google's "Forgot password?" link, and to write to admin@eiss-europa.com when the account has no recovery details. A "Reset my password" tile under Your apps opens Google's account recovery page. The joining steps gain one: add a personal address as the account's recovery email. The French and German wording is a machine translation.
 
 ### Changed
@@ -133,7 +133,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 - The call for papers for the 2027 conference in Belgrade is on `/2027.html` in English, French and German: the three submission types, the eight closed panels with their chairs, the key dates to 26 January 2027, a link to submit on the conference's Indico event, and the full call as a PDF. The French and German panel descriptions are machine translations.
 - A News item issue filed by a publisher opens its pull request straight away, with no label needed, and the pull request waits for the maintainer to merge it. It used to need the `news` label and then merged itself once the checks passed.
 - The internal dashboard's header is shorter: a welcome line, and a note asking people to log in only with their EISS account and recommending a dedicated Chrome profile.
-- The staff sign-in menu in the header opens with a reminder to sign in with an eiss-europa.com account, and the internal dashboard says that a Google "request access" page means a personal account is signed in. Board members were requesting access to EISS files from their personal Gmail.
+- The staff sign-in menu in the header opens with a reminder to sign in with an eiss-europa.com account, and the internal dashboard asks people to log in only with their EISS account and recommends a dedicated Chrome profile. Board members were requesting access to EISS files from their personal Gmail.
 
 ### Fixed
 
