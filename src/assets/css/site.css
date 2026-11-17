@@ -9386,6 +9386,10 @@ main:has(.confnav) [id] { scroll-margin-top: 3.75rem; }
 
 .person-hovercard {
   position: absolute;
+  /* Pinned until the script places it: left in flow after the footer, the
+     idle card added a blank strip under it on every page. */
+  top: 0;
+  left: 0;
   /* Above the sticky chrome (z 200) so a card opening near the top of the
      page isn't clipped by the header / banner. */
   z-index: 210;
