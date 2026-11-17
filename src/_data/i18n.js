@@ -173,8 +173,9 @@ const locales = {
       tabGuides: "Guides",
       tabIt: "Platform status",
       needsAttention: ", needs attention",
+      annual: { tab: "Annual reports", year: "Year", title: "Annual report {year}", toDate: "Year to date, figures as of {date}.", fullYear: "1 January to 31 December {year}.", open: "Open the report", empty: "No annual report has been published yet. Drafts show to Staff and Management." },
       netsec: {
-        tab: "NetSec report",
+        tab: "NetSec reports",
         heading: "Monthly report, {month}",
         allHeading: "Report since launch, {start} to {end}",
         month: "Report",
@@ -1299,8 +1300,9 @@ const locales = {
       tabGuides: "Guides",
       tabIt: "État de la plateforme",
       needsAttention: ", à vérifier",
+      annual: { tab: "Rapports annuels", year: "Année", title: "Rapport annuel {year} (en anglais)", toDate: "Année en cours, chiffres au {date}.", fullYear: "Du 1er janvier au 31 décembre {year}.", open: "Ouvrir le rapport", empty: "Aucun rapport annuel n’est encore publié. Les projets s’affichent pour le Personnel et la Direction." },
       netsec: {
-        tab: "Rapport NetSec",
+        tab: "Rapports NetSec",
         heading: "Rapport mensuel, {month}",
         allHeading: "Rapport depuis le lancement, de {start} à {end}",
         month: "Rapport",
@@ -2301,8 +2303,9 @@ const locales = {
       tabGuides: "Leitfäden",
       tabIt: "Plattformstatus",
       needsAttention: ", braucht Aufmerksamkeit",
+      annual: { tab: "Jahresberichte", year: "Jahr", title: "Jahresbericht {year} (auf Englisch)", toDate: "Laufendes Jahr, Zahlen vom {date}.", fullYear: "1. Januar bis 31. Dezember {year}.", open: "Bericht öffnen", empty: "Noch ist kein Jahresbericht veröffentlicht. Entwürfe sehen Personal und Leitung." },
       netsec: {
-        tab: "NetSec-Bericht",
+        tab: "NetSec-Berichte",
         heading: "Monatsbericht, {month}",
         allHeading: "Bericht seit dem Start, {start} bis {end}",
         month: "Bericht",

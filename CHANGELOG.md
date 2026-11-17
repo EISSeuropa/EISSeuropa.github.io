@@ -106,6 +106,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
+- The internal dashboard has an Annual reports tab, next to NetSec reports (renamed from "NetSec report"). A Year menu shows one annual report at a time and links to its page. Drafts show to staff and management only, and a year marked final in `annualReportNotes.json` shows to everyone. The link at the foot of the dashboard is gone. The French and German wording is a machine translation.
 - The staff sign-in menu in the header (the padlock) leads to the internal dashboard's tabs: My apps, Guides, Platform status with a dot for its current level, NetSec reports, then Reset my password and the dashboard itself. Its note links to the dashboard's "Can't sign in?" box. It listed Chat, Mail, Groups, Drive and Calendar, which stay as tiles on the dashboard. The French and German wording is a machine translation.
 - The internal dashboard helps people who cannot sign in to their EISS account. A "Can't sign in?" disclosure under the hero says where to find a forgotten EISS address (the welcome email), how to reset a password through Google's "Forgot password?" link, and to write to admin@eiss-europa.com when the account has no recovery details. A "Reset my password" tile under Your apps opens Google's account recovery page. The joining steps gain one: add a personal address as the account's recovery email. The French and German wording is a machine translation.
 

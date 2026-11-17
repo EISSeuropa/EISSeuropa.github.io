@@ -18,6 +18,7 @@ const news = require("./news.json");
 const cohorts = require("./cohorts.json");
 const nameKey = require("./nameKey.js");
 const prizeLaureates = require("./prizeLaureates.js")();
+const notes = require("./annualReportNotes.json");
 
 const FIRST = 2025;
 const today = new Date().toISOString().slice(0, 10);
@@ -102,6 +103,8 @@ for (let y = thisYear; y >= FIRST; y--) {
   const next = facts.conferences.editions.filter((c) => c.startDate > `${y}-12-31`).sort((a, b) => a.startDate.localeCompare(b.startDate))[0];
   years.push({
     year: y,
+    // A year is a draft until staff mark it "final": true in annualReportNotes.json.
+    draft: !(notes[y] && notes[y].final),
     toDate: y === thisYear,
     asOf: y === thisYear ? today : `${y}-12-31`,
     now: year(y),
@@ -113,7 +116,7 @@ for (let y = thisYear; y >= FIRST; y--) {
   });
 }
 
-module.exports = { years, anthologyDoi: facts.anthology.doi };
+module.exports = { years, published: years.some((y) => !y.draft), anthologyDoi: facts.anthology.doi };
 
 // NetSec's monthly reports summed over a calendar year: the Directory and the
 // Management Committee from the first month's start to the last month's end,
