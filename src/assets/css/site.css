@@ -675,6 +675,12 @@ h4 { font-size: var(--fs-lg); }
   white-space: nowrap;
 }
 
+.staff-menu-note a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .staff-menu-sep {
   margin: var(--space-1) 0;
   border: 0;

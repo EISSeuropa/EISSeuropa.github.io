@@ -46,7 +46,7 @@
       <p class="apps-hero-note">{{ t.staffMenu.accessNote | replace(t.staffMenu.chromeProfile, profileLink) | safe }}</p>
       {#- Native disclosure: works without JS. The steps follow Google's
           account recovery, which an administrator can switch off. -#}
-      <details class="apps-signin">
+      <details class="apps-signin" id="signin">
         <summary>{{ d.signin.summary }}</summary>
         <ul role="list">
           <li>{{ d.signin.address }}</li>
@@ -783,6 +783,11 @@
       list[to].focus();
       list[to].click();
     });
+    // A link to #signin (the padlock menu's "Guide") opens the "Can't sign in?" box.
+    var signin = document.getElementById("signin");
+    function openSignin() { if (location.hash === "#signin") { signin.open = true; signin.scrollIntoView({ block: "center" }); } }
+    openSignin();
+    addEventListener("hashchange", openSignin);
     addEventListener("hashchange", function () {
       var name = location.hash.slice(1);
       if (!isTab(name)) return;

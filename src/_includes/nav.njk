@@ -165,7 +165,9 @@
       <details class="staff-menu" data-nav-group>
         <summary class="icon-btn staff-menu-summary" aria-label="{{ t.staffMenu.label }}" title="{{ t.staffMenu.label }}">{{ icon("lock") }}</summary>
         <div class="staff-menu-panel" role="group" aria-label="{{ t.staffMenu.label }}">
-          <p class="staff-menu-note">{{ t.staffMenu.accountNote | replace("eiss-europa.com", '<span class="staff-menu-domain">eiss-europa.com</span>') | safe }}</p>
+          {#- "Guide" opens the dashboard's "Can't sign in?" box. -#}
+          {%- set guideLink = '<a href="' + ("/internal.html" | localizedHref(lang)) + '#signin">' + t.staffMenu.accountGuide + '</a>' %}
+          <p class="staff-menu-note">{{ t.staffMenu.accountNote | replace("eiss-europa.com", '<span class="staff-menu-domain">eiss-europa.com</span>') | replace(t.staffMenu.accountGuide, guideLink) | safe }}</p>
           {% for link in site.staffMenu %}{% if not link.needs or staffData[link.needs] %}
             {% if link.sep %}<hr class="staff-menu-sep">{% endif %}
             {%- set to = link.href.split("#") %}
