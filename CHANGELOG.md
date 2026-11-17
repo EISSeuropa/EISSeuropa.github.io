@@ -106,7 +106,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Added
 
-- The internal dashboard helps people who cannot sign in to their EISS account. A "Can't sign in?" disclosure under the hero says where to find a forgotten EISS address (the welcome email), how to reset a password through Google's "Forgot password?" link, and whom to ask when Google has no recovery details or points to an administrator. The joining steps gain one: add a personal address as the account's recovery email. The French and German wording is a machine translation.
+- The internal dashboard helps people who cannot sign in to their EISS account. A "Can't sign in?" disclosure under the hero says where to find a forgotten EISS address (the welcome email), how to reset a password through Google's "Forgot password?" link, and to write to admin@eiss-europa.com when the account has no recovery details. A "Reset my password" tile under Your apps opens Google's account recovery page. The joining steps gain one: add a personal address as the account's recovery email. The French and German wording is a machine translation.
 
 ### Changed
 

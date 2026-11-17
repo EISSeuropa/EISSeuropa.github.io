@@ -51,9 +51,9 @@
         <ul role="list">
           <li>{{ d.signin.address }}</li>
           <li>{{ d.signin.password }}</li>
-          <li>{{ d.signin.locked }}</li>
+          {%- set recoveryLink = '<a href="https://support.google.com/accounts/answer/183723' + hl + '" target="_blank" rel="noopener">' + d.signin.recovery + '</a>' %}
+          <li>{{ d.signin.locked | replace(d.signin.recovery, recoveryLink) | safe }}</li>
         </ul>
-        <p><a href="https://support.google.com/accounts/answer/183723{{ hl }}" target="_blank" rel="noopener">{{ d.signin.recovery }}</a></p>
       </details>
     </div>
   </header>
