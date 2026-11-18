@@ -36,8 +36,14 @@ Two body shapes are read.
      Body               "body", kept whole for the newsletter (off the form
                         for now, still read for older issues)
      Type / Link / Publication date   as the header keys below
-     Image              "image" (http(s) or site-root path; a site image is
-                        the picture of the social posts)
+     Image              a photo dragged into the field (an https address),
+                        downloaded, shrunk to IMAGE_MAX_BYTES as a JPEG
+                        without its camera data, and saved in
+                        src/assets/images/news/. Or a site image (/assets/...).
+                        "image" is its site path: the picture of the social
+                        posts.
+     Image description  "imageAlt", the photo's alt text. Required with a
+                        photo, up to IMAGE_ALT_MAX characters
      Collaborator page  social.collaborator ("netsec")
      Newsletter         "newsletter": true when the box is ticked (off the
                         form for now, still read for older issues)
@@ -55,19 +61,30 @@ Usage (local test): ISSUE_TITLE=… ISSUE_BODY=… TODAY=2026-06-20 \
 """
 from __future__ import annotations
 
+import io
 import json
 import os
 import re
 import sys
+import unicodedata
+import urllib.error
+import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 NEWS = ROOT / "src" / "_data" / "news.json"
+IMAGE_DIR = ROOT / "src" / "assets" / "images" / "news"
 
 ALLOWED_TYPES = {"paper", "event", "press", "podcast", "news"}
 EXCERPT_MAX = 320
 HEADLINE_MAX = 100
 SUMMARY_MAX = 300
+IMAGE_ALT_MAX = 300
+# Bluesky refuses an image over 1,000,000 bytes. LinkedIn takes more, so the
+# smaller limit sets the size of the saved photo.
+IMAGE_MAX_BYTES = 950_000
+IMAGE_MAX_SIDE = 2000
+DOWNLOAD_MAX_BYTES = 25_000_000
 FORM_HEADING_RE = re.compile(r"^###\s+(.+?)\s*$")
 NO_RESPONSE = "_No response_"
 HEADER_RE = re.compile(r"^\s*(type|url|date)\s*:\s*(.+?)\s*$", re.IGNORECASE)
@@ -163,6 +180,92 @@ def _link(val: str) -> str:
     return val if val.startswith(("http://", "https://", "/")) else ""
 
 
+def image_source(text: str) -> str:
+    """The photo in the Image field: an https address, or a site image path
+    (/assets/...). GitHub writes a dragged photo as <img ... src="..."> or
+    ![name](...), and either is read. An empty field gives ""."""
+    text = (text or "").strip()
+    if not text:
+        return ""
+    for pattern in (r'src="(https://[^"\s]+)"', r"\]\((https://[^)\s]+)\)", r"(https://\S+)"):
+        m = re.search(pattern, text)
+        if m:
+            return m.group(1)
+    if re.fullmatch(r"/assets/\S+", text):
+        return text
+    sys.exit("The Image field has no photo in it. Edit the issue and drag a photo into the Image "
+             "field, then wait until the upload finishes. Or empty the field to post without a photo.")
+
+
+def fetch(url: str) -> bytes:
+    """The photo's bytes. Any failure is the person's to retry, so the
+    message is theirs."""
+    req = urllib.request.Request(url, headers={"User-Agent": "eiss-news-publisher"})
+    try:
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            data = resp.read(DOWNLOAD_MAX_BYTES + 1)
+    except (urllib.error.URLError, TimeoutError, ValueError) as e:
+        print(f"news-from-issue: download of {url} failed: {e}")
+        sys.exit("The photo in the Image field could not be downloaded. Edit the issue, delete the "
+                 "photo, drag it in again and wait until the upload finishes. Or empty the Image "
+                 "field to post without a photo.")
+    if len(data) > DOWNLOAD_MAX_BYTES:
+        sys.exit(f"The photo is larger than {DOWNLOAD_MAX_BYTES // 1_000_000} MB. Edit the issue and use a smaller photo.")
+    return data
+
+
+def shrink(data: bytes) -> bytes:
+    """The photo as a JPEG of at most IMAGE_MAX_BYTES and IMAGE_MAX_SIDE
+    pixels on its longer side, turned the way the camera held it. The
+    camera data (EXIF, with the place it was taken) is not copied."""
+    try:
+        from PIL import Image, ImageOps
+    except ImportError:
+        sys.exit("news-from-issue: Pillow is missing. Run pip install -r scripts/requirements.txt.")
+    try:
+        img = Image.open(io.BytesIO(data))
+        img.load()
+        img = ImageOps.exif_transpose(img)
+    except Exception:
+        sys.exit("The file in the Image field is not a photo that can be read. "
+                 "Edit the issue and use a JPEG or PNG photo.")
+    if img.mode in ("RGBA", "LA", "P"):
+        rgba = img.convert("RGBA")
+        flat = Image.new("RGB", rgba.size, "white")
+        flat.paste(rgba, mask=rgba.getchannel("A"))
+        img = flat
+    elif img.mode != "RGB":
+        img = img.convert("RGB")
+    img.thumbnail((IMAGE_MAX_SIDE, IMAGE_MAX_SIDE), Image.LANCZOS)
+    quality = 85
+    while True:
+        buf = io.BytesIO()
+        img.save(buf, format="JPEG", quality=quality, optimize=True, progressive=True)
+        out = buf.getvalue()
+        if len(out) <= IMAGE_MAX_BYTES:
+            return out
+        if quality > 70:
+            quality -= 5
+        else:
+            img = img.resize((max(1, img.width * 4 // 5), max(1, img.height * 4 // 5)), Image.LANCZOS)
+
+
+def slugify(text: str) -> str:
+    text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode().lower()
+    return re.sub(r"[^a-z0-9]+", "-", text).strip("-")[:60].rstrip("-") or "item"
+
+
+def save_photo(item: dict, data: bytes, image_dir: Path | None = None) -> str:
+    """Writes the shrunk photo and returns its site path."""
+    image_dir = image_dir or IMAGE_DIR
+    out = shrink(data)
+    image_dir.mkdir(parents=True, exist_ok=True)
+    name = f"{item['date']}-{slugify(item['title'])}.jpg"
+    (image_dir / name).write_bytes(out)
+    print(f"news-from-issue: photo saved as src/assets/images/news/{name} ({len(out) // 1000} kB).")
+    return f"/assets/images/news/{name}"
+
+
 def parse_form(title: str, f: dict[str, str], today: str) -> dict:
     site = f.get("site", "").strip().lower()
     if site.startswith("netsec"):
@@ -193,9 +296,19 @@ def parse_form(title: str, f: dict[str, str], today: str) -> dict:
     body = f.get("body", "").strip()
     if body:
         item["body"] = body
-    image = _link(f.get("image", ""))
+    image = image_source(f.get("image", ""))
     if image:
-        item["image"] = image
+        alt = " ".join(f.get("image description", "").split())
+        if not alt:
+            sys.exit("The item has a photo but the Image description is empty. Edit the issue and "
+                     "write one sentence saying what the photo shows, for people who cannot see it.")
+        _check_length("Image description", alt, IMAGE_ALT_MAX)
+        item["imageAlt"] = alt
+        if image.startswith("/"):
+            item["image"] = image
+        else:
+            # Downloaded by main(), after the duplicate check.
+            item["_image_url"] = image
 
     social: dict = {}
     if summary:
@@ -236,6 +349,9 @@ def main() -> None:
             print(f"news-from-issue: '{item['title']}' ({item['date']}) already present — no change.")
             return
 
+    url = item.pop("_image_url", "")
+    if url:
+        item["image"] = save_photo(item, fetch(url))
     data.append(item)
     NEWS.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
     issue = os.environ.get("ISSUE_NUMBER", "?")

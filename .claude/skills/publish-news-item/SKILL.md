@@ -23,7 +23,8 @@ are required.
 | Summary | Up to 300 characters. The site's excerpt and the LinkedIn and Bluesky caption |
 | Type | `news`, `event`, `paper`, `press` or `podcast` |
 | Link | The address of an existing page the item is about, or a page added in the same PR |
-| Image | Optional. An image on the site (`/assets/...`), the picture of the LinkedIn and Bluesky posts |
+| Image | Optional. The picture of the LinkedIn and Bluesky posts: an `https://` address of a photo the person sent (the script downloads it, shrinks it under 1 MB and saves it in `src/assets/images/news/`), or an image on the site (`/assets/...`) |
+| Image description | Required with an image. One sentence saying what it shows, up to 300 characters: the alt text |
 | Publication date | `YYYY-MM-DD`, blank for today |
 | Collaborator page | `NetSec` for a joint item, otherwise `No collaborator` |
 
@@ -59,6 +60,10 @@ event
 /2027.html
 
 ### Image
+
+_No response_
+
+### Image description
 
 _No response_
 

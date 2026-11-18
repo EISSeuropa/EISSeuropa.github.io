@@ -9,7 +9,8 @@
 #
 # The files a PR changes decide its kind, and each kind has its own
 # repository variable of approvers (GitHub logins, separated by commas):
-#   - src/_data/news.json and nothing else: NEWS_APPROVERS;
+#   - src/_data/news.json and photos in src/assets/images/news/ (.jpg, as
+#     news-from-issue.py saves them), and nothing else: NEWS_APPROVERS;
 #   - src/_data/board.json and files in src/assets/images/board/, and nothing
 #     else (the PR of sync-board.yml): PROFILE_APPROVERS.
 # An unset variable means the repository owner. The run merges only when the
@@ -62,12 +63,12 @@ jobs:
           # grep -v finds a file outside the kind's list. No such file: that kind.
           if [ -z "$files" ]; then
             reason="This PR changes no file, so the \`publish\` label cannot merge it."
-          elif ! grep -qvx 'src/_data/news\.json' <<<"$files"; then
+          elif ! grep -qvEx 'src/_data/news\.json|src/assets/images/news/[^/]+\.jpg' <<<"$files"; then
             variable=NEWS_APPROVERS
           elif ! grep -qvEx 'src/_data/board\.json|src/assets/images/board/[^/]+' <<<"$files"; then
             variable=PROFILE_APPROVERS
           else
-            reason="The \`publish\` label merges a PR that changes only \`src/_data/news.json\`, or only \`src/_data/board.json\` and headshots in \`src/assets/images/board/\`. This PR changes other files, so merge it from the merge box instead. Changed files: $(echo "$files" | tr '\n' ' ')"
+            reason="The \`publish\` label merges a PR that changes only \`src/_data/news.json\` and photos in \`src/assets/images/news/\`, or only \`src/_data/board.json\` and headshots in \`src/assets/images/board/\`. This PR changes other files, so merge it from the merge box instead. Changed files: $(echo "$files" | tr '\n' ' ')"
           fi
           if [ -z "$reason" ]; then
             allowed=false

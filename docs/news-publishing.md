@@ -79,6 +79,10 @@ The News item form (#2058) can also write these. The site pages ignore them.
 - **body** — the longer text, kept whole for the newsletter.
 - **image** — an image on the site (`/assets/...`), used as the picture of the
   LinkedIn and Bluesky posts. Blank, or an `https://` address: the site card.
+  A photo from the form is saved in `src/assets/images/news/` (see *Photos*
+  below).
+- **imageAlt** — the image's alt text on both networks (the form's Image
+  description). Blank: the headline.
 - **social** — an object. `text` is the LinkedIn and Bluesky caption (the
   form's summary). `collaborator: "netsec"` names the NetSec page, which is
   added by hand as collaborator after the post goes out.
@@ -108,7 +112,8 @@ Headline is the title on the site and in the posts.
 | Summary | `excerpt` and `social.text`. Up to 300 characters. A longer one stops the run, so a cut never lands inside a link (#2189) |
 | Type | `type` (default `news`) |
 | Link | `url`: an existing page, never a new one. The headline links to it and the social posts end with it. Blank: the posts link to the item in `/news` |
-| Image | `image`: a site image (`/assets/...`), the picture of the social posts |
+| Image | A photo dragged into the field: saved in `src/assets/images/news/`, and `image` is its path, the picture of the social posts. A site image (`/assets/...`) is used as it is |
+| Image description | `imageAlt`. Required with a photo, up to 300 characters |
 | Publication date | `date` (blank or not `YYYY-MM-DD`: the day the run starts) |
 | Collaborator page | `social.collaborator` |
 
@@ -144,6 +149,21 @@ in `scripts/news-from-issue.py`. A message prefixed `news-from-issue:` is a
 fault in the repository and gets the generic comment. The failure alarm also
 opens an issue for the maintainer (#2134).
 
+**Photos.** GitHub stores a photo dragged into the Image field and writes its
+address there (`<img ... src="https://github.com/user-attachments/assets/...">`
+or `![...](...)`). `news-from-issue.py` downloads it after the duplicate check,
+turns it upright from its EXIF orientation, and saves it as a JPEG of at most
+950,000 bytes and 2,000 pixels a side (Bluesky refuses an image over 1 MB). It
+shrinks the quality to 70, then the size, until it fits. The EXIF data, with
+the place the photo was taken, is not copied. The file is
+`src/assets/images/news/<date>-<headline slug>.jpg` and goes in the news PR, so
+the approver sees it in the Files changed tab, and its description in the post
+preview. A photo that cannot be downloaded or read, or one without a
+description, stops the run with a comment saying what to change. The website
+does not show the photo. `scripts/test-news-image.py` checks the shrinking and
+needs Pillow, so `sanity-check.yml` runs it last, after installing
+`scripts/requirements.txt`.
+
 **Post preview.** Every PR that changes `src/_data/news.json`, from the form or
 by hand, gets a comment with the exact LinkedIn and Bluesky text
 (`.github/workflows/news-preview.yml`). The comment is updated on each push, so
@@ -157,7 +177,8 @@ four required checks and merges with the owner's `AUTOPR_TOKEN`. It merges only
 when the label comes from an account in the repository variable
 `NEWS_APPROVERS` (GitHub logins separated by commas, or the repository owner
 when the variable is unset) and the PR
-changes `src/_data/news.json` and nothing else. Otherwise it comments, removes
+changes `src/_data/news.json`, and photos in `src/assets/images/news/`, and
+nothing else. Otherwise it comments, removes
 the label and merges nothing. A merge that fails, for example on a required
 check, comments with a link to the run and removes the label, so it can be
 applied again. An approver other than the owner needs collaborator access to

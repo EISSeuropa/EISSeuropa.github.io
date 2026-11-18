@@ -25,11 +25,17 @@ FAKE_GH = '#!/usr/bin/env bash\nif [ "$1 $2" = "pr view" ]; then printf \'%s\' "
 NEWS = "src/_data/news.json\n"
 BOARD = "src/_data/board.json\n"
 PHOTO = "src/assets/images/board/doe.jpg\n"
+NEWS_PHOTO = "src/assets/images/news/2026-11-18-essc-2027.jpg\n"
 CASES = [
     # sender, changed files, expected to merge
     ("eugenio", NEWS, True),
     ("Eugenio", NEWS, True),  # logins compare without case
     ("filip", NEWS, False),  # a profile approver cannot merge news
+    ("eugenio", NEWS + NEWS_PHOTO, True),  # an item with its photo
+    ("filip", NEWS + NEWS_PHOTO, False),
+    ("eugenio", NEWS + "src/assets/images/news/x.svg\n", False),  # only the script's JPEGs
+    ("eugenio", NEWS + "src/assets/images/news/a/b.jpg\n", False),
+    ("eugenio", NEWS_PHOTO + PHOTO, False),
     ("filip", BOARD, True),
     ("filip", BOARD + PHOTO, True),
     ("eugenio", BOARD, False),  # a news approver cannot merge profiles
