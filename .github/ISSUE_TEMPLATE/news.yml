@@ -63,6 +63,7 @@ body:
         tag a page, write @EISS, @NetSec or @COST. The Link is added at the
         end unless the post already holds it. Leave it empty to post the
         headline, the website summary and the link.
+      render: text
     validations:
       required: false
   - type: textarea
@@ -76,6 +77,7 @@ body:
         Bluesky name (@NetSec becomes @netsec-cost.eu), so leave room for both.
         Tags are written @EISS, @NetSec or @COST. Leave it empty to post the
         headline, the website summary and the link, shortened to fit.
+      render: text
     validations:
       required: false
   - type: dropdown
