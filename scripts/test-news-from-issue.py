@@ -39,10 +39,24 @@ Joint (EISS and NetSec)
 
 ESSC 2027 call opens
 
-### Summary
+### Website summary
 
 The call for the 2027 conference
 is open until 15 January.
+
+### LinkedIn post
+
+📣 The call is open!   
+
+With @NetSec and @cost.
+
+
+
+#ESSC2027
+
+### Bluesky post
+
+The call is open, with @NetSec. #ESSC2027
 
 ### Body
 
@@ -83,7 +97,8 @@ assert item == {
     "url": "https://indico.eiss-europa.com/event/9/",
     "excerpt": "The call for the 2027 conference is open until 15 January.",
     "body": "Longer text for the newsletter.\n\nSecond paragraph.",
-    "social": {"text": "The call for the 2027 conference is open until 15 January.",
+    "social": {"linkedin": "📣 The call is open!\n\nWith @NetSec and @cost.\n\n#ESSC2027",
+               "bluesky": "The call is open, with @NetSec. #ESSC2027",
                "collaborator": "netsec"},
     "newsletter": True,
 }, item
@@ -112,7 +127,7 @@ _No response_
 
 ### Link
 
-not a link
+_No response_
 
 ### Image
 
@@ -124,7 +139,7 @@ A test picture.
 
 ### Publication date
 
-next week
+_No response_
 
 ### Collaborator page
 
@@ -184,6 +199,41 @@ stops("news: P", with_photo.replace("A test picture.", "d" * 301), "Image descri
 item = mod.parse_issue("news: P", MINIMAL.replace("/assets/img/x.png", "_No response_"), TODAY)
 assert "imageAlt" not in item and "image" not in item, item
 
+# Every other box has its limit or its format, and stops the run with a
+# message for the person who filed the form.
+stops("x", FORM.replace("https://indico.eiss-europa.com/event/9/", "indico event page"), "The Link is not a web address")
+stops("x", FORM.replace("https://indico.eiss-europa.com/event/9/", "https://example.org/a b"), "The Link is not a web address")
+stops("x", FORM.replace("2026-11-10", "next week"), 'Publication date "next week"', "2026-11-08")
+stops("x", FORM.replace("The call for the 2027 conference\nis open until 15 January.", "_No response_"),
+      "Website summary is empty")
+stops("x", FORM.replace("The call for the 2027 conference\nis open until 15 January.", "w" * 301),
+      "Website summary is 301 characters")
+stops("x", FORM.replace("With @NetSec", "With @Nope"), "LinkedIn post tags @Nope", "@COST, @EISS, @NetSec")
+stops("x", FORM.replace("with @NetSec. #ESSC2027", "with @Nobody."), "Bluesky post tags @Nobody")
+# An email address and a URL are not tags.
+item = mod.parse_issue("x", FORM.replace("With @NetSec", "Write to info@eiss-europa.com or https://x.com/@a, with @NetSec"), TODAY)
+assert "info@eiss-europa.com" in item["social"]["linkedin"]
+
+# The post limits count the post as the network shows it: the link added at
+# the end, and on Bluesky each tag written as the account's handle.
+sp = mod._social_post_module()
+LINK = "https://indico.eiss-europa.com/event/9/"
+room = 300 - len("\n\n" + LINK) - len(" @netsec-cost.eu")
+ok = mod.parse_issue("x", FORM.replace("The call is open, with @NetSec. #ESSC2027", "b" * room + " @NetSec"), TODAY)
+assert len(sp.tagged(sp.with_link(ok["social"]["bluesky"], LINK), "bluesky", sp.load_accounts())[0]) == 300
+stops("x", FORM.replace("The call is open, with @NetSec. #ESSC2027", "b" * (room + 1) + " @NetSec"),
+      "Bluesky post is 301 characters long with the link", "at least 1 characters")
+# A post that already holds the link is not given it twice.
+ok = mod.parse_issue("x", FORM.replace("The call is open, with @NetSec. #ESSC2027", "b" * 250 + " " + LINK), TODAY)
+assert ok["social"]["bluesky"].endswith(LINK)
+room = 3000 - len("\n\n" + LINK)
+mod.parse_issue("x", FORM.replace("📣 The call is open!   \n\nWith @NetSec and @cost.\n\n\n\n#ESSC2027", "l" * room), TODAY)
+stops("x", FORM.replace("📣 The call is open!   \n\nWith @NetSec and @cost.\n\n\n\n#ESSC2027", "l" * (room + 1)),
+      "LinkedIn post is 3001 characters long with the link", "limit is 3000")
+# A post box left empty: the post is built from the headline and summary.
+item = mod.parse_issue("x", FORM.replace("The call is open, with @NetSec. #ESSC2027", "_No response_"), TODAY)
+assert "bluesky" not in item["social"] and "linkedin" in item["social"]
+
 # No headline and the form's default title (#2189).
 stops("news:", MINIMAL, "Headline is empty")
 
@@ -192,7 +242,7 @@ stops("news:", MINIMAL, "Headline is empty")
 form_text = (HERE.parent / ".github" / "ISSUE_TEMPLATE" / "news.yml").read_text()
 blocks = re.split(r"^  - type: ", form_text, flags=re.M)[1:]
 fields = {re.search(r"^    id: (\S+)", b, re.M).group(1): b for b in blocks if not b.startswith("markdown")}
-assert len(fields) == 9, sorted(fields)
+assert len(fields) == 11, sorted(fields)
 for fid, b in fields.items():
     assert re.search(r"^      description: \S", b, re.M), f"{fid} has no description"
 assert "required: true" in fields["headline"], "the Headline is not required"
@@ -210,6 +260,9 @@ with tempfile.TemporaryDirectory() as tmp:
     (root / "scripts").mkdir()
     (root / "src" / "_data").mkdir(parents=True)
     (root / "scripts" / "news-from-issue.py").write_text((HERE / "news-from-issue.py").read_text())
+    (root / "scripts" / "social-post.py").write_text((HERE / "social-post.py").read_text())
+    (root / "data").mkdir()
+    (root / "data" / "social-accounts.json").write_text((HERE.parent / "data" / "social-accounts.json").read_text())
     news = root / "src" / "_data" / "news.json"
     news.write_text("[]\n")
     env = {**os.environ, "ISSUE_TITLE": "news: x", "ISSUE_BODY": FORM, "ISSUE_NUMBER": "1", "TODAY": TODAY}
