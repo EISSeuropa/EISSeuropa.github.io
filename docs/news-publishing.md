@@ -83,9 +83,12 @@ The News item form (#2058) can also write these. The site pages ignore them.
   below).
 - **imageAlt** — the image's alt text on both networks (the form's Image
   description). Blank: the headline.
-- **social** — an object. `text` is the LinkedIn and Bluesky caption (the
-  form's summary). `collaborator: "netsec"` names the NetSec page, which is
-  added by hand as collaborator after the post goes out.
+- **social** — an object. `linkedin` and `bluesky` are the posts written for
+  each network (the form's LinkedIn post and Bluesky post), kept with their
+  line breaks and `@Key` tags. A network without one gets the headline, the
+  summary and the link. `text` is the caption of items filed before the post
+  boxes. `collaborator: "netsec"` names the NetSec page, which is added by
+  hand as collaborator after the post goes out.
 - **newsletter** — `true` when the item goes in the monthly newsletter. The
   feed tags such an entry with `<category term="newsletter"/>`.
 
@@ -109,12 +112,14 @@ Headline is the title on the site and in the posts.
 |---|---|
 | Site | EISS: nothing extra. Joint: `"site": "joint"`. NetSec: the run stops, file it in the NetSec repository |
 | Headline | `title`. Required, up to 100 characters. A longer one stops the run |
-| Summary | `excerpt` and `social.text`. Up to 300 characters. A longer one stops the run, so a cut never lands inside a link (#2189) |
+| Website summary | `excerpt`, one line. Required, up to 300 characters. Also the post text for a network whose box is empty |
+| LinkedIn post | `social.linkedin`, as written with its line breaks. Up to 3,000 characters, counted with the link added at the end (unless the text holds it) and the tags as LinkedIn shows them |
+| Bluesky post | `social.bluesky`, the same. Up to 300 characters, counted with the link and each tag written as its Bluesky handle |
 | Type | `type` (default `news`) |
-| Link | `url`: an existing page, never a new one. The headline links to it and the social posts end with it. Blank: the posts link to the item in `/news` |
+| Link | `url`: an existing page, never a new one. The headline links to it and the social posts end with it. Blank: the posts link to the item in `/news`. Not an address: the run stops |
 | Image | A photo dragged into the field: saved in `src/assets/images/news/`, and `image` is its path, the picture of the social posts. A site image (`/assets/...`) is used as it is |
 | Image description | `imageAlt`. Required with a photo, up to 300 characters |
-| Publication date | `date` (blank or not `YYYY-MM-DD`: the day the run starts) |
+| Publication date | `date` (blank: the day the run starts). Not `YYYY-MM-DD`: the run stops |
 | Collaborator page | `social.collaborator` |
 
 GitHub drops the form from the issue chooser, without an error, when a
@@ -267,9 +272,24 @@ The optional `social` field of a news item:
 | Value | Effect |
 |---|---|
 | absent | Posted, with the `excerpt` as caption |
-| `{"text": "..."}` | Posted, with this caption (the form's summary) |
+| `{"linkedin": "...", "bluesky": "..."}` | Each network gets its own post, as written. A network left out gets the headline, the `excerpt` and the link |
+| `{"text": "..."}` | Posted, with this caption (items filed before the post boxes) |
 | `"skip"` or `{"skip": true}` | Never posted |
 | `{"collaborator": "netsec"}` | Posted from the EISS page. The run summary lists the LinkedIn post with a reminder to add the NetSec page as collaborator by hand. LinkedIn's API cannot do it |
+
+**Tags.** A post box may tag an account as `@Key`, any case, where the key is
+in `data/social-accounts.json` (EISS, NetSec and COST for now).
+`social-post.py` writes a LinkedIn mention, `@[Name](urn:li:organization:N)`,
+and a Bluesky mention facet on the handle, resolved to its DID at post time.
+An account without a URN or a handle goes out as its plain name on that
+network, and the post preview says so. `#Name` hashtags get Bluesky tag
+facets. `news-from-issue.py` stops on a tag that is not in the file. An email
+address or an `@` inside a URL is not a tag. The NetSec repository keeps the
+same file.
+
+**Re-runs.** A publisher who edits an open form issue starts the run again,
+and the news PR is rebuilt from the edited form. Anyone else's edit starts
+nothing, and so does an edit to a closed issue, whose item has merged.
 
 A joint item goes out from the organiser's page only, and the other page is
 added as collaborator. NetSec's pipeline does the same with

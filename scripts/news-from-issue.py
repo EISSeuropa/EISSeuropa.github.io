@@ -27,12 +27,20 @@ Two body shapes are read.
      Headline           the title, up to HEADLINE_MAX characters (falls back
                         to the issue title, for issues filed before the
                         form required it)
-     Summary            the excerpt, and social.text (the LinkedIn and
-                        Bluesky caption), up to SUMMARY_MAX characters
+     Website summary    the excerpt on the site, one line, up to SUMMARY_MAX
+                        characters ("Summary" on issues filed before it was
+                        split). Also the post text when a post box is blank
+     LinkedIn post      social.linkedin, verbatim with its line breaks, up
+                        to LINKEDIN_LIMIT characters with the link and tags
+                        as LinkedIn shows them
+     Bluesky post       social.bluesky, the same, up to BLUESKY_LIMIT
+                        characters with the link and the tags as handles
+                        (@Key tags come from data/social-accounts.json)
 
-   A headline or summary over its limit stops the run. The message is
-   written for the person who filed the form: the workflow posts it on the
-   issue.
+   Every text box has a limit, and a box over it, an unknown @tag, a Link
+   that is not an address or a date not written YYYY-MM-DD stops the run.
+   The message is written for the person who filed the form: the workflow
+   posts it on the issue.
      Body               "body", kept whole for the newsletter (off the form
                         for now, still read for older issues)
      Type / Link / Publication date   as the header keys below
@@ -266,6 +274,49 @@ def save_photo(item: dict, data: bytes, image_dir: Path | None = None) -> str:
     return f"/assets/images/news/{name}"
 
 
+def _social_post_module():
+    """scripts/social-post.py, for the post helpers: the link a post ends
+    with, the accounts, and the text as each network shows it. Loaded once."""
+    global _SP
+    if _SP is None:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("social_post", Path(__file__).with_name("social-post.py"))
+        _SP = importlib.util.module_from_spec(spec)
+        sys.modules["social_post"] = _SP
+        spec.loader.exec_module(_SP)
+    return _SP
+
+
+_SP = None
+POST_BOXES = (("linkedin", "LinkedIn post", "linkedin post"), ("bluesky", "Bluesky post", "bluesky post"))
+
+
+def post_text(text: str) -> str:
+    """A post as written, with its paragraphs: line ends trimmed, at most one
+    blank line between paragraphs."""
+    lines = [ln.rstrip() for ln in (text or "").replace("\r\n", "\n").split("\n")]
+    return re.sub(r"\n{3,}", "\n\n", "\n".join(lines)).strip()
+
+
+def check_post(network: str, label: str, text: str, item: dict) -> None:
+    """Stops the run when a post box tags an unknown account or is over the
+    network's limit once the link is added and the tags are written out."""
+    sp = _social_post_module()
+    accounts = sp.load_accounts()
+    unknown = sp.unknown_tags(text, accounts)
+    if unknown:
+        known = ", ".join("@" + k for k in sorted(
+            (json.loads(sp.ACCOUNTS_JSON.read_text(encoding="utf-8")).get("accounts") or {})))
+        sys.exit(f"The {label} tags {', '.join(unknown)}, which is not in the list of accounts. "
+                 f"Edit the issue and use {known}, or write the name without @.")
+    shown, _ = sp.tagged(sp.with_link(text, sp.post_link(item)), network, accounts)
+    limit = sp.LINKEDIN_LIMIT if network == "linkedin" else sp.BLUESKY_LIMIT
+    if len(shown) > limit:
+        extra = " with the link and the tags as Bluesky shows them" if network == "bluesky" else " with the link"
+        sys.exit(f"The {label} is {len(shown)} characters long{extra}, and the limit is {limit}. "
+                 f"Edit the issue and shorten the {label} by at least {len(shown) - limit} characters.")
+
+
 def parse_form(title: str, f: dict[str, str], today: str) -> dict:
     site = f.get("site", "").strip().lower()
     if site.startswith("netsec"):
@@ -278,19 +329,29 @@ def parse_form(title: str, f: dict[str, str], today: str) -> dict:
     _check_length("Headline", headline, HEADLINE_MAX)
 
     date = f.get("publication date", "").strip()
+    if date and not DATE_RE.match(date):
+        sys.exit(f"The Publication date \"{date}\" is not a date the site can read. Edit the issue and "
+                 "write it as year-month-day with dashes, for example 2026-11-08, or leave it empty for today.")
     t = f.get("type", "").strip().lower()
     item: dict = {
-        "date": date if DATE_RE.match(date) else today,
+        "date": date or today,
         "type": t if t in ALLOWED_TYPES else "news",
         "title": headline,
     }
     if site.startswith("joint"):
         item["site"] = "joint"
-    url = _link(f.get("link", ""))
+    raw_link = f.get("link", "").strip()
+    url = _link(raw_link)
+    if raw_link and (not url or any(c.isspace() for c in raw_link)):
+        sys.exit("The Link is not a web address. Edit the issue and paste the full address, starting "
+                 "with https://, or a page on this site starting with /, or leave it empty.")
     if url:
         item["url"] = url
-    summary = " ".join(f.get("summary", "").split())
-    _check_length("Summary", summary, SUMMARY_MAX)
+    label = "Website summary" if "website summary" in f else "Summary"
+    summary = " ".join(f.get("website summary", f.get("summary", "")).split())
+    if not summary and "website summary" in f:
+        sys.exit("The Website summary is empty. Edit the issue and write one or two sentences for the website.")
+    _check_length(label, summary, SUMMARY_MAX)
     if summary:
         item["excerpt"] = summary
     body = f.get("body", "").strip()
@@ -311,8 +372,13 @@ def parse_form(title: str, f: dict[str, str], today: str) -> dict:
             item["_image_url"] = image
 
     social: dict = {}
-    if summary:
-        social["text"] = summary
+    if "website summary" not in f and summary:
+        social["text"] = summary  # an issue filed before the post boxes
+    for network, box_label, key in POST_BOXES:
+        text = post_text(f.get(key, ""))
+        if text:
+            check_post(network, box_label, text, item)
+            social[network] = text
     if f.get("collaborator page", "").strip().lower() == "netsec":
         social["collaborator"] = "netsec"
     if social:

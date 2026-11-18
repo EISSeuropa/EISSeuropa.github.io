@@ -71,6 +71,77 @@ def test_read_news_caption_link_skip_collaborator(monkeypatch, tmp_path):
     assert c.link == "https://example.org/a" and c.summary == ""
 
 
+ACCOUNTS = {"netsec": {"name": "Networking European Security Knowledge (NetSec)",
+                       "linkedin": "urn:li:organization:123", "bluesky": "netsec-cost.eu"},
+            "cost": {"name": "COST Association", "linkedin": None, "bluesky": None}}
+
+
+def test_posts_written_per_network(monkeypatch, tmp_path):
+    _news(monkeypatch, tmp_path, [{"date": "2026-11-18", "title": "ESSC 2027", "excerpt": "Belgrade.",
+                                    "url": "/2027.html", "social": {
+                                        "linkedin": "📣 Save the date!\n\nWith @NetSec and @COST. #ESSC2027",
+                                        "bluesky": "Save the date, with @NetSec https://eiss-europa.com/2027.html"}}])
+    monkeypatch.setattr(sp, "load_accounts", lambda path=None: ACCOUNTS)
+    (p,) = sp.read_news()
+    li = p.render("linkedin")
+    # The text as written, paragraphs kept, the link added once at the end,
+    # and no headline or hashtags added to it.
+    assert li == ("📣 Save the date!\n\nWith Networking European Security Knowledge (NetSec) and COST Association."
+                  " #ESSC2027\n\nhttps://eiss-europa.com/2027.html"), li
+    bs = p.render("bluesky")
+    assert bs == "Save the date, with @netsec-cost.eu https://eiss-europa.com/2027.html", bs
+    # LinkedIn: a tag with a URN is a mention, one without is the plain name.
+    c = sp.li_commentary(sp.with_link(p.linkedin_text, p.link), ACCOUNTS)
+    assert "@[Networking European Security Knowledge \\(NetSec\\)](urn:li:organization:123)" in c, c
+    assert "COST Association." in c and "{hashtag|\\#|ESSC2027}" in c, c
+
+
+def test_post_box_left_empty_builds_from_title(monkeypatch, tmp_path):
+    _news(monkeypatch, tmp_path, [{"date": "2026-11-18", "title": "T", "excerpt": "S.",
+                                    "social": {"linkedin": "Only LinkedIn."}}])
+    (p,) = sp.read_news()
+    assert p.render("bluesky").startswith("T\n\nS.\n\nhttps://eiss-europa.com/news.html#news-t")
+
+
+def test_tags_skip_emails_and_urls():
+    text = "Mail info@eiss-europa.com, see https://x.com/@a and @NetSec."
+    assert [m.group(1) for m in sp.TAG_RE.finditer(text)] == ["NetSec"]
+    assert sp.unknown_tags("@Nope and @netsec", ACCOUNTS) == ["@Nope"]
+
+
+def test_bluesky_facets_for_mentions_and_hashtags(monkeypatch, tmp_path):
+    _news(monkeypatch, tmp_path, [{"date": "2026-11-18", "title": "T", "url": "https://example.org/a",
+                                    "social": {"bluesky": "Né with @NetSec #ESSC2027"}}])
+    monkeypatch.setattr(sp, "load_accounts", lambda path=None: ACCOUNTS)
+    (p,) = sp.read_news()
+    sent = {}
+
+    def fake_http(url, payload=None, headers=None, raw=None, content_type=None):
+        if "createSession" in url:
+            return {"accessJwt": "j", "did": "did:plc:me"}
+        if "resolveHandle" in url:
+            assert url.endswith("handle=netsec-cost.eu"), url
+            return {"did": "did:plc:netsec"}
+        if "createRecord" in url:
+            sent.update(payload["record"])
+            return {"uri": "at://did:plc:me/app.bsky.feed.post/abc"}
+        return {}
+
+    monkeypatch.setattr(sp, "_http_json", fake_http)
+    monkeypatch.setenv("BSKY_HANDLE", "eissnetwork.bsky.social")
+    monkeypatch.setenv("BSKY_APP_PASSWORD", "x")
+    monkeypatch.setattr(sp, "SITE_OG", tmp_path / "none.jpg")
+    p.image = None
+    sp.BlueskyChannel("bluesky").publish(p)
+    text = sent["text"]
+    assert text == "Né with @netsec-cost.eu #ESSC2027\n\nhttps://example.org/a", text
+    kinds = {f["features"][0]["$type"].rsplit("#", 1)[1]: f["index"] for f in sent["facets"]}
+    b = text.encode("utf-8")
+    assert b[kinds["mention"]["byteStart"]:kinds["mention"]["byteEnd"]] == b"@netsec-cost.eu"
+    assert b[kinds["tag"]["byteStart"]:kinds["tag"]["byteEnd"]] == b"#ESSC2027"
+    assert b[kinds["link"]["byteStart"]:kinds["link"]["byteEnd"]] == b"https://example.org/a"
+
+
 def test_item_image_inside_src_only(monkeypatch, tmp_path):
     src = tmp_path / "src"
     (src / "assets").mkdir(parents=True)
