@@ -13,6 +13,7 @@ SKIP_HOSTS are pinned:
     TLS cut        -> retried, then reported unreachable rather than broken
     conn reset     -> same, one layer down (#1628)
     502/503/504    -> retried, then reported unreachable without failing
+    5xx on a fallback (GET after HEAD 405, unverified retry) -> "HTTP <code>"
     other 5xx/DNS -> still broken
     hanging host   -> every attempt in TIMEOUT_SCHEDULE is made, then reported
                       as slow rather than broken (#1417)
@@ -138,6 +139,36 @@ for status in (404, 410, 500, 501, 505, 'dns'):
     fails += report_case(status, 1, 3 if isinstance(status, int) and status >= 500 else 1)
 fails += report_case(503, 1, 0, internal=True)
 
+# A 5xx answered to a fallback request must reach the report as "HTTP <code>",
+# the shape the 502/503/504 tolerance matches. Both fallbacks returned the raw
+# error ("err: HTTPError: HTTP Error 503: ...") instead, which the report
+# counted as broken: softwareheritage.org failed #2220 twice this way.
+#   1. HEAD refused (405), then the GET fallback answers 503.
+class HeadRefused(H):
+    def do_HEAD(self):
+        self.send_response(405); self.end_headers()
+    def do_GET(self):
+        self.send_response(503 if self.path == '/down' else 404); self.end_headers()
+srv4 = socketserver.TCPServer(('127.0.0.1', 0), HeadRefused); port4 = srv4.server_address[1]
+threading.Thread(target=srv4.serve_forever, daemon=True).start()
+u, st = check_external(f'http://127.0.0.1:{port4}/down')
+print(f'  HEAD 405, GET 503 -> {st!r}')
+fails += [] if st == 'HTTP 503' else ['a 503 on the GET fallback must report "HTTP 503", not an error string']
+u, st = check_external(f'http://127.0.0.1:{port4}/gone')
+print(f'  HEAD 405, GET 404 -> {st!r}')
+fails += [] if st == 'HTTP 404' else ['a 404 on the GET fallback must still be broken']
+#   2. Certificate verification fails, then the unverified retry answers 503.
+def cert_then_503(req, context=None, **kw):
+    if context is not None and context.verify_mode != ssl.CERT_NONE:
+        raise urllib.error.URLError(ssl.SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] unable to get local issuer'))
+    raise urllib.error.HTTPError(req.full_url, 503, 'Backend fetch failed', {}, None)
+ns['_ssl_warned'] = True
+urllib.request.urlopen = ns['urllib'].request.urlopen = cert_then_503
+u, st = check_external('https://example.invalid/')
+urllib.request.urlopen = ns['urllib'].request.urlopen = real
+print(f'  certificate retry, then 503 -> {st!r}')
+fails += [] if st == 'HTTP 503' else ['a 503 on the unverified retry must report "HTTP 503", not an error string']
+
 # A TLS connection cut mid-read must be retried and then reported as
 # unreachable, not counted as broken (#1423). Simulated by raising the same
 # URLError urllib produces, on every attempt.
@@ -211,5 +242,6 @@ fails += [] if not own else [f'the skip list must not hide our own sites: {own}'
 srv.shutdown()
 srv2.shutdown()
 srv3.shutdown()
+srv4.shutdown()
 print('\nFAIL: ' + '; '.join(fails) if fails else '\nall link-check behaviours correct')
 sys.exit(1 if fails else 0)

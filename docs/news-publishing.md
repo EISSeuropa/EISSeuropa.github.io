@@ -391,6 +391,58 @@ Until step 5 the preview runs and the publish job is skipped. With
 `SOCIAL_ENABLED` on and a channel's secrets missing, that channel is skipped.
 With no channel configured, nothing is posted and the ledger is untouched.
 
+### Weekly welcome
+
+Every Thursday at 10:00 Central European time,
+`.github/workflows/team-welcome.yml` composes one post welcoming the
+people who joined EISS (#2219, ported from NetSec's weekly welcome,
+EISSeuropa/netsec.github.io#2236).
+
+- **Who.** People in `src/_data/board.json` with `"socialConsent": true`
+  (they agreed on the Joining Form or the bios Form, see
+  `docs/board-bios-setup.md`) and a `joined` date on or after `since` in
+  `data/welcome.json`. The welcome is not retroactive: `since` is the
+  go-live date, and while it is `null` the welcome is off.
+- **When.** Seven days after `joined`, so a newcomer has time to add a
+  photo. A volunteer whose `roleEndDate` is a cohort's `end` in
+  `src/_data/cohorts.json` waits for that cohort's `start`, so a whole
+  cohort is welcomed together on its first Thursday.
+- **The text.** On LinkedIn, "Welcome to EISS", the number of people, and
+  one line per person (name, title for leadership roles, position and
+  institution, country) under a heading per group: each cohort, the
+  board and the team. On Bluesky, one sentence with as many names as fit
+  and "and N more", or "Welcome to the winter cohort of EISS volunteers"
+  when the post is one cohort. Both link to `/board.html`.
+- **The card.** `scripts/build-welcome-card.py` renders a 1200x630 JPEG in
+  the share-card style, with a tile per person pictured. Only people with
+  a headshot are pictured, up to seven, or six and a "+N more members"
+  tile that counts everyone else. When nobody has a headshot, it shows
+  initials. The file is `.cache/welcome-cards/<hash of the slugs>.jpg`,
+  attached only when it matches the people the post names, and otherwise
+  the post uses the standard EISS picture.
+- **The ledger.** Each person named is recorded as `welcome::<slug>`, so
+  nobody is welcomed twice. The welcome's ledger PR is on
+  `welcome/ledger`, and `scripts/social-fold-ledger.sh welcome/ledger`
+  folds it in while it is open.
+- **Before the go-live date** (or with `since` null), each run is a
+  preview: the post goes to the run summary and the card to the run's
+  artifacts (`welcome-card`, kept 14 days). A manual run with a `since`
+  date previews another window. `--since` is refused with `--live`.
+- **From the go-live date**, the publish job waits for approval on the
+  `social` environment, as news does, and runs only with
+  `SOCIAL_ENABLED` set to `true`.
+- **Withdrawal.** A person who answers No on the bios Form loses
+  `socialConsent` at the next weekly sync, and no later post names them.
+  A post already published is removed by hand on request, as the privacy
+  notice says.
+
+To preview locally:
+
+```bash
+python3 scripts/social-post.py --dry-run --kind welcome --since 2026-12-01
+python3 scripts/build-welcome-card.py --since 2026-12-01
+```
+
 ### Upkeep
 
 - **When a post fails at sign-in**, run "Check the LinkedIn and Bluesky
@@ -422,8 +474,10 @@ With no channel configured, nothing is posted and the ledger is untouched.
   `linkedin-version-check.yml` reads LinkedIn's list of active versions on
   the 5th of each month and opens an auto-merging PR when the pin nears its
   end. A version past its end returns HTTP 426.
-- **Tests.** `python3 scripts/test-social-post.py` and
-  `python3 scripts/test-check-linkedin-version.py`, run by Build sanity. No
-  network and no posting.
-- Both workflows are on the failure alarm list.
+- **Tests.** `python3 scripts/test-social-post.py`,
+  `python3 scripts/test-check-linkedin-version.py`,
+  `python3 scripts/test-build-welcome-card.py` and
+  `python3 scripts/test-sync-board.py` (which needs `requests`), run by
+  Build sanity. No network and no posting.
+- The news and welcome workflows are on the failure alarm list.
 

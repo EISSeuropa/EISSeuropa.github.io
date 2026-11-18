@@ -80,6 +80,35 @@ their headshot later by submitting this Form, signed in with their
 EISS account. Dedup by email keeps the newer row, and any answer left
 blank keeps the value already in `board.json`.
 
+### Social media consent and the join date
+
+Both the Joining Form and this Form ask **Social media** straight after
+the website consent (#2219). It is a required choice between two
+answers, added to both forms by the one-off `addSocialConsent` in the
+"EISS intern lifecycle" Apps Script (`workspace-ops`):
+
+> I agree that EISS may name me and show my photo, role and institution
+> in its posts on social media, such as LinkedIn and Bluesky, including a
+> welcome post when I join. I can withdraw this consent at any time.
+
+> No, leave me out of EISS's social media posts.
+
+A checkbox would not do. The newest row replaces the older ones, and a
+newcomer who agreed on the Joining Form later submits this Form to add
+their photo, which would leave an unticked box and read as a
+withdrawal.
+
+`scripts/sync-board.py` maps the column as `socialConsent` in
+`board-source.json` and writes `"socialConsent": true` on the entry of
+someone who agreed. A No drops the field. A blank answer, from a row
+older than the question, keeps the value already in `board.json`. The
+flag is public, like the rest of `board.json` and the published Sheet.
+
+The sync also stamps `joined`, the UTC date a person first lands in
+`board.json`, on new entries only. A returning person keeps theirs, and
+everyone listed before the field existed has none. The weekly welcome
+post reads both fields (`docs/news-publishing.md`, *Weekly welcome*).
+
 ## Step 1 · Create the Form
 
 1. Go to <https://forms.google.com> and create a new blank form.

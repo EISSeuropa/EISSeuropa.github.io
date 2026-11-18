@@ -42,6 +42,7 @@ on:
       - Offboarding prompt
       - Campaign metrics
       - Post news to LinkedIn and Bluesky
+      - Welcome people who joined EISS
       - Check LinkedIn API version
       - Close released milestone
       - Publish news from issue
