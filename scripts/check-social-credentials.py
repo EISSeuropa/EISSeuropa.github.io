@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Check the LinkedIn and Bluesky credentials in the `social` environment,
-without posting and without printing a secret.
+"""Check the LinkedIn and Bluesky credentials in the `social` environment (or
+`social-auto` on NetSec), without posting and without printing a secret.
 
 Run by .github/workflows/check-social-credentials.yml (manual, approval-gated
 like a post). It reads the same environment variables as
@@ -206,7 +206,7 @@ def main(env: dict | None = None) -> int:
     env = dict(os.environ if env is None else env)
     lines = ["## Social credentials check", "",
              "Nothing was posted and no secret is shown. ❌ names the value to replace in "
-             "Settings > Environments > `social`.", ""]
+             "Settings > Environments > `" + os.environ.get("SOCIAL_ENVIRONMENT", "social") + "`.", ""]
     failed = report("Bluesky", check_bluesky(env), lines)
     failed = report("LinkedIn", check_linkedin(env), lines) or failed
     print("\n".join(lines))
