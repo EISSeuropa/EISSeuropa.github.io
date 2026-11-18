@@ -30,6 +30,7 @@ Newest first. Rows for 2.20.0 and later were added as each PR was opened.
 
 | Version | Date | PR | Change |
 |---|---|---|---|
+| 3.5.0 | 2026-11-18 | | Your apps groups its tiles under Work together, Conference and news, and People and account for a role that sees more than eight, and under Most used for the tiles moved up by use. Board members see eight tiles and keep a flat grid. Filtering flattens the list |
 | 3.4.0 | 2026-11-18 | | The News Composer tile is two tiles, EISS News Composer and NetSec News Composer, for staff, management and volunteers. Each opens its site's News item form on GitHub |
 | 3.3.0 | 2026-11-18 | | A News Composer tile under Your apps, for staff, management and volunteers, opens the News item form on GitHub. A composer with live character counts and post previews is #2196 |
 | 3.2.1 | 2026-11-17 | | The calendar tiles open the Updates tab, above the activity rolls and the conference timeline. They were last, under the conference pace, 1,591px down on desktop. The right-edge fade on the tiles, measured while the tab was hidden since 3.1.0, is measured again when the tab shows |

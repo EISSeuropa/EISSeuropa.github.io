@@ -1225,6 +1225,12 @@ a.apps-agenda-link:hover .apps-agenda-label { text-decoration: underline; }
 }
 /* An item coming back from display: none replays this, so a role change
    animates with no script. */
+/* Group headings span the grid. dashboard.js gives them the roles that see
+   more than eight tiles, so a short grid stays flat. */
+.apps-group { grid-column: 1 / -1; animation: apps-rise 500ms var(--ease-out) calc(var(--n) * 45ms) both; }
+.apps-group:not(:first-child) { margin-top: var(--space-3); }
+.apps-group-heading { margin: 0; font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+.apps-group.apps-filtered-out { display: none; }
 .apps-card-wrap { animation: apps-rise 500ms var(--ease-out) calc(var(--n) * 45ms) both; }
 .apps-tile {
   position: relative;

@@ -207,7 +207,9 @@
 
       <ul class="apps-grid" role="list">
         {% set n = 0 %}
-        {% for app in site.staffLinks %}{% if app.roles %}
+        {% for g in dashboard.appGroups %}
+          <li class="apps-group" data-roles="{{ g.roles | join(' ') }}"><h3 class="apps-group-heading">{{ d.appGroups[g.key] }}</h3></li>
+        {% for app in site.staffLinks %}{% if app.roles and app.group == g.key %}
           {% set note = t.staffMenu[app.key + "Note"] or app.note %}
           <li class="apps-card-wrap"{% if app.href %} data-apps-app{% endif %} data-roles="{{ app.roles | join(' ') }}" style="--n: {{ n }}">
             {% if app.href %}
@@ -227,6 +229,7 @@
           </li>
           {% set n = n + 1 %}
         {% endif %}{% endfor %}
+        {% endfor %}
       </ul>
       <p class="apps-note apps-filter-empty" data-apps-filter-empty hidden></p>
     </section>
@@ -1686,9 +1689,21 @@
     try { used = JSON.parse(localStorage.getItem(USED)) || {}; } catch (e) {}
     function hrefOf(li) { var a = li.querySelector("a.apps-tile"); return a ? a.getAttribute("href") : null; }
     function uses(li) { return used[hrefOf(li)] || 0; }
-    [].slice.call(grid.children).filter(function (li) { return uses(li) >= 3; })
-      .sort(function (a, b) { return uses(b) - uses(a); }).slice(0, 3).reverse()
-      .forEach(function (li) { grid.insertBefore(li, grid.firstChild); });
+    var heads = grid.querySelectorAll(".apps-group");
+    var top3 = [].slice.call(grid.children).filter(function (li) { return uses(li) >= 3; })
+      .sort(function (a, b) { return uses(b) - uses(a); }).slice(0, 3).reverse();
+    top3.forEach(function (li) { grid.insertBefore(li, grid.firstChild); });
+    // Under group headings, the moved tiles get one of their own, shown to
+    // the same roles as the others.
+    // ponytail: a group whose every tile moved up keeps a bare heading; hide it if that turns up.
+    if (top3.length && heads.length) {
+      var roles = {};
+      [].forEach.call(heads, function (h) { h.getAttribute("data-roles").split(" ").forEach(function (r) { if (r) roles[r] = 1; }); });
+      var head = heads[0].cloneNode(true);
+      head.setAttribute("data-roles", Object.keys(roles).join(" "));
+      head.firstChild.textContent = I.mostUsed;
+      grid.insertBefore(head, grid.firstChild);
+    }
     [].forEach.call(grid.children, function (li, i) { li.style.setProperty("--n", i); });
     grid.addEventListener("click", function (e) {
       var li = e.target.closest("li"), key = li && hrefOf(li);
@@ -1705,8 +1720,9 @@
       var q = filter.value.trim().toLowerCase();
       var before = new Map();
       shown().forEach(function (li) { before.set(li, li.getBoundingClientRect()); });
+      // A filtered list is flat, so the group headings step aside.
       [].forEach.call(grid.children, function (li) {
-        li.classList.toggle("apps-filtered-out", !!q && li.textContent.toLowerCase().indexOf(q) < 0);
+        li.classList.toggle("apps-filtered-out", !!q && (li.classList.contains("apps-group") || li.textContent.toLowerCase().indexOf(q) < 0));
       });
       var now = shown();
       // The tiles that stay glide from where they were to where they land.

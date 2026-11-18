@@ -205,39 +205,44 @@ module.exports = {
   // on it, so it goes bare). The
   // mail./groups. custom domains are http only, so they are not linked.
   staffLinks: [
-    { href: "https://indico.eiss-europa.com", key: "indico", icon: "ticket", roles: ["staff", "management", "board", "volunteer"] },
-    { href: "https://mail.google.com/a/eiss-europa.com", key: "mail", icon: "mail", roles: ["staff", "management", "board", "volunteer"] },
+    // `group` sorts the tiles under a heading once a role sees more than
+    // eight of them (dashboard.js appGroups). Keep each group together.
+    { href: "https://mail.google.com/a/eiss-europa.com", key: "mail", icon: "mail", group: "team", roles: ["staff", "management", "board", "volunteer"] },
     // contact@ and internship@ are collaborative inboxes, worked in Groups.
-    { href: "https://groups.google.com/a/eiss-europa.com", key: "groups", icon: "inbox", roles: ["staff", "management", "volunteer"] },
-    { href: "https://calendar.google.com/a/eiss-europa.com", key: "calendar", icon: "calendar", roles: ["staff", "management", "board", "volunteer"] },
-    { href: "https://drive.google.com/a/eiss-europa.com", key: "drive", icon: "folder", roles: ["staff", "management", "board", "volunteer"] },
-    { href: "https://drive.google.com/drive/folders/0AEaDgMvcPVVyUk9PVA", key: "boardDrive", icon: "folder", roles: ["board", "management"] },
-    { href: "https://meet.google.com/", key: "meet", icon: "video", roles: ["staff", "management", "board", "volunteer"] },
-    // Google's account recovery: works only while self-service recovery is on in the Admin console.
-    { href: "https://accounts.google.com/signin/recovery", key: "recover", icon: "lock", roles: ["staff", "management", "board", "volunteer"] },
-    {
-      href: "https://docs.google.com/forms/d/e/1FAIpQLSevC0tbQwCA4ZNfdk_pCY5xUvmFjuQbIIpddDXLF5TdSoKfcw/viewform",
-      key: "internForm",
-      icon: "user-plus",
-      roles: ["staff", "management"],
-    },
+    { href: "https://groups.google.com/a/eiss-europa.com", key: "groups", icon: "inbox", group: "team", roles: ["staff", "management", "volunteer"] },
+    // Daily tasks live in Chat spaces.
+    { href: "https://chat.google.com/", key: "chat", icon: "users", group: "team", roles: ["staff", "management", "volunteer"] },
+    { href: "https://calendar.google.com/a/eiss-europa.com", key: "calendar", icon: "calendar", group: "team", roles: ["staff", "management", "board", "volunteer"] },
+    { href: "https://meet.google.com/", key: "meet", icon: "video", group: "team", roles: ["staff", "management", "board", "volunteer"] },
+    { href: "https://drive.google.com/a/eiss-europa.com", key: "drive", icon: "folder", group: "team", roles: ["staff", "management", "board", "volunteer"] },
+    { href: "https://drive.google.com/drive/folders/0AEaDgMvcPVVyUk9PVA", key: "boardDrive", icon: "folder", group: "team", roles: ["board", "management"] },
+    { href: "https://indico.eiss-europa.com", key: "indico", icon: "ticket", group: "publish", roles: ["staff", "management", "board", "volunteer"] },
     // The News item forms on GitHub, one per site, for now. A composer with
     // live character counts and post previews is #2196.
     {
       href: "https://github.com/EISSeuropa/EISSeuropa.github.io/issues/new?template=news.yml",
       key: "newsComposerEiss",
       icon: "rss",
+      group: "publish",
       roles: ["staff", "management", "volunteer"],
     },
     {
       href: "https://github.com/EISSeuropa/netsec.github.io/issues/new?template=news.yml",
       key: "newsComposerNetsec",
       icon: "rss",
+      group: "publish",
       roles: ["staff", "management", "volunteer"],
     },
-    // Daily tasks live in Chat spaces.
-    { href: "https://chat.google.com/", key: "chat", icon: "users", roles: ["staff", "management", "volunteer"] },
-    { href: "https://www.linkedin.com/groups/42830462/", key: "alumni", icon: "linkedin", roles: ["staff", "management", "board", "volunteer"] },
+    {
+      href: "https://docs.google.com/forms/d/e/1FAIpQLSevC0tbQwCA4ZNfdk_pCY5xUvmFjuQbIIpddDXLF5TdSoKfcw/viewform",
+      key: "internForm",
+      icon: "user-plus",
+      group: "people",
+      roles: ["staff", "management"],
+    },
+    { href: "https://www.linkedin.com/groups/42830462/", key: "alumni", icon: "linkedin", group: "people", roles: ["staff", "management", "board", "volunteer"] },
+    // Google's account recovery: works only while self-service recovery is on in the Admin console.
+    { href: "https://accounts.google.com/signin/recovery", key: "recover", icon: "lock", group: "people", roles: ["staff", "management", "board", "volunteer"] },
   ],
 
   // The padlock menu in the header: the dashboard's tabs, then the dashboard
