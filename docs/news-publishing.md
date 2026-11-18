@@ -118,6 +118,12 @@ intro says that the issue title ("Add a title") only names the issue, which
 the run renames `news: <Headline>`, and that the Headline is the title on the
 site and in the posts. The news PR takes the headline as its title too.
 
+If the form shows for a second and then turns into a blank issue, the browser
+holds saved GitHub data that replaces it (seen on 18 November 2026 from the
+dashboard's News Composer tile on a desktop). Discarding the blank issue does
+not help. Open the link in a private window, or clear the stored data for
+github.com in the browser's settings, which signs you out of GitHub.
+
 | Field | Goes to |
 |---|---|
 | Site | EISS: nothing extra. Joint: `"site": "joint"`, and with LinkedIn ticked the run stops unless Collaborator page is NetSec. NetSec, an option until 18 November 2026, stops the run |
