@@ -670,9 +670,13 @@ def main() -> int:
     live = args.live and not args.dry_run
     if not live:
         print(f"DRY RUN: {len(posts)} post(s) pending.\n")
+        posted = set(ledger.get("posted", []))
         for p in posts:
             print(f"* {p.title}  (key: {p.key})")
             for ch in ("bluesky", "linkedin"):
+                if f"{p.key}#{ch}" in posted:
+                    print(f"  -- already posted to {ch} --\n")
+                    continue
                 print(f"  -- would post to {ch} --")
                 for line in p.render(ch).splitlines():
                     print(f"    {line}")
@@ -694,26 +698,47 @@ def main() -> int:
         print("::notice::No channel is configured (secrets missing). Nothing posted.")
         return 0
 
-    notes = []
+    # Each network is tried on its own: one that fails (a wrong password, an
+    # expired token, an API error) does not stop the other. The ledger then
+    # records the network that posted as "<key>#<network>", so the next run
+    # retries only the one that failed. An item every configured network has
+    # posted is recorded by its key alone, as before. The run reports the
+    # failure through GITHUB_OUTPUT (failed=true) and returns 0, so the
+    # workflow still persists the ledger and fails the job afterwards.
+    notes, failures = [], []
     for p in posts:
-        posted_any = False
+        posted = set(ledger.get("posted", []))
+        done = [c.name for c in active if f"{p.key}#{c.name}" in posted]
+        failed = []
         for c in active:
+            if c.name in done:
+                continue
             try:
                 url = c.publish(p)
-            except SystemExit:
-                if posted_any:  # keep the channel that succeeded from re-posting
-                    ledger.setdefault("posted", []).append(p.key)
-                    save_ledger(ledger)
-                raise
+            except (SystemExit, Exception) as e:  # noqa: BLE001 (any failure stays on its network)
+                msg = str(e) or e.__class__.__name__
+                print(f"::error title=Social post::{c.name} did not post {p.title}: {msg}")
+                failures.append(f"- {p.title}: {c.name} failed ({msg}). The next run tries {c.name} again.")
+                failed.append(c.name)
+                continue
             print(f"posted to {c.name}: {p.title}: {url}")
-            posted_any = True
+            done.append(c.name)
             if c.name == "linkedin" and p.collaborator:
                 notes.append(f"- {p.title}: {url} Add the {p.collaborator} LinkedIn page as collaborator.")
-        if posted_any:
+        if failed:
+            ledger.setdefault("posted", []).extend(
+                f"{p.key}#{n}" for n in done if f"{p.key}#{n}" not in posted)
+        else:
             ledger.setdefault("posted", []).append(p.key)
-            save_ledger(ledger)
+        save_ledger(ledger)
     if notes:
         _summary(["### Collaborators to add by hand", ""] + notes)
+    if failures:
+        _summary(["### Posts that failed", ""] + failures)
+        out = os.environ.get("GITHUB_OUTPUT")
+        if out:
+            with open(out, "a", encoding="utf-8") as fh:
+                fh.write("failed=true\n")
     return 0
 
 

@@ -100,7 +100,11 @@ jobs:
       - name: Fold in a ledger that has not reached master yet
         run: bash scripts/social-fold-ledger.sh
 
+      # A network that fails does not stop the other. The script records
+      # what posted, sets failed=true and exits 0, so the ledger steps below
+      # still run, and the last step fails the job.
       - name: Post and update the ledger
+        id: post
         env:
           BSKY_HANDLE: ${{ secrets.BSKY_HANDLE }}
           BSKY_APP_PASSWORD: ${{ secrets.BSKY_APP_PASSWORD }}
@@ -157,3 +161,9 @@ jobs:
           GH_TOKEN: ${{ secrets.AUTOPR_TOKEN }}
           GH_REPO: ${{ github.repository }}
         run: scripts/merge-bot-pr.sh "${{ steps.create-pr.outputs.pull-request-number }}"
+
+      - name: Fail when a network did not post
+        if: steps.post.outputs.failed == 'true'
+        run: |
+          echo "::error::A network did not post. The run summary names it, and the next run tries it again."
+          exit 1
