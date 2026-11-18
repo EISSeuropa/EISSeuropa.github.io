@@ -85,13 +85,13 @@
     },
     {
       "kind": "fix",
-      "site": "EISS",
-      "n": 2154,
-      "title": "Link previews for papers, profiles and the card alt text",
-      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2154",
-      "at": "2026-11-15",
-      "lines": 172
+      "site": "NetSec",
+      "n": 2229,
+      "title": "The credentials check renews an expired LinkedIn access token before calling it a failure",
+      "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2229",
+      "at": "2026-11-18",
+      "lines": 210
     }
   ],
-  "since": "2026-10-18"
+  "since": "2026-10-19"
 }
