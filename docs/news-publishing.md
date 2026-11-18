@@ -8,7 +8,7 @@ label-an-issue automation. Tracked in
 [#634](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/634),
 [#2058](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2058).
 
-## Status (11 November 2026)
+## Status (18 November 2026)
 
 Ready:
 
@@ -26,12 +26,18 @@ Ready:
   `news` and `publish` labels when they are missing
   ([#2142](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2142)).
 
+- LinkedIn posting works. The first post went out on 18 November 2026: the
+  ESSC 2027 call, to LinkedIn only, with the NetSec page added as
+  collaborator by hand (#2210, run 6). It went through NetSec's LinkedIn app
+  ([#2207](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2207)).
+
 Not yet done:
 
-- No item has been posted through the pipeline. The first real news item is
-  the live test: read the preview in the run summary, approve, then check both
-  accounts. A LinkedIn 403 means NetSec's app cannot post for the EISS page,
-  and EISS needs its own app (Set-up, step 1).
+- Bluesky: `BSKY_APP_PASSWORD` does not sign in to `eissnetwork.bsky.social`
+  (credentials check, 18 November). It needs a new app password from whoever
+  holds that login (Set-up, step 3). Until then an item posts to LinkedIn
+  only when its key is in the ledger with `#bluesky`, as the ESSC 2027 call
+  is. Without that entry, every run fails on Bluesky and retries it.
 - The Seville workshop item (11 November) merged before `SOCIAL_ENABLED` was
   set. It carries `"social": "skip"`, so the next run does not post it.
 - The newsletter does not use the pipeline yet. The form has no Newsletter box
@@ -317,13 +323,21 @@ with every item then in `news.json`.
 
 ### Set-up (done once, by the maintainer)
 
-1. LinkedIn: check in the developer portal whether NetSec's app, which holds
-   the Community Management API, can post for the EISS page when the
-   authorising member administers both pages. If it cannot, request the same
-   product for an EISS app.
+1. LinkedIn: EISS posts through NetSec's LinkedIn app, which holds the
+   Community Management API. EISS has no app of its own. The tokens are
+   authorised by a person who administers both the EISS and the NetSec page,
+   and `w_organization_social` covers every page that person administers.
+   `LINKEDIN_ORG_ID` (`78412359`) picks the EISS page. Both sites store the
+   same token pair, authorised on 11 November 2026, and the client ID and
+   secret of NetSec's app (#2207). If that person stops administering either
+   page, re-authorise as someone who administers both. An EISS app would need
+   its own Community Management API request, which LinkedIn reviews.
 2. Create the token with `scripts/linkedin-token.py` (`auth-url`, then
-   `exchange`), signed in as an administrator of the EISS page. The scope is
-   `w_organization_social`. What caught the first run on a Mac:
+   `exchange`), signed in as an administrator of both pages, with NetSec's
+   client ID, client secret and a redirect URI registered on NetSec's app. The
+   scope is `w_organization_social`. Store the value only, never the
+   `LINKEDIN_ACCESS_TOKEN=` part the script prints before it. What caught the
+   first run on a Mac:
    - Run it from the repository folder with `/usr/bin/python3`. A python.org
      build fails with `CERTIFICATE_VERIFY_FAILED`.
    - Replace each `<...>` placeholder, brackets included, with the value in
@@ -374,6 +388,12 @@ With no channel configured, nothing is posted and the ledger is untouched.
   If `exchange` printed no refresh token, the access token cannot renew
   itself: repeat step 2 of the set-up every 60 days or so.
   NetSec's `docs/admin-guide.md` has the same procedure.
+- **One renewal for both sites.** The refresh token issued on 11 November
+  2026 expires on 11 November 2027. NetSec's `data/linkedin-api-version.json`
+  records the issue date, its monthly check opens a reminder issue from
+  5 October 2027, and the "EISS internal deadlines" calendar has the expiry.
+  A renewal replaces the two tokens in this repository's `social` environment
+  and in NetSec's `social` and `social-auto` environments together.
 - **The LinkedIn API version** is pinned in `data/linkedin-api-version.json`.
   `linkedin-version-check.yml` reads LinkedIn's list of active versions on
   the 5th of each month and opens an auto-merging PR when the pin nears its
