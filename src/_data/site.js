@@ -221,6 +221,14 @@ module.exports = {
       icon: "user-plus",
       roles: ["staff", "management"],
     },
+    // The News item form on GitHub, for now. A composer with live character
+    // counts and post previews is #2196.
+    {
+      href: "https://github.com/EISSeuropa/EISSeuropa.github.io/issues/new?template=news.yml",
+      key: "newsComposer",
+      icon: "rss",
+      roles: ["staff", "management", "volunteer"],
+    },
     // Daily tasks live in Chat spaces.
     { href: "https://chat.google.com/", key: "chat", icon: "users", roles: ["staff", "management", "volunteer"] },
     { href: "https://www.linkedin.com/groups/42830462/", key: "alumni", icon: "linkedin", roles: ["staff", "management", "board", "volunteer"] },
