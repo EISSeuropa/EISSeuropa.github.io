@@ -120,7 +120,7 @@ site and in the posts. The news PR takes the headline as its title too.
 
 If the form shows for a second and then turns into a blank issue, the browser
 holds saved GitHub data that replaces it (seen on 18 November 2026 from the
-dashboard's News Composer tile on a desktop). Discarding the blank issue does
+dashboard's EISS News Composer tile on a desktop). Discarding the blank issue does
 not help. Open the link in a private window, or clear the stored data for
 github.com in the browser's settings, which signs you out of GitHub.
 
