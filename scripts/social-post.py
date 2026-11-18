@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Post EISS news items to the EISS LinkedIn page and Bluesky account (#2056).
+Post EISS news items to the EISS LinkedIn page and Bluesky account (#2056),
+and the weekly welcome to people who joined EISS (#2219, --kind welcome).
 
 Ported from EISSeuropa/netsec.github.io scripts/social-post.py (its #1072
 pipeline), cut down to news: EISS has no member spotlight and no curated
@@ -22,8 +23,17 @@ re-runs publish nothing. The key is news::<date>::<slug>, with the slug built
 as src/_data/news.js builds it. Editing a posted item's title or date makes
 a new key, so the item would be offered again (the approval gate catches it).
 
+The welcome (#2219) names the people in src/_data/board.json who agreed to
+appear in EISS's social media posts (`socialConsent`, from the Joining Form or
+the bios form) and whose `joined` date is on or after data/welcome.json
+`since`, the go-live date. A person waits WELCOME_WAIT_DAYS after `joined`,
+and a volunteer whose roleEndDate is a cohort's end waits for that cohort's
+start. Each person named is recorded as welcome::<slug>. Ported from
+EISSeuropa/netsec.github.io's weekly welcome (#2236).
+
 Usage:
     python3 scripts/social-post.py --dry-run          # preview what is pending
+    python3 scripts/social-post.py --dry-run --kind welcome --since 2026-11-01
     python3 scripts/social-post.py --count            # number pending (for CI)
     python3 scripts/social-post.py --live --channel all   # behind the `social` gate
     python3 scripts/social-post.py --seed             # mark every current item posted
@@ -34,12 +44,13 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import hashlib
 import json
 import os
 import re
 import sys
 import unicodedata
-from dataclasses import dataclass
+from dataclasses import dataclass, field as dataclass_field
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -47,6 +58,11 @@ NEWS_JSON = ROOT / "src" / "_data" / "news.json"
 LEDGER = ROOT / "data" / "social-posted.json"
 LINKEDIN_VERSION_FILE = ROOT / "data" / "linkedin-api-version.json"
 ACCOUNTS_JSON = ROOT / "data" / "social-accounts.json"
+BOARD_JSON = ROOT / "src" / "_data" / "board.json"
+COHORTS_JSON = ROOT / "src" / "_data" / "cohorts.json"
+WELCOME = ROOT / "data" / "welcome.json"
+# The welcome card, rendered per post by scripts/build-welcome-card.py (gitignored).
+WELCOME_CARDS = ROOT / ".cache" / "welcome-cards"
 SITE = "https://eiss-europa.com"
 SRC = ROOT / "src"
 SITE_OG = SRC / "assets" / "images" / "index-meta.jpg"
@@ -98,6 +114,11 @@ class Post:
     networks: tuple[str, ...] = ()
     # False when the item has no photo of its own and the posts use the site card.
     own_image: bool = False
+    # Welcome only: the finished text for each channel, keyed "bluesky" and
+    # "linkedin", and the welcome::<slug> key of every person it names,
+    # recorded in the ledger with `key` once the post goes out.
+    texts: dict = dataclass_field(default_factory=dict)
+    member_keys: tuple[str, ...] = ()
 
     def wants(self, channel: str) -> bool:
         return not self.networks or channel in self.networks
@@ -111,6 +132,8 @@ class Post:
         text does not hold it, and its @tags shown as the network shows them.
         Otherwise the post is built from the title and summary: Bluesky is
         trimmed to its limit, and the link is always kept whole."""
+        if self.texts:
+            return self.texts.get(channel, "")
         own = self.custom(channel)
         if own:
             text, _ = tagged(with_link(own, self.link), channel, load_accounts())
@@ -344,6 +367,265 @@ def find_links(text: str) -> list[tuple[str, int, int]]:
 
 
 # --------------------------------------------------------------------------
+# Weekly welcome to people who joined EISS (#2219)
+# --------------------------------------------------------------------------
+WELCOME_TITLE = "Welcome to EISS"
+BOARD_LINK = f"{SITE}/board.html"
+# Days after `joined` before a person is welcomed: a newcomer adds their photo
+# through the bios form after approval, so the card has more photos.
+WELCOME_WAIT_DAYS = 7
+# Tiles on the welcome card. When everyone pictured fits, each has a tile.
+# Otherwise the last tile reads "+N" for everyone not pictured.
+WELCOME_CARD_TILES = 7
+_NUMBER_WORDS = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"]
+
+
+def _number_word(n: int) -> str:
+    """"one" to "ten" in words, larger numbers in figures."""
+    return _NUMBER_WORDS[n] if 0 <= n < len(_NUMBER_WORDS) else str(n)
+
+
+def _count_words(n: int, noun: str, plural: str = "") -> str:
+    """"one person", "seven people", "16 people"."""
+    return f"{_number_word(n)} {noun}" if n == 1 else f"{_number_word(n)} {plural or noun + 's'}"
+
+
+def _join_and(items: list[str]) -> str:
+    """"a", "a and b", "a, b and c" (no Oxford comma)."""
+    items = [i for i in items if i]
+    if len(items) <= 1:
+        return "".join(items)
+    return ", ".join(items[:-1]) + " and " + items[-1]
+
+
+def welcome_since() -> str | None:
+    """data/welcome.json `since` (YYYY-MM-DD), or None while the welcome is
+    off (no file, or `since` null or malformed)."""
+    try:
+        since = json.loads(WELCOME.read_text(encoding="utf-8")).get("since")
+        return dt.date.fromisoformat(str(since)).isoformat() if since else None
+    except (OSError, ValueError, AttributeError):
+        return None
+
+
+def _cohorts() -> list[dict]:
+    try:
+        return json.loads(COHORTS_JSON.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return []
+
+
+def person_slug(p: dict) -> str:
+    return p.get("slug") or slugify(p.get("name", ""))
+
+
+def person_cohort(p: dict, cohorts: list[dict]) -> dict | None:
+    """The volunteer cohort a Support Staff entry belongs to: the one whose
+    end is the entry's roleEndDate (sync-board.py writes it from the cohort
+    answer)."""
+    end = p.get("roleEndDate")
+    if p.get("_section") != "support" or not end:
+        return None
+    return next((c for c in cohorts if c.get("end") == end), None)
+
+
+def welcome_due(p: dict, cohorts: list[dict]) -> str:
+    """The first date the person may be welcomed (YYYY-MM-DD)."""
+    due = (dt.date.fromisoformat(p["joined"]) + dt.timedelta(days=WELCOME_WAIT_DAYS)).isoformat()
+    c = person_cohort(p, cohorts)
+    return max(due, c["start"]) if c and c.get("start") else due
+
+
+def welcome_people(posted: set[str], since: str, today: dt.date) -> list[dict]:
+    """Everyone in board.json who agreed to social media posts, joined on or
+    after `since`, is due by `today` and has not been welcomed, oldest first.
+    Each carries `_section` ("members" or "support")."""
+    try:
+        board = json.loads(BOARD_JSON.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return []
+    cohorts = _cohorts()
+    out = []
+    for section in ("members", "support"):
+        for p in board.get(section, []):
+            p = {**p, "_section": section}
+            joined = str(p.get("joined") or "")
+            try:
+                dt.date.fromisoformat(joined)
+            except ValueError:
+                continue
+            if not (p.get("socialConsent") is True and p.get("name") and joined >= since):
+                continue
+            if p.get("formerMember") or f"welcome::{person_slug(p)}" in posted:
+                continue
+            if welcome_due(p, cohorts) > today.isoformat():
+                continue
+            out.append(p)
+    return sorted(out, key=lambda p: (p["joined"], p["name"].lower()))
+
+
+def welcome_pending(posted: set[str], since: str | None = None,
+                    today: dt.date | None = None) -> list[dict]:
+    """The people the next welcome names. Empty while the welcome is off (no
+    `since`, or a go-live date still to come) or nobody is due. `since`
+    overrides data/welcome.json for previews, and is the only way to compose
+    a welcome before the go-live date. scripts/build-welcome-card.py calls
+    this too, so the card and the post name the same people."""
+    today = today or dt.datetime.now(dt.timezone.utc).date()
+    if not since:
+        since = welcome_since()
+        if not since or today.isoformat() < since:
+            return []
+    return welcome_people(posted, since, today)
+
+
+def _role_line(p: dict) -> str:
+    """"Position, Institution", whichever is set, without a stutter when the
+    position already names the institution."""
+    pos = (p.get("position") or "").strip()
+    inst = (p.get("institution") or "").strip()
+    if inst and inst.lower() in pos.lower():
+        return pos
+    return ", ".join(x for x in (pos, inst) if x)
+
+
+def welcome_groups(people: list[dict]) -> list[tuple[str, list[dict]]]:
+    """(heading, people) in the post's order: each volunteer cohort, then the
+    board, then everyone else in the team. Empty groups are left out."""
+    cohorts = _cohorts()
+    groups: dict[str, list[dict]] = {}
+    for p in people:
+        c = person_cohort(p, cohorts)
+        if c:
+            phrase = ((c.get("phrase") or {}).get("en") or "the new cohort").strip()
+            heading = phrase[:1].upper() + phrase[1:]
+        elif p["_section"] == "members":
+            heading = "The board"
+        else:
+            heading = "The team"
+        groups.setdefault(heading, []).append(p)
+    order = [h for h in groups if h not in ("The board", "The team")] + ["The board", "The team"]
+    return [(h, groups[h]) for h in order if h in groups]
+
+
+def welcome_linkedin(people: list[dict]) -> str:
+    """A heading per group and one line per person: name, role in EISS when
+    it is not the group's own, position and institution, and country. Over
+    LinkedIn's limit, the positions go first, then the tail of each group."""
+
+    def line(p: dict, full: bool) -> str:
+        parts = [p["name"].strip()]
+        if p.get("role") not in ("Board Member", "Support Staff"):
+            parts.append(p.get("role", ""))
+        if full:
+            parts.append(_role_line(p))
+        text = ", ".join(x for x in parts if x)
+        country = (p.get("country") or "").strip()
+        if country and country.lower() not in text.lower():
+            text += f" ({country})"
+        return f"- {text}"
+
+    def build(cap: int | None, full: bool) -> str:
+        out = [WELCOME_TITLE, "", f"{_count_words(len(people), 'person', 'people').capitalize()} joined EISS:"]
+        for heading, group in welcome_groups(people):
+            shown = group if cap is None else group[:cap]
+            out += ["", f"{heading}:"] + [line(p, full) for p in shown]
+            if len(shown) < len(group):
+                out.append(f"- and {_count_words(len(group) - len(shown), 'other')}")
+        return "\n".join(out + ["", f"Meet them at {BOARD_LINK}"])
+
+    attempts = [(None, True), (None, False)] + [(k, False) for k in range(len(people), 0, -1)]
+    for cap, full in attempts:
+        text = build(cap, full)
+        if len(li_little_text(text)) <= LINKEDIN_LIMIT:
+            return text
+    return build(0, False)
+
+
+def welcome_bluesky(people: list[dict]) -> str:
+    """One sentence with as many names as fit and "and N more", then the
+    link, within 300 graphemes."""
+    groups = welcome_groups(people)
+    n = len(people)
+    names = [p["name"].strip() for p in people]
+    if n == 1:
+        heading = groups[0][0]
+        where = {"The board": "the EISS board", "The team": "the EISS team"}.get(
+            heading, f"{heading[:1].lower()}{heading[1:]} of EISS volunteers")
+        lead = f"Welcome to {names[0]}, who joined {where}."
+        return f"{lead}\n\n{BOARD_LINK}"
+    if len(groups) == 1 and groups[0][0] not in ("The board", "The team"):
+        who = f"{groups[0][0][:1].lower()}{groups[0][0][1:]} of EISS volunteers"
+    else:
+        who = f"the {_count_words(n, 'person', 'people')} who joined EISS"
+    for shown in range(n, -1, -1):
+        listed = names[:shown] + ([f"{_number_word(n - shown)} more"] if shown < n else [])
+        lead = f"Welcome to {who}: {_join_and(listed)}." if shown else f"Welcome to {who}."
+        text = f"{lead}\n\n{BOARD_LINK}"
+        if len(text) <= BLUESKY_LIMIT:
+            return text
+    return f"Welcome to {who}.\n\n{BOARD_LINK}"
+
+
+def has_photo(p: dict) -> bool:
+    """True when the person's headshot is in the repository."""
+    rel = (p.get("photoOverride") or p.get("photo") or "").strip().lstrip("/")
+    return bool(rel) and (SRC / rel).is_file()
+
+
+def welcome_card_faces(people: list[dict]) -> list[dict]:
+    """The people pictured on the welcome card, in the post's order. Only
+    people with a headshot are pictured, and the rest are counted in the
+    "+N" tile. When nobody has one, the card falls back to initials tiles."""
+    pool = [p for p in people if has_photo(p)] or people
+    if len(pool) == len(people) and len(people) <= WELCOME_CARD_TILES:
+        return list(people)
+    return pool[:WELCOME_CARD_TILES - 1]
+
+
+def welcome_card_path(people: list[dict]) -> Path:
+    """The welcome card for exactly these people. The name hashes their
+    slugs, so a card left over from another week is never attached."""
+    digest = hashlib.sha256(",".join(person_slug(p) for p in people).encode("utf-8")).hexdigest()[:12]
+    return WELCOME_CARDS / f"{digest}.jpg"
+
+
+def welcome_card_alt(people: list[dict]) -> str:
+    faces = welcome_card_faces(people)
+    shown = [p["name"].strip() for p in faces]
+    what = "photos of " if any(has_photo(p) for p in faces) else "tiles for "
+    n = len(people)
+    noun = _count_words(n, "new member of EISS", "new members of EISS")
+    if len(shown) == n:
+        return f"Welcome to EISS: {what}the {noun}, {_join_and(shown)}"
+    return (f"Welcome to EISS: {what}{_number_word(len(shown))} of the {n} new members of EISS, "
+            f"{_join_and(shown)}, and a tile for {_number_word(n - len(shown))} more")
+
+
+def read_welcome(posted: set[str], since: str | None = None,
+                 today: dt.date | None = None) -> Post | None:
+    """The weekly welcome post, or None when nobody is to be welcomed."""
+    today = today or dt.datetime.now(dt.timezone.utc).date()
+    people = welcome_pending(posted, since, today)
+    if not people:
+        return None
+    y, w, _ = today.isocalendar()
+    card = welcome_card_path(people)
+    return Post(
+        key=f"welcome::{y}-W{w:02d}",
+        title=WELCOME_TITLE,
+        summary=_join_and([p["name"].strip() for p in people]),
+        link=BOARD_LINK,
+        image=card if card.exists() else (SITE_OG if SITE_OG.exists() else None),
+        image_alt=welcome_card_alt(people) if card.exists() else SITE_OG_ALT,
+        hashtags="",
+        own_image=card.exists(),
+        texts={"bluesky": welcome_bluesky(people), "linkedin": welcome_linkedin(people)},
+        member_keys=tuple(f"welcome::{person_slug(p)}" for p in people),
+    )
+
+
+# --------------------------------------------------------------------------
 # Ledger
 # --------------------------------------------------------------------------
 def load_ledger() -> dict:
@@ -356,8 +638,13 @@ def save_ledger(data: dict) -> None:
     LEDGER.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
-def pending(ledger: dict) -> list[Post]:
+def pending(ledger: dict, kind: str = "news", since: str | None = None) -> list[Post]:
+    """The posts still to go out: the news items, or the week's welcome.
+    `since` applies to the welcome only."""
     posted = set(ledger.get("posted", []))
+    if kind == "welcome":
+        wp = read_welcome(posted, since)
+        return [wp] if wp else []
     return [p for p in read_news() if p.key not in posted]
 
 
@@ -655,19 +942,33 @@ def _summary(lines: list[str]) -> None:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Post EISS news to LinkedIn and Bluesky (#2056).")
+    ap = argparse.ArgumentParser(description="Post EISS news and the weekly welcome to LinkedIn and Bluesky (#2056, #2219).")
     ap.add_argument("--dry-run", action="store_true", help="print posts, publish nothing (default)")
     ap.add_argument("--live", action="store_true", help="publish through the configured channels")
     ap.add_argument("--channel", choices=["bluesky", "linkedin", "all"], default="all")
     ap.add_argument("--count", action="store_true", help="print the number of pending items only")
     ap.add_argument("--seed", action="store_true", help="record every current item as posted")
+    ap.add_argument("--kind", choices=["news", "welcome"], default="news",
+                    help="news items (default), or the weekly welcome (#2219)")
+    ap.add_argument("--since", metavar="YYYY-MM-DD",
+                    help="welcome previews only: people who joined on or after this date, "
+                         "in place of data/welcome.json `since`. Refused with --live")
     args = ap.parse_args()
+    # The welcome is not retroactive: a live post names only people who joined
+    # on or after data/welcome.json `since`, the go-live date.
+    if args.since and (args.live or args.seed):
+        ap.error("--since is for dry-run previews. A live welcome uses data/welcome.json `since`")
+    if args.since:
+        try:
+            dt.date.fromisoformat(args.since)
+        except ValueError:
+            ap.error(f"--since must be a date as YYYY-MM-DD, not {args.since!r}")
 
     ledger = load_ledger()
-    posts = pending(ledger)
+    posts = pending(ledger, args.kind, args.since)
 
     if args.seed:
-        ledger["posted"] += [p.key for p in posts]
+        ledger["posted"] += [k for p in posts for k in (p.key, *p.member_keys)]
         save_ledger(ledger)
         print(f"Recorded {len(posts)} item(s) as posted.")
         return 0
@@ -687,7 +988,8 @@ def main() -> int:
         for p in posts:
             print(f"* {p.title}  (key: {p.key})")
             if not p.own_image:
-                print("  NO PHOTO: the posts use the standard EISS picture.\n")
+                what = "No welcome card" if p.texts else "NO PHOTO"
+                print(f"  {what}: the posts use the standard EISS picture.\n")
             for ch in ("bluesky", "linkedin"):
                 if not p.wants(ch):
                     print(f"  -- not posted to {ch}: the item is for {' and '.join(p.networks)} only --\n")
@@ -749,6 +1051,7 @@ def main() -> int:
                 f"{p.key}#{n}" for n in done if f"{p.key}#{n}" not in posted)
         else:
             ledger.setdefault("posted", []).append(p.key)
+            ledger["posted"].extend(k for k in p.member_keys if k not in ledger["posted"])
         save_ledger(ledger)
     if notes:
         _summary(["### Collaborators to add by hand", ""] + notes)

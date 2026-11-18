@@ -31,7 +31,8 @@
     "photo": "Headshot photo (optional)",
     "roleEndDate": "Internship end date (optional)",
     "cohort": "Volunteer cohort (optional)",
-    "consent": "I consent to publication of my bio on eiss-europa.com"
+    "consent": "I consent to publication of my bio on eiss-europa.com",
+    "socialConsent": "Social media"
   },
 
   "_url_overrides_doc": [

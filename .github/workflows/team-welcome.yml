@@ -1,0 +1,269 @@
+# Weekly welcome to people who joined EISS, approval-gated (#2219).
+#
+# Ported from EISSeuropa/netsec.github.io directory-welcome.yml (#2236).
+#
+# Every Thursday at 10:00 Central European time, scripts/social-post.py
+# composes one post naming the people in src/_data/board.json who agreed to
+# appear in EISS's social media posts (`socialConsent`, from the Joining Form
+# and the bios form), with a card of their photos
+# (scripts/build-welcome-card.py).
+#
+# The welcome is not retroactive. It names only people whose `joined` date is
+# on or after `since` in data/welcome.json, the go-live date, and each person
+# named is recorded in the ledger as welcome::<slug>.
+#
+# Two modes, chosen by the gate job:
+#   - preview: before the go-live date (or while `since` is null), or on a
+#     manual run given a `since` date. The post for people who joined in that
+#     window (default: the last 13 days, the people a seven-day wait makes due
+#     this week) goes to the run summary, and the card to the run's
+#     artifacts. Nothing is posted, no secrets are read and the ledger is
+#     untouched. --since is refused with --live.
+#   - live: from the go-live date. As for news (social-post.yml), `publish`
+#     runs only when someone is due and SOCIAL_ENABLED is `true`, and targets
+#     the `social` environment, so GitHub holds it for a required reviewer,
+#     who reads the preview and approves. The ledger returns in a PR on
+#     `welcome/ledger`, merged by scripts/merge-bot-pr.sh once the checks
+#     pass.
+#
+# Cron can't follow DST, so two UTC triggers (08:00 + 09:00) fire and the gate
+# lets through the one that lands at 10:00 Europe/Paris.
+#
+# Secrets on the `social` environment: the same as social-post.yml.
+# Set-up: docs/news-publishing.md, Weekly welcome.
+
+name: Welcome people who joined EISS
+
+on:
+  schedule:
+    - cron: '0 8 * * 4'
+    - cron: '0 9 * * 4'
+  workflow_dispatch:
+    inputs:
+      since:
+        description: 'Preview only: people who joined on or after this date (YYYY-MM-DD). Empty: run as scheduled.'
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+concurrency:
+  group: team-welcome
+  cancel-in-progress: false
+
+jobs:
+  gate:
+    name: Proceed only at 10:00 Europe/Paris, and pick the mode
+    runs-on: ubuntu-latest
+    outputs:
+      go: ${{ steps.check.outputs.go }}
+      mode: ${{ steps.mode.outputs.mode }}
+      since: ${{ steps.mode.outputs.since }}
+      count: ${{ steps.mode.outputs.count }}
+    steps:
+      - id: check
+        env:
+          SCHEDULE: ${{ github.event.schedule }}
+        run: |
+          offset=$(TZ='Europe/Paris' date +%z)   # +0200 in summer (CEST), +0100 in winter (CET)
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "go=true" >> "$GITHUB_OUTPUT"
+          elif { [ "$offset" = "+0200" ] && [[ "$SCHEDULE" == "0 8 "* ]]; } \
+            || { [ "$offset" = "+0100" ] && [[ "$SCHEDULE" == "0 9 "* ]]; }; then
+            echo "go=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "go=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Cron '${SCHEDULE}' is not the 10:00 Europe/Paris trigger for offset ${offset}; skipped."
+          fi
+
+      - name: Check out repository
+        if: steps.check.outputs.go == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Fold in a welcome ledger that has not reached master yet
+        if: steps.check.outputs.go == 'true'
+        run: bash scripts/social-fold-ledger.sh welcome/ledger
+
+      - id: mode
+        if: steps.check.outputs.go == 'true'
+        env:
+          SINCE_INPUT: ${{ github.event.inputs.since || '' }}
+        run: |
+          today=$(date -u +%F)
+          live_since=$(python3 -c "import json; print(json.load(open('data/welcome.json')).get('since') or '')")
+          if [ -n "$SINCE_INPUT" ]; then
+            mode=preview; since="$SINCE_INPUT"
+          elif [ -n "$live_since" ] && ! [[ "$today" < "$live_since" ]]; then
+            mode=live; since="$live_since"
+          else
+            mode=preview; since=$(date -u -d '13 days ago' +%F)
+          fi
+          if [ "$mode" = live ]; then
+            count=$(python3 scripts/social-post.py --count --kind welcome)
+          else
+            count=$(python3 scripts/social-post.py --count --kind welcome --since "$since")
+          fi
+          {
+            echo "mode=$mode"
+            echo "since=$since"
+            echo "count=$count"
+          } >> "$GITHUB_OUTPUT"
+          echo "::notice::Mode ${mode}, people who joined on or after ${since} (go-live date: ${live_since:-not set}), ${count} post(s) due."
+
+  preview:
+    name: Preview the weekly welcome
+    needs: gate
+    if: needs.gate.outputs.go == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+
+      - name: Fold in a welcome ledger that has not reached master yet
+        run: bash scripts/social-fold-ledger.sh welcome/ledger
+
+      - name: Render the welcome card
+        # Pillow crops the rendered SVG (scripts/card_raster.py). Without the
+        # card the post uses the standard EISS picture, and this step shows
+        # red, which is the signal.
+        continue-on-error: true
+        env:
+          MODE: ${{ needs.gate.outputs.mode }}
+          SINCE: ${{ needs.gate.outputs.since }}
+        run: |
+          pip install --quiet -r scripts/requirements.txt
+          if [ "$MODE" = live ]; then
+            python3 scripts/build-welcome-card.py
+          else
+            python3 scripts/build-welcome-card.py --since "$SINCE"
+          fi
+
+      - name: Compose (dry run) into the run summary
+        env:
+          MODE: ${{ needs.gate.outputs.mode }}
+          SINCE: ${{ needs.gate.outputs.since }}
+        run: |
+          if [ "$MODE" = live ]; then ARGS=(--kind welcome); else ARGS=(--kind welcome --since "$SINCE"); fi
+          {
+            echo "### Weekly welcome (${MODE}), people who joined since ${SINCE}"
+            echo ""
+            echo '```'
+            python3 scripts/social-post.py --dry-run "${ARGS[@]}"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$MODE" != live ]; then
+            echo "::notice::Preview: the welcome post is in the run summary and the card in the artifacts. Nothing was posted."
+          elif [ "${{ vars.SOCIAL_ENABLED }}" != "true" ]; then
+            echo "::notice::SOCIAL_ENABLED is not true. Nothing is posted."
+          fi
+
+      - name: Attach the card to the run
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: welcome-card
+          path: .cache/welcome-cards/*.jpg
+          if-no-files-found: ignore
+          include-hidden-files: true
+          retention-days: 14
+
+  publish:
+    name: Approve, then post the welcome
+    needs: [gate, preview]
+    if: needs.gate.outputs.mode == 'live' && needs.gate.outputs.count != '0' && vars.SOCIAL_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    environment: social
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+
+      - name: Fold in a welcome ledger that has not reached master yet
+        run: bash scripts/social-fold-ledger.sh welcome/ledger
+
+      - name: Render the welcome card
+        # After the fold-in, so the card shows the people this run names.
+        continue-on-error: true
+        run: |
+          pip install --quiet -r scripts/requirements.txt
+          python3 scripts/build-welcome-card.py
+
+      # A network that fails does not stop the other. The script records what
+      # posted, sets failed=true and exits 0, so the ledger steps still run,
+      # and the last step fails the job.
+      - name: Post and update the ledger
+        id: post
+        env:
+          BSKY_HANDLE: ${{ secrets.BSKY_HANDLE }}
+          BSKY_APP_PASSWORD: ${{ secrets.BSKY_APP_PASSWORD }}
+          LINKEDIN_ORG_ID: ${{ secrets.LINKEDIN_ORG_ID }}
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_REFRESH_TOKEN: ${{ secrets.LINKEDIN_REFRESH_TOKEN }}
+          LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
+          LINKEDIN_CLIENT_SECRET: ${{ secrets.LINKEDIN_CLIENT_SECRET }}
+        run: python3 scripts/social-post.py --live --channel all --kind welcome
+
+      - name: Move the ledger onto the current master
+        # The approval can hold this job for a day. Reset to master's tip and
+        # re-add only the keys master lacks, so the PR is a pure append.
+        run: |
+          cp data/social-posted.json /tmp/ledger.json
+          git fetch --depth=1 origin master
+          git reset --hard --quiet FETCH_HEAD
+          python3 - <<'PY'
+          import json, pathlib
+          led = pathlib.Path("data/social-posted.json")
+          cur = json.loads(led.read_text(encoding="utf-8"))
+          extra = [k for k in json.loads(pathlib.Path("/tmp/ledger.json").read_text(encoding="utf-8"))["posted"]
+                   if k not in cur["posted"]]
+          cur["posted"] += extra
+          led.write_text(json.dumps(cur, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+          print(f"::notice::Carried {len(extra)} new key(s) onto master's ledger.")
+          PY
+
+      - name: Persist the ledger through a PR
+        id: create-pr
+        uses: peter-evans/create-pull-request@3ffccacd46053766916f087ce41d627c0b8cf2d1 # v8
+        with:
+          token: ${{ secrets.AUTOPR_TOKEN || secrets.GITHUB_TOKEN }}
+          branch: welcome/ledger
+          base: master
+          delete-branch: true
+          add-paths: data/social-posted.json
+          title: 'chore(social): record the weekly welcome'
+          commit-message: |
+            chore(social): record the weekly welcome
+
+            Records the people named in this week's welcome post (#2219).
+          body: |
+            Records the welcome::<slug> keys of the people named in this
+            week's welcome post, so they are not welcomed again.
+            Auto-generated by the team-welcome workflow.
+          labels: automated
+
+      # The "Restrict updates" ruleset blocks auto-merge, so the owner's PAT
+      # merges with --admin after the checks (scripts/merge-bot-pr.sh).
+      - name: Merge once the required checks pass
+        if: steps.create-pr.outputs.pull-request-number
+        env:
+          GH_TOKEN: ${{ secrets.AUTOPR_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: scripts/merge-bot-pr.sh "${{ steps.create-pr.outputs.pull-request-number }}"
+
+      - name: Fail when a network did not post
+        if: steps.post.outputs.failed == 'true'
+        run: |
+          echo "::error::A network did not post. The run summary names it, and the next run tries it again."
+          exit 1

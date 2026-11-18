@@ -271,7 +271,7 @@ def _stub(monkeypatch, tmp_path, *, configured=True, fail=None):
     post = sp.Post(key="news::2026-11-10::a", title="A", summary="S", link="https://x/",
                    collaborator="netsec")
     monkeypatch.setattr(sp, "CHANNELS", {"bluesky": _Fake, "linkedin": _Fake})
-    monkeypatch.setattr(sp, "pending", lambda ledger: [post])
+    monkeypatch.setattr(sp, "pending", lambda ledger, *_a, **_k: [post])
     monkeypatch.setattr(sp, "LEDGER", tmp_path / "ledger.json")
     monkeypatch.setattr(sys, "argv", ["social-post.py", "--live", "--channel", "all"])
     monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(tmp_path / "summary.md"))
@@ -387,7 +387,7 @@ def test_networks_limit_the_post(monkeypatch, tmp_path):
     post = sp.Post(key="news::2026-11-10::a", title="A", summary="S", link="https://x/",
                    collaborator="netsec", networks=("linkedin",))
     monkeypatch.setattr(sp, "CHANNELS", {"bluesky": _Fake, "linkedin": _Fake})
-    monkeypatch.setattr(sp, "pending", lambda ledger: [post])
+    monkeypatch.setattr(sp, "pending", lambda ledger, *_a, **_k: [post])
     assert sp.main() == 0
     assert tried == ["linkedin"]
     assert json.loads((tmp_path / "ledger.json").read_text())["posted"] == ["news::2026-11-10::a"]
@@ -410,7 +410,7 @@ def test_dry_run_names_the_skipped_network_and_a_missing_photo(monkeypatch, tmp_
     _stub(monkeypatch, tmp_path)
     post = sp.Post(key="news::2026-11-10::a", title="A", summary="S", link="https://x/",
                    collaborator="netsec", networks=("bluesky",))
-    monkeypatch.setattr(sp, "pending", lambda ledger: [post])
+    monkeypatch.setattr(sp, "pending", lambda ledger, *_a, **_k: [post])
     monkeypatch.setattr(sys, "argv", ["social-post.py", "--dry-run"])
     buf = io.StringIO()
     with contextlib.redirect_stdout(buf):
@@ -421,6 +421,170 @@ def test_dry_run_names_the_skipped_network_and_a_missing_photo(monkeypatch, tmp_
     assert "-- would post to bluesky --" in text
     # No LinkedIn post, so no collaborator to add.
     assert "as collaborator" not in text
+
+
+# --------------------------------------------------------------------------
+# Weekly welcome (#2219)
+# --------------------------------------------------------------------------
+import datetime as _dt
+
+TODAY = _dt.date(2027, 1, 7)  # a Thursday
+PHOTO = "/assets/images/board/" + sorted(p.name for p in (sp.SRC / "assets" / "images" / "board").glob("*.jpg"))[0]
+COHORTS = [{"key": "winter-2027", "start": "2027-01-04", "end": "2027-02-26",
+            "phrase": {"en": "the winter cohort"}}]
+
+
+def _person(i, joined="2026-12-20", **kw):
+    p = {"name": f"Dr Example Person{i:02d}", "role": "Board Member", "institution": f"University {i:02d}",
+         "position": "Lecturer", "country": "Italy", "joined": joined, "socialConsent": True}
+    p.update(kw)
+    return p
+
+
+def _board(monkeypatch, tmp_path, members=(), support=(), since="2026-12-01"):
+    b = tmp_path / "board.json"
+    b.write_text(json.dumps({"members": list(members), "support": list(support)}), encoding="utf-8")
+    c = tmp_path / "cohorts.json"
+    c.write_text(json.dumps(COHORTS), encoding="utf-8")
+    w = tmp_path / "welcome.json"
+    w.write_text(json.dumps({"since": since}), encoding="utf-8")
+    monkeypatch.setattr(sp, "BOARD_JSON", b)
+    monkeypatch.setattr(sp, "COHORTS_JSON", c)
+    monkeypatch.setattr(sp, "WELCOME", w)
+    monkeypatch.setattr(sp, "WELCOME_CARDS", tmp_path / "cards")
+
+
+def test_welcome_is_off_without_since(monkeypatch, tmp_path):
+    _board(monkeypatch, tmp_path, [_person(1)], since=None)
+    assert sp.read_welcome(set(), today=TODAY) is None
+
+
+def test_welcome_waits_for_the_go_live_date(monkeypatch, tmp_path):
+    _board(monkeypatch, tmp_path, [_person(1)], since="2027-01-10")
+    assert sp.read_welcome(set(), today=TODAY) is None
+
+
+def test_welcome_needs_consent_and_a_join_date(monkeypatch, tmp_path):
+    _board(monkeypatch, tmp_path, [_person(1, socialConsent=False), _person(2, joined=""),
+                                   _person(3), {**_person(4), "socialConsent": "yes"}])
+    post = sp.read_welcome(set(), today=TODAY)
+    assert post.member_keys == ("welcome::dr-example-person03",)
+
+
+def test_welcome_skips_before_since_and_already_welcomed_and_former(monkeypatch, tmp_path):
+    _board(monkeypatch, tmp_path, [_person(1, joined="2026-11-20"), _person(2), _person(3, formerMember=True),
+                                   _person(4)])
+    post = sp.read_welcome({"welcome::dr-example-person02"}, today=TODAY)
+    assert post.member_keys == ("welcome::dr-example-person04",)
+
+
+def test_welcome_waits_seven_days_after_joining(monkeypatch, tmp_path):
+    _board(monkeypatch, tmp_path, [_person(1, joined="2027-01-01"), _person(2, joined="2026-12-31")])
+    assert sp.read_welcome(set(), today=TODAY).member_keys == ("welcome::dr-example-person02",)
+
+
+def test_a_volunteer_waits_for_the_cohort_start(monkeypatch, tmp_path):
+    vol = _person(1, joined="2026-12-01", role="Support Staff", roleEndDate="2027-02-26")
+    _board(monkeypatch, tmp_path, support=[vol])
+    assert sp.read_welcome(set(), today=_dt.date(2027, 1, 3)) is None
+    post = sp.read_welcome(set(), today=TODAY)
+    assert post.texts["bluesky"].startswith(
+        "Welcome to Dr Example Person01, who joined the winter cohort of EISS volunteers.")
+
+
+def test_welcome_groups_cohort_board_and_team(monkeypatch, tmp_path):
+    vols = [_person(i, role="Support Staff", roleEndDate="2027-02-26") for i in (1, 2)]
+    staff = _person(3, role="Support Staff")
+    board = _person(4, role="Co-Director")
+    _board(monkeypatch, tmp_path, [board], vols + [staff])
+    li = sp.read_welcome(set(), today=TODAY).render("linkedin")
+    assert li.startswith("Welcome to EISS\n\nFour people joined EISS:\n\nThe winter cohort:\n- Dr Example Person01")
+    assert "\nThe board:\n- Dr Example Person04, Co-Director, Lecturer, University 04 (Italy)" in li
+    assert "\nThe team:\n- Dr Example Person03, Lecturer, University 03 (Italy)" in li
+    assert li.rstrip().endswith("Meet them at https://eiss-europa.com/board.html")
+
+
+def test_a_whole_cohort_reads_as_the_cohort_on_bluesky(monkeypatch, tmp_path):
+    vols = [_person(i, role="Support Staff", roleEndDate="2027-02-26") for i in range(12)]
+    _board(monkeypatch, tmp_path, support=vols)
+    bsky = sp.read_welcome(set(), today=TODAY).render("bluesky")
+    assert bsky.startswith("Welcome to the winter cohort of EISS volunteers: Dr Example Person00")
+    assert len(bsky) <= sp.BLUESKY_LIMIT and " more." in bsky
+    assert bsky.endswith(sp.BOARD_LINK)
+
+
+def test_mixed_groups_read_as_a_count_on_bluesky(monkeypatch, tmp_path):
+    _board(monkeypatch, tmp_path, [_person(1)], [_person(2, role="Support Staff")])
+    assert sp.read_welcome(set(), today=TODAY).render("bluesky").startswith(
+        "Welcome to the two people who joined EISS: Dr Example Person01 and Dr Example Person02.")
+
+
+def test_linkedin_stays_within_its_limit(monkeypatch, tmp_path):
+    many = [_person(i, position="Professor of " + "Very Long Subject " * 12) for i in range(40)]
+    _board(monkeypatch, tmp_path, many)
+    li = sp.read_welcome(set(), today=TODAY).render("linkedin")
+    assert len(sp.li_little_text(li)) <= sp.LINKEDIN_LIMIT and "Very Long Subject" not in li
+
+
+def test_welcome_card_pictures_people_with_a_photo_first(monkeypatch, tmp_path):
+    people = [{**_person(1), "_section": "members"}, {**_person(2, photo=PHOTO), "_section": "members"}]
+    assert sp.welcome_card_faces(people) == [people[1]]
+    assert sp.welcome_card_alt(people).startswith("Welcome to EISS: photos of one of the 2 new members of EISS")
+    nobody = [{**_person(1), "_section": "members"}]
+    assert sp.welcome_card_alt(nobody).startswith("Welcome to EISS: tiles for the one new member of EISS")
+
+
+def test_welcome_uses_its_card_only_when_rendered_for_these_people(monkeypatch, tmp_path):
+    _board(monkeypatch, tmp_path, [_person(1, photo=PHOTO), _person(2, photo=PHOTO)])
+    post = sp.read_welcome(set(), today=TODAY)
+    assert post.image == sp.SITE_OG and not post.own_image
+    card = sp.welcome_card_path([{**_person(1)}, {**_person(2)}])
+    card.parent.mkdir(parents=True)
+    card.write_bytes(b"jpg")
+    post = sp.read_welcome(set(), today=TODAY)
+    assert post.image == card and post.image_alt.startswith("Welcome to EISS: photos of the two new members")
+
+
+def test_live_welcome_records_every_person(monkeypatch, tmp_path):
+    _board(monkeypatch, tmp_path, [_person(1), _person(2)])
+    post = sp.read_welcome(set(), today=TODAY)
+    saved = {}
+
+    class _Fake(sp.Channel):
+        def configured(self):
+            return True
+
+        def publish(self, p):
+            return "https://example.org/1"
+
+    monkeypatch.setattr(sp, "CHANNELS", {"bluesky": _Fake, "linkedin": _Fake})
+    monkeypatch.setattr(sp, "pending", lambda ledger, *_a, **_k: [post])
+    monkeypatch.setattr(sp, "load_ledger", lambda: {"posted": []})
+    monkeypatch.setattr(sp, "save_ledger", lambda ledger: saved.update(ledger))
+    monkeypatch.setattr(sys, "argv", ["social-post.py", "--live", "--kind", "welcome"])
+    assert sp.main() == 0
+    assert saved["posted"] == ["welcome::2027-W01", "welcome::dr-example-person01", "welcome::dr-example-person02"]
+
+
+def test_since_is_refused_on_a_live_run(monkeypatch, tmp_path):
+    monkeypatch.setattr(sys, "argv", ["social-post.py", "--live", "--kind", "welcome", "--since", "2026-01-01"])
+    try:
+        sp.main()
+    except SystemExit as e:
+        assert e.code == 2
+    else:
+        raise AssertionError("--since accepted with --live")
+
+
+def test_news_runs_never_pick_up_a_welcome(monkeypatch, tmp_path):
+    _board(monkeypatch, tmp_path, [_person(1)])
+    monkeypatch.setattr(sp, "read_news", lambda: [])
+    assert sp.pending({"posted": []}) == [], "the default kind is news, which never holds a welcome"
+
+
+def test_the_go_live_date_in_the_repository_is_a_date_or_null():
+    since = json.loads((sp.ROOT / "data" / "welcome.json").read_text(encoding="utf-8"))["since"]
+    assert since is None or _dt.date.fromisoformat(since)
 
 
 def _standalone() -> int:

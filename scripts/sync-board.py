@@ -51,7 +51,7 @@ import re
 import sys
 import unicodedata
 from collections import Counter
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
@@ -185,6 +185,29 @@ def parse_timestamp(raw: str) -> float:
         except ValueError:
             continue
     return 0.0
+
+
+# The bios form's "Social media" answer that agrees (EISSeuropa.github.io#2219,
+# SOCIAL_CONSENT in workspace-ops intern-lifecycle/Code.gs). The other answer
+# is a No. The question is a required choice on both forms, so a blank cell is
+# a row from before the question, not a withdrawal.
+SOCIAL_AGREE_PREFIX = "i agree that eiss may name me"
+
+
+def social_consent(row: dict, cols: dict, prior: dict | None) -> bool:
+    """True when the person agreed to appear in EISS's social media posts.
+    The latest submission's answer decides: the agreement sets it, a No
+    clears it. A blank answer, or a sheet without the column yet, keeps the
+    earlier value."""
+    col = cols.get("socialConsent", "")
+    answer = (row.get(col, "") or "").strip().lower() if col else ""
+    if answer:
+        return answer.startswith(SOCIAL_AGREE_PREFIX)
+    return bool((prior or {}).get("socialConsent"))
+
+
+def today_utc() -> str:
+    return datetime.now(timezone.utc).date().isoformat()
 
 
 def consent_ok(raw: str) -> bool:
@@ -548,6 +571,17 @@ def build_from_row(row: dict, cols: dict, role_info: dict, prior: dict | None) -
     if role_end:
         person["roleEndDate"] = role_end
 
+    # `joined` is the UTC date a person first lands in board.json. Only a new
+    # entry is stamped, so a returning person keeps theirs and everyone listed
+    # before the field existed has none. The weekly welcome post reads it with
+    # `socialConsent` (EISSeuropa.github.io#2219).
+    if prior is None:
+        person["joined"] = today_utc()
+    elif prior.get("joined"):
+        person["joined"] = prior["joined"]
+    if social_consent(row, cols, prior):
+        person["socialConsent"] = True
+
     # Slug + alt are preserved across syncs if the prior entry has them
     # (a hand-set slug for deep linking, or a custom alt for a11y).
     #
@@ -824,6 +858,7 @@ FIELD_LABELS: dict[str, str] = {
     "alt": "alt text",
     "workingGroups": "working groups",
     "roleEndDate": "role end-date",
+    "socialConsent": "social media consent",
 }
 LINK_LABELS: dict[str, str] = {
     "publicEmail": "public email",

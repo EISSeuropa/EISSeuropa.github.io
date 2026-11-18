@@ -107,6 +107,7 @@ jobs:
         run: |
           python3 scripts/test-social-post.py
           python3 scripts/test-check-linkedin-version.py
+          python3 scripts/test-build-welcome-card.py
 
       # The Claude bulk-read guard, which refuses a whole-file read of
       # anything over 800 lines. It lives outside src/ and matches no path
@@ -145,3 +146,4 @@ jobs:
         run: |
           pip install -r scripts/requirements.txt
           python3 scripts/test-news-image.py
+          python3 scripts/test-sync-board.py
