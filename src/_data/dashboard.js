@@ -10,7 +10,7 @@ const site = require("./site.js");
 const REPO = "https://github.com/EISSeuropa/EISSeuropa.github.io";
 // The dashboard's own version, shown at the foot of the page. Semantic
 // versioning, rules and history in docs/internal-dashboard.md.
-const VERSION = "3.4.0";
+const VERSION = "3.5.0";
 const everyone = ["staff", "management", "board", "volunteer"];
 const today = new Date().toISOString().slice(0, 10);
 
@@ -213,7 +213,17 @@ function assemble(keyDates, source, events = []) {
     url: milestoneUrl(m),
   }));
 
-  return { version: VERSION, milestones, release, counts, dates, deadlines, phase, onboarding, agenda: agenda(dates, events), datesSource: source, calendar: site.deadlinesCalendar || null, repo: "EISSeuropa/EISSeuropa.github.io" };
+  // The apps grid gets a heading per group only for a role that sees more
+  // than eight tiles, about two rows. A heading's data-roles lists those roles
+  // among its tiles', so the role filter hides it like a tile.
+  const apps = site.staffLinks.filter((a) => a.roles);
+  const busy = ["staff", "management", "board", "volunteer"].filter((r) => apps.filter((a) => a.roles.includes(r)).length > 8);
+  const appGroups = [...new Set(apps.map((a) => a.group))].map((key) => ({
+    key,
+    roles: busy.filter((r) => apps.some((a) => a.group === key && a.roles.includes(r))),
+  }));
+
+  return { version: VERSION, appGroups, milestones, release, counts, dates, deadlines, phase, onboarding, agenda: agenda(dates, events), datesSource: source, calendar: site.deadlinesCalendar || null, repo: "EISSeuropa/EISSeuropa.github.io" };
 }
 
 // The five newest issues still open and the last five closed as done, for the Today
