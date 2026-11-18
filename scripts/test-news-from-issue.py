@@ -234,6 +234,13 @@ stops("x", FORM.replace("📣 The call is open!   \n\nWith @NetSec and @cost.\n\
 item = mod.parse_issue("x", FORM.replace("The call is open, with @NetSec. #ESSC2027", "_No response_"), TODAY)
 assert "bluesky" not in item["social"] and "linkedin" in item["social"]
 
+# The post boxes come as code blocks (`render: text`), so an @tag in the
+# issue notifies nobody on GitHub. The fence is dropped, the text kept.
+fenced = FORM.replace("The call is open, with @NetSec. #ESSC2027", "```text\nThe call is open, with @NetSec. #ESSC2027\n```")
+assert mod.parse_issue("x", fenced, TODAY)["social"]["bluesky"] == "The call is open, with @NetSec. #ESSC2027"
+assert mod.post_text("```text\nA\n\n\n\nB\n```") == "A\n\nB"
+assert mod.post_text("```\nA\n```") == "A" and mod.post_text("Use ``` here") == "Use ``` here"
+
 # No headline and the form's default title (#2189).
 stops("news:", MINIMAL, "Headline is empty")
 
@@ -246,6 +253,8 @@ assert len(fields) == 11, sorted(fields)
 for fid, b in fields.items():
     assert re.search(r"^      description: \S", b, re.M), f"{fid} has no description"
 assert "required: true" in fields["headline"], "the Headline is not required"
+# The post boxes render as code blocks, so an @tag in the issue notifies nobody.
+assert "render: text" in fields["linkedin-post"] and "render: text" in fields["bluesky-post"]
 
 # A NetSec item stops the run.
 try:
