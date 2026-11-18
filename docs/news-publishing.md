@@ -284,6 +284,12 @@ The optional `social` field of a news item:
 | `"skip"` or `{"skip": true}` | Never posted |
 | `{"collaborator": "netsec"}` | Posted from the EISS page. The run summary lists the LinkedIn post with a reminder to add the NetSec page as collaborator by hand. LinkedIn's API cannot do it |
 
+**One network only.** To post an item to LinkedIn alone, add its key with
+`#bluesky` to `data/social-posted.json` in the same PR, for example
+`news::2026-11-18::essc-2027-the-call-for-panels-and-papers-is-open#bluesky`.
+The preview then shows Bluesky as already posted, and once LinkedIn posts the
+item is recorded by its key alone. `#linkedin` holds back LinkedIn the same way.
+
 **Tags.** A post box may tag an account as `@Key`, any case, where the key is
 in `data/social-accounts.json` (EISS, NetSec and COST for now).
 `social-post.py` writes a LinkedIn mention, `@[Name](urn:li:organization:N)`,
