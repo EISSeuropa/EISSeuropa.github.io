@@ -249,7 +249,7 @@ stops("news:", MINIMAL, "Headline is empty")
 form_text = (HERE.parent / ".github" / "ISSUE_TEMPLATE" / "news.yml").read_text()
 blocks = re.split(r"^  - type: ", form_text, flags=re.M)[1:]
 fields = {re.search(r"^    id: (\S+)", b, re.M).group(1): b for b in blocks if not b.startswith("markdown")}
-assert len(fields) == 12, sorted(fields)
+assert len(fields) == 13, sorted(fields)
 for fid, b in fields.items():
     assert re.search(r"^      description: \S", b, re.M), f"{fid} has no description"
 assert "required: true" in fields["headline"], "the Headline is not required"
@@ -279,6 +279,19 @@ stops("x", post_on(no_collab, True, False), "Site is Joint", "pick NetSec under 
 stops("x", no_collab, "Site is Joint")
 item = mod.parse_issue("x", post_on(no_collab, False, True), TODAY)
 assert item["site"] == "joint" and item["social"]["networks"] == ["bluesky"]
+
+# Options: "Do not post" is for an item on the website only, with Post on unticked.
+assert fields["options"].startswith("checkboxes") and "Do not post to LinkedIn and Bluesky" in fields["options"]
+SKIP = "\n\n### Options\n\n- [X] Do not post to LinkedIn and Bluesky\n"
+item = mod.parse_issue("x", post_on(FORM, False, False) + SKIP, TODAY)
+assert item["social"] == "skip", item
+# Joint without a collaborator is fine when nothing is posted.
+item = mod.parse_issue("x", post_on(no_collab, False, False) + SKIP, TODAY)
+assert item["social"] == "skip" and item["site"] == "joint", item
+stops("x", post_on(FORM, True, False) + SKIP, "Options says not to post", "untick one of them")
+stops("x", post_on(FORM, False, False), "or tick \"Do not post to LinkedIn and Bluesky\"")
+item = mod.parse_issue("x", post_on(FORM, True, True) + "\n\n### Options\n\n- [ ] Do not post to LinkedIn and Bluesky\n", TODAY)
+assert isinstance(item["social"], dict) and "linkedin" in item["social"], item
 
 # A post pasted from LinkedIn: page links become tags, other links plain text.
 PASTE = ("[#ESSC2027](https://www.linkedin.com/search/results/all/?keywords=%23essc2027) with "

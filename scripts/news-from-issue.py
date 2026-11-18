@@ -25,10 +25,13 @@ Two body shapes are read.
                         "site": "joint", and with LinkedIn ticked it needs
                         NetSec as Collaborator page. NetSec, an option on
                         issues filed before 18 November 2026, stops the run.
-     Post on            LinkedIn and Bluesky checkboxes, at least one ticked.
-                        One ticked: social.networks lists it, and the other
-                        network's box is ignored. Issues filed before the
-                        boxes post on both.
+     Post on            LinkedIn and Bluesky checkboxes, at least one ticked
+                        unless Options says not to post. One ticked:
+                        social.networks lists it, and the other network's box
+                        is ignored. Issues filed before the boxes post on both.
+     Options            "Do not post to LinkedIn and Bluesky": "social":
+                        "skip", the item is on the website only. A Post on
+                        box ticked with it stops the run.
      Headline           the title, up to HEADLINE_MAX characters (falls back
                         to the issue title, for issues filed before the
                         form required it)
@@ -429,12 +432,18 @@ def parse_form(title: str, f: dict[str, str], today: str) -> dict:
             # Downloaded by main(), after the duplicate check.
             item["_image_url"] = image
 
-    networks = list(NETWORK_LABELS)
+    no_post = "do not post to linkedin and bluesky" in ticked(f.get("options", ""))
+    networks = [] if no_post else list(NETWORK_LABELS)
     if "post on" in f:
         chosen = ticked(f["post on"])
-        networks = [n for n, label in NETWORK_LABELS.items() if label.lower() in chosen]
-        if not networks:
-            sys.exit("No box is ticked under Post on. Edit the issue and tick LinkedIn, Bluesky or both.")
+        picked = [n for n, label in NETWORK_LABELS.items() if label.lower() in chosen]
+        if no_post and picked:
+            sys.exit("Post on has a box ticked, and Options says not to post. Edit the issue and "
+                     "untick one of them.")
+        if not no_post and not picked:
+            sys.exit("No box is ticked under Post on. Edit the issue and tick LinkedIn, Bluesky or both, "
+                     "or tick \"Do not post to LinkedIn and Bluesky\" under Options for the website only.")
+        networks = networks and picked
     collaborator = f.get("collaborator page", "").strip().lower() == "netsec"
     if item.get("site") == "joint" and "linkedin" in networks and not collaborator:
         sys.exit("The Site is Joint and the news goes to LinkedIn, so NetSec's page is added as collaborator. "
@@ -450,11 +459,13 @@ def parse_form(title: str, f: dict[str, str], today: str) -> dict:
         if text:
             check_post(network, box_label, text, item)
             social[network] = text
-    if len(networks) < len(NETWORK_LABELS):
+    if networks and len(networks) < len(NETWORK_LABELS):
         social["networks"] = networks
     if collaborator and "linkedin" in networks:
         social["collaborator"] = "netsec"
-    if social:
+    if no_post:
+        item["social"] = "skip"
+    elif social:
         item["social"] = social
     if re.search(r"^\s*-\s*\[[xX]\]", f.get("newsletter", ""), re.M):
         item["newsletter"] = True

@@ -111,7 +111,8 @@ items older than 18 months rotate off the homepage (capped at 5) but stay on
 
 Open a new issue and pick **News item**
 ([`.github/ISSUE_TEMPLATE/news.yml`](../.github/ISSUE_TEMPLATE/news.yml)).
-The headline, the summary and at least one Post on box are needed. Every
+The headline, the summary and at least one Post on box are needed, or "Do
+not post" under Options for an item on the website only. Every
 field has a description written for someone who has never filed the form. The
 intro says that the issue title ("Add a title") only names the issue, which
 the run renames `news: <Headline>`, and that the Headline is the title on the
@@ -122,7 +123,7 @@ site and in the posts. The news PR takes the headline as its title too.
 | Site | EISS: nothing extra. Joint: `"site": "joint"`, and with LinkedIn ticked the run stops unless Collaborator page is NetSec. NetSec, an option until 18 November 2026, stops the run |
 | Headline | `title`. Required, up to 100 characters. A longer one stops the run |
 | Website summary | `excerpt`, one line. Required, up to 300 characters. Also the post text for a network whose box is empty |
-| Post on | LinkedIn and Bluesky checkboxes. None ticked: the run stops. One ticked: `social.networks` lists it, and the other network's post box is ignored. Issues filed before the boxes post on both |
+| Post on | LinkedIn and Bluesky checkboxes. None ticked: the run stops, unless "Do not post" is ticked under Options (both ticked stops it too). One ticked: `social.networks` lists it, and the other network's post box is ignored. Issues filed before the boxes post on both |
 | LinkedIn post | `social.linkedin`, as written with its line breaks. Up to 3,000 characters, counted with the link added at the end (unless the text holds it) and the tags as LinkedIn shows them |
 | Bluesky post | `social.bluesky`, the same. Up to 300 characters, counted with the link and each tag written as its Bluesky handle |
 | Type | `type` (default `news`) |
@@ -131,6 +132,7 @@ site and in the posts. The news PR takes the headline as its title too.
 | Image description | `imageAlt`. Required with a photo, up to 300 characters |
 | Publication date | `date` (blank: the day the run starts). Not `YYYY-MM-DD`: the run stops |
 | Collaborator page | `social.collaborator`, kept when LinkedIn is ticked |
+| Do not post to LinkedIn and Bluesky | `"social": "skip"`: the item is on the website only |
 
 A post pasted from LinkedIn keeps each page, person and hashtag as a
 `[Name](https://www.linkedin.com/...)` link. `untangle_linkedin()` in
