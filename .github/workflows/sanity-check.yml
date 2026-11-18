@@ -129,6 +129,10 @@ jobs:
       - name: Self-check the offboarding window
         run: python3 scripts/test-offboarding-due.py
 
+      # The LinkedIn and Bluesky credentials check (stdlib, no network).
+      - name: Self-check the social credentials check
+        run: python3 scripts/test-check-social-credentials.py
+
       # The photo of a news item: shrunk under Bluesky's 1 MB, turned
       # upright, camera data dropped. It needs Pillow, so it comes last,
       # after the stdlib checks above, with its own Python.

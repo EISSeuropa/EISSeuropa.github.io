@@ -349,6 +349,16 @@ With no channel configured, nothing is posted and the ledger is untouched.
 
 ### Upkeep
 
+- **When a post fails at sign-in**, run "Check the LinkedIn and Bluesky
+  credentials" from the Actions tab
+  (`.github/workflows/check-social-credentials.yml`). It waits for the same
+  approval as a post, posts nothing and shows no secret. Its run summary marks
+  each value ✅ or ❌: a value stored with quotes, a space or a line break; a
+  Bluesky handle written with `@` or as an address; an account password where
+  an app password belongs; a LinkedIn token that is no longer active, was
+  issued to another app than `LINKEDIN_CLIENT_ID`, or lacks
+  `w_organization_social`. Replace the ❌ values, run the check again, then
+  start the post.
 - **The LinkedIn token** lasts about 60 days. The script renews it with the
   refresh token on a 401. When the refresh token expires too (about a year),
   run `scripts/linkedin-token.py` again and replace the two token secrets.
