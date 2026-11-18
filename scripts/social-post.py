@@ -14,6 +14,8 @@ Source: src/_data/news.json, the one record the News item form writes
   {"collaborator": "netsec"} after a LinkedIn post, the run summary asks for
                              the NetSec page to be added as collaborator by
                              hand. LinkedIn's API offers no way to do it.
+  {"networks": ["linkedin"]} post on these networks only (the form's "Post
+                             on" boxes). Absent: every configured network.
 
 A ledger (data/social-posted.json) records the key of every item posted, so
 re-runs publish nothing. The key is news::<date>::<slug>, with the slug built
@@ -92,6 +94,13 @@ class Post:
     # breaks and @tags. Blank: the post is built from the title and summary.
     linkedin_text: str = ""
     bluesky_text: str = ""
+    # The networks the item is for, from social.networks. Empty: all of them.
+    networks: tuple[str, ...] = ()
+    # False when the item has no photo of its own and the posts use the site card.
+    own_image: bool = False
+
+    def wants(self, channel: str) -> bool:
+        return not self.networks or channel in self.networks
 
     def custom(self, channel: str) -> str:
         return self.linkedin_text if channel == "linkedin" else self.bluesky_text
@@ -220,9 +229,13 @@ def read_news() -> list[Post]:
             collaborator=(social.get("collaborator") or "").strip().lower(),
             linkedin_text=str(social.get("linkedin") or "").strip(),
             bluesky_text=str(social.get("bluesky") or "").strip(),
+            networks=tuple(n for n in (social.get("networks") or []) if n in NETWORKS),
+            own_image=image is not None and image != SITE_OG,
         ))
     return posts
 
+
+NETWORKS = ("linkedin", "bluesky")
 
 URL_RE = re.compile(r"https?://[^\s\]\)]+")
 
@@ -673,7 +686,12 @@ def main() -> int:
         posted = set(ledger.get("posted", []))
         for p in posts:
             print(f"* {p.title}  (key: {p.key})")
+            if not p.own_image:
+                print("  NO PHOTO: the posts use the standard EISS picture.\n")
             for ch in ("bluesky", "linkedin"):
+                if not p.wants(ch):
+                    print(f"  -- not posted to {ch}: the item is for {' and '.join(p.networks)} only --\n")
+                    continue
                 if f"{p.key}#{ch}" in posted:
                     print(f"  -- already posted to {ch} --\n")
                     continue
@@ -685,7 +703,7 @@ def main() -> int:
                 print(f"    [image: {p.image.relative_to(ROOT)} | alt: {p.image_alt}]")
             for note in untagged_notes(p):
                 print(f"    [{note}]")
-            if p.collaborator:
+            if p.collaborator and p.wants("linkedin"):
                 print(f"    [then add the {p.collaborator} LinkedIn page as collaborator by hand]")
             print()
         print("Nothing was published.")
@@ -708,9 +726,10 @@ def main() -> int:
     notes, failures = [], []
     for p in posts:
         posted = set(ledger.get("posted", []))
-        done = [c.name for c in active if f"{p.key}#{c.name}" in posted]
+        chans = [c for c in active if p.wants(c.name)]
+        done = [c.name for c in chans if f"{p.key}#{c.name}" in posted]
         failed = []
-        for c in active:
+        for c in chans:
             if c.name in done:
                 continue
             try:

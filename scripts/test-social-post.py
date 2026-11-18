@@ -370,6 +370,59 @@ def test_dry_run_marks_a_network_already_posted(monkeypatch, tmp_path, capsys=No
     assert "-- would post to linkedin --" not in text
 
 
+def test_networks_limit_the_post(monkeypatch, tmp_path):
+    # The form's Post on boxes: an item for LinkedIn only never reaches
+    # Bluesky, and is recorded by its key once LinkedIn has posted.
+    tried = []
+
+    class _Fake(sp.Channel):
+        def configured(self):
+            return True
+
+        def publish(self, post):
+            tried.append(self.name)
+            return f"https://{self.name}.example/1"
+
+    _stub(monkeypatch, tmp_path)
+    post = sp.Post(key="news::2026-11-10::a", title="A", summary="S", link="https://x/",
+                   collaborator="netsec", networks=("linkedin",))
+    monkeypatch.setattr(sp, "CHANNELS", {"bluesky": _Fake, "linkedin": _Fake})
+    monkeypatch.setattr(sp, "pending", lambda ledger: [post])
+    assert sp.main() == 0
+    assert tried == ["linkedin"]
+    assert json.loads((tmp_path / "ledger.json").read_text())["posted"] == ["news::2026-11-10::a"]
+    assert "netsec LinkedIn page as collaborator" in (tmp_path / "summary.md").read_text()
+
+
+def test_read_news_networks_and_own_photo(monkeypatch, tmp_path):
+    _news(monkeypatch, tmp_path, [
+        {"date": "2026-11-18", "title": "One", "social": {"networks": ["linkedin", "x"]}},
+        {"date": "2026-11-18", "title": "Two"},
+    ])
+    one, two = sp.read_news()
+    assert one.networks == ("linkedin",) and one.wants("linkedin") and not one.wants("bluesky")
+    assert two.networks == () and two.wants("bluesky") and two.wants("linkedin")
+    assert not one.own_image and not two.own_image
+
+
+def test_dry_run_names_the_skipped_network_and_a_missing_photo(monkeypatch, tmp_path):
+    import io, contextlib
+    _stub(monkeypatch, tmp_path)
+    post = sp.Post(key="news::2026-11-10::a", title="A", summary="S", link="https://x/",
+                   collaborator="netsec", networks=("bluesky",))
+    monkeypatch.setattr(sp, "pending", lambda ledger: [post])
+    monkeypatch.setattr(sys, "argv", ["social-post.py", "--dry-run"])
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        sp.main()
+    text = buf.getvalue()
+    assert "NO PHOTO: the posts use the standard EISS picture." in text
+    assert "-- not posted to linkedin: the item is for bluesky only --" in text
+    assert "-- would post to bluesky --" in text
+    # No LinkedIn post, so no collaborator to add.
+    assert "as collaborator" not in text
+
+
 def _standalone() -> int:
     """Run without pytest (this repository has none): each test_ function
     gets a fresh tmp_path and a minimal monkeypatch when it asks for them."""

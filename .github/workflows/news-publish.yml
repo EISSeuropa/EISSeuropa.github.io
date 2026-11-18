@@ -111,6 +111,7 @@ jobs:
 
       - name: Append the news item
         if: steps.publisher.outputs.allowed == 'true'
+        id: append
         env:
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_BODY: ${{ github.event.issue.body }}
@@ -135,6 +136,9 @@ jobs:
             if grep -q 'photo saved as' /tmp/news-add.txt; then
               echo "The photo is in the Files changed tab. The post preview below gives its description, read aloud to people who cannot see it."
               echo ""
+            elif ! grep -q 'already present' /tmp/news-add.txt; then
+              echo "No photo: the posts use the standard EISS picture. To add a photo, a publisher edits issue #${ISSUE_NUMBER} and drags it into the Image box, which rebuilds this PR."
+              echo ""
             fi
             echo "The item was added to \`src/_data/news.json\`. Merging this PR publishes it"
             echo "on the homepage, the \`/news\` archive and the Atom feed, and queues the"
@@ -143,6 +147,20 @@ jobs:
             echo ""
             echo "Closes #${ISSUE_NUMBER}"
           } > /tmp/news-pr-body.md
+
+      # The form's "Add a title" box mostly stays "news:", so the issue takes
+      # the headline's name. GITHUB_TOKEN's edit starts no new run.
+      - name: Name the issue after the headline
+        if: steps.publisher.outputs.allowed == 'true' && steps.append.outputs.headline != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEADLINE: ${{ steps.append.outputs.headline }}
+          TITLE: ${{ github.event.issue.title }}
+        run: |
+          want="news: $HEADLINE"
+          if [ "$TITLE" != "$want" ]; then
+            gh issue edit "${{ github.event.issue.number }}" --repo "${{ github.repository }}" --title "$want"
+          fi
 
       - name: Open or update the news PR
         if: steps.publisher.outputs.allowed == 'true'
@@ -153,7 +171,7 @@ jobs:
           branch: news/auto-${{ github.event.issue.number }}
           base: master
           delete-branch: true
-          title: 'content(news): ${{ github.event.issue.title }}'
+          title: 'content(news): ${{ steps.append.outputs.headline || github.event.issue.title }}'
           commit-message: |
             content(news): publish item from issue #${{ github.event.issue.number }}
 

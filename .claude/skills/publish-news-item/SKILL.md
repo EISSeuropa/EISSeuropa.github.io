@@ -21,6 +21,7 @@ are required.
 | Site | `EISS`, or `Joint (EISS and NetSec)` for an item organised by EISS with NetSec. A NetSec-only item goes in `EISSeuropa/netsec.github.io`, with that repository's own skill. |
 | Headline | Plain text, up to 100 characters |
 | Website summary | Required, up to 300 characters, plain: the site's excerpt |
+| Post on | `LinkedIn`, `Bluesky` or both, ticked. At least one, unless Options says not to post. The other network's box is ignored |
 | LinkedIn post | Optional, up to 3,000 characters with the link: the post as written, line breaks kept. `@EISS`, `@NetSec`, `@COST` tag pages (`data/social-accounts.json`) |
 | Bluesky post | Optional, up to 300 characters with the link and the tags as handles |
 | Type | `news`, `event`, `paper`, `press` or `podcast` |
@@ -28,7 +29,8 @@ are required.
 | Image | Optional. The picture of the LinkedIn and Bluesky posts: an `https://` address of a photo the person sent (the script downloads it, shrinks it under 1 MB and saves it in `src/assets/images/news/`), or an image on the site (`/assets/...`) |
 | Image description | Required with an image. One sentence saying what it shows, up to 300 characters: the alt text |
 | Publication date | `YYYY-MM-DD`, blank for today |
-| Collaborator page | `NetSec` for a joint item, otherwise `No collaborator` |
+| Collaborator page | `NetSec` for a joint item that goes to LinkedIn (the run stops without it), otherwise `No collaborator` |
+| Options | Tick "Do not post to LinkedIn and Bluesky" for an item on the website only, such as one already announced, with Post on unticked |
 
 Write the summary and the posts in the person's words. Shorten them only to fit
 their limits, and say so. The script stops on any box over its limit, an
@@ -52,6 +54,11 @@ EISS
 ### Website summary
 
 <summary>
+
+### Post on
+
+- [X] LinkedIn
+- [X] Bluesky
 
 ### LinkedIn post
 
