@@ -358,7 +358,10 @@ With no channel configured, nothing is posted and the ledger is untouched.
   an app password belongs; a LinkedIn token that is no longer active, was
   issued to another app than `LINKEDIN_CLIENT_ID`, or lacks
   `w_organization_social`. Replace the ❌ values, run the check again, then
-  start the post.
+  start the post. An expired access token is not a failure while the refresh
+  token works: the check renews it as a post does (EISSeuropa/netsec.github.io#2228).
+  A revoked access token, a refused renewal or an inactive refresh token is ❌,
+  and a refresh token with fewer than 60 days left is ⚠️.
 - **The LinkedIn token** lasts about 60 days. The script renews it with the
   refresh token on a 401. When the refresh token expires too (about a year),
   run `scripts/linkedin-token.py` again and replace the two token secrets.
