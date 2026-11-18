@@ -21,9 +21,14 @@ Two body shapes are read.
 1. The News item issue form (.github/ISSUE_TEMPLATE/news.yml, #2058). GitHub
    renders each field as a `### Label` heading followed by the answer. The
    fields map as follows:
-     Site               EISS | Joint (EISS and NetSec) | NetSec. A joint item
-                        gets "site": "joint". A NetSec item stops the run: it
-                        belongs in the NetSec repository.
+     Site               EISS | Joint (EISS and NetSec). A joint item gets
+                        "site": "joint", and with LinkedIn ticked it needs
+                        NetSec as Collaborator page. NetSec, an option on
+                        issues filed before 18 November 2026, stops the run.
+     Post on            LinkedIn and Bluesky checkboxes, at least one ticked.
+                        One ticked: social.networks lists it, and the other
+                        network's box is ignored. Issues filed before the
+                        boxes post on both.
      Headline           the title, up to HEADLINE_MAX characters (falls back
                         to the issue title, for issues filed before the
                         form required it)
@@ -36,6 +41,10 @@ Two body shapes are read.
      Bluesky post       social.bluesky, the same, up to BLUESKY_LIMIT
                         characters with the link and the tags as handles
                         (@Key tags come from data/social-accounts.json)
+                        A post pasted from LinkedIn keeps its links as
+                        [Name](https://www.linkedin.com/...): a page in the
+                        accounts file becomes its @Key, any other link its
+                        plain text (untangle_linkedin)
 
    Every text box has a limit, and a box over it, an unknown @tag, a Link
    that is not an address or a date not written YYYY-MM-DD stops the run.
@@ -52,7 +61,8 @@ Two body shapes are read.
                         posts.
      Image description  "imageAlt", the photo's alt text. Required with a
                         photo, up to IMAGE_ALT_MAX characters
-     Collaborator page  social.collaborator ("netsec")
+     Collaborator page  social.collaborator ("netsec"), kept when LinkedIn
+                        is ticked
      Newsletter         "newsletter": true when the box is ticked (off the
                         form for now, still read for older issues)
 
@@ -63,6 +73,9 @@ Two body shapes are read.
      Date: YYYY-MM-DD                          (default: TODAY)
    Everything that isn't a recognised header line becomes the excerpt (first
    paragraph, collapsed to a single line, capped at EXCERPT_MAX chars).
+
+The headline goes to GITHUB_OUTPUT as `headline`, so the workflow names the
+issue and the PR after it.
 
 Usage (local test): ISSUE_TITLE=… ISSUE_BODY=… TODAY=2026-06-20 \
     python3 scripts/news-from-issue.py
@@ -289,6 +302,45 @@ def _social_post_module():
 
 _SP = None
 POST_BOXES = (("linkedin", "LinkedIn post", "linkedin post"), ("bluesky", "Bluesky post", "bluesky post"))
+NETWORK_LABELS = {"linkedin": "LinkedIn", "bluesky": "Bluesky"}
+TICKED_RE = re.compile(r"^\s*-\s*\[[xX]\]\s*(.+?)\s*$", re.M)
+LI_LINK_RE = re.compile(r"\[([^\]\n]+)\]\((https?://(?:[\w-]+\.)?linkedin\.com/[^)\s]*)\)", re.I)
+LI_PAGE_RE = re.compile(r"(?:(?:company|school|showcase)/([^/?#)\s]+)|organization:(\d+))", re.I)
+
+
+def ticked(value: str) -> set[str]:
+    """The labels of the ticked boxes in a checkboxes field, lower-cased."""
+    return {m.group(1).lower() for m in TICKED_RE.finditer(value or "")}
+
+
+def linkedin_pages() -> dict[str, str]:
+    """{page name or number in a LinkedIn address: @Key}, from the accounts
+    file's linkedin_url and linkedin (the urn:li:organization number)."""
+    sp = _social_post_module()
+    try:
+        accounts = json.loads(sp.ACCOUNTS_JSON.read_text(encoding="utf-8")).get("accounts") or {}
+    except (OSError, json.JSONDecodeError):
+        return {}
+    pages = {}
+    for key, acc in accounts.items():
+        for ref in (acc.get("linkedin_url"), acc.get("linkedin")) if isinstance(acc, dict) else ():
+            m = LI_PAGE_RE.search(ref or "")
+            if m:
+                pages[(m.group(1) or m.group(2)).lower()] = key
+    return pages
+
+
+def untangle_linkedin(text: str, tags: bool = True) -> str:
+    """Text copied from LinkedIn writes each page, person and hashtag as a
+    [Name](https://www.linkedin.com/...) link. A page in the accounts file
+    becomes its @Key (when tags is true), and any other link its plain text."""
+    pages = linkedin_pages() if tags else {}
+
+    def sub(m: re.Match) -> str:
+        page = LI_PAGE_RE.search(m.group(2))
+        key = pages.get((page.group(1) or page.group(2)).lower()) if page else None
+        return "@" + key if key else m.group(1)
+    return LI_LINK_RE.sub(sub, text or "")
 
 
 def post_text(text: str) -> str:
@@ -354,7 +406,7 @@ def parse_form(title: str, f: dict[str, str], today: str) -> dict:
     if url:
         item["url"] = url
     label = "Website summary" if "website summary" in f else "Summary"
-    summary = " ".join(f.get("website summary", f.get("summary", "")).split())
+    summary = " ".join(untangle_linkedin(f.get("website summary", f.get("summary", "")), tags=False).split())
     if not summary and "website summary" in f:
         sys.exit("The Website summary is empty. Edit the issue and write one or two sentences for the website.")
     _check_length(label, summary, SUMMARY_MAX)
@@ -377,15 +429,30 @@ def parse_form(title: str, f: dict[str, str], today: str) -> dict:
             # Downloaded by main(), after the duplicate check.
             item["_image_url"] = image
 
+    networks = list(NETWORK_LABELS)
+    if "post on" in f:
+        chosen = ticked(f["post on"])
+        networks = [n for n, label in NETWORK_LABELS.items() if label.lower() in chosen]
+        if not networks:
+            sys.exit("No box is ticked under Post on. Edit the issue and tick LinkedIn, Bluesky or both.")
+    collaborator = f.get("collaborator page", "").strip().lower() == "netsec"
+    if item.get("site") == "joint" and "linkedin" in networks and not collaborator:
+        sys.exit("The Site is Joint and the news goes to LinkedIn, so NetSec's page is added as collaborator. "
+                 "Edit the issue and pick NetSec under Collaborator page.")
+
     social: dict = {}
     if "website summary" not in f and summary:
         social["text"] = summary  # an issue filed before the post boxes
     for network, box_label, key in POST_BOXES:
-        text = post_text(f.get(key, ""))
+        if network not in networks:
+            continue
+        text = untangle_linkedin(post_text(f.get(key, "")))
         if text:
             check_post(network, box_label, text, item)
             social[network] = text
-    if f.get("collaborator page", "").strip().lower() == "netsec":
+    if len(networks) < len(NETWORK_LABELS):
+        social["networks"] = networks
+    if collaborator and "linkedin" in networks:
         social["collaborator"] = "netsec"
     if social:
         item["social"] = social
@@ -409,6 +476,10 @@ def main() -> None:
         sys.exit("news-from-issue: TODAY must be set to an ISO date (YYYY-MM-DD).")
 
     item = parse_issue(title, body, today)
+    out = os.environ.get("GITHUB_OUTPUT")
+    if out:
+        with open(out, "a", encoding="utf-8") as fh:
+            fh.write(f"headline={item['title']}\n")
 
     data = json.loads(NEWS.read_text()) if NEWS.exists() else []
     if not isinstance(data, list):

@@ -249,14 +249,55 @@ stops("news:", MINIMAL, "Headline is empty")
 form_text = (HERE.parent / ".github" / "ISSUE_TEMPLATE" / "news.yml").read_text()
 blocks = re.split(r"^  - type: ", form_text, flags=re.M)[1:]
 fields = {re.search(r"^    id: (\S+)", b, re.M).group(1): b for b in blocks if not b.startswith("markdown")}
-assert len(fields) == 11, sorted(fields)
+assert len(fields) == 12, sorted(fields)
 for fid, b in fields.items():
     assert re.search(r"^      description: \S", b, re.M), f"{fid} has no description"
 assert "required: true" in fields["headline"], "the Headline is not required"
 # The post boxes render as code blocks, so an @tag in the issue notifies nobody.
 assert "render: text" in fields["linkedin-post"] and "render: text" in fields["bluesky-post"]
 
-# A NetSec item stops the run.
+# Post on: two boxes, at least one ticked. The Site no longer offers NetSec.
+assert fields["networks"].startswith("checkboxes") and "- label: LinkedIn" in fields["networks"] \
+    and "- label: Bluesky" in fields["networks"]
+assert "- NetSec" not in fields["site"], "the Site still offers NetSec"
+def post_on(body, linkedin, bluesky):
+    box = lambda on: "X" if on else " "
+    return body.replace("### LinkedIn post", f"### Post on\n\n- [{box(linkedin)}] LinkedIn\n- [{box(bluesky)}] Bluesky\n\n### LinkedIn post")
+item = mod.parse_issue("x", post_on(FORM, True, True), TODAY)
+assert "networks" not in item["social"] and {"linkedin", "bluesky", "collaborator"} <= set(item["social"]), item
+item = mod.parse_issue("x", post_on(FORM, True, False), TODAY)
+assert item["social"]["networks"] == ["linkedin"] and "bluesky" not in item["social"], item
+assert item["social"]["collaborator"] == "netsec"
+# Bluesky only: the LinkedIn box is ignored, even when it would fail, and no collaborator is kept.
+item = mod.parse_issue("x", post_on(FORM, False, True).replace("With @NetSec", "With @Nope"), TODAY)
+assert item["social"]["networks"] == ["bluesky"] and "linkedin" not in item["social"], item
+assert "collaborator" not in item["social"]
+stops("x", post_on(FORM, False, False), "No box is ticked under Post on")
+# A joint item that goes to LinkedIn needs NetSec as collaborator.
+no_collab = FORM.replace("### Collaborator page\n\nNetSec", "### Collaborator page\n\nNo collaborator")
+stops("x", post_on(no_collab, True, False), "Site is Joint", "pick NetSec under Collaborator page")
+stops("x", no_collab, "Site is Joint")
+item = mod.parse_issue("x", post_on(no_collab, False, True), TODAY)
+assert item["site"] == "joint" and item["social"]["networks"] == ["bluesky"]
+
+# A post pasted from LinkedIn: page links become tags, other links plain text.
+PASTE = ("[#ESSC2027](https://www.linkedin.com/search/results/all/?keywords=%23essc2027) with "
+         "[Networking European Security Knowledge (NetSec)](https://www.linkedin.com/company/costnetsec/), "
+         "[EISS](https://www.linkedin.com/company/78412359/), "
+         "[COST Association](https://www.linkedin.com/company/cost-office/), "
+         "[FPN](https://www.linkedin.com/school/fakultet-politickih-nauka-univerzitet-u-beogradu/) "
+         "and [Jane Doe](https://www.linkedin.com/in/jane-doe-123/). See https://eiss-europa.com/2027.html")
+assert mod.untangle_linkedin(PASTE) == ("#ESSC2027 with @NetSec, @EISS, @COST, FPN and Jane Doe. "
+                                        "See https://eiss-europa.com/2027.html"), mod.untangle_linkedin(PASTE)
+assert mod.untangle_linkedin(PASTE, tags=False).startswith(
+    "#ESSC2027 with Networking European Security Knowledge (NetSec), EISS, COST Association, FPN")
+assert mod.untangle_linkedin("[a](https://example.org/)") == "[a](https://example.org/)"
+item = mod.parse_issue("x", FORM.replace("📣 The call is open!", PASTE), TODAY)
+assert "with @NetSec, @EISS, @COST, FPN" in item["social"]["linkedin"], item["social"]["linkedin"]
+item = mod.parse_issue("x", FORM.replace("is open until 15 January.", "is open, with [NetSec](https://www.linkedin.com/company/costnetsec/)."), TODAY)
+assert item["excerpt"].endswith("is open, with NetSec."), item["excerpt"]
+
+# A NetSec item (an option on issues filed before 18 November 2026) stops the run.
 try:
     mod.parse_issue("x", MINIMAL.replace("EISS\n", "NetSec\n", 1), TODAY)
     raise AssertionError("a NetSec item must stop the run")

@@ -35,9 +35,9 @@ Not yet done:
 
 - Bluesky: `BSKY_APP_PASSWORD` does not sign in to `eissnetwork.bsky.social`
   (credentials check, 18 November). It needs a new app password from whoever
-  holds that login (Set-up, step 3). Until then an item posts to LinkedIn
-  only when its key is in the ledger with `#bluesky`, as the ESSC 2027 call
-  is. Without that entry, every run fails on Bluesky and retries it.
+  holds that login (Set-up, step 3). Until then, tick LinkedIn only under
+  Post on. An item that goes to Bluesky fails there on every run and is
+  retried.
 - The Seville workshop item (11 November) merged before `SOCIAL_ENABLED` was
   set. It carries `"social": "skip"`, so the next run does not post it.
 - The newsletter does not use the pipeline yet. The form has no Newsletter box
@@ -94,7 +94,9 @@ The News item form (#2058) can also write these. The site pages ignore them.
   line breaks and `@Key` tags. A network without one gets the headline, the
   summary and the link. `text` is the caption of items filed before the post
   boxes. `collaborator: "netsec"` names the NetSec page, which is added by
-  hand as collaborator after the post goes out.
+  hand as collaborator after the post goes out. `networks`, when present,
+  lists the only networks the item goes to (`["linkedin"]` or
+  `["bluesky"]`).
 - **newsletter** — `true` when the item goes in the monthly newsletter. The
   feed tags such an entry with `<category term="newsletter"/>`.
 
@@ -109,16 +111,18 @@ items older than 18 months rotate off the homepage (capped at 5) but stay on
 
 Open a new issue and pick **News item**
 ([`.github/ISSUE_TEMPLATE/news.yml`](../.github/ISSUE_TEMPLATE/news.yml)).
-Only the headline and the summary are needed. Every field has a description
-written for someone who has never filed the form. The intro says that the
-issue title ("Add a title") only names the issue and the PR, and that the
-Headline is the title on the site and in the posts.
+The headline, the summary and at least one Post on box are needed. Every
+field has a description written for someone who has never filed the form. The
+intro says that the issue title ("Add a title") only names the issue, which
+the run renames `news: <Headline>`, and that the Headline is the title on the
+site and in the posts. The news PR takes the headline as its title too.
 
 | Field | Goes to |
 |---|---|
-| Site | EISS: nothing extra. Joint: `"site": "joint"`. NetSec: the run stops, file it in the NetSec repository |
+| Site | EISS: nothing extra. Joint: `"site": "joint"`, and with LinkedIn ticked the run stops unless Collaborator page is NetSec. NetSec, an option until 18 November 2026, stops the run |
 | Headline | `title`. Required, up to 100 characters. A longer one stops the run |
 | Website summary | `excerpt`, one line. Required, up to 300 characters. Also the post text for a network whose box is empty |
+| Post on | LinkedIn and Bluesky checkboxes. None ticked: the run stops. One ticked: `social.networks` lists it, and the other network's post box is ignored. Issues filed before the boxes post on both |
 | LinkedIn post | `social.linkedin`, as written with its line breaks. Up to 3,000 characters, counted with the link added at the end (unless the text holds it) and the tags as LinkedIn shows them |
 | Bluesky post | `social.bluesky`, the same. Up to 300 characters, counted with the link and each tag written as its Bluesky handle |
 | Type | `type` (default `news`) |
@@ -126,7 +130,14 @@ Headline is the title on the site and in the posts.
 | Image | A photo dragged into the field: saved in `src/assets/images/news/`, and `image` is its path, the picture of the social posts. A site image (`/assets/...`) is used as it is |
 | Image description | `imageAlt`. Required with a photo, up to 300 characters |
 | Publication date | `date` (blank: the day the run starts). Not `YYYY-MM-DD`: the run stops |
-| Collaborator page | `social.collaborator` |
+| Collaborator page | `social.collaborator`, kept when LinkedIn is ticked |
+
+A post pasted from LinkedIn keeps each page, person and hashtag as a
+`[Name](https://www.linkedin.com/...)` link. `untangle_linkedin()` in
+`news-from-issue.py` turns a link to a page listed in
+`data/social-accounts.json` (by its `linkedin_url` or its organisation number)
+into the page's `@Key`, and any other LinkedIn link into its plain text. The
+Website summary gets the plain text only.
 
 GitHub drops the form from the issue chooser, without an error, when a
 dropdown that sets `default` also lists `None` or `n/a` as an option. The
@@ -178,7 +189,10 @@ needs Pillow, so `sanity-check.yml` runs it last, after installing
 **Post preview.** Every PR that changes `src/_data/news.json`, from the form or
 by hand, gets a comment with the exact LinkedIn and Bluesky text
 (`.github/workflows/news-preview.yml`). The comment is updated on each push, so
-the item and its posts are read in one place before the merge.
+the item and its posts are read in one place before the merge. An item without
+its own photo opens with `NO PHOTO: the posts use the standard EISS picture.`,
+and the news PR body says the same with how to add one. A network the item
+is not for reads `not posted to <network>`.
 
 **Merging with the `publish` label.** Only the owner can merge into `master`,
 and the GitHub app does not offer the owner's bypass. Applying the
@@ -288,10 +302,12 @@ The optional `social` field of a news item:
 | `{"linkedin": "...", "bluesky": "..."}` | Each network gets its own post, as written. A network left out gets the headline, the `excerpt` and the link |
 | `{"text": "..."}` | Posted, with this caption (items filed before the post boxes) |
 | `"skip"` or `{"skip": true}` | Never posted |
+| `{"networks": ["linkedin"]}` | Posted on the networks listed only. The form's Post on boxes write it. The preview shows `not posted to bluesky`, and the item is recorded by its key once LinkedIn has posted |
 | `{"collaborator": "netsec"}` | Posted from the EISS page. The run summary lists the LinkedIn post with a reminder to add the NetSec page as collaborator by hand. LinkedIn's API cannot do it |
 
-**One network only.** To post an item to LinkedIn alone, add its key with
-`#bluesky` to `data/social-posted.json` in the same PR, for example
+**One network only.** A new item says so with `social.networks`, from the
+form's Post on boxes. For an item already on `master` and not yet posted, add
+its key with `#bluesky` to `data/social-posted.json` instead, as #2210 did for
 `news::2026-11-18::essc-2027-the-call-for-panels-and-papers-is-open#bluesky`.
 The preview then shows Bluesky as already posted, and once LinkedIn posts the
 item is recorded by its key alone. `#linkedin` holds back LinkedIn the same way.
