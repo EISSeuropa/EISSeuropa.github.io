@@ -4,6 +4,9 @@
 # adds the item to src/_data/news.json. The run starts in two ways:
 #
 #   - a publisher files the form: the run starts when the issue is opened;
+#   - a publisher edits an open form issue: the run starts again and the
+#     news PR is rebuilt from the edited form (an edit by anyone else starts
+#     nothing, and a closed issue, whose item has merged, is left alone);
 #   - a publisher applies the `news` label, to an issue someone else filed or
 #     to a free-text issue with optional `Type:` / `URL:` / `Date:` lines.
 #
@@ -29,7 +32,7 @@ name: Publish news from issue
 
 on:
   issues:
-    types: [opened, labeled]
+    types: [opened, labeled, edited]
 
 permissions:
   contents: write
@@ -49,6 +52,8 @@ jobs:
     if: >-
       (github.event.action == 'labeled' && github.event.label.name == 'news')
       || (github.event.action == 'opened' && startsWith(github.event.issue.body, '### Site'))
+      || (github.event.action == 'edited' && github.event.issue.state == 'open'
+          && startsWith(github.event.issue.body, '### Site'))
     runs-on: ubuntu-latest
     steps:
       # The labels this pipeline listens for, made here so nobody has to make
@@ -170,7 +175,7 @@ jobs:
           if [ -s /tmp/news-error.txt ] && ! grep -q -e Traceback -e '^news-from-issue:' /tmp/news-error.txt; then
             body="@$SENDER nothing was published. $(cat /tmp/news-error.txt)
 
-          To edit the issue, open the ··· menu at the top right of its first message and choose Edit. Then a publisher removes the \`news\` label and applies it again, which starts a new run. The run: $RUN_URL"
+          To edit the issue, open the ··· menu at the top right of its first message and choose Edit. Saving the edit starts a new run when a publisher makes it. Otherwise a publisher removes the \`news\` label and applies it again. The run: $RUN_URL"
           else
             body="@$SENDER the run that turns this issue into a news PR failed, so nothing was published. The maintainer has been notified. The run: $RUN_URL"
           fi
