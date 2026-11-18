@@ -78,6 +78,8 @@ def test_item_image_inside_src_only(monkeypatch, tmp_path):
     monkeypatch.setattr(sp, "SRC", src)
     path, alt = sp._image({"title": "T", "image": "/assets/pic.png"})
     assert path == (src / "assets" / "pic.png").resolve() and alt == "T"
+    path, alt = sp._image({"title": "T", "image": "/assets/pic.png", "imageAlt": "Four people at a table."})
+    assert path == (src / "assets" / "pic.png").resolve() and alt == "Four people at a table."
     path, alt = sp._image({"title": "T", "image": "/../../etc/passwd"})
     assert alt == sp.SITE_OG_ALT
     path, alt = sp._image({"title": "T", "image": "https://example.org/x.png"})

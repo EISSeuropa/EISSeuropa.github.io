@@ -99,6 +99,11 @@ jobs:
         with:
           python-version: '3.12'
 
+      # Pillow shrinks the item's photo (scripts/requirements.txt).
+      - name: Install the script requirements
+        if: steps.publisher.outputs.allowed == 'true'
+        run: pip install -r scripts/requirements.txt
+
       - name: Append the news item
         if: steps.publisher.outputs.allowed == 'true'
         env:
@@ -122,6 +127,10 @@ jobs:
             cat /tmp/news-add.txt
             echo '```'
             echo ""
+            if grep -q 'photo saved as' /tmp/news-add.txt; then
+              echo "The photo is in the Files changed tab. The post preview below gives its description, read aloud to people who cannot see it."
+              echo ""
+            fi
             echo "The item was added to \`src/_data/news.json\`. Merging this PR publishes it"
             echo "on the homepage, the \`/news\` archive and the Atom feed, and queues the"
             echo "LinkedIn and Bluesky posts for approval in the \`social\` environment."

@@ -160,12 +160,13 @@ def _social(item: dict) -> dict:
 
 
 def _image(item: dict) -> tuple[Path | None, str]:
-    """A site image the item names (/assets/...), else the site card."""
+    """A site image the item names (/assets/...), with its imageAlt (the
+    form's Image description, else the title), else the site card."""
     img = (item.get("image") or "").strip()
     if img.startswith("/"):
         path = (SRC / img.lstrip("/")).resolve()
         if path.is_file() and SRC.resolve() in path.parents:
-            return path, item.get("title", "")
+            return path, (item.get("imageAlt") or item.get("title", "")).strip()
     return (SITE_OG if SITE_OG.exists() else None), SITE_OG_ALT
 
 

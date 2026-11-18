@@ -118,6 +118,10 @@ not a link
 
 /assets/img/x.png
 
+### Image description
+
+A test picture.
+
 ### Publication date
 
 next week
@@ -132,7 +136,8 @@ No collaborator
 """
 item = mod.parse_issue("news: From the title", MINIMAL, TODAY)
 assert item == {"date": TODAY, "type": "news", "title": "From the title", "excerpt": "Short.",
-                "image": "/assets/img/x.png", "social": {"text": "Short."}}, item
+                "image": "/assets/img/x.png", "imageAlt": "A test picture.",
+                "social": {"text": "Short."}}, item
 
 # A summary over 300 characters stops the run and says by how much (#2189).
 def stops(title, body, *needles):
@@ -157,6 +162,28 @@ stops("news: " + "h" * 101, MINIMAL, "Headline is 101 characters")
 item = mod.parse_issue("news: " + "h" * 100, MINIMAL, TODAY)
 assert item["title"] == "h" * 100
 
+# The Image field: GitHub writes a dragged photo as <img ... src> or ![](...).
+UUID = "https://github.com/user-attachments/assets/0b1c2d3e-0000-4000-8000-000000000000"
+for text in (f'<img width="1024" height="768" alt="IMG_1234" src="{UUID}" />',
+             f"![IMG_1234]({UUID})", UUID, f"  {UUID}  "):
+    assert mod.image_source(text) == UUID, text
+assert mod.image_source("") == "" and mod.image_source("/assets/images/x.jpg") == "/assets/images/x.jpg"
+try:
+    mod.image_source("Uploading IMG_1234.jpg…")
+    raise AssertionError("an upload still in progress should stop the run")
+except SystemExit as e:
+    assert "no photo in it" in str(e), e
+
+# A photo needs a description, up to 300 characters, and is fetched later.
+with_photo = MINIMAL.replace("/assets/img/x.png", f"![p]({UUID})")
+item = mod.parse_issue("news: P", with_photo, TODAY)
+assert item["_image_url"] == UUID and item["imageAlt"] == "A test picture." and "image" not in item, item
+stops("news: P", with_photo.replace("A test picture.", "_No response_"), "Image description is empty")
+stops("news: P", with_photo.replace("A test picture.", "d" * 301), "Image description is 301 characters")
+# A description without a photo is dropped.
+item = mod.parse_issue("news: P", MINIMAL.replace("/assets/img/x.png", "_No response_"), TODAY)
+assert "imageAlt" not in item and "image" not in item, item
+
 # No headline and the form's default title (#2189).
 stops("news:", MINIMAL, "Headline is empty")
 
@@ -165,7 +192,7 @@ stops("news:", MINIMAL, "Headline is empty")
 form_text = (HERE.parent / ".github" / "ISSUE_TEMPLATE" / "news.yml").read_text()
 blocks = re.split(r"^  - type: ", form_text, flags=re.M)[1:]
 fields = {re.search(r"^    id: (\S+)", b, re.M).group(1): b for b in blocks if not b.startswith("markdown")}
-assert len(fields) == 8, sorted(fields)
+assert len(fields) == 9, sorted(fields)
 for fid, b in fields.items():
     assert re.search(r"^      description: \S", b, re.M), f"{fid} has no description"
 assert "required: true" in fields["headline"], "the Headline is not required"
