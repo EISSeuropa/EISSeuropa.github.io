@@ -264,6 +264,13 @@ The pipeline is a port of NetSec's (`EISSeuropa/netsec.github.io`,
    (`urn:li:organization:{LINKEDIN_ORG_ID}`).
 5. The keys of the posted items go to `data/social-posted.json` through an
    auto-merging PR on `social/ledger`. A rerun posts nothing twice.
+6. Each network is tried on its own. When one fails (a wrong Bluesky app
+   password, an expired LinkedIn token, an API error), the other still posts.
+   The ledger records the network that posted as `<key>#<network>`, the run
+   summary lists the failure, and the job fails after the ledger PR. The next
+   run tries only the network that failed, so a fixed secret catches the post
+   up. Deleting a network's secrets skips that network instead: the item is
+   then recorded as posted, and that network never gets it.
 
 ### What each item can say
 

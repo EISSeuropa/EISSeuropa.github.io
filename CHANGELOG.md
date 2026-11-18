@@ -149,6 +149,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- A failure on one network no longer stops the news post on the other: when the Bluesky sign-in fails, LinkedIn still posts, and the next run tries Bluesky again. Before, the first failure ended the run, and LinkedIn, tried second, never posted.
 - The LinkedIn post and Bluesky post boxes of the News item form show as code blocks in the issue, so a tag such as `@NetSec` no longer notifies a GitHub user of that name. The robot reads the text inside the block.
 - 42 paper pages showed `&#39;` or `&quot;` in place of an apostrophe or quotation mark in the browser tab and in link previews. The title was escaped twice. Profile pages and theme vocabulary pages had the same fault waiting for a name with an apostrophe.
 - The abstract coverage bars on the Anthology show "100%" on one line. The column was too narrow and broke it in two.

@@ -291,14 +291,83 @@ def test_main_records_key_and_collaborator_note(monkeypatch, tmp_path):
     assert "https://linkedin.example/1" in summary and "netsec LinkedIn page as collaborator" in summary
 
 
-def test_main_keeps_the_key_when_the_second_channel_fails(monkeypatch, tmp_path):
-    _stub(monkeypatch, tmp_path, fail="linkedin")
-    try:
+def test_one_network_failing_does_not_block_the_other(monkeypatch, tmp_path):
+    out = tmp_path / "out"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(out))
+    # Bluesky, tried first, fails: LinkedIn still posts.
+    _stub(monkeypatch, tmp_path, fail="bluesky")
+    assert sp.main() == 0
+    assert json.loads((tmp_path / "ledger.json").read_text())["posted"] == ["news::2026-11-10::a#linkedin"]
+    assert out.read_text() == "failed=true\n"
+    summary = (tmp_path / "summary.md").read_text()
+    assert "https://linkedin.example/1" in summary
+    assert "bluesky failed (boom). The next run tries bluesky again." in summary
+
+
+def test_next_run_retries_only_the_failed_network(monkeypatch, tmp_path):
+    (tmp_path / "ledger.json").write_text(json.dumps({"posted": ["news::2026-11-10::a#linkedin"]}))
+    tried = []
+
+    class _Fake(sp.Channel):
+        def configured(self):
+            return True
+
+        def publish(self, post):
+            tried.append(self.name)
+            return f"https://{self.name}.example/1"
+
+    _stub(monkeypatch, tmp_path)
+    monkeypatch.setattr(sp, "CHANNELS", {"bluesky": _Fake, "linkedin": _Fake})
+    assert sp.main() == 0
+    assert tried == ["bluesky"]
+    assert json.loads((tmp_path / "ledger.json").read_text())["posted"] == [
+        "news::2026-11-10::a#linkedin", "news::2026-11-10::a"]
+
+
+def test_any_error_stays_on_its_network(monkeypatch, tmp_path):
+    # Not only SystemExit: a network error from urllib is an OSError.
+    class _Fake(sp.Channel):
+        def configured(self):
+            return True
+
+        def publish(self, post):
+            if self.name == "linkedin":
+                raise OSError("connection reset")
+            return "https://bluesky.example/1"
+
+    _stub(monkeypatch, tmp_path)
+    monkeypatch.setattr(sp, "CHANNELS", {"bluesky": _Fake, "linkedin": _Fake})
+    monkeypatch.delenv("GITHUB_OUTPUT", raising=False)
+    assert sp.main() == 0
+    assert json.loads((tmp_path / "ledger.json").read_text())["posted"] == ["news::2026-11-10::a#bluesky"]
+
+
+def test_both_networks_failing_records_nothing(monkeypatch, tmp_path):
+    class _Fake(sp.Channel):
+        def configured(self):
+            return True
+
+        def publish(self, post):
+            raise SystemExit("down")
+
+    _stub(monkeypatch, tmp_path)
+    monkeypatch.setattr(sp, "CHANNELS", {"bluesky": _Fake, "linkedin": _Fake})
+    monkeypatch.delenv("GITHUB_OUTPUT", raising=False)
+    assert sp.main() == 0
+    assert json.loads((tmp_path / "ledger.json").read_text())["posted"] == []
+
+
+def test_dry_run_marks_a_network_already_posted(monkeypatch, tmp_path, capsys=None):
+    import io, contextlib
+    (tmp_path / "ledger.json").write_text(json.dumps({"posted": ["news::2026-11-10::a#linkedin"]}))
+    _stub(monkeypatch, tmp_path)
+    monkeypatch.setattr(sys, "argv", ["social-post.py", "--dry-run"])
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
         sp.main()
-        raise AssertionError("a failed channel must fail the run")
-    except SystemExit:
-        pass
-    assert json.loads((tmp_path / "ledger.json").read_text())["posted"] == ["news::2026-11-10::a"]
+    text = buf.getvalue()
+    assert "-- already posted to linkedin --" in text and "-- would post to bluesky --" in text
+    assert "-- would post to linkedin --" not in text
 
 
 def _standalone() -> int:
