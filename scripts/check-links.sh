@@ -307,6 +307,16 @@ TIMEOUT_PAUSES = (3, 10)         # pause before attempts 2 and 3
 SERVER_ERROR_PAUSES = (3, 12)
 
 
+def _http_status(e):
+    """An HTTP error answered to a fallback request (the GET after a refused
+    HEAD, the retry without certificate checks), in the shape the main path
+    returns: 429, or "HTTP <code>". Returned as an error string, a 503 here
+    skipped the 502/503/504 tolerance below and failed the build:
+    softwareheritage.org answered 503 to the unverified retry twice in a row
+    on #2220."""
+    return 429 if e.code == 429 else f"HTTP {e.code}"
+
+
 def check_external(url, _retry=True, _attempt=1):
     parsed = urllib.parse.urlparse(url)
     host = parsed.hostname or ""
@@ -342,6 +352,8 @@ def check_external(url, _retry=True, _attempt=1):
         if method == "HEAD" and e.code in (403, 405) and parsed.hostname not in GET_HOSTS:
             try:
                 return (url, _do("GET", _make_ssl_ctx(verify=True)))
+            except urllib.error.HTTPError as e2:
+                return (url, _http_status(e2))
             except Exception as e2:
                 return (url, f"err: {e2}")
         # A 5xx is the server faltering, not the link being wrong. Academic
@@ -391,6 +403,8 @@ def check_external(url, _retry=True, _attempt=1):
                 )
             try:
                 return (url, _do(method, _make_ssl_ctx(verify=False)))
+            except urllib.error.HTTPError as e2:
+                return (url, _http_status(e2))
             except Exception as e2:
                 return (url, f"err: {e2.__class__.__name__}: {e2}")
         # A TLS connection cut mid-handshake or mid-read is the same class of
