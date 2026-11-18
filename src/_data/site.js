@@ -221,11 +221,17 @@ module.exports = {
       icon: "user-plus",
       roles: ["staff", "management"],
     },
-    // The News item form on GitHub, for now. A composer with live character
-    // counts and post previews is #2196.
+    // The News item forms on GitHub, one per site, for now. A composer with
+    // live character counts and post previews is #2196.
     {
       href: "https://github.com/EISSeuropa/EISSeuropa.github.io/issues/new?template=news.yml",
-      key: "newsComposer",
+      key: "newsComposerEiss",
+      icon: "rss",
+      roles: ["staff", "management", "volunteer"],
+    },
+    {
+      href: "https://github.com/EISSeuropa/netsec.github.io/issues/new?template=news.yml",
+      key: "newsComposerNetsec",
       icon: "rss",
       roles: ["staff", "management", "volunteer"],
     },
