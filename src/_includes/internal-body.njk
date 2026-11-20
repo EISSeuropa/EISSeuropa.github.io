@@ -583,8 +583,9 @@
               <p class="apps-note">{{ VD.empty }}</p>
             {% endif %}
           </div>
-          {# Belvedere: the tracker's counts by stage (titles stay in the Sheet),
-             then what the blog has published, from the blog collection. #}
+          {# Belvedere: the tracker's counts by stage and its posts in progress
+             (authors stay in the Sheet), then what the blog has published, from
+             the blog collection. #}
           {% set VBD = VD.belvedere %}
           {% set posts = collections.blog | byLang("en") | reverse %}
           {% set untranslated %}{% for p in posts %}{% if not (p.data.alternates.fr and p.data.alternates.de) %}x{% endif %}{% endfor %}{% endset %}
@@ -599,6 +600,12 @@
                   </ol>
                   {% set inProgress = VB.stages.Pitch + VB.stages.Drafting + VB.stages.Editing + VB.stages.Translation + VB.stages.Ready %}
                   <p class="apps-note">{{ inProgress }} {{ plural(VBD.inProgress, inProgress, lang) }}{% if VB.nextDue %}. {{ VBD.nextDue | replace("{date}", VB.nextDue | newsDate(lang)) }}{% endif %}.</p>
+                  {# The posts in progress by title (#2238), furthest along first. #}
+                  {% if VB.posts and VB.posts.length %}
+                    <ul class="apps-volunteers-people" role="list">
+                      {% for p in VB.posts %}<li><span class="apps-volunteers-name">{{ p.title or VBD.untitled }}</span> <span class="apps-volunteers-meta">{{ VBD.stages[p.stage] or p.stage }}{% if p.due %}, {{ VBD.due | replace("{date}", p.due | newsDate(lang)) }}{% endif %}</span></li>{% endfor %}
+                    </ul>
+                  {% endif %}
                 {% else %}
                   <p class="apps-note">{{ VBD.unread }}</p>
                 {% endif %}
