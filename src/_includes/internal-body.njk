@@ -171,6 +171,12 @@
       </ul>
     </div>
 
+    {# Volunteers (#2230): the joining requests waiting for the Approved tick and
+       the active volunteers. The counts come from the lifecycle script through
+       the status web app, the names from board.json, which lists only people
+       with a profile. #}
+    {% set VP = systemHealth.people if systemHealth else null %}
+    {% set V = volunteerRoll %}
     <div class="apps-tabbar">
       <div class="apps-tabs" role="tablist" aria-label="{{ d.sections }}" data-apps-tabs hidden>
         <button type="button" role="tab" id="apps-tab-apps" aria-controls="apps" data-apps-tab="apps">{{ d.tabApps }}</button>
@@ -178,6 +184,7 @@
         <button type="button" role="tab" id="apps-tab-guides" aria-controls="guides" data-apps-tab="guides">{{ d.tabGuides }}</button>
         <button type="button" role="tab" id="apps-tab-status" aria-controls="status" data-apps-tab="status">{{ d.tabStatus }}</button>
         {% if systemHealth %}<button type="button" role="tab" id="apps-tab-it" aria-controls="it" data-apps-tab="it" data-roles="staff">{{ d.tabIt }} <span class="apps-dot apps-dot-{{ systemHealth.summary.level }}" data-apps-it-dot aria-hidden="true"{% if not systemHealth.summary.url %} hidden{% endif %}></span><span class="sr-only" data-apps-it-note{% if not systemHealth.summary.url %} hidden{% endif %}>{{ d.needsAttention }}</span></button>{% endif %}
+        {% if VP or V.groups.length %}<button type="button" role="tab" id="apps-tab-volunteers" aria-controls="volunteers" data-apps-tab="volunteers" data-roles="staff management">{{ d.volunteers.heading }}{% if VP and VP.pending %} <span class="apps-dot apps-dot-issue" aria-hidden="true"></span><span class="sr-only">{{ d.needsAttention }}</span>{% endif %}</button>{% endif %}
         {% if netsecReport %}<button type="button" role="tab" id="apps-tab-netsec" aria-controls="netsec" data-apps-tab="netsec" class="apps-tab-netsec">{{ d.netsec.tab }}</button>{% endif %}
         {% if annualReport.years.length %}<button type="button" role="tab" id="apps-tab-annual" aria-controls="annual" data-apps-tab="annual">{{ d.annual.tab }}</button>{% endif %}
       </div>
@@ -437,35 +444,6 @@
             </ul>
           </div>
         {% endif %}
-        {# Volunteers (#2230): the joining requests waiting for the Approved tick,
-           with an orange dot while there is one, and the active volunteers. The
-           counts come from the lifecycle script through the status web app, the
-           names from board.json, which lists only people with a profile. #}
-        {% set P = systemHealth.people if systemHealth else null %}
-        {% set V = volunteerRoll %}
-        {% if P or V.groups.length %}
-          <div class="apps-status-card apps-volunteers" data-roles="staff management">
-            <h3 class="apps-status-title">{{ d.volunteers.heading }}</h3>
-            {% if P %}
-              <p class="apps-volunteers-pending"><span class="apps-dot apps-dot-{{ 'issue' if P.pending else 'nominal' }}" aria-hidden="true"></span> <a href="{{ V.sheet }}"><strong>{{ P.pending }}</strong> {{ plural(d.volunteers.pending, P.pending, lang) }}</a>{% if P.pending %}<span class="sr-only">{{ d.needsAttention }}</span>{% endif %}</p>
-              <p class="apps-volunteers-active"><strong>{{ P.activeVolunteers }}</strong> {{ plural(d.volunteers.active, P.activeVolunteers, lang) }}{{ d.volunteers.withProfile | replace("{n}", V.listed) }}</p>
-            {% endif %}
-            {% if V.groups.length %}
-              <ul class="apps-volunteers-groups" role="list">
-                {% for g in V.groups %}
-                  <li>
-                    <p class="apps-volunteers-cohort">{% if g.cohort %}{{ d.volunteers.cohort | replace("{cohort}", g.cohort[lang] or g.cohort.en) }}{% else %}{{ d.volunteers.until | replace("{date}", g.end | newsDate(lang)) }}{% endif %}</p>
-                    <ul class="apps-volunteers-names" role="list">
-                      {% for p in g.people %}<li><a href="{{ '/board.html' | localizedHref(lang) }}#{{ p.slug }}">{{ p.name }}</a></li>{% endfor %}
-                    </ul>
-                  </li>
-                {% endfor %}
-              </ul>
-            {% else %}
-              <p class="apps-note">{{ d.volunteers.empty }}</p>
-            {% endif %}
-          </div>
-        {% endif %}
         {# The coming release milestones, from the GitHub milestones. The
            conference and internship dates are under Updates. #}
         {% if dashboard.milestones.length %}
@@ -535,6 +513,34 @@
           </div>
         </div>
         <p class="apps-note">{{ d.asOf | replace("{date}", systemHealth.checked | newsDate(lang)) }}.</p>
+      </section>
+    {% endif %}
+
+    {% if VP or V.groups.length %}
+      <section class="apps-panel" id="volunteers" data-apps-panel aria-labelledby="apps-volunteers-heading" data-roles="staff management">
+        <h2 class="apps-heading apps-section-heading" id="apps-volunteers-heading">{{ d.volunteers.heading }}</h2>
+        <div class="apps-status">
+          <div class="apps-status-card apps-volunteers">
+            {% if VP %}
+              <p class="apps-volunteers-pending"><span class="apps-dot apps-dot-{{ 'issue' if VP.pending else 'nominal' }}" aria-hidden="true"></span> <a href="{{ V.sheet }}"><strong>{{ VP.pending }}</strong> {{ plural(d.volunteers.pending, VP.pending, lang) }}</a>{% if VP.pending %}<span class="sr-only">{{ d.needsAttention }}</span>{% endif %}</p>
+              <p class="apps-volunteers-active"><strong>{{ VP.activeVolunteers }}</strong> {{ plural(d.volunteers.active, VP.activeVolunteers, lang) }}{{ d.volunteers.withProfile | replace("{n}", V.listed) }}</p>
+            {% endif %}
+            {% if V.groups.length %}
+              <ul class="apps-volunteers-groups" role="list">
+                {% for g in V.groups %}
+                  <li>
+                    <p class="apps-volunteers-cohort">{% if g.cohort %}{{ d.volunteers.cohort | replace("{cohort}", g.cohort[lang] or g.cohort.en) }}{% else %}{{ d.volunteers.until | replace("{date}", g.end | newsDate(lang)) }}{% endif %}</p>
+                    <ul class="apps-volunteers-names" role="list">
+                      {% for p in g.people %}<li><a href="{{ '/board.html' | localizedHref(lang) }}#{{ p.slug }}">{{ p.name }}</a></li>{% endfor %}
+                    </ul>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p class="apps-note">{{ d.volunteers.empty }}</p>
+            {% endif %}
+          </div>
+        </div>
       </section>
     {% endif %}
 
@@ -1331,7 +1337,8 @@
       // Before the live runs arrive, the build's repo levels count and the build's link stays.
       var all = repoLive || data.health.repos.map(function (r) { return { level: r.level, bad: [] }; });
       var gh = data.health.github;
-      var levels = all.map(function (x) { return x.level; }).concat(data.health.workspace.level, gh ? gh.level : []);
+      var pending = data.health.people && data.health.people.pending > 0;
+      var levels = all.map(function (x) { return x.level; }).concat(data.health.workspace.level, gh ? gh.level : [], pending ? "issue" : []);
       var overall = levels.indexOf("critical") > -1 ? "critical" : levels.indexOf("issue") > -1 ? "issue" : levels.indexOf("nominal") > -1 ? "nominal" : "unknown";
       var bad = all.reduce(function (acc, x) { return acc.concat(x.bad); }, []);
       var ghBad = gh && (gh.level === "issue" || gh.level === "critical");
@@ -1342,7 +1349,7 @@
         setDot(box.querySelector("[data-apps-systems-dot]"), overall);
         var label = box.querySelector("[data-apps-systems-label]");
         label.textContent = LEVELS[overall] || LEVELS[data.health.summary.level];
-        if ((overall === "issue" || overall === "critical") && (repoLive || !label.hasAttribute("href"))) label.href = bad.length && isRun(bad[0].url) ? bad[0].url : ghBad ? "https://www.githubstatus.com/" : "https://script.google.com/home/executions";
+        if ((overall === "issue" || overall === "critical") && (repoLive || !label.hasAttribute("href"))) label.href = bad.length && isRun(bad[0].url) ? bad[0].url : ghBad ? "https://www.githubstatus.com/" : pending ? "#volunteers" : "https://script.google.com/home/executions";
         else if (overall !== "issue" && overall !== "critical") label.removeAttribute("href");
       }
       var alarm = overall === "issue" || overall === "critical";
