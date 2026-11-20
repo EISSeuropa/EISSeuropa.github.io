@@ -437,6 +437,35 @@
             </ul>
           </div>
         {% endif %}
+        {# Volunteers (#2230): the joining requests waiting for the Approved tick,
+           with an orange dot while there is one, and the active volunteers. The
+           counts come from the lifecycle script through the status web app, the
+           names from board.json, which lists only people with a profile. #}
+        {% set P = systemHealth.people if systemHealth else null %}
+        {% set V = volunteerRoll %}
+        {% if P or V.groups.length %}
+          <div class="apps-status-card apps-volunteers" data-roles="staff management">
+            <h3 class="apps-status-title">{{ d.volunteers.heading }}</h3>
+            {% if P %}
+              <p class="apps-volunteers-pending"><span class="apps-dot apps-dot-{{ 'issue' if P.pending else 'nominal' }}" aria-hidden="true"></span> <a href="{{ V.sheet }}"><strong>{{ P.pending }}</strong> {{ plural(d.volunteers.pending, P.pending, lang) }}</a>{% if P.pending %}<span class="sr-only">{{ d.needsAttention }}</span>{% endif %}</p>
+              <p class="apps-volunteers-active"><strong>{{ P.activeVolunteers }}</strong> {{ plural(d.volunteers.active, P.activeVolunteers, lang) }}{{ d.volunteers.withProfile | replace("{n}", V.listed) }}</p>
+            {% endif %}
+            {% if V.groups.length %}
+              <ul class="apps-volunteers-groups" role="list">
+                {% for g in V.groups %}
+                  <li>
+                    <p class="apps-volunteers-cohort">{% if g.cohort %}{{ d.volunteers.cohort | replace("{cohort}", g.cohort[lang] or g.cohort.en) }}{% else %}{{ d.volunteers.until | replace("{date}", g.end | newsDate(lang)) }}{% endif %}</p>
+                    <ul class="apps-volunteers-names" role="list">
+                      {% for p in g.people %}<li><a href="{{ '/board.html' | localizedHref(lang) }}#{{ p.slug }}">{{ p.name }}</a></li>{% endfor %}
+                    </ul>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p class="apps-note">{{ d.volunteers.empty }}</p>
+            {% endif %}
+          </div>
+        {% endif %}
         {# The coming release milestones, from the GitHub milestones. The
            conference and internship dates are under Updates. #}
         {% if dashboard.milestones.length %}

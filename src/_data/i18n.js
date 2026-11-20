@@ -237,6 +237,15 @@ const locales = {
       issuesClosedCol: "Issues closed",
       progress: "{title} progress",
       onGithub: "On GitHub",
+      volunteers: {
+        heading: "Volunteers",
+        pending: ["joining request waiting for approval", "joining requests waiting for approval"],
+        active: ["active volunteer", "active volunteers"],
+        withProfile: ", {n} with a profile on the board page",
+        cohort: "{cohort} cohort",
+        until: "Until {date}",
+        empty: "No active volunteer has a profile on the board page.",
+      },
       counts: {
         issues: ["open issue", "open issues"],
         prs: ["open pull request", "open pull requests"],
@@ -1370,6 +1379,15 @@ const locales = {
       issuesClosedCol: "Tickets clos",
       progress: "Avancement de {title}",
       onGithub: "Sur GitHub",
+      volunteers: {
+        heading: "Bénévoles",
+        pending: ["demande d'arrivée en attente d'approbation", "demandes d'arrivée en attente d'approbation"],
+        active: ["bénévole actif", "bénévoles actifs"],
+        withProfile: ", dont {n} avec un profil sur la page de l'équipe",
+        cohort: "Promotion : {cohort}",
+        until: "Jusqu'au {date}",
+        empty: "Aucun bénévole actif n'a de profil sur la page de l'équipe.",
+      },
       counts: {
         issues: ["ticket ouvert", "tickets ouverts"],
         prs: ["pull request ouverte", "pull requests ouvertes"],
@@ -2379,6 +2397,15 @@ const locales = {
       issuesClosedCol: "Geschlossene Issues",
       progress: "Fortschritt von {title}",
       onGithub: "Auf GitHub",
+      volunteers: {
+        heading: "Ehrenamtliche",
+        pending: ["Beitrittsanfrage wartet auf Freigabe", "Beitrittsanfragen warten auf Freigabe"],
+        active: ["aktive ehrenamtliche Person", "aktive ehrenamtliche Personen"],
+        withProfile: ", davon {n} mit Profil auf der Teamseite",
+        cohort: "Durchgang: {cohort}",
+        until: "Bis {date}",
+        empty: "Keine aktive ehrenamtliche Person hat ein Profil auf der Teamseite.",
+      },
       counts: {
         issues: ["offenes Issue", "offene Issues"],
         prs: ["offener Pull-Request", "offene Pull-Requests"],
