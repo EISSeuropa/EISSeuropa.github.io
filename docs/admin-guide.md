@@ -128,7 +128,7 @@ successor inherits through the handover in section 4.
   a `menu` number adds the link to the padlock menu, which lists them in
   that order. Team chat comes first, and the last entry opens this
   dashboard.
-- **Tabs.** Apps, Updates, Guides, Platform development, Platform status, Volunteers, NetSec reports and Annual reports, linkable as `#apps`, `#updates`, `#guides`, `#status`, `#it`, `#volunteers`, `#netsec` and `#annual` (the hashes kept their old names, so existing links still work). Without JavaScript all of them stack. The Platform status tab follows the staff role, and the Volunteers tab the staff and management roles.
+- **Tabs.** Apps, Calendar, Guides, Volunteers, Platform development, Platform status, NetSec reports and Annual reports, linkable as `#apps`, `#updates`, `#guides`, `#volunteers`, `#status`, `#it`, `#netsec` and `#annual` (the hashes kept their old names, so existing links still work). Without JavaScript all of them stack. The Platform status tab follows the staff role, and the Volunteers tab the staff and management roles.
 - **Apps grid.** A "Filter apps" field narrows the tiles by name and note, and Escape clears it. The three apps opened most often in a browser (three times or more) move to the front there. The counts sit in that browser's storage under `eiss-apps-used` and go nowhere else.
 - **Platform development** (`#status`). The next release and the open issue, PR and
   `help wanted` counts come from `src/data/roadmap-progress.json`, which
@@ -136,7 +136,8 @@ successor inherits through the handover in section 4.
   milestones" card lists the open release milestones with a due date,
   soonest first, each with its progress bar and "Issues closed: X of Y",
   linked to its issues. It keeps the timeline's countdown and "Today"
-  marker. Conference and internship dates sit in the Updates tab, not here.
+  marker. Conference and internship dates sit in the Calendar tab, not here.
+  The activity rolls and the board's rolls open the tab (see below).
   `src/_data/dashboard.js` assembles all of it.
   Under the release bar, a chart counts the release's issues closed per day
   over the last 30 days, in the browser from the live GitHub call that lists
@@ -159,8 +160,8 @@ successor inherits through the handover in section 4.
   at a time: the last five issues closed as done (green tick) and the five
   newest issues still open (amber "i"). Issues labelled `automated` and
   "not planned" closures are left out. The rolls show for every role. They
-  and the board's rolls open the Updates tab, above the conference
-  timeline. The tab counts what changed since the last visit until it is
+  and the board's rolls open the Platform development tab, above its
+  cards. That tab counts what changed since the last visit until it is
   opened. Every roll moves on every 6.2 s (`setInterval` in `makeRoll`),
   and its chevron button unfolds the whole list and stops that roll until
   folded again.
@@ -182,8 +183,8 @@ successor inherits through the handover in section 4.
   `src/_data/audits.json`, kept by hand: add a line when an audit lands.
   The private `workspace-ops` repo stays out, since the page is public.
 - **Version.** The foot of the page reads "Internal dashboard v2.30.0", from `VERSION` in `src/_data/dashboard.js`. The rules for bumping it and the history are in [internal-dashboard.md](internal-dashboard.md).
-- **Updates tab.** It opens with up to 20 calendar tiles for the
-  coming dates, then the activity rolls, then the "Conference timeline"
+- **Calendar tab** (`#updates`, named Updates until dashboard 3.11.0). It opens with up to 20 calendar tiles for the
+  coming dates, then the "Conference timeline"
   card with its stepper (below; its note opens with "Now:" and the
   current stage) and the conference pace. The tiles are built by `agenda()` in `src/_data/dashboard.js` from the Key
   dates list, the cohorts in `src/_data/cohorts.json` (call opens,
