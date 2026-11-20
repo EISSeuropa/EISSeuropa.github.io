@@ -119,6 +119,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- The internal dashboard's activity rolls (recently closed and still open issues, main new features, latest audits, main bug fixes) move to the Platform development tab, which now carries the count of what changed since the last visit. The Updates tab is renamed Calendar, and the Volunteers tab sits to the right of Guides. The French and German tab names are machine translations.
 - The privacy notice places the profile Form under Google Workspace and its Cloud Data Processing Addendum, now that the Form is on an EISS Workspace account (#1988).
 - The internal dashboard groups the tiles under Your apps by theme once a role sees more than eight of them: Work together, Conference and news, and People and account, with the tiles moved up by use under Most used. Board members see eight tiles, which stay in one grid. The French and German headings are machine translations.
 - `@COST` in a LinkedIn post mentions the COST Association page (`urn:li:organization:1050548` in `data/social-accounts.json`). Until now it went out as the plain name. On Bluesky it stays the plain name, as COST has no account there.
