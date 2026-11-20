@@ -50,6 +50,8 @@ change both, or keep the old shape.
 | NetSec | `data/bios.json`, `data/wg.json`, `data/mc-members.json` and the git history of `main` | EISS `src/_data/netsecReport.js`: the NetSec report tab |
 | NetSec and EISS | Workflow runs | EISS `src/_data/systemHealth.js`: Platform status tab |
 | workspace-ops (`status`) | The EISS status web app, and its `?view=dates` | EISS `src/_data/systemHealth.js` (Workspace card) and the Key dates on the dashboard (fallback: `keyDates` in `src/_data/site.js`) |
+| workspace-ops (`status`, fed by `intern-lifecycle`) | The "Volunteer accounts" check's `counts` (`activeVolunteers`, `pending`, `upcoming`, `ending`) and `people` (`pending`, `upcoming`: name, role, cohort, start, for consenting people only) | EISS `src/_data/systemHealth.js`: the Volunteers tab and the Systems tile's Issue (#2235) |
+| workspace-ops (`status`) | `?view=belvedere`: `stages`, `nextDue` and `posts` (title, stage, due) from the "Belvedere tracker" Sheet | EISS `src/_data/systemHealth.js`: the Belvedere card on the Volunteers tab (#2238) |
 | workspace-ops (`status`) | `?view=dates`: the `uid` and `deadline` keys of the "EISS dates" calendar | NetSec `scripts/sync-calendar-dates.py`, in the daily Indico sync: the `start`, `end` and `applicationDeadline` of events not on Indico (netsec.github.io#2133) |
 | EISS | `src/_data/cohorts.json` and `src/_data/board.json` on `master` | workspace-ops `intern-lifecycle`: cohort dates and the Website check column |
 | workspace-ops (`intern-lifecycle`) | A row in the board entries Form's response sheet | EISS `sync-board.yml` (Mondays): the PR that updates `board.json` |
