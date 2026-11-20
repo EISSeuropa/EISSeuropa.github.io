@@ -31,9 +31,24 @@ async function workspaceChecks() {
     const { checks } = await res.json();
     // counts: whole numbers some checks report beside their stamp, such as the
     // active volunteers and pending joining requests of "Volunteer accounts".
-    return checks.map((c) => ({ name: c.name, level: c.level, label: LABELS[c.level] || c.level, date: c.lastOk, ...(c.counts ? { counts: c.counts } : {}) }));
+    // people: the names of joining people who consented to a profile (#2235).
+    return checks.map((c) => ({ name: c.name, level: c.level, label: LABELS[c.level] || c.level, date: c.lastOk, ...(c.counts ? { counts: c.counts } : {}), ...(c.people ? { people: c.people } : {}) }));
   } catch (e) {
     console.warn(`[systemHealth] Workspace status unavailable: ${e.message}`);
+    return null;
+  }
+}
+
+// The Belvedere tracker's post count per stage and next due date, from the
+// same web app (?view=belvedere). Titles and authors stay in the Sheet.
+async function belvedereStatus() {
+  try {
+    const res = await fetch(`${WORKSPACE_STATUS}?view=belvedere`, { signal: AbortSignal.timeout(30000) });
+    if (!res.ok) throw new Error(String(res.status));
+    const { belvedere } = await res.json();
+    return belvedere && belvedere.stages ? belvedere : null;
+  } catch (e) {
+    console.warn(`[systemHealth] Belvedere tracker unavailable: ${e.message}`);
     return null;
   }
 }
@@ -118,17 +133,19 @@ async function githubHealth() {
 
 module.exports = async function () {
   try {
-    const [repos, google, checks, github] = await Promise.all([Promise.all(REPOS.map(repoHealth)), googleHealth(), workspaceChecks(), githubHealth()]);
+    const [repos, google, checks, github, belvedere] = await Promise.all([Promise.all(REPOS.map(repoHealth)), googleHealth(), workspaceChecks(), githubHealth(), belvedereStatus()]);
     const level = worst([...(google ? [google.level] : []), ...(checks || []).map((c) => c.level)]);
     const workspace = { level, levelLabel: LABELS[level], checks };
-    const people = ((checks || []).find((c) => c.name === "Volunteer accounts") || {}).counts || null;
+    const accounts = (checks || []).find((c) => c.name === "Volunteer accounts") || {};
+    const people = accounts.counts || null;
+    const joining = accounts.people || null;
     const failed = repos.flatMap((r) => r.items.filter((i) => i.failed));
     // A joining request waiting for approval is an issue, which links to the Volunteers tab.
     const pending = people?.pending > 0;
     const overall = worst([...repos.map((r) => r.level), level, ...(github ? [github.level] : []), ...(pending ? ["issue"] : [])]);
     const link = failed.length ? failed[0].url : ["issue", "critical"].includes(github?.level) ? "https://www.githubstatus.com/" : pending ? "#volunteers" : "https://script.google.com/home/executions";
     const summary = { level: overall, label: LABELS[overall], failed: failed.map((i) => i.name), url: ["issue", "critical"].includes(overall) ? link : null };
-    return { repos, google, github, workspace, people, summary, checked: new Date().toISOString().slice(0, 10) };
+    return { repos, google, github, workspace, people, joining, belvedere, summary, checked: new Date().toISOString().slice(0, 10) };
   } catch (e) {
     console.warn(`[systemHealth] section hidden: ${e.message}`);
     return null;

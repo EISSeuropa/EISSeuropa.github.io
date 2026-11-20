@@ -1084,7 +1084,8 @@ a.apps-agenda-link:hover .apps-agenda-label { text-decoration: underline; }
   margin-bottom: var(--space-6);
   border-bottom: 1px solid var(--border);
 }
-.apps-tabs { display: flex; flex-wrap: wrap; gap: var(--space-1); }
+/* Relative, so a tab's screen-reader note stays inside the bar when it scrolls on a phone. */
+.apps-tabs { position: relative; display: flex; flex-wrap: wrap; gap: var(--space-1); }
 .apps-tabs[hidden] { display: none; }
 .apps-tabs [role="tab"] {
   display: inline-flex;
@@ -1561,9 +1562,38 @@ html:has(.apps-welcome[open]) { overflow: hidden; }
 }
 .apps-counts a { display: inline-block; padding-block: var(--space-1); }
 /* The Volunteers card (#2230): pending requests with their dot, the active count, then the names by cohort. */
-.apps-volunteers-pending { display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-2); }
-.apps-volunteers-pending a { display: inline-block; padding-block: var(--space-1); }
-.apps-volunteers-pending strong, .apps-volunteers-active strong { color: var(--accent); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+/* The Volunteers tab (#2235): a strip of counts, then the cards. The waiting
+   tile turns amber while a request waits, like the header's Systems tile. */
+.apps-volunteers-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: var(--space-3); margin: 0 0 var(--space-5); padding: 0; list-style: none; }
+.apps-volunteers-tile { display: flex; flex-direction: column; padding: var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elev); box-shadow: var(--shadow-1); }
+.apps-volunteers-tile a { display: flex; flex-direction: column; color: inherit; text-decoration: none; }
+.apps-volunteers-tile a:hover span { text-decoration: underline; }
+.apps-volunteers-tile strong { color: var(--accent); font-size: 2rem; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.apps-volunteers-tile span { color: var(--text-muted); font-size: 0.875rem; }
+.apps-volunteers-tile-issue { border-color: transparent; background: hsl(38 95% 55%); }
+.apps-volunteers-tile-issue strong, .apps-volunteers-tile-issue span { color: hsl(222 40% 10%); }
+.apps-volunteers-subhead { margin: var(--space-3) 0 var(--space-2); color: var(--text-muted); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.apps-volunteers-subhead:first-of-type { margin-top: 0; }
+.apps-volunteers-people { display: grid; gap: var(--space-2); margin: 0 0 var(--space-2); padding: 0; list-style: none; }
+.apps-volunteers-name { display: block; font-weight: 600; }
+.apps-volunteers-meta { display: block; color: var(--text-muted); font-size: 0.8125rem; }
+.apps-volunteers-active strong { color: var(--accent); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.apps-volunteers-cards { grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); }
+.apps-volunteers-wide { grid-column: 1 / -1; }
+.apps-volunteers-blog { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: var(--space-5); }
+/* The Belvedere stages as steps on one line, joined by a rule. */
+.apps-volunteers-stages { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); margin: 0 0 var(--space-3); padding: 0; list-style: none; }
+.apps-volunteers-stage { position: relative; display: flex; flex-direction: column; align-items: center; gap: var(--space-1); text-align: center; }
+.apps-volunteers-stage::before { content: ""; position: absolute; top: 1.125rem; left: -50%; width: 100%; height: 2px; background: var(--border); z-index: 0; }
+.apps-volunteers-stage:first-child::before { display: none; }
+.apps-volunteers-stage strong { position: relative; z-index: 1; display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border: 2px solid var(--accent); border-radius: 50%; background: var(--bg-elev); color: var(--accent); font-variant-numeric: tabular-nums; }
+.apps-volunteers-stage span { color: var(--text-muted); font-size: 0.75rem; }
+@media (max-width: 30rem) {
+  .apps-volunteers-stages { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: var(--space-3); }
+  .apps-volunteers-stage:nth-child(4)::before { display: none; }
+}
+.apps-volunteers-stage-empty strong { border-color: var(--border-strong); color: var(--text-muted); }
+.apps-volunteers-link, .apps-volunteers-latest { margin: 0 0 var(--space-2); }
 .apps-volunteers-active { margin: 0 0 var(--space-3); }
 .apps-volunteers-groups { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
 .apps-volunteers-cohort { margin: 0 0 var(--space-1); color: var(--text-muted); font-size: 0.875rem; font-weight: 600; }

@@ -516,20 +516,63 @@
       </section>
     {% endif %}
 
+    {# The Volunteers tab (#2230, #2235), for staff and management: the counts,
+       the people joining, the cohort dates, the roster and Belvedere. Names of
+       people waiting for approval or starting soon come only for those who
+       consented to a profile on /board (workspace-ops intern-lifecycle). #}
     {% if VP or V.groups.length %}
+      {% set VD = d.volunteers %}
+      {% set VJ = systemHealth.joining if systemHealth else null %}
+      {% set VB = systemHealth.belvedere if systemHealth else null %}
       <section class="apps-panel" id="volunteers" data-apps-panel aria-labelledby="apps-volunteers-heading" data-roles="staff management">
-        <h2 class="apps-heading apps-section-heading" id="apps-volunteers-heading">{{ d.volunteers.heading }}</h2>
-        <div class="apps-status">
-          <div class="apps-status-card apps-volunteers">
-            {% if VP %}
-              <p class="apps-volunteers-pending"><span class="apps-dot apps-dot-{{ 'issue' if VP.pending else 'nominal' }}" aria-hidden="true"></span> <a href="{{ V.sheet }}"><strong>{{ VP.pending }}</strong> {{ plural(d.volunteers.pending, VP.pending, lang) }}</a>{% if VP.pending %}<span class="sr-only">{{ d.needsAttention }}</span>{% endif %}</p>
-              <p class="apps-volunteers-active"><strong>{{ VP.activeVolunteers }}</strong> {{ plural(d.volunteers.active, VP.activeVolunteers, lang) }}{{ d.volunteers.withProfile | replace("{n}", V.listed) }}</p>
-            {% endif %}
+        <h2 class="apps-heading apps-section-heading" id="apps-volunteers-heading">{{ VD.heading }}</h2>
+        {% if VP %}
+          <ul class="apps-volunteers-strip" role="list">
+            <li class="apps-volunteers-tile{% if VP.pending %} apps-volunteers-tile-issue{% endif %}"><a href="{{ V.sheet }}"><strong>{{ VP.pending }}</strong> <span>{{ plural(VD.tiles.pending, VP.pending, lang) }}</span></a>{% if VP.pending %}<span class="sr-only">{{ d.needsAttention }}</span>{% endif %}</li>
+            {% if VP.upcoming is defined %}<li class="apps-volunteers-tile"><strong>{{ VP.upcoming }}</strong> <span>{{ plural(VD.tiles.upcoming, VP.upcoming, lang) }}</span></li>{% endif %}
+            <li class="apps-volunteers-tile"><strong>{{ VP.activeVolunteers }}</strong> <span>{{ plural(VD.tiles.active, VP.activeVolunteers, lang) }}</span></li>
+            {% if VP.ending is defined %}<li class="apps-volunteers-tile"><strong>{{ VP.ending }}</strong> <span>{{ plural(VD.tiles.ending, VP.ending, lang) }}</span></li>{% endif %}
+          </ul>
+        {% endif %}
+        <div class="apps-status apps-volunteers-cards">
+          {% if VP %}
+            <div class="apps-status-card">
+              <h3 class="apps-status-title">{{ VD.joining }}</h3>
+              {% for key in ["pending", "upcoming"] %}
+                {% set named = (VJ[key] if VJ and VJ[key] else []) %}
+                {% set total = VP[key] if VP[key] is defined else named.length %}
+                <h4 class="apps-volunteers-subhead">{{ VD.waiting if key == "pending" else VD.starting }}</h4>
+                {% if named.length %}
+                  <ul class="apps-volunteers-people" role="list">
+                    {% for p in named %}<li><span class="apps-volunteers-name">{{ p.name }}</span> <span class="apps-volunteers-meta">{{ d.roles[{"Volunteer": "volunteer", "Staff": "staff", "Management": "management", "Board Member": "board"}[p.role]] or p.role }}{% if p.cohort %}, {{ p.cohort }}{% elif p.start %}, {{ VD.starts | replace("{date}", p.start | newsDate(lang)) }}{% endif %}</span></li>{% endfor %}
+                  </ul>
+                {% endif %}
+                {% if total > named.length %}
+                  <p class="apps-note">{% if named.length %}{{ plural(VD.unnamed, total - named.length, lang) | replace("{n}", total - named.length) }}{% else %}{{ total }} {{ plural(VD.tiles[key], total, lang) }}{% endif %}</p>
+                {% elif not total %}
+                  <p class="apps-note">{{ VD.noneWaiting if key == "pending" else VD.noneStarting }}</p>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+          {% if V.dates.length %}
+            <div class="apps-status-card">
+              <h3 class="apps-status-title">{{ VD.datesHeading }}</h3>
+              <ol class="apps-timeline" data-apps-timeline>
+                {% for x in V.dates %}
+                  <li class="apps-timeline-item apps-timeline-later" data-roles="staff management" data-date="{{ x.date }}"><span class="apps-timeline-dot" aria-hidden="true"></span><time datetime="{{ x.date }}">{{ x.date | newsDate(lang) }}</time> <span class="apps-timeline-label">{{ VD.dates[x.key] | replace("{cohort}", x.cohort[lang] or x.cohort.en) }}</span><span class="apps-timeline-when" data-apps-timeline-when></span></li>
+                {% endfor %}
+              </ol>
+            </div>
+          {% endif %}
+          <div class="apps-status-card">
+            <h3 class="apps-status-title">{{ VD.roster }}</h3>
+            {% if VP %}<p class="apps-volunteers-active"><strong>{{ VP.activeVolunteers }}</strong> {{ plural(VD.active, VP.activeVolunteers, lang) }}{{ VD.withProfile | replace("{n}", V.listed) }}</p>{% endif %}
             {% if V.groups.length %}
               <ul class="apps-volunteers-groups" role="list">
                 {% for g in V.groups %}
                   <li>
-                    <p class="apps-volunteers-cohort">{% if g.cohort %}{{ d.volunteers.cohort | replace("{cohort}", g.cohort[lang] or g.cohort.en) }}{% else %}{{ d.volunteers.until | replace("{date}", g.end | newsDate(lang)) }}{% endif %}</p>
+                    <p class="apps-volunteers-cohort">{% if g.cohort %}{{ VD.cohort | replace("{cohort}", g.cohort[lang] or g.cohort.en) }}{% else %}{{ VD.until | replace("{date}", g.end | newsDate(lang)) }}{% endif %}</p>
                     <ul class="apps-volunteers-names" role="list">
                       {% for p in g.people %}<li><a href="{{ '/board.html' | localizedHref(lang) }}#{{ p.slug }}">{{ p.name }}</a></li>{% endfor %}
                     </ul>
@@ -537,8 +580,40 @@
                 {% endfor %}
               </ul>
             {% else %}
-              <p class="apps-note">{{ d.volunteers.empty }}</p>
+              <p class="apps-note">{{ VD.empty }}</p>
             {% endif %}
+          </div>
+          {# Belvedere: the tracker's counts by stage (titles stay in the Sheet),
+             then what the blog has published, from the blog collection. #}
+          {% set VBD = VD.belvedere %}
+          {% set posts = collections.blog | byLang("en") | reverse %}
+          {% set untranslated %}{% for p in posts %}{% if not (p.data.alternates.fr and p.data.alternates.de) %}x{% endif %}{% endfor %}{% endset %}
+          <div class="apps-status-card apps-volunteers-wide">
+            <h3 class="apps-status-title"><a href="{{ '/blog.html' | localizedHref(lang) }}">{{ VBD.heading }}</a></h3>
+            <div class="apps-volunteers-blog">
+              <div>
+                <h4 class="apps-volunteers-subhead">{{ VBD.pipeline }}</h4>
+                {% if VB %}
+                  <ol class="apps-volunteers-stages">
+                    {% for st, n in VB.stages %}<li class="apps-volunteers-stage{% if not n %} apps-volunteers-stage-empty{% endif %}"><strong>{{ n }}</strong> <span>{{ VBD.stages[st] or st }}</span></li>{% endfor %}
+                  </ol>
+                  {% set inProgress = VB.stages.Pitch + VB.stages.Drafting + VB.stages.Editing + VB.stages.Translation + VB.stages.Ready %}
+                  <p class="apps-note">{{ inProgress }} {{ plural(VBD.inProgress, inProgress, lang) }}{% if VB.nextDue %}. {{ VBD.nextDue | replace("{date}", VB.nextDue | newsDate(lang)) }}{% endif %}.</p>
+                {% else %}
+                  <p class="apps-note">{{ VBD.unread }}</p>
+                {% endif %}
+                <p class="apps-volunteers-link"><a href="{{ V.belvedere }}">{{ VBD.tracker }}</a></p>
+              </div>
+              <div>
+                <h4 class="apps-volunteers-subhead">{{ posts.length }} {{ plural(VBD.published, posts.length, lang) }}</h4>
+                {% if posts.length %}
+                  {% set inLang = collections.blog | byLang(lang) | reverse %}
+                  {% set latest = inLang[0] if (inLang.length and inLang[0].data.alternates.en == posts[0].data.alternates.en) else posts[0] %}
+                  <p class="apps-volunteers-latest">{{ VBD.latest }} <a href="{{ latest.url }}">{{ latest.data.title }}</a>, <time datetime="{{ latest.date.toISOString() | truncate(10, true, '') }}">{{ latest.date.toISOString() | newsDate(lang) }}</time></p>
+                  <p class="apps-note">{% if untranslated | length %}{{ untranslated | length }} {{ plural(VBD.missing, untranslated | length, lang) }}{% else %}{{ VBD.allTranslated }}{% endif %}</p>
+                {% endif %}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -911,15 +986,17 @@
     // days old leave, the rest are ticked off as they pass, and the first one
     // ahead for the role in view gets the countdown and the "Today" marker,
     // which slides into place once on load.
-    var timeline = document.querySelector("[data-apps-timeline]");
-    var todayMark = document.querySelector("[data-apps-timeline-today]");
-    function renderTimeline(first) {
-      if (!timeline) return;
+    // The Volunteers tab has a second one, the cohort dates (#2235).
+    var timelines = [].slice.call(document.querySelectorAll("[data-apps-timeline]"));
+    function renderTimeline(first) { timelines.forEach(function (timeline) { renderOne(timeline, first); }); }
+    function renderOne(timeline, first) {
       var role = roleSelect.value, next = null;
+      var todayMark = timeline.querySelector("[data-apps-timeline-today]");
       if (!todayMark) {
         todayMark = document.createElement("li");
         todayMark.className = "apps-timeline-today";
         todayMark.setAttribute("aria-hidden", "true");
+        todayMark.setAttribute("data-apps-timeline-today", "");
         todayMark.innerHTML = "<span></span>";
         todayMark.firstChild.textContent = DASH.today;
       }
@@ -965,14 +1042,14 @@
 
     renderTimeline(false);
     // The marker slides in when the timeline is first in view (its tab may be closed).
-    if (timeline && "IntersectionObserver" in window) {
+    if ("IntersectionObserver" in window) timelines.forEach(function (timeline) {
       var seenOnce = new IntersectionObserver(function (entries) {
         if (!entries[0].isIntersecting) return;
         seenOnce.disconnect();
-        renderTimeline(true);
+        renderOne(timeline, true);
       });
       seenOnce.observe(timeline);
-    }
+    });
 
     // The Today line: failures for those who see IT monitoring, then what changed
     // since the last visit. It stays away when there is nothing to say.
