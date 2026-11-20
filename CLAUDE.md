@@ -88,8 +88,8 @@ publishes data another repository uses.
   app. Work on the `claude/...` branch the session names, created from
   freshly fetched `origin/master` before the first edit. Open the PR
   with the GitHub connector's `create_pull_request`, set its milestone
-  with `issue_write` (method `update`, the PR number, the milestone
-  number), do not arm auto-merge, and use `subscribe_pr_activity` for
+  and labels with `issue_write` (method `update`, the PR number, the
+  milestone number, `labels`), do not arm auto-merge, and use `subscribe_pr_activity` for
   Auto-fix. Issues go through
   `issue_write` with `milestone`. Search with
   `gh api -X GET search/issues` or `search/code`. `add_repo` attaches
@@ -425,6 +425,13 @@ that track the roadmap and when to create a new milestone are in the
   in the same command that opens it, not afterwards. The usual answer is
   the release that is currently open, since a PR ships in whatever
   release is cut next.
+- **Labels too.** A PR carries labels as an issue does, set as it is
+  opened: the labels of the issue it closes or follows, or else the one
+  that fits the change (`enhancement`, `bug`, `documentation`,
+  `data-sync`, `dashboard`, `news`, `a11y`). A label the linked issue
+  carries that the PR's repository lacks is created there with the same
+  name. Process labels (`help wanted`, `duplicate`, `needs-review`) stay
+  on the issue.
 - **Ask when the answer is not obvious.** If no milestone fits, or the
   right one does not exist yet, or the PR could reasonably belong to
   either of two, stop and ask the maintainer rather than guessing or
