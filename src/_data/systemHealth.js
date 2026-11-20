@@ -29,7 +29,9 @@ async function workspaceChecks() {
     const res = await fetch(WORKSPACE_STATUS, { signal: AbortSignal.timeout(30000) });
     if (!res.ok) throw new Error(String(res.status));
     const { checks } = await res.json();
-    return checks.map((c) => ({ name: c.name, level: c.level, label: LABELS[c.level] || c.level, date: c.lastOk }));
+    // counts: whole numbers some checks report beside their stamp, such as the
+    // active volunteers and pending joining requests of "Volunteer accounts".
+    return checks.map((c) => ({ name: c.name, level: c.level, label: LABELS[c.level] || c.level, date: c.lastOk, ...(c.counts ? { counts: c.counts } : {}) }));
   } catch (e) {
     console.warn(`[systemHealth] Workspace status unavailable: ${e.message}`);
     return null;
@@ -119,11 +121,12 @@ module.exports = async function () {
     const [repos, google, checks, github] = await Promise.all([Promise.all(REPOS.map(repoHealth)), googleHealth(), workspaceChecks(), githubHealth()]);
     const level = worst([...(google ? [google.level] : []), ...(checks || []).map((c) => c.level)]);
     const workspace = { level, levelLabel: LABELS[level], checks };
+    const people = ((checks || []).find((c) => c.name === "Volunteer accounts") || {}).counts || null;
     const failed = repos.flatMap((r) => r.items.filter((i) => i.failed));
     const overall = worst([...repos.map((r) => r.level), level, ...(github ? [github.level] : [])]);
     const link = failed.length ? failed[0].url : ["issue", "critical"].includes(github?.level) ? "https://www.githubstatus.com/" : "https://script.google.com/home/executions";
     const summary = { level: overall, label: LABELS[overall], failed: failed.map((i) => i.name), url: ["issue", "critical"].includes(overall) ? link : null };
-    return { repos, google, github, workspace, summary, checked: new Date().toISOString().slice(0, 10) };
+    return { repos, google, github, workspace, people, summary, checked: new Date().toISOString().slice(0, 10) };
   } catch (e) {
     console.warn(`[systemHealth] section hidden: ${e.message}`);
     return null;

@@ -1559,6 +1559,15 @@ html:has(.apps-welcome[open]) { overflow: hidden; }
   list-style: none;
 }
 .apps-counts a { display: inline-block; padding-block: var(--space-1); }
+/* The Volunteers card (#2230): pending requests with their dot, the active count, then the names by cohort. */
+.apps-volunteers-pending { display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-2); }
+.apps-volunteers-pending a { display: inline-block; padding-block: var(--space-1); }
+.apps-volunteers-pending strong, .apps-volunteers-active strong { color: var(--accent); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.apps-volunteers-active { margin: 0 0 var(--space-3); }
+.apps-volunteers-groups { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+.apps-volunteers-cohort { margin: 0 0 var(--space-1); color: var(--text-muted); font-size: 0.875rem; font-weight: 600; }
+.apps-volunteers-names { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); margin: 0; padding: 0; list-style: none; }
+.apps-volunteers-names a { display: inline-block; padding-block: var(--space-1); }
 .apps-counts strong {
   color: var(--accent);
   font-size: 1.25rem;
