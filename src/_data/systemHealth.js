@@ -123,8 +123,10 @@ module.exports = async function () {
     const workspace = { level, levelLabel: LABELS[level], checks };
     const people = ((checks || []).find((c) => c.name === "Volunteer accounts") || {}).counts || null;
     const failed = repos.flatMap((r) => r.items.filter((i) => i.failed));
-    const overall = worst([...repos.map((r) => r.level), level, ...(github ? [github.level] : [])]);
-    const link = failed.length ? failed[0].url : ["issue", "critical"].includes(github?.level) ? "https://www.githubstatus.com/" : "https://script.google.com/home/executions";
+    // A joining request waiting for approval is an issue, which links to the Volunteers tab.
+    const pending = people?.pending > 0;
+    const overall = worst([...repos.map((r) => r.level), level, ...(github ? [github.level] : []), ...(pending ? ["issue"] : [])]);
+    const link = failed.length ? failed[0].url : ["issue", "critical"].includes(github?.level) ? "https://www.githubstatus.com/" : pending ? "#volunteers" : "https://script.google.com/home/executions";
     const summary = { level: overall, label: LABELS[overall], failed: failed.map((i) => i.name), url: ["issue", "critical"].includes(overall) ? link : null };
     return { repos, google, github, workspace, people, summary, checked: new Date().toISOString().slice(0, 10) };
   } catch (e) {

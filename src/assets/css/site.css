@@ -1080,6 +1080,7 @@ a.apps-agenda-link:hover .apps-agenda-label { text-decoration: underline; }
   justify-content: space-between;
   align-items: flex-end;
   gap: var(--space-3) var(--space-5);
+  margin-top: var(--space-6);
   margin-bottom: var(--space-6);
   border-bottom: 1px solid var(--border);
 }
