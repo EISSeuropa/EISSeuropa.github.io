@@ -70,5 +70,18 @@
       "bluesky": "📢 The #ESSC2027 call is open: panels, papers and posters for the European Security Studies Conference, 10–11 June 2027, University of Belgrade, organised with @NetSec. Proposals on Indico by 26 January 2027.",
       "collaborator": "netsec"
     }
+  },
+  {
+    "date": "2026-11-24",
+    "type": "news",
+    "title": "Survey of Global Risks to EU 2027",
+    "url": "https://eui.eu.qualtrics.com/jfe/form/SV_9zB4P2iXPLlsHWu?mc_cid=5f4c2790aa",
+    "excerpt": "What are the most serious threats to European security in 2027? The Global Risks to the EU 2027 survey invites top European experts to assess the likelihood and potential impact of 30 geopolitical and security risks facing the European Union in the coming year.",
+    "social": {
+      "linkedin": "What are the most serious threats to European security in 2027? The Global Risks to the EU 2027 survey invites top European experts to assess the likelihood and potential impact of 30 geopolitical and security risks facing the European Union in the coming year. This initiative remains the only continent-wide assessment of global risk perceptions and is influential in shaping decision making.",
+      "networks": [
+        "linkedin"
+      ]
+    }
   }
 ]
