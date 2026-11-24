@@ -20,7 +20,7 @@ async function api(path) {
 
 const LABELS = { nominal: "Nominal", issue: "Issue", critical: "Critical", unknown: "No report yet" };
 
-// The "EISS status" Apps Script web app (workspace-ops/status), which is public
+// The "EISS status web app (public)" Apps Script project (workspace-ops/status), which is public
 // and returns only each check's level and last good date.
 const WORKSPACE_STATUS = "https://script.google.com/macros/s/AKfycbyUPZHKz0SQ0eNN6jfvy7TWvS_LtVFMnir2Q4D-QJEjjJXoGS7VbK63m7MIhUFBp4QN/exec";
 

@@ -68,7 +68,7 @@ a bio changes. The other grants access and is filled in once.
 New people also reach `/board` through the Joining Form, which ends
 with an optional profile made of this Form's own questions (all but
 the name, role, cohort and headshot). When Arthur approves a newcomer
-who ticked the consent box, the "EISS intern lifecycle" Apps Script
+who ticked the consent box, the "EISS On/off-boarding" Apps Script
 (`workspace-ops`) appends a row to this Form's response Sheet: a
 timestamp, their new EISS address, the full name, the role label
 (Support Staff, Board Member, or the leadership title management
@@ -85,7 +85,7 @@ blank keeps the value already in `board.json`.
 Both the Joining Form and this Form ask **Social media** straight after
 the website consent (#2219). It is a required choice between two
 answers, added to both forms by the one-off `addSocialConsent` in the
-"EISS intern lifecycle" Apps Script (`workspace-ops`):
+"EISS On/off-boarding" Apps Script (`workspace-ops`):
 
 > I agree that EISS may name me and show my photo, role and institution
 > in its posts on social media, such as LinkedIn and Bluesky, including a
@@ -229,7 +229,7 @@ departure is a hand edit of `board.json`.
 
 The choices are the cohorts in `src/_data/cohorts.json` that have not
 ended, such as "Winter 2027 (4 January to 26 February 2027)". Nobody
-edits them by hand: the "EISS intern lifecycle" Apps Script
+edits them by hand: the "EISS On/off-boarding" Apps Script
 (`workspace-ops`) resets them every morning, and its one-off
 `upgradeForm` puts the question in place of the old *Internship end
 date* (#1986). Its description reads:
