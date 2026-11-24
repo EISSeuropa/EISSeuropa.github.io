@@ -5,7 +5,7 @@
   "description": "Static site for the European Initiative for Security Studies (eiss-europa.com), built with Eleventy.",
   "license": "UNLICENSED",
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "scripts": {
     "build": "eleventy",

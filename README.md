@@ -73,7 +73,7 @@ The site is fully built by Eleventy. Every page lives as a `.njk` template under
 
 ## Working on the site
 
-Install Node 20+ once, then:
+Install Node 24+ once, then:
 
 ```bash
 npm install
