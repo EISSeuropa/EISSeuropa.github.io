@@ -36,9 +36,9 @@ jobs:
         with:
           python-version: "3.12"
 
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v6
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: "20"
+          node-version: "24"
 
       - name: Run drift checker
         run: python3 scripts/check-i18n-drift.py

@@ -7,20 +7,21 @@
 #      upstream tag moves to a new SHA, so the pin stays current without
 #      manual sweeps.
 #
-#   2. Python dependencies in scripts/requirements.txt (requests, Pillow).
+#   2. Python dependencies in scripts/requirements.txt (requests, Pillow,
+#      qrcode).
 #      Used by sync-board.py and make-share-cards.py, which run with
 #      `contents: write` in the sync workflows, so a compromised package
 #      on the chain matters.
 #
-#   3. npm dependencies in package.json (currently just @11ty/eleventy).
-#      Eleventy is the static-site generator; its transitive tree (the
+#   3. npm dependencies in package.json (@11ty/eleventy, acorn, axe-core).
+#      Eleventy is the static-site generator. Its transitive tree (the
 #      dev-server's `ws`, `liquidjs`, `markdown-it`, …) is where the
 #      `npm audit` advisories land. Patch/minor bumps are grouped into one
-#      PR; majors stay individual for review.
+#      PR. Majors stay individual for review.
 #
-# Weekly cadence keeps the PR volume manageable. Each PR is auto-mergeable
-# once CI is green (link-check + CodeQL + drift checkers cover the surface
-# Dependabot bumps could break).
+# Weekly cadence keeps the PR volume manageable. Only the maintainer
+# merges, once CI is green (link-check + CodeQL + drift checkers cover the
+# surface Dependabot bumps could break). See CLAUDE.md §2.
 
 version: 2
 updates:

@@ -83,11 +83,11 @@ jobs:
           # the feature silently does nothing rather than lying.
           fetch-depth: 0
 
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v6
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: "20"
+          node-version: "24"
 
-      - run: npm install --no-audit --no-fund
+      - run: npm ci --no-audit --no-fund
 
       # One share card per paper page (#2156), drawn before Eleventy so
       # src/_data/paperCards.js sees them. Not committed: the cache keeps them
