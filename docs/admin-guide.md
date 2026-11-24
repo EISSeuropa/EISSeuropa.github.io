@@ -276,7 +276,7 @@ successor inherits through the handover in section 4.
 - **Platform status** (`#it`, formerly IT System Monitoring). A staff section that lists the latest run of
   each automation in both site repos, read when the site builds by
   `src/_data/systemHealth.js`. Its Workspace card reads Google's public
-  status feed and the "EISS status" Apps Script web app, whose source is
+  status feed and the "EISS status web app (public)" Apps Script project, whose source is
   in the private `workspace-ops` repo. A script run that crashes or stops
   shows as a stale check. Its GitHub card reads GitHub's public status
   page (`githubstatus.com/api/v2/summary.json`) for the components EISS
