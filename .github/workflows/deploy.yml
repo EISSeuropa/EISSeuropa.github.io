@@ -126,14 +126,16 @@ jobs:
       # here only, never committed (_site is gitignored), so local dev
       # has no index and the search modal degrades gracefully.
       #
-      # Pinned to 1.5.2 (matching the NetSec sister repo): an unpinned
-      # `npx pagefind` can fetch a different version on each deploy, and
-      # the index format / content-hashed shard names differ between
-      # versions — across rapid back-to-back deploys the CDN can then
-      # serve a mix of shards from two versions, which surfaces as some
-      # queries returning no results. Pinning keeps every build identical.
+      # Pagefind is a devDependency, so package-lock.json pins the exact
+      # version, `npm ci` above installs it and Dependabot's npm group
+      # bumps it. An unpinned `npx pagefind` can fetch a different version
+      # on each deploy. The index format and content-hashed shard names
+      # differ between versions, so across rapid back-to-back deploys the
+      # CDN can serve a mix of shards from two versions, which surfaces as
+      # some queries returning no results. Pinning keeps every build
+      # identical.
       - name: Build search index (Pagefind)
-        run: npx -y pagefind@1.5.2 --site _site
+        run: npm run build:search
 
       - name: List build output
         run: |
