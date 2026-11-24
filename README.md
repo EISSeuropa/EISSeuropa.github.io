@@ -76,12 +76,14 @@ The site is fully built by Eleventy. Every page lives as a `.njk` template under
 Install Node 24+ once, then:
 
 ```bash
-npm install
+npm ci
 npm run serve     # local dev server with live reload at http://localhost:8080
 npm run build     # one-off build into _site/
 ```
 
 Push to `master` to deploy. GitHub Actions runs the build and publishes via GitHub Pages.
+
+The dev dependencies in `package.json` are Eleventy, acorn, axe-core and Pagefind, and `npm ci` installs the versions in `package-lock.json`. `npm run build:search` builds the search index into `_site/pagefind/` after a build. Dependabot checks them every Monday (`.github/dependabot.yml`). Their minor and patch updates arrive together in one PR, the `eleventy` group, and a major arrives in a PR of its own.
 
 ### Editing pages
 

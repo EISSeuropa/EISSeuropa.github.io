@@ -13,7 +13,8 @@
 #      `contents: write` in the sync workflows, so a compromised package
 #      on the chain matters.
 #
-#   3. npm dependencies in package.json (@11ty/eleventy, acorn, axe-core).
+#   3. npm dependencies in package.json (@11ty/eleventy, acorn, axe-core,
+#      pagefind).
 #      Eleventy is the static-site generator. Its transitive tree (the
 #      dev-server's `ws`, `liquidjs`, `markdown-it`, …) is where the
 #      `npm audit` advisories land. Patch/minor bumps are grouped into one
