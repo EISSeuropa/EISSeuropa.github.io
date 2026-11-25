@@ -163,6 +163,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- The Winter 2027 volunteer call opens on 13 November 2026 in `cohorts.json`, as in the Volunteer handbook. It read 1 November, which the internal dashboard's cohort timeline showed.
 - A label applied to a news issue at the same moment as another no longer cancels the run that turns the issue into a PR, so the comment saying why a form was refused always reaches the issue (#2254). The News item form says that no label is needed.
 - On a phone, the internal dashboard no longer scrolls sideways when the Volunteers tab carries its orange dot.
 - A failure on one network no longer stops the news post on the other: when the Bluesky sign-in fails, LinkedIn still posts, and the next run tries Bluesky again. Before, the first failure ended the run, and LinkedIn, tried second, never posted.
