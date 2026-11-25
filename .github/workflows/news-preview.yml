@@ -2,8 +2,8 @@
 #
 # Every PR that changes src/_data/news.json gets one comment, updated on each
 # push, with the exact text scripts/social-post.py would post once the PR
-# merges and the run is approved in the `social` environment
-# (social-post.yml). The maintainer reads the item and its posts in one place
+# merges (social-post.yml). The `social` environment has no required
+# reviewer, so this comment is the last look before the posts go out. The maintainer reads the item and its posts in one place
 # before merging. This workflow posts nothing and holds no secrets.
 #
 # The comment is found by its first line, <!-- news-social-preview -->.
@@ -57,7 +57,7 @@ jobs:
             echo "### LinkedIn and Bluesky preview"
             echo ""
             if [ "$ENABLED" = "true" ]; then
-              echo "After this PR merges, these posts wait for approval in the \`social\` environment, then go out as shown."
+              echo "Merging this PR posts these straight away, as shown."
             else
               echo "\`SOCIAL_ENABLED\` is not \`true\`, so nothing is posted after the merge."
             fi

@@ -1,4 +1,4 @@
-# Post EISS news to LinkedIn and Bluesky, approval-gated (#2056).
+# Post EISS news to LinkedIn and Bluesky once a news PR merges (#2056).
 #
 # Ported from EISSeuropa/netsec.github.io social-bluesky.yml, news only.
 #
@@ -6,9 +6,9 @@
 #   1. `preview` runs scripts/social-post.py --dry-run, writes the exact posts
 #      to the run summary and counts how many are pending. No secrets.
 #   2. `publish` runs only when something is pending and the repository
-#      variable SOCIAL_ENABLED is `true`. It targets the `social` environment,
-#      so GitHub holds it for a required reviewer, who reads the preview and
-#      approves. The ledger update returns in an auto-merging PR on
+#      variable SOCIAL_ENABLED is `true`. It targets the `social` environment
+#      for its secrets. That environment has no required reviewer: merging
+#      the news PR, after its preview comment, is the approval. The ledger update returns in an auto-merging PR on
 #      `social/ledger`.
 #
 # A news item whose `social.collaborator` is set gets a line in the run

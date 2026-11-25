@@ -141,8 +141,8 @@ jobs:
               echo ""
             fi
             echo "The item was added to \`src/_data/news.json\`. Merging this PR publishes it"
-            echo "on the homepage, the \`/news\` archive and the Atom feed, and queues the"
-            echo "LinkedIn and Bluesky posts for approval in the \`social\` environment."
+            echo "on the homepage, the \`/news\` archive and the Atom feed, and posts it to"
+            echo "LinkedIn and Bluesky straight away, as previewed in the comment below."
             echo "To change anything first, edit the entry on this branch."
             echo ""
             echo "Closes #${ISSUE_NUMBER}"
