@@ -35,16 +35,18 @@ permissions:
   contents: read
   pull-requests: write
 
-concurrency:
-  group: news-merge-${{ github.event.pull_request.number }}
-  cancel-in-progress: true
-
 jobs:
   merge:
     name: Check and merge
     if: >-
       github.event.label.name == 'publish'
       && github.event.pull_request.head.repo.full_name == github.repository
+    # At job level, so another label applied to the PR at the same moment
+    # (`automated` as it opens, say) skips its job without cancelling a
+    # `publish` merge in progress (#2254).
+    concurrency:
+      group: news-merge-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     steps:
       - name: Check the approver and the changed files
