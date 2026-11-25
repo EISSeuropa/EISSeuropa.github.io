@@ -54,7 +54,6 @@ news without the maintainer (#2142). Each takes GitHub logins.
 |---|---|---|
 | `NEWS_PUBLISHERS` | Secrets and variables > Actions > Variables | File a News item that opens a PR, or start one with the `news` label |
 | `NEWS_APPROVERS` | Secrets and variables > Actions > Variables | Merge the PR with the `publish` label, and be assigned to it |
-| Required reviewers of `social` | Environments > `social` | Approve the LinkedIn and Bluesky posts after the merge |
 
 They also need collaborator access to apply a label. Leaving any one out stops
 the item at that step and leaves it for the maintainer.
@@ -164,8 +163,8 @@ adds the item to `src/_data/news.json` and opens a PR. It starts in two ways:
 The PR waits for the maintainer or an approver (see *Merging with the
 `publish` label* below), and is assigned to the accounts in `NEWS_APPROVERS`,
 so GitHub notifies them. Merging it publishes the item on the site and
-the feed, and queues the LinkedIn and Bluesky posts for approval in the
-`social` environment. To change the item first, edit the entry on the PR's
+the feed, and posts it to LinkedIn and Bluesky within a minute. The merge is
+the approval: the `social` environment has no required reviewer. To change the item first, edit the entry on the PR's
 branch. To drop it, close the PR and the issue. The PR body mentions the
 person who filed the issue, so GitHub notifies them, and carries
 `Closes #<issue>`, so the merge closes the issue.
@@ -284,8 +283,9 @@ The pipeline is a port of NetSec's (`EISSeuropa/netsec.github.io`,
    ([`.github/workflows/social-post.yml`](../.github/workflows/social-post.yml))
    runs `scripts/social-post.py --dry-run` and writes the exact text of each
    pending post to the run summary.
-3. The publish job waits in the `social` environment for a required
-   reviewer. The reviewer reads the preview in the run summary and approves.
+3. The publish job runs in the `social` environment, which holds the
+   secrets. It has no required reviewer: merging the news PR, after reading
+   its preview comment, is the approval.
 4. The script posts the headline, the caption and the link, with the item's
    image (a file under `src/`) or the site card
    (`src/assets/images/index-meta.jpg`). It posts as the EISS page
@@ -380,8 +380,8 @@ with every item then in `news.json`.
      client secret.
 3. Create a Bluesky app password for `eissnetwork.bsky.social` (Settings >
    Privacy and security > App passwords). Never the account password.
-4. Create the `social` environment (Settings > Environments) with a required
-   reviewer, and add its secrets: `BSKY_HANDLE` (`eissnetwork.bsky.social`),
+4. Create the `social` environment (Settings > Environments), with no
+   required reviewer, and add its secrets: `BSKY_HANDLE` (`eissnetwork.bsky.social`),
    `BSKY_APP_PASSWORD`, `LINKEDIN_ORG_ID` (the EISS page's numeric id),
    `LINKEDIN_ACCESS_TOKEN`, `LINKEDIN_REFRESH_TOKEN`, `LINKEDIN_CLIENT_ID`,
    `LINKEDIN_CLIENT_SECRET`.
@@ -428,9 +428,10 @@ EISSeuropa/netsec.github.io#2236).
   preview: the post goes to the run summary and the card to the run's
   artifacts (`welcome-card`, kept 14 days). A manual run with a `since`
   date previews another window. `--since` is refused with `--live`.
-- **From the go-live date**, the publish job waits for approval on the
-  `social` environment, as news does, and runs only with
-  `SOCIAL_ENABLED` set to `true`.
+- **From the go-live date**, the publish job posts with no approval step,
+  and runs only with `SOCIAL_ENABLED` set to `true`. It names only people
+  with `socialConsent`, and the preview of each week's post stays in the
+  run summary.
 - **Withdrawal.** A person who answers No on the bios Form loses
   `socialConsent` at the next weekly sync, and no later post names them.
   A post already published is removed by hand on request, as the privacy

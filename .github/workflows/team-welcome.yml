@@ -1,4 +1,4 @@
-# Weekly welcome to people who joined EISS, approval-gated (#2219).
+# Weekly welcome to people who joined EISS (#2219).
 #
 # Ported from EISSeuropa/netsec.github.io directory-welcome.yml (#2236).
 #
@@ -21,10 +21,10 @@
 #     untouched. --since is refused with --live.
 #   - live: from the go-live date. As for news (social-post.yml), `publish`
 #     runs only when someone is due and SOCIAL_ENABLED is `true`, and targets
-#     the `social` environment, so GitHub holds it for a required reviewer,
-#     who reads the preview and approves. The ledger returns in a PR on
-#     `welcome/ledger`, merged by scripts/merge-bot-pr.sh once the checks
-#     pass.
+#     the `social` environment for its secrets. There is no required
+#     reviewer: each person named gave `socialConsent`. The ledger returns
+#     in a PR on `welcome/ledger`, merged by scripts/merge-bot-pr.sh once
+#     the checks pass.
 #
 # Cron can't follow DST, so two UTC triggers (08:00 + 09:00) fire and the gate
 # lets through the one that lands at 10:00 Europe/Paris.
