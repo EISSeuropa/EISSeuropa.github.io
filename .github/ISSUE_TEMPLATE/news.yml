@@ -7,7 +7,7 @@ body:
       value: |
         Fill in this form to announce something on eiss-europa.com, LinkedIn and Bluesky.
 
-        After you submit it, a robot turns the form into a draft. Nothing is public until the maintainer approves that draft. If something goes wrong, the robot leaves a comment on this issue saying what to change.
+        After you submit it, a robot turns the form into a draft. You do not need to add a label. Nothing is public until the maintainer approves that draft. If something goes wrong, the robot leaves a comment on this issue saying what to change.
 
         Headline, Website summary and Post on are required (or "Do not post" under Options, at the end, for an item on the website only). Leave any other field blank if it does not apply. The website, LinkedIn and Bluesky each get their own text: write the website summary plainly, and the posts the way you would write them on each network. The web address goes in the Link field, and a photo in the Image field.
 

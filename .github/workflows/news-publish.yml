@@ -39,12 +39,6 @@ permissions:
   pull-requests: write
   issues: write
 
-concurrency:
-  # One run per issue, so re-labelling doesn't race itself; different issues
-  # run independently.
-  group: news-publish-${{ github.event.issue.number }}
-  cancel-in-progress: true
-
 jobs:
   publish:
     name: Append the news item and open a PR
@@ -54,6 +48,14 @@ jobs:
       || (github.event.action == 'opened' && startsWith(github.event.issue.body, '### Site'))
       || (github.event.action == 'edited' && github.event.issue.state == 'open'
           && startsWith(github.event.issue.body, '### Site'))
+    # One run per issue, so re-labelling doesn't race itself, and different
+    # issues run independently. At job level, not workflow level: a run whose
+    # job is skipped by the `if` above (a `publish` label applied to the
+    # issue, say) never joins the group, so it can't cancel the run doing the
+    # work (#2254).
+    concurrency:
+      group: news-publish-${{ github.event.issue.number }}
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     steps:
       # The labels this pipeline listens for, made here so nobody has to make
@@ -64,8 +66,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
         run: |
-          gh label create news --color 0e8a16 --description "Publishes a News item issue as a PR" 2>/dev/null || true
-          gh label create publish --color 1d76db --description "Merges a news or board profile PR (news-merge.yml)" 2>/dev/null || true
+          gh label create news --color 0e8a16 --description "Turns an issue into a news PR. A publisher's News item form needs no label. Publishers only." 2>/dev/null || true
+          gh label create publish --color 1d76db --description "Merges a news or board profile PR. Goes on the PR, not the issue. Approvers only." 2>/dev/null || true
 
       - name: Check the publisher
         id: publisher

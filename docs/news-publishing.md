@@ -156,7 +156,9 @@ The `Publish news from issue` workflow
 runs [`scripts/news-from-issue.py`](../scripts/news-from-issue.py), which
 adds the item to `src/_data/news.json` and opens a PR. It starts in two ways:
 
-- A publisher files the form. The run starts as soon as the issue is opened.
+- A publisher files the form. The run starts as soon as the issue is opened,
+  and the issue needs no label. The `publish` label goes on the news PR, never
+  on the issue.
 - A publisher applies the **`news`** label, to a form issue someone else
   filed or to a free-text issue.
 
