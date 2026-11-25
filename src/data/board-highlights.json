@@ -49,15 +49,6 @@
   "fixes": [
     {
       "kind": "fix",
-      "site": "NetSec",
-      "n": 2064,
-      "title": "List entries newest first and reattach orphaned v1.17.0 chips",
-      "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2064",
-      "at": "2026-10-25",
-      "lines": 1532
-    },
-    {
-      "kind": "fix",
       "site": "EISS",
       "n": 2085,
       "title": "Store the NetSec months and board highlights, refresh them daily",
@@ -91,7 +82,16 @@
       "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2229",
       "at": "2026-11-18",
       "lines": 210
+    },
+    {
+      "kind": "fix",
+      "site": "EISS",
+      "n": 2208,
+      "title": "The credentials check renews an expired LinkedIn access token before calling it a failure",
+      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2208",
+      "at": "2026-11-18",
+      "lines": 208
     }
   ],
-  "since": "2026-10-25"
+  "since": "2026-10-26"
 }
