@@ -448,8 +448,8 @@ python3 scripts/build-welcome-card.py --since 2026-12-01
 
 - **When a post fails at sign-in**, run "Check the LinkedIn and Bluesky
   credentials" from the Actions tab
-  (`.github/workflows/check-social-credentials.yml`). It waits for the same
-  approval as a post, posts nothing and shows no secret. Its run summary marks
+  (`.github/workflows/check-social-credentials.yml`). It reads the secrets
+  of the `social` environment, posts nothing and shows no secret. Its run summary marks
   each value ✅ or ❌: a value stored with quotes, a space or a line break; a
   Bluesky handle written with `@` or as an address; an account password where
   an app password belongs; a LinkedIn token that is no longer active, was
