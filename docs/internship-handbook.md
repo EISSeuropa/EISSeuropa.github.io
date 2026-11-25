@@ -19,6 +19,10 @@ are in [`src/_data/cohorts.json`](../src/_data/cohorts.json), which the
 internship page reads in all three languages. Add next year's cohorts
 there, and a cohort drops off the page once its end date passes.
 
+Applicants apply through the volunteer application form, a Google Form
+whose address is `volunteerFormUrl` in `src/_data/site.js`. The page
+gives internship@ (`internshipEmail`) for questions only.
+
 | Cohort | Dates | Call out by | Applications close |
 |---|---|---|---|
 | Winter 2027 | 4 January to 26 February | 13 November 2026 | 4 December 2026 |

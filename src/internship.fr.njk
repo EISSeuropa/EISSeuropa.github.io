@@ -25,8 +25,8 @@ alternates:
     </p>
     {% if open %}
     <p style="margin-top: var(--space-5);">
-      <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}?subject=Promotion%20{{ open.name.fr }}">
-        {{ icon("mail") }} Candidatez pour {{ open.phrase.fr }} jusqu'au {{ open.applyBy | newsDate("fr") }}
+      <a class="btn btn-primary" href="{{ site.volunteerFormUrl }}">
+        {{ icon("file-text") }} Candidatez pour {{ open.phrase.fr }} jusqu'au {{ open.applyBy | newsDate("fr") }}
       </a>
     </p>
     {% endif %}
@@ -154,12 +154,14 @@ alternates:
 <section class="section-tight">
   <div class="container">
     <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <h2 style="margin-bottom: var(--space-3);">Écrivez-nous</h2>
+      <h2 style="margin-bottom: var(--space-3);">Comment candidater</h2>
       <p class="muted">
-        Envoyez un court message et un CV à
-        <a href="mailto:{{ site.contactEmail }}?subject=B%C3%A9n%C3%A9volat">{{ site.contactEmail }}</a>,
-        en indiquant la promotion et l'axe qui vous intéressent. Nous répondons à chacun dans la
-        semaine qui suit la clôture.
+        <a href="{{ site.volunteerFormUrl }}">Candidatez via le formulaire de candidature des bénévoles</a>.
+        Nous répondons à chacun dans la semaine qui suit la clôture.
+      </p>
+      <p class="muted" style="margin-top: var(--space-4);">
+        Pour toute question, écrivez à
+        <a href="mailto:{{ site.internshipEmail }}?subject=B%C3%A9n%C3%A9volat">{{ site.internshipEmail }}</a>.
       </p>
       <p class="muted" style="margin-top: var(--space-4);">
         Déjà bénévole ? Votre première semaine est décrite dans <a href="{{ site.handbookUrl }}">le guide</a>

@@ -27,6 +27,11 @@ module.exports = {
     "The largest and most diverse European gathering of scholars and practitioners on security issues.",
   url: "https://eiss-europa.com",
   contactEmail: "contact@eiss-europa.com",
+  // Volunteer applications go through the form. internship@ takes questions
+  // only, on /internship.html in all three locales.
+  internshipEmail: "internship@eiss-europa.com",
+  volunteerFormUrl:
+    "https://docs.google.com/forms/d/e/1FAIpQLSf9eL5jfytQehP9_wCrveDx_m8GM4sEV-JfdXnvHO2DYn0rOw/viewform",
 
   // Volunteer-facing GitHub surfaces, linked from /internship.html in all
   // three locales (#1352). Kept here so the three hand-maintained language

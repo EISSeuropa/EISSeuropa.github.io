@@ -25,8 +25,8 @@ alternates:
     </p>
     {% if open %}
     <p style="margin-top: var(--space-5);">
-      <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}?subject=Durchgang%20{{ open.name.de }}">
-        {{ icon("mail") }} Bis zum {{ open.applyBy | newsDate("de") }} für {{ open.phrase.de }} bewerben
+      <a class="btn btn-primary" href="{{ site.volunteerFormUrl }}">
+        {{ icon("file-text") }} Bis zum {{ open.applyBy | newsDate("de") }} für {{ open.phrase.de }} bewerben
       </a>
     </p>
     {% endif %}
@@ -155,12 +155,14 @@ alternates:
 <section class="section-tight">
   <div class="container">
     <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <h2 style="margin-bottom: var(--space-3);">Schreiben Sie uns</h2>
+      <h2 style="margin-bottom: var(--space-3);">So bewerben Sie sich</h2>
       <p class="muted">
-        Senden Sie eine kurze Nachricht und einen Lebenslauf an
-        <a href="mailto:{{ site.contactEmail }}?subject=Ehrenamt">{{ site.contactEmail }}</a> und
-        nennen Sie den Durchgang und den Bereich, die Sie interessieren. Wir antworten allen innerhalb
-        einer Woche nach Fristende.
+        <a href="{{ site.volunteerFormUrl }}">Bewerben Sie sich über das Bewerbungsformular für Ehrenamtliche</a>.
+        Wir antworten allen innerhalb einer Woche nach Fristende.
+      </p>
+      <p class="muted" style="margin-top: var(--space-4);">
+        Fragen richten Sie bitte an
+        <a href="mailto:{{ site.internshipEmail }}?subject=Ehrenamt">{{ site.internshipEmail }}</a>.
       </p>
       <p class="muted" style="margin-top: var(--space-4);">
         Schon dabei? Ihre erste Woche ist im <a href="{{ site.handbookUrl }}">Leitfaden</a> beschrieben
