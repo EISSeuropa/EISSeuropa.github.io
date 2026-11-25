@@ -23,8 +23,8 @@ alternates:
     </p>
     {% if open %}
     <p style="margin-top: var(--space-5);">
-      <a class="btn btn-primary" href="mailto:{{ site.contactEmail }}?subject={{ open.name.en }}%20cohort">
-        {{ icon("mail") }} Apply for {{ open.phrase.en }} by {{ open.applyBy | newsDate("en") }}
+      <a class="btn btn-primary" href="{{ site.volunteerFormUrl }}">
+        {{ icon("file-text") }} Apply for {{ open.phrase.en }} by {{ open.applyBy | newsDate("en") }}
       </a>
     </p>
     {% endif %}
@@ -160,12 +160,14 @@ alternates:
 <section class="section-tight">
   <div class="container">
     <article class="card" style="padding: clamp(var(--space-6), 2vw + 1rem, var(--space-8));">
-      <h2 style="margin-bottom: var(--space-3);">Write to us</h2>
+      <h2 style="margin-bottom: var(--space-3);">How to apply</h2>
       <p class="muted">
-        Send a short note and a CV to
-        <a href="mailto:{{ site.contactEmail }}?subject=Volunteering">{{ site.contactEmail }}</a>,
-        saying which cohort and which track interest you. We reply to everyone within a week of the
-        closing date.
+        <a href="{{ site.volunteerFormUrl }}">Apply through the volunteer application form</a>.
+        We reply to everyone within a week of the closing date.
+      </p>
+      <p class="muted" style="margin-top: var(--space-4);">
+        Questions go to
+        <a href="mailto:{{ site.internshipEmail }}?subject=Volunteering">{{ site.internshipEmail }}</a>.
       </p>
       <p class="muted" style="margin-top: var(--space-4);">
         Already a volunteer? Your first week is in <a href="{{ site.handbookUrl }}">the handbook</a>.
