@@ -1565,6 +1565,16 @@ html:has(.apps-welcome[open]) { overflow: hidden; }
 /* The Volunteers tab (#2235): a strip of counts, then the cards. The waiting
    tile turns amber while a request waits, like the header's Systems tile. */
 .apps-volunteers-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: var(--space-3); margin: 0 0 var(--space-5); padding: 0; list-style: none; }
+/* Two groups of counts (#2268): applications, then joining and the current cohort.
+   Stacked on a phone, side by side from 64rem, each tile the same width. */
+.apps-volunteers-bands { display: grid; gap: var(--space-4) var(--space-5); margin: 0 0 var(--space-5); }
+@media (min-width: 64rem) {
+  .apps-volunteers-bands-two { grid-template-columns: 3fr 4fr; }
+}
+.apps-volunteers-band { display: flex; flex-direction: column; }
+.apps-volunteers-band .apps-volunteers-strip { flex: 1; grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); margin: 0; }
+/* The three application counts stay on one row, also on a phone. */
+.apps-volunteers-band-apps .apps-volunteers-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .apps-volunteers-tile { display: flex; flex-direction: column; padding: var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elev); box-shadow: var(--shadow-1); }
 .apps-volunteers-tile a { display: flex; flex-direction: column; color: inherit; text-decoration: none; }
 .apps-volunteers-tile a:hover span { text-decoration: underline; }
