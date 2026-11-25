@@ -46,6 +46,101 @@ A returning volunteer acts as cohort lead for each intake. The
 operational detail (the roster, the handbook role sections, the first-day
 steps) lives in the Drive, not here.
 
+## Applications and joining
+
+How an applicant becomes a volunteer, and what is kept for how long.
+The code is the `intern-lifecycle` project in the private
+`EISSeuropa/workspace-ops` repository, whose `README.md` has the detail
+(#2268). Staff follow the same steps in the Staff handbook, in Drive.
+
+1. The applicant fills in the volunteer application form. Answers land
+   in the "Volunteer applications" Sheet in EISS Restricted > Interns
+   and staff.
+2. A reviewer sets Status: Shortlisted, Accepted, Declined or Withdrawn.
+   A blank Status counts as New. Every applicant gets a reply within a
+   week of the closing date. After that week, applications still New
+   turn the Applications tile on `/internal.html` orange.
+3. For an Accepted application the lifecycle script makes a Gmail draft
+   in admin@'s Drafts, with a Joining Form link that has the name, email
+   address and cohort filled in. A person signs and sends it. The script
+   never sends it.
+4. The applicant fills in the Joining Form, and the approval, the
+   account and the Intern roster row follow as for any volunteer. The
+   roster's Track comes from the areas named in the application.
+
+```mermaid
+flowchart TD
+  A["Applicant fills in the volunteer application form<br/>(linked from eiss-europa.com/internship.html)"] --> B["New row in Volunteer applications<br/>Status: New"]
+  B --> C{"Reviewer sets Status"}
+  C -->|"Shortlisted"| S["Shortlisted: decided later"]
+  S -.-> C
+  C -->|"Declined or Withdrawn"| D["Closed on is stamped"]
+  D --> E["Row and form answer deleted<br/>60 days later"]
+  C -->|"Accepted"| F["Gmail draft in admin@ with a<br/>pre-filled Joining Form link"]
+  F --> G["A person checks, signs and sends it"]
+  G --> H["Applicant fills in the Joining Form"]
+  H --> I["New row in EISS people lifecycle<br/>Status: Pending"]
+  I --> J["Arthur ticks Approved"]
+  J --> K["Script creates the EISS account,<br/>adds it to internship@ and sends the welcome"]
+  K --> L["Placement: cohort start to cohort end"]
+  L --> M["Exit checklist 7 days before the end"]
+  M --> N["Day after the end: removed from internship@<br/>and suspended"]
+  N --> O["30 days later: Ready to delete"]
+  O --> P["Arthur deletes the account<br/>and transfers its Drive to admin@"]
+  L -.-> Q["Application deleted<br/>3 months after the placement ends"]
+```
+
+### Reviewing an application
+
+```mermaid
+sequenceDiagram
+  autonumber
+  actor Applicant
+  participant Form as Application form
+  participant Sheet as Volunteer applications
+  actor Reviewer
+  participant Script as EISS On/off-boarding
+  participant Dash as Dashboard (Volunteers tab)
+  participant Drafts as admin@ Drafts
+  Applicant->>Form: Applies before the closing date
+  Form->>Sheet: New row, Status blank (counts as New)
+  Script->>Dash: Counts: applications, to review, accepted
+  Reviewer->>Sheet: Sets Status: Shortlisted, Accepted, Declined or Withdrawn
+  Note over Reviewer,Dash: Reply within a week of the closing date. Applications still New after that turn the tile and the tab dot orange.
+  Script->>Sheet: Reads Accepted rows (hourly)
+  Script->>Drafts: One draft per row, with a pre-filled Joining Form link
+  Script->>Sheet: Writes the date in Joining Form draft
+  Reviewer->>Drafts: Checks, signs and sends the draft
+  Drafts->>Applicant: Offer and Joining Form link
+  Note over Applicant,Sheet: Applicants send questions to internship@eiss-europa.com
+```
+
+### What is deleted when
+
+Declined and withdrawn applications go 60 days after the Status was
+set. Accepted ones go 3 months after the placement ends. The script
+deletes the Sheet row and the form's copy of the answers.
+
+```mermaid
+flowchart TB
+  subgraph Rec["Joining records"]
+    direction LR
+    C1["Joining Form answers of someone who has left"] -->|"12 months after the End date"| C2["Row and form answer deleted"]
+    C3["Intern roster row"] -->|"12 months after the End date"| C4["Row deleted"]
+  end
+  subgraph Acc["Volunteer EISS account"]
+    direction LR
+    B1["Cohort end date"] -->|"next day"| B2["Removed from internship@<br/>and suspended"] -->|"30 days"| B3["Ready to delete"] -->|"by hand"| B4["Deleted, Drive to admin@"]
+  end
+  subgraph App["Volunteer applications"]
+    direction LR
+    A1["Declined or Withdrawn<br/>(Closed on stamped)"] -->|"60 days"| A2["Row and form answer deleted"]
+    A3["Accepted"] --> A4["Placement ends"] -->|"3 months"| A5["Row and form answer deleted"]
+    A6["New or Shortlisted"] --> A7["Kept until the Status changes"]
+  end
+  App ~~~ Acc ~~~ Rec
+```
+
 ## Your first week
 
 **Nothing here is a test.** If a step does not work, say so and we fix
