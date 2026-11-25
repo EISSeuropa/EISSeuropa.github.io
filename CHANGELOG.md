@@ -119,6 +119,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Changed
 
+- The internal dashboard's Volunteers tab opens with three Applications tiles: applications for the current call, applications still to review and applications accepted. Applications still to review turn the tile and the tab's dot orange once the call has closed. The counts come from the "Volunteer applications" Sheet through the lifecycle script, with no names (#2268).
 - Volunteer applications go through the new volunteer application form, linked from the apply button and the "How to apply" card on `/internship.html` in English, French and German. The pages no longer ask for a CV by email, and internship@eiss-europa.com replaces contact@ as the address for questions.
 - The Global Risks to the EU page links the 2027 survey, now open to European experts, from a call at the top of the page.
 - Site search runs on Pagefind 1.6.0, up from 1.5.2. A phrase in quotes finds its accented spelling ("cafe latte" finds "café latte"), excerpts no longer come from the wrong words and broad queries return faster. Pagefind is now a devDependency, so the lockfile pins its version and Dependabot proposes its updates.
