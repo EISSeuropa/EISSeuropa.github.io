@@ -365,21 +365,33 @@
       <section class="apps-panel" id="volunteers" data-apps-panel aria-labelledby="apps-volunteers-heading" data-roles="staff management">
         <h2 class="apps-heading apps-section-heading" id="apps-volunteers-heading">{{ VD.heading }}</h2>
         {% if VP %}
-          <ul class="apps-volunteers-strip" role="list">
-            {# Applications (#2268): counts only, from the "Volunteer applications" Sheet
-               through the lifecycle script. Unreviewed ones turn orange once the call closes. #}
-            {% set VA = V.applications %}
-            {% if VP.applications is defined and VA.call %}
-              {% set callName = VA.call[lang] or VA.call.en %}
-              <li class="apps-volunteers-tile"><a href="{{ VA.sheet }}"><strong>{{ VP.applications }}</strong> <span>{{ plural(VD.tiles.applications, VP.applications, lang) | replace("{cohort}", callName) }}</span></a></li>
-              <li class="apps-volunteers-tile{% if VReview %} apps-volunteers-tile-issue{% endif %}"><strong>{{ VP.applicationsNew }}</strong> <span>{{ plural(VD.tiles.toReview, VP.applicationsNew, lang) }}</span>{% if VReview %}<span class="sr-only">{{ d.needsAttention }}</span>{% endif %}</li>
-              <li class="apps-volunteers-tile"><strong>{{ VP.applicationsAccepted }}</strong> <span>{{ plural(VD.tiles.accepted, VP.applicationsAccepted, lang) | replace("{cohort}", callName) }}</span></li>
+          {# Two groups (#2268): the applications for the current call, then joining
+             and the cohort under way. Side by side on a wide screen, stacked on a phone. #}
+          {% set VA = V.applications %}
+          {% set VAshow = VP.applications is defined and VA.call %}
+          <div class="apps-volunteers-bands{% if VAshow %} apps-volunteers-bands-two{% endif %}">
+            {% if VAshow %}
+              {# Applications: counts only, from the "Volunteer applications" Sheet through
+                 the lifecycle script. Unreviewed ones turn orange once the call closes. #}
+              <div class="apps-volunteers-band apps-volunteers-band-apps">
+                <h3 class="apps-volunteers-subhead" id="apps-volunteers-band-apps">{{ VD.bandApplications | replace("{cohort}", VA.call[lang] or VA.call.en) }}</h3>
+                <ul class="apps-volunteers-strip" role="list" aria-labelledby="apps-volunteers-band-apps">
+                  <li class="apps-volunteers-tile"><a href="{{ VA.sheet }}"><strong>{{ VP.applications }}</strong> <span>{{ plural(VD.tiles.applications, VP.applications, lang) }}</span></a></li>
+                  <li class="apps-volunteers-tile{% if VReview %} apps-volunteers-tile-issue{% endif %}"><strong>{{ VP.applicationsNew }}</strong> <span>{{ plural(VD.tiles.toReview, VP.applicationsNew, lang) }}</span>{% if VReview %}<span class="sr-only">{{ d.needsAttention }}</span>{% endif %}</li>
+                  <li class="apps-volunteers-tile"><strong>{{ VP.applicationsAccepted }}</strong> <span>{{ plural(VD.tiles.accepted, VP.applicationsAccepted, lang) }}</span></li>
+                </ul>
+              </div>
             {% endif %}
-            <li class="apps-volunteers-tile{% if VP.pending %} apps-volunteers-tile-issue{% endif %}"><a href="{{ V.sheet }}"><strong>{{ VP.pending }}</strong> <span>{{ plural(VD.tiles.pending, VP.pending, lang) }}</span></a>{% if VP.pending %}<span class="sr-only">{{ d.needsAttention }}</span>{% endif %}</li>
-            {% if VP.upcoming is defined %}<li class="apps-volunteers-tile"><strong>{{ VP.upcoming }}</strong> <span>{{ plural(VD.tiles.upcoming, VP.upcoming, lang) }}</span></li>{% endif %}
-            <li class="apps-volunteers-tile"><strong>{{ VP.activeVolunteers }}</strong> <span>{{ plural(VD.tiles.active, VP.activeVolunteers, lang) }}</span></li>
-            {% if VP.ending is defined %}<li class="apps-volunteers-tile"><strong>{{ VP.ending }}</strong> <span>{{ plural(VD.tiles.ending, VP.ending, lang) }}</span></li>{% endif %}
-          </ul>
+            <div class="apps-volunteers-band">
+              <h3 class="apps-volunteers-subhead" id="apps-volunteers-band-cohort">{{ VD.bandCohort }}</h3>
+              <ul class="apps-volunteers-strip" role="list" aria-labelledby="apps-volunteers-band-cohort">
+                <li class="apps-volunteers-tile{% if VP.pending %} apps-volunteers-tile-issue{% endif %}"><a href="{{ V.sheet }}"><strong>{{ VP.pending }}</strong> <span>{{ plural(VD.tiles.pending, VP.pending, lang) }}</span></a>{% if VP.pending %}<span class="sr-only">{{ d.needsAttention }}</span>{% endif %}</li>
+                {% if VP.upcoming is defined %}<li class="apps-volunteers-tile"><strong>{{ VP.upcoming }}</strong> <span>{{ plural(VD.tiles.upcoming, VP.upcoming, lang) }}</span></li>{% endif %}
+                <li class="apps-volunteers-tile"><strong>{{ VP.activeVolunteers }}</strong> <span>{{ plural(VD.tiles.active, VP.activeVolunteers, lang) }}</span></li>
+                {% if VP.ending is defined %}<li class="apps-volunteers-tile"><strong>{{ VP.ending }}</strong> <span>{{ plural(VD.tiles.ending, VP.ending, lang) }}</span></li>{% endif %}
+              </ul>
+            </div>
+          </div>
         {% endif %}
         <div class="apps-status apps-volunteers-cards">
           {% if VP %}
