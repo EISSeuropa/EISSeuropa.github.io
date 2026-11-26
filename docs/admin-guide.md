@@ -286,7 +286,7 @@ successor inherits through the handover in section 4.
   the browser, since the build runs on GitHub Actions and seldom runs
   during a GitHub outage, and the Systems tile follows it. The section
   hides itself if a build cannot reach GitHub.
-- **Volunteers** (`#volunteers`, #2230, #2235, #2268). A staff and management
+- **Volunteers** (`#volunteers`, #2230, #2235, #2268, #2277). A staff and management
   tab. The cohort dates come first, from `cohorts.json` through
   `src/_data/volunteerRoll.js`: each of the current and next cohort is a
   track with its call, its review week (seven days after applications close)
@@ -303,7 +303,7 @@ successor inherits through the handover in section 4.
   `intern-lifecycle` script in `workspace-ops` writes hourly and daily. A
   request waiting for approval puts an orange dot on the tab and sets the
   Systems tile to Issue, linked to the tab.
-- **Belvedere** (`#belvedere`, #2238). A tab for staff, management and
+- **Belvedere** (`#belvedere`, #2238, #2277). A tab for staff, management and
   volunteers. "Posts by stage" counts the posts at each stage of the
   editors' "Belvedere tracker" Sheet, with the posts in progress, those
   overdue, the next due date and the published posts lacking a French or
