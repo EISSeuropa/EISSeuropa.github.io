@@ -186,6 +186,8 @@ comma-separated cell, and the card renders one pill per value:
 > as a quiet pill alongside the role on the card. It is purely
 > descriptive, not used for sorting or grouping.
 
+Functional responsibilities are for staff, board members and management only. The sync drops them for anyone whose answer names a volunteer cohort, an earlier answer included, and the lifecycle script sends a volunteer's Joining Form answer as "None" (workspace-ops `intern-lifecycle`).
+
 In *Settings → Responses*, set:
 
 - **Collect email addresses → Verified**

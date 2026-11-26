@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Tests for the `joined` date and the `socialConsent` flag that
+"""Tests for the `joined` date, the `socialConsent` flag and the staff-only
+functional responsibility that
 scripts/sync-board.py writes into board.json (#2219). No network: rows are
 built by hand and no photo is downloaded.
 
@@ -35,6 +36,19 @@ def _row(social: str | None = None, **extra) -> dict:
         row[COLS["socialConsent"]] = social
     row.update(extra)
     return row
+
+
+def test_a_volunteer_has_no_functional_responsibility():
+    cohort = "Winter 2027 (4 January to 26 February 2027)"
+    row = _row(**{COLS["cohort"]: cohort, COLS["functionalResponsibility"]: "Conference Coordinator"})
+    assert "functionalResponsibility" not in sb.build_from_row(row, COLS, ROLE, None)
+    prior = {"name": "Ada Example", "functionalResponsibility": "Conference Coordinator"}
+    assert "functionalResponsibility" not in sb.build_from_row(_row(**{COLS["cohort"]: cohort}), COLS, ROLE, prior)
+
+
+def test_staff_keep_their_functional_responsibility():
+    row = _row(**{COLS["functionalResponsibility"]: "Conference Coordinator"})
+    assert sb.build_from_row(row, COLS, ROLE, None)["functionalResponsibility"] == "Conference Coordinator"
 
 
 def test_the_column_is_mapped():
