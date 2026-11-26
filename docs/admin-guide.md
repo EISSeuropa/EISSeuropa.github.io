@@ -128,7 +128,7 @@ successor inherits through the handover in section 4.
   a `menu` number adds the link to the padlock menu, which lists them in
   that order. Team chat comes first, and the last entry opens this
   dashboard.
-- **Tabs.** Apps, Calendar, Guides, Volunteers, Platform development, Platform status, NetSec reports and Annual reports, linkable as `#apps`, `#updates`, `#guides`, `#volunteers`, `#status`, `#it`, `#netsec` and `#annual` (the hashes kept their old names, so existing links still work). Without JavaScript all of them stack. The Platform status tab follows the staff role, and the Volunteers tab the staff and management roles.
+- **Tabs.** Apps, Calendar, Guides, Volunteers, Belvedere, Platform development, Platform status, NetSec reports and Annual reports, linkable as `#apps`, `#updates`, `#guides`, `#volunteers`, `#belvedere`, `#status`, `#it`, `#netsec` and `#annual` (the hashes kept their old names, so existing links still work). Without JavaScript all of them stack. The Platform status tab follows the staff role, the Volunteers tab the staff and management roles, and the Belvedere tab staff, management and volunteers.
 - **Apps grid.** A "Filter apps" field narrows the tiles by name and note, and Escape clears it. The three apps opened most often in a browser (three times or more) move to the front there. The counts sit in that browser's storage under `eiss-apps-used` and go nowhere else.
 - **Platform development** (`#status`). The next release and the open issue, PR and
   `help wanted` counts come from `src/data/roadmap-progress.json`, which
@@ -286,23 +286,39 @@ successor inherits through the handover in section 4.
   the browser, since the build runs on GitHub Actions and seldom runs
   during a GitHub outage, and the Systems tile follows it. The section
   hides itself if a build cannot reach GitHub.
-- **Volunteers** (`#volunteers`, #2230, #2235, #2238). A staff and management
-  tab. A strip counts the joining requests waiting for approval, the people
-  approved whose start date is still ahead, the active volunteers and those
-  ending within 30 days. The Joining card names the people waiting or
-  starting soon who ticked consent to a profile on /board, with their role
-  and cohort or start date. Cohort dates come from `cohorts.json`, and the
-  roster from `board.json` through `src/_data/volunteerRoll.js`. The counts
-  and names come from the "Volunteer accounts" check of the EISS status web
-  app, which the `intern-lifecycle` script in `workspace-ops` writes hourly
-  and daily. A request waiting for approval puts an orange dot on the tab and
-  sets the Systems tile to Issue, linked to the tab. The Belvedere card reads
-  the web app's `?view=belvedere`, which counts the posts at each stage of
-  the editors' "Belvedere tracker" Sheet and lists those in progress by
-  title, stage and due date. Authors and links stay in the Sheet. The card's
-  published record comes from the blog collection. The page is public, so
-  anything typed as a title in the tracker is published once the site
-  builds.
+- **Volunteers** (`#volunteers`, #2230, #2235, #2268). A staff and management
+  tab. The cohort dates come first, from `cohorts.json` through
+  `src/_data/volunteerRoll.js`: each of the current and next cohort is a
+  track with its call, its review week (seven days after applications close)
+  and its term as bars, and a line for today that the page script places.
+  Below 40rem, and for screen readers, the dates are a list, and on a wider
+  screen the list shows only the next date with its countdown. Then four
+  steps of counts in the order a volunteer moves through them: applications
+  for the current call (received, to review, accepted), joining (waiting for
+  approval, approved and starting soon), active, and ending within 30 days.
+  The Joining card names the people waiting or starting soon who ticked
+  consent to a profile on /board, with their role and cohort or start date,
+  and the roster comes from `board.json`. The counts and names come from the
+  "Volunteer accounts" check of the EISS status web app, which the
+  `intern-lifecycle` script in `workspace-ops` writes hourly and daily. A
+  request waiting for approval puts an orange dot on the tab and sets the
+  Systems tile to Issue, linked to the tab.
+- **Belvedere** (`#belvedere`, #2238). A tab for staff, management and
+  volunteers. "Posts by stage" counts the posts at each stage of the
+  editors' "Belvedere tracker" Sheet, with the posts in progress, those
+  overdue, the next due date and the published posts lacking a French or
+  German version. Below it every post is one row with the same columns
+  (post and author, stage, next step and its owner, due date, languages),
+  grouped by stage, furthest along first. Posts in progress come from the
+  web app's `?view=belvedere`, which sends an author's or owner's name only
+  when it matches a person on /board, and "Name withheld" stands for anyone
+  else. Their language chip is the one the post is written in. Published
+  posts come from the blog collection, with a chip for each of English,
+  French and German that exists, and a missing translation reads as a
+  Translation next step. A post past its due date and not published gets an
+  orange Overdue flag and puts a dot on the tab. The page is public, so
+  anything typed as a title or next action in the tracker is published once
+  the site builds.
 - **Tasks in Google Chat.** Daily tasks live in the Tasks tab of each
   project's Chat space, and the *Chat* tile opens Chat for staff, management
   and volunteers. A task has one assignee, who must be a member of the

@@ -40,6 +40,32 @@ module.exports = function () {
     .slice(0, 2)
     .flatMap((c) => DATE_KEYS.filter((k) => c[k]).map((k) => ({ date: c[k], key: k, cohort: c.name })))
     .sort((a, b) => a.date.localeCompare(b.date));
+  // The same cohorts as horizontal tracks: the call, the review week
+  // and the term as bars, in percent of a span from the first call's month to
+  // the month after the last end. The page script places today's line.
+  const DAY = 864e5;
+  const ms = (s) => Date.parse(s + "T00:00:00Z");
+  const iso = (t) => new Date(t).toISOString().slice(0, 10);
+  const shown = cohorts.filter((c) => c.end >= today).slice(0, 2).filter((c) => c.callOpens && c.applyBy && c.start && c.end);
+  let timeline = null;
+  if (shown.length) {
+    const first = new Date(ms(shown.map((c) => c.callOpens).sort()[0]));
+    const last = new Date(ms(shown.map((c) => c.end).sort().pop()));
+    const from = Date.UTC(first.getUTCFullYear(), first.getUTCMonth(), 1);
+    const to = Date.UTC(last.getUTCFullYear(), last.getUTCMonth() + 1, 1);
+    const pc = (t) => +(((t - from) / (to - from)) * 100).toFixed(2);
+    const bar = (a, b) => ({ left: pc(ms(a)), width: +(pc(ms(b)) - pc(ms(a))).toFixed(2) });
+    const months = [];
+    for (let m = new Date(from); m.getTime() < to; m.setUTCMonth(m.getUTCMonth() + 1)) months.push({ date: iso(m.getTime()), left: pc(m.getTime()) });
+    timeline = {
+      from: iso(from), to: iso(to), months,
+      tracks: shown.map((c) => {
+        const review = iso(ms(c.applyBy) + REPLY_DAYS * DAY);
+        return { cohort: c.name, year: c.start.slice(0, 4), callOpens: c.callOpens, applyBy: c.applyBy, review, start: c.start, end: c.end,
+          call: bar(c.callOpens, c.applyBy), reply: bar(c.applyBy, review), term: bar(c.start, c.end) };
+      }),
+    };
+  }
   // The cohort under way, if any: the Belvedere card counts its posts.
   const current = cohorts.find((c) => c.start <= today && c.end >= today) || null;
   // The call the Applications tiles count, by the lifecycle script's rule, and
@@ -53,5 +79,5 @@ module.exports = function () {
     .filter((c) => c.callOpens <= today && replyEnd(c) >= today)
     .sort((a, b) => a.applyBy.localeCompare(b.applyBy))[0] || null;
   const applications = { sheet: APPLICATIONS, call: call ? call.name : null, closed: call ? call.applyBy < today : false };
-  return { groups: list, listed: list.reduce((n, g) => n + g.people.length, 0), sheet: SHEET, belvedere: BELVEDERE, dates, current, applications };
+  return { groups: list, listed: list.reduce((n, g) => n + g.people.length, 0), sheet: SHEET, belvedere: BELVEDERE, dates, timeline, current, applications, today };
 };
