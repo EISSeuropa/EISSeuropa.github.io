@@ -166,6 +166,7 @@ At v2.13.0r (formerly v2.21.0) we adopted the NetSec-style versioning rules spel
 
 ### Fixed
 
+- James Roughan's profile on /board is back at /board/james-roughan.html, in English, French and German. Adding "Mr" to his name in the bios form had moved it to a new address and left the old one returning "page not found".
 - Hugo Meijer's entry on /board no longer has a LinkedIn link that opened his website.
 - The internal dashboard asks the EISS status web app a second time when its first answer fails or is too slow, for the Belvedere tab, the workspace checks and the dates calendar. A single slow answer during a build had left the Belvedere tab reading "The tracker could not be read".
 - The Winter 2027 volunteer call opens on 13 November 2026 in `cohorts.json`, as in the Volunteer handbook. It read 1 November, which the internal dashboard's cohort timeline showed.
