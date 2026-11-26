@@ -1565,16 +1565,19 @@ html:has(.apps-welcome[open]) { overflow: hidden; }
 /* The Volunteers tab (#2235): a strip of counts, then the cards. The waiting
    tile turns amber while a request waits, like the header's Systems tile. */
 .apps-volunteers-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: var(--space-3); margin: 0 0 var(--space-5); padding: 0; list-style: none; }
-/* Two groups of counts (#2268): applications, then joining and the current cohort.
-   Stacked on a phone, side by side from 64rem, each tile the same width. */
-.apps-volunteers-bands { display: grid; gap: var(--space-4) var(--space-5); margin: 0 0 var(--space-5); }
+/* From application to departure: up to four steps in a row from 64rem, the
+   order a volunteer moves through, each holding its tiles. Two per row below
+   that, one on a phone. */
+.apps-volunteers-flowhead { margin-bottom: var(--space-3); }
+.apps-volunteers-flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: var(--space-4); margin: 0 0 var(--space-5); padding: 0; list-style: none; }
 @media (min-width: 64rem) {
-  .apps-volunteers-bands-two { grid-template-columns: 3fr 4fr; }
+  .apps-volunteers-flow { grid-template-columns: 3fr 2fr 1fr 1fr; }
+  .apps-volunteers-flow:not(:has(> :nth-child(4))) { grid-template-columns: 2fr 1fr 1fr; }
 }
-.apps-volunteers-band { display: flex; flex-direction: column; }
-.apps-volunteers-band .apps-volunteers-strip { flex: 1; grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); margin: 0; }
+.apps-volunteers-step { display: flex; flex-direction: column; min-width: 0; }
+.apps-volunteers-step .apps-volunteers-strip { flex: 1; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); margin: 0; }
 /* The three application counts stay on one row, also on a phone. */
-.apps-volunteers-band-apps .apps-volunteers-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.apps-volunteers-step-apps .apps-volunteers-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .apps-volunteers-tile { display: flex; flex-direction: column; padding: var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elev); box-shadow: var(--shadow-1); }
 .apps-volunteers-tile a { display: flex; flex-direction: column; color: inherit; text-decoration: none; }
 .apps-volunteers-tile a:hover span { text-decoration: underline; }
@@ -1589,8 +1592,6 @@ html:has(.apps-welcome[open]) { overflow: hidden; }
 .apps-volunteers-meta { display: block; color: var(--text-muted); font-size: 0.8125rem; }
 .apps-volunteers-active strong { color: var(--accent); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
 .apps-volunteers-cards { grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); }
-.apps-volunteers-wide { grid-column: 1 / -1; }
-.apps-volunteers-blog { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: var(--space-5); }
 /* The Belvedere stages as steps on one line, joined by a rule. */
 .apps-volunteers-stages { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); margin: 0 0 var(--space-3); padding: 0; list-style: none; }
 .apps-volunteers-stage { position: relative; display: flex; flex-direction: column; align-items: center; gap: var(--space-1); text-align: center; }
@@ -1603,12 +1604,83 @@ html:has(.apps-welcome[open]) { overflow: hidden; }
   .apps-volunteers-stage:nth-child(4)::before { display: none; }
 }
 .apps-volunteers-stage-empty strong { border-color: var(--border-strong); color: var(--text-muted); }
-.apps-volunteers-link, .apps-volunteers-latest { margin: 0 0 var(--space-2); }
+.apps-volunteers-link { margin: 0 0 var(--space-2); }
 .apps-volunteers-active { margin: 0 0 var(--space-3); }
 .apps-volunteers-groups { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
 .apps-volunteers-cohort { margin: 0 0 var(--space-1); color: var(--text-muted); font-size: 0.875rem; font-weight: 600; }
 .apps-volunteers-names { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); margin: 0; padding: 0; list-style: none; }
 .apps-volunteers-names a { display: inline-block; padding-block: var(--space-1); }
+/* The cohort dates as tracks: one row per cohort, the call, review week and
+   term as bars placed in percent of the span, today's line set by the page
+   script through --apps-at. Below 40rem the chart goes and the dated list
+   shows in full. From 40rem the list keeps only the next date in view, and
+   the rest stays for screen readers. */
+.apps-cohorts { margin: 0 0 var(--space-5); }
+.apps-cohorts-chart { --apps-label: 6.5rem; position: relative; }
+.apps-cohorts-scale { position: relative; height: 1.5rem; margin-left: var(--apps-label); border-bottom: 1px solid var(--border); }
+.apps-cohorts-month { position: absolute; top: 0; height: 100%; padding-left: var(--space-1); border-left: 1px solid var(--border); color: var(--text-muted); font-size: 0.75rem; white-space: nowrap; }
+.apps-cohorts-tracks { margin: 0; padding: 0; list-style: none; }
+.apps-cohorts-track { display: grid; grid-template-columns: var(--apps-label) minmax(0, 1fr); align-items: center; min-height: 3.5rem; border-bottom: 1px dashed var(--border); }
+.apps-cohorts-name { padding-right: var(--space-3); font-weight: 600; }
+.apps-cohorts-name span { display: block; color: var(--text-muted); font-size: 0.75rem; font-weight: 400; }
+.apps-cohorts-lane { position: relative; height: 1.5rem; }
+.apps-cohorts-bar { position: absolute; top: 0.125rem; height: 1.25rem; overflow: hidden; padding: 0 var(--space-1); border-radius: var(--radius-xs); font-size: 0.6875rem; font-weight: 600; line-height: 1.25rem; white-space: nowrap; text-overflow: ellipsis; }
+.apps-cohorts-call { border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); background: var(--accent-soft); color: var(--accent); }
+.apps-cohorts-reply { border: 1px dashed color-mix(in srgb, var(--accent) 40%, transparent); background: repeating-linear-gradient(135deg, var(--accent-soft) 0 4px, transparent 4px 8px); }
+.apps-cohorts-term { background: var(--accent); color: var(--accent-text); }
+.apps-cohorts-today { position: absolute; top: 1.5rem; bottom: 0; left: calc(var(--apps-label) + (100% - var(--apps-label)) * var(--apps-at, 0)); z-index: 1; border-left: 2px solid var(--warning); pointer-events: none; }
+.apps-cohorts-today span { position: absolute; top: -1.4rem; left: 0; transform: translateX(-50%); padding: 0 var(--space-2); border-radius: var(--radius-full); background: var(--warning); color: hsl(222 40% 10%); font-size: 0.6875rem; font-weight: 700; white-space: nowrap; }
+.apps-cohorts-legend { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); margin: var(--space-3) 0; color: var(--text-muted); font-size: 0.8125rem; }
+.apps-cohorts-legend i { position: static; display: inline-block; width: 1.4rem; height: 0.7rem; margin-right: var(--space-1); padding: 0; border-radius: 3px; vertical-align: -1px; }
+@media (max-width: 40rem) {
+  .apps-cohorts-chart, .apps-cohorts-legend { display: none; }
+}
+@media (min-width: 40.01rem) {
+  .apps-cohorts-list::before, .apps-cohorts-list .apps-timeline-today { display: none; }
+  .apps-cohorts-list .apps-timeline-item:not(.apps-timeline-next) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .apps-cohorts-list .apps-timeline-next { display: flex; flex-wrap: wrap; gap: 0 var(--space-2); padding: 0; }
+  .apps-cohorts-list .apps-timeline-next .apps-timeline-dot { display: none; }
+  .apps-cohorts-list .apps-timeline-next > * { grid-column: auto; }
+}
+/* The Belvedere tab: the stages overview, then every post in one list of
+   rows with the same five columns, grouped by stage in <details>. On a
+   phone each row folds into three lines. */
+.apps-belvedere-overview { margin: 0 0 var(--space-5); }
+.apps-belvedere-summary { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); margin: 0; color: var(--text-muted); font-size: 0.875rem; }
+.apps-belvedere-late { color: var(--atlas-prize); font-weight: 600; }
+.apps-belvedere .apps-status-title small { margin-left: var(--space-2); color: var(--text-muted); font-size: 0.8125rem; font-weight: 400; }
+.apps-belvedere-scroll { overflow-x: auto; }
+.apps-belvedere-head, .apps-belvedere-row { display: grid; grid-template-columns: minmax(13rem, 2.4fr) 6.5rem minmax(10rem, 1.6fr) 8.5rem 6.5rem; gap: var(--space-3); align-items: center; }
+.apps-belvedere-head { margin: 0; padding: 0 var(--space-3) var(--space-2); border-bottom: 1px solid var(--border); color: var(--text-muted); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.apps-belvedere-group > summary { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-3) var(--space-1); color: var(--text-muted); font-size: 0.8125rem; font-weight: 600; cursor: pointer; }
+.apps-belvedere-group > summary span { font-weight: 400; }
+.apps-belvedere-rows { margin: 0; padding: 0; list-style: none; }
+.apps-belvedere-row { padding: var(--space-3); border-top: 1px solid var(--border); }
+.apps-belvedere-post { min-width: 0; }
+.apps-belvedere-title { display: block; color: var(--text); font-weight: 600; }
+a.apps-belvedere-title { text-decoration: none; }
+a.apps-belvedere-title:hover { color: var(--accent); text-decoration: underline; }
+.apps-belvedere-author, .apps-belvedere-owner { display: block; color: var(--text-muted); font-size: 0.8125rem; }
+.apps-belvedere-none { color: var(--text-muted); font-style: italic; font-weight: 400; }
+.apps-belvedere-stage { justify-self: start; padding: 0.1rem var(--space-2); border-radius: var(--radius-full); background: var(--accent-soft); color: var(--accent); font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
+.apps-belvedere-stage-done { border: 1px solid var(--border-strong); background: none; color: var(--text-muted); }
+.apps-belvedere-next { min-width: 0; font-size: 0.875rem; }
+.apps-belvedere-due { font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+.apps-belvedere-flag { display: inline-block; padding: 0 var(--space-2); border-radius: var(--radius-full); background: var(--warning); color: hsl(222 40% 10%); font-size: 0.6875rem; font-weight: 700; font-style: normal; }
+.apps-belvedere-langs { display: flex; gap: var(--space-1); }
+.apps-belvedere-lang { display: inline-block; width: 1.9rem; padding: 0.05rem 0; border: 1px solid var(--border-strong); border-radius: var(--radius-xs); color: var(--text-muted); font-size: 0.6875rem; font-weight: 600; text-align: center; }
+.apps-belvedere-lang-on { border-color: var(--accent); background: var(--accent); color: var(--accent-text); }
+.apps-belvedere-lang-written { border-style: dashed; border-color: var(--accent); color: var(--accent); }
+.apps-belvedere-legend { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); margin: var(--space-4) 0 0; color: var(--text-muted); font-size: 0.8125rem; }
+@media (max-width: 48rem) {
+  .apps-belvedere-head { display: none; }
+  .apps-belvedere-row { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "post post" "stage langs" "next due"; row-gap: var(--space-2); }
+  .apps-belvedere-post { grid-area: post; }
+  .apps-belvedere-stage { grid-area: stage; }
+  .apps-belvedere-langs { grid-area: langs; justify-self: end; }
+  .apps-belvedere-next { grid-area: next; }
+  .apps-belvedere-due { grid-area: due; text-align: right; }
+}
 .apps-counts strong {
   color: var(--accent);
   font-size: 1.25rem;
