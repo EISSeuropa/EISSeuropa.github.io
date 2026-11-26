@@ -9,7 +9,7 @@
       "position": "CNRS Research Fellow",
       "institution": "Sciences Po, Center for International Studies (CERI)",
       "country": "France",
-      "bio": "Hugo Meijer is CNRS Research Fellow at the Center for International Studies (CERI) at Sciences Po, where he also serves as Deputy Director. His research focuses on the deep history of war and peace and long-term processes of biocultural evolution. Recent and forthcoming publications include: The Origins of War and Peace in the Human Species (Cambridge University Press, forthcoming 2026); with Richard Wrangham, “The Evolutionary Roots of War and Peace,” Journal of Strategic Studies, 48(6-7) (2026), pp. 1134–1222; “Janus faced: The Co-Evolution of War and Peace in the Human Species,” Evolutionary Anthropology 33/3 (2024), pp. 1-14; “The Origins of War: A Global Archaeological Review,” Human Nature, 35(3) (2024), pp. 225–288. For more details on his profile, see: https://www.hugomeijer.com.",
+      "bio": "Hugo Meijer is CNRS Research Fellow at the Center for International Studies (CERI) at Sciences Po. His research focuses on the deep history of war and peace and long-term processes of biocultural evolution. Recent publications include: The Origins of War and Peace in the Human Species (Cambridge University Press, 2026); with Richard Wrangham, “The Evolutionary Roots of War and Peace,” Journal of Strategic Studies, 48(6-7) (2026), pp. 1134–1222; “Janus faced: The Co-Evolution of War and Peace in the Human Species,” Evolutionary Anthropology 33/3 (2024), pp. 1-14; “The Origins of War: A Global Archaeological Review,” Human Nature, 35(3) (2024), pp. 225–288. For more details on his profile, see: https://www.hugomeijer.com.",
       "themes": "war, peace, diplomacy, biocultural evolution, deep history",
       "links": {
         "website": "https://www.hugomeijer.com/",
@@ -17,7 +17,8 @@
         "linkedin": "https://www.hugomeijer.com/",
         "twitter": "https://x.com/Hg_Meijer"
       },
-      "workingGroups": "WG1"
+      "workingGroups": "WG1",
+      "socialConsent": true
     },
     {
       "name": "Prof. Chiara Ruffa",
@@ -499,13 +500,22 @@
       "roleEndDate": "2023-07-10"
     },
     {
-      "name": "James Roughan",
+      "name": "Mr James Roughan",
       "role": "Support Staff",
       "alt": "James Roughan",
       "photo": "",
-      "institution": "Sciences Po",
-      "country": "France",
-      "roleEndDate": "2026-05-16"
+      "functionalResponsibility": "Conference Coordinator, Communications Coordinator",
+      "position": "Final year BA International relations student",
+      "institution": "SOAS",
+      "country": "United Kingdom",
+      "bio": "Final year international relations student at SOAS University of London. Aspiring towards a masters in peace studies, with particular interest in the security-development nexus in post-colonial states.",
+      "links": {
+        "publicEmail": "jamesroughan123@gmail.com",
+        "linkedin": "https://www.linkedin.com/in/james-roughan-b2ab4730b/"
+      },
+      "workingGroups": "None yet",
+      "roleEndDate": "2027-02-26",
+      "socialConsent": true
     },
     {
       "name": "Ms. Angela Sajewicz",
