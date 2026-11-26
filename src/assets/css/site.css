@@ -7132,6 +7132,20 @@ a.paper-theme-chip:focus-visible { border-color: var(--accent); color: var(--acc
   .archive-layout .conference-list { margin-top: 0; }
 }
 
+/* ---------- recording link ----------
+   A link to a session recording on YouTube, with a self-hosted thumbnail,
+   so the page makes no request to YouTube until the link is followed.
+   Used under the "In review" prose on /2026. */
+.recording-link { display: flex; align-items: center; gap: var(--space-4); max-width: 42rem; margin-top: var(--space-4); padding: var(--space-3); border: 1px solid var(--border); border-radius: var(--radius-md); color: inherit; text-decoration: none; }
+.recording-link:hover { color: inherit; text-decoration: none; }
+.recording-link-thumb { display: block; flex: none; width: 160px; height: auto; border-radius: var(--radius-sm); }
+.recording-link-label { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.recording-link:hover .recording-link-label { color: var(--accent-hover); text-decoration-thickness: 2px; }
+@media (max-width: 30rem) {
+  .recording-link { flex-direction: column; align-items: flex-start; }
+  .recording-link-thumb { width: 100%; }
+}
+
 /* ---------- site search modal ----------
    The markup (search-modal.njk) and search.js shipped without any CSS,
    so the overlay rendered as an unstyled block. search.js toggles
