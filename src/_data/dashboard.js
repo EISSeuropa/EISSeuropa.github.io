@@ -10,7 +10,7 @@ const site = require("./site.js");
 const REPO = "https://github.com/EISSeuropa/EISSeuropa.github.io";
 // The dashboard's own version, shown at the foot of the page. Semantic
 // versioning, rules and history in docs/internal-dashboard.md.
-const VERSION = "3.13.0";
+const VERSION = "3.13.1";
 const everyone = ["staff", "management", "board", "volunteer"];
 const today = new Date().toISOString().slice(0, 10);
 
@@ -48,7 +48,7 @@ const longDate = (d) => new Date(d).toLocaleDateString("en-GB", { day: "numeric"
 // tile, the stages and their stepper, and the Key dates timeline. It comes from
 // the "EISS dates" calendar, through the EISS status web app's ?view=dates, and
 // falls back to keyDates in site.js when that gives nothing.
-const { WORKSPACE_STATUS } = require("./systemHealth.js");
+const { workspaceStatus } = require("./systemHealth.js");
 const ROLES = new Set(everyone);
 
 // keyDates in site.js is code, so a typo that would show twice, or a stage the
@@ -115,9 +115,7 @@ const isKeyDate = (d) => !d.indico && d.site !== "netsec";
 async function fetchDates() {
   let events = [];
   try {
-    const res = await fetch(`${WORKSPACE_STATUS}?view=dates`, { signal: AbortSignal.timeout(30000) });
-    if (!res.ok) throw new Error(String(res.status));
-    const { dates } = await res.json();
+    const { dates } = await workspaceStatus("dates");
     const list = Array.isArray(dates) ? calendarDates(dates) : [];
     events = list.filter((d) => !isKeyDate(d));
     const keyDates = list.filter(isKeyDate);

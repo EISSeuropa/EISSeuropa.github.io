@@ -24,11 +24,20 @@ const LABELS = { nominal: "Nominal", issue: "Issue", critical: "Critical", unkno
 // and returns only each check's level and last good date.
 const WORKSPACE_STATUS = "https://script.google.com/macros/s/AKfycbyUPZHKz0SQ0eNN6jfvy7TWvS_LtVFMnir2Q4D-QJEjjJXoGS7VbK63m7MIhUFBp4QN/exec";
 
+// One view of the web app as JSON ("" for the checks, "belvedere", "dates").
+// ponytail: one retry, since a single slow answer past 30 s hid the Belvedere tab (26 Nov 2026).
+async function workspaceStatus(view) {
+  const get = async () => {
+    const res = await fetch(view ? `${WORKSPACE_STATUS}?view=${view}` : WORKSPACE_STATUS, { signal: AbortSignal.timeout(30000) });
+    if (!res.ok) throw new Error(String(res.status));
+    return res.json();
+  };
+  return get().catch(get);
+}
+
 async function workspaceChecks() {
   try {
-    const res = await fetch(WORKSPACE_STATUS, { signal: AbortSignal.timeout(30000) });
-    if (!res.ok) throw new Error(String(res.status));
-    const { checks } = await res.json();
+    const { checks } = await workspaceStatus("");
     // counts: whole numbers some checks report beside their stamp, such as the
     // active volunteers and pending joining requests of "Volunteer accounts".
     // people: the names of joining people who consented to a profile (#2235).
@@ -43,9 +52,7 @@ async function workspaceChecks() {
 // same web app (?view=belvedere). Titles and authors stay in the Sheet.
 async function belvedereStatus() {
   try {
-    const res = await fetch(`${WORKSPACE_STATUS}?view=belvedere`, { signal: AbortSignal.timeout(30000) });
-    if (!res.ok) throw new Error(String(res.status));
-    const { belvedere } = await res.json();
+    const { belvedere } = await workspaceStatus("belvedere");
     return belvedere && belvedere.stages ? belvedere : null;
   } catch (e) {
     console.warn(`[systemHealth] Belvedere tracker unavailable: ${e.message}`);
@@ -154,4 +161,5 @@ module.exports = async function () {
 
 // The dashboard reads the same web app for the year's dates (?view=dates).
 module.exports.WORKSPACE_STATUS = WORKSPACE_STATUS;
+module.exports.workspaceStatus = workspaceStatus;
 module.exports.githubLevel = githubLevel;
