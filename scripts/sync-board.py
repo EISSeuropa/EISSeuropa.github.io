@@ -502,6 +502,10 @@ def build_from_row(row: dict, cols: dict, role_info: dict, prior: dict | None) -
     func_resp = _cell(row, cols, "functionalResponsibility")
     if not func_resp and prior:
         func_resp = prior.get("functionalResponsibility", "")
+    # Staff only. Volunteers are the only people who pick a cohort, so an
+    # answer that names one drops the field, the earlier one included.
+    if _cell(row, cols, "cohort"):
+        func_resp = ""
     if func_resp and func_resp.strip().lower() not in FUNC_RESP_NULL_SENTINELS:
         person["functionalResponsibility"] = func_resp
 
