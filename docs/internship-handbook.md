@@ -62,8 +62,11 @@ The code is the `intern-lifecycle` project in the private
    turn the Applications tile on `/internal.html` orange.
 3. For an Accepted application the lifecycle script makes a Gmail draft
    in admin@'s Drafts, with a Joining Form link that has the name, email
-   address and cohort filled in. A person signs and sends it. The script
-   never sends it.
+   address and cohort filled in. A Declined application gets a draft
+   decline. Arthur gets an email for each draft, and for an offer it says
+   what the applicant's university needs. A person signs and sends the
+   draft. The script never sends it, and a withdrawn application gets
+   none (#2273).
 4. The applicant fills in the Joining Form, and the approval, the
    account and the Intern roster row follow as for any volunteer. The
    roster's Track comes from the areas named in the application.
@@ -74,9 +77,12 @@ flowchart TD
   B --> C{"Reviewer sets Status"}
   C -->|"Shortlisted"| S["Shortlisted: decided later"]
   S -.-> C
-  C -->|"Declined or Withdrawn"| D["Closed on is stamped"]
+  C -->|"Declined"| X["Decline draft in admin@,<br/>Arthur emailed"]
+  X --> X2["A person checks, signs and sends it"]
+  X2 --> D
+  C -->|"Withdrawn"| D["Closed on is stamped"]
   D --> E["Row and form answer deleted<br/>60 days later"]
-  C -->|"Accepted"| F["Gmail draft in admin@ with a<br/>pre-filled Joining Form link"]
+  C -->|"Accepted"| F["Gmail draft in admin@ with a<br/>pre-filled Joining Form link,<br/>Arthur emailed"]
   F --> G["A person checks, signs and sends it"]
   G --> H["Applicant fills in the Joining Form"]
   H --> I["New row in EISS people lifecycle<br/>Status: Pending"]
@@ -107,11 +113,12 @@ sequenceDiagram
   Script->>Dash: Counts: applications, to review, accepted
   Reviewer->>Sheet: Sets Status: Shortlisted, Accepted, Declined or Withdrawn
   Note over Reviewer,Dash: Reply within a week of the closing date. Applications still New after that turn the tile and the tab dot orange.
-  Script->>Sheet: Reads Accepted rows (hourly)
-  Script->>Drafts: One draft per row, with a pre-filled Joining Form link
-  Script->>Sheet: Writes the date in Joining Form draft
+  Script->>Sheet: Reads Accepted and Declined rows (hourly)
+  Script->>Drafts: One draft per row: an offer with a pre-filled Joining Form link, or a decline
+  Script->>Sheet: Writes the date in Joining Form draft or Decline draft
+  Script->>Reviewer: Emails Arthur that a draft is waiting, with the university's needs for an offer
   Reviewer->>Drafts: Checks, signs and sends the draft
-  Drafts->>Applicant: Offer and Joining Form link
+  Drafts->>Applicant: Offer with the Joining Form link, or decline
   Note over Applicant,Sheet: Applicants send questions to internship@eiss-europa.com
 ```
 
