@@ -122,6 +122,75 @@ def test_the_pr_body_names_a_consent_change():
     assert "social media consent" in sb.describe_field_changes({"socialConsent": True}, {})
 
 
+# Link checks for the PR body (#2287). The network is replaced by stubs.
+
+def _board(**links) -> dict:
+    return {"members": [], "support": [{"name": "Hugo Example", "links": links}]}
+
+
+def _no_net(url):
+    raise AssertionError("no network call expected")
+
+
+def test_a_host_without_a_real_domain_is_reported():
+    problem = sb.link_reach_problem("https://www.hugo", resolves=lambda h: False,
+                                    http_status=_no_net, skip_domains=())
+    assert problem and "www.hugo" in problem
+    lines = sb.link_problems(_board(), _board(website="https://www.hugo"),
+                             reach=lambda u: sb.link_reach_problem(u, resolves=lambda h: False,
+                                                                   http_status=_no_net, skip_domains=()))
+    assert len(lines) == 1 and "Hugo Example" in lines[0] and "website" in lines[0]
+
+
+def test_a_host_without_a_dot_is_reported_offline():
+    assert "domain ending" in sb.link_shape_problem("website", "https://hugo")
+
+
+def test_a_website_under_linkedin_is_reported():
+    lines = sb.link_problems(_board(), _board(linkedin="https://www.hugo-example.nl"), network=False)
+    assert len(lines) == 1 and "is not on linkedin.com" in lines[0]
+
+
+def test_other_profile_hosts_are_checked():
+    assert sb.link_shape_problem("bluesky", "https://twitter.com/x") is not None
+    assert sb.link_shape_problem("twitter", "https://x.com/example") is None
+    assert sb.link_shape_problem("linkedin", "https://uk.linkedin.com/in/example") is None
+    assert sb.link_shape_problem("orcid", "https://orcid.org/0000-0002-1825-0097") is None
+    assert "ORCID iD" in sb.link_shape_problem("orcid", "https://orcid.org/0000-0002-1825-0098")
+
+
+def test_a_valid_entry_gives_no_warning():
+    links = {"website": "https://example.org", "linkedin": "https://www.linkedin.com/in/example",
+             "orcid": "https://orcid.org/0000-0002-1825-0097", "publicEmail": "hugo@example.org"}
+    reach = lambda u: sb.link_reach_problem(u, resolves=lambda h: True,
+                                            http_status=lambda u: 200, skip_domains=("linkedin.com",))
+    assert sb.link_problems(_board(), _board(**links), reach=reach) == []
+
+
+def test_only_new_or_changed_links_are_checked():
+    old = _board(website="https://www.hugo")
+    assert sb.link_problems(old, old, reach=_no_net) == []
+
+
+def test_a_404_is_reported_and_a_bot_refusal_is_not():
+    check = lambda status: sb.link_reach_problem("https://example.org/gone", resolves=lambda h: True,
+                                                 http_status=lambda u: status, skip_domains=())
+    assert "404" in check(404)
+    assert check(403) is None and check(999) is None and check(None) is None
+
+
+def test_a_skipped_domain_gets_the_dns_lookup_only():
+    assert sb.link_reach_problem("https://www.linkedin.com/in/x", resolves=lambda h: True,
+                                 http_status=_no_net, skip_domains=("linkedin.com",)) is None
+
+
+def test_the_pr_body_lists_links_to_check():
+    body = sb.compose_rich_body(_board(), _board(website="https://www.hugo"), [],
+                                ["- **Hugo Example**, website: `https://www.hugo` does not exist"])
+    assert "### Links to check (1)" in body and "Hugo Example" in body
+    assert "Links to check" not in sb.compose_rich_body(_board(), _board(), [], [])
+
+
 def _standalone() -> int:
     failures = 0
     tests = [(n, f) for n, f in sorted(globals().items())
