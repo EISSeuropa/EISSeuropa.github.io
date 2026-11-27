@@ -51,6 +51,29 @@ def test_staff_keep_their_functional_responsibility():
     assert sb.build_from_row(row, COLS, ROLE, None)["functionalResponsibility"] == "Conference Coordinator"
 
 
+def test_a_volunteer_without_a_cohort_has_no_functional_responsibility():
+    row = _row(**{COLS["role"]: "Volunteer", COLS["functionalResponsibility"]: "Conference Coordinator"})
+    assert "functionalResponsibility" not in sb.build_from_row(row, COLS, ROLE, None)
+    prior = {"name": "Ada Example", "functionalResponsibility": "Conference Coordinator"}
+    assert "functionalResponsibility" not in sb.build_from_row(_row(**{COLS["role"]: "Volunteer"}), COLS, ROLE, prior)
+
+
+def test_staff_who_pick_a_cohort_keep_their_functional_responsibility():
+    row = _row(**{COLS["role"]: "Staff", COLS["cohort"]: "Winter 2027 (4 January to 26 February 2027)",
+                  COLS["functionalResponsibility"]: "Conference Coordinator"})
+    assert sb.build_from_row(row, COLS, ROLE, None)["functionalResponsibility"] == "Conference Coordinator"
+
+
+def test_volunteer_and_staff_answers_are_support_staff():
+    roles = json.loads((Path(__file__).resolve().parent / "board-source.json").read_text(encoding="utf-8"))["roles"]
+    support = next(r for r in roles if r["label"] == "Support Staff")
+    assert {"Volunteer", "Staff"} <= set(support["aliases"])
+    for answer in ("Volunteer", "Staff", "Support Staff"):
+        assert not any(answer == r["label"] or answer in r.get("aliases", []) for r in roles if r is not support)
+    person = sb.build_from_row(_row(**{COLS["role"]: "Volunteer"}), COLS, support, None)
+    assert person["role"] == "Support Staff"
+
+
 def test_the_column_is_mapped():
     assert COLS["socialConsent"] == "Social media"
 

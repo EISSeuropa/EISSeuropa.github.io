@@ -502,9 +502,13 @@ def build_from_row(row: dict, cols: dict, role_info: dict, prior: dict | None) -
     func_resp = _cell(row, cols, "functionalResponsibility")
     if not func_resp and prior:
         func_resp = prior.get("functionalResponsibility", "")
-    # Staff only. Volunteers are the only people who pick a cohort, so an
-    # answer that names one drops the field, the earlier one included.
-    if _cell(row, cols, "cohort"):
+    # Staff only (#2288). The bios form asks "Volunteer" or "Staff", both shown
+    # as Support Staff. A "Volunteer" answer drops the field, the earlier one
+    # included, and a "Staff" answer keeps it whatever the cohort says. Older
+    # answers ("Support Staff") fall back to the cohort rule from #2285:
+    # volunteers are the only people who pick a cohort.
+    role_answer = _cell(row, cols, "role").strip().lower()
+    if role_answer == "volunteer" or (role_answer != "staff" and _cell(row, cols, "cohort")):
         func_resp = ""
     if func_resp and func_resp.strip().lower() not in FUNC_RESP_NULL_SENTINELS:
         person["functionalResponsibility"] = func_resp

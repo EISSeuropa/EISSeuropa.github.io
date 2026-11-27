@@ -70,8 +70,8 @@ with an optional profile made of this Form's own questions (all but
 the name, role, cohort and headshot). When Arthur approves a newcomer
 who ticked the consent box, the "EISS On/off-boarding" Apps Script
 (`workspace-ops`) appends a row to this Form's response Sheet: a
-timestamp, their new EISS address, the full name, the role label
-(Support Staff, Board Member, or the leadership title management
+timestamp, their new EISS address, the full name, the role answer
+(Volunteer, Staff, Board Member, or the leadership title management
 picks), the cohort and the profile answers. Personal email and dates
 stay in the private lifecycle sheet.
 
@@ -156,8 +156,8 @@ than a hard constraint:
 - Mx
 - None
 
-**Q3 options**, which must match exactly the `label` values in
-`scripts/board-source.json` → `roles` table:
+**Q3 options**, which must match exactly a `label` or an `aliases`
+value in `scripts/board-source.json` → `roles` table:
 
 - *(None — leave blank)* → falls through to *Board Member* (tier 100)
 - Founding and Honorary Director
@@ -165,7 +165,15 @@ than a hard constraint:
 - Secretary-General
 - Treasurer
 - Board Member
-- Support Staff (incl. volunteers)
+- Volunteer
+- Staff
+
+Volunteer and Staff are aliases of Support Staff, so both appear in
+the Support Staff section on `/board`. They replaced a single "Support
+Staff (incl. volunteers)" choice ([#2288](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2288)),
+which stays an alias for the earlier answers. workspace-ops
+`intern-lifecycle` sets the two choices on the Form with
+`splitSupportStaffRole`.
 
 **Q4 options**, which must match values in `scripts/board-source.json` →
 `functional_responsibilities` list. A member can hold a Functional
@@ -186,7 +194,7 @@ comma-separated cell, and the card renders one pill per value:
 > as a quiet pill alongside the role on the card. It is purely
 > descriptive, not used for sorting or grouping.
 
-Functional responsibilities are for staff, board members and management only. The sync drops them for anyone whose answer names a volunteer cohort, an earlier answer included, and the lifecycle script sends a volunteer's Joining Form answer as "None" (workspace-ops `intern-lifecycle`).
+Functional responsibilities are for staff, board members and management only. The sync drops them when the role answer is Volunteer, an earlier answer included, and keeps them when it is Staff, whatever the cohort says. For an older answer of "Support Staff", it falls back to the cohort: an answer that names a volunteer cohort drops them. The lifecycle script also sends a volunteer's Joining Form answer as "None" (workspace-ops `intern-lifecycle`).
 
 In *Settings → Responses*, set:
 

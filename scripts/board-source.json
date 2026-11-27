@@ -57,7 +57,7 @@
     { "label": "Secretary-General",               "kind": "board",   "tier": 3   },
     { "label": "Treasurer",                       "kind": "board",   "tier": 4   },
     { "label": "Board Member",                    "kind": "board",   "tier": 100 },
-    { "label": "Support Staff",                   "kind": "support", "tier": 100, "aliases": ["Support Staff (incl. intern)"] }
+    { "label": "Support Staff",                   "kind": "support", "tier": 100, "aliases": ["Volunteer", "Staff", "Support Staff (incl. intern)"] }
   ],
 
   "_functional_responsibilities_doc": "Allowed values for the new 'Functional responsibility' Form dropdown. The script copies whichever value the member picks into the entry's `functionalResponsibility` field verbatim; the template renders it as a quiet pill alongside the primary role. The list here exists only as a sanity check on the Form options — if a member submits an unrecognised value, the script accepts it (forward-compatible) but logs a warning.",
