@@ -238,6 +238,8 @@ module.exports = {
       group: "publish",
       roles: ["staff", "management", "volunteer"],
     },
+    // My card (#2293): creates or updates the signed-in person's card on /board.
+    { href: "/my-card.html", key: "myProfile", icon: "user", group: "people", roles: ["staff", "management", "board", "volunteer"] },
     {
       href: "https://docs.google.com/forms/d/e/1FAIpQLSevC0tbQwCA4ZNfdk_pCY5xUvmFjuQbIIpddDXLF5TdSoKfcw/viewform",
       key: "internForm",
