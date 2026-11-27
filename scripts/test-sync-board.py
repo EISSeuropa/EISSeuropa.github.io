@@ -125,7 +125,7 @@ def test_a_host_without_a_dot_is_reported_offline():
 
 def test_a_website_under_linkedin_is_reported():
     lines = sb.link_problems(_board(), _board(linkedin="https://www.hugo-example.nl"), network=False)
-    assert len(lines) == 1 and "linkedin.com" in lines[0]
+    assert len(lines) == 1 and "is not on linkedin.com" in lines[0]
 
 
 def test_other_profile_hosts_are_checked():
