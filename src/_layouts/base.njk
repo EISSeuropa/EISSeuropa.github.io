@@ -26,9 +26,9 @@
   <title>{% if title %}{{ title }} — {{ site.title }}{% else %}{{ homeTitle or site.fullName }}{% endif %}</title>
   <meta name="description" content="{{ description or site.description }}">
 
-  {% if redirectTo %}
+  {% if redirectTo %}{% set redirectExternal = redirectTo.indexOf("https://") == 0 %}{# another site, as for My card (#2293): this page stays canonical #}
     <meta http-equiv="refresh" content="0; url={{ redirectTo }}">
-    <link rel="canonical" href="{{ site.url }}{{ redirectTo }}">
+    <link rel="canonical" href="{{ site.url }}{{ page.url if redirectExternal else redirectTo }}">
     <meta name="robots" content="noindex,follow">
   {% else %}
     <link rel="canonical" href="{{ site.url }}{{ page.url }}">
@@ -185,7 +185,7 @@
   <meta property="og:site_name" content="{{ site.title }}">
   <meta property="og:title" content="{{ title or homeTitle or site.fullName }}">
   <meta property="og:description" content="{{ description or site.description }}">
-  <meta property="og:url" content="{{ site.url }}{{ redirectTo or page.url }}">
+  <meta property="og:url" content="{{ site.url }}{{ page.url if redirectExternal else (redirectTo or page.url) }}">
   <meta property="og:locale" content="{{ ogLocale }}">
   <meta property="og:image" content="{{ site.url }}{{ localisedMeta }}">
   <meta property="og:image:type" content="image/jpeg">

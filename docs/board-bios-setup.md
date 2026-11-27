@@ -63,6 +63,21 @@ sheet, or ask the person, then run the sync again.
 Links already on the page are not checked again. The weekly link check
 on `master` covers them.
 
+### My card
+
+`/my-card.html` (`src/my-card.njk`, eiss-europa.com/my-card) redirects
+to "My card", a web app in workspace-ops `intern-lifecycle`
+([#2293](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2293)).
+Signed in with an EISS account, it opens this Form pre-filled with the
+person's newest answer, or else with their card in `board.json` (found
+by name) and their Joining Form role, or else with their name. The two
+consents and the photo are never pre-filled. A pre-filled link opens a
+new response, so a new photo can be uploaded each time, and a blank
+photo keeps the current one. The redirect target is the web app's
+address, which stays the same across deploys (`WEB_APPS` in
+workspace-ops). How the web app finds a card, and the link for people
+without an EISS account, are in that folder's README.
+
 ## Where the Form lives
 
 The live Form, "Create or update my EISS Board entry", its response
@@ -148,12 +163,12 @@ post reads both fields (`docs/news-publishing.md`, *Weekly welcome*).
 | 1 | **Title** | Dropdown — see *Q1 options* below | ✅ |
 | 2 | **Full name** | Short answer | ✅ |
 | 3 | **What is your role at EISS?** | Dropdown — see *Q3 options* below | ✅ |
-| 4 | **Do you have functional responsibilities?** | Checkboxes — see *Q4 options* below | ⬜ |
+| 4 | **Do you have functional responsibilities?** | Checkboxes — see *Q4 options* below | ✅ |
 | 5 | **Position or current role (e.g. PhD candidate, Associate Professor, Policy analyst)** | Short answer | ✅ |
 | 6 | **Institution or organisation** | Short answer | ✅ |
-| 7 | **Country** | Short answer | ✅ |
+| 7 | **Country** | Dropdown, one choice per country | ✅ |
 | 8 | **Public email (optional)** | Short answer | ⬜ |
-| 9 | **Short bio (max. 300 words)** | Paragraph | ✅ |
+| 9 | **Short bio (max. 300 words)** | Paragraph | ⬜ |
 | 10 | **Research keywords (comma-separated, 3 to 5 suggested)** | Short answer | ⬜ |
 | 11 | **Working Group involvement (tick all that apply)** | Checkboxes | ⬜ |
 | 12 | **Personal or institutional website (optional)** | Short answer | ⬜ |
@@ -165,6 +180,9 @@ post reads both fields (`docs/news-publishing.md`, *Weekly welcome*).
 | 18 | **Headshot photo (optional)** | File upload — image only — max 5 MB | ⬜ |
 | 19 | **Volunteer cohort (optional)** | Multiple choice | ⬜ |
 | 20 | **I consent to publication of my bio on eiss-europa.com** | Checkboxes — single option | ✅ |
+| 21 | **Social media** | Multiple choice, agree or decline (#2219) | ✅ |
+
+The live Form asks these in a different order (checked on 27 November 2026). The sync matches answers by question title, so the order does not matter.
 
 **Q1 options** (the honorific title). The sync prepends the chosen title to
 the full name, so the card renders e.g. "Prof. Jane Doe". "None" prepends
