@@ -41,6 +41,28 @@ members directly), and every workflow run produces a PR that you
 review before it lands. If something unexpected comes through, you
 just don't merge.
 
+### Links to check
+
+The link check (`link-check.yml`) skips the `board-sync/auto` PRs, so
+`sync-board.py` checks every link that a run adds or changes and lists
+doubtful ones under **Links to check** in the PR body, one line per
+person and link ([#2287](https://github.com/EISSeuropa/EISSeuropa.github.io/issues/2287)).
+The entry stays as the person wrote it. Correct the answer in the bios
+sheet, or ask the person, then run the sync again.
+
+- Without the network: a LinkedIn link must be on `linkedin.com`, an
+  ORCID link on `orcid.org` with a valid iD, an X link on `x.com` or
+  `twitter.com`, a Bluesky link on `bsky.app`, and every host needs a
+  domain ending.
+- With the network: the host must have a DNS record (this catches
+  `www.hugo`, which became `https://www.hugo` in #2281), and a page
+  that answers 404 or 410 is listed. Like `check-links.sh`, a 403, 429,
+  999, 5xx or timeout is not listed, and hosts in
+  `scripts/link-check-skip-domains.txt` get the DNS lookup only.
+
+Links already on the page are not checked again. The weekly link check
+on `master` covers them.
+
 ## Where the Form lives
 
 The live Form, "Create or update my EISS Board entry", its response

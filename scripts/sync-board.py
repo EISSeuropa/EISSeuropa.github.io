@@ -410,6 +410,139 @@ def _normalize_link(out_key: str, value: str) -> str:
     return f"https://{v}"
 
 
+# ──────────────────── link checks for the PR body (#2287) ────────────────────
+#
+# The sync PR runs on `board-sync/auto`, which link-check.yml skips, so a
+# mistyped link (`www.hugo` became `https://www.hugo` in #2281) reached the
+# review with every check green. These checks list doubtful links under
+# "Links to check" in the PR body. The entry stays as the person wrote it.
+
+# Hosts each profile link must sit on (the host itself or a subdomain).
+LINK_HOSTS: dict[str, tuple[str, ...]] = {
+    "linkedin": ("linkedin.com",),
+    "orcid": ("orcid.org",),
+    "twitter": ("x.com", "twitter.com"),
+    "bluesky": ("bsky.app",),
+}
+LINK_CHECK_UA = "Mozilla/5.0 (EISS link checker; +https://eiss-europa.com)"
+SKIP_DOMAINS_FILE = ROOT / "scripts" / "link-check-skip-domains.txt"
+
+
+def _orcid_checksum_ok(orcid_id: str) -> bool:
+    """ISO 7064 11-2 check digit, as ORCID specifies it."""
+    digits = orcid_id.replace("-", "")
+    total = 0
+    for ch in digits[:-1]:
+        total = (total + int(ch)) * 2
+    result = (12 - total % 11) % 11
+    return digits[-1] == ("X" if result == 10 else str(result))
+
+
+def _on_host(host: str, domains: tuple[str, ...]) -> bool:
+    return any(host == d or host.endswith("." + d) for d in domains)
+
+
+def link_shape_problem(key: str, url: str) -> str | None:
+    """Offline check of one normalised link. Returns a short problem
+    description, or None when the link looks right."""
+    if key == "publicEmail" or not url:
+        return None
+    parsed = urlparse(url if not url.startswith("//") else "https:" + url)
+    host = (parsed.hostname or "").lower()
+    if parsed.scheme not in ("http", "https") or not host:
+        return "is not a web address"
+    if "." not in host.strip("."):
+        return f"has no domain ending (`{host}`)"
+    allowed = LINK_HOSTS.get(key)
+    if allowed and not _on_host(host, allowed):
+        return f"is not on {' or '.join(allowed)}"
+    if key == "orcid":
+        orcid_id = parsed.path.strip("/")
+        if not _ORCID_ID_RE.match(orcid_id) or not _orcid_checksum_ok(orcid_id):
+            return "does not end in a valid ORCID iD"
+    return None
+
+
+def _load_skip_domains() -> tuple[str, ...]:
+    try:
+        lines = SKIP_DOMAINS_FILE.read_text(encoding="utf-8").splitlines()
+    except OSError:
+        return ()
+    return tuple(l.split("#", 1)[0].strip().lower() for l in lines if l.split("#", 1)[0].strip())
+
+
+def _resolves(host: str) -> bool:
+    import socket
+    try:
+        socket.getaddrinfo(host, 443)
+        return True
+    except socket.gaierror:
+        return False
+    except OSError:
+        return True  # not a "no such name" answer, so not reported
+
+
+def _http_status(url: str) -> int | None:
+    """Status of a GET, or None when the server could not be asked
+    (timeout, refused connection, TLS error). None is not reported."""
+    try:
+        with requests.get(url, headers={"User-Agent": LINK_CHECK_UA},
+                          timeout=15, stream=True, allow_redirects=True) as r:
+            return r.status_code
+    except requests.RequestException:
+        return None
+
+
+def link_reach_problem(url: str, resolves=_resolves, http_status=_http_status,
+                       skip_domains: tuple[str, ...] | None = None) -> str | None:
+    """Network check of one link that passed the shape check. Follows
+    check-links.sh: only a definite answer counts. A name that does not
+    resolve, or a 404 or 410, is reported. 403, 429, 999, 5xx and
+    timeouts come from sites that refuse bots and are not. Hosts in
+    link-check-skip-domains.txt get the DNS lookup only."""
+    host = (urlparse(url).hostname or "").lower()
+    if not host:
+        return None
+    if not resolves(host):
+        return f"does not exist (`{host}` has no DNS record)"
+    if skip_domains is None:
+        skip_domains = _load_skip_domains()
+    if _on_host(host, skip_domains):
+        return None
+    status = http_status(url)
+    if status in (404, 410):
+        return f"returns HTTP {status}"
+    return None
+
+
+def changed_links(prior_raw: dict, new_data: dict) -> list[tuple[str, str, str]]:
+    """(name, key, url) for every link that is new or changed in this run."""
+    def by_name(d: dict) -> dict[str, dict]:
+        return {p["name"]: p for p in d.get("members", []) + d.get("support", [])}
+
+    old, new = by_name(prior_raw), by_name(new_data)
+    out: list[tuple[str, str, str]] = []
+    for name in sorted(new):
+        old_links = (old.get(name) or {}).get("links") or {}
+        for key, url in ((new[name].get("links") or {}).items()):
+            if key in LINK_LABELS and key != "publicEmail" and url and url != old_links.get(key):
+                out.append((name, key, url))
+    return out
+
+
+def link_problems(prior_raw: dict, new_data: dict, network: bool = True,
+                  reach=link_reach_problem) -> list[str]:
+    """Markdown lines, one per doubtful new or changed link."""
+    lines: list[str] = []
+    for name, key, url in changed_links(prior_raw, new_data):
+        problem = link_shape_problem(key, url)
+        if problem is None and network:
+            problem = reach(url)
+        if problem:
+            lines.append(f"- **{name}**, {LINK_LABELS[key]}: `{url}` {problem}")
+    return lines
+
+
 def apply_url_overrides(entries: list[dict], overrides: dict) -> None:
     """Rewrite links the Form holds that must not ship as written.
 
@@ -892,13 +1025,15 @@ def describe_field_changes(old: dict, new: dict) -> list[str]:
 
 
 def compose_rich_body(
-    prior_raw: dict, new_data: dict, photos_changed: list[str]
+    prior_raw: dict, new_data: dict, photos_changed: list[str],
+    links_to_check: list[str] | None = None,
 ) -> str:
     """Build a Markdown-rich auto-PR body. Sections cover:
       - New members (name · country · _affiliation_)
       - Updated members (name: comma-separated field labels)
       - Removed members (name)
       - Headshot files updated (paths)
+      - Links to check (from link_problems(), #2287)
 
     Excludes the run-log section — that's appended by the workflow
     from the script's stdout, after this body is composed."""
@@ -982,6 +1117,14 @@ def compose_rich_body(
             lines.append(f"- `{p}`")
         lines.append("")
 
+    if links_to_check:
+        lines.append(f"### Links to check ({len(links_to_check)})")
+        lines.append("")
+        lines.append("Kept as submitted. Correct the answer in the bios sheet, or ask the person, before merging.")
+        lines.append("")
+        lines.extend(links_to_check)
+        lines.append("")
+
     return "\n".join(lines).rstrip() + "\n"
 
 
@@ -992,7 +1135,10 @@ def emit_pr_body_file(prior_raw: dict, new_data: dict, photos_changed: list[str]
     path = os.environ.get("SYNC_BOARD_BODY_FILE")
     if not path:
         return
-    body = compose_rich_body(prior_raw, new_data, photos_changed)
+    problems = link_problems(prior_raw, new_data)
+    for line in problems:
+        print(f"  ⚠ link to check: {line[2:]}", file=sys.stderr)
+    body = compose_rich_body(prior_raw, new_data, photos_changed, problems)
     Path(path).write_text(body, encoding="utf-8")
 
 
