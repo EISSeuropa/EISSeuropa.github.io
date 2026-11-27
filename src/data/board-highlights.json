@@ -67,6 +67,15 @@
     },
     {
       "kind": "fix",
+      "site": "EISS",
+      "n": 2290,
+      "title": "List doubtful profile links in the sync PR body",
+      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2290",
+      "at": "2026-11-27",
+      "lines": 241
+    },
+    {
+      "kind": "fix",
       "site": "NetSec",
       "n": 2200,
       "title": "Keyword theme placement by recurring words, and map WG hubs from the bio",
@@ -82,16 +91,7 @@
       "url": "https://github.com/EISSeuropa/netsec.github.io/pull/2229",
       "at": "2026-11-18",
       "lines": 210
-    },
-    {
-      "kind": "fix",
-      "site": "EISS",
-      "n": 2208,
-      "title": "The credentials check renews an expired LinkedIn access token before calling it a failure",
-      "url": "https://github.com/EISSeuropa/EISSeuropa.github.io/pull/2208",
-      "at": "2026-11-18",
-      "lines": 208
     }
   ],
-  "since": "2026-10-27"
+  "since": "2026-10-28"
 }
