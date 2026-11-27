@@ -40,7 +40,10 @@ on day one:
 - **Week 4, review.** Includes the question "What slowed you down in
   your first week?"
 - **Week 8, exit review.** Volunteer handbook role section updated,
-  roster handover columns set to Yes, alumni invite sent.
+  roster handover columns set to Yes, alumni group asked to join, anonymous exit
+  feedback form filled in. The exit email links the form, and its answers
+  are deleted two years after they were sent (#2296). The answers feed
+  the programme review (#1632).
 
 A returning volunteer acts as cohort lead for each intake. The
 operational detail (the roster, the handbook role sections, the first-day
