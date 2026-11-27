@@ -1,0 +1,23 @@
+---
+layout: base.njk
+permalink: /my-card.html
+title: My card
+description: Create or update your card on The People page, signed in with your EISS account.
+redirectTo: https://script.google.com/a/macros/eiss-europa.com/s/AKfycbwlhpfpiZ6jZ55fRq4dCTrQKgOWVNJMfH3SHdkw8affR4_kLAIqh9UkeoMMWEUURrjE/exec
+navKey: ""
+---
+{#- The "My card" web app in workspace-ops intern-lifecycle (#2293). It opens the
+    bios form pre-filled for the person signed in with their EISS account. #}
+<header class="page-header">
+  <div class="container">
+    <span class="eyebrow">The People</span>
+    <h1>My card</h1>
+    <p class="page-lead">Create or update your card on <a href="/board.html">The People</a> page. Sign in with your EISS account if Google asks.</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <p><a class="btn btn-primary" href="{{ redirectTo }}">Open My card</a></p>
+  </div>
+</section>
