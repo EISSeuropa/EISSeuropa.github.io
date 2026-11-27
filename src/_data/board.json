@@ -500,11 +500,9 @@
     },
     {
       "name": "Mr James Roughan",
-      "slug": "james-roughan",
       "role": "Support Staff",
       "alt": "James Roughan",
       "photo": "",
-      "functionalResponsibility": "Conference Coordinator, Communications Coordinator",
       "position": "Final year BA International relations student",
       "institution": "SOAS",
       "country": "United Kingdom",
@@ -515,7 +513,8 @@
       },
       "workingGroups": "None yet",
       "roleEndDate": "2027-02-26",
-      "socialConsent": true
+      "socialConsent": true,
+      "slug": "james-roughan"
     },
     {
       "name": "Ms. Angela Sajewicz",
